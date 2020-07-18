@@ -1,19 +1,21 @@
 <template>
 	<view>
 		<view class="example-body">
-			<uni-nav-bar  :status-bar="true" color="#333333" background-color="#FFFFFF"  @clickLeft="showCity" >
+			<uni-nav-bar  fixed="true" :status-bar="true" color="#333333" background-color="#FFFFFF"  @clickLeft="showCity" >
 				<block slot="left">
 					<view class="city">
 						<view><text class="uni-nav-bar-text">{{ city }}</text></view>
 						<uni-icons type="arrowdown" color="#333333" size="18" />
 					</view>
 				</block>
-				<view class="input-view">
+				<view class="input-view" @click="confirm">
 					<uni-icons class="input-uni-icon" type="search" size="22" color="#666666" />
-					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="输入搜索关键词" @confirm="confirm">
+					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索旅行目的地" >
 				</view>
 			</uni-nav-bar>
 		</view>
+		<!-- 内容 -->
+		<tcontent></tcontent>
 	</view>
 </template>
 
@@ -22,15 +24,17 @@
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue'
 	import uniSection from '@/components/uni-section/uni-section.vue'
+	import tcontent from '@/components/content/tcontent.vue'
 	export default {
 		components: {
 			uniIcons,
 			uniNavBar,
-			uniSection
+			uniSection,
+			tcontent
 		},
 		data() {
 			return {
-				city: '北京'
+				city: '云南'
 			}
 		},
 		methods: {
@@ -48,14 +52,21 @@
 			},
 			showCity() {
 
-				uni.showToast({
-					title: '选择城市'
+				// uni.showToast({
+				// 	title: '选择城市'
+				// })
+				uni.navigateTo({
+					url:'../city/city'
 				})
+				
 			},
 			
 			confirm() {
-				uni.showToast({
-					title: '搜索'
+				// uni.showToast({
+				// 	title: '搜索'
+				// })
+				uni.navigateTo({
+					url:'../search/search'
 				})
 			}
 		},
@@ -179,7 +190,7 @@
 		justify-content: flex-start;
 		/* width: 160rpx;
  */
-		margin-left: 4px;
+		margin-left: 2px;
 	}
 
 	.input-view {
@@ -187,8 +198,8 @@
 		display: flex;
 		/* #endif */
 		flex-direction: row;
-		/* width: 500rpx;
- */
+		width: 150rpx;
+
 		flex: 1;
 		background-color: #f8f8f8;
 		height: 30px;

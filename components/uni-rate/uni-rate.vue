@@ -1,7 +1,7 @@
 <template>
 	<view class="uni-rate">
 		<view :key="index" :style="{ marginLeft: margin + 'px' }" @click="_onClick(index)" class="uni-rate__icon" v-for="(star, index) in stars">
-			<uni-icons :color="color" :size="size" :type="isFill ? 'star-filled' : 'star'" />
+			<uni-icons :color="color" :size="size" :type="isFill ? 'star-filled' : 'star'" class="bk" />
 			<!-- #ifdef APP-NVUE -->
 			<view :style="{ width: star.activeWitch.replace('%','')*size/100+'px'}" class="uni-rate__icon-on">
 				<uni-icons style="text-align: left;" :color="activeColor" :size="size" type="star-filled" />
@@ -138,12 +138,21 @@
 		line-height: 0;
 		font-size: 0;
 		flex-direction: row;
+		padding: 3px;
 	}
+	/* .bk{
+		width: 16px;
+		height: 16px;
+		border:  1px #000000 solid;
+		border-radius: 5px;
+	} */
 
 	.uni-rate__icon {
 		position: relative;
 		line-height: 0;
 		font-size: 0;
+		/* border:  1px #000000 solid;
+		border-radius: 5px; */
 	}
 
 	.uni-rate__icon-on {

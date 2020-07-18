@@ -7,6 +7,8 @@ Vue.prototype.$store = store
 
 Vue.config.productionTip = false
 
+import MescrollBody from "@/components/mescroll-uni/mescroll-body.vue";
+Vue.component("mescroll-body", MescrollBody);
 App.mpType = 'app'
 
 const app = new Vue({

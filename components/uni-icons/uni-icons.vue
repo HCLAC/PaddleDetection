@@ -63,5 +63,8 @@
 		font-family: uniicons;
 		text-decoration: none;
 		text-align: center;
+		/* border: 1px #000000 solid; */
+		/* border-radius: 5px; */
+		margin-right: 2px;
 	}
 </style>

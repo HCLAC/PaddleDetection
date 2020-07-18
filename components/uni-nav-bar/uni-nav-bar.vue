@@ -88,7 +88,7 @@
 			},
 			fixed: {
 				type: [Boolean, String],
-				default: false
+				default: true
 			},
 			color: {
 				type: String,
@@ -174,7 +174,7 @@
 		display: flex;
 		/* #endif */
 		flex-wrap: nowrap;
-		width: 120rpx;
+		/* width: 120rpx; */
 		padding: 0 6px;
 		justify-content: center;
 		align-items: center;
@@ -184,7 +184,7 @@
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
-		width: 150rpx;
+		/* width: 120rpx; */
 		justify-content: flex-start;
 	}
 
@@ -193,12 +193,13 @@
 		display: flex;
 		/* #endif */
 		width: 150rpx;
-		padding-right: 30rpx;
+		/* padding-right: 30rpx; */
 		justify-content: flex-end;
 	}
 
 	.uni-navbar__header-container {
-		flex: 1;
+		/* flex: 1; */
+		width: 350rpx;
 	}
 
 	.uni-navbar__header-container-inner {
