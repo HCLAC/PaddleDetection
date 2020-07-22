@@ -3,7 +3,7 @@
 	    <view class="hot">
 	        <view class="hot-top">
 	            <text class="ht-l">热门景点</text>
-	            <text class="ht-r">查看全部>></text>
+	            <text class="ht-r" @click="lookAll">查看全部>></text>
 	        </view>
 	        <view class="hot-bot">
 	            <view class="hb-1">
@@ -35,7 +35,11 @@
 			}
 		},
 		methods: {
-			
+			lookAll(){
+				uni.navigateTo({
+					url:'/pages/attractionsList/attractionsList'
+				})
+			}
 		},
 		components:{
 			touring
@@ -51,6 +55,7 @@
 	.hot{
 	    display: flex;
 	    flex-direction: column;
+		padding-top: 5px;
 	}
 	.hot .hot-top{
 	    display: flex;

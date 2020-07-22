@@ -1,0 +1,144 @@
+
+.hello {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+}
+.title {
+	color: #8f8f94;
+	margin-top: 25px;
+}
+.ul {
+	font-size: 15px;
+	color: #8f8f94;
+	margin-top: 25px;
+}
+.ul>view {
+	line-height: 25px;
+}
+
+/* 用户信息 */
+.usermes{
+	height: 130px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	background-color: #f3f3f3;
+}
+.userAva{
+	margin-left: 15px;
+	width: 65px;
+	height: 65px;
+	border: 1px #333333 solid;
+	border-radius: 50%;
+}
+.userR{
+	margin-left: 25px;
+}
+.userName{
+	font-size: 18px;
+	font-weight: 900;
+	color: #000000;
+	margin-bottom: 8px;
+}
+.logout{
+	margin-top: 4px;
+	width: 80px;
+	height: 20px;
+	font-size: 12px;
+	background-color: #f7f7f7;
+	border: 1px #B9B9BF solid;
+	border-radius: 30px;
+	line-height: 20px;
+	text-align: center;
+}
+
+/* 我的收藏卡片 */
+.collectionContent{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+}
+.myCollection{
+	text-align: center;
+}
+.collectionText{
+	text-align: center;
+	margin: 5px 0;
+}
+.collectionTips{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	padding: 5px;
+	border: 1px #AAAAAA solid;
+}
+.tipImg{
+	width: 110px;
+	height: 90px;
+	background-color: #B9B9BF;
+	border-radius: 5px;
+}
+.tipsR{
+	margin-left: 10px;
+}
+.tipTitle{
+	font-size: 14px;
+	font-weight: 900;
+}
+.tipBody{
+	font-size: 12px;
+	color: #C0C0C0;
+	width: 185px;
+	height: 50px;
+	margin: 5px 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+}
+.contentAdress{
+	font-size: 12px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	color: #4CA2FF;
+	text-decoration: underline;
+}
+.caImg{
+	width: 15px;
+	height: 15px;
+}
+.end{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	font-size: 12px;
+}
+.endLine{
+	width: 40px;
+	height: 1px;
+	background-color: #666666;
+}
+

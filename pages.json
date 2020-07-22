@@ -1,23 +1,51 @@
 {
+	"easycom": {
+			"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
     "pages": [
+		{
+		    "path" : "pages/index/index",
+		    "style" : {
+				"navigationStyle":"custom"
+				
+			}
+		},
+		{
+		    "path" : "pages/mine/mine",
+		    "style" : {}
+		}
+		,
+		{
+		    "path" : "pages/contentdetail/contentdetail",
+		    "style" : {
+				"navigationStyle":"custom"
+			}
+		},
+		{
+		    "path" : "pages/attractionsDetails/attractionsDetails",
+		    "style" : {
+				"navigationStyle":"custom"
+			}
+		},
+		{
+		    "path" : "pages/attractionsList/attractionsList",
+		    "style" : {
+				"navigationStyle":"custom"
+			}
+		}
+		,
+		{
+		    "path" : "pages/searchResults/searchResults",
+		    "style" : {
+				"navigationStyle":"custom"
+			}
+		},
 		{
 		    "path" : "pages/login/login",
 		    "style" : {}
 		},
-        {
-            "path" : "pages/index/index",
-            "style" : {
-				"navigationStyle":"custom"
-				
-			}
-        },
-        
 		
 		{
-            "path" : "pages/mine/mine",
-            "style" : {}
-        }
-        ,{
             "path" : "pages/search/search",
             "style" : {}
         }
@@ -25,9 +53,12 @@
             "path" : "pages/city/city",
             "style" : {}
         }
+        
     ],
 	"globalStyle":{
-		"navigationBarBackgroundColor":"#F7F7F7"
+		"navigationBarBackgroundColor":"#F7F7F7",
+		"navigationBarTextStyle":"black",
+		"navigationBarTitleText":"领途羊"
 	},
     "window": {
         "navigationBarBackgroundColor": "#ccc",

@@ -1,6 +1,9 @@
 {
-  "navigationBarTitleText": "uni-ui基础项目",
+  "navigationStyle": "custom",
   "usingComponents": {
-    "uni-link": "/components/uni-link/uni-link"
+    "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar",
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "uni-section": "/components/uni-section/uni-section",
+    "tcontent": "/components/content/tcontent"
   }
 }

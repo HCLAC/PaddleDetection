@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mescroll-body": "/components/mescroll-uni/mescroll-body",
+    "waterfall-touring": "/components/module/complete_waterfall_touring"
+  }
+}

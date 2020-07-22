@@ -1,0 +1,39 @@
+
+.list-city{
+    margin: 10px;
+}
+
+/* 定位 */
+.item{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+            align-items: center;
+}
+.dd{
+    width: 15px;
+    height: 15px;
+}
+.item .cityname{
+    font-weight: 600;
+}
+.item .nowcity{
+    font-size: 12px;
+    margin-left:5px;
+}
+.item-hot .py{
+    font-size: 12px;
+    font-weight: 600;
+    color: gray;
+    margin-top: 5px;
+}
+.item-hot .hot-city{
+    float: left;
+}
+.item-hot .city-button{
+    margin: 10px
+}
+
+

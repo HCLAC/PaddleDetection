@@ -48,8 +48,8 @@
 		data() {
 			return {
 				status:true,// 账号密码验证
-				username:"",
-				password:"",
+				// username:"",
+				// password:"",
 				phone:"",
 				code:"",
 				codeTime:0,
@@ -129,35 +129,46 @@
 				// ...更多验证
 				return true
 			},
+			
 			// 提交
 			submit(){
 				this.loading = '登录中...'
-				let url = ""
+				// let url = ""
 				let data = ""
+				
+				
 				// 表单验证
 				if(!this.status){
 					if (!this.validate()) return;
 				}
-				if (this.status){
-					// 账号密码登录
-					url = '/user/login'
-					data = {
-						username:this.username,
-						password:this.password
-					}
-				}else{
-					
-					// 手机验证码登录
-					url = '/user/phonelogin'
+				{
 					data = {
 						phone:this.phone,
 						code:this.code
 					}
 				}
+				// if (this.status){
+				// 	// 账号密码登录
+				// 	url = '/user/login'
+				// 	data = {
+				// 		username:this.username,
+				// 		password:this.password
+				// 	}
+				// }else{
+					
+				// 	// 手机验证码登录
+				// 	// url = '/user/phonelogin'
+				// 	data = {
+				// 		phone:this.phone,
+				// 		code:this.code
+				// 		// phone:15020779433,
+				// 		// code:123456
+				// 	}
+				// }
 				
 				// 提交后端
 				this.$H.post(url,data).then(res=>{
-					// console.log(res)
+					console.log("res==>",res)
 					// 修改vuex的state，持久化存储
 					this.$store.commit('login',res)
 					// 提示和跳转
@@ -173,7 +184,14 @@
 					this.loading = ''
 				)
 				// 登录成功处理
+				// uni.reLaunch({
+				// 	url:'../mine/mine'
+				// })
 			}
+			// uni.reLaunch({
+			// 	url:'../mine/mine'
+			// })
+			// ...mapMutations(['login']),
 		}
 	}
 </script>

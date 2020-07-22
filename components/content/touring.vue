@@ -1,13 +1,13 @@
 <template>
 	<view>
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback">
-			<waterfall-goods :list="dataList"></waterfall-goods>
+			<waterfallTouring :list="dataList"></waterfallTouring>
 		</mescroll-body>
 	</view>
 </template>
 
 <script>
-	import waterfallGoods from '@/components/module/complete_waterfall_goods';
+	import waterfallTouring from '@/components/module/complete_waterfall_touring.vue';
 	import allList from './data';
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	export default {
@@ -21,7 +21,7 @@
 		},
 		mixins: [MescrollMixin], // 使用mixin (在main.js注册全局组件)
 		components:{
-			waterfallGoods
+			waterfallTouring
 		},
 		methods:{
 			/*下拉刷新的回调 */
