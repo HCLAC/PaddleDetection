@@ -72,20 +72,20 @@
             {
                 "pagePath": "pages/index/index",
                 "text": "首页",
-                "iconPath": "/static/images/home.png",
-                "selectedIconPath": "/static/images/home-actived.png"
+                "iconPath": "/static/images/index.png",
+                "selectedIconPath": "/static/images/index-active.png"
             },
             {
                 "pagePath": "pages/mine/mine",
                 "text": "我的",
                 "iconPath": "/static/images/mine.png",
-                "selectedIconPath": "/static/images/mine-actived.png"
+                "selectedIconPath": "/static/images/mine-active.png"
             }
         ],
-        "backgroundColor": "#fff",
+        "backgroundColor": "#ffffff",
         "borderStyle": "black",
-        "color": "#000",
-        "selectedColor": "#6495ED"
+        "color": "#C9CAD1",
+        "selectedColor": "#303133"
     },
     "dynamicLib": {
         "smartUI": {

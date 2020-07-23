@@ -1,9 +1,23 @@
 {
     "editor": {
         "curPath": "",
-        "expands": [],
+        "expands": [
+            "C:\\Users\\wang\\Desktop\\风眼\\demo\\unpackage\\dist\\dev\\mp-baidu\\common",
+            "C:\\Users\\wang\\Desktop\\风眼\\demo\\unpackage\\dist\\dev\\mp-baidu\\pages",
+            "C:\\Users\\wang\\Desktop\\风眼\\demo\\unpackage\\dist\\dev\\mp-baidu\\pages\\mine"
+        ],
         "markdownUploadTimeMap": {},
         "paths": [],
-        "recentlyFiles": []
+        "recentlyFiles": [
+            "C:\\Users\\wang\\Desktop\\风眼\\demo\\unpackage\\dist\\dev\\mp-baidu\\app.json",
+            "C:\\Users\\wang\\Desktop\\风眼\\demo\\unpackage\\dist\\dev\\mp-baidu\\pages\\mine\\mine.js",
+            "C:\\Users\\wang\\Desktop\\风眼\\demo\\unpackage\\dist\\dev\\mp-baidu\\pages\\mine\\mine.swan",
+            "C:\\Users\\wang\\Desktop\\风眼\\demo\\unpackage\\dist\\dev\\mp-baidu\\common\\main.css",
+            "C:\\Users\\wang\\Desktop\\风眼\\demo\\unpackage\\dist\\dev\\mp-baidu\\common\\vendor.js",
+            "C:\\Users\\wang\\Desktop\\风眼\\demo\\unpackage\\dist\\dev\\mp-baidu\\common\\runtime.js",
+            "C:\\Users\\wang\\Desktop\\风眼\\demo\\unpackage\\dist\\dev\\mp-baidu\\common\\main.js",
+            "C:\\Users\\wang\\Desktop\\风眼\\demo\\unpackage\\dist\\dev\\mp-baidu\\app.css",
+            "C:\\Users\\wang\\Desktop\\风眼\\demo\\unpackage\\dist\\dev\\mp-baidu\\app.js"
+        ]
     }
 }

@@ -81,7 +81,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" >
 	// 自定义导航栏样式
 	.example-body {
 		flex-direction: row;
