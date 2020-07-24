@@ -1,6 +1,8 @@
 {
+  "navigationBarBackgroundColor": "#FFFFFF",
   "component": true,
   "usingComponents": {
-    "m-search": "/components/mehaotian-search-revision/mehaotian-search-revision"
+    "m-search": "/components/mehaotian-search-revision/mehaotian-search-revision",
+    "tcontent": "/components/content/tcontent"
   }
 }

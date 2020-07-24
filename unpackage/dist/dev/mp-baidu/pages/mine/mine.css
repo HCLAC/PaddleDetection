@@ -31,33 +31,9 @@
   width: 100%;
   z-index: -21;
 }
-.hello {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
-}
-.title {
-  color: #8f8f94;
-  margin-top: 25px;
-}
-.ul {
-  font-size: 15px;
-  color: #8f8f94;
-  margin-top: 25px;
-}
-.ul > view {
-  line-height: 25px;
-}
-/* 用户信息 */
 .usermes {
-  height: 130px;
+  padding-top: 174rpx;
+  height: 130rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -73,13 +49,12 @@
   border-radius: 50%;
 }
 .userR {
-  margin-left: 25px;
+  margin-left: 32rpx;
 }
 .userName {
-  font-size: 18px;
-  font-weight: 900;
-  color: #000000;
-  margin-bottom: 8px;
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #303133;
 }
 .logout {
   margin-top: 4px;
@@ -102,6 +77,47 @@
   font-weight: 500;
   padding-left: 32rpx;
   padding-top: 52rpx;
+  position: relative;
+  top: 86rpx;
+  position: relative;
+}
+.myCollection .phone {
+  height: 120rpx;
+  width: 120rpx;
+  border-radius: 50%;
+  position: absolute;
+  top: -60rpx;
+  right: 32rpx;
+}
+.myCollection .phone .phoneImg {
+  width: 120rpx;
+  height: 120rpx;
+}
+.noContentItem {
+  height: 600rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.noContentItem image {
+  width: 154rpx;
+  height: 122rpx;
+  position: fi;
+}
+.noContentItem .tipText {
+  color: #909399;
+  font-size: 28rpx;
+  line-height: 80rpx;
 }
 .noContent {
   font-size: 22rpx;
@@ -117,11 +133,31 @@
   display: -webkit-flex;
   display: flex;
 }
+.contentItem .left {
+  position: relative;
+}
+.contentItem .left .imgTip {
+  position: absolute;
+  left: 15rpx;
+  top: 15rpx;
+  font-size: 24rpx;
+  line-height: 44rpx;
+  font-weight: 500;
+  color: #ffffff;
+  width: 96rpx;
+  height: 44rpx;
+  text-align: center;
+  background-color: #000000;
+  border-radius: 8px 0px 8px 0px;
+}
 .contentItem .left image {
   margin: 8rpx;
   width: 192rpx;
   height: 230rpx;
   margin-right: 20rpx;
+}
+.contentItem .right {
+  margin-top: 40rpx;
 }
 .contentItem .right .title {
   font-size: 32rpx;
@@ -151,7 +187,7 @@
 }
 .contentItem .right .position view {
   font-size: 22rpx;
-  color: #0091FF;
+  color: #0091ff;
   font-weight: 400;
 }
 
