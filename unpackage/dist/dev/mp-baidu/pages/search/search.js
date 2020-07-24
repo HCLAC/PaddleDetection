@@ -330,22 +330,42 @@ __webpack_require__.r(__webpack_exports__);
         key: 'OldKeys',
         success: function success(res) {
           console.log(res);
-          var OldKeys = JSON.parse(res.data);
-          // var OldKeys = res.data;
-          var findIndex = OldKeys.indexOf(keyword);
-          if (findIndex == -1) {
-            OldKeys.unshift(keyword);
-          } else {
-            OldKeys.splice(findIndex, 1);
-            OldKeys.unshift(keyword);
-          }
-          //最多10个纪录
-          OldKeys.length > 10 && OldKeys.pop();
-          uni.setStorage({
-            key: 'OldKeys',
-            data: JSON.stringify(OldKeys) });
+          if (!res.data) {
+            var OldKeys = [keyword];
+            uni.setStorage({
+              key: 'OldKeys',
+              data: JSON.stringify(OldKeys),
+              success: function success(res) {
+                console.log(res);
+                _this3.oldKeywordList = OldKeys; //更新历史搜索
+              } });
 
-          _this3.oldKeywordList = OldKeys; //更新历史搜索
+            if (!res.data) {
+              //最多10个纪录
+              OldKeys.length > 10 && OldKeys.pop();
+              uni.setStorage({
+                key: 'OldKeys',
+                data: JSON.stringify(OldKeys) });
+
+              _this3.oldKeywordList = OldKeys; //更新历史搜索
+            }
+          }
+          // var OldKeys = JSON.parse(res.data);
+          // // var OldKeys = res.data;
+          // var findIndex = OldKeys.indexOf(keyword);
+          // if (findIndex == -1) {
+          // 	OldKeys.unshift(keyword);
+          // } else {
+          // 	OldKeys.splice(findIndex, 1);
+          // 	OldKeys.unshift(keyword);
+          // }
+          // //最多10个纪录
+          // OldKeys.length > 10 && OldKeys.pop();
+          // uni.setStorage({
+          // 	key: 'OldKeys',
+          // 	data: JSON.stringify(OldKeys)
+          // });
+          // this.oldKeywordList = OldKeys; //更新历史搜索
         },
         fail: function fail(e) {
           var OldKeys = [keyword];

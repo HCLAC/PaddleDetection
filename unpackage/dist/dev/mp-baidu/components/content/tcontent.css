@@ -25,11 +25,11 @@
 /* 透明度 */
 /* 文章场景相关 */
 /* uni.scss */
-.cus-sty {
+.cus-sty.data-v-0c9faa16 {
   background-color: #FFFFFF;
 }
 /* 热门景点 */
-.hot {
+.hot.data-v-0c9faa16 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -37,112 +37,103 @@
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
           flex-direction: column;
-  padding-top: 5px;
 }
-.hot .hot-top {
+.hot .hot-top.data-v-0c9faa16 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
           justify-content: space-between;
-  padding: 0 15rpx;
 }
-.hot-top .ht-r {
-  font-size: 12px;
+.ht-l.data-v-0c9faa16 {
+  width: 160rpx;
+  height: 40rpx;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium,PingFang SC;
+  font-weight: 500;
+  color: #303133;
+  line-height: 40rpx;
+  margin-top: 48rpx;
+  margin-left: 32rpx;
 }
-.hot .hot-bot {
+.hot-top .ht-r.data-v-0c9faa16 {
+  width: 152rpx;
+  height: 28rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular,PingFang SC;
+  font-weight: 400;
+  color: #606266;
+  line-height: 28rpx;
+  margin: 54rpx 32rpx 0 0;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
 }
-.hot .hot-bot .hb-1 {
+.moreIcon.data-v-0c9faa16 {
+  width: 28rpx;
+  height: 28rpx;
+  margin-left: 12rpx;
+}
+.hot .hot-bot.data-v-0c9faa16 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
-  margin: 15rpx;
+  margin-top: 32rpx;
 }
-.hot .hot-bot image {
-  width: 200rpx;
-  height: 150rpx;
-  background-color: gray;
+.hb-l.data-v-0c9faa16 {
+  width: 360rpx;
+  height: 360rpx;
+  margin-left: 10rpx;
+  position: relative;
 }
-.hot-bot .hb-1 text {
-  font-size: 14px;
-  text-align: center;
+.hb-l image.data-v-0c9faa16 {
+  width: 100%;
+  height: 100%;
+  border-radius: 16rpx;
+  background: -webkit-linear-gradient(top, transparent 0%, black 100%);
+  background: linear-gradient(180deg, transparent 0%, black 100%);
+}
+.hb-r.data-v-0c9faa16 {
+  margin: 0 0 0 10rpx;
+}
+.hb-r image.data-v-0c9faa16 {
+  width: 100%;
+  height: 100%;
+  border-radius: 8rpx;
+  background: -webkit-linear-gradient(top, transparent 0%, black 100%);
+  background: linear-gradient(180deg, transparent 0%, black 100%);
+}
+.hb-r1.data-v-0c9faa16 {
+  width: 360rpx;
+  height: 174rpx;
+  margin-bottom: 10rpx;
+  position: relative;
+}
+.hb-r2.data-v-0c9faa16 {
+  width: 360rpx;
+  height: 174rpx;
+  position: relative;
+}
+.hot-bot text.data-v-0c9faa16 {
+  position: absolute;
+  left: 22rpx;
+  bottom: 28rpx;
+  font-size: 32rpx;
+  color: #FFFFFF;
 }
 /* 正在旅行 */
-.touring {
-  border-top: 5rpx gray solid;
-  padding: 20rpx 15rpx;
+.touring.data-v-0c9faa16 {
+  margin-top: 48rpx;
 }
-/*  */
-.touring .tb {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  padding: 0 5rpx;
+.touring .tourtext.data-v-0c9faa16 {
+  width: 160rpx;
+  height: 40rpx;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium,PingFang SC;
+  font-weight: 500;
+  color: #303133;
+  margin-left: 32rpx;
 }
-.touring .tb-1 {
-  width: 320rpx;
-  font-size: 14px;
-  border: 1px black solid;
-  border-radius: 5px;
-  margin-top: 15rpx;
-}
-.touring .title {
-  font-weight: 600;
-}
-.touring .bigimg {
-  width: 100%;
-  border-radius: 5px;
-  background-color: gray;
-}
-/*  */
-.touring .tb-1-b-b {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  font-size: 12px;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  text-align: center;
-}
-.touring .users {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  /* text-align: center; */
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-}
-.touring .user-tx {
-  width: 50rpx;
-  height: 50rpx;
-  background-color: grey;
-  border-radius: 50%;
-}
-.touring .like {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-}
-.touring .like-icon {
-  width: 25rpx;
-  height: 25rpx;
-}
+/* 正在旅行瀑布流 */
 

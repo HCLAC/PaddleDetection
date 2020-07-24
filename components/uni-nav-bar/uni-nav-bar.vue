@@ -175,7 +175,7 @@
 		/* #endif */
 		flex-wrap: nowrap;
 		/* width: 120rpx; */
-		padding: 0 6px;
+		/* padding: 0 6px; */
 		justify-content: center;
 		align-items: center;
 	}
