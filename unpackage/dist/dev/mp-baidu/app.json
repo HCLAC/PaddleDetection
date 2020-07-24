@@ -1,43 +1,42 @@
 {
-    "pages": [
-            "pages/index/index",
-
-        "pages/search/search",
-        "pages/mine/mine",
-        "pages/contentdetail/contentdetail",
-        "pages/attractionsDetails/attractionsDetails",
-        "pages/attractionsList/attractionsList",
-        "pages/searchResults/searchResults",
-        "pages/login/login",
-        "pages/city/city"
+  "pages": [
+    "pages/index/index",
+    "pages/mine/mine",
+    "pages/contentdetail/contentdetail",
+    "pages/attractionsDetails/attractionsDetails",
+    "pages/attractionsList/attractionsList",
+    "pages/searchResults/searchResults",
+    "pages/login/login",
+    "pages/search/search",
+    "pages/city/city"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarBackgroundColor": "#F7F7F7",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "领途羊"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/static/images/index.png",
+        "selectedIconPath": "/static/images/index-active.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "/static/images/mine.png",
+        "selectedIconPath": "/static/images/mine-active.png"
+      }
     ],
-    "subPackages": [],
-    "window": {
-        "navigationBarBackgroundColor": "#F7F7F7",
-        "navigationBarTextStyle": "black",
-        "navigationBarTitleText": "领途羊"
-    },
-    "tabBar": {
-        "list": [
-            {
-                "pagePath": "pages/index/index",
-                "text": "首页",
-                "iconPath": "/static/images/index.png",
-                "selectedIconPath": "/static/images/index-active.png"
-            },
-            {
-                "pagePath": "pages/mine/mine",
-                "text": "我的",
-                "iconPath": "/static/images/mine.png",
-                "selectedIconPath": "/static/images/mine-active.png"
-            }
-        ],
-        "backgroundColor": "#ffffff",
-        "borderStyle": "black",
-        "color": "#C9CAD1",
-        "selectedColor": "#303133"
-    },
-    "usingComponents": {
-        "mescroll-body": "/components/mescroll-uni/mescroll-body"
-    }
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "color": "#C9CAD1",
+    "selectedColor": "#303133"
+  },
+  "usingComponents": {
+    "mescroll-body": "/components/mescroll-uni/mescroll-body"
+  }
 }
