@@ -1,12 +1,12 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/login/login",
     "pages/mine/mine",
     "pages/contentdetail/contentdetail",
     "pages/attractionsDetails/attractionsDetails",
     "pages/attractionsList/attractionsList",
     "pages/searchResults/searchResults",
-    "pages/login/login",
     "pages/search/search",
     "pages/city/city"
   ],

@@ -5,12 +5,12 @@
 				<block slot="left">
 					<view class="city">
 						<view><text class="uni-nav-bar-text">{{ city }}</text></view>
-						<uni-icons type="arrowdown" color="#333333" size="18" />
+						<image src="../../static/images/zhankai@2x.png" class="down" />
 					</view>
 				</block>
 				<view class="input-view" @click="confirm">
-					<uni-icons class="input-uni-icon" type="search" size="22" color="#666666" />
-					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索旅行目的地" >
+					<image class="input-uni-icon" src="../../static/images/icon-search@2x.png" />
+					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" >
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -20,7 +20,6 @@
 </template>
 
 <script>
-	// console.log(uni.getSystemInfoSync());
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue'
 	import uniSection from '@/components/uni-section/uni-section.vue'
@@ -34,7 +33,7 @@
 		},
 		data() {
 			return {
-				city: '云南'
+				city: '北京'
 			}
 		},
 		methods: {
@@ -80,7 +79,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	/* 头条小程序组件内不能引入字体 */
 	/* #ifdef MP-TOUTIAO */
 	@font-face {
@@ -151,7 +150,6 @@
 
 	.example-body {
 		flex-direction: column;
-		padding: 15px;
 		background-color: #ffffff;
 	}
 
@@ -178,7 +176,17 @@
 	}
 
 	.uni-nav-bar-text {
-		font-size: 28rpx;
+		width:64rpx;
+		height:32rpx;
+		font-size:32rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:500;
+		color:#303133;
+		line-height:32rpx;
+	}
+	.down{
+		width: 18rpx;
+		height: 18rpx;
 	}
 
 	.city {
@@ -190,7 +198,7 @@
 		justify-content: flex-start;
 		/* width: 160rpx;
  */
-		margin-left: 2px;
+		margin-left: 28rpx;
 	}
 
 	.input-view {
@@ -198,31 +206,31 @@
 		display: flex;
 		/* #endif */
 		flex-direction: row;
-		width: 150rpx;
-
+		width: 396rpx;
+		height: 72rpx;
+		align-items: center;
 		flex: 1;
-		background-color: #f8f8f8;
-		height: 30px;
-		border-radius: 15px;
-		padding: 0 15px;
+		background:rgba(248,248,248,1);
+		border-radius: 36rpx;
 		flex-wrap: nowrap;
-		margin: 7px 0;
-		line-height: 30px;
+		margin: 0rpx 28rpx;
 	}
 
 	.input-uni-icon {
-		line-height: 30px;
+		width: 28rpx;
+		height: 28rpx;
+		margin-left: 42rpx;
 	}
 
 	.nav-bar-input {
-		height: 30px;
-		line-height: 30px;
+		width: 196rpx;
+		height: 28rpx;
+		line-height: 28rpx;
 		/* #ifdef APP-PLUS-NVUE */
-		width: 200rpx;
 		/* #endif */
-		padding: 0 5px;
 		font-size: 28rpx;
-		background-color: #f8f8f8;
+		color: #C9CAD1;
+		margin-left: 12rpx;
 	}
 
 	.example-body {

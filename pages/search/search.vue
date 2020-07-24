@@ -198,22 +198,42 @@
 					key: 'OldKeys',
 					success: (res) => {
 						console.log(res)
-						var OldKeys = JSON.parse(res.data);
-						// var OldKeys = res.data;
-						var findIndex = OldKeys.indexOf(keyword);
-						if (findIndex == -1) {
-							OldKeys.unshift(keyword);
-						} else {
-							OldKeys.splice(findIndex, 1);
-							OldKeys.unshift(keyword);
+						if(!res.data){
+							var OldKeys = [keyword];
+							uni.setStorage({
+								key: 'OldKeys',
+								data: JSON.stringify(OldKeys),
+								success:(res) =>{
+									console.log(res)
+									this.oldKeywordList = OldKeys; //更新历史搜索
+								}
+							});
+							if(!res.data){
+								//最多10个纪录
+								OldKeys.length > 10 && OldKeys.pop();
+								uni.setStorage({
+									key: 'OldKeys',
+									data: JSON.stringify(OldKeys)
+								});
+								this.oldKeywordList = OldKeys; //更新历史搜索
+							}
 						}
-						//最多10个纪录
-						OldKeys.length > 10 && OldKeys.pop();
-						uni.setStorage({
-							key: 'OldKeys',
-							data: JSON.stringify(OldKeys)
-						});
-						this.oldKeywordList = OldKeys; //更新历史搜索
+						// var OldKeys = JSON.parse(res.data);
+						// // var OldKeys = res.data;
+						// var findIndex = OldKeys.indexOf(keyword);
+						// if (findIndex == -1) {
+						// 	OldKeys.unshift(keyword);
+						// } else {
+						// 	OldKeys.splice(findIndex, 1);
+						// 	OldKeys.unshift(keyword);
+						// }
+						// //最多10个纪录
+						// OldKeys.length > 10 && OldKeys.pop();
+						// uni.setStorage({
+						// 	key: 'OldKeys',
+						// 	data: JSON.stringify(OldKeys)
+						// });
+						// this.oldKeywordList = OldKeys; //更新历史搜索
 					},
 					fail: (e) => {
 						var OldKeys = [keyword];
