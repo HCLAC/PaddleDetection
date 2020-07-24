@@ -14078,7 +14078,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-
+throw new Error("Module build failed (from ./node_modules/@dcloudio/webpack-uni-pages-loader/lib/index.js):\nSyntaxError: Unexpected token < in JSON at position 18\n    at JSON.parse (<anonymous>)\n    at parseJson (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@dcloudio\\uni-cli-shared\\lib\\json.js:16:20)\n    at parsePagesJson (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@dcloudio\\uni-cli-shared\\lib\\pages.js:41:27)\n    at Object.module.exports (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@dcloudio\\webpack-uni-pages-loader\\lib\\index-new.js:51:21)\n    at Object.module.exports (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@dcloudio\\webpack-uni-pages-loader\\lib\\index.js:49:35)");
 
 /***/ }),
 

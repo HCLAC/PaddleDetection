@@ -1,32 +1,39 @@
 <template>
 	<view class="wrap">
 		<!-- <u-button @click="clear">清空列表</u-button> -->
-		<u-waterfall v-model="list" ref="uWaterfall">
+		<u-waterfall v-model="list" ref="uWaterfall" >
 			<template v-slot:left="{leftList}">
-				<view class="demo-warter" v-for="(item, index) in leftList" :key="index" @click="onPageJump">
+				<view class="demo-warter demo-warter-l" v-for="(item, index) in leftList" :key="index" @click="onPageJump">
 					<!-- 警告：微信小程序不支持嵌入lazyload组件，请自行如下使用image标签 -->
-					<!-- #ifndef MP-WEIXIN -->
-					<u-lazy-load threshold="-150" border-radius="10" :image="item.image" :index="index"></u-lazy-load>
-					<!-- #endif -->
-					<!-- #ifdef MP-WEIXIN -->
-					<view class="demo-img-wrap">
-						<image class="demo-image" :src="item.image" mode="widthFix"></image>
-					</view>
-					<!-- #endif -->
-					<view class="demo-tag">
-						<view class="demo-tag-owner">
-							自营
+					
+					<!-- <u-lazy-load threshold="-200" border-radius="8" :image="item.image" :index="index" ></u-lazy-load> -->
+					<image class="demo-image"  :src="item.image" :index="index" mode="widthFix"></image>
+					<view class="adress">
+						<image class="adreessIcon" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
+						<view class="adressText">
+							{{item.adressText}}
 						</view>
 					</view>
-					<view class="demo-title">
-						{{item.title}}
+					
+					<view class="titleTip">
+						<view class="demo-tag">
+							<view class="demo-tag-owner">
+								攻略
+							</view>
+						</view>
+						<view class="demo-title">
+							{{item.title}}
+						</view>
 					</view>
 					<view class="demo-user">
 						<view class="userMessage">
 							<image class="userHeard" src="../../static/images/mine-actived.png"></image>
 							<view class="userNikename">{{ item.shop }}</view>
 						</view>
-						<view class="count"><u-icon name="heart" size="30"></u-icon>{{ item.numSales || 0 }}</view>
+						<view class="count">
+							<image src="../../static/images/hear选中(1).png"></image>
+								{{ item.numLike || 0 }}
+							</view>
 					</view>
 					
 					<!-- 微信小程序无效，因为它不支持在template中引入组件 -->
@@ -35,28 +42,38 @@
 			</template>
 			<template v-slot:right="{rightList}">
 				<view class="demo-warter" v-for="(item, index) in rightList" :key="index" @click="onPageJump">
-					<!-- #ifndef MP-WEIXIN -->
-					<u-lazy-load threshold="-450" border-radius="10" :image="item.image" :index="index"></u-lazy-load>
-					<!-- #endif -->
-					<!-- #ifdef MP-WEIXIN -->
-					<view class="demo-img-wrap">
-						<image class="demo-image" :src="item.image" mode="widthFix"></image>
-					</view>
-					<!-- #endif -->
-					<view class="demo-tag">
-						<view class="demo-tag-owner">
-							自营
+					
+					<!-- <u-lazy-load threshold="-200" border-radius="8" :image="item.image" :index="index"></u-lazy-load> -->
+					<image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
+					<view class="adress">
+						<image class="adreessIcon" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
+						<view class="adressText">
+							{{item.adressText}}
 						</view>
 					</view>
-					<view class="demo-title">
-						{{item.title}}
+					<!-- <view class="demo-img-wrap">
+						 <image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
+					</view> -->
+					<!-- #endif -->
+					<view class="titleTip">
+						<view class="demo-tag">
+							<view class="demo-tag-owner">
+								攻略
+							</view>
+						</view>
+						<view class="demo-title">
+							{{item.title}}
+						</view>
 					</view>
 					<view class="demo-user">
 						<view class="userMessage">
 							<image class="userHeard" src="../../static/images/mine-actived.png"></image>
 							<view class="userNikename">{{ item.shop }}</view>
 						</view>
-						<view class="count"><u-icon name="star" size="28" ></u-icon>{{ item.numSales || 0 }}</view>
+						<view class="count">
+							<image src="../../static/images/heart未选中.png" ></image>
+							<view class="countNum">{{ item.numLike || 0 }}</view>
+						</view>
 					</view>
 					<!-- 微信小程序无效，因为它不支持在template中引入组件 -->
 					<!-- <u-icon name="close-circle-fill" color="#fa3534" size="34" class="u-close" @click="remove(item.id)"></u-icon> -->
@@ -75,70 +92,39 @@
 				flowList: [],
 				list: [
 					{
-						price: 35,
-						title: '北国风光，千里冰封，万里雪飘',
-						shop: '李白杜甫旗舰店',
+						title: '云南 | 愿你踏遍山海觉 得人间值得',
+						shop: 'Nancy Garcia',
+						numLike:28,
 						image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23327_s.jpg',
+						adressText:"斯里兰卡"
 					},
 					{
-						price: 75,
-						title: '望长城内外，惟余莽莽',
-						shop: '李白杜甫旗舰店',
+						title: '云南 | 愿你踏遍山海觉 得人间值得',
+						shop: '石磊',
+						numLike:100,
 						image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23325_s.jpg',
+						adressText:"斯里兰卡"
 					},
 					{
-						price: 385,
-						title: '大河上下，顿失滔滔',
-						shop: '李白杜甫旗舰店',
+						title: '云南 | 愿你踏遍山海觉 得人间值得',
+						shop: '黄油奶油包',
+						numLike:2020,
 						image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg',
+						adressText:"斯里兰卡"
 					},
 					{
-						price: 784,
-						title: '欲与天公试比高',
-						shop: '李白杜甫旗舰店',
+						title: '云南 | 愿你踏遍山海觉 得人间值得',
+						shop: 'Paul',
+						numLike:9000,
 						image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/zzpic23369_s.jpg',
+						adressText:"斯里兰卡"
 					},
 					{
-						price: 7891,
-						title: '须晴日，看红装素裹，分外妖娆',
-						shop: '李白杜甫旗舰店',
+						title: '云南 | 愿你踏遍山海觉 得人间值得',
+						shop: '柠檬精',
+						numLike:1000,
 						image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2130_s.jpg',
-					},
-					{
-						price: 2341,
-						shop: '李白杜甫旗舰店',
-						title: '江山如此多娇，引无数英雄竞折腰',
-						image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23346_s.jpg',
-					},
-					{
-						price: 661,
-						shop: '李白杜甫旗舰店',
-						title: '惜秦皇汉武，略输文采',
-						image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23344_s.jpg',
-					},
-					{
-						price: 1654,
-						title: '唐宗宋祖，稍逊风骚',
-						shop: '李白杜甫旗舰店',
-						image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23343_s.jpg',
-					},
-					{
-						price: 1678,
-						title: '一代天骄，成吉思汗',
-						shop: '李白杜甫旗舰店',
-						image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23343_s.jpg',
-					},
-					{
-						price: 924,
-						title: '只识弯弓射大雕',
-						shop: '李白杜甫旗舰店',
-						image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23343_s.jpg',
-					},
-					{
-						price: 8243,
-						title: '俱往矣，数风流人物，还看今朝',
-						shop: '李白杜甫旗舰店',
-						image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23343_s.jpg',
+						adressText:"斯里兰卡"
 					},
 				]
 			}
@@ -179,72 +165,85 @@
 	}
 </script>
 
-<style>
-	/* page不能写带scope的style标签中，否则无效 */
-	page {
-		background-color: rgb(240, 240, 240);
-	}
-</style>
+
 
 <style lang="scss" scoped>
+	.demo-warter-l{
+		margin-left:10rpx ;
+	}
 	.demo-warter {
-		border-radius: 8px;
-		margin: 5px;
-		background-color: #ffffff;
-		padding: 8px;
+		margin-top: 32rpx;
+		margin-right: 10rpx;
+		margin-bottom: 16rpx;
 		position: relative;
-		border: 2rpx solid #777777;
 	}
 	
-	.u-close {
-		position: absolute;
-		top: 32rpx;
-		right: 32rpx;
-	}
+	// .u-close {
+	// 	position: absolute;
+	// 	top: 32rpx;
+	// 	right: 32rpx;
+	// }
 	
 	.demo-image {
 		width: 100%;
-		border-radius: 4px;
+		border-radius: 8rpx 8rpx 0 0 ;
 	}
-	
+	.adress{
+		position: absolute;
+		left: 4rpx;
+		bottom: 174rpx;
+		display: flex;
+		align-items: center;
+		width:144rpx;
+		height:40rpx;
+		background:rgba(0,0,0,0.6);
+		border-radius:0px 14rpx 0px 0px;
+	}
+	.adreessIcon{
+		width: 24rpx;
+		height: 24rpx;
+		margin-right: 4rpx;
+	}
+	.adressText{
+		font-size:24rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:500;
+		color:rgba(255,255,255,1);
+		line-height:24px;
+	}
+	.titleTip{
+		display: flex;
+		margin-top: 24rpx;
+		margin-left: 8rpx;
+	}
 	.demo-title {
-		font-size: 30rpx;
-		font-weight: 900;
-		margin-top: 5px;
-		color: $u-main-color;
-		text-indent: 80rpx;
+		width: 278rpx;
+		height: 70rpx;
+		font-size: 28rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:500;
+		color:rgba(48,49,51,1);
+		margin-left: 8rpx;
+		// line-height:28rpx;
 	}
 	
 	.demo-tag {
-		display: flex;
-		position: absolute;
-		margin-top: 5px;
-		align-items: center;
+		
 	}
 	
 	.demo-tag-owner {
-		// background-color: $u-type-error;
-		color: #d4d4d4;
-		display: flex;
+		width: 52rpx;
+		height: 28rpx;
+		text-align: center;
 		align-items: center;
-		padding: 4rpx 14rpx;
-		border: 2rpx solid #d4d4d4;
-		border-radius: 25rpx;
-		font-size: 20rpx;
-		// line-height: 1;
-	}
-	
-	.demo-tag-text {
-		border: 1px solid $u-type-primary;
-		color: $u-type-primary;
-		margin-left: 10px;
-		border-radius: 50rpx;
-		line-height: 1;
-		padding: 4rpx 14rpx;
-		display: flex;
-		align-items: center;
-		border-radius: 50rpx;
-		font-size: 20rpx;
+		color: #0091FF;
+		border: 2rpx solid rgba(0,145,255,1);
+		border-radius: 14rpx;
+		font-size: 16rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(0,145,255,1);
+		margin-top: 6rpx;
 	}
 	
 	.demo-price {
@@ -255,10 +254,10 @@
 	
 	.demo-user {
 		font-size: 10rpx;
-		color: $u-tips-color;
-		margin-top: 5px;
+		margin-top: 24rpx;
+		margin-bottom: 16rpx;
 		display: flex;
-		justify-content: space-around;
+		justify-content: space-between;
 	}
 	.userMessage {
 		font-size: 10px;
@@ -267,22 +266,33 @@
 		display: flex;
 		align-items: center;
 		.userHeard{
-			width: 30rpx;
-			height: 30rpx;
-			border: 1rpx #777777 solid;
+			width: 40rpx;
+			height: 40rpx;
 			border-radius: 50%;
-			margin-right: 10rpx;
+			margin-left: 14rpx;
 		}
 		.userNikename{
 			font-size: 24rpx;
+			margin-left: 16rpx;
+			font-family:PingFangSC-Regular,PingFang SC;
+			font-weight:400;
+			color:rgba(96,98,102,1);
 		}
 		
 	}
 	.count {
 		display: flex;
-		font-size: 24rpx;
-		color: #999;
+		font-size: 22rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(96,98,102,1);
 		align-items: center;
+		margin-right: 20rpx;
+	}
+	.count image{
+		width: 26rpx;
+		height: 26rpx;
+		margin-right: 8rpx;
 	}
 </style>
 
@@ -545,107 +555,4 @@
 	};
 </script>
 
-<style scoped lang="scss">
-	@import '@/style/mixin.scss';
-
-	.flow-box {
-		position: relative;
-		color: #1a1a1a;
-		padding: 0 20rpx 0rpx 20rpx;
-		box-sizing: content-box;
-	}
-
-	.flow-box .left {
-		left: 20rpx;
-	}
-
-	.flow-box .right {
-		right: 20rpx;
-	}
-
-	.flow-box .good_item {
-		position: absolute;
-		width: 325rpx;
-		border: 2rpx solid #c1c1c1;
-		background: #fff;
-		border-radius: 20rpx;
-		overflow: hidden;
-		margin-bottom: 10rpx;
-
-		&.noMargin {
-			margin-right: 0;
-		}
-
-		.goods_img {
-			image {
-				width: 100%;
-				height: 345rpx;
-			}
-		}
-
-		.title {
-			margin: 10rpx 20rpx;
-			color: #333333;
-			font-size: 24rpx;
-			font-weight: 900;
-			position: relative;
-		}
-		.title-r{
-			text-indent: 30px;
-			font-size: 28rpx;
-			// position: absolute;
-		}
-		.sell_well {
-			// top: 0;
-			// left: 0;
-			// display: flex;
-			// padding: 0rpx 20rpx 20rpx 20rpx;
-
-			text {
-				position: absolute;
-				height: 28rpx;
-				border-radius: 4rpx;
-				border: solid 2rpx #777777;
-				line-height: 28rpx;
-				padding: 0 10rpx;
-				font-size: 20rpx;
-				color: #777777;
-			}
-		}
-
-		.info {
-			// width: 100%;
-			// padding: 0rpx 20rpx 30rpx 20rpx;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin: 10rpx 20rpx;
-
-			.userMessage {
-				// font-size: 26rpx;
-				font-weight: 900;
-				color: #464646;
-				display: flex;
-				align-items: center;
-				.userHeard{
-					width: 30rpx;
-					height: 30rpx;
-					border: 1rpx #777777 solid;
-					border-radius: 50%;
-					margin-right: 10rpx;
-				}
-				text {
-					font-size: 20rpx;
-				}
-			}
-
-			.count {
-				display: flex;
-				font-size: 24rpx;
-				color: #999;
-				align-items: center;
-			}
-		}
-	}
-</style>
 -->

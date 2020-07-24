@@ -213,6 +213,7 @@ export default {
 				window.location.href = 'taobao://s.taobao.com/search?q=' + keyword
 				//#endif
 				*/
+<<<<<<< HEAD
 		},
 		//保存关键字到历史记录
 		saveKeyword(keyword) {
@@ -272,6 +273,72 @@ export default {
 						this.oldKeywordList = [];
 					} else {
 						var OldKeys = JSON.parse(res.data);
+=======
+			},
+			//保存关键字到历史记录
+			saveKeyword(keyword) {
+				uni.getStorage({
+					key: 'OldKeys',
+					success: (res) => {
+						console.log(res)
+						if(!res.data){
+							var OldKeys = [keyword];
+							uni.setStorage({
+								key: 'OldKeys',
+								data: JSON.stringify(OldKeys),
+								success:(res) =>{
+									console.log(res)
+									this.oldKeywordList = OldKeys; //更新历史搜索
+								}
+							});
+							if(!res.data){
+								//最多10个纪录
+								OldKeys.length > 10 && OldKeys.pop();
+								uni.setStorage({
+									key: 'OldKeys',
+									data: JSON.stringify(OldKeys)
+								});
+								this.oldKeywordList = OldKeys; //更新历史搜索
+							}
+						}
+						// var OldKeys = JSON.parse(res.data);
+						// // var OldKeys = res.data;
+						// var findIndex = OldKeys.indexOf(keyword);
+						// if (findIndex == -1) {
+						// 	OldKeys.unshift(keyword);
+						// } else {
+						// 	OldKeys.splice(findIndex, 1);
+						// 	OldKeys.unshift(keyword);
+						// }
+						// //最多10个纪录
+						// OldKeys.length > 10 && OldKeys.pop();
+						// uni.setStorage({
+						// 	key: 'OldKeys',
+						// 	data: JSON.stringify(OldKeys)
+						// });
+						// this.oldKeywordList = OldKeys; //更新历史搜索
+					},
+					fail: (e) => {
+						var OldKeys = [keyword];
+						uni.setStorage({
+							key: 'OldKeys',
+							data: JSON.stringify(OldKeys),
+							success:(res) =>{
+								console.log(res)
+								this.oldKeywordList = OldKeys; //更新历史搜索
+							}
+						});
+					}
+				});
+			},
+			//加载历史搜索,自动读取本地Storage
+			loadOldKeyword() {
+				uni.getStorage({
+					key: 'OldKeys',
+					success: (res) =>{
+						console.log(res)
+						var OldKeys =  JSON.parse(res.data);
+>>>>>>> feature/login
 						// var OldKeys = res.data?res.data:[];
 						this.oldKeywordList = OldKeys;
 					}
