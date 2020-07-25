@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "complete_waterfall_touring-u-waterfall-left": "/components/module/complete_waterfall_touring-u-waterfall-left",
+    "complete_waterfall_touring-u-waterfall-right": "/components/module/complete_waterfall_touring-u-waterfall-right"
+  }
+}

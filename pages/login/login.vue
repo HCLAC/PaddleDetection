@@ -1,0 +1,195 @@
+<template>
+	<view class="register">
+
+		<view class="content">
+			<!-- 头部标题 -->
+			<view class="header">
+				<view class="headerTitle">
+					欢迎来到领途羊
+				</view>
+				<view class="titleTip">
+					未注册过的手机号将自动创建账号
+				</view>
+			</view>
+			<!-- 短信验证登录 -->
+			<view class="loginBox">
+				<view class="login-phone">
+					<input type="number" maxlength="11" placeholder="请输入您的手机号" placeholder-style="color:'#C9CAD1',font-size:30rpx" class="is-input1" :style="styleObj" @input="onInput" v-model="phone" />
+					<image src="../../static/images/ic_search_sel@2x.png" mode="" @click="clearphone()"  class="searchSel" v-show="phone" ></image>
+				</view>
+				<view class="login-code">
+					<input type="number" maxlength="6" placeholder="请输入您的验证码"  class="is-input1 " :style="styleCode" @input="onCode" v-model="code" />
+					<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-show="code" @click="clearcode()"></image>
+					<view class="code-sx"></view>
+					<view class="codeimg" @click.stop="getCode()">{{getCodeText}}</view>
+				</view>
+			</view> 
+
+
+			<!-- 登录按钮 -->
+			<view class="loginButton" >
+				<button class="lb"   
+				 @click="submit" >登录</button>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	
+	export default {
+		
+		data() {
+			return {
+				phone: "",
+				code: '',
+				key: '',
+				getCodeText: '获取验证码',
+				getCodeBtnColor: "#ffffff",
+				getCodeisWaiting: false,
+				styleObj: {
+	                color: '#C9CAD1'
+	            },
+				styleCode: {
+	                color: '#C9CAD1'
+	            },
+				
+			}
+		},
+		
+		components: {
+			
+		},
+		
+		methods: {
+			onInput (e){
+				if(e.detail.value.length  ==11){
+					this.styleObj.color = '#303133'
+				}else{
+					this.styleObj.color = '#C9CAD1'
+				}
+			},
+			onCode(e){
+				if(e.detail.value.length  ==6){
+					this.styleCode.color = '#303133'
+				}else{
+					this.styleCode.color = '#C9CAD1'
+				}
+			},
+			clearphone(){
+				if(this.phone){
+					this.phone = '';
+				}
+			},
+			clearcode(){
+				if(this.code){
+					this.code = '';
+				}
+			},
+			submit(){
+				uni.reLaunch({
+					url:'../mine/mine'
+				})
+				// uni.setStorage({
+				// 	// phone:data.phone
+				// }),
+			}
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	
+	.null-input .el-input__inner {
+	color: #525661; 
+	}
+	 
+	.no-null-input .el-input__inner { 
+	color: #524F52; 
+	}
+	/* @import url("../../components/watch-login/css/icon.css"); */
+	/* @import url("./css/main.css"); */
+	.header{
+		margin-top: 246rpx;
+		margin-left: 32rpx;
+	}
+	.headerTitle{
+		width:336rpx;
+		height:48rpx;
+		font-size:48rpx;
+		font-family:PingFangSC-Semibold,PingFang SC;
+		font-weight:600;
+		color:rgba(48,49,51,1);
+		line-height:48rpx;
+	}
+	.titleTip{
+		width:225px;
+		height:15px;
+		font-size:15px;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(144,147,153,1);
+		line-height:15px;
+		margin-top: 20rpx;
+	}
+	.loginBox{
+		margin: 210rpx 32rpx 0rpx;
+		
+	}
+	.login-phone{
+		// width:240rpx;
+		height:30rpx;
+		font-size:30rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:#C9CAD1;
+		line-height:30rpx;
+		display: flex;
+		justify-content: space-between;
+	}
+	.styleOjb{
+		color: #303133;
+	}
+	.login-code{
+		height:30rpx;
+		font-size:30rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:#C9CAD1;
+		line-height:30rpx;
+		display: flex;
+		margin-top: 114rpx;
+		align-items: center;
+	}
+	.is-input1{
+		color:#C9CAD1;
+		
+	}
+	// .is-input1::-ms-searchSel{display: none;}
+	.searchSel{
+		width: 44rpx;
+		height: 44rpx;
+		// display: none;
+	}
+	// .is-input1:valid + .searchSel {display: block;}
+	.codeimg{
+		width:150rpx;
+		height:30rpx;
+		font-size:30rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(0,145,255,1);
+		line-height:30rpx;
+		margin-left: 20rpx;
+	}
+	.loginButton .lb{
+		width:692rpx;
+		height:100rpx;
+		background:rgba(255,229,18,1);
+		border-radius:58rpx;
+		margin-top: 154rpx;
+		font-size: 36rpx;
+		color: #303133;
+	}
+	button::after{ border: none;}
+</style>
