@@ -1,7 +1,12 @@
 {
   "component": true,
   "usingComponents": {
+<<<<<<< HEAD
     "mescroll-body": "/components/mescroll-uni/mescroll-body",
+    "waterfall-touring": "/components/module/complete_waterfall_touring",
+    "tcontent": "/components/content/tcontent"
+=======
     "waterfall-touring": "/components/module/complete_waterfall_touring"
+>>>>>>> feature/login
   }
 }

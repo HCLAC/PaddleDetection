@@ -1,5 +1,12 @@
 {
 	"easycom": {
+<<<<<<< HEAD
+
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [
+
+=======
 			"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
     "pages": [
@@ -7,14 +14,29 @@
 		    "path" : "pages/login/login",
 		    "style" : {}
 		},
+>>>>>>> feature/login
 		{
-		    "path" : "pages/index/index",
-		    "style" : {
-				"navigationStyle":"custom"
-				
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle": "custom"
+
 			}
 		},
 		{
+<<<<<<< HEAD
+			"path": "pages/login/login",
+			"style": {}
+		},
+		{
+			"path": "pages/mine/mine",
+			"style": {}
+		},
+
+		{
+			"path": "pages/contentdetail/contentdetail",
+			"style": {
+				"navigationStyle": "custom"
+=======
 		    "path" : "pages/city/city",
 		    "style" : {
 				"navigationStyle":"custom"
@@ -24,21 +46,24 @@
 		    "path" : "pages/contentdetail/contentdetail",
 		    "style" : {
 				"navigationStyle":"custom"
+>>>>>>> feature/login
 			}
 		},
 		{
-		    "path" : "pages/attractionsDetails/attractionsDetails",
-		    "style" : {
-				"navigationStyle":"custom"
+			"path": "pages/attractionsDetails/attractionsDetails",
+			"style": {
+				"navigationStyle": "custom"
 			}
 		},
 		
 		{
-		    "path" : "pages/attractionsList/attractionsList",
-		    "style" : {
-				"navigationStyle":"custom"
+			"path": "pages/attractionsList/attractionsList",
+			"style": {
+				"navigationStyle": "custom"
 			}
 		},
+<<<<<<< HEAD
+=======
 		
 		
 		{
@@ -47,56 +72,72 @@
 		}
 		,
 		
+>>>>>>> feature/login
 		{
-		    "path" : "pages/searchResults/searchResults",
-		    "style" : {
-				"navigationStyle":"custom"
+			"path": "pages/searchResults/searchResults",
+			"style": {
+				"navigationStyle": "custom"
 			}
 		},
-		
-		
+
 		{
+<<<<<<< HEAD
+			"path": "pages/search/search",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/city/city",
+			"style": {}
+		}
+
+
+	    ,{
+            "path" : "pages/positionContent/positionContent",
+            "style" : {}
+        }
+=======
             "path" : "pages/search/search",
             "style" : {}
         }
         
         
+>>>>>>> feature/login
     ],
-	"globalStyle":{
-		"navigationBarBackgroundColor":"#F7F7F7",
-		"navigationBarTextStyle":"black",
-		"navigationBarTitleText":"领途羊"
+	"globalStyle": {
+		"navigationBarBackgroundColor": "#F7F7F7",
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "领途羊"
 	},
-    "window": {
-        "navigationBarBackgroundColor": "#ccc",
-        "navigationBarTextStyle": "black",
-        "navigationBarTitleText": "智能小程序",
-        "backgroundTextStyle": "dark",
-        "enablePullDownRefresh": true
-    },
-    "tabBar": {
-        "list": [
-            {
-                "pagePath": "pages/index/index",
-                "text": "首页",
-                "iconPath": "/static/images/home.png",
-                "selectedIconPath": "/static/images/home-actived.png"
-            },
-            {
-                "pagePath": "pages/mine/mine",
-                "text": "我的",
-                "iconPath": "/static/images/mine.png",
-                "selectedIconPath": "/static/images/mine-actived.png"
-            }
-        ],
-        "backgroundColor": "#fff",
-        "borderStyle": "black",
-        "color": "#000",
-        "selectedColor": "#6495ED"
-    },
-    "dynamicLib": {
-        "smartUI": {
-            "provider": "smart-ui"
-        }
-    }
+	"window": {
+		"navigationBarBackgroundColor": "#ccc",
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "智能小程序",
+		"backgroundTextStyle": "dark",
+		"enablePullDownRefresh": true
+	},
+	"tabBar": {
+		"list": [{
+				"pagePath": "pages/index/index",
+				"text": "首页",
+				"iconPath": "/static/images/index.png",
+				"selectedIconPath": "/static/images/index-active.png"
+			},
+			{
+				"pagePath": "pages/mine/mine",
+				"text": "我的",
+				"iconPath": "/static/images/mine.png",
+				"selectedIconPath": "/static/images/mine-active.png"
+			}
+		],
+		"backgroundColor": "#ffffff",
+		"borderStyle": "black",
+		"color": "#C9CAD1",
+		"selectedColor": "#303133"
+	},
+	"dynamicLib": {
+		"smartUI": {
+			"provider": "smart-ui"
+		}
+	}
 }

@@ -4,9 +4,8 @@
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
-					<uni-icons type="arrowleft" color="#333333" size="22" @click="back" />
-					<view class="button-v-line"></view>
-					<uni-icons type="home" color="#333333" size="22" @click="home" />
+					<uni-icons type="arrowleft" class="icons" color="#333333" size="22" @click="back" />
+					<image src="../../static/images/home.png" class="homeIcon" mode=""></image>
 				</view>
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
@@ -79,7 +78,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	
 	.search-box {width:95%;padding:15upx 2.5%;display:flex;justify-content:space-between;position:sticky;top: 0;}
 	.search-box .mSearch-input-box{width: 100%;}
@@ -89,12 +88,12 @@
 		flex-wrap: wrap;
 		justify-content: center;
 		padding: 0;
-		font-size: 14px;
+		font-size: 28rpx;
 		background-color: #aa557f;
 	}
 	.example-body {
 		flex-direction: column;
-		padding: 15px;
+		padding: 30rpx;
 		background-color: #ffffff;
 	}
 	.example-body {
@@ -106,15 +105,24 @@
 	.slotleft{
 		display: flex;
 		align-items: center;
+		.icons{
+			font-weight: 600;
+			margin-right: 20rpx;
+		}
+		.homeIcon{
+			width: 40rpx;
+			height: 40rpx;
+		}
+		
 	}
 	.slottitle{
-		margin-left: 64px;
+		margin-left: 180rpx;
+		font-size:38rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:500;
+		color:rgba(0,0,0,1);
+		
 	}
-	.button-v-line{
-		width: 1px;
-		height: 18px;
-		background-color: #2f2f2f;
-		margin: 0 8px;
-	}
+	
 	
 </style>

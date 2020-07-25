@@ -171,9 +171,9 @@
 		margin-left:10rpx ;
 	}
 	.demo-warter {
-		margin-top: 32rpx;
+		margin-top: 0;
 		margin-right: 10rpx;
-		margin-bottom: 16rpx;
+		margin-bottom: 48rpx;
 		position: relative;
 		background-color: #FFFFFF;
 	}

@@ -24,7 +24,7 @@
 	    </view>
 	    <view class="touring">
 	        <text class="tourtext">正在旅行</text>
-			<touring class="touringList"></touring>
+			<touring class="touringList" ></touring>
 	    </view>
 	</view>
 </template>
@@ -139,12 +139,14 @@
 	}
 	.touring .tourtext{
 		width: 160rpx;
-		height: 40rpx;
+		height: 104rpx;
+		line-height: 104rpx;
 		font-size: 40rpx;
 		font-family:PingFangSC-Medium,PingFang SC;
 		font-weight:500;
 		color: #303133;
 		margin-left: 32rpx;
+		
 	}
 	/* 正在旅行瀑布流 */
 	// .touringList{

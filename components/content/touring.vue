@@ -7,6 +7,8 @@
 </template>
 
 <script>
+	import tcontent from '@/components/content/tcontent.vue'
+	
 	import waterfallTouring from '@/components/module/complete_waterfall_touring.vue';
 	import allList from './data';
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
@@ -21,7 +23,8 @@
 		},
 		mixins: [MescrollMixin], // 使用mixin (在main.js注册全局组件)
 		components:{
-			waterfallTouring
+			waterfallTouring,
+			tcontent
 		},
 		methods:{
 			/*下拉刷新的回调 */
@@ -62,4 +65,5 @@
 
 <style>
 	@import '@/style/mixin.scss';
+	
 </style>

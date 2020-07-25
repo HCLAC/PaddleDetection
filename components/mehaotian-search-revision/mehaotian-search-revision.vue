@@ -1,19 +1,32 @@
 <template>
 	<view class="serach">
-		<view class="content" :style="{'border-radius':radius+'px'}">
+		<view class="content" :style="{ 'border-radius': radius + 'px' }">
 			<!-- HM修改 增加进入输入状态的点击范围 -->
-			<view class="content-box" :class="{'center':mode === 2}" >
+			<view class="content-box" :class="{ center: mode === 2 }">
 				<text class="icon icon-serach"></text>
 				<!-- HM修改 增加placeholder input confirm-type confirm-->
-				<input  :placeholder="placeholder" @input="inputChange" confirm-type="search" @confirm="triggerConfirm" class="input" :class="{'center':!active && mode === 2}" :focus="isFocus" v-model="inputVal" @focus="focus" @blur="blur"/>
+				<input
+					:placeholder="placeholder"
+					placeholder-class="placeholder-class"
+					@input="inputChange"
+					confirm-type="search"
+					@confirm="triggerConfirm"
+					class="input"
+					:class="{ center: !active && mode === 2 }"
+					:focus="isFocus"
+					v-model="inputVal"
+					@focus="focus"
+					@blur="blur"
+				/>
 				<!-- <view v-if="!active && mode === 2" class="input sub" @click="getFocus">请输入搜索内容</view> -->
 				<!-- HM修改 @click换成@click.stop阻止冒泡 -->
+				<image @click.stop="clear" class="iconImg" src="../../static/images/deleteIcon.png"></image>
 			</view>
 			<!-- <view v-show="(active&&show&&button === 'inside')||(isDelShow && button === 'inside')" class="serachBtn" @click="search">
 				搜索
 			</view> -->
 		</view>
-		<text  class="icon "  @click.stop="clear">取消</text>
+		<text class="iconTitle " @click.stop="clear">取消</text>
 		<!-- <view  v-if="button === 'outside'" class="button" :class="{'active':show||active}" @click="search">
 			<view class="button-item">{{!show?searchName:'搜索'}}</view>
 		</view> -->
@@ -28,13 +41,13 @@ export default {
 			default: 1
 		},
 		//HM修改 定义默认搜索关键词(水印文字)
-		placeholder:{
+		placeholder: {
 			value: String,
 			default: '请输入搜索内容'
 		},
 		value: {
 			type: String,
-			default:false
+			default: false
 		},
 		button: {
 			value: String,
@@ -60,11 +73,11 @@ export default {
 	},
 	methods: {
 		//HM修改 触发组件confirm事件
-		triggerConfirm(){
+		triggerConfirm() {
 			this.$emit('confirm', false);
 		},
 		//HM修改 触发组件input事件
-		inputChange(event){
+		inputChange(event) {
 			var keyword = event.detail.value;
 			this.$emit('input', keyword);
 			if (this.inputVal) {
@@ -94,26 +107,24 @@ export default {
 			//HM修改 清空内容时候触发组件input
 			this.$emit('input', '');
 			//this.$emit('search', '');//HM修改 清空内容时候不进行搜索
-			
 		},
 		getFocus() {
-			if(!this.isFocus){
+			if (!this.isFocus) {
 				this.isFocus = true;
 			}
-			
 		},
 		search() {
 			//HM修改 增加点击取消时候退出输入状态，内容为空时，输入默认关键字
 			if (!this.inputVal) {
-				if(!this.show&&this.searchName == '取消'){
+				if (!this.show && this.searchName == '取消') {
 					uni.hideKeyboard();
 					this.isFocus = false;
 					this.active = false;
 					return;
 				}
 			}
-			console.log(this.inputVal); 
-			this.$emit('search', this.inputVal?this.inputVal:this.placeholder);
+			console.log(this.inputVal);
+			this.$emit('search', this.inputVal ? this.inputVal : this.placeholder);
 		}
 	},
 	watch: {
@@ -129,7 +140,7 @@ export default {
 		//HM修改 双向绑定
 		value(val) {
 			this.inputVal = val;
-		},
+		}
 	}
 };
 </script>
@@ -145,22 +156,22 @@ export default {
 		display: flex;
 		align-items: center;
 		width: 100%;
-		height: 60upx;
+		height: 62rpx;
 		//border: 1px #ccc solid; //HM修改 去掉边框
 		background: #fff;
 		overflow: hidden;
 		transition: all 0.2s linear;
-		border-radius: 30px;
+		border-radius: 36rpx;
 
 		.content-box {
 			width: 100%;
 			display: flex;
-			background-color: #ebebeb;
+			background-color: #f8f8f8;
 			align-items: center;
 			&.center {
 				justify-content: center;
 			}
-			
+
 			.input {
 				width: 100%;
 				max-width: 100%;
@@ -182,7 +193,7 @@ export default {
 			flex-shrink: 0;
 			padding: 0 30upx;
 			//HM修改 按钮背景色
-			background:linear-gradient(to right,#ff9801,#ff570a);
+			background: linear-gradient(to right, #ff9801, #ff570a);
 			//background: $uni-color-success;
 			line-height: 60upx;
 			color: #fff;
@@ -191,19 +202,36 @@ export default {
 		}
 	}
 	.icon {
-		padding: 0 15upx;
-		width: 50px;
+		padding: 0 30rpx;
 		display: flex;
 		// text-align: center;
 		align-items: center;
-		color: #000000;
+		color: #cbcbd8;
 		// &.icon-del {
 		// 	font-size: 38upx;
 		// 	&:before {content:"\e644";}
 		// }
-		&.icon-serach:before {content:"\e61c";}
+		&.icon-serach:before {
+			content: '\e61c';
+		}
 	}
-
+	.iconImg {
+		width: 36rpx;
+		height: 36rpx;
+		margin:0 14rpx;
+	}
+	.iconTitle {
+		margin-left: 30rpx;
+		color: #303133;
+		font-size: 32rpx;
+		width: 120rpx;
+		display: flex;
+		align-items: center;
+	}
+	.placeholder-class {
+		color: #c9cad1;
+		font-size: 28rpx;
+	}
 	.button {
 		display: flex;
 		align-items: center;
@@ -221,14 +249,15 @@ export default {
 	}
 }
 //HM修改 把字体改成本地加载
-@font-face {font-family:"iconfont";src:url('data:application/x-font-woff;charset=utf-8;base64,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');}
-
+@font-face {
+	font-family: 'iconfont';
+	src: url('data:application/x-font-woff;charset=utf-8;base64,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');
+}
 
 .icon {
 	font-family: iconfont;
 	font-size: 32upx;
 	font-style: normal;
 	color: #999;
-	
 }
 </style>
