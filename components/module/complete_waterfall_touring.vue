@@ -54,7 +54,6 @@
 					<!-- <view class="demo-img-wrap">
 						 <image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
 					</view> -->
-					<!-- #endif -->
 					<view class="titleTip">
 						<view class="demo-tag">
 							<view class="demo-tag-owner">
@@ -176,6 +175,7 @@
 		margin-right: 10rpx;
 		margin-bottom: 16rpx;
 		position: relative;
+		background-color: #FFFFFF;
 	}
 	
 	// .u-close {
