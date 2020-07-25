@@ -1,20 +1,15 @@
 {
   "pages": [
-    "pages/login/login",
+      "pages/positionContent/positionContent",
     "pages/index/index",
+    "pages/login/login",
     "pages/city/city",
     "pages/contentdetail/contentdetail",
     "pages/attractionsDetails/attractionsDetails",
     "pages/attractionsList/attractionsList",
     "pages/mine/mine",
     "pages/searchResults/searchResults",
-<<<<<<< HEAD
-    "pages/search/search",
-    "pages/city/city",
-    "pages/positionContent/positionContent"
-=======
     "pages/search/search"
->>>>>>> feature/login
   ],
   "subPackages": [],
   "window": {
