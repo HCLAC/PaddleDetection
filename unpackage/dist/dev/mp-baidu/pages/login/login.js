@@ -130,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -180,6 +180,9 @@ var _default =
       getCodeBtnColor: "#ffffff",
       getCodeisWaiting: false,
       styleObj: {
+        color: '#C9CAD1' },
+
+      styleCode: {
         color: '#C9CAD1' } };
 
 
@@ -198,11 +201,32 @@ var _default =
         this.styleObj.color = '#C9CAD1';
       }
     },
-    clear: function clear() {
+    onCode: function onCode(e) {
+      if (e.detail.value.length == 6) {
+        this.styleCode.color = '#303133';
+      } else {
+        this.styleCode.color = '#C9CAD1';
+      }
+    },
+    clearphone: function clearphone() {
       if (this.phone) {
         this.phone = '';
       }
+    },
+    clearcode: function clearcode() {
+      if (this.code) {
+        this.code = '';
+      }
+    },
+    submit: function submit() {
+      uni.reLaunch({
+        url: '../mine/mine' });
+
+      // uni.setStorage({
+      // 	// phone:data.phone
+      // }),
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-baidu/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

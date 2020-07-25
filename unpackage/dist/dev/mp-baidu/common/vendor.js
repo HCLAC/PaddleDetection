@@ -4144,6 +4144,8 @@ var GlobalOption = {
     textInOffset: '下拉刷新', // 下拉的距离在offset范围内的提示文本
     textOutOffset: '释放更新', // 下拉的距离大于offset范围的提示文本
     textLoading: '加载中 ...', // 加载中的提示文本
+    bgColor: '#F8F8F8',
+    textColor: '#909399',
     offset: 80, // 在列表顶部,下拉大于80px,松手即可触发下拉刷新的回调
     native: false // 是否使用系统自带的下拉刷新; 默认false; 仅在mescroll-body生效 (值为true时,还需在pages配置enablePullDownRefresh:true;详请参考mescroll-native的案例)
   },
@@ -14007,7 +14009,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-
+throw new Error("Module build failed (from ./node_modules/@dcloudio/webpack-uni-pages-loader/lib/index.js):\nSyntaxError: Unexpected token < in JSON at position 18\n    at JSON.parse (<anonymous>)\n    at parseJson (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@dcloudio\\uni-cli-shared\\lib\\json.js:16:20)\n    at parsePagesJson (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@dcloudio\\uni-cli-shared\\lib\\pages.js:41:27)\n    at Object.module.exports (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@dcloudio\\webpack-uni-pages-loader\\lib\\index-new.js:51:21)\n    at Object.module.exports (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@dcloudio\\webpack-uni-pages-loader\\lib\\index.js:49:35)");
 
 /***/ }),
 

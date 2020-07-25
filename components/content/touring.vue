@@ -1,8 +1,8 @@
 <template>
 	<view>
-		<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback">
+		<!-- <mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback"> -->
 			<waterfallTouring :list="dataList"></waterfallTouring>
-		</mescroll-body>
+		<!-- </mescroll-body> -->
 	</view>
 </template>
 

@@ -134,7 +134,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 74));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 104));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var tcontent = function tcontent() {__webpack_require__.e(/*! require.ensure | components/content/tcontent */ "components/content/tcontent").then((function () {return resolve(__webpack_require__(/*! @/components/content/tcontent.vue */ 154));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -160,6 +160,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 50));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 74));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 104));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var tcontent = function tcontent() {__webpack_require__.e(/*! require.ensure | components/content/tcontent */ "components/content/tcontent").then((function () {return resolve(__webpack_require__(/*! @/components/content/tcontent.vue */ 154));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: {
     uniIcons: uniIcons,
@@ -167,6 +171,7 @@ __webpack_require__.r(__webpack_exports__);
     uniSection: uniSection,
     tcontent: tcontent },
 
+  mixins: [_mescrollMixins.default],
   data: function data() {
     return {
       city: '北京' };
@@ -211,6 +216,82 @@ __webpack_require__.r(__webpack_exports__);
       uni.stopPullDownRefresh();
       console.log('stopPullDownRefresh');
     }, 1000);
+  },
+  /*下拉刷新的回调, 有三种处理方式:*/
+  downCallback: function downCallback() {var _this = this;
+    // 第1种: 请求具体接口
+    uni.request({
+      url: 'xxxx',
+      success: function success() {
+        // 请求成功,隐藏加载状态
+        _this.mescroll.endSuccess();
+      },
+      fail: function fail() {
+        // 请求失败,隐藏加载状态
+        _this.mescroll.endErr();
+      } });
+
+    // 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
+    this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+    // 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
+    this.mescroll.endSuccess();
+
+    // 此处仍可以继续写其他接口请求...
+    // 调用其他方法...
+  },
+  /*上拉加载的回调*/
+  upCallback: function upCallback(page) {var _this2 = this;
+    var pageNum = page.num; // 页码, 默认从1开始
+    var pageSize = page.size; // 页长, 默认每页10条
+    uni.request({
+      url: 'xxxx?pageNum=' + pageNum + '&pageSize=' + pageSize,
+      success: function success(data) {
+        // 接口返回的当前页数据列表 (数组)
+        var curPageData = data.xxx;
+        // 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+        var curPageLen = curPageData.length;
+        // 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+        var totalPage = data.xxx;
+        // 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+        var totalSize = data.xxx;
+        // 接口返回的是否有下一页 (true/false)
+        var hasNext = data.xxx;
+
+        //设置列表数据
+        if (page.num == 1) _this2.dataList = []; //如果是第一页需手动置空列表
+        _this2.dataList = _this2.dataList.concat(curPageData); //追加新数据
+
+        // 请求成功,隐藏加载状态
+        //方法一(推荐): 后台接口有返回列表的总页数 totalPage
+        _this2.mescroll.endByPage(curPageLen, totalPage);
+
+        //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+        //this.mescroll.endBySize(curPageLen, totalSize); 
+
+        //方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+        //this.mescroll.endSuccess(curPageLen, hasNext); 
+
+        //方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+        //如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+        //如果传了hasNext,则翻到第二页即可显示无更多数据.
+        //this.mescroll.endSuccess(curPageLen);
+
+        // 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+        // 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+        setTimeout(function () {
+          _this2.mescroll.endSuccess(curPageLen);
+        }, 20);
+
+
+      },
+      fail: function fail() {
+        //  请求失败,隐藏加载状态
+        _this2.mescroll.endErr();
+      } });
+
+
+    // 此处仍可以继续写其他接口请求...
+    // 调用其他方法...
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-baidu/dist/index.js */ 1)["default"]))
 

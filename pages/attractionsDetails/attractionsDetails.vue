@@ -4,9 +4,8 @@
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
-					<uni-icons type="arrowleft" color="#333333" size="22" @click="back" />
-					<view class="button-v-line"></view>
-					<uni-icons type="home" color="#333333" size="22" @click="home" />
+					<image class="fanhui" src="../../static/images/icon-fanhui.png" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy.png" @click="home" />
 				</view>
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
@@ -194,8 +193,22 @@
 		display: flex;
 		align-items: center;
 	}
+	.fanhui{
+		width: 40rpx;
+		height: 40rpx;
+		margin-left: 40rpx;
+		margin-right: 20rpx;
+	}
+	.fhsy{
+		width: 40rpx;
+		height: 40rpx;
+	}
 	.slottitle{
-		margin-left: 64px;
+		margin-left: 162rpx;
+		font-size: 38rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:600;
+		color:rgba(0,0,0,1);
 	}
 	.button-v-line{
 		width: 1px;

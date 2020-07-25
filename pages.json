@@ -1,10 +1,20 @@
 {
 	"easycom": {
+<<<<<<< HEAD
 
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
 	"pages": [
 
+=======
+			"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+    "pages": [
+		{
+		    "path" : "pages/login/login",
+		    "style" : {}
+		},
+>>>>>>> feature/login
 		{
 			"path": "pages/index/index",
 			"style": {
@@ -13,6 +23,7 @@
 			}
 		},
 		{
+<<<<<<< HEAD
 			"path": "pages/login/login",
 			"style": {}
 		},
@@ -25,6 +36,17 @@
 			"path": "pages/contentdetail/contentdetail",
 			"style": {
 				"navigationStyle": "custom"
+=======
+		    "path" : "pages/city/city",
+		    "style" : {
+				"navigationStyle":"custom"
+			}
+		},
+		{
+		    "path" : "pages/contentdetail/contentdetail",
+		    "style" : {
+				"navigationStyle":"custom"
+>>>>>>> feature/login
 			}
 		},
 		{
@@ -33,12 +55,24 @@
 				"navigationStyle": "custom"
 			}
 		},
+		
 		{
 			"path": "pages/attractionsList/attractionsList",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
+<<<<<<< HEAD
+=======
+		
+		
+		{
+		    "path" : "pages/mine/mine",
+		    "style" : {}
+		}
+		,
+		
+>>>>>>> feature/login
 		{
 			"path": "pages/searchResults/searchResults",
 			"style": {
@@ -47,6 +81,7 @@
 		},
 
 		{
+<<<<<<< HEAD
 			"path": "pages/search/search",
 			"style": {
 				"navigationStyle": "custom"
@@ -61,6 +96,13 @@
             "path" : "pages/positionContent/positionContent",
             "style" : {}
         }
+=======
+            "path" : "pages/search/search",
+            "style" : {}
+        }
+        
+        
+>>>>>>> feature/login
     ],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",

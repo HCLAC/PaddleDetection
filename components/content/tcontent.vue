@@ -51,7 +51,7 @@
 
 <style lang="scss" scoped>
 	.cus-sty{
-		background-color: #FFFFFF;
+		background-color: #F8F8F8;
 	}
 	/* 热门景点 */
 	.hot{

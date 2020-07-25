@@ -14,12 +14,12 @@
 			<!-- 短信验证登录 -->
 			<view class="loginBox">
 				<view class="login-phone">
-					<input type="number" maxlength="11" placeholder="请输入您的手机号" placeholder-style="color:'#C9CAD1',font-size:30rpx" class="is-input1" required="required" :style="styleObj" @input="onInput" v-model="phone" />
-					<image src="../../static/images/ic_search_sel@2x.png" mode="" @click="clear()"  class="searchSel"></image>
+					<input type="number" maxlength="11" placeholder="请输入您的手机号" placeholder-style="color:'#C9CAD1',font-size:30rpx" class="is-input1" :style="styleObj" @input="onInput" v-model="phone" />
+					<image src="../../static/images/ic_search_sel@2x.png" mode="" @click="clearphone()"  class="searchSel" v-show="phone" ></image>
 				</view>
 				<view class="login-code">
-					<input type="number" maxlength="6" placeholder="请输入您的验证码" class="is-input1 " v-model="code" />
-					<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel"></image>
+					<input type="number" maxlength="6" placeholder="请输入您的验证码"  class="is-input1 " :style="styleCode" @input="onCode" v-model="code" />
+					<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-show="code" @click="clearcode()"></image>
 					<view class="code-sx"></view>
 					<view class="codeimg" @click.stop="getCode()">{{getCodeText}}</view>
 				</view>
@@ -28,15 +28,15 @@
 
 			<!-- 登录按钮 -->
 			<view class="loginButton" >
-				<button class="lb"   :disabled="disabled" :class="disabled?'bg-main-disabled':'bg-main'"
-				 @click="submit" :loading="loading">{{loading?loading:'登录'}}</button>
+				<button class="lb"   
+				 @click="submit" >登录</button>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-
+	
 	export default {
 		
 		data() {
@@ -48,6 +48,9 @@
 				getCodeBtnColor: "#ffffff",
 				getCodeisWaiting: false,
 				styleObj: {
+	                color: '#C9CAD1'
+	            },
+				styleCode: {
 	                color: '#C9CAD1'
 	            },
 				
@@ -66,13 +69,31 @@
 					this.styleObj.color = '#C9CAD1'
 				}
 			},
-			clear(){
+			onCode(e){
+				if(e.detail.value.length  ==6){
+					this.styleCode.color = '#303133'
+				}else{
+					this.styleCode.color = '#C9CAD1'
+				}
+			},
+			clearphone(){
 				if(this.phone){
 					this.phone = '';
 				}
 			},
-			
-			
+			clearcode(){
+				if(this.code){
+					this.code = '';
+				}
+			},
+			submit(){
+				uni.reLaunch({
+					url:'../mine/mine'
+				})
+				// uni.setStorage({
+				// 	// phone:data.phone
+				// }),
+			}
 		}
 	}
 </script>
@@ -142,14 +163,15 @@
 	}
 	.is-input1{
 		color:#C9CAD1;
+		
 	}
 	// .is-input1::-ms-searchSel{display: none;}
 	.searchSel{
 		width: 44rpx;
 		height: 44rpx;
-		display: none;
+		// display: none;
 	}
-	.is-input1:valid + .searchSel {display: block;}
+	// .is-input1:valid + .searchSel {display: block;}
 	.codeimg{
 		width:150rpx;
 		height:30rpx;
