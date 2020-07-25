@@ -65,4 +65,5 @@
 
 <style>
 	@import '@/style/mixin.scss';
+	
 </style>

@@ -1,9 +1,11 @@
 {
 	"easycom": {
-<<<<<<< HEAD
+
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
-	"pages": [{
+	"pages": [
+
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom"
@@ -11,34 +13,14 @@
 			}
 		},
 		{
+			"path": "pages/login/login",
+			"style": {}
+		},
+		{
 			"path": "pages/mine/mine",
-			"style": {
+			"style": {}
+		},
 
-				"navigationStyle": "custom"
-			}
-		},
-=======
-			"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
-	},
-    "pages": [
-		
-		{
-		    "path" : "pages/index/index",
-		    "style" : {
-				"navigationStyle":"custom"
-				
-			}
-		},
-		{
-		    "path" : "pages/login/login",
-		    "style" : {}
-		},
-		{
-		    "path" : "pages/mine/mine",
-		    "style" : {}
-		}
-		,
->>>>>>> feature/login
 		{
 			"path": "pages/contentdetail/contentdetail",
 			"style": {
@@ -63,27 +45,23 @@
 				"navigationStyle": "custom"
 			}
 		},
-<<<<<<< HEAD
-		{
-			"path": "pages/login/login",
-			"style": {}
-		},
 
-=======
-		
-		
->>>>>>> feature/login
 		{
 			"path": "pages/search/search",
 			"style": {
-				"navigationBarBackgroundColor":"#FFFFFF"
+				"navigationStyle": "custom"
 			}
 		}, {
 			"path": "pages/city/city",
 			"style": {}
 		}
 
-	],
+
+	    ,{
+            "path" : "pages/positionContent/positionContent",
+            "style" : {}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",
 		"navigationBarTextStyle": "black",

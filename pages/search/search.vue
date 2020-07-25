@@ -1,5 +1,13 @@
 <template>
 	<view class="content">
+		<view class="example-body">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+				<view slot="left" class="slotleft">
+					<uni-icons type="arrowleft" class="icons" color="#333333" size="22" @click="back" />
+				</view>
+				<view class="slottitle">领途羊</view>
+			</uni-nav-bar>
+		</view>
 		<view class="search-box">
 			<!-- mSearch组件 如果使用原样式，删除组件元素-->
 			<mSearch
@@ -22,8 +30,8 @@
 			 -->
 			<!-- 原样式 end -->
 		</view>
-		<view class="search-keyword" v-show="isShowKeywordList">
-			<scroll-view class="keyword-list-box" scroll-y>
+		<view class="search-keyword">
+			<scroll-view class="keyword-list-box" scroll-y v-show="isShowKeywordList">
 				<block v-for="(row, index) in keywordList" :key="index">
 					<view class="keyword-entry" hover-class="keyword-entry-tap">
 						<view class="liIcon"></view>
@@ -36,7 +44,7 @@
 					”的结果
 				</view>
 			</scroll-view>
-			<scroll-view class="keyword-box" v-show="!isShowKeywordList" scroll-y>
+			<scroll-view class="keyword-box" scroll-y v-show="noResult != '暂无结果'">
 				<view class="keyword-block" v-if="oldKeywordList.length > 0">
 					<view class="keyword-list-header">
 						<view>历史记录</view>
@@ -67,7 +75,7 @@
 				<veiw>{{ keyValue }}</veiw>
 				”相关结果
 			</view>
-			<tcontent></tcontent>
+			<touring></touring>
 		</view>
 	</view>
 </template>
@@ -75,7 +83,8 @@
 <script>
 //引用mSearch组件，如不需要删除即可
 import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision.vue';
-import tcontent from '@/components/content/tcontent.vue';
+import touring from '@/components/content/touring.vue';
+import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 
 export default {
 	data() {
@@ -96,7 +105,8 @@ export default {
 	components: {
 		//引用mSearch组件，如不需要删除即可
 		mSearch,
-		tcontent
+		touring,
+		uniNavBar
 	},
 	methods: {
 		init() {
@@ -124,7 +134,7 @@ export default {
 			var keyword = event.detail ? event.detail.value : event;
 			if (!keyword) {
 				this.keywordList = [];
-				this.noResult = '暂无结果';
+				this.noResult = '无数据';
 				this.isShowKeywordList = false;
 
 				return;
@@ -213,7 +223,6 @@ export default {
 				window.location.href = 'taobao://s.taobao.com/search?q=' + keyword
 				//#endif
 				*/
-<<<<<<< HEAD
 		},
 		//保存关键字到历史记录
 		saveKeyword(keyword) {
@@ -221,7 +230,6 @@ export default {
 				key: 'OldKeys',
 				success: res => {
 					console.log(res);
-					// var OldKeys = res.data;
 					if (!res.data) {
 						var OldKeys = [keyword];
 						uni.setStorage({
@@ -233,7 +241,8 @@ export default {
 							}
 						});
 					} else {
-						let OldKeys = JSON.parse(res.data);
+						var OldKeys = JSON.parse(res.data);
+						// var OldKeys = res.data;
 						var findIndex = OldKeys.indexOf(keyword);
 						if (findIndex == -1) {
 							OldKeys.unshift(keyword);
@@ -247,19 +256,11 @@ export default {
 							key: 'OldKeys',
 							data: JSON.stringify(OldKeys)
 						});
-						this.oldKeywordList = OldKeys;
-					} //更新历史搜索
+						this.oldKeywordList = OldKeys; //更新历史搜索
+					}
 				},
 				fail: e => {
-					var OldKeys = [keyword];
-					uni.setStorage({
-						key: 'OldKeys',
-						data: JSON.stringify(OldKeys),
-						success: res => {
-							console.log(res);
-							this.oldKeywordList = OldKeys; //更新历史搜索
-						}
-					});
+					console.error(e);
 				}
 			});
 		},
@@ -269,79 +270,10 @@ export default {
 				key: 'OldKeys',
 				success: res => {
 					console.log(res);
-					if (!res.data) {
-						this.oldKeywordList = [];
-					} else {
-						var OldKeys = JSON.parse(res.data);
-=======
-			},
-			//保存关键字到历史记录
-			saveKeyword(keyword) {
-				uni.getStorage({
-					key: 'OldKeys',
-					success: (res) => {
-						console.log(res)
-						if(!res.data){
-							var OldKeys = [keyword];
-							uni.setStorage({
-								key: 'OldKeys',
-								data: JSON.stringify(OldKeys),
-								success:(res) =>{
-									console.log(res)
-									this.oldKeywordList = OldKeys; //更新历史搜索
-								}
-							});
-							if(!res.data){
-								//最多10个纪录
-								OldKeys.length > 10 && OldKeys.pop();
-								uni.setStorage({
-									key: 'OldKeys',
-									data: JSON.stringify(OldKeys)
-								});
-								this.oldKeywordList = OldKeys; //更新历史搜索
-							}
-						}
-						// var OldKeys = JSON.parse(res.data);
-						// // var OldKeys = res.data;
-						// var findIndex = OldKeys.indexOf(keyword);
-						// if (findIndex == -1) {
-						// 	OldKeys.unshift(keyword);
-						// } else {
-						// 	OldKeys.splice(findIndex, 1);
-						// 	OldKeys.unshift(keyword);
-						// }
-						// //最多10个纪录
-						// OldKeys.length > 10 && OldKeys.pop();
-						// uni.setStorage({
-						// 	key: 'OldKeys',
-						// 	data: JSON.stringify(OldKeys)
-						// });
-						// this.oldKeywordList = OldKeys; //更新历史搜索
-					},
-					fail: (e) => {
-						var OldKeys = [keyword];
-						uni.setStorage({
-							key: 'OldKeys',
-							data: JSON.stringify(OldKeys),
-							success:(res) =>{
-								console.log(res)
-								this.oldKeywordList = OldKeys; //更新历史搜索
-							}
-						});
-					}
-				});
-			},
-			//加载历史搜索,自动读取本地Storage
-			loadOldKeyword() {
-				uni.getStorage({
-					key: 'OldKeys',
-					success: (res) =>{
-						console.log(res)
-						var OldKeys =  JSON.parse(res.data);
->>>>>>> feature/login
-						// var OldKeys = res.data?res.data:[];
-						this.oldKeywordList = OldKeys;
-					}
+					var OldKeys = JSON.parse(res.data);
+
+					// var OldKeys = res.data?res.data:[];
+					this.oldKeywordList = OldKeys;
 				}
 			});
 		}
@@ -530,4 +462,38 @@ view {
 	justify-content: center;
 	align-items: center;
 }
+	.example-body {
+		flex-direction: column;
+		padding: 15px;
+		background-color: #ffffff;
+	}
+	.example-body {
+		padding: 0;
+	}
+	.navBar{
+		display: flex;
+	}
+	.slotleft{
+		display: flex;
+		align-items: center;
+		.icons{
+			font-weight: 600;
+			margin-right: 20rpx;
+		}
+		.homeIcon{
+			width: 40rpx;
+			height: 40rpx;
+		}
+		
+	}
+	.slottitle{
+		margin-left: 200rpx;
+		font-size:38rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:500;
+		color:rgba(0,0,0,1);
+		
+	}
+	
+	
 </style>

@@ -1,10 +1,9 @@
 {
   "pages": [
+      "pages/positionContent/positionContent",
+
     "pages/index/index",
-<<<<<<< HEAD
-=======
     "pages/login/login",
->>>>>>> feature/login
     "pages/mine/mine",
     "pages/contentdetail/contentdetail",
     "pages/attractionsDetails/attractionsDetails",

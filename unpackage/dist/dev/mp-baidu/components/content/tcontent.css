@@ -128,7 +128,8 @@
 }
 .touring .tourtext.data-v-0c9faa16 {
   width: 160rpx;
-  height: 40rpx;
+  height: 104rpx;
+  line-height: 104rpx;
   font-size: 40rpx;
   font-family: PingFangSC-Medium,PingFang SC;
   font-weight: 500;

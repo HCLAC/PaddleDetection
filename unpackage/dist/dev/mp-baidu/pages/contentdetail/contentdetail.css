@@ -197,391 +197,368 @@
 	font-size: 28rpx;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+/* uni.scss */
 /* 自定义导航栏样式 */
 .example-body {
-	-webkit-box-orient: horizontal;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: row;
-	        flex-direction: row;
-	-webkit-flex-wrap: wrap;
-	        flex-wrap: wrap;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
-	padding: 0;
-	font-size: 14px;
-	background-color: #aa557f;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  padding: 0;
+  font-size: 28rpx;
+  background-color: #aa557f;
 }
 .example-body {
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
-	padding: 15px;
-	background-color: #ffffff;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  padding: 30rpx;
+  background-color: #ffffff;
 }
 .example-body {
-	padding: 0;
+  padding: 0;
 }
-.navBar{
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
+.navBar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
 }
-.slotleft{
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+.slotleft {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
 }
-.slottitle{
-	margin-left: 64px;
+.slotleft .icon {
+  font-weight: 600;
+  margin-right: 20rpx;
 }
-.button-v-line{
-	width: 1px;
-	height: 18px;
-	background-color: #2f2f2f;
-	margin: 0 8px;
+.slotleft .homeIcon {
+  width: 40rpx;
+  height: 40rpx;
+}
+.slottitle {
+  margin-left: 180rpx;
+  font-size: 38rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: black;
+  margin-left: 64px;
 }
 /* 用户信息 */
-.usermes{
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	margin: 5px 0;
-}
-.userAva{
-	margin-left: 15px;
-	width: 25px;
-	height: 25px;
-	border: 1px #333333 solid;
-	border-radius: 50%;
-}
-.userName{
-	font-size: 18px;
-	color: #777777;
-	margin-left: 10px;
-}
 /* 轮播图 */
-.page-section-spacing{
-	position: relative;
+.page-section-spacing {
+  position: relative;
 }
-.swiper-item{
-	height: 150px;
+.swiper-item {
+  width: 100%;
 }
-.uni-bg-red{
-	background-color: #EA552D;
+.swiper-item image {
+  height: 100%;
+  width: 100%;
 }
-.uni-bg-green{
-	background-color: #4CD964;
+.uni-bg-red {
+  background-color: #ea552d;
 }
-.uni-bg-blue{
-	background-color: #007AFF;
+.uni-bg-green {
+  background-color: #4cd964;
+}
+.uni-bg-blue {
+  background-color: #007aff;
 }
 .imageCount {
-  width: 80rpx;
-  height: 60rpx;
-  /* background-color: #c5c5cc; */
-  border: 1px #F8F8F8 solid;
-  border-radius: 10px;
-  line-height: 58rpx;
+  height: 40rpx;
+  background-color: #000000;
+  border-radius: 20rpx;
+  line-height: 40rpx;
   color: #fff;
   text-align: center;
-  font-size: 26rpx;
+  font-size: 22rpx;
   position: absolute;
-  right: 26rpx;
-  bottom: 20rpx;
+  right: 22rpx;
+  padding: 0 12rpx;
+  bottom: 36rpx;
+}
+.dots {
+  width: 100%;
+  height: 10rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  position: absolute;
+  /* left: 320rpx; */
+  background: #ffff;
+  bottom: -40rpx;
+}
+.dots .dot {
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background: #dddddd;
+  margin-right: 8rpx;
+}
+.dots .activieDot {
+  width: 20rpx;
+  height: 10rpx;
+  background: #303133;
+  border-radius: 3px;
+  margin-right: 8rpx;
+}
+.userInfo {
+  margin-top: 40rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  height: 100rpx;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  margin-left: 30rpx;
+}
+.userInfo .left image {
+  height: 80rpx;
+  width: 80rpx;
+  margin-right: 20rpx;
+}
+.userInfo .right {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.userInfo .right .userName {
+  font-size: 28rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #303133;
+  line-height: 28rpx;
+  margin-bottom: 10rpx;
+}
+.userInfo .right .position {
+  padding: 4rpx 7rpx;
+  border: 1px solid #0091ff;
+  border-radius: 20rpx;
+  color: #0091ff;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.userInfo .right .position .positionIcon {
+  height: 24rpx;
+  width: 24rpx;
+  margin-right: 2rpx;
 }
 /* 内容详情 */
-.detailContent{
-	padding: 15px;
+.detailContent {
+  padding: 30rpx 30rpx;
 }
-.contentTitle{
-	font-size: 16px;
-	font-weight: 900;
-	padding-left: 4px;
+.contentTitle {
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #303133;
+  line-height: 64rpx;
 }
-.contentAdress{
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-	color: #4CA2FF;
-	text-decoration: underline;
-	padding-left: 4px;
+.contentText {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #606266;
+  line-height: 56rpx;
 }
-.caImg{
-	width: 20px;
-	height: 20px;
+.copy {
+  font-weight: 500;
+  color: #303133;
+  margin-right: 36rpx;
 }
-.line{
-	width: 100%;
-	height: 1px;
-	background-color: #b9b9bf;
-	margin: 4px 0 4px 0;
+.clcopy {
+  color: #4ca2ff;
 }
-.contentText{
-	font-size: 12px;
-	padding-left: 4px;
+.tips {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+  margin: 40rpx 0;
 }
-.copy{
-	font-size: 14px;
-	font-weight: 900;
+.tips .tipItem {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  margin-right: 40rpx;
+  line-height: 52rpx;
 }
-.clcopy{
-	font-size: 12px;
-	color: #4CA2FF;
-	text-decoration: underline;
+.tips .tipItem image {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 6rpx;
 }
-.tips{
-	color: #4CA2FF;
-	font-size: 12px;
-	font-weight: 900;
-	margin-top: 5px;
+.tips .tipItem text {
+  font-size: 26rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #0091ff;
 }
-.tips text{
-	margin-right: 10px;
-}
-.releaseTime{
-	font-size: 10px;
-	margin-top: 5px;
-	color: #C0C0C0;
+.releaseTime {
+  font-size: 22rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #c9cad1;
 }
 /* 底部 */
-.contentBottom{
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-	font-size: 12px;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+.contentBottom {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  padding: 0 30rpx;
+  margin-top: 84rpx;
+  align-items: center;
+  height: 98rpx;
+  border-top: 2rpx solid #dddddd;
 }
-.loginButton{
-	width: 100px;
-	height: 24px;
-	font-size: 14px;
-	background-color: #000000;
-	color: #FFFFFF;
-	border-radius: 15px;
-	border: none;
-	text-align: center;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	margin: 10px 15px 10px 15px;
+.contentBottom .footerLeft {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
 }
-.vertical{
-	width: 1px;
-	height: 26px;
-	background-color: #AAAAAA;
+.like {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  margin-right: 56rpx;
 }
-.like{
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-	margin:  0 10px;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+.like image {
+  height: 52rpx;
+  width: 52rpx;
+  margin-right: 10rpx;
 }
-.fav{
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-	margin:  0 10px;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+.like .likeNum {
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #303133;
 }
-.share{
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-	margin:  0 15px;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+.fav {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  margin-right: 56rpx;
 }
-.share image{
-	width: 20px;
-	height: 20px;
+.fav image {
+  height: 52rpx;
+  width: 52rpx;
+  margin-right: 10rpx;
 }
-
+.fav .favNum {
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #303133;
+}
+.share {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.share image {
+  height: 52rpx;
+  width: 52rpx;
+}
+.loginBtn {
+  border: none !important;
+  width: 156rpx;
+  height: 68rpx;
+  background: #ffe512;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium,PingFang SC;
+  font-weight: 500;
+  color: #303133;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+button::after {
+  border: none;
+}
 

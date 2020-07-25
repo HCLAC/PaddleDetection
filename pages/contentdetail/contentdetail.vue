@@ -2,66 +2,71 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
 				<view slot="left" class="slotleft">
-					<uni-icons type="arrowleft" color="#333333" size="22" @click="back" />
-					<view class="button-v-line"></view>
-					<uni-icons type="home" color="#333333" size="22" @click="home" />
+					<uni-icons type="arrowleft" class="icons" color="#333333" size="22" @click="back" />
+					<image src="../../static/images/home.png" class="homeIcon" mode=""></image>
 				</view>
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
 		<!-- 用户信息 -->
-		<view class="usermes">
-			<image class="userAva" src="../../static/images/mine-actived.png">
-			</image>
-			<view class="userName">
-				用户昵称
-			</view>
-		</view>
+
 		<!-- 内容详情轮播图 -->
 		<view class="uni-padding-wrap">
 			<view class="page-section swiper">
 				<view class="page-section-spacing">
-					<swiper @change="change" class="swiper" :indicator-dots="indicatorDots" indicator-color="#ababab" indicator-active-color="#2d2d2d">
-						<swiper-item v-for="item in list" >
-							<view class="swiper-item uni-bg-blue" >{{item.title}}</view>
-						</swiper-item>
-						
+					<swiper @change="change" :autoplay="true" class="swiper" :indicator-dots="false">
+						<swiper-item v-for="item in list" class="swiper-item"><image src="../../static/images/photos/WechatIMG3.png" mode=""></image></swiper-item>
 					</swiper>
-					<view class="imageCount">{{current+1}}/{{list.length}}</view>
+					<view class="imageCount">{{ current + 1 }}/{{ list.length }}</view>
+					<view class="dots">
+						<block v-for="(item, index) in list"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="userInfo">
+			<view class="left"><image src="../../static/images/userImg.png" mode=""></image></view>
+			<view class="right">
+				<view class="userName">Haley</view>
+				<view class="position">
+					<image class="positionIcon" src="../../static/images/positionIcon.png"></image>
+					<text>希腊</text>
 				</view>
 			</view>
 		</view>
 		<!-- 内容详情 -->
 		<view class="detailContent">
 			<!-- 标题 -->
-			<view class="contentTitle">
-				云南旅游必去的地方~
-			</view>
-			<!-- 地址 -->
-			<view class="contentAdress">
-				<image class="caImg" src="../../static/images/dd.png"></image>
-				洱海·云南省大理市
-			</view>
-			<!-- 分割线 -->
-			<view class="line"></view>
-			<!-- 内容文章 -->
+			<view class="contentTitle">攻略 | 愿你踏遍山海觉得人间值得</view>
+
 			<view class="contentText">
-				云南游记双廊古镇诏风情岛上大理游<br>
-				写完第二篇大理洱海骑行，有朋友就问大理周边除了洱海骑行还有没有其他景点。确实有，双廊古镇，南诏风情岛以及喜洲古镇，都是现在大理周边比较热门的景点那么第三篇就继续和大家分享
-				<br>
-				交通：旅游客运站腾冲县热海路有发往昆明、保山、 大理和丽江的班车
-				<br>
-				费用：热海浴谷268元在腾冲市区旅游客运站有专线车直达，车票6元；从腾冲市区乘坐出租车前往，车费30元左右
-				<view class="copy">详情请+VX: 13456789012<text class="clcopy">点击复制</text></view>
-				世界上有温泉的地方很多，但像腾冲这样面积又广、泉眼又多、疗效又好的那就不多了。早在古代，徐霞客已经踏足这里，详细地考察了丰富的地热资源。这里有中国最密集的火山群和地热温泉，90多座火山，80余处温泉，更有数以万计的温泉泉眼。壮观的热海大滚锅、热力四射的万年蛤蟆嘴、令人浮想联翩的醉鸟神泉······这里似乎遍地都是温泉，永远升腾着袅袅的轻烟
+				语雀是一款优雅高效的在线文档编辑与协同工具， 让每 个企业轻松拥有文档中心阿里巴巴集团内部使用多年， 众多中小企业首选。
+				<view class="copy">
+					详情请+VX: 13456789012
+					<text class="clcopy">点击复制</text>
+				</view>
+				语雀是一款优雅高效的在线文档编辑与协同工具让每个 企业轻松拥有文档中心，阿里巴巴集团内部使用多年众 多中小企业首选语雀是一款优雅高效的在线文档编辑与
+				协同工具，让每个企业轻松拥有文档中心阿里巴巴集团 内部使用多年众多中小企业首选。
 			</view>
 			<view class="tips">
-				<text>#旅游攻略</text>
-				<text>#云南去哪儿玩</text>
-				<text>#洱海</text>
-				<text>#大理</text>
+				<view class="tipItem">
+					<image src="../../static/images/tipIcon.png" mode=""></image>
+					<text>旅游攻略</text>
+				</view>
+				<view class="tipItem">
+					<image src="../../static/images/tipIcon.png" mode=""></image>
+					<text>旅游攻略</text>
+				</view>
+				<view class="tipItem">
+					<image src="../../static/images/tipIcon.png" mode=""></image>
+					<text>旅游攻略</text>
+				</view>
+				<view class="tipItem">
+					<image src="../../static/images/tipIcon.png" mode=""></image>
+					<text>旅游攻略</text>
+				</view>
 			</view>
 			<view class="releaseTime">发布于2020-12-14</view>
 		</view>
@@ -69,282 +74,363 @@
 		<view class="line"></view>
 		<!-- 登录 -->
 		<view class="contentBottom">
-			<view class="loginButton">登录</view>
-			<view class="vertical">
-			</view>
-			<view class="like">
-				<uni-icons type="heart" size="20" @click="likeclick"></uni-icons>
-				<view class="likeNum" v-model="likemessage" >
-					{{likemessage}}
+			<view class="footerLeft">
+				<view class="like">
+					<image src="../../static/images/like.png" mode=""></image>
+					<view class="likeNum" v-model="likemessage">{{ likemessage }}</view>
 				</view>
-			</view>
-			<view class="vertical">
-			</view>
-			<view class="fav">
-				<uni-icons  class="favBtn" type="star" size="20" @click="favclick" >
-				</uni-icons>
-				<view class="favNum" v-model="favmessage">
-					{{favmessage}}
+				<view class="fav">
+					<image src="../../static/images/collection.png" mode=""></image>
+					<view class="favNum" v-model="favmessage">{{ favmessage }}</view>
 				</view>
+				<view class="share"><image src="../../static/images/shareHere.png"></image></view>
 			</view>
-			<view class="vertical">
-			</view>
-			<view class="share">
-				<image src="../../static/images/share.png"></image>
+			
+			<view class="footerRight">
+				<button class="loginBtn">登录</button>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	var _this
-	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue'
-	import uniIcons from "@/components/uni-icons/uni-icons.vue"
-	import uniFav from '@/components/uni-fav/uni-fav.vue'
-	export default {
-		comments:{
-			uniNavBar,
-			uniIcons,
-			uniFav
+var _this;
+import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
+import uniIcons from '@/components/uni-icons/uni-icons.vue';
+import uniFav from '@/components/uni-fav/uni-fav.vue';
+export default {
+	comments: {
+		uniNavBar,
+		uniIcons,
+		uniFav
+	},
+	data() {
+		return {
+			indicatorDots: true,
+			current: 0,
+			list: [{ key: '1', title: 'A' }, { key: '2', title: 'B' }, { key: '3', title: 'C' }, { key: '4', title: 'D' }, { key: '6', title: 'E' }, { key: '7', title: 'F' }],
+			likemessage: 144,
+			favmessage: 219
+		};
+	},
+	created() {
+		(_this = this), _this.getOrder();
+	},
+
+	methods: {
+		change(e) {
+			_this.current = e.detail.current;
 		},
-		data() {
-			return {
-				indicatorDots: true,
-				current:0,
-				list:[
-					{key:"1",title:"A"},
-					{key:"2",title:"B"},
-					{key:"3",title:"C"},
-					{key:"4",title:"D"},
-					{key:"6",title:"E"},
-					{key:"7",title:"F"}
-				],
-				likemessage:144,
-				favmessage:219
-			}
+		getOrder() {
+			_this.swiperlength,
+				(_this.list = [
+					{ key: '1', title: 'A' },
+					{ key: '2', title: 'B' },
+					{ key: '3', title: 'C' },
+					{ key: '4', title: 'D' },
+					{ key: '6', title: 'E' },
+					{ key: '7', title: 'F' }
+				]);
 		},
-		created() {
-			_this = this,
-			_this.getOrder()
+		back() {
+			uni.navigateBack({
+				delta: 1
+			});
 		},
-		
-		methods: {
-			change(e){
-				_this.current = e.detail.current
-			},
-			getOrder(){
-				_this.swiperlength,
-				_this.list = [
-					{key:"1",title:"A"},
-					{key:"2",title:"B"},
-					{key:"3",title:"C"},
-					{key:"4",title:"D"},
-					{key:"6",title:"E"},
-					{key:"7",title:"F"}
-				]
-			},
-			back() {
-				uni.navigateBack({
-					delta: 1
-				})
-			},
-			home(){
-				uni.switchTab({
-					url:"/pages/index/index"
-				})
-			},
-			likeclick(){
-				// console.log("cccccccccccc")
-				this.likemessage++
-			},
-			favclick(){
-				// console.log("cccccccccccc")
-				this.favmessage++
-			}
-			// favClick() {
-			// 	this.checked = !this.checked
-			//  this.$forceUpdate()
-			// }
+		home() {
+			uni.switchTab({
+				url: '/pages/index/index'
+			});
+		},
+		likeclick() {
+			// console.log("cccccccccccc")
+			this.likemessage++;
+		},
+		favclick() {
+			// console.log("cccccccccccc")
+			this.favmessage++;
 		}
+		// favClick() {
+		// 	this.checked = !this.checked
+		//  this.$forceUpdate()
+		// }
 	}
+};
 </script>
 
-<style>
-	/* 自定义导航栏样式 */
-	.example-body {
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
-		padding: 0;
-		font-size: 14px;
-		background-color: #aa557f;
+<style lang="scss">
+/* 自定义导航栏样式 */
+.example-body {
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	padding: 0;
+	font-size: 28rpx;
+	background-color: #aa557f;
+}
+.example-body {
+	flex-direction: column;
+	padding: 30rpx;
+	background-color: #ffffff;
+}
+.example-body {
+	padding: 0;
+}
+.navBar {
+	display: flex;
+}
+.slotleft {
+	display: flex;
+	align-items: center;
+	.icon {
+		font-weight: 600;
+		margin-right: 20rpx;
 	}
-	.example-body {
-		flex-direction: column;
-		padding: 15px;
-		background-color: #ffffff;
+	.homeIcon {
+		width: 40rpx;
+		height: 40rpx;
 	}
-	.example-body {
-		padding: 0;
-	}
-	.navBar{
-		display: flex;
-	}
-	.slotleft{
-		display: flex;
-		align-items: center;
-	}
-	.slottitle{
-		margin-left: 64px;
-	}
-	.button-v-line{
-		width: 1px;
-		height: 18px;
-		background-color: #2f2f2f;
-		margin: 0 8px;
-	}
-	/* 用户信息 */
-	.usermes{
-		display: flex;
-		align-items: center;
-		margin: 5px 0;
-	}
-	.userAva{
-		margin-left: 15px;
-		width: 25px;
-		height: 25px;
-		border: 1px #333333 solid;
-		border-radius: 50%;
-	}
-	.userName{
-		font-size: 18px;
-		color: #777777;
-		margin-left: 10px;
-	}
-	/* 轮播图 */
-	.page-section-spacing{
-		position: relative;
-	}
-	.swiper-item{
-		height: 150px;
-	}
-	.uni-bg-red{
-		background-color: #EA552D;
-	}
-	.uni-bg-green{
-		background-color: #4CD964;
-	}
-	.uni-bg-blue{
-		background-color: #007AFF;
-	}
-	.imageCount {
-	  width: 80rpx;
-	  height: 60rpx;
-	  // background-color: #c5c5cc;
-	  border: 1px #F8F8F8 solid;
-	  border-radius: 10px;
-	  line-height: 58rpx;
-	  color: #fff;
-	  text-align: center;
-	  font-size: 26rpx;
-	  position: absolute;
-	  right: 26rpx;
-	  bottom: 20rpx;
-	}
-	
-	/* 内容详情 */
-	.detailContent{
-		padding: 15px;
-	}
-	.contentTitle{
-		font-size: 16px;
-		font-weight: 900;
-		padding-left: 4px;
-	}
-	.contentAdress{
-		display: flex;
-		color: #4CA2FF;
-		text-decoration: underline;
-		padding-left: 4px;
-	}
-	.caImg{
-		width: 20px;
-		height: 20px;
-	}
-	.line{
+}
+.slottitle {
+	margin-left: 180rpx;
+	font-size: 38rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: rgba(0, 0, 0, 1);
+	margin-left: 64px;
+}
+
+/* 用户信息 */
+
+/* 轮播图 */
+.page-section-spacing {
+	position: relative;
+}
+
+.swiper-item {
+	width: 100%;
+	image {
+		height: 100%;
 		width: 100%;
-		height: 1px;
-		background-color: #b9b9bf;
-		margin: 4px 0 4px 0;
 	}
-	.contentText{
-		font-size: 12px;
-		padding-left: 4px;
+}
+.uni-bg-red {
+	background-color: #ea552d;
+}
+.uni-bg-green {
+	background-color: #4cd964;
+}
+.uni-bg-blue {
+	background-color: #007aff;
+}
+.imageCount {
+	height: 40rpx;
+	background-color: #000000;
+	border-radius: 20rpx;
+	line-height: 40rpx;
+	color: #fff;
+	text-align: center;
+	font-size: 22rpx;
+	position: absolute;
+	right: 22rpx;
+	padding: 0 12rpx;
+	bottom: 36rpx;
+}
+//标记点样式
+.dots {
+	width: 100%;
+	height: 10rpx;
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	/* left: 320rpx; */
+	background: #ffff;
+	bottom: -40rpx;
+	.dot {
+		width: 10rpx;
+		height: 10rpx;
+		border-radius: 50%;
+		background: rgba(221, 221, 221, 1);
+		margin-right: 8rpx;
 	}
-	.copy{
-		font-size: 14px;
-		font-weight: 900;
+	.activieDot {
+		width: 20rpx;
+		height: 10rpx;
+		background: rgba(48, 49, 51, 1);
+		border-radius: 3px;
+		margin-right: 8rpx;
 	}
-	.clcopy{
-		font-size: 12px;
-		color: #4CA2FF;
-		text-decoration: underline;
+}
+// 用户信息界面
+.userInfo {
+	margin-top: 40rpx;
+	display: flex;
+	height: 100rpx;
+	align-items: center;
+	margin-left: 30rpx;
+	.left {
+		image {
+			height: 80rpx;
+			width: 80rpx;
+			margin-right: 20rpx;
+		}
 	}
-	.tips{
-		color: #4CA2FF;
-		font-size: 12px;
-		font-weight: 900;
-		margin-top: 5px;
-	}
-	.tips text{
-		margin-right: 10px;
-	}
-	.releaseTime{
-		font-size: 10px;
-		margin-top: 5px;
-		color: #C0C0C0;
-	}
-	/* 底部 */
-	.contentBottom{
+	.right {
 		display: flex;
-		font-size: 12px;
+		flex-direction: column;
+		justify-content: space-between;
 		align-items: center;
+		.userName {
+			font-size: 28rpx;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 500;
+			color: rgba(48, 49, 51, 1);
+			line-height: 28rpx;
+			margin-bottom: 10rpx;
+		}
+		.position {
+			padding: 4rpx 7rpx;
+			border: 1rpx solid #0091ff;
+			border-radius: 20rpx;
+			color: #0091ff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			.positionIcon {
+				height: 24rpx;
+				width: 24rpx;
+				margin-right: 2rpx;
+			}
+		}
 	}
-	.loginButton{
-		width: 100px;
-		height: 24px;
-		font-size: 14px;
-		background-color: #000000;
-		color: #FFFFFF;
-		border-radius: 15px;
-		border: none;
-		text-align: center;
-		align-items: center;
-		margin: 10px 15px 10px 15px;
-	}
-	.vertical{
-		width: 1px;
-		height: 26px;
-		background-color: #AAAAAA;
-	}
-	.like{
+}
+/* 内容详情 */
+.detailContent {
+	padding: 30rpx 30rpx;
+}
+.contentTitle {
+	font-size: 32rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: rgba(48, 49, 51, 1);
+	line-height: 64rpx;
+}
+
+.contentText {
+	font-size: 28rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: rgba(96, 98, 102, 1);
+	line-height: 56rpx;
+}
+.copy {
+	font-weight: 500;
+	color: rgba(48, 49, 51, 1);
+	margin-right: 36rpx;
+}
+.clcopy {
+	color: #4ca2ff;
+}
+.tips {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 40rpx 0;
+	.tipItem {
 		display: flex;
-		margin:  0 10px;
 		align-items: center;
+		margin-right: 40rpx;
+		line-height: 52rpx;
+		image {
+			width: 30rpx;
+			height: 30rpx;
+			margin-right: 6rpx;
+		}
+		text {
+			font-size: 26rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: rgba(0, 145, 255, 1);
+		}
 	}
-	.fav{
+}
+
+.releaseTime {
+	font-size: 22rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: rgba(201, 202, 209, 1);
+}
+/* 底部 */
+.contentBottom {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 30rpx;
+	margin-top: 84rpx;
+	align-items: center;
+	height: 98rpx;
+	border-top: 2rpx solid #dddddd;
+	.footerLeft {
 		display: flex;
-		margin:  0 10px;
 		align-items: center;
 	}
-	.share{
-		display: flex;
-		margin:  0 15px;
-		align-items: center;
+}
+
+.like {
+	display: flex;
+	align-items: center;
+	margin-right: 56rpx;
+	image {
+		height: 52rpx;
+		width: 52rpx;
+		margin-right: 10rpx;
 	}
-	.share image{
-		width: 20px;
-		height: 20px;
+	.likeNum {
+		font-size: 24rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(48, 49, 51, 1);
 	}
-	
+}
+.fav {
+	display: flex;
+	align-items: center;
+	margin-right: 56rpx;
+
+	image {
+		height: 52rpx;
+		width: 52rpx;
+		margin-right: 10rpx;
+	}
+	.favNum {
+		font-size: 24rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(48, 49, 51, 1);
+	}
+}
+
+.share {
+	display: flex;
+	align-items: center;
+	image {
+		height: 52rpx;
+		width: 52rpx;
+	}
+}
+.loginBtn{
+	border:none !important;
+	width:156rpx;
+	height:68rpx;
+	background:rgba(255,229,18,1);
+	border-radius:40rpx;
+	font-size:32rpx;
+	font-family:PingFangSC-Medium,PingFang SC;
+	font-weight:500;
+	color:rgba(48,49,51,1);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+button::after{ border: none;}
 </style>
