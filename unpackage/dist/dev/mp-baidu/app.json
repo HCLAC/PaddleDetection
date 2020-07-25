@@ -1,14 +1,14 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/login/login",
-    "pages/mine/mine",
+    "pages/index/index",
+    "pages/city/city",
     "pages/contentdetail/contentdetail",
     "pages/attractionsDetails/attractionsDetails",
     "pages/attractionsList/attractionsList",
+    "pages/mine/mine",
     "pages/searchResults/searchResults",
-    "pages/search/search",
-    "pages/city/city"
+    "pages/search/search"
   ],
   "subPackages": [],
   "window": {

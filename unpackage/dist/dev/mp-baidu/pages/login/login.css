@@ -97,10 +97,6 @@
 .searchSel.data-v-b237504c {
   width: 44rpx;
   height: 44rpx;
-  display: none;
-}
-.is-input1:valid + .searchSel.data-v-b237504c {
-  display: block;
 }
 .codeimg.data-v-b237504c {
   width: 150rpx;

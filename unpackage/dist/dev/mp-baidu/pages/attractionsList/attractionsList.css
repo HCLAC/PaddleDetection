@@ -25,7 +25,7 @@
 /* 透明度 */
 /* 文章场景相关 */
 /* uni.scss */
-.example-body {
+.example-body.data-v-2796015c {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -webkit-flex-direction: row;
@@ -39,7 +39,7 @@
   font-size: 14px;
   background-color: #aa557f;
 }
-.example-body {
+.example-body.data-v-2796015c {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
@@ -47,15 +47,15 @@
   padding: 15px;
   background-color: #ffffff;
 }
-.example-body {
+.example-body.data-v-2796015c {
   padding: 0;
 }
-.navBar {
+.navBar.data-v-2796015c {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
 }
-.slotleft {
+.slotleft.data-v-2796015c {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -63,21 +63,39 @@
   -webkit-align-items: center;
           align-items: center;
 }
-.slottitle {
-  margin-left: 64px;
+.fanhui.data-v-2796015c {
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 40rpx;
+  margin-right: 20rpx;
 }
-.button-v-line {
+.fhsy.data-v-2796015c {
+  width: 40rpx;
+  height: 40rpx;
+}
+.slottitle.data-v-2796015c {
+  margin-left: 162rpx;
+  font-size: 38rpx;
+  font-family: PingFangSC-Medium,PingFang SC;
+  font-weight: 600;
+  color: black;
+}
+.button-v-line.data-v-2796015c {
   width: 1px;
   height: 18px;
   background-color: #2f2f2f;
   margin: 0 8px;
 }
-.card {
-  width: 300px;
-  height: 150px;
-  border: 1px #333333 solid;
-  border-radius: 15px;
-  margin: 10px;
+.content.data-v-2796015c {
+  background-color: #F8F8F8;
+}
+.card.data-v-2796015c {
+  width: 694rpx;
+  height: 316rpx;
+  background: white;
+  box-shadow: 0px 8rpx 16rpx 0px #ededed;
+  border-radius: 16rpx;
+  margin: 20rpx 28rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -86,40 +104,56 @@
   -webkit-flex-direction: column;
           flex-direction: column;
 }
-.title {
-  font-size: 18px;
-  font-weight: 900;
-  margin-left: 15px;
+.title.data-v-2796015c {
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium,PingFang SC;
+  font-weight: 600;
+  color: #303133;
+  margin-top: 40rpx;
+  margin-left: 28rpx;
+  margin-bottom: 20rpx;
 }
-.content {
-  padding: 15px;
-  font-size: 12px;
+.cardContent.data-v-2796015c {
+  width: 642rpx;
+  height: 28rpx;
+  font-size: 14px;
+  line-height: 28rpx;
+  font-family: PingFangSC-Regular,PingFang SC;
+  font-weight: 400;
+  color: #909399;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin-left: 28rpx;
+  margin-right: 24rpx;
+  margin-bottom: 20rpx;
 }
-.uni-padding-wrap {
-  width: 280px;
+.uni-padding-wrap.data-v-2796015c {
   overflow: hidden;
+  margin-left: 28rpx;
 }
-.page-section {
-  width: 280px;
+.swiper.data-v-2796015c {
+  height: 136rpx;
 }
-.swiper-item {
-  width: 85px;
-  height: 60px;
-  border-radius: 10px;
+.swiper-item.data-v-2796015c {
+  width: 194rpx;
+  height: 136rpx;
+  border-radius: 8rpx;
+  margin-right: 28rpx;
 }
-.uni-padding-wrap {
-  padding: 10px;
+.uni-bg-red.data-v-2796015c {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url(/static/images/photos/15a4e698667005.5ee13e809affe.jpg);
 }
-.uni-bg-red {
-  background-color: #EA552D;
+.uni-bg-green.data-v-2796015c {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url(/static/images/photos/23b32199831121.5efb7ae58b7bc.jpg);
 }
-.uni-bg-green {
-  background-color: #4CD964;
-}
-.uni-bg-blue {
-  background-color: #007AFF;
+.uni-bg-blue.data-v-2796015c {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url(/static/images/photos/48d2d599831121.5efb7ae587e4e.jpg);
 }
 

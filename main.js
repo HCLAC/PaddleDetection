@@ -7,6 +7,9 @@ Vue.prototype.$store = store
 import uView from "uview-ui";
 Vue.use(uView);
 
+// import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue"
+// Vue.component('mescroll-uni', MescrollUni)	
+	
 Vue.config.productionTip = false
 import MescrollBody from "@/components/mescroll-uni/mescroll-body.vue";
 Vue.component("mescroll-body", MescrollBody);

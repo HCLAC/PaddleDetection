@@ -4,40 +4,41 @@
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
-					<uni-icons type="arrowleft" color="#333333" size="22" @click="back" />
-					<view class="button-v-line"></view>
-					<uni-icons type="home" color="#333333" size="22" @click="home" />
+					<image class="fanhui" src="../../static/images/icon-fanhui.png" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy.png" @click="home" />
 				</view>
-				<view class="slottitle">领途羊</view>
+				<view class="slottitle">热门景点</view>
 			</uni-nav-bar>
 		</view>
 		<!-- 卡片列表 -->
-		<view class="card" v-for="item in cardList" @click="toAttractionsDetails">
-			<text class="title">{{item.title}}</text>
-			<text class="content">{{item.content}}</text>
-			<view class="uni-padding-wrap">
-				<view class="page-section swiper">
-					<view class="page-section-spacing">
-						<swiper class="swiper" display-multiple-items="3" >
-							<swiper-item>
-								<view class="swiper-item uni-bg-red">A</view>
-							</swiper-item>
-							<swiper-item>
-								<view class="swiper-item uni-bg-green">B</view>
-							</swiper-item>
-							<swiper-item>
-								<view class="swiper-item uni-bg-blue">C</view>
-							</swiper-item>
-							<swiper-item>
-								<view class="swiper-item uni-bg-red">D</view>
-							</swiper-item>
-							<swiper-item>
-								<view class="swiper-item uni-bg-green">E</view>
-							</swiper-item>
-							<swiper-item>
-								<view class="swiper-item uni-bg-blue">F</view>
-							</swiper-item>
-						</swiper>
+		<view class="content">
+			<view class="card" v-for="item in cardList" @click="toAttractionsDetails">
+				<text class="title">{{item.title}}</text>
+				<view class="cardContent">{{item.content}}</view>
+				<view class="uni-padding-wrap">
+					<view class="page-section swiper">
+						<view class="page-section-spacing">
+							<swiper class="swiper" display-multiple-items="3" >
+								<swiper-item>
+									<view class="swiper-item uni-bg-red">A</view>
+								</swiper-item>
+								<swiper-item>
+									<view class="swiper-item uni-bg-green">B</view>
+								</swiper-item>
+								<swiper-item>
+									<view class="swiper-item uni-bg-blue">C</view>
+								</swiper-item>
+								<swiper-item>
+									<view class="swiper-item uni-bg-red">D</view>
+								</swiper-item>
+								<swiper-item>
+									<view class="swiper-item uni-bg-green">E</view>
+								</swiper-item>
+								<swiper-item>
+									<view class="swiper-item uni-bg-blue">F</view>
+								</swiper-item>
+							</swiper>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -81,7 +82,8 @@
 	}
 </script>
 
-<style lang="scss" >
+
+<style lang="scss" scoped>
 	// 自定义导航栏样式
 	.example-body {
 		flex-direction: row;
@@ -106,8 +108,22 @@
 		display: flex;
 		align-items: center;
 	}
+	.fanhui{
+		width: 40rpx;
+		height: 40rpx;
+		margin-left: 40rpx;
+		margin-right: 20rpx;
+	}
+	.fhsy{
+		width: 40rpx;
+		height: 40rpx;
+	}
 	.slottitle{
-		margin-left: 64px;
+		margin-left: 162rpx;
+		font-size: 38rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:600;
+		color:rgba(0,0,0,1);
 	}
 	.button-v-line{
 		width: 1px;
@@ -116,50 +132,79 @@
 		margin: 0 8px;
 	}
 	// 卡片样式
+	.content{
+		background-color: #F8F8F8;
+	}
 	.card{
-		width: 300px;
-		height: 150px;
-		border: 1px #333333 solid;
-		border-radius: 15px;
-		margin: 10px;
+		width: 694rpx;
+		height: 316rpx;
+		background:rgba(255,255,255,1);
+		box-shadow:0px 8rpx 16rpx 0px rgba(237,237,237,1);
+		border-radius:16rpx;
+		margin: 20rpx 28rpx;
 		display: flex;
 		flex-direction: column;
 	}
 	.title{
-		font-size: 18px;
-		font-weight: 900;
-		margin-left: 15px;
+		font-size: 32rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:600;
+		color:rgba(48,49,51,1);
+		margin-top: 40rpx;
+		margin-left: 28rpx;
+		margin-bottom: 20rpx;
 	}
-	.content{
-		padding: 15px;
-		font-size: 12px;
+	.cardContent{
+		width:642rpx;
+		height:28rpx;
+		font-size:14px;
+		line-height: 28rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(144,147,153,1);
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space:nowrap;
+		margin-left: 28rpx;
+		margin-right: 24rpx;
+		margin-bottom: 20rpx;
 	}
 	.uni-padding-wrap{
-		width: 280px;
+		// width: 280px;
 		overflow: hidden;
+		margin-left: 28rpx;
 	}
 	.page-section{
-		width: 280px;
+		// width: 280px;
+	}
+	.swiper{
+		height: 136rpx;
 	}
 	.swiper-item{
-		width: 85px;
-		height: 60px;
-		border-radius: 10px;
-		// margin-left: 10px;
+		width: 194rpx;
+		height: 136rpx;
+		border-radius: 8rpx;
+		margin-right: 28rpx;
 	}
 	.uni-padding-wrap{
-		padding: 10px;
+		// padding: 10px;
 	}
 	.uni-bg-red{
-		background-color: #EA552D;
+		background-repeat:no-repeat;
+		background-size:100% 100%;
+		// background-color: #EA552D;
+		background-image: url(../../static/images/photos/15a4e698667005.5ee13e809affe.jpg);
 	}
 	.uni-bg-green{
-		background-color: #4CD964;
+		background-repeat:no-repeat;
+		background-size:100% 100%;
+		// background-color: #4CD964;
+		background-image: url(../../static/images/photos/23b32199831121.5efb7ae58b7bc.jpg);
 	}
 	.uni-bg-blue{
-		background-color: #007AFF;
+		background-repeat:no-repeat;
+		background-size:100% 100%;
+		// background-color: #007AFF;
+		background-image: url(../../static/images/photos/48d2d599831121.5efb7ae587e4e.jpg);
 	}
 </style>

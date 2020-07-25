@@ -1,1 +1,1 @@
-<view><mescroll-body class="vue-ref" vue-id="67e09aee-1" down="{{downOption}}" data-ref="mescrollRef" data-event-opts="{{[['^init',[['mescrollInit']]],['^down',[['downCallback']]],['^up',[['upCallback']]]]}}" bind:init="__e" bind:down="__e" bind:up="__e" vue-slots="{{['default']}}"><waterfall-touring vue-id="{{('67e09aee-2')+','+('67e09aee-1')}}" list="{{dataList}}"></waterfall-touring></mescroll-body></view>
+<view><waterfall-touring vue-id="67e09aee-1" list="{{dataList}}"></waterfall-touring></view>

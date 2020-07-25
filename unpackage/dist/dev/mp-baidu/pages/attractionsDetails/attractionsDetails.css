@@ -119,9 +119,9 @@
 		box-shadow: 0 1px 6px #ccc;
 }
 .uni-navbar--border.data-v-4afea59e {
-		border-bottom-width: 1px;
+		/* border-bottom-width: 1rpx;
 		border-bottom-style: solid;
-		border-bottom-color: #e5e5e5;
+		border-bottom-color: #e5e5e5; */
 }
 
 
@@ -315,8 +315,22 @@
   -webkit-align-items: center;
           align-items: center;
 }
+.fanhui {
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 40rpx;
+  margin-right: 20rpx;
+}
+.fhsy {
+  width: 40rpx;
+  height: 40rpx;
+}
 .slottitle {
-  margin-left: 64px;
+  margin-left: 162rpx;
+  font-size: 38rpx;
+  font-family: PingFangSC-Medium,PingFang SC;
+  font-weight: 600;
+  color: black;
 }
 .button-v-line {
   width: 1px;
