@@ -3,9 +3,9 @@
 		<image src="../../static/images/mineBack.png" class="backImg"></image>
 		<!-- 用户信息 -->
 		<view class="usermes">
-			<image class="userAva" src="../../static/images/userImg.png"></image>
+			<image class="userAva" :src="avatarUrl"></image>
 			<view class="userR">
-				<view class="userName">李小鱼</view>
+				<view class="userName">{{ nickName }}</view>
 <!-- 				<view class="logout">退出登录</view>
  -->			</view>
 		</view>
@@ -43,6 +43,8 @@ import { mapState, mapMutations } from 'vuex';
 export default {
 	data() {
 		return {
+			nickName:"",
+			avatarUrl:"",
 			tipList: [
 				{
 					key: '1',
@@ -127,7 +129,49 @@ export default {
 	// 		this.guideToLogin()
 	// 	}
 	// },
+	onLoad() {
+		this.getUserMsg()
+	},
 	methods: {
+		getUserMsg(){
+			uni.getProvider({
+			    service: 'oauth',
+			    success: function (res) {
+			        console.log(res.provider)
+			        if (~res.provider.indexOf('baidu')) {
+			            uni.login({
+			                provider: 'baidu',
+			                success: function (loginRes) {
+			                    // console.log(JSON.stringify(loginRes));
+			                }
+			            });
+			        }
+			    }
+			});
+			uni.login({
+			  provider: 'baidu',
+			  success: (loginRes) => {
+			    // console.log(loginRes.authResult);
+			  }
+			});
+			uni.login({
+			  provider: 'baidu',
+			  success: (loginRes) => {
+			    // console.log(loginRes.authResult);
+			    // 获取用户信息
+			    uni.getUserInfo({
+			      provider: 'baidu',
+			      success:  (infoRes) => {
+			        // console.log('用户昵称为：' + infoRes.userInfo.nickName);
+					var infoRes = infoRes.userInfo
+					console.log(infoRes.nickName)
+					this.nickName = infoRes.nickName
+					this.avatarUrl = infoRes.avatarUrl
+			      }
+			    });
+			  }
+			});
+		},
 		...mapMutations(['login']),
 		guideToLogin() {
 			if (this.forcedLogin) {

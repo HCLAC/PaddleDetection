@@ -175,6 +175,8 @@ var _vuex = __webpack_require__(/*! vuex */ 12);function ownKeys(object, enumera
 {
   data: function data() {
     return {
+      nickName: "",
+      avatarUrl: "",
       tipList: [
       {
         key: '1',
@@ -259,7 +261,49 @@ var _vuex = __webpack_require__(/*! vuex */ 12);function ownKeys(object, enumera
   // 		this.guideToLogin()
   // 	}
   // },
-  methods: _objectSpread({},
+  onLoad: function onLoad() {
+    this.getUserMsg();
+  },
+  methods: _objectSpread({
+    getUserMsg: function getUserMsg() {var _this = this;
+      uni.getProvider({
+        service: 'oauth',
+        success: function success(res) {
+          console.log(res.provider);
+          if (~res.provider.indexOf('baidu')) {
+            uni.login({
+              provider: 'baidu',
+              success: function success(loginRes) {
+                // console.log(JSON.stringify(loginRes));
+              } });
+
+          }
+        } });
+
+      uni.login({
+        provider: 'baidu',
+        success: function success(loginRes) {
+          // console.log(loginRes.authResult);
+        } });
+
+      uni.login({
+        provider: 'baidu',
+        success: function success(loginRes) {
+          // console.log(loginRes.authResult);
+          // 获取用户信息
+          uni.getUserInfo({
+            provider: 'baidu',
+            success: function success(infoRes) {
+              // console.log('用户昵称为：' + infoRes.userInfo.nickName);
+              var infoRes = infoRes.userInfo;
+              console.log(infoRes.nickName);
+              _this.nickName = infoRes.nickName;
+              _this.avatarUrl = infoRes.avatarUrl;
+            } });
+
+        } });
+
+    } },
   (0, _vuex.mapMutations)(['login']), {
     guideToLogin: function guideToLogin() {
       if (this.forcedLogin) {
