@@ -1,12 +1,13 @@
 <template>
 	<view>
+		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
-					<uni-icons type="arrowleft" class="icons" color="#333333" size="22" @click="back" />
-					<image src="../../static/images/home.png" class="homeIcon" mode=""></image>
+					<image class="fanhui" src="../../static/images/icon-fanhui.png" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy.png" @click="home" />
 				</view>
-				<view class="slottitle">领途羊</view>
+				<view class="slottitle">热门景点</view>
 			</uni-nav-bar>
 		</view>
 		<!-- 用户信息 -->
@@ -189,45 +190,53 @@ export default {
 </script>
 
 <style lang="scss">
-.example-body {
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: center;
-	padding: 0;
-	font-size: 28rpx;
-	background-color: #aa557f;
-}
-.example-body {
-	flex-direction: column;
-	padding: 30rpx;
-	background-color: #ffffff;
-}
-.example-body {
-	padding: 0;
-}
-.navBar {
-	display: flex;
-}
-.slotleft {
-	display: flex;
-	align-items: center;
-	.icon {
-		font-weight: 600;
+// 自定义导航栏样式
+	.example-body {
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 0;
+		font-size: 14px;
+		background-color: #aa557f;
+	}
+	.example-body {
+		flex-direction: column;
+		padding: 15px;
+		background-color: #ffffff;
+	}
+	.example-body {
+		padding: 0;
+	}
+	.navBar{
+		display: flex;
+	}
+	.slotleft{
+		display: flex;
+		align-items: center;
+	}
+	.fanhui{
+		width: 40rpx;
+		height: 40rpx;
+		margin-left: 40rpx;
 		margin-right: 20rpx;
 	}
-	.homeIcon {
+	.fhsy{
 		width: 40rpx;
 		height: 40rpx;
 	}
-}
-.slottitle {
-	margin-left: 180rpx;
-	font-size: 38rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 500;
-	color: rgba(0, 0, 0, 1);
-	margin-left: 64px;
-}
+	.slottitle{
+		margin-left: 162rpx;
+		font-size: 38rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:600;
+		color:rgba(0,0,0,1);
+	}
+	.button-v-line{
+		width: 1px;
+		height: 18px;
+		background-color: #2f2f2f;
+		margin: 0 8px;
+	}
 
 /* 用户信息 */
 

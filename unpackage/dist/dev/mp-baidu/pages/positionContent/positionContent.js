@@ -95,9 +95,6 @@ __webpack_require__.r(__webpack_exports__);
 var components = {
   uniNavBar: function() {
     return Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59))
-  },
-  uniIcons: function() {
-    return Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 74))
   }
 }
 var render = function() {
@@ -260,9 +257,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _uniNavBar = _interopRequireDefault(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));
 var _uniIcons = _interopRequireDefault(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 74));
 var _uniFav = _interopRequireDefault(__webpack_require__(/*! @/components/uni-fav/uni-fav.vue */ 82));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
 //
 //
 //

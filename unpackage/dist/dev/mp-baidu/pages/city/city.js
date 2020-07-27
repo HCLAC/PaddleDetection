@@ -213,8 +213,14 @@ var _uniNavBar = _interopRequireDefault(__webpack_require__(/*! @/components/uni
 //
 //
 //
-var _default = { data: function data() {return { citySelected: '青岛', city: '青岛', cityData: {}, //搜索历史记录
-      historyListShow: true, historyList: [], hotCityDate: [{ key: "yunnan", title: "云南" }, { key: "sichuan", title: "四川" }, { key: "guizhou", title: "贵州" }, { key: "chongqing", title: "重庆" }, { key: "chengdu", title: "成都" }, { key: "lijiang", title: "丽江" }, { key: "dali", title: "大理" }, { key: "leshan", title: "乐山" }, { key: "jiuzhaigou", title: "九寨沟" }, { key: "guiyang", title: "贵阳" }, { key: "kunming", title: "昆明" }] };}, methods: { back: function back() {uni.navigateBack({ delta: 1 });}, home: function home() {uni.switchTab({ url: "/pages/index/index" });} } };exports.default = _default;
+var _default = { data: function data() {return { citySelected: '', city: '', cityData: {}, //搜索历史记录
+      historyListShow: true, historyList: [], hotCityDate: [{ key: "yunnan", title: "云南" }, { key: "sichuan", title: "四川" }, { key: "guizhou", title: "贵州" }, { key: "chongqing", title: "重庆" }, { key: "chengdu", title: "成都" }, { key: "lijiang", title: "丽江" }, { key: "dali", title: "大理" }, { key: "leshan", title: "乐山" }, { key: "jiuzhaigou", title: "九寨沟" }, { key: "guiyang", title: "贵阳" }, { key: "kunming", title: "昆明" }] };}, onLoad: function onLoad() {this.getAdress();}, methods: { back: function back() {uni.navigateBack({ delta: 1 });}, home: function home() {uni.switchTab({ url: "/pages/index/index" });}, getAdress: function getAdress() {var _this = this;uni.getLocation({
+        type: 'wgs84',
+        success: function success(res) {
+          _this.city = res.city;
+        } });
+
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-baidu/dist/index.js */ 1)["default"]))
 
 /***/ }),

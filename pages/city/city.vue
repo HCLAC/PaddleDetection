@@ -16,7 +16,7 @@
 				<!-- 定位 -->
 				<view class='item'>
 					<image src="/static/images/Mapt.png" class="dd"></image>
-					<view class='cityname'>{{citySelected}}</view>
+					<view class='cityname'>{{city}}</view>
 					<text class="nowcity">当前位置</text>
 					<!-- <text class="getNowCity">获取当前位置</text> -->
 					<!-- <text class="tip">暂未开放，请选择以下热门城市</text> -->
@@ -42,8 +42,8 @@
 	export default {
 		data() {
 			return {
-				citySelected: '青岛',
-				city: '青岛',
+				citySelected: '',
+				city: '',
 				cityData: {},
 				//搜索历史记录
 				historyListShow: true,
@@ -63,6 +63,9 @@
 				]
 			}
 		},
+		onLoad() {
+			this.getAdress()
+		},
 		methods: {
 			back() {
 				uni.navigateBack({
@@ -73,6 +76,14 @@
 				uni.switchTab({
 					url:"/pages/index/index"
 				})
+			},
+			getAdress(){
+				uni.getLocation({
+				    type: 'wgs84',
+				    success:  (res)=> {
+						this.city = res.city
+				    }
+				});
 			},
 		}
 	}

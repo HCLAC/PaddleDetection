@@ -5,7 +5,7 @@
 				<block slot="left">
 					<view class="city">
 						<view><text class="uni-nav-bar-text">{{ city }}</text></view>
-						<image src="../../static/images/zhankai@2x.png" class="down" />
+						<image src="../../static/images/shouqiIcon.png" class="down" />
 					</view>
 				</block>
 				<view class="input-view" @click="confirm">
@@ -38,11 +38,21 @@
 		mixins: [MescrollMixin],
 		data() {
 			return {
-				city: '北京'
+				city: ''
 			}
 		},
+		onLoad() {
+			this.getAdress()
+		},
 		methods: {
-			
+			getAdress(){
+				uni.getLocation({
+				    type: 'wgs84',
+				    success:  (res)=> {
+						this.city = res.city
+				    }
+				});
+			},
 			clickLeft() {
 
 				uni.showToast({
@@ -304,8 +314,8 @@
 	}
 
 	.nav-bar-input {
-		width: 196rpx;
-		height: 28rpx;
+		width: 396rpx;
+		height: 72rpx;
 		line-height: 28rpx;
 		/* #ifdef APP-PLUS-NVUE */
 		/* #endif */

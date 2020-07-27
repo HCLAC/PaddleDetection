@@ -211,7 +211,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     toAttractionsDetails: function toAttractionsDetails() {
       uni.navigateTo({
-        url: "/pages/attractionsDetails/attractionsDetails" });
+        url: "/pages/positionContent/positionContent" });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-baidu/dist/index.js */ 1)["default"]))

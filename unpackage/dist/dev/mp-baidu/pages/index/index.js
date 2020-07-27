@@ -174,11 +174,21 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
   mixins: [_mescrollMixins.default],
   data: function data() {
     return {
-      city: '北京' };
+      city: '' };
 
   },
+  onLoad: function onLoad() {
+    this.getAdress();
+  },
   methods: {
+    getAdress: function getAdress() {var _this = this;
+      uni.getLocation({
+        type: 'wgs84',
+        success: function success(res) {
+          _this.city = res.city;
+        } });
 
+    },
     clickLeft: function clickLeft() {
 
       uni.showToast({
@@ -218,17 +228,17 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
     }, 1000);
   },
   /*下拉刷新的回调, 有三种处理方式:*/
-  downCallback: function downCallback() {var _this = this;
+  downCallback: function downCallback() {var _this2 = this;
     // 第1种: 请求具体接口
     uni.request({
       url: 'xxxx',
       success: function success() {
         // 请求成功,隐藏加载状态
-        _this.mescroll.endSuccess();
+        _this2.mescroll.endSuccess();
       },
       fail: function fail() {
         // 请求失败,隐藏加载状态
-        _this.mescroll.endErr();
+        _this2.mescroll.endErr();
       } });
 
     // 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
@@ -240,7 +250,7 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
     // 调用其他方法...
   },
   /*上拉加载的回调*/
-  upCallback: function upCallback(page) {var _this2 = this;
+  upCallback: function upCallback(page) {var _this3 = this;
     var pageNum = page.num; // 页码, 默认从1开始
     var pageSize = page.size; // 页长, 默认每页10条
     uni.request({
@@ -258,12 +268,12 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
         var hasNext = data.xxx;
 
         //设置列表数据
-        if (page.num == 1) _this2.dataList = []; //如果是第一页需手动置空列表
-        _this2.dataList = _this2.dataList.concat(curPageData); //追加新数据
+        if (page.num == 1) _this3.dataList = []; //如果是第一页需手动置空列表
+        _this3.dataList = _this3.dataList.concat(curPageData); //追加新数据
 
         // 请求成功,隐藏加载状态
         //方法一(推荐): 后台接口有返回列表的总页数 totalPage
-        _this2.mescroll.endByPage(curPageLen, totalPage);
+        _this3.mescroll.endByPage(curPageLen, totalPage);
 
         //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
         //this.mescroll.endBySize(curPageLen, totalSize); 
@@ -279,14 +289,14 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
         // 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
         // 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
         setTimeout(function () {
-          _this2.mescroll.endSuccess(curPageLen);
+          _this3.mescroll.endSuccess(curPageLen);
         }, 20);
 
 
       },
       fail: function fail() {
         //  请求失败,隐藏加载状态
-        _this2.mescroll.endErr();
+        _this3.mescroll.endErr();
       } });
 
 

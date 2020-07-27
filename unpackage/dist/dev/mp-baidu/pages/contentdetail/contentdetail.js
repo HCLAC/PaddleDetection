@@ -489,20 +489,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var _uniNavBar = _interopRequireDefault(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));
 var _uniIcons = _interopRequireDefault(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 74));
 var _uniFav = _interopRequireDefault(__webpack_require__(/*! @/components/uni-fav/uni-fav.vue */ 82));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
@@ -590,21 +576,7 @@ var _uniFav = _interopRequireDefault(__webpack_require__(/*! @/components/uni-fa
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _this;var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.default, uniFav: _uniFav.default }, data: function data() {return { indicatorDots: true, current: 0, list: [{ key: "1", title: "A", image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23327_s.jpg' }, { key: "2", title: "B", image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23325_s.jpg' }, { key: "3", title: "C", image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg' }, { key: "4", title: "D", image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/zzpic23369_s.jpg' }, { key: "5", title: "E", image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2130_s.jpg' }], likemessage: 144, favmessage: 219 };}, getOrder: function getOrder() {_this.swiperlength, _this.list = [{ key: '1', title: 'A' }, { key: '2', title: 'B' }, { key: '3', title: 'C' }, { key: '4', title: 'D' }, { key: '6', title: 'E' }, { key: '7', title: 'F' }];}, methods: { change: function change(e) {_this.current = e.detail.current;}, getOrder: function getOrder() {_this.swiperlength, _this.list = [{ key: "1", title: "A" }, { key: "2", title: "B" }, { key: "3", title: "C" }, { key: "4", title: "D" }, { key: "5", title: "E" }];}, back: function back() {uni.navigateBack({ delta: 1 });}, home: function home() {uni.switchTab({ url: "/pages/index/index" });}, likeclick: function likeclick() {// console.log("cccccccccccc")
+var _this;var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.default, uniFav: _uniFav.default }, data: function data() {return { indicatorDots: true, current: 0, list: [{ key: "1", title: "A", image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23327_s.jpg' }, { key: "2", title: "B", image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23325_s.jpg' }, { key: "3", title: "C", image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg' }, { key: "4", title: "D", image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/zzpic23369_s.jpg' }, { key: "5", title: "E", image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2130_s.jpg' }], likemessage: 144, favmessage: 219 };}, created: function created() {_this = this, _this.getOrder();}, methods: { change: function change(e) {_this.current = e.detail.current;}, getOrder: function getOrder() {_this.swiperlength, _this.list = [{ key: "1", title: "A" }, { key: "2", title: "B" }, { key: "3", title: "C" }, { key: "4", title: "D" }, { key: "5", title: "E" }];}, back: function back() {uni.navigateBack({ delta: 1 });}, home: function home() {uni.switchTab({ url: "/pages/index/index" });}, likeclick: function likeclick() {// console.log("cccccccccccc")
       this.likemessage++;}, favclick: function favclick() {// console.log("cccccccccccc")
       this.favmessage++;} // favClick() {
     // 	this.checked = !this.checked

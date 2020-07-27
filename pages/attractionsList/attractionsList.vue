@@ -75,7 +75,7 @@
 			},
 			toAttractionsDetails(){
 				uni.navigateTo({
-					url:"/pages/attractionsDetails/attractionsDetails"
+					url:"/pages/positionContent/positionContent"
 				})
 			}
 		}

@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui.png" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.png" @click="home" />
@@ -21,27 +21,14 @@
 						</swiper-item>
 						
 					</swiper>
-					<view class="imageCount">{{ current + 1 }}/{{ list.length }}</view>
-					<view class="dots">
-						<block v-for="(item, index) in list"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
-					</view>
-				</view>
-			</view>
-		</view>
-		<view class="userInfo">
-			<view class="left"><image src="../../static/images/userImg.png" mode=""></image></view>
-			<view class="right">
-				<view class="userName">Haley</view>
-				<view class="position">
-					<image class="positionIcon" src="../../static/images/positionIcon.png"></image>
-					<text>希腊</text>
+					<view class="imageCount">{{current+1}}/{{list.length}}</view>
 				</view>
 			</view>
 		</view>
 		<!-- 内容详情 -->
 		<view class="detailContent">
 			<view class="userMse">
-				<image class="userHeard" src="../../static/images/mine-actived.png"></image>
+				<image class="userHeard" src="../../static/images/userImg.png"></image>
 				<view class="userMse-r">
 					<view class="userNikename"> Haley </view>
 					<view class="adress">
@@ -87,7 +74,6 @@
 				<view class="favNum" v-model="favmessage">
 					{{favmessage}}
 				</view>
-				<view class="share"><image src="../../static/images/shareHere.png"></image></view>
 			</view>
 			<view class="share">
 				<image src="../../static/images/share.png"></image>
@@ -123,16 +109,9 @@
 				favmessage:219
 			}
 		},
-		getOrder() {
-			_this.swiperlength,
-				(_this.list = [
-					{ key: '1', title: 'A' },
-					{ key: '2', title: 'B' },
-					{ key: '3', title: 'C' },
-					{ key: '4', title: 'D' },
-					{ key: '6', title: 'E' },
-					{ key: '7', title: 'F' }
-				]);
+		created() {
+			_this = this,
+			_this.getOrder()
 		},
 		
 		methods: {

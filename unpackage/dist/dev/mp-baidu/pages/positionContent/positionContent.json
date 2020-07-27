@@ -2,7 +2,6 @@
   "navigationStyle": "custom",
   "component": true,
   "usingComponents": {
-    "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar",
-    "uni-icons": "/components/uni-icons/uni-icons"
+    "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar"
   }
 }
