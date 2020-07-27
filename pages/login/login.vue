@@ -29,7 +29,7 @@
 			<!-- 登录按钮 -->
 			<view class="loginButton" >
 				<button class="lb"   
-				 @click="submit" >登录</button>
+				 @click="submit" @tap="doLogin">登录</button>
 			</view>
 		</view>
 	</view>
@@ -93,7 +93,101 @@
 				// uni.setStorage({
 				// 	// phone:data.phone
 				// }),
-			}
+			},
+			getCode() {
+				let _this = this;
+				uni.hideKeyboard()
+				if (_this.getCodeisWaiting) {
+					return;
+				}
+				if (!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(_this.phone))) {
+					uni.showToast({
+						title: '请填写正确手机号码',
+						icon: "none"
+					});
+					return false;
+				}
+				_this.getCodeText = "发送中..."
+				_this.getCodeisWaiting = true;
+				_this.getCodeBtnColor = "rgba(255,255,255,0.5)"
+			
+				uni.request({
+					url: 'http://121.40.30.19/user/sendcaptcha',
+					data: {
+						'mobile': _this.phone
+					},
+					method: 'POST',
+					// header: {
+					// 	'Content-Type': 'application/x-www-form-urlencoded',
+					// 	//自定义请求头信息
+					// },
+					success: (res) => {
+						// _this.key = res.data.data.key;
+						//TODO 开发模式
+						_this.code = res.data.data.code;
+					}
+				});
+				//示例用定时器模拟请求效果
+				setTimeout(() => {
+					//uni.showToast({title: '验证码已发送',icon:"none"});
+					_this.setTimer();
+				}, 1000)
+			},
+			setTimer() {
+				let holdTime = 59,
+					_this = this;
+				_this.getCodeText = "60s重新获取"
+				_this.Timer = setInterval(() => {
+					if (holdTime <= 0) {
+						_this.getCodeisWaiting = false;
+						_this.getCodeBtnColor = "#ffffff";
+						_this.getCodeText = "获取验证码"
+						clearInterval(_this.Timer);
+						return;
+					}
+					_this.getCodeText = holdTime + "s重新获取"
+					holdTime--;
+				}, 1000)
+			},
+			doLogin() {
+				let _this = this;
+				uni.hideKeyboard()
+				//模板示例部分验证规则
+				// if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phone))){ 
+				// 	uni.showToast({title: '请填写正确手机号码',icon:"none"});
+				// 	return false; 
+				// } 
+			
+				uni.request({
+					url: 'http://121.40.30.19/user/login',
+					data: {
+						'key': _this.key,
+						'code': _this.code,
+						'mobile': _this.phone
+					},
+					method: 'POST',
+					// header: {
+					// 	'Content-Type': 'application/x-www-form-urlencoded',
+					// },
+					success: (res) => {
+						if (res.data.code == 200) {
+							_this.login(true, res.data.data, function() {
+								// _this.getRongyToken();
+								uni.showToast({
+									title: '登录成功',
+									icon: "none"
+								})
+							});
+						} else {
+							uni.showToast({
+								title: '验证码不正确',
+								icon: "none"
+							});
+							return false;
+						}
+					}
+				});
+			},
 		}
 	}
 </script>
@@ -173,7 +267,7 @@
 	}
 	// .is-input1:valid + .searchSel {display: block;}
 	.codeimg{
-		width:150rpx;
+		width:204rpx;
 		height:30rpx;
 		font-size:30rpx;
 		font-family:PingFangSC-Regular,PingFang SC;
