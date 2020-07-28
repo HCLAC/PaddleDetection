@@ -71,7 +71,7 @@
 				</view>
 				<view class="right">
 					<image src="../../static/images/mapBack.png" mode=""></image>
-					<view class="insideBox">
+					<view class="insideBox" @click="map">
 						<image src="../../static/images/dingwei.png" mode=""></image>
 						<text>导航</text>
 					</view>
@@ -180,11 +180,27 @@ export default {
 		},
 		showMore() {
 			this.isShow = !this.isShow;
-		}
+		},
 		// favClick() {
 		// 	this.checked = !this.checked
 		//  this.$forceUpdate()
 		// }
+		map(){
+			uni.getLocation({
+			    type: 'gcj02', //返回可以用于uni.openLocation的经纬度
+			    success: function (res) {
+			        const latitude = res.latitude;
+			        const longitude = res.longitude;
+			        uni.openLocation({
+			            latitude: latitude,
+			            longitude: longitude,
+			            success: function () {
+			                console.log('success');
+			            }
+			        });
+			    }
+			});
+		}
 	}
 };
 </script>

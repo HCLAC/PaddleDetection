@@ -384,11 +384,12 @@ var _uniFav = _interopRequireDefault(__webpack_require__(/*! @/components/uni-fa
 //
 var _this;var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.default, uniFav: _uniFav.default }, data: function data() {return { indicatorDots: true, current: 0, list: [{ key: '1', title: 'A' }, { key: '2', title: 'B' }, { key: '3', title: 'C' }, { key: '4', title: 'D' }, { key: '6', title: 'E' }, { key: '7', title: 'F' }], likemessage: 144, favmessage: 219, isShow: true };}, created: function created() {_this = this, _this.getOrder();}, methods: { change: function change(e) {_this.current = e.detail.current;}, getOrder: function getOrder() {_this.swiperlength, _this.list = [{ key: '1', title: 'A' }, { key: '2', title: 'B' }, { key: '3', title: 'C' }, { key: '4', title: 'D' }, { key: '6', title: 'E' }, { key: '7', title: 'F' }];}, back: function back() {uni.navigateBack({ delta: 1 });}, home: function home() {uni.switchTab({ url: '/pages/index/index' });}, likeclick: function likeclick() {// console.log("cccccccccccc")
       this.likemessage++;}, favclick: function favclick() {// console.log("cccccccccccc")
-      this.favmessage++;}, showMore: function showMore() {this.isShow = !this.isShow;} // favClick() {
+      this.favmessage++;}, showMore: function showMore() {this.isShow = !this.isShow;}, // favClick() {
     // 	this.checked = !this.checked
     //  this.$forceUpdate()
     // }
-  } };exports.default = _default;
+    map: function map() {uni.getLocation({ type: 'gcj02', //返回可以用于uni.openLocation的经纬度
+        success: function success(res) {var latitude = res.latitude;var longitude = res.longitude;uni.openLocation({ latitude: latitude, longitude: longitude, success: function success() {console.log('success');} });} });} } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-baidu/dist/index.js */ 1)["default"]))
 
 /***/ }),

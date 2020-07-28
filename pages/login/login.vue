@@ -180,12 +180,12 @@
 										title: '登录成功',
 										icon: "none"
 									}),
-									uni.getStorage({
-										key:'Authorization',
-										success:function(res){
-											console.log(res.data)
-										}
-									})
+									// uni.getStorage({
+									// 	key:'Authorization',
+									// 	success:function(res){
+									// 		console.log(res.data)
+									// 	}
+									// })
 									uni.reLaunch({
 										url:'../mine/mine'
 									})

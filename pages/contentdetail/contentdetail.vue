@@ -48,7 +48,7 @@
 			<!-- 内容文章 -->
 			<view class="contentText">
 				语雀是一款优雅高效的在线文档编辑与协同工具， 让每 个企业轻松拥有文档中心阿里巴巴集团内部使用多年， 众多中小企业首选。
-				<view class="copy">详情请+VX: 13456789012<text class="clcopy">点击复制</text></view>
+				<view class="copy">详情请+VX: {{VX}}<text class="clcopy" @click="copy">点击复制</text></view>
 				语雀是一款优雅高效的在线文档编辑与协同工具让每个 企业轻松拥有文档中心，阿里巴巴集团内部使用多年众 多中小企业首选语雀是一款优雅高效的在线文档编辑与 协同工具，让每个企业轻松拥有文档中心阿里巴巴集团 内部使用多年众多中小企业首选。
 			</view>
 			<view class="tips">
@@ -106,7 +106,8 @@
 					{key:"5",title:"E",image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2130_s.jpg',},
 				],
 				likemessage:144,
-				favmessage:219
+				favmessage:219,
+				VX:15020779433
 			}
 		},
 		created() {
@@ -145,6 +146,23 @@
 			favclick(){
 				// console.log("cccccccccccc")
 				this.favmessage++
+			},
+			copy(){
+				uni.setClipboardData({
+				    data: _this.VX,
+				    success: function () {
+				        // console.log('success');
+						uni.showToast({
+							title:'复制成功',
+							icon:"none"
+						})
+				    }
+				});
+				uni.getClipboardData({
+				    success: function (res) {
+				        console.log(res.data);
+				    }
+				});
 			}
 			// favClick() {
 			// 	this.checked = !this.checked
