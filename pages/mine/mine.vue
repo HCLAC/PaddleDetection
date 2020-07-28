@@ -169,8 +169,15 @@ export default {
 					this.avatarUrl = infoRes.avatarUrl
 			      }
 			    });
+				
 			  }
 			});
+			uni.getStorage({
+				key:'Authorization',
+				success:function(res){
+					console.log("token===>",res.data)
+				}
+			})
 		},
 		...mapMutations(['login']),
 		guideToLogin() {

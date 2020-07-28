@@ -114,6 +114,11 @@ export default {
 			this.loadOldKeyword();
 			this.loadHotKeyword();
 		},
+		back() {
+			uni.navigateBack({
+				delta: 1
+			})
+		},
 		blur() {
 			uni.hideKeyboard();
 		},

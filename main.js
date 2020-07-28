@@ -7,6 +7,7 @@ Vue.prototype.$store = store
 import uView from "uview-ui";
 Vue.use(uView);
 
+// import http from './api/api.js'
 // import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue"
 // Vue.component('mescroll-uni', MescrollUni)	
 	

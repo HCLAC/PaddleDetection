@@ -29,7 +29,7 @@
 			<!-- 登录按钮 -->
 			<view class="loginButton" >
 				<button class="lb"   
-				 @click="submit" @tap="doLogin">登录</button>
+				  @tap="doLogin">登录</button>
 			</view>
 		</view>
 	</view>
@@ -86,14 +86,7 @@
 					this.code = '';
 				}
 			},
-			submit(){
-				uni.reLaunch({
-					url:'../mine/mine'
-				})
-				// uni.setStorage({
-				// 	// phone:data.phone
-				// }),
-			},
+			
 			getCode() {
 				let _this = this;
 				uni.hideKeyboard()
@@ -110,23 +103,29 @@
 				_this.getCodeText = "发送中..."
 				_this.getCodeisWaiting = true;
 				_this.getCodeBtnColor = "rgba(255,255,255,0.5)"
-			
+				
+				// this.$ajax.post({
+				// 	url:'/user/sendcaptcha',
+				// 	param:{
+				// 		'mobile': _this.phone
+				// 	}
+				// }).then((res)=>{
+				// 	console.log(res.data)
+				// 	_this.code = res.data.data.code;
+				// })
+				
+				// 获取验证码
 				uni.request({
-					url: 'http://121.40.30.19/user/sendcaptcha',
-					data: {
-						'mobile': _this.phone
+					url:'http://121.40.30.19/user/sendcaptcha',
+					data:{
+						'mobile':this.phone
 					},
-					method: 'POST',
-					// header: {
-					// 	'Content-Type': 'application/x-www-form-urlencoded',
-					// 	//自定义请求头信息
-					// },
-					success: (res) => {
-						// _this.key = res.data.data.key;
-						//TODO 开发模式
+					method:'POST',
+					success: (res)=> {
 						_this.code = res.data.data.code;
 					}
-				});
+				}),
+				
 				//示例用定时器模拟请求效果
 				setTimeout(() => {
 					//uni.showToast({title: '验证码已发送',icon:"none"});
@@ -161,26 +160,44 @@
 				uni.request({
 					url: 'http://121.40.30.19/user/login',
 					data: {
-						'key': _this.key,
+						// 'key': _this.key,
 						'code': _this.code,
-						'mobile': _this.phone
+						'mobile': _this.phone,
+						'source':1
 					},
 					method: 'POST',
 					// header: {
 					// 	'Content-Type': 'application/x-www-form-urlencoded',
 					// },
 					success: (res) => {
-						if (res.data.code == 200) {
-							_this.login(true, res.data.data, function() {
+						console.log(res)
+						if (res.data.code == 0) {
+							// _this.login(true, res.data.data, function() {
 								// _this.getRongyToken();
-								uni.showToast({
-									title: '登录成功',
-									icon: "none"
-								})
-							});
+								uni.setStorageSync('Authorization',res.header.Authorization),
+								
+									uni.showToast({
+										title: '登录成功',
+										icon: "none"
+									}),
+									uni.getStorage({
+										key:'Authorization',
+										success:function(res){
+											console.log(res.data)
+										}
+									})
+									uni.reLaunch({
+										url:'../mine/mine'
+									})
+							
+								
+									// uni.setStorage({
+									// 	// phone:data.phone
+									// }),
+							// });
 						} else {
 							uni.showToast({
-								title: '验证码不正确',
+								title: '手机验证码错误',
 								icon: "none"
 							});
 							return false;
