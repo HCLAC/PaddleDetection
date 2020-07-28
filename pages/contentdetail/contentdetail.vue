@@ -15,13 +15,15 @@
 		<view class="uni-padding-wrap">
 			<view class="page-section swiper">
 				<view class="page-section-spacing">
-					<swiper @change="change" class="swiper" :indicator-dots="indicatorDots" indicator-color="#ababab" indicator-active-color="#2d2d2d">
+					<swiper @change="change" class="swiper" :indicator-dots="false" >
 						<swiper-item v-for="item in list" >
 							<image class="itemImg" mode="aspectFit" :src="item.image" ></image>
 						</swiper-item>
-						
 					</swiper>
 					<view class="imageCount">{{current+1}}/{{list.length}}</view>
+					<view class="dots">
+						<block v-for="(item, index) in list"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -246,7 +248,7 @@
 		background-color: #007AFF;
 	}
 	.imageCount {
-	  width: 90rpx;
+	  // width: 90rpx;
 	  height: 40rpx;
 	  background-color: rgba(0,0,0,0.6);
 	  border-radius: 20rpx;
@@ -259,8 +261,33 @@
 	  position: absolute;
 	  right: 28rpx;
 	  bottom: 28rpx;
+	  padding: 0 12rpx;
 	}
-	
+	//标记点样式
+	.dots {
+		width: 100%;
+		height: 10rpx;
+		display: flex;
+		justify-content: center;
+		position: absolute;
+		/* left: 320rpx; */
+		background: #ffff;
+		bottom: -20rpx;
+		.dot {
+			width: 10rpx;
+			height: 10rpx;
+			border-radius: 50%;
+			background: rgba(221, 221, 221, 1);
+			margin-right: 8rpx;
+		}
+		.activieDot {
+			width: 20rpx;
+			height: 10rpx;
+			background: rgba(48, 49, 51, 1);
+			border-radius: 3px;
+			margin-right: 8rpx;
+		}
+	}
 	/* 内容详情 */
 	.detailContent{
 		// padding: 15px;
@@ -269,7 +296,7 @@
 	.userMse{
 		display: flex;
 		margin-left: 28rpx;
-		margin-top: 20rpx;
+		margin-top: 40rpx;
 	}
 	.userHeard{
 		width: 80rpx;

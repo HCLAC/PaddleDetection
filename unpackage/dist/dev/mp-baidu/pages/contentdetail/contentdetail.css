@@ -311,7 +311,6 @@
   background-color: #007AFF;
 }
 .imageCount.data-v-32e87e5c {
-  width: 90rpx;
   height: 40rpx;
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 20rpx;
@@ -324,6 +323,35 @@
   position: absolute;
   right: 28rpx;
   bottom: 28rpx;
+  padding: 0 12rpx;
+}
+.dots.data-v-32e87e5c {
+  width: 100%;
+  height: 10rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  position: absolute;
+  /* left: 320rpx; */
+  background: #ffff;
+  bottom: -20rpx;
+}
+.dots .dot.data-v-32e87e5c {
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background: #dddddd;
+  margin-right: 8rpx;
+}
+.dots .activieDot.data-v-32e87e5c {
+  width: 20rpx;
+  height: 10rpx;
+  background: #303133;
+  border-radius: 3px;
+  margin-right: 8rpx;
 }
 /* 内容详情 */
 .userMse.data-v-32e87e5c {
@@ -331,7 +359,7 @@
   display: -webkit-flex;
   display: flex;
   margin-left: 28rpx;
-  margin-top: 20rpx;
+  margin-top: 40rpx;
 }
 .userHeard.data-v-32e87e5c {
   width: 80rpx;
