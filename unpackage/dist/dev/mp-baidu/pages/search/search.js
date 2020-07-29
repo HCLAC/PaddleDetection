@@ -137,7 +137,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search-revision/mehaotian-search-revision */ "components/mehaotian-search-revision/mehaotian-search-revision").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search-revision/mehaotian-search-revision.vue */ 176));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var touring = function touring() {Promise.all(/*! require.ensure | components/content/touring */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/content/touring")]).then((function () {return resolve(__webpack_require__(/*! @/components/content/touring.vue */ 183));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -225,6 +225,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js */ 247));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search-revision/mehaotian-search-revision */ "components/mehaotian-search-revision/mehaotian-search-revision").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search-revision/mehaotian-search-revision.vue */ 176));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var touring = function touring() {Promise.all(/*! require.ensure | components/content/touring */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/content/touring")]).then((function () {return resolve(__webpack_require__(/*! @/components/content/touring.vue */ 183));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   data: function data() {
     return {
@@ -268,12 +269,19 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     //加载热门搜索
-    loadHotKeyword: function loadHotKeyword() {
+    loadHotKeyword: function loadHotKeyword() {var _this = this;
       //定义热门搜索关键字，可以自己实现ajax请求数据再赋值
-      this.hotKeywordList = ['热门搜索1', '热门搜2', '热门搜索3', '热门搜索4', '热门搜索5'];
+      uni.request({
+        url: "http://121.40.30.19/search/hot",
+        method: "get",
+        success: function success(res) {
+          console.log(res);
+          _this.hotKeywordList = res.data.data;
+        } });
+
     },
     //监听输入
-    inputChange: function inputChange(event) {var _this = this;
+    inputChange: function inputChange(event) {var _this2 = this;
       //兼容引入组件时传入参数情况
       var keyword = event.detail ? event.detail.value : event;
       if (!keyword) {
@@ -286,17 +294,23 @@ __webpack_require__.r(__webpack_exports__);
 
       //以下示例截取淘宝的关键字，请替换成你的接口
       uni.request({
-        url: 'https://suggest.taobao.com/sug?code=utf-8&q=' + keyword, //仅为示例
+        url: 'http://121.40.30.19/search/suggest',
+        data: {
+          'query': keyword,
+          'hit': 8 },
+
+        // type:"GET",
         success: function success(res) {
-          if (res.data.result && res.data.result.length) {
-            _this.keywordList = [];
-            _this.noResult = '有结果';
-            _this.keywordList = _this.drawCorrelativeKeyword(res.data.result, keyword);
-            _this.isShowKeywordList = true;
+          console.log('请求', res);
+          if (res.data.data && res.data.data.length) {
+            _this2.keywordList = [];
+            _this2.noResult = '有结果';
+            _this2.keywordList = _this2.drawCorrelativeKeyword(res.data.data, keyword);
+            _this2.isShowKeywordList = true;
           } else {
-            _this.keywordList = [];
-            _this.noResult = '暂无结果';
-            _this.isShowKeywordList = false;
+            _this2.keywordList = [];
+            _this2.noResult = '暂无结果';
+            _this2.isShowKeywordList = false;
           }
         } });
 
@@ -319,8 +333,20 @@ __webpack_require__.r(__webpack_exports__);
       return keywordArr;
     },
     Toresults: function Toresults() {
-      uni.navigateTo({
-        url: '../searchResults/searchResults' });
+      var keyword = this.keyword;
+      uni.request({
+        url: "http://121.40.30.19/search",
+        data: {
+          'query': keyword,
+          'hit': 8 },
+
+        success: function success(res) {
+          console.log(res);
+          uni.navigateTo({
+            url: '../searchResults/searchResults' });
+
+        } });
+
 
     },
     //顶置关键字
@@ -328,13 +354,13 @@ __webpack_require__.r(__webpack_exports__);
       this.keyword = this.keywordList[index].keyword;
     },
     //清除历史搜索
-    oldDelete: function oldDelete() {var _this2 = this;
+    oldDelete: function oldDelete() {var _this3 = this;
       uni.showModal({
         content: '确定清除历史搜索记录？',
         success: function success(res) {
           if (res.confirm) {
             console.log('用户点击确定');
-            _this2.oldKeywordList = [];
+            _this3.oldKeywordList = [];
             uni.removeStorage({
               key: 'OldKeys' });
 
@@ -369,7 +395,7 @@ __webpack_require__.r(__webpack_exports__);
 
     },
     //保存关键字到历史记录
-    saveKeyword: function saveKeyword(keyword) {var _this3 = this;
+    saveKeyword: function saveKeyword(keyword) {var _this4 = this;
       uni.getStorage({
         key: 'OldKeys',
         success: function success(res) {
@@ -381,7 +407,7 @@ __webpack_require__.r(__webpack_exports__);
               data: JSON.stringify(OldKeys),
               success: function success(res) {
                 console.log(res);
-                _this3.oldKeywordList = OldKeys; //更新历史搜索
+                _this4.oldKeywordList = OldKeys; //更新历史搜索
               } });
 
           } else {
@@ -400,7 +426,7 @@ __webpack_require__.r(__webpack_exports__);
               key: 'OldKeys',
               data: JSON.stringify(OldKeys) });
 
-            _this3.oldKeywordList = OldKeys; //更新历史搜索
+            _this4.oldKeywordList = OldKeys; //更新历史搜索
           }
         },
         fail: function fail(e) {
@@ -409,7 +435,7 @@ __webpack_require__.r(__webpack_exports__);
 
     },
     //加载历史搜索,自动读取本地Storage
-    loadOldKeyword: function loadOldKeyword() {var _this4 = this;
+    loadOldKeyword: function loadOldKeyword() {var _this5 = this;
       uni.getStorage({
         key: 'OldKeys',
         success: function success(res) {
@@ -417,7 +443,7 @@ __webpack_require__.r(__webpack_exports__);
           var OldKeys = JSON.parse(res.data);
 
           // var OldKeys = res.data?res.data:[];
-          _this4.oldKeywordList = OldKeys;
+          _this5.oldKeywordList = OldKeys;
         } });
 
     } } };exports.default = _default;

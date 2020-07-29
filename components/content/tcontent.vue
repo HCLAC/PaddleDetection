@@ -6,16 +6,16 @@
 	            <view class="ht-r" @click="lookAll">查看更多<image src="../../static/images/查看更多@2x.png" class="moreIcon" mode=""></image></view>
 	        </view>
 	        <view class="hot-bot">
-	            <view class="hb-l">
+	            <view class="hb-l" @click='toAtt'>
 	                <image src="../../static/images/photos/48d2d599831121.5efb7ae587e4e.jpg"></image>
 	                <text>直布罗陀</text>
 	            </view>
 				<view class="hb-r">
-					<view class="hb-r1">
+					<view class="hb-r1" @click='toAtt'>
 					    <image src="../../static/images/photos/sda.jpeg"></image>
 					    <text>海南藏族自治州</text>
 					</view>
-					<view class="hb-r2">
+					<view class="hb-r2" @click='toAtt'>
 					    <image src="../../static/images/photos/15a4e698667005.5ee13e809affe.jpg"></image>
 					    <text>科索沃</text>
 					</view>
@@ -38,6 +38,11 @@
 		},
 		methods: {
 			lookAll(){
+				uni.navigateTo({
+					url:'/pages/attractionsList/attractionsList'
+				})
+			},
+			toAtt(){
 				uni.navigateTo({
 					url:'/pages/attractionsList/attractionsList'
 				})

@@ -39,8 +39,10 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
+import httpType from '../../httpType.js';
 
 export default {
+	
 	data() {
 		return {
 			nickName:"",
@@ -129,8 +131,16 @@ export default {
 	// 		this.guideToLogin()
 	// 	}
 	// },
+	
 	onLoad() {
-		this.getUserMsg()
+		this.getUserMsg(),
+		httpType.request({
+			url:"user/info",
+			method:'get',
+			success:function(res){
+				console.log(res.data)
+			}
+		})
 	},
 	methods: {
 		getUserMsg(){
@@ -167,6 +177,7 @@ export default {
 					console.log(infoRes.nickName)
 					this.nickName = infoRes.nickName
 					this.avatarUrl = infoRes.avatarUrl
+					uni.setStorageSync('nickName',infoRes.nickName)
 			      }
 			    });
 				

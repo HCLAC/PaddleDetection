@@ -61,7 +61,8 @@
 					</view>
 					<view class="hotList" v-if="forbid == ''">
 						<view class="hotItem" v-for="(keyword, index) in hotKeywordList" @tap="doSearch(keyword)" :key="index">
-							<image class="hotImg" src="../../static/images/hotIcon.png" mode=""></image>
+							<!-- <image class="hotImg " :src="`../../static/images/icon-${index+1>=3?3:index+1}.png`" mode=""></image> -->
+							<image class="hotImg " :src="`../../static/images/icon-${index+1}.png`" mode=""></image>
 							<view class="hotContent">{{ keyword }}</view>
 						</view>
 					</view>
@@ -85,7 +86,7 @@
 import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision.vue';
 import touring from '@/components/content/touring.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
-
+import httpType from '../../httpType.js';
 export default {
 	data() {
 		return {
@@ -131,7 +132,14 @@ export default {
 		//加载热门搜索
 		loadHotKeyword() {
 			//定义热门搜索关键字，可以自己实现ajax请求数据再赋值
-			this.hotKeywordList = ['热门搜索1', '热门搜2', '热门搜索3', '热门搜索4', '热门搜索5'];
+			uni.request({
+				url:"http://121.40.30.19/search/hot",
+				method:"get",
+				success:(res)=>{
+					console.log(res)
+					this.hotKeywordList = res.data.data
+				}
+			})
 		},
 		//监听输入
 		inputChange(event) {
@@ -147,12 +155,18 @@ export default {
 
 			//以下示例截取淘宝的关键字，请替换成你的接口
 			uni.request({
-				url: 'https://suggest.taobao.com/sug?code=utf-8&q=' + keyword, //仅为示例
-				success: res => {
-					if (res.data.result && res.data.result.length) {
+				url:'http://121.40.30.19/search/suggest',
+				data:{
+					'query':keyword,
+					'hit':8
+				},
+				// type:"GET",
+				success: (res)=> {
+					console.log('请求',res)
+					if (res.data.data && res.data.data.length) {
 						this.keywordList = [];
 						this.noResult = '有结果';
-						this.keywordList = this.drawCorrelativeKeyword(res.data.result, keyword);
+						this.keywordList = this.drawCorrelativeKeyword(res.data.data, keyword);
 						this.isShowKeywordList = true;
 					} else {
 						this.keywordList = [];
@@ -180,9 +194,21 @@ export default {
 			return keywordArr;
 		},
 		Toresults() {
-			uni.navigateTo({
-				url: '../searchResults/searchResults'
-			});
+			var keyword = this.keyword;
+			uni.request({
+				url:"http://121.40.30.19/search",
+				data:{
+					'query':keyword,
+					'hit':8
+				},
+				success:(res)=> {
+					console.log(res)
+					uni.navigateTo({
+						url: '../searchResults/searchResults'
+					});
+				}
+			})
+			
 		},
 		//顶置关键字
 		setKeyword(index) {
@@ -428,6 +454,7 @@ view {
 		height: 28rpx;
 		margin-right: 8rpx;
 	}
+	
 	.hotContent {
 		color: #303133;
 		font-size: 28rpx;
@@ -467,6 +494,15 @@ view {
 	justify-content: center;
 	align-items: center;
 }
+/*  自定义导航栏样式 */
+	.example-body {
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 0;
+		font-size: 14px;
+		background-color: #aa557f;
+	}
 	.example-body {
 		flex-direction: column;
 		padding: 15px;
@@ -481,23 +517,29 @@ view {
 	.slotleft{
 		display: flex;
 		align-items: center;
-		.icons{
-			font-weight: 600;
-			margin-right: 20rpx;
-		}
-		.homeIcon{
-			width: 40rpx;
-			height: 40rpx;
-		}
-		
+	}
+	.fanhui{
+		width: 40rpx;
+		height: 40rpx;
+		margin-left: 40rpx;
+		/* margin-right: 20rpx; */
+	}
+	.fhsy{
+		width: 40rpx;
+		height: 40rpx;
 	}
 	.slottitle{
-		margin-left: 200rpx;
-		font-size:38rpx;
+		margin-left: 220rpx;
+		font-size: 38rpx;
 		font-family:PingFangSC-Medium,PingFang SC;
 		font-weight:500;
 		color:rgba(0,0,0,1);
-		
+	}
+	.button-v-line{
+		width: 1px;
+		height: 18px;
+		background-color: #2f2f2f;
+		margin: 0 8px;
 	}
 	
 	

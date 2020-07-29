@@ -17,7 +17,7 @@
 			<view class="page-section swiper">
 				<view class="page-section-spacing">
 					<swiper @change="change" :autoplay="true" class="swiper" :indicator-dots="false">
-						<swiper-item v-for="item in list" class="swiper-item"><image src="../../static/images/photos/WechatIMG3.png" mode=""></image></swiper-item>
+						<swiper-item v-for="item in list" class="swiper-item"><image src="../../static/images/photos/sda.jpeg" mode=""></image></swiper-item>
 					</swiper>
 					<view class="imageCount">{{ current + 1 }}/{{ list.length }}</view>
 					<view class="dots">

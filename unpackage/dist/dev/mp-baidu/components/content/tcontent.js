@@ -157,6 +157,11 @@ __webpack_require__.r(__webpack_exports__);
       uni.navigateTo({
         url: '/pages/attractionsList/attractionsList' });
 
+    },
+    toAtt: function toAtt() {
+      uni.navigateTo({
+        url: '/pages/attractionsList/attractionsList' });
+
     } },
 
   components: {

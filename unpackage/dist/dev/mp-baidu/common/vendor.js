@@ -13666,6 +13666,81 @@ guid;exports.default = _default;
 
 /***/ }),
 
+/***/ 247:
+/*!*******************************************!*\
+  !*** D:/work/test/fengyan-mp/httpType.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _config = _interopRequireDefault(__webpack_require__(/*! ./config.js */ 248));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+var userInfo = uni.getStorageSync('Authorization'); //获取token
+var token = userInfo.token; //获取token
+
+// 请求封装
+function request(obj) {
+  var url = _config.default + obj.url; //地址
+  var data = obj.data || {};
+  var _success = obj.success;
+  var method = obj.method || 'POST';
+  uni.request({
+    url: url,
+    data: data,
+    header: {
+      'token': token },
+
+    method: method,
+    success: function success(res) {
+      // 判断token是否过期
+      if (res.data.status == 601) {
+        uni.showModal({
+          title: '提示',
+          content: res.data.statusMsg,
+          showCancel: false,
+          success: function success(res) {
+            if (res.confirm) {
+              uni.redirectTo({
+                url: '../Login/register' });
+
+            }
+          } });
+
+        return;
+      }
+
+      _success(res);
+
+
+
+    },
+    fail: function fail(res) {},
+    complete: function complete(res) {
+      console.log("请求成功");
+    } });
+
+}var _default =
+{
+  request: request };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-baidu/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 248:
+/*!*****************************************!*\
+  !*** D:/work/test/fengyan-mp/config.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // const baseurl = 'http://192.168.43.156/';  //公共接口请求地址
+var baseurl = 'http://121.40.30.19/';var _default =
+baseurl;exports.default = _default;
+
+/***/ }),
+
 /***/ 25:
 /*!***************************************************************!*\
   !*** D:/work/test/fengyan-mp/uview-ui/libs/function/color.js ***!

@@ -169,7 +169,7 @@ __webpack_require__.r(__webpack_exports__);
 {
   data: function data() {
     return {
-      defaultKeyword: "云南旅游",
+      defaultKeyword: "",
       keyword: "" };
 
   },
@@ -202,10 +202,17 @@ __webpack_require__.r(__webpack_exports__);
       uni.hideKeyboard();
     },
     //加载默认搜索关键字
-    loadDefaultKeyword: function loadDefaultKeyword() {
+    loadDefaultKeyword: function loadDefaultKeyword() {var _this = this;
       //定义默认搜索关键字，可以自己实现ajax请求数据再赋值,用户未输入时，以水印方式显示在输入框，直接不输入内容搜索会搜索默认关键字
-      this.defaultKeyword = "云南旅游";
+      // this.defaultKeyword = "云南旅游";
+      uni.getStorage({
+        key: "OldKeys",
+        success: function success(res) {
+          _this.defaultKeyword = OldKeys;
+        } });
+
     }
+
     // getLoadNum(num){
     //     console.log('共加载了:'+num);
     //     !this.isNewRenderDone&&uni.hideLoading()

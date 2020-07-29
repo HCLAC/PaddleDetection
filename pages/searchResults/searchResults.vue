@@ -30,7 +30,7 @@
 	export default {
 		data() {
 			return {
-				defaultKeyword: "云南旅游",
+				defaultKeyword: "",
 				keyword: "",
 			}
 		},
@@ -65,8 +65,15 @@
 			//加载默认搜索关键字
 			loadDefaultKeyword() {
 				//定义默认搜索关键字，可以自己实现ajax请求数据再赋值,用户未输入时，以水印方式显示在输入框，直接不输入内容搜索会搜索默认关键字
-				this.defaultKeyword = "云南旅游";
+				// this.defaultKeyword = "云南旅游";
+				uni.getStorage({
+					key:"OldKeys",
+					success: res =>{
+						this.defaultKeyword = OldKeys;
+					},
+				})
 			},
+			
 			// getLoadNum(num){
 			//     console.log('共加载了:'+num);
 			//     !this.isNewRenderDone&&uni.hideLoading()
