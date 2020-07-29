@@ -357,6 +357,7 @@
 	background:rgba(237,239,242,1);
 	border-radius:8rpx;
 	line-height: 60rpx;
+	font-size: 26rpx;
 }
 .city-button.data-v-5fb12034::after{ border: none;
 }

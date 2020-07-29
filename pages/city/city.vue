@@ -28,7 +28,7 @@
 					<view class='py' id="hot">国内热门省市</view>
 					<view class="hot-city" v-for="item in hotCityDate">
 						<button  class="city-button" type="default" size="mini">
-							{{item.title}}
+							{{item.name}}
 						</button>
 					</view>
 				</view>
@@ -48,25 +48,25 @@
 				//搜索历史记录
 				historyListShow: true,
 				historyList: [],
-				hotCityDate:[
-					{key:"yunnan",title:"云南"},
-					{key:"sichuan",title:"四川"},
-					{key:"guizhou",title:"贵州"},
-					{key:"chongqing",title:"重庆"},
-					{key:"chengdu",title:"成都"},
-					{key:"lijiang",title:"丽江"},
-					{key:"dali",title:"大理"},
-					{key:"leshan",title:"乐山"},
-					{key:"jiuzhaigou",title:"九寨沟"},
-					{key:"guiyang",title:"贵阳"},
-					{key:"kunming",title:"昆明"},
-				]
+				hotCityDate:[]
 			}
 		},
 		onLoad() {
 			this.getAdress()
+			this.getHotCity()
 		},
 		methods: {
+			getHotCity(){
+				uni.request({
+					url:'http://121.40.30.19/city/hot',
+					method:"GET",
+					success:(res)=> {
+						console.log(res)
+						this.hotCityDate = res.data.data
+						console.log('热门城市===>',res.data.data)
+					}
+				})
+			},
 			back() {
 				uni.navigateBack({
 					delta: 1
@@ -214,6 +214,7 @@
 		background:rgba(237,239,242,1);
 		border-radius:8rpx;
 		line-height: 60rpx;
+		font-size: 26rpx;
 	}
 	.city-button::after{ border: none; }
 </style>

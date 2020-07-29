@@ -214,10 +214,10 @@ var _uniNavBar = _interopRequireDefault(__webpack_require__(/*! @/components/uni
 //
 //
 var _default = { data: function data() {return { citySelected: '', city: '', cityData: {}, //搜索历史记录
-      historyListShow: true, historyList: [], hotCityDate: [{ key: "yunnan", title: "云南" }, { key: "sichuan", title: "四川" }, { key: "guizhou", title: "贵州" }, { key: "chongqing", title: "重庆" }, { key: "chengdu", title: "成都" }, { key: "lijiang", title: "丽江" }, { key: "dali", title: "大理" }, { key: "leshan", title: "乐山" }, { key: "jiuzhaigou", title: "九寨沟" }, { key: "guiyang", title: "贵阳" }, { key: "kunming", title: "昆明" }] };}, onLoad: function onLoad() {this.getAdress();}, methods: { back: function back() {uni.navigateBack({ delta: 1 });}, home: function home() {uni.switchTab({ url: "/pages/index/index" });}, getAdress: function getAdress() {var _this = this;uni.getLocation({
+      historyListShow: true, historyList: [], hotCityDate: [] };}, onLoad: function onLoad() {this.getAdress();this.getHotCity();}, methods: { getHotCity: function getHotCity() {var _this = this;uni.request({ url: 'http://121.40.30.19/city/hot', method: "GET", success: function success(res) {console.log(res);_this.hotCityDate = res.data.data;console.log('热门城市===>', res.data.data);} });}, back: function back() {uni.navigateBack({ delta: 1 });}, home: function home() {uni.switchTab({ url: "/pages/index/index" });}, getAdress: function getAdress() {var _this2 = this;uni.getLocation({
         type: 'wgs84',
         success: function success(res) {
-          _this.city = res.city;
+          _this2.city = res.city;
         } });
 
     } } };exports.default = _default;
