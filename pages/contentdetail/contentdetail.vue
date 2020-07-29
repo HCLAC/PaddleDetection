@@ -77,7 +77,7 @@
 					{{favmessage}}
 				</view>
 			</view>
-			<view class="share">
+			<view class="share" @click="share">
 				<image src="../../static/images/share.png"></image>
 			</view>
 			<view class="loginButton">登录</view>
@@ -165,6 +165,11 @@
 				        console.log(res.data);
 				    }
 				});
+			},
+			share(){
+				uni.showShareMenu({
+					
+				})
 			}
 			// favClick() {
 			// 	this.checked = !this.checked

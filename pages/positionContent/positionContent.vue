@@ -29,7 +29,7 @@
 		<view class="content">
 			<view class="contentHeader">
 				<view class="title">纳米比亚</view>
-				<image src="../../static/images/shareHere.png" mode=""></image>
+				<image src="../../static/images/shareHere.png" mode="" @click="share"></image>
 			</view>
 			<view class="tips">
 				<view class="tipHot">5A景区</view>
@@ -146,6 +146,11 @@ export default {
 	},
 
 	methods: {
+		share(){
+			uni.showShareMenu({
+				
+			})
+		},
 		change(e) {
 			_this.current = e.detail.current;
 		},

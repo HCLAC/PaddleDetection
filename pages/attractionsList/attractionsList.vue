@@ -199,12 +199,12 @@
 		background-repeat:no-repeat;
 		background-size:100% 100%;
 		// background-color: #4CD964;
-		background-image: url(../../static/images/photos/23b32199831121.5efb7ae58b7bc.jpg);
+		background-image: url(../../static/images/photos/48d2d599831121.5efb7ae587e4e.jpg);
 	}
 	.uni-bg-blue{
 		background-repeat:no-repeat;
 		background-size:100% 100%;
 		// background-color: #007AFF;
-		background-image: url(../../static/images/photos/48d2d599831121.5efb7ae587e4e.jpg);
+		background-image: url(../../static/images/photos/sda.jpeg);
 	}
 </style>

@@ -7,7 +7,7 @@
 	        </view>
 	        <view class="hot-bot">
 	            <view class="hb-l">
-	                <image src="../../static/images/photos/f0e1fe97524085.5ec6dde3b745f.jpg"></image>
+	                <image src="../../static/images/photos/48d2d599831121.5efb7ae587e4e.jpg"></image>
 	                <text>直布罗陀</text>
 	            </view>
 				<view class="hb-r">
@@ -16,7 +16,7 @@
 					    <text>海南藏族自治州</text>
 					</view>
 					<view class="hb-r2">
-					    <image src="../../static/images/photos/asxds.png"></image>
+					    <image src="../../static/images/photos/15a4e698667005.5ee13e809affe.jpg"></image>
 					    <text>科索沃</text>
 					</view>
 				</view>
