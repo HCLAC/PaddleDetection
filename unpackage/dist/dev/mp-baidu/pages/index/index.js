@@ -174,11 +174,13 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
   mixins: [_mescrollMixins.default],
   data: function data() {
     return {
-      city: '' };
+      city: '',
+      province: '' };
 
   },
   onLoad: function onLoad() {
-    this.getAdress();
+    this.getAdress(),
+    this.getLocation();
   },
   methods: {
     getAdress: function getAdress() {var _this = this;
@@ -186,7 +188,29 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
         type: 'wgs84',
         success: function success(res) {
           console.log(res);
-          _this.city = res.city;
+          _this.city = res.city,
+          _this.province = res.province;
+        } });
+
+    },
+    getLocation: function getLocation() {var _this2 = this;
+      // let _this = this;
+      uni.request({
+        url: 'http://192.168.43.156:8199/user/location',
+        data: {
+          // state:this.province,
+          // city:this.city
+          state: '山东省',
+          city: '青岛市' },
+
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(_this2.province);
+          console.log(_this2.city);
+          console.log('获取地址id', res);
         } });
 
     },
@@ -229,17 +253,17 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
     }, 1000);
   },
   /*下拉刷新的回调, 有三种处理方式:*/
-  downCallback: function downCallback() {var _this2 = this;
+  downCallback: function downCallback() {var _this3 = this;
     // 第1种: 请求具体接口
     uni.request({
       url: 'xxxx',
       success: function success() {
         // 请求成功,隐藏加载状态
-        _this2.mescroll.endSuccess();
+        _this3.mescroll.endSuccess();
       },
       fail: function fail() {
         // 请求失败,隐藏加载状态
-        _this2.mescroll.endErr();
+        _this3.mescroll.endErr();
       } });
 
     // 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
@@ -251,7 +275,7 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
     // 调用其他方法...
   },
   /*上拉加载的回调*/
-  upCallback: function upCallback(page) {var _this3 = this;
+  upCallback: function upCallback(page) {var _this4 = this;
     var pageNum = page.num; // 页码, 默认从1开始
     var pageSize = page.size; // 页长, 默认每页10条
     uni.request({
@@ -269,12 +293,12 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
         var hasNext = data.xxx;
 
         //设置列表数据
-        if (page.num == 1) _this3.dataList = []; //如果是第一页需手动置空列表
-        _this3.dataList = _this3.dataList.concat(curPageData); //追加新数据
+        if (page.num == 1) _this4.dataList = []; //如果是第一页需手动置空列表
+        _this4.dataList = _this4.dataList.concat(curPageData); //追加新数据
 
         // 请求成功,隐藏加载状态
         //方法一(推荐): 后台接口有返回列表的总页数 totalPage
-        _this3.mescroll.endByPage(curPageLen, totalPage);
+        _this4.mescroll.endByPage(curPageLen, totalPage);
 
         //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
         //this.mescroll.endBySize(curPageLen, totalSize); 
@@ -290,14 +314,14 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
         // 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
         // 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
         setTimeout(function () {
-          _this3.mescroll.endSuccess(curPageLen);
+          _this4.mescroll.endSuccess(curPageLen);
         }, 20);
 
 
       },
       fail: function fail() {
         //  请求失败,隐藏加载状态
-        _this3.mescroll.endErr();
+        _this4.mescroll.endErr();
       } });
 
 

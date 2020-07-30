@@ -46,7 +46,7 @@ function request(obj) {
 		success: function(res) {
 			// 判断token是否过期
 			console.log(res)
-			debugger
+			// debugger
 			if (res.data.code != 0) {
 				// debugger
 				uni.showModal({

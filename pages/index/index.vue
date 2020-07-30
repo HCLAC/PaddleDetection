@@ -38,11 +38,13 @@
 		mixins: [MescrollMixin],
 		data() {
 			return {
-				city: ''
+				city: '',
+				province:''
 			}
 		},
 		onLoad() {
-			this.getAdress()
+			this.getAdress(),
+			this.getLocation()
 		},
 		methods: {
 			getAdress(){
@@ -50,9 +52,31 @@
 				    type: 'wgs84',
 				    success:  (res)=> {
 						console.log(res)
-						this.city = res.city
-				    }
+						this.city = res.city,
+						this.province = res.province
+					}
 				});
+			},
+			getLocation(){
+				// let _this = this;
+				uni.request({
+					url:'http://192.168.43.156:8199/user/location',
+					data:{
+						// state:this.province,
+						// city:this.city
+						state:'山东省',
+						city:'青岛市'
+					},
+					method:'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded', 
+					},
+					success: (res) => {
+						console.log(this.province);
+						console.log(this.city)
+						console.log('获取地址id',res);
+					}
+				})
 			},
 			clickLeft() {
 
