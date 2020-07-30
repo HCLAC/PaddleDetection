@@ -49,6 +49,7 @@
 				uni.getLocation({
 				    type: 'wgs84',
 				    success:  (res)=> {
+						console.log(res)
 						this.city = res.city
 				    }
 				});

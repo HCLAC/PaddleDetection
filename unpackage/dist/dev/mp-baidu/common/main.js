@@ -20,7 +20,7 @@ _vue.default.prototype.$store = _store.default;_vue.default.use(_uviewUi.default
 // import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue"
 // Vue.component('mescroll-uni', MescrollUni)	
 
-_vue.default.config.productionTip = false;var MescrollBody = function MescrollBody() {Promise.all(/*! require.ensure | components/mescroll-uni/mescroll-body */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mescroll-uni/mescroll-body")]).then((function () {return resolve(__webpack_require__(/*! @/components/mescroll-uni/mescroll-body.vue */ 153));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+_vue.default.config.productionTip = false;var MescrollBody = function MescrollBody() {Promise.all(/*! require.ensure | components/mescroll-uni/mescroll-body */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mescroll-uni/mescroll-body")]).then((function () {return resolve(__webpack_require__(/*! @/components/mescroll-uni/mescroll-body.vue */ 155));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 _vue.default.component("mescroll-body", MescrollBody);
 _App.default.mpType = 'app';

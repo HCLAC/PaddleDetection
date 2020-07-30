@@ -63,7 +63,14 @@
 					success:(res)=> {
 						console.log(res)
 						this.hotCityDate = res.data.data
-						console.log('热门城市===>',res.data.data)
+						console.log('热门城市===>',res.data.data),
+						uni.setStorageSync('state_id',res.data.data)
+					}
+				}),
+				uni.getStorage({
+					key:'state_id',
+					success:function(res){
+						console.log("city===>",res.data)
 					}
 				})
 			},

@@ -214,7 +214,14 @@ var _uniNavBar = _interopRequireDefault(__webpack_require__(/*! @/components/uni
 //
 //
 var _default = { data: function data() {return { citySelected: '', city: '', cityData: {}, //搜索历史记录
-      historyListShow: true, historyList: [], hotCityDate: [] };}, onLoad: function onLoad() {this.getAdress();this.getHotCity();}, methods: { getHotCity: function getHotCity() {var _this = this;uni.request({ url: 'http://121.40.30.19/city/hot', method: "GET", success: function success(res) {console.log(res);_this.hotCityDate = res.data.data;console.log('热门城市===>', res.data.data);} });}, back: function back() {uni.navigateBack({ delta: 1 });}, home: function home() {uni.switchTab({ url: "/pages/index/index" });}, getAdress: function getAdress() {var _this2 = this;uni.getLocation({
+      historyListShow: true, historyList: [], hotCityDate: [] };}, onLoad: function onLoad() {this.getAdress();this.getHotCity();}, methods: { getHotCity: function getHotCity() {var _this = this;uni.request({ url: 'http://121.40.30.19/city/hot', method: "GET", success: function success(res) {console.log(res);_this.hotCityDate = res.data.data;console.log('热门城市===>', res.data.data), uni.setStorageSync('state_id', res.data.data);} }), uni.getStorage({ key: 'state_id', success: function success(res) {console.log("city===>", res.data);} });}, back: function back() {uni.navigateBack({ delta: 1 });},
+    home: function home() {
+      uni.switchTab({
+        url: "/pages/index/index" });
+
+    },
+    getAdress: function getAdress() {var _this2 = this;
+      uni.getLocation({
         type: 'wgs84',
         success: function success(res) {
           _this2.city = res.city;
@@ -303,7 +310,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   uniStatusBar: function() {
-    return __webpack_require__.e(/*! import() | components/uni-status-bar/uni-status-bar */ "components/uni-status-bar/uni-status-bar").then(__webpack_require__.bind(null, /*! @/components/uni-status-bar/uni-status-bar.vue */ 169))
+    return __webpack_require__.e(/*! import() | components/uni-status-bar/uni-status-bar */ "components/uni-status-bar/uni-status-bar").then(__webpack_require__.bind(null, /*! @/components/uni-status-bar/uni-status-bar.vue */ 171))
   },
   uniIcons: function() {
     return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 74))
@@ -346,7 +353,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniStatusBar = function uniStatusBar() {__webpack_require__.e(/*! require.ensure | components/uni-status-bar/uni-status-bar */ "components/uni-status-bar/uni-status-bar").then((function () {return resolve(__webpack_require__(/*! ../uni-status-bar/uni-status-bar.vue */ 169));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! ../uni-icons/uni-icons.vue */ 74));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniStatusBar = function uniStatusBar() {__webpack_require__.e(/*! require.ensure | components/uni-status-bar/uni-status-bar */ "components/uni-status-bar/uni-status-bar").then((function () {return resolve(__webpack_require__(/*! ../uni-status-bar/uni-status-bar.vue */ 171));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! ../uni-icons/uni-icons.vue */ 74));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 
 

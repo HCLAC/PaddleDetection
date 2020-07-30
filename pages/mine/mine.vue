@@ -47,50 +47,7 @@ export default {
 		return {
 			nickName:"",
 			avatarUrl:"",
-			tipList: [
-				{
-					key: '1',
-					tipTitle: '内容主标题（展示20个字符）',
-					tipBody:
-						'这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文',
-					tipAdress: '洱海·云南省大理市'
-				},
-				{
-					key: '2',
-					tipTitle: '内容主标题（展示20个字符）',
-					tipBody:
-						'这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文',
-					tipAdress: '云南'
-				},
-				{
-					key: '3',
-					tipTitle: '内容主标题（展示20个字符）',
-					tipBody:
-						'这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文',
-					tipAdress: '大理'
-				},
-				{
-					key: '4',
-					tipTitle: '内容主标题（展示20个字符）',
-					tipBody:
-						'这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文',
-					tipAdress: '泸沽湖'
-				},
-				{
-					key: '6',
-					tipTitle: '内容主标题（展示20个字符）',
-					tipBody:
-						'这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文',
-					tipAdress: '洱海·云南省大理市'
-				},
-				{
-					key: '7',
-					tipTitle: '内容主标题（展示20个字符）',
-					tipBody:
-						'这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文这里是正文',
-					tipAdress: '洱海·云南省大理市'
-				}
-			]
+			tipList: [			]
 		};
 	},
 	computed: mapState(['forcedLogin', 'hasLogin', 'phone']),
@@ -133,12 +90,32 @@ export default {
 	// },
 	
 	onLoad() {
-		this.getUserMsg(),
 		httpType.request({
 			url:"user/info",
 			method:'get',
 			success:function(res){
-				console.log(res.data)
+				console.log("用户信息",res)
+				// if (res.data.code !== 0) {
+				// 	// debugger
+				// 	uni.showModal({
+				// 		title: '提示',
+				// 		content: res.data.msg,
+				// 		showCancel: false,
+				// 		success: function(res) {
+				// 			if (res.confirm) {
+				// 				uni.redirectTo({
+				// 					url: '../login/login'
+				// 				})
+				// 			}
+				// 		}
+				// 	})
+				// 	return
+				// }
+				// if(res.data.data == null){
+				// 	uni.reLaunch({
+				// 		url:"../login/login"
+				// 	})
+				// }
 			}
 		})
 	},
@@ -183,20 +160,41 @@ export default {
 				
 			  }
 			});
-			uni.getStorage({
-				key:'Authorization',
-				success:function(res){
-					console.log("token===>",res.data)
-				}
-			})
+			// uni.getStorage({
+			// 	key:'Authorization',
+			// 	success:function(res){
+			// 		console.log("token===>",res.data)
+			// 	}
+			// })
 		},
+		// checkToken(){
+			// let uniIdToken = uni.getStorageSync('Authorization')
+			// uni.getStorage({
+			// 	key:'Authorization',
+			// 	success:function(res){
+			// 		console.log("token===>",res.data)
+			// 		if (e.result.code > 0) {
+			// 				//token过期或token不合法，重新登录
+			// 				if (this.forcedLogin) {
+			// 					uni.reLaunch({
+			// 						url: '../login/login'
+			// 					});
+			// 				} else {
+			// 					uni.navigateTo({
+			// 						url: '../login/login'
+			// 					});
+			// 				}
+			// 			}
+			// 	}
+			// })
+		// },
 		...mapMutations(['login']),
-		guideToLogin() {
-			if (this.forcedLogin) {
-				uni.navigateTo({
-					url: '../login/login'
-				});
-			}
+		// guideToLogin() {
+		// 	if (this.forcedLogin) {
+		// 		uni.navigateTo({
+		// 			url: '../login/login'
+		// 		});
+		// 	}
 			// uni.showModal({
 			// 	title: '未登录',
 			// 	content: '您未登录，需要登录后才能继续',
@@ -221,7 +219,7 @@ export default {
 			// 		}
 			// 	}
 			// });
-		}
+		// }
 	}
 };
 </script>
