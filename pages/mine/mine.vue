@@ -90,6 +90,7 @@ export default {
 	// },
 	
 	onLoad() {
+		this.getUserMsg(),
 		httpType.request({
 			url:"user/info",
 			method:'get',

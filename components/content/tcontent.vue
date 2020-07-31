@@ -5,7 +5,7 @@
 	            <text class="ht-l">热门景点</text>
 	            <view class="ht-r" @click="lookAll">查看更多<image src="../../static/images/查看更多@2x.png" class="moreIcon" mode=""></image></view>
 	        </view>
-	        <view class="hot-bot">
+	        <view class="hot-bot" >
 	            <view class="hb-l" @click='toAtt'>
 	                <image src="../../static/images/photos/48d2d599831121.5efb7ae587e4e.jpg"></image>
 	                <text>直布罗陀</text>
@@ -34,9 +34,22 @@
 	export default {
 		data() {
 			return {
+				hotAtt:''
 			}
 		},
+		onLoad() {
+			this.getHotAtt()
+		},
 		methods: {
+			getHotAtt(){
+				uni.getStorage({
+					key:'id',
+					success:function(res){
+						console.log('getHotAtt==',res)
+						this.hotAtt = res.data
+					}
+				})
+			},
 			lookAll(){
 				uni.navigateTo({
 					url:'/pages/attractionsList/attractionsList'

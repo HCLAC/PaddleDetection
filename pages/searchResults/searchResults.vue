@@ -5,7 +5,7 @@
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
 					<uni-icons type="arrowleft" class="icons" color="#333333" size="22" @click="back" />
-					<image src="../../static/images/home.png" class="homeIcon" mode=""></image>
+					<image src="../../static/images/home.png" class="homeIcon" mode="" @click="home"></image>
 				</view>
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>

@@ -149,10 +149,23 @@ __webpack_require__.r(__webpack_exports__);
 
 {
   data: function data() {
-    return {};
+    return {
+      hotAtt: '' };
 
   },
+  onLoad: function onLoad() {
+    this.getHotAtt();
+  },
   methods: {
+    getHotAtt: function getHotAtt() {
+      uni.getStorage({
+        key: 'id',
+        success: function success(res) {
+          console.log('getHotAtt==', res);
+          this.hotAtt = res.data;
+        } });
+
+    },
     lookAll: function lookAll() {
       uni.navigateTo({
         url: '/pages/attractionsList/attractionsList' });

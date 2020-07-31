@@ -196,6 +196,97 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/* 头条小程序组件内不能引入字体 */
 page.data-v-57280228 {
 		display: -webkit-box;
@@ -363,5 +454,117 @@ view.data-v-57280228 {
 }
 .example-body.data-v-57280228 {
 		padding: 0;
+}
+.cus-sty.data-v-57280228{
+		background-color: #F8F8F8;
+}
+	/* 热门景点 */
+.hot.data-v-57280228{
+	    display: -webkit-box;
+	    display: -webkit-flex;
+	    display: flex;
+	    -webkit-box-orient: vertical;
+	    -webkit-box-direction: normal;
+	    -webkit-flex-direction: column;
+	            flex-direction: column;
+}
+.hot .hot-top.data-v-57280228{
+	    display: -webkit-box;
+	    display: -webkit-flex;
+	    display: flex;
+	    -webkit-box-pack: justify;
+	    -webkit-justify-content: space-between;
+	            justify-content: space-between;
+}
+.ht-l.data-v-57280228{
+		width: 160rpx;
+		height: 40rpx;
+		font-size: 40rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:500;
+		color:rgba(48,49,51,1);
+		line-height:40rpx;
+		margin-top: 48rpx;
+		margin-left: 32rpx;
+}
+.hot-top .ht-r.data-v-57280228{
+		width: 152rpx;
+		height: 28rpx;
+	    font-size: 28rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(96,98,102,1);
+		line-height:28rpx;
+		margin: 54rpx 32rpx 0 0;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+}
+.moreIcon.data-v-57280228{
+		width: 28rpx;
+		height: 28rpx;
+		margin-left: 12rpx;
+}
+	/* 热门景点图 */
+.hot .hot-bot.data-v-57280228 {
+	    display: -webkit-box;
+	    display: -webkit-flex;
+	    display: flex;
+		margin-top: 32rpx;
+}
+.hb-l.data-v-57280228{
+		width: 360rpx;
+		height: 360rpx;
+		margin-left: 10rpx;
+		position: relative;
+}
+.hb-l image.data-v-57280228{
+		width: 100%;
+		height: 100%;
+		border-radius: 16rpx;
+		background:-webkit-linear-gradient(top,rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+		background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+}
+.hb-r.data-v-57280228{
+		margin: 0 0 0 10rpx;
+}
+.hb-r image.data-v-57280228{
+		width: 100%;
+		height: 100%;
+		border-radius: 8rpx;
+		background:-webkit-linear-gradient(top,rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+		background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+}
+.hb-r1.data-v-57280228{
+		width: 360rpx;
+		height: 174rpx;
+		margin-bottom: 10rpx;
+		position: relative;
+}
+.hb-r2.data-v-57280228{
+		width: 360rpx;
+		height: 174rpx;
+		position: relative;
+}
+.hot-bot  text.data-v-57280228{
+		position: absolute;
+		left: 22rpx;
+		bottom: 28rpx;
+	    font-size: 32rpx;
+		color: #FFFFFF;
+}
+	/* 正在旅行 */
+.touring.data-v-57280228{
+		margin-top: 48rpx;
+}
+.touring .tourtext.data-v-57280228{
+		width: 160rpx;
+		height: 104rpx;
+		line-height: 104rpx;
+		font-size: 40rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:500;
+		color: #303133;
+		margin-left: 32rpx;
 }
 

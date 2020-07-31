@@ -16,7 +16,35 @@
 		</view>
 		<!-- 内容 -->
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			<tcontent></tcontent>
+			<!-- <tcontent></tcontent> -->
+			<view class="cus-sty">
+			    <view class="hot">
+			        <view class="hot-top">
+			            <text class="ht-l">热门景点</text>
+			            <view class="ht-r" @click="lookAll">查看更多<image src="../../static/images/查看更多@2x.png" class="moreIcon" mode=""></image></view>
+			        </view>
+			        <view class="hot-bot"  >
+						<view class="hb-l" @click='toAtt'  >
+							<image :src="hotAtt[0].image"></image>
+							<text>{{hotAtt[0].name}}</text>
+						</view>
+						<view class="hb-r">
+							<view class="hb-r1" @click='toAtt'>
+								<image :src="hotAtt[1].image"></image>
+								<text>{{hotAtt[1].name}}</text>
+							</view>
+							<view class="hb-r2" @click='toAtt'>
+								<image :src="hotAtt[2].image"></image>
+								<text>{{hotAtt[2].name}}</text>
+							</view>
+						</view>
+			        </view>
+			    </view>
+			    <view class="touring">
+			        <text class="tourtext">正在旅行</text>
+					<touring class="touringList" ></touring>
+			    </view>
+			</view>
 		</mescroll-body>
 	</view>
 </template>
@@ -26,6 +54,7 @@
 	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue'
 	import uniSection from '@/components/uni-section/uni-section.vue'
 	import tcontent from '@/components/content/tcontent.vue'
+	import touring from '@/components/content/touring.vue'
 	// 引入mescroll-mixins.js
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	export default {
@@ -34,17 +63,23 @@
 			uniNavBar,
 			uniSection,
 			tcontent,
+			touring
 		},
 		mixins: [MescrollMixin],
 		data() {
 			return {
 				city: '',
-				province:''
+				province:'',
+				state_id:'',
+				city_id:'',
+				hotAtt:''
 			}
 		},
 		onLoad() {
 			this.getAdress(),
-			this.getLocation()
+			// this.getLocation(),
+			this.getSiteHot(),
+			this.getHotAtt()
 		},
 		methods: {
 			getAdress(){
@@ -53,29 +88,85 @@
 				    success:  (res)=> {
 						console.log(res)
 						this.city = res.city,
-						this.province = res.province
+						this.province = res.province,
+						
+							uni.request({
+								url:'http://192.168.43.156:8199/user/location',
+								// url:'http://121.40.30.19/user/location',
+								data:{
+									state:this.province,
+									city:this.city,
+									
+									// state:'山东省',
+									// city:'青岛市'
+								},
+								method:'POST',
+								header: {
+									'content-type': 'application/x-www-form-urlencoded', 
+								},
+								success: (res) => {
+									console.log(this.city)
+									// debugger
+									console.log(this.province)
+									console.log('获取地址id',res);
+									uni.setStorageSync('city_id',res.data)
+									console.log('存储本地',res.data.data)
+								}
+							})
+						
 					}
 				});
 			},
-			getLocation(){
-				// let _this = this;
-				uni.request({
-					url:'http://192.168.43.156:8199/user/location',
-					data:{
-						// state:this.province,
-						// city:this.city
-						state:'山东省',
-						city:'青岛市'
-					},
-					method:'POST',
-					header: {
-						'content-type': 'application/x-www-form-urlencoded', 
-					},
-					success: (res) => {
-						console.log(this.province);
-						console.log(this.city)
-						console.log('获取地址id',res);
+			
+			getSiteHot() {
+				uni.getStorage({
+					key:'city_id',
+					success:function(res){
+						console.log('取本地存储城市id',res.data)
+						this.state_id = res.data.data.state_id,
+						this.city_id = res.data.data.city_id
 					}
+				})
+				uni.request({
+					url:'http://192.168.43.156:8199/site/hot',
+					data:{
+						state_id:this.state_id,
+						city_id:this.city_id,
+						count:3,
+						sort_by:0
+					},
+					success:function(res){
+						console.log('热门景点',res)
+						uni.setStorageSync('id',res.data)
+						console.log('存储热门景点==',res)
+						// uni.setStorage({
+						// 	key:'id',
+						// 	data:res.data,
+						// 	success:function(res) {
+						// 		console.log('存储热门景点==',res)
+						// 	}
+						// })
+					}
+				})
+			},
+			getHotAtt(){
+				var _this = this
+				uni.getStorage({
+					key:'id',
+					success:function(res){
+						console.log('获取热门景点',res.data.data)
+						_this.hotAtt = res.data.data
+					}
+				})
+			},
+			lookAll(){
+				uni.navigateTo({
+					url:'/pages/attractionsList/attractionsList'
+				})
+			},
+			toAtt(){
+				uni.navigateTo({
+					url:'/pages/attractionsList/attractionsList'
 				})
 			},
 			clickLeft() {
@@ -351,5 +442,104 @@
 
 	.example-body {
 		padding: 0;
+	}
+	
+	.cus-sty{
+		background-color: #F8F8F8;
+	}
+	/* 热门景点 */
+	.hot{
+	    display: flex;
+	    flex-direction: column;
+	}
+	.hot .hot-top{
+	    display: flex;
+	    justify-content: space-between;
+	}
+	.ht-l{
+		width: 160rpx;
+		height: 40rpx;
+		font-size: 40rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:500;
+		color:rgba(48,49,51,1);
+		line-height:40rpx;
+		margin-top: 48rpx;
+		margin-left: 32rpx;
+	}
+	.hot-top .ht-r{
+		width: 152rpx;
+		height: 28rpx;
+	    font-size: 28rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(96,98,102,1);
+		line-height:28rpx;
+		margin: 54rpx 32rpx 0 0;
+		display: flex;
+	}
+	.moreIcon{
+		width: 28rpx;
+		height: 28rpx;
+		margin-left: 12rpx;
+	}
+	/* 热门景点图 */
+	.hot .hot-bot {
+	    display: flex;
+		margin-top: 32rpx;
+	}
+	.hb-l{
+		width: 360rpx;
+		height: 360rpx;
+		margin-left: 10rpx;
+		position: relative;
+	}
+	.hb-l image{
+		width: 100%;
+		height: 100%;
+		border-radius: 16rpx;
+		background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+	}
+	.hb-r{
+		margin: 0 0 0 10rpx;
+	}
+	.hb-r image{
+		width: 100%;
+		height: 100%;
+		border-radius: 8rpx;
+		background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+	}
+	.hb-r1{
+		width: 360rpx;
+		height: 174rpx;
+		margin-bottom: 10rpx;
+		position: relative;
+	}
+	.hb-r2{
+		width: 360rpx;
+		height: 174rpx;
+		position: relative;
+	}
+	.hot-bot  text{
+		position: absolute;
+		left: 22rpx;
+		bottom: 28rpx;
+	    font-size: 32rpx;
+		color: #FFFFFF;
+	}
+	/* 正在旅行 */
+	.touring{
+		margin-top: 48rpx;
+	}
+	.touring .tourtext{
+		width: 160rpx;
+		height: 104rpx;
+		line-height: 104rpx;
+		font-size: 40rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:500;
+		color: #303133;
+		margin-left: 32rpx;
+		
 	}
 </style>

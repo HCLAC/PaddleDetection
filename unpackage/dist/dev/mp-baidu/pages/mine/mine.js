@@ -222,6 +222,7 @@ var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js
   // },
 
   onLoad: function onLoad() {
+    this.getUserMsg(),
     _httpType.default.request({
       url: "user/info",
       method: 'get',

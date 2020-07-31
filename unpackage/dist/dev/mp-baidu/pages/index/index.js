@@ -163,55 +163,146 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 42));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 74));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 104));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var tcontent = function tcontent() {__webpack_require__.e(/*! require.ensure | components/content/tcontent */ "components/content/tcontent").then((function () {return resolve(__webpack_require__(/*! @/components/content/tcontent.vue */ 164));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 42));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 74));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 104));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var tcontent = function tcontent() {__webpack_require__.e(/*! require.ensure | components/content/tcontent */ "components/content/tcontent").then((function () {return resolve(__webpack_require__(/*! @/components/content/tcontent.vue */ 164));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var touring = function touring() {Promise.all(/*! require.ensure | components/content/touring */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/content/touring")]).then((function () {return resolve(__webpack_require__(/*! @/components/content/touring.vue */ 185));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: {
     uniIcons: uniIcons,
     uniNavBar: uniNavBar,
     uniSection: uniSection,
-    tcontent: tcontent },
+    tcontent: tcontent,
+    touring: touring },
 
   mixins: [_mescrollMixins.default],
   data: function data() {
     return {
       city: '',
-      province: '' };
+      province: '',
+      state_id: '',
+      city_id: '',
+      hotAtt: '' };
 
   },
   onLoad: function onLoad() {
     this.getAdress(),
-    this.getLocation();
+    // this.getLocation(),
+    this.getSiteHot(),
+    this.getHotAtt();
   },
   methods: {
-    getAdress: function getAdress() {var _this = this;
+    getAdress: function getAdress() {var _this2 = this;
       uni.getLocation({
         type: 'wgs84',
         success: function success(res) {
           console.log(res);
-          _this.city = res.city,
-          _this.province = res.province;
+          _this2.city = res.city,
+          _this2.province = res.province,
+
+          uni.request({
+            url: 'http://192.168.43.156:8199/user/location',
+            // url:'http://121.40.30.19/user/location',
+            data: {
+              state: _this2.province,
+              city: _this2.city
+
+              // state:'山东省',
+              // city:'青岛市'
+            },
+            method: 'POST',
+            header: {
+              'content-type': 'application/x-www-form-urlencoded' },
+
+            success: function success(res) {
+              console.log(_this2.city);
+              // debugger
+              console.log(_this2.province);
+              console.log('获取地址id', res);
+              uni.setStorageSync('city_id', res.data);
+              console.log('存储本地', res.data.data);
+            } });
+
+
         } });
 
     },
-    getLocation: function getLocation() {var _this2 = this;
-      // let _this = this;
-      uni.request({
-        url: 'http://192.168.43.156:8199/user/location',
-        data: {
-          // state:this.province,
-          // city:this.city
-          state: '山东省',
-          city: '青岛市' },
 
-        method: 'POST',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded' },
+    getSiteHot: function getSiteHot() {
+      uni.getStorage({
+        key: 'city_id',
+        success: function success(res) {
+          console.log('取本地存储城市id', res.data);
+          this.state_id = res.data.data.state_id,
+          this.city_id = res.data.data.city_id;
+        } });
+
+      uni.request({
+        url: 'http://192.168.43.156:8199/site/hot',
+        data: {
+          state_id: this.state_id,
+          city_id: this.city_id,
+          count: 3,
+          sort_by: 0 },
 
         success: function success(res) {
-          console.log(_this2.province);
-          console.log(_this2.city);
-          console.log('获取地址id', res);
+          console.log('热门景点', res);
+          uni.setStorageSync('id', res.data);
+          console.log('存储热门景点==', res);
+          // uni.setStorage({
+          // 	key:'id',
+          // 	data:res.data,
+          // 	success:function(res) {
+          // 		console.log('存储热门景点==',res)
+          // 	}
+          // })
         } });
+
+    },
+    getHotAtt: function getHotAtt() {
+      var _this = this;
+      uni.getStorage({
+        key: 'id',
+        success: function success(res) {
+          console.log('获取热门景点', res.data.data);
+          _this.hotAtt = res.data.data;
+        } });
+
+    },
+    lookAll: function lookAll() {
+      uni.navigateTo({
+        url: '/pages/attractionsList/attractionsList' });
+
+    },
+    toAtt: function toAtt() {
+      uni.navigateTo({
+        url: '/pages/attractionsList/attractionsList' });
 
     },
     clickLeft: function clickLeft() {
