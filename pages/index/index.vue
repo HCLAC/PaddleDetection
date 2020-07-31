@@ -91,8 +91,8 @@
 						this.province = res.province,
 						
 							uni.request({
-								url:'http://192.168.43.156:8199/user/location',
-								// url:'http://121.40.30.19/user/location',
+								// url:'http://192.168.43.156:8199/user/location',
+								url:'http://121.40.30.19/user/location',
 								data:{
 									state:this.province,
 									city:this.city,
@@ -119,23 +119,28 @@
 			},
 			
 			getSiteHot() {
+				var _this = this
+				// var city_id = uni.getStorageSync('city_id')
+				// var state_id = uni.getStorageSync('state_id')
+				// console.log('取本地存储城市id',city_id)
 				uni.getStorage({
 					key:'city_id',
 					success:function(res){
 						console.log('取本地存储城市id',res.data)
-						this.state_id = res.data.data.state_id,
-						this.city_id = res.data.data.city_id
+						_this.state_id = res.data.data.state_id,
+						_this.city_id = res.data.data.city_id
 					}
 				})
 				uni.request({
-					url:'http://192.168.43.156:8199/site/hot',
+					// url:'http://192.168.43.156:8199/site/hot',
+					url:'http://121.40.30.19/site/hot',
 					data:{
-						state_id:this.state_id,
-						city_id:this.city_id,
+						state_id:_this.state_id,
+						city_id:_this.city_id,
 						count:3,
 						sort_by:0
 					},
-					success:function(res){
+					success:(res)=>{
 						console.log('热门景点',res)
 						uni.setStorageSync('id',res.data)
 						console.log('存储热门景点==',res)
@@ -158,6 +163,8 @@
 						_this.hotAtt = res.data.data
 					}
 				})
+				// var hotAtt = uni.getStorageSync('id')
+				// console.log('------------------',hotAtt)
 			},
 			lookAll(){
 				uni.navigateTo({
@@ -165,6 +172,7 @@
 				})
 			},
 			toAtt(){
+				
 				uni.navigateTo({
 					url:'/pages/attractionsList/attractionsList'
 				})
@@ -211,7 +219,7 @@
 						downCallback(){
 							// 第1种: 请求具体接口
 							uni.request({
-								url: 'xxxx',
+								url: 'http://121.40.30.19/site/hot',
 								success: () => {
 									// 请求成功,隐藏加载状态
 									this.mescroll.endSuccess()

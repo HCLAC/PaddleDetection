@@ -158,8 +158,8 @@
 				// } 
 			
 				uni.request({
-					// url: 'http://121.40.30.19/user/login',
-					url:'http://192.168.43.156:8199/user/login',
+					url: 'http://121.40.30.19/user/login',
+					// url:'http://192.168.43.156:8199/user/login',
 					data: {
 						// 'key': _this.key,
 						'code': _this.code,

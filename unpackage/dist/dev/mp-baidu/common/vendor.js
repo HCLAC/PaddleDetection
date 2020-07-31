@@ -3011,9 +3011,9 @@ function request(obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var baseurl = 'http://192.168.43.156:8199/'; //公共接口请求地址
-// const baseurl = 'http://121.40.30.19/';
-var _default = baseurl;exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // const baseurl = 'http://192.168.43.156:8199/';  //公共接口请求地址
+var baseurl = 'http://121.40.30.19/';var _default =
+baseurl;exports.default = _default;
 
 /***/ }),
 

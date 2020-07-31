@@ -13,36 +13,22 @@
 		<!-- 卡片列表 -->
 		<view class="content">
 			<view class="card" v-for="item in cardList" @click="toAttractionsDetails">
-				<text class="title">{{item.title}}</text>
-				<view class="cardContent">{{item.content}}</view>
+				<text class="title">{{item.name}}</text>
+				<view class="cardContent">{{item.description}}</view>
 				<view class="uni-padding-wrap">
 					<view class="page-section swiper">
 						<view class="page-section-spacing">
 							<swiper class="swiper" display-multiple-items="3" >
-								<swiper-item>
-									<view class="swiper-item uni-bg-red">A</view>
-								</swiper-item>
-								<swiper-item>
-									<view class="swiper-item uni-bg-green">B</view>
-								</swiper-item>
-								<swiper-item>
-									<view class="swiper-item uni-bg-blue">C</view>
-								</swiper-item>
-								<swiper-item>
-									<view class="swiper-item uni-bg-red">D</view>
-								</swiper-item>
-								<swiper-item>
-									<view class="swiper-item uni-bg-green">E</view>
-								</swiper-item>
-								<swiper-item>
-									<view class="swiper-item uni-bg-blue">F</view>
-								</swiper-item>
+								<view v-for="(item,index) in item.images">
+									<image class="swiper-item " :src="item"></image>
+								</view>
 							</swiper>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
+		
 	</view>
 </template>
 
@@ -51,18 +37,67 @@
 	export default {
 		data() {
 			return {
+				state_id:'',
+				city_id:'',
 				cardList:[
-					{key:"1",title:"玉龙雪山",content:"玉龙雪山在纳西语中被称为“欧鲁”，意为“天山”。其十三座雪峰连绵不绝，宛若一条“巨龙”腾越飞舞，故称为“玉龙”。又因其岩性主要为石灰岩与玄武岩，黑白分明，所以又称为“黑白雪山”。是纳西人的神山，传说纳西族保护神“三多”的化身。"},
-					{key:"2",title:"玉龙雪山",content:"玉龙雪山在纳西语中被称为“欧鲁”，意为“天山”。其十三座雪峰连绵不绝，宛若一条“巨龙”腾越飞舞，故称为“玉龙”。又因其岩性主要为石灰岩与玄武岩，黑白分明，所以又称为“黑白雪山”。是纳西人的神山，传说纳西族保护神“三多”的化身。"},
-					{key:"3",title:"玉龙雪山",content:"玉龙雪山在纳西语中被称为“欧鲁”，意为“天山”。其十三座雪峰连绵不绝，宛若一条“巨龙”腾越飞舞，故称为“玉龙”。又因其岩性主要为石灰岩与玄武岩，黑白分明，所以又称为“黑白雪山”。是纳西人的神山，传说纳西族保护神“三多”的化身。"},
-					{key:"4",title:"玉龙雪山",content:"玉龙雪山在纳西语中被称为“欧鲁”，意为“天山”。其十三座雪峰连绵不绝，宛若一条“巨龙”腾越飞舞，故称为“玉龙”。又因其岩性主要为石灰岩与玄武岩，黑白分明，所以又称为“黑白雪山”。是纳西人的神山，传说纳西族保护神“三多”的化身。"},
 				]
 			}
 		},
 		components:{
 			uniNavBar
 		},
+		onLoad() {
+			this.getHotAttList()
+			this.showHotAttList()
+		},
+		// onShow() {
+		// 	this.getHotAttList()
+		// 	this.showHotAttList()
+		// },
 		methods: {
+			getHotAttList(){
+				var _this = this
+				var city_id = uni.getStorageSync('city_id');
+				var state_id = uni.getStorageSync('state_id');
+				// uni.getStorages({
+				// 	key:'city_id',
+				// 	success:function(res){
+				// 		console.log('取本地存储城市id',res.data)
+				// 		_this.state_id = res.data.data.state_id,
+				// 		_this.city_id = res.data.data.city_id
+				// 	}
+				// }),
+				// console.log('----===',city_id)
+				uni.request({
+					url:'http://121.40.30.19/site/list',
+					data:{
+						state_id:state_id,
+						city_id:city_id,
+						count:20,
+						page:1,
+						sort_by:1
+					},
+					success:(res)=>{
+						console.log("热门景点列表=========",res)
+						uni.setStorageSync('id',res.data)
+						
+					}
+				})
+				// this.$forceUpdate();
+			},
+			showHotAttList(){
+				var _this = this
+				uni.getStorage({
+					key:'id',
+					success:function(res){
+						console.log('取数据',res)
+						_this.cardList = res.data.data.List
+					}
+				})
+				// this.$forceUpdate();
+				// var cardList = uni.getStorageSync('id')
+				
+			},
 			back() {
 				uni.navigateBack({
 					delta: 1
@@ -189,22 +224,5 @@
 	.uni-padding-wrap{
 		// padding: 10px;
 	}
-	.uni-bg-red{
-		background-repeat:no-repeat;
-		background-size:100% 100%;
-		// background-color: #EA552D;
-		background-image: url(../../static/images/photos/15a4e698667005.5ee13e809affe.jpg);
-	}
-	.uni-bg-green{
-		background-repeat:no-repeat;
-		background-size:100% 100%;
-		// background-color: #4CD964;
-		background-image: url(../../static/images/photos/48d2d599831121.5efb7ae587e4e.jpg);
-	}
-	.uni-bg-blue{
-		background-repeat:no-repeat;
-		background-size:100% 100%;
-		// background-color: #007AFF;
-		background-image: url(../../static/images/photos/sda.jpeg);
-	}
+	
 </style>

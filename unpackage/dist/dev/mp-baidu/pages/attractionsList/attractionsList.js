@@ -170,35 +170,70 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {
   data: function data() {
     return {
-      cardList: [
-      { key: "1", title: "玉龙雪山", content: "玉龙雪山在纳西语中被称为“欧鲁”，意为“天山”。其十三座雪峰连绵不绝，宛若一条“巨龙”腾越飞舞，故称为“玉龙”。又因其岩性主要为石灰岩与玄武岩，黑白分明，所以又称为“黑白雪山”。是纳西人的神山，传说纳西族保护神“三多”的化身。" },
-      { key: "2", title: "玉龙雪山", content: "玉龙雪山在纳西语中被称为“欧鲁”，意为“天山”。其十三座雪峰连绵不绝，宛若一条“巨龙”腾越飞舞，故称为“玉龙”。又因其岩性主要为石灰岩与玄武岩，黑白分明，所以又称为“黑白雪山”。是纳西人的神山，传说纳西族保护神“三多”的化身。" },
-      { key: "3", title: "玉龙雪山", content: "玉龙雪山在纳西语中被称为“欧鲁”，意为“天山”。其十三座雪峰连绵不绝，宛若一条“巨龙”腾越飞舞，故称为“玉龙”。又因其岩性主要为石灰岩与玄武岩，黑白分明，所以又称为“黑白雪山”。是纳西人的神山，传说纳西族保护神“三多”的化身。" },
-      { key: "4", title: "玉龙雪山", content: "玉龙雪山在纳西语中被称为“欧鲁”，意为“天山”。其十三座雪峰连绵不绝，宛若一条“巨龙”腾越飞舞，故称为“玉龙”。又因其岩性主要为石灰岩与玄武岩，黑白分明，所以又称为“黑白雪山”。是纳西人的神山，传说纳西族保护神“三多”的化身。" }] };
+      state_id: '',
+      city_id: '',
+      cardList: [] };
 
 
   },
   components: {
     uniNavBar: uniNavBar },
 
+  onLoad: function onLoad() {
+    this.getHotAttList();
+    this.showHotAttList();
+  },
+  // onShow() {
+  // 	this.getHotAttList()
+  // 	this.showHotAttList()
+  // },
   methods: {
+    getHotAttList: function getHotAttList() {
+      var _this = this;
+      var city_id = uni.getStorageSync('city_id');
+      var state_id = uni.getStorageSync('state_id');
+      // uni.getStorages({
+      // 	key:'city_id',
+      // 	success:function(res){
+      // 		console.log('取本地存储城市id',res.data)
+      // 		_this.state_id = res.data.data.state_id,
+      // 		_this.city_id = res.data.data.city_id
+      // 	}
+      // }),
+      // console.log('----===',city_id)
+      uni.request({
+        url: 'http://121.40.30.19/site/list',
+        data: {
+          state_id: state_id,
+          city_id: city_id,
+          count: 20,
+          page: 1,
+          sort_by: 1 },
+
+        success: function success(res) {
+          console.log("热门景点列表=========", res);
+          uni.setStorageSync('id', res.data);
+
+        } });
+
+      // this.$forceUpdate();
+    },
+    showHotAttList: function showHotAttList() {
+      var _this = this;
+      uni.getStorage({
+        key: 'id',
+        success: function success(res) {
+          console.log('取数据', res);
+          _this.cardList = res.data.data.List;
+        } });
+
+      // this.$forceUpdate();
+      // var cardList = uni.getStorageSync('id')
+
+    },
     back: function back() {
       uni.navigateBack({
         delta: 1 });
