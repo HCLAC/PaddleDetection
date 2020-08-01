@@ -192,7 +192,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 42));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 74));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 104));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var tcontent = function tcontent() {__webpack_require__.e(/*! require.ensure | components/content/tcontent */ "components/content/tcontent").then((function () {return resolve(__webpack_require__(/*! @/components/content/tcontent.vue */ 164));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var touring = function touring() {Promise.all(/*! require.ensure | components/content/touring */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/content/touring")]).then((function () {return resolve(__webpack_require__(/*! @/components/content/touring.vue */ 185));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 42));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 74));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 104));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var tcontent = function tcontent() {__webpack_require__.e(/*! require.ensure | components/content/tcontent */ "components/content/tcontent").then((function () {return resolve(__webpack_require__(/*! @/components/content/tcontent.vue */ 164));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var touring = function touring() {Promise.all(/*! require.ensure | components/content/touring */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/content/touring")]).then((function () {return resolve(__webpack_require__(/*! @/components/content/touring.vue */ 171));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: {
     uniIcons: uniIcons,
@@ -215,23 +215,24 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
     this.getAdress(),
     // this.getLocation(),
     this.getSiteHot(),
-    this.getHotAtt();
+    // this.getHotAtt(),
+    this.getSystem();
   },
   methods: {
-    getAdress: function getAdress() {var _this2 = this;
+    getAdress: function getAdress() {var _this = this;
       uni.getLocation({
         type: 'wgs84',
         success: function success(res) {
           console.log(res);
-          _this2.city = res.city,
-          _this2.province = res.province,
+          _this.city = res.city,
+          _this.province = res.province,
 
           uni.request({
             // url:'http://192.168.43.156:8199/user/location',
             url: 'http://121.40.30.19/user/location',
             data: {
-              state: _this2.province,
-              city: _this2.city
+              state: _this.province,
+              city: _this.city
 
               // state:'山东省',
               // city:'青岛市'
@@ -241,9 +242,9 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
               'content-type': 'application/x-www-form-urlencoded' },
 
             success: function success(res) {
-              console.log(_this2.city);
+              console.log(_this.city);
               // debugger
-              console.log(_this2.province);
+              console.log(_this.province);
               console.log('获取地址id', res);
               uni.setStorageSync('city_id', res.data);
               console.log('存储本地', res.data.data);
@@ -255,24 +256,24 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
     },
 
     getSiteHot: function getSiteHot() {
-      var _this = this;
-      // var city_id = uni.getStorageSync('city_id')
-      // var state_id = uni.getStorageSync('state_id')
+      var that = this;
+      var city_id = uni.getStorageSync('city_id');
+      var state_id = uni.getStorageSync('state_id');
       // console.log('取本地存储城市id',city_id)
-      uni.getStorage({
-        key: 'city_id',
-        success: function success(res) {
-          console.log('取本地存储城市id', res.data);
-          _this.state_id = res.data.data.state_id,
-          _this.city_id = res.data.data.city_id;
-        } });
-
+      // uni.getStorage({
+      // 	key:'city_id',
+      // 	success:function(res){
+      // 		console.log('取本地存储城市id',res.data)
+      // 		this.state_id = res.data.data.state_id,
+      // 		this.city_id = res.data.data.city_id
+      // 	}
+      // })
       uni.request({
         // url:'http://192.168.43.156:8199/site/hot',
         url: 'http://121.40.30.19/site/hot',
         data: {
-          state_id: _this.state_id,
-          city_id: _this.city_id,
+          state_id: state_id,
+          city_id: city_id,
           count: 3,
           sort_by: 0 },
 
@@ -280,6 +281,8 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
           console.log('热门景点', res);
           uni.setStorageSync('id', res.data);
           console.log('存储热门景点==', res);
+          that.hotAtt = res.data.data;
+          console.log('hotAtt=====', that.hotAtt);
           // uni.setStorage({
           // 	key:'id',
           // 	data:res.data,
@@ -290,17 +293,26 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
         } });
 
     },
-    getHotAtt: function getHotAtt() {
-      var _this = this;
-      uni.getStorage({
-        key: 'id',
+    // getHotAtt(){
+    // 	// var _this = this
+    // 	uni.getStorage({
+    // 		key:'id',
+    // 		success:res=>{
+    // 			console.log('获取热门景点',res.data.data)
+    // 			this.hotAtt = res.data.data
+    // 		}
+    // 	})
+    // this.$forceUpdate() 
+    // var hotAtt = uni.getStorageSync('id')
+    // console.log('------------------',hotAtt)
+    // },
+    // 设备信息
+    getSystem: function getSystem() {
+      uni.getSystemInfo({
         success: function success(res) {
-          console.log('获取热门景点', res.data.data);
-          _this.hotAtt = res.data.data;
+          console.log('设备信息', res);
         } });
 
-      // var hotAtt = uni.getStorageSync('id')
-      // console.log('------------------',hotAtt)
     },
     lookAll: function lookAll() {
       uni.navigateTo({
@@ -352,17 +364,17 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
     }, 1000);
   },
   /*下拉刷新的回调, 有三种处理方式:*/
-  downCallback: function downCallback() {var _this3 = this;
+  downCallback: function downCallback() {var _this2 = this;
     // 第1种: 请求具体接口
     uni.request({
       url: 'http://121.40.30.19/site/hot',
       success: function success() {
         // 请求成功,隐藏加载状态
-        _this3.mescroll.endSuccess();
+        _this2.mescroll.endSuccess();
       },
       fail: function fail() {
         // 请求失败,隐藏加载状态
-        _this3.mescroll.endErr();
+        _this2.mescroll.endErr();
       } });
 
     // 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
@@ -374,7 +386,7 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
     // 调用其他方法...
   },
   /*上拉加载的回调*/
-  upCallback: function upCallback(page) {var _this4 = this;
+  upCallback: function upCallback(page) {var _this3 = this;
     var pageNum = page.num; // 页码, 默认从1开始
     var pageSize = page.size; // 页长, 默认每页10条
     uni.request({
@@ -392,12 +404,12 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
         var hasNext = data.xxx;
 
         //设置列表数据
-        if (page.num == 1) _this4.dataList = []; //如果是第一页需手动置空列表
-        _this4.dataList = _this4.dataList.concat(curPageData); //追加新数据
+        if (page.num == 1) _this3.dataList = []; //如果是第一页需手动置空列表
+        _this3.dataList = _this3.dataList.concat(curPageData); //追加新数据
 
         // 请求成功,隐藏加载状态
         //方法一(推荐): 后台接口有返回列表的总页数 totalPage
-        _this4.mescroll.endByPage(curPageLen, totalPage);
+        _this3.mescroll.endByPage(curPageLen, totalPage);
 
         //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
         //this.mescroll.endBySize(curPageLen, totalSize); 
@@ -413,14 +425,14 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
         // 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
         // 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
         setTimeout(function () {
-          _this4.mescroll.endSuccess(curPageLen);
+          _this3.mescroll.endSuccess(curPageLen);
         }, 20);
 
 
       },
       fail: function fail() {
         //  请求失败,隐藏加载状态
-        _this4.mescroll.endErr();
+        _this3.mescroll.endErr();
       } });
 
 

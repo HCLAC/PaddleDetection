@@ -79,7 +79,8 @@
 			this.getAdress(),
 			// this.getLocation(),
 			this.getSiteHot(),
-			this.getHotAtt()
+			// this.getHotAtt(),
+			this.getSystem()
 		},
 		methods: {
 			getAdress(){
@@ -104,7 +105,7 @@
 								header: {
 									'content-type': 'application/x-www-form-urlencoded', 
 								},
-								success: (res) => {
+								success: res => {
 									console.log(this.city)
 									// debugger
 									console.log(this.province)
@@ -119,31 +120,33 @@
 			},
 			
 			getSiteHot() {
-				var _this = this
-				// var city_id = uni.getStorageSync('city_id')
-				// var state_id = uni.getStorageSync('state_id')
+				var that = this
+				var city_id = uni.getStorageSync('city_id')
+				var state_id = uni.getStorageSync('state_id')
 				// console.log('取本地存储城市id',city_id)
-				uni.getStorage({
-					key:'city_id',
-					success:function(res){
-						console.log('取本地存储城市id',res.data)
-						_this.state_id = res.data.data.state_id,
-						_this.city_id = res.data.data.city_id
-					}
-				})
+				// uni.getStorage({
+				// 	key:'city_id',
+				// 	success:function(res){
+				// 		console.log('取本地存储城市id',res.data)
+				// 		this.state_id = res.data.data.state_id,
+				// 		this.city_id = res.data.data.city_id
+				// 	}
+				// })
 				uni.request({
 					// url:'http://192.168.43.156:8199/site/hot',
 					url:'http://121.40.30.19/site/hot',
 					data:{
-						state_id:_this.state_id,
-						city_id:_this.city_id,
+						state_id:state_id,
+						city_id:city_id,
 						count:3,
 						sort_by:0
 					},
-					success:(res)=>{
+					success:res=>{
 						console.log('热门景点',res)
 						uni.setStorageSync('id',res.data)
 						console.log('存储热门景点==',res)
+						that.hotAtt = res.data.data
+						console.log('hotAtt=====',that.hotAtt)
 						// uni.setStorage({
 						// 	key:'id',
 						// 	data:res.data,
@@ -154,17 +157,26 @@
 					}
 				})
 			},
-			getHotAtt(){
-				var _this = this
-				uni.getStorage({
-					key:'id',
-					success:function(res){
-						console.log('获取热门景点',res.data.data)
-						_this.hotAtt = res.data.data
-					}
-				})
+			// getHotAtt(){
+			// 	// var _this = this
+			// 	uni.getStorage({
+			// 		key:'id',
+			// 		success:res=>{
+			// 			console.log('获取热门景点',res.data.data)
+			// 			this.hotAtt = res.data.data
+			// 		}
+			// 	})
+				// this.$forceUpdate() 
 				// var hotAtt = uni.getStorageSync('id')
 				// console.log('------------------',hotAtt)
+			// },
+			// 设备信息
+			getSystem(){
+				uni.getSystemInfo({
+					success:function(res){
+						console.log('设备信息',res)
+					}
+				})
 			},
 			lookAll(){
 				uni.navigateTo({

@@ -12,7 +12,7 @@
 		</view>
 		<!-- 卡片列表 -->
 		<view class="content">
-			<view class="card" v-for="item in cardList" @click="toAttractionsDetails">
+			<view class="card" v-for="item in cardList.List" @click="toAttractionsDetails">
 				<text class="title">{{item.name}}</text>
 				<view class="cardContent">{{item.description}}</view>
 				<view class="uni-padding-wrap">
@@ -48,7 +48,7 @@
 		},
 		onLoad() {
 			this.getHotAttList()
-			this.showHotAttList()
+			// this.showHotAttList()
 		},
 		// onShow() {
 		// 	this.getHotAttList()
@@ -56,48 +56,49 @@
 		// },
 		methods: {
 			getHotAttList(){
-				var _this = this
-				var city_id = uni.getStorageSync('city_id');
-				var state_id = uni.getStorageSync('state_id');
-				// uni.getStorages({
-				// 	key:'city_id',
-				// 	success:function(res){
-				// 		console.log('取本地存储城市id',res.data)
-				// 		_this.state_id = res.data.data.state_id,
-				// 		_this.city_id = res.data.data.city_id
-				// 	}
-				// }),
+				var that = this
+				// var city_id = uni.getStorageSync('city_id');
+				// var state_id = uni.getStorageSync('state_id');
+				uni.getStorage({
+					key:'city_id',
+					success:function(res){
+						console.log('取本地存储城市id',res.data)
+						that.state_id = res.data.data.state_id
+						that.city_id = res.data.data.city_id
+					}
+				}),
 				// console.log('----===',city_id)
 				uni.request({
 					url:'http://121.40.30.19/site/list',
 					data:{
-						state_id:state_id,
-						city_id:city_id,
+						state_id:that.state_id,
+						city_id:that.city_id,
 						count:20,
 						page:1,
 						sort_by:1
 					},
-					success:(res)=>{
+					success:res=>{
 						console.log("热门景点列表=========",res)
 						uni.setStorageSync('id',res.data)
-						
+						that.cardList = res.data.data
+						console.log('cardList====',that.cardList)
 					}
 				})
 				// this.$forceUpdate();
 			},
-			showHotAttList(){
-				var _this = this
-				uni.getStorage({
-					key:'id',
-					success:function(res){
-						console.log('取数据',res)
-						_this.cardList = res.data.data.List
-					}
-				})
-				// this.$forceUpdate();
-				// var cardList = uni.getStorageSync('id')
+			// showHotAttList(){
+			// 	var that = this
+			// 	uni.getStorage({
+			// 		key:'id',
+			// 		success:function(res){
+			// 			console.log('取数据',res.data)
+			// 			that.cardList = res.data.data.List
+			// 		}
+			// 	})
+			// 	this.$forceUpdate();
+			// 	// var cardList = uni.getStorageSync('id')
 				
-			},
+			// },
 			back() {
 				uni.navigateBack({
 					delta: 1
