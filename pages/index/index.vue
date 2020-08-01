@@ -42,7 +42,95 @@
 			    </view>
 			    <view class="touring">
 			        <text class="tourtext">正在旅行</text>
-					<touring class="touringList" ></touring>
+					<!-- <touring class="touringList" ></touring> -->
+					<view class="wrap">
+						<!-- <u-button @click="clear">清空列表</u-button> -->
+						<u-waterfall v-model="list" ref="uWaterfall" >
+							<template v-slot:left="{leftList}">
+								<view class="demo-warter demo-warter-l" v-for="(item, index) in leftList" :key="index" @click="onPageJump">
+									<!-- 警告：微信小程序不支持嵌入lazyload组件，请自行如下使用image标签 -->
+									
+									<!-- <u-lazy-load threshold="-200" border-radius="8" :image="item.image" :index="index" ></u-lazy-load> -->
+									<image class="demo-image"  :src="item.image" :index="index" mode="widthFix"></image>
+									<view class="adress">
+										<image class="adreessIcon" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
+										<view class="adressText">
+											{{item.location}}
+										</view>
+									</view>
+									
+									<view class="titleTip">
+										<view class="demo-tag">
+											<view class="demo-tag-owner" v-if="item.type==1">
+												游记
+											</view>
+											<view class="demo-tag-owner" v-if="item.type==2">
+												攻略
+											</view>
+										</view>
+										<view class="demo-title">
+											{{item.title}}
+										</view>
+									</view>
+									<view class="demo-user">
+										<view class="userMessage">
+											<image class="userHeard" :src="item.avatar"></image>
+											<view class="userNikename">{{ item.author_name }}</view>
+										</view>
+										<view class="count">
+											<image src="../../static/images/hear选中(1).png"></image>
+												{{ item.like_count || 0 }}
+											</view>
+									</view>
+									
+									<!-- 微信小程序无效，因为它不支持在template中引入组件 -->
+									<!-- <u-icon name="close-circle-fill" color="#fa3534" size="34" class="u-close" @click="remove(item.id)"></u-icon> -->
+								</view>
+							</template>
+							<template v-slot:right="{rightList}">
+								<view class="demo-warter" v-for="(item, index) in rightList" :key="index" @click="onPageJump">
+									
+									<!-- <u-lazy-load threshold="-200" border-radius="8" :image="item.image" :index="index"></u-lazy-load> -->
+									<image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
+									<view class="adress">
+										<image class="adreessIcon" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
+										<view class="adressText">
+											{{item.location}}
+										</view>
+									</view>
+									<!-- <view class="demo-img-wrap">
+										 <image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
+									</view> -->
+									<view class="titleTip">
+										<view class="demo-tag">
+											<view class="demo-tag-owner" v-if="item.type==1">
+												游记
+											</view>
+											<view class="demo-tag-owner" v-if="item.type==2">
+												攻略
+											</view>
+										</view>
+										<view class="demo-title">
+											{{item.title}}
+										</view>
+									</view>
+									<view class="demo-user">
+										<view class="userMessage">
+											<image class="userHeard" :src="item.avatar"></image>
+											<view class="userNikename">{{ item.author_name }}</view>
+										</view>
+										<view class="count">
+											<image src="../../static/images/heart未选中.png" ></image>
+											{{ item.like_count || 0 }}
+										</view>
+									</view>
+									<!-- 微信小程序无效，因为它不支持在template中引入组件 -->
+									<!-- <u-icon name="close-circle-fill" color="#fa3534" size="34" class="u-close" @click="remove(item.id)"></u-icon> -->
+								</view>
+							</template>
+						</u-waterfall>
+						<!-- <u-loadmore bg-color="rgb(240, 240, 240)" :status="loadStatus" @loadmore="addRandomData"></u-loadmore> -->
+					</view>
 			    </view>
 			</view>
 		</mescroll-body>
@@ -72,15 +160,17 @@
 				province:'',
 				state_id:'',
 				city_id:'',
-				hotAtt:''
+				hotAtt:'',
+				list: [
+					
+				]
 			}
 		},
 		onLoad() {
 			this.getAdress(),
-			// this.getLocation(),
 			this.getSiteHot(),
-			// this.getHotAtt(),
-			this.getSystem()
+			this.getSystem(),
+			this.getArticleList()
 		},
 		methods: {
 			getAdress(){
@@ -142,11 +232,11 @@
 						sort_by:0
 					},
 					success:res=>{
-						console.log('热门景点',res)
+						// console.log('热门景点',res)
 						uni.setStorageSync('id',res.data)
-						console.log('存储热门景点==',res)
+						// console.log('存储热门景点==',res)
 						that.hotAtt = res.data.data
-						console.log('hotAtt=====',that.hotAtt)
+						// console.log('hotAtt=====',that.hotAtt)
 						// uni.setStorage({
 						// 	key:'id',
 						// 	data:res.data,
@@ -157,19 +247,30 @@
 					}
 				})
 			},
-			// getHotAtt(){
-			// 	// var _this = this
-			// 	uni.getStorage({
-			// 		key:'id',
-			// 		success:res=>{
-			// 			console.log('获取热门景点',res.data.data)
-			// 			this.hotAtt = res.data.data
-			// 		}
-			// 	})
-				// this.$forceUpdate() 
-				// var hotAtt = uni.getStorageSync('id')
-				// console.log('------------------',hotAtt)
-			// },
+			// 获取文章列表
+			getArticleList(){
+				var that = this
+				var city_id = uni.getStorageSync('city_id')
+				var state_id = uni.getStorageSync('state_id')
+				uni.request({
+					// url:'http://192.168.43.156:8199/article/list',
+					url:'http://121.40.30.19/article/list',
+					data:{
+						state_id:state_id,
+						city_id:city_id,
+						count:20,
+						page:1,
+						sort_by:1
+					},
+					success:res=>{
+						console.log('文章列表',res)
+						uni.setStorageSync('article_id',res.data)
+						console.log('存储文章列表==',res)
+						that.list = res.data.data.list
+						console.log('list=====',that.list)
+					}
+				})
+			},
 			// 设备信息
 			getSystem(){
 				uni.getSystemInfo({
@@ -561,5 +662,129 @@
 		color: #303133;
 		margin-left: 32rpx;
 		
+	}
+	.demo-warter-l{
+		margin-left:10rpx ;
+	}
+	.demo-warter {
+		margin-top: 0;
+		margin-right: 10rpx;
+		margin-bottom: 48rpx;
+		position: relative;
+		background-color: #FFFFFF;
+	}
+	
+	
+	
+	.demo-image {
+		width: 100%;
+		border-radius: 8rpx 8rpx 0 0 ;
+	}
+	.adress{
+		position: absolute;
+		left: 4rpx;
+		bottom: 174rpx;
+		display: flex;
+		align-items: center;
+		width:144rpx;
+		height:40rpx;
+		background:rgba(0,0,0,0.6);
+		border-radius:0px 14rpx 0px 0px;
+	}
+	.adreessIcon{
+		width: 24rpx;
+		height: 24rpx;
+		margin-right: 4rpx;
+	}
+	.adressText{
+		font-size:24rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:500;
+		color:rgba(255,255,255,1);
+		line-height:24px;
+	}
+	.titleTip{
+		display: flex;
+		margin-top: 24rpx;
+		margin-left: 8rpx;
+	}
+	.demo-title {
+		width: 278rpx;
+		height: 70rpx;
+		font-size: 28rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:500;
+		color:rgba(48,49,51,1);
+		margin-left: 8rpx;
+		// line-height:28rpx;
+	}
+	
+	.demo-tag {
+		
+	}
+	
+	.demo-tag-owner {
+		width: 52rpx;
+		height: 28rpx;
+		text-align: center;
+		align-items: center;
+		color: #0091FF;
+		border: 2rpx solid rgba(0,145,255,1);
+		border-radius: 14rpx;
+		font-size: 16rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(0,145,255,1);
+		margin-top: 6rpx;
+	}
+	
+	.demo-price {
+		font-size: 30rpx;
+		color: $u-type-error;
+		margin-top: 5px;
+	}
+	
+	.demo-user {
+		font-size: 10rpx;
+		margin-top: 24rpx;
+		margin-bottom: 16rpx;
+		display: flex;
+		justify-content: space-between;
+	}
+	.userMessage {
+		font-size: 10px;
+		font-weight: 900;
+		color: #464646;
+		display: flex;
+		align-items: center;
+		}
+    .userHeard{
+			width: 40rpx;
+			height: 40rpx;
+			border-radius: 50%;
+			margin-left: 14rpx;
+		}
+		.userNikename{
+			font-size: 24rpx;
+			margin-left: 16rpx;
+			font-family:PingFangSC-Regular,PingFang SC;
+			font-weight:400;
+			color:rgba(96,98,102,1);
+		}
+		
+	
+	.count {
+		display: flex;
+		font-size: 22rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(96,98,102,1);
+		align-items: center;
+		margin-right: 20rpx;
+	}
+	.count image{
+		width: 26rpx;
+		height: 26rpx;
+		margin-right: 8rpx;
 	}
 </style>

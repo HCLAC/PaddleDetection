@@ -95,6 +95,9 @@ __webpack_require__.r(__webpack_exports__);
 var components = {
   uniNavBar: function() {
     return __webpack_require__.e(/*! import() | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then(__webpack_require__.bind(null, /*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59))
+  },
+  uWaterfall: function() {
+    return Promise.all(/*! import() | uview-ui/components/u-waterfall/u-waterfall */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uview-ui/components/u-waterfall/u-waterfall")]).then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-waterfall/u-waterfall.vue */ 214))
   }
 }
 var render = function() {
@@ -192,6 +195,94 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 42));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 74));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 104));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var tcontent = function tcontent() {__webpack_require__.e(/*! require.ensure | components/content/tcontent */ "components/content/tcontent").then((function () {return resolve(__webpack_require__(/*! @/components/content/tcontent.vue */ 164));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var touring = function touring() {Promise.all(/*! require.ensure | components/content/touring */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/content/touring")]).then((function () {return resolve(__webpack_require__(/*! @/components/content/touring.vue */ 171));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: {
@@ -208,15 +299,17 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
       province: '',
       state_id: '',
       city_id: '',
-      hotAtt: '' };
+      hotAtt: '',
+      list: [] };
+
+
 
   },
   onLoad: function onLoad() {
     this.getAdress(),
-    // this.getLocation(),
     this.getSiteHot(),
-    // this.getHotAtt(),
-    this.getSystem();
+    this.getSystem(),
+    this.getArticleList();
   },
   methods: {
     getAdress: function getAdress() {var _this = this;
@@ -278,11 +371,11 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
           sort_by: 0 },
 
         success: function success(res) {
-          console.log('热门景点', res);
+          // console.log('热门景点',res)
           uni.setStorageSync('id', res.data);
-          console.log('存储热门景点==', res);
+          // console.log('存储热门景点==',res)
           that.hotAtt = res.data.data;
-          console.log('hotAtt=====', that.hotAtt);
+          // console.log('hotAtt=====',that.hotAtt)
           // uni.setStorage({
           // 	key:'id',
           // 	data:res.data,
@@ -293,19 +386,30 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
         } });
 
     },
-    // getHotAtt(){
-    // 	// var _this = this
-    // 	uni.getStorage({
-    // 		key:'id',
-    // 		success:res=>{
-    // 			console.log('获取热门景点',res.data.data)
-    // 			this.hotAtt = res.data.data
-    // 		}
-    // 	})
-    // this.$forceUpdate() 
-    // var hotAtt = uni.getStorageSync('id')
-    // console.log('------------------',hotAtt)
-    // },
+    // 获取文章列表
+    getArticleList: function getArticleList() {
+      var that = this;
+      var city_id = uni.getStorageSync('city_id');
+      var state_id = uni.getStorageSync('state_id');
+      uni.request({
+        // url:'http://192.168.43.156:8199/article/list',
+        url: 'http://121.40.30.19/article/list',
+        data: {
+          state_id: state_id,
+          city_id: city_id,
+          count: 20,
+          page: 1,
+          sort_by: 1 },
+
+        success: function success(res) {
+          console.log('文章列表', res);
+          uni.setStorageSync('article_id', res.data);
+          console.log('存储文章列表==', res);
+          that.list = res.data.data.list;
+          console.log('list=====', that.list);
+        } });
+
+    },
     // 设备信息
     getSystem: function getSystem() {
       uni.getSystemInfo({
