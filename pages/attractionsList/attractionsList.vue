@@ -12,7 +12,7 @@
 		</view>
 		<!-- 卡片列表 -->
 		<view class="content">
-			<view class="card" v-for="item in cardList.List" @click="toAttractionsDetails">
+			<view class="card" v-for="item in cardList.List" @click="toAttractionsDetails(item.id)">
 				<text class="title">{{item.name}}</text>
 				<view class="cardContent">{{item.description}}</view>
 				<view class="uni-padding-wrap">
@@ -109,9 +109,10 @@
 					url:"/pages/index/index"
 				})
 			},
-			toAttractionsDetails(){
+			toAttractionsDetails(e){
+				console.log('----------------',e)
 				uni.navigateTo({
-					url:"/pages/positionContent/positionContent"
+					url:"/pages/positionContent/positionContent?id="+e
 				})
 			}
 		}

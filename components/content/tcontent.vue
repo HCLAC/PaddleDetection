@@ -1,5 +1,5 @@
 <template>
-	<view class="cus-sty">
+	<!-- <view class="cus-sty">
 	    <view class="hot">
 	        <view class="hot-top">
 	            <text class="ht-l">热门景点</text>
@@ -26,7 +26,7 @@
 	        <text class="tourtext">正在旅行</text>
 			<touring class="touringList" ></touring>
 	    </view>
-	</view>
+	</view> -->
 </template>
 
 <script>

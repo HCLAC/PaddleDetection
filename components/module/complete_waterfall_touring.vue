@@ -27,7 +27,7 @@
 					</view>
 					<view class="demo-user">
 						<view class="userMessage">
-							<image class="userHeard" src="../../static/images/mine-actived.png"></image>
+							<image class="userHeard" src="../../static/images/userImg.png"></image>
 							<view class="userNikename">{{ item.shop }}</view>
 						</view>
 						<view class="count">
@@ -66,7 +66,7 @@
 					</view>
 					<view class="demo-user">
 						<view class="userMessage">
-							<image class="userHeard" src="../../static/images/mine-actived.png"></image>
+							<image class="userHeard" src="../../static/images/userImg.png"></image>
 							<view class="userNikename">{{ item.shop }}</view>
 						</view>
 						<view class="count">

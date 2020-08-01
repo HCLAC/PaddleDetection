@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view> 
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
@@ -13,106 +13,107 @@
 		<!-- 用户信息 -->
 
 		<!-- 内容详情轮播图 -->
-		<view class="uni-padding-wrap">
-			<view class="page-section swiper">
-				<view class="page-section-spacing">
-					<swiper @change="change" :autoplay="true" class="swiper" :indicator-dots="false">
-						<swiper-item v-for="item in list" class="swiper-item"><image src="../../static/images/photos/sda.jpeg" mode=""></image></swiper-item>
-					</swiper>
-					<view class="imageCount">{{ current + 1 }}/{{ list.length }}</view>
-					<view class="dots">
-						<block v-for="(item, index) in list"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+		<view class="" >
+			<view class="uni-padding-wrap">
+				<view class="page-section swiper">
+					<view class="page-section-spacing">
+						<swiper @change="change" :autoplay="true" class="swiper" :indicator-dots="false">
+							<swiper-item v-for="item in list" class="swiper-item"><image src="" mode=""></image></swiper-item>
+						</swiper>
+						<view class="imageCount">{{ current + 1 }}/{{ list.length }}</view>
+						<view class="dots">
+							<block v-for="(item, index) in list"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+						</view>
 					</view>
 				</view>
 			</view>
-		</view>
-		<view class="content">
-			<view class="contentHeader">
-				<view class="title">纳米比亚</view>
-				<image src="../../static/images/shareHere.png" mode="" @click="share"></image>
-			</view>
-			<view class="tips">
-				<view class="tipHot">5A景区</view>
-				<view class="tip">直布罗陀</view>
-			</view>
-			<view class="rateBox">
-				<view class="iconBox">
-					<image src="../../static/images/rateOver.png"></image>
-					<image src="../../static/images/rateOver.png"></image>
-					<image src="../../static/images/rateOver.png"></image>
-					<image src="../../static/images/rateHalf.png"></image>
-					<image src="../../static/images/rateNo.png"></image>
+			<view class="content" >
+				<view class="contentHeader">
+					<view class="title">{{attDetail.data.name}}</view>
+					<image src="../../static/images/shareHere.png" mode="" @click="share"></image>
 				</view>
-				<view class="rate">3.5 星</view>
-				<view class="goTo">2688人去过</view>
-			</view>
-			<view class="contentText">
-				<text :class="[isShow ? 'loseText' : 'moreText']">
-					简介：语雀是一款优雅高效的在线文档编辑与协同工让 个企业轻松拥有文档中心阿里巴巴集团内部使语雀是一 款优雅高效的在线文档编辑与协同工让个企业轻松拥有
-					文档中心阿里巴巴集团内部使语雀是一款优雅高效的在 线文档编辑与协同工让个企业轻松拥有文档中心阿里巴 巴集团内部使。
-				</text>
-				<view class="btnBox" @click="showMore" v-if="!isShow">
-					<text>收起</text>
-					<image class="iconImg" src="../../static/images/zhankaiIcon.png" mode=""></image>
+				<view class="tips">
+					<view class="tipHot">{{attDetail.data.tags[0]}}</view>
+					<view class="tip">直布罗陀</view>
 				</view>
-				<view class="btnBox" @click="showMore" v-else>
-					<text>展开</text>
-					<image class="iconImg" src="../../static/images/shouqiIcon.png" mode=""></image>
+				<view class="rateBox">
+					<view class="iconBox">
+						<image src="../../static/images/rateOver.png"></image>
+						<image src="../../static/images/rateOver.png"></image>
+						<image src="../../static/images/rateOver.png"></image>
+						<image src="../../static/images/rateHalf.png"></image>
+						<image src="../../static/images/rateNo.png"></image>
+					</view>
+					<view class="rate">{{attDetail.data.rate}} 星</view>
+					<view class="goTo">{{attDetail.data.visited}}人去过</view>
 				</view>
-			</view>
-		</view>
-		<view class="magrinBck"></view>
-		<view class="adressBox">
-			<view class="title">景点位置</view>
-			<view class="adress">
-				<view class="left">
-					<image src="../../static/images/mapIcon.png" mode=""></image>
-					<text>中国浙江省杭州市西湖区弯糖路118号</text>
-				</view>
-				<view class="right">
-					<image src="../../static/images/mapBack.png" mode=""></image>
-					<view class="insideBox" @click="map">
-						<image src="../../static/images/dingwei.png" mode=""></image>
-						<text>导航</text>
+				<view class="contentText">
+					<text :class="[isShow ? 'loseText' : 'moreText']">
+						简介：{{attDetail.data.description}}
+					</text>
+					<view class="btnBox" @click="showMore" v-if="!isShow">
+						<text>收起</text>
+						<image class="iconImg" src="../../static/images/zhankaiIcon.png" mode=""></image>
+					</view>
+					<view class="btnBox" @click="showMore" v-else>
+						<text>展开</text>
+						<image class="iconImg" src="../../static/images/shouqiIcon.png" mode=""></image>
 					</view>
 				</view>
 			</view>
-			<view class="phone">
-				<image src="../../static/images/dianhua.png"></image>
-				<text>旅行管家：15846985068</text>
+			<view class="magrinBck"></view>
+			<view class="adressBox">
+				<view class="title">景点位置</view>
+				<view class="adress">
+					<view class="left">
+						<image src="../../static/images/mapIcon.png" mode=""></image>
+						<text>中国浙江省杭州市西湖区弯糖路118号</text>
+					</view>
+					<view class="right">
+						<image src="../../static/images/mapBack.png" mode=""></image>
+						<view class="insideBox" @click="map">
+							<image src="../../static/images/dingwei.png" mode=""></image>
+							<text>导航</text>
+						</view>
+					</view>
+				</view>
+				<view class="phone">
+					<image src="../../static/images/dianhua.png"></image>
+					<text>旅行管家：{{attDetail.data.butler_mobile}}</text>
+				</view>
 			</view>
-		</view>
-		<view class="magrinBck"></view>
-		<view class="gonglueBox">
-			<view class="title">热门攻略</view>
-			<view class="contentBox">
-				<view class="contentItem">
-					<image class="topHot" src="../../static/images/topHot.png" mode=""></image>
-					<view class="top">故宫 | 故宫游玩新姿势 红墙黄瓦欣赏get技…</view>
-					<view class="bottom">
-						<image src="../../static/images/liulan.png" mode=""></image>
-						<text>2389</text>
+			<view class="magrinBck"></view>
+			<view class="gonglueBox">
+				<view class="title">热门攻略</view>
+				<view class="contentBox">
+					<view class="contentItem">
+						<image class="topHot" src="../../static/images/topHot.png" mode=""></image>
+						<view class="top">{{attDetail.data.articles[0].title}}</view>
+						<view class="bottom">
+							<image src="../../static/images/liulan.png" mode=""></image>
+							<text>{{attDetail.data.articles[0].visit_count}}</text>
+						</view>
 					</view>
-				</view>
-				<view class="contentItem">
-					<view class="top">故宫 | 故宫游玩新姿势 红墙黄瓦欣赏get技…</view>
-					<view class="bottom">
-						<image src="../../static/images/liulan.png" mode=""></image>
-						<text>2389</text>
+					<view class="contentItem">
+						<view class="top">{{attDetail.data.articles[1].title}}</view>
+						<view class="bottom">
+							<image src="../../static/images/liulan.png" mode=""></image>
+							<text>{{attDetail.data.articles[1].visit_count}}</text>
+						</view>
 					</view>
-				</view>
-				<view class="contentItem">
-					<view class="top">故宫 | 故宫游玩新姿势 红墙黄瓦欣赏get技…</view>
-					<view class="bottom">
-						<image src="../../static/images/liulan.png" mode=""></image>
-						<text>2389</text>
+					<view class="contentItem">
+						<view class="top">{{attDetail.data.articles[2].title}}</view>
+						<view class="bottom">
+							<image src="../../static/images/liulan.png" mode=""></image>
+							<text>{{attDetail.data.articles[2].visit_count}}</text>
+						</view>
 					</view>
-				</view>
-				<view class="contentItem">
-					<view class="top">故宫 | 故宫游玩新姿势 红墙黄瓦欣赏get技…</view>
-					<view class="bottom">
-						<image src="../../static/images/liulan.png" mode=""></image>
-						<text>2389</text>
+					<view class="contentItem">
+						<view class="top">{{attDetail.data.articles[3].title}}</view>
+						<view class="bottom">
+							<image src="../../static/images/liulan.png" mode=""></image>
+							<text>{{attDetail.data.articles[3].visit_count}}</text>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -138,14 +139,35 @@ export default {
 			list: [{ key: '1', title: 'A' }, { key: '2', title: 'B' }, { key: '3', title: 'C' }, { key: '4', title: 'D' }, { key: '6', title: 'E' }, { key: '7', title: 'F' }],
 			likemessage: 144,
 			favmessage: 219,
-			isShow: true
+			isShow: true,
+			attDetail:''
 		};
 	},
 	created() {
 		(_this = this), _this.getOrder();
 	},
-
+	onLoad:function(e) {
+		console.log('详情id====',e)
+		this.getAttDetail(e)
+	},
 	methods: {
+		getAttDetail(e){
+			var that = this
+			uni.request({
+				url:'http://121.40.30.19/site',
+				data:{
+					id:e.id
+				},
+				success:function(res){
+					console.log('eeeeeeeeeeeeeeee',e)
+					console.log('景点详情====',res.data)
+					uni.setStorageSync('id',res.data)
+					that.attDetail = res.data
+					console.log('attDetail--',that.attDetail)
+				}
+			})
+		},
+		
 		share(){
 			uni.showShareMenu({
 				

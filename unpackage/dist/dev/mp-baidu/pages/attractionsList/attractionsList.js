@@ -245,9 +245,10 @@ __webpack_require__.r(__webpack_exports__);
         url: "/pages/index/index" });
 
     },
-    toAttractionsDetails: function toAttractionsDetails() {
+    toAttractionsDetails: function toAttractionsDetails(e) {
+      console.log('----------------', e);
       uni.navigateTo({
-        url: "/pages/positionContent/positionContent" });
+        url: "/pages/positionContent/positionContent?id=" + e });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-baidu/dist/index.js */ 1)["default"]))

@@ -258,6 +258,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _uniNavBar = _interopRequireDefault(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));
 var _uniIcons = _interopRequireDefault(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 74));
 var _uniFav = _interopRequireDefault(__webpack_require__(/*! @/components/uni-fav/uni-fav.vue */ 82));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
@@ -382,7 +383,8 @@ var _uniFav = _interopRequireDefault(__webpack_require__(/*! @/components/uni-fa
 //
 //
 //
-var _this;var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.default, uniFav: _uniFav.default }, data: function data() {return { indicatorDots: true, current: 0, list: [{ key: '1', title: 'A' }, { key: '2', title: 'B' }, { key: '3', title: 'C' }, { key: '4', title: 'D' }, { key: '6', title: 'E' }, { key: '7', title: 'F' }], likemessage: 144, favmessage: 219, isShow: true };}, created: function created() {_this = this, _this.getOrder();}, methods: { share: function share() {uni.showShareMenu({});}, change: function change(e) {_this.current = e.detail.current;}, getOrder: function getOrder() {_this.swiperlength, _this.list = [{ key: '1', title: 'A' }, { key: '2', title: 'B' }, { key: '3', title: 'C' }, { key: '4', title: 'D' }, { key: '6', title: 'E' }, { key: '7', title: 'F' }];}, back: function back() {uni.navigateBack({ delta: 1 });}, home: function home() {uni.switchTab({ url: '/pages/index/index' });}, likeclick: function likeclick() {// console.log("cccccccccccc")
+//
+var _this;var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.default, uniFav: _uniFav.default }, data: function data() {return { indicatorDots: true, current: 0, list: [{ key: '1', title: 'A' }, { key: '2', title: 'B' }, { key: '3', title: 'C' }, { key: '4', title: 'D' }, { key: '6', title: 'E' }, { key: '7', title: 'F' }], likemessage: 144, favmessage: 219, isShow: true, attDetail: '' };}, created: function created() {_this = this, _this.getOrder();}, onLoad: function onLoad(e) {console.log('详情id====', e);this.getAttDetail(e);}, methods: { getAttDetail: function getAttDetail(e) {var that = this;uni.request({ url: 'http://121.40.30.19/site', data: { id: e.id }, success: function success(res) {console.log('eeeeeeeeeeeeeeee', e);console.log('景点详情====', res.data);uni.setStorageSync('id', res.data);that.attDetail = res.data;console.log('attDetail--', that.attDetail);} });}, share: function share() {uni.showShareMenu({});}, change: function change(e) {_this.current = e.detail.current;}, getOrder: function getOrder() {_this.swiperlength, _this.list = [{ key: '1', title: 'A' }, { key: '2', title: 'B' }, { key: '3', title: 'C' }, { key: '4', title: 'D' }, { key: '6', title: 'E' }, { key: '7', title: 'F' }];}, back: function back() {uni.navigateBack({ delta: 1 });}, home: function home() {uni.switchTab({ url: '/pages/index/index' });}, likeclick: function likeclick() {// console.log("cccccccccccc")
       this.likemessage++;}, favclick: function favclick() {// console.log("cccccccccccc")
       this.favmessage++;}, showMore: function showMore() {this.isShow = !this.isShow;}, // favClick() {
     // 	this.checked = !this.checked
