@@ -84,21 +84,7 @@
 						console.log('cardList====',that.cardList)
 					}
 				})
-				// this.$forceUpdate();
 			},
-			// showHotAttList(){
-			// 	var that = this
-			// 	uni.getStorage({
-			// 		key:'id',
-			// 		success:function(res){
-			// 			console.log('取数据',res.data)
-			// 			that.cardList = res.data.data.List
-			// 		}
-			// 	})
-			// 	this.$forceUpdate();
-			// 	// var cardList = uni.getStorageSync('id')
-				
-			// },
 			back() {
 				uni.navigateBack({
 					delta: 1

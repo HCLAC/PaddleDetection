@@ -97,7 +97,7 @@ var components = {
     return __webpack_require__.e(/*! import() | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then(__webpack_require__.bind(null, /*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59))
   },
   uWaterfall: function() {
-    return Promise.all(/*! import() | uview-ui/components/u-waterfall/u-waterfall */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uview-ui/components/u-waterfall/u-waterfall")]).then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-waterfall/u-waterfall.vue */ 214))
+    return Promise.all(/*! import() | uview-ui/components/u-waterfall/u-waterfall */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uview-ui/components/u-waterfall/u-waterfall")]).then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-waterfall/u-waterfall.vue */ 164))
   }
 }
 var render = function() {
@@ -283,15 +283,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 42));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 74));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 104));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var tcontent = function tcontent() {__webpack_require__.e(/*! require.ensure | components/content/tcontent */ "components/content/tcontent").then((function () {return resolve(__webpack_require__(/*! @/components/content/tcontent.vue */ 164));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var touring = function touring() {Promise.all(/*! require.ensure | components/content/touring */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/content/touring")]).then((function () {return resolve(__webpack_require__(/*! @/components/content/touring.vue */ 171));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 42));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 74));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 104));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: {
     uniIcons: uniIcons,
     uniNavBar: uniNavBar,
-    uniSection: uniSection,
-    tcontent: tcontent,
-    touring: touring },
-
+    uniSection: uniSection
+    // tcontent,
+    // touring
+  },
   mixins: [_mescrollMixins.default],
   data: function data() {
     return {
@@ -300,9 +301,9 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
       state_id: '',
       city_id: '',
       hotAtt: '',
-      list: [] };
-
-
+      list: [],
+      leftList: [],
+      rightList: [] };
 
   },
   onLoad: function onLoad() {
@@ -394,6 +395,7 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
       uni.request({
         // url:'http://192.168.43.156:8199/article/list',
         url: 'http://121.40.30.19/article/list',
+        // url:'http://192.168.43.60:8299/article/list',
         data: {
           state_id: state_id,
           city_id: city_id,
@@ -404,10 +406,20 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
         success: function success(res) {
           console.log('文章列表', res);
           uni.setStorageSync('article_id', res.data);
-          console.log('存储文章列表==', res);
-          that.list = res.data.data.list;
-          console.log('list=====', that.list);
+          console.log('存储文章列表==', res.data);
+          that.list = res.data.data;
+          that.leftList = that.list.list;
+          that.rightList = that.list.list;
+          console.log('list=====', that.leftList);
         } });
+
+    },
+    onPageJump: function onPageJump(e) {
+      console.log('----------------', e);
+      // debugger
+      // return
+      uni.navigateTo({
+        url: "/pages/contentdetail/contentdetail?article_id=" + e });
 
     },
     // 设备信息

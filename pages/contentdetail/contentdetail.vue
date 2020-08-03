@@ -7,7 +7,7 @@
 					<image class="fanhui" src="../../static/images/icon-fanhui.png" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.png" @click="home" />
 				</view>
-				<view class="slottitle">热门景点</view>
+				<view class="slottitle">内容详情</view>
 			</uni-nav-bar>
 		</view>
 		
@@ -16,8 +16,8 @@
 			<view class="page-section swiper">
 				<view class="page-section-spacing">
 					<swiper @change="change" class="swiper" :indicator-dots="false" >
-						<swiper-item v-for="item in list" >
-							<image class="itemImg" mode="aspectFit" :src="item.image" ></image>
+						<swiper-item  v-for="(item,index) in articleList.data.images">
+							<image class="itemImg" mode="aspectFit" :src="item" ></image>
 						</swiper-item>
 					</swiper>
 					<view class="imageCount">{{current+1}}/{{list.length}}</view>
@@ -30,35 +30,35 @@
 		<!-- 内容详情 -->
 		<view class="detailContent">
 			<view class="userMse">
-				<image class="userHeard" src="../../static/images/userImg.png"></image>
+				<image class="userHeard" :src="articleList.data.avatar"></image>
 				<view class="userMse-r">
-					<view class="userNikename"> Haley </view>
+					<view class="userNikename"> {{articleList.data.author_name}} </view>
 					<view class="adress">
 						<image src="../../static/images/Icon／Map.png" mode="" class="adreessIcon"></image>
 						<view class="adressText">
-							希腊
+							{{articleList.data.city}}
 						</view>
 					</view>
 				</view>
 			</view>
 			<!-- 标题 -->
 			<view class="contentTitle">
-				攻略 | 愿你踏遍山海觉得人间值得
+				{{articleList.data.title}}
 			</view>
 			
 			
 			<!-- 内容文章 -->
 			<view class="contentText">
-				语雀是一款优雅高效的在线文档编辑与协同工具， 让每 个企业轻松拥有文档中心阿里巴巴集团内部使用多年， 众多中小企业首选。
+				{{articleList.data.content}}
 				<view class="copy">详情请+VX: {{VX}}<text class="clcopy" @click="copy">点击复制</text></view>
 				语雀是一款优雅高效的在线文档编辑与协同工具让每个 企业轻松拥有文档中心，阿里巴巴集团内部使用多年众 多中小企业首选语雀是一款优雅高效的在线文档编辑与 协同工具，让每个企业轻松拥有文档中心阿里巴巴集团 内部使用多年众多中小企业首选。
 			</view>
 			<view class="tips">
-				<view>#<text>旅游攻略</text></view>
-				<view>#<text>云南去哪儿玩</text></view>
-				<view>#<text>洱海</text></view>
+				<view>#<text>{{articleList.data.tags[0]}}</text></view>
+				<view>#<text>{{articleList.data.topics[0]}}</text></view>
+				<!-- <view>#<text></text></view> -->
 			</view>
-			<view class="releaseTime">发布于2020-12-14</view>
+			<view class="releaseTime">发布于{{articleList.data.update_at}}</view>
 		</view>
 		<!-- 分割线 -->
 		<view class="line"></view>
@@ -67,14 +67,14 @@
 			<view class="like">
 				<image class="likeBtn" src="../../static/images/ic_fenxiang.png" @click="likeclick"></image>
 				<view class="likeNum" v-model="likemessage" >
-					{{likemessage}}
+					{{articleList.data.like_count}}
 				</view>
 			</view>
 			<view class="fav">
 				<image  class="favBtn" src="../../static/images/fav.png" @click="favclick" >
 				</image>
-				<view class="favNum" v-model="favmessage">
-					{{favmessage}}
+				<view class="favNum" >
+					{{articleList.data.fav_count}}
 				</view>
 			</view>
 			<view class="share" @click="share">
@@ -109,8 +109,13 @@
 				],
 				likemessage:144,
 				favmessage:219,
-				VX:15020779433
+				VX:15020779433,
+				articleList:''
 			}
+		},
+		onLoad:function(e){
+			console.log('文章id====',e)
+			this.getArticleDetail(e)
 		},
 		created() {
 			_this = this,
@@ -118,6 +123,22 @@
 		},
 		
 		methods: {
+			getArticleDetail(e){
+				var that = this
+				uni.request({
+					url:'http://121.40.30.19/article',
+					data:{
+						article_id:e.article_id
+					},
+					success:function(res){
+						console.log('eeeeeeeeeeeeeeee',e)
+						console.log('文章详情====',res.data)
+						uni.setStorageSync('id',res.data)
+						that.articleList = res.data
+						console.log('articleList',that.articleList)
+					}
+				})
+			},
 			change(e){
 				_this.current = e.detail.current
 			},

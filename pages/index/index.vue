@@ -45,83 +45,84 @@
 					<!-- <touring class="touringList" ></touring> -->
 					<view class="wrap">
 						<!-- <u-button @click="clear">清空列表</u-button> -->
-						<u-waterfall v-model="list" ref="uWaterfall" >
+						<u-waterfall v-model="list.list" ref="uWaterfall" >
 							<template v-slot:left="{leftList}">
-								<view class="demo-warter demo-warter-l" v-for="(item, index) in leftList" :key="index" @click="onPageJump">
+								<view class="demo-warter demo-warter-l" v-for="(item,index) in leftList" :key="index" @click="onPageJump(item.article_id)">
 									<!-- 警告：微信小程序不支持嵌入lazyload组件，请自行如下使用image标签 -->
-									
-									<!-- <u-lazy-load threshold="-200" border-radius="8" :image="item.image" :index="index" ></u-lazy-load> -->
-									<image class="demo-image"  :src="item.image" :index="index" mode="widthFix"></image>
-									<view class="adress">
-										<image class="adreessIcon" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
-										<view class="adressText">
-											{{item.location}}
-										</view>
-									</view>
-									
-									<view class="titleTip">
-										<view class="demo-tag">
-											<view class="demo-tag-owner" v-if="item.type==1">
-												游记
-											</view>
-											<view class="demo-tag-owner" v-if="item.type==2">
-												攻略
+									<view class="" >
+										<!-- <u-lazy-load threshold="-200" border-radius="8" :image="item.image" :index="index" ></u-lazy-load> -->
+										<image class="demo-image"  :src="item.image" :index="index" mode="widthFix"></image>
+										<view class="adress">
+											<image class="adreessIcon" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
+											<view class="adressText">
+												{{item.location}}
 											</view>
 										</view>
-										<view class="demo-title">
-											{{item.title}}
-										</view>
-									</view>
-									<view class="demo-user">
-										<view class="userMessage">
-											<image class="userHeard" :src="item.avatar"></image>
-											<view class="userNikename">{{ item.author_name }}</view>
-										</view>
-										<view class="count">
-											<image src="../../static/images/hear选中(1).png"></image>
-												{{ item.like_count || 0 }}
+										
+										<view class="titleTip">
+											<view class="demo-tag">
+												<view class="demo-tag-owner" v-if="item.type==1">
+													游记
+												</view>
+												<view class="demo-tag-owner" v-if="item.type==2">
+													攻略
+												</view>
 											</view>
+											<view class="demo-title">
+												{{item.title}}
+											</view>
+										</view>
+										<view class="demo-user">
+											<view class="userMessage">
+												<image class="userHeard" :src="item.avatar"></image>
+												<view class="userNikename">{{ item.author_name }}</view>
+											</view>
+											<view class="count">
+												<image src="../../static/images/hear选中(1).png"></image>
+													{{ item.like_count || 0 }}
+												</view>
+										</view>
 									</view>
-									
 									<!-- 微信小程序无效，因为它不支持在template中引入组件 -->
 									<!-- <u-icon name="close-circle-fill" color="#fa3534" size="34" class="u-close" @click="remove(item.id)"></u-icon> -->
 								</view>
 							</template>
 							<template v-slot:right="{rightList}">
-								<view class="demo-warter" v-for="(item, index) in rightList" :key="index" @click="onPageJump">
-									
-									<!-- <u-lazy-load threshold="-200" border-radius="8" :image="item.image" :index="index"></u-lazy-load> -->
-									<image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
-									<view class="adress">
-										<image class="adreessIcon" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
-										<view class="adressText">
-											{{item.location}}
-										</view>
-									</view>
-									<!-- <view class="demo-img-wrap">
-										 <image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
-									</view> -->
-									<view class="titleTip">
-										<view class="demo-tag">
-											<view class="demo-tag-owner" v-if="item.type==1">
-												游记
-											</view>
-											<view class="demo-tag-owner" v-if="item.type==2">
-												攻略
+								<view class="demo-warter" v-for="(item,index) in rightList" :key="index" @click="onPageJump(item.article_id)">
+									<view class="" >
+										<!-- <u-lazy-load threshold="-200" border-radius="8" :image="item.image" :index="index"></u-lazy-load> -->
+										<image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
+										<view class="adress">
+											<image class="adreessIcon" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
+											<view class="adressText">
+												{{item.location}}
 											</view>
 										</view>
-										<view class="demo-title">
-											{{item.title}}
+										<!-- <view class="demo-img-wrap">
+											 <image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
+										</view> -->
+										<view class="titleTip">
+											<view class="demo-tag">
+												<view class="demo-tag-owner" v-if="item.type==1">
+													游记
+												</view>
+												<view class="demo-tag-owner" v-if="item.type==2">
+													攻略
+												</view>
+											</view>
+											<view class="demo-title">
+												{{item.title}}
+											</view>
 										</view>
-									</view>
-									<view class="demo-user">
-										<view class="userMessage">
-											<image class="userHeard" :src="item.avatar"></image>
-											<view class="userNikename">{{ item.author_name }}</view>
-										</view>
-										<view class="count">
-											<image src="../../static/images/heart未选中.png" ></image>
-											{{ item.like_count || 0 }}
+										<view class="demo-user">
+											<view class="userMessage">
+												<image class="userHeard" :src="item.avatar"></image>
+												<view class="userNikename">{{ item.author_name }}</view>
+											</view>
+											<view class="count">
+												<image src="../../static/images/heart未选中.png" ></image>
+												{{ item.like_count || 0 }}
+											</view>
 										</view>
 									</view>
 									<!-- 微信小程序无效，因为它不支持在template中引入组件 -->
@@ -141,8 +142,8 @@
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue'
 	import uniSection from '@/components/uni-section/uni-section.vue'
-	import tcontent from '@/components/content/tcontent.vue'
-	import touring from '@/components/content/touring.vue'
+	// import tcontent from '@/components/content/tcontent.vue'
+	// import touring from '@/components/content/touring.vue'
 	// 引入mescroll-mixins.js
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	export default {
@@ -150,8 +151,8 @@
 			uniIcons,
 			uniNavBar,
 			uniSection,
-			tcontent,
-			touring
+			// tcontent,
+			// touring
 		},
 		mixins: [MescrollMixin],
 		data() {
@@ -161,9 +162,9 @@
 				state_id:'',
 				city_id:'',
 				hotAtt:'',
-				list: [
-					
-				]
+				list: [],
+				leftList:[],
+				rightList:[]
 			}
 		},
 		onLoad() {
@@ -255,6 +256,7 @@
 				uni.request({
 					// url:'http://192.168.43.156:8199/article/list',
 					url:'http://121.40.30.19/article/list',
+					// url:'http://192.168.43.60:8299/article/list',
 					data:{
 						state_id:state_id,
 						city_id:city_id,
@@ -265,10 +267,20 @@
 					success:res=>{
 						console.log('文章列表',res)
 						uni.setStorageSync('article_id',res.data)
-						console.log('存储文章列表==',res)
-						that.list = res.data.data.list
-						console.log('list=====',that.list)
+						console.log('存储文章列表==',res.data)
+						that.list = res.data.data
+						that.leftList = that.list.list
+						that.rightList = that.list.list
+						console.log('list=====',that.leftList)
 					}
+				})
+			},
+			onPageJump(e) {
+				console.log('----------------',e)
+				// debugger
+				// return
+				uni.navigateTo({
+					url: "/pages/contentdetail/contentdetail?article_id="+e
 				})
 			},
 			// 设备信息
