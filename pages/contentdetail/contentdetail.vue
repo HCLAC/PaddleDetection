@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui.png" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.png" @click="home" />
@@ -10,19 +10,21 @@
 				<view class="slottitle">内容详情</view>
 			</uni-nav-bar>
 		</view>
-		
+
 		<!-- 内容详情轮播图 -->
 		<view class="uni-padding-wrap">
 			<view class="page-section swiper">
 				<view class="page-section-spacing">
-					<swiper @change="change" class="swiper" :indicator-dots="false" >
-						<swiper-item  v-for="(item,index) in articleList.data.images">
-							<image class="itemImg" mode="aspectFit" :src="item" ></image>
+					<swiper @change="change" class="swiper" :indicator-dots="false">
+						<swiper-item v-for="(item,index) in articleList.data.images">
+							<image class="itemImg" mode="aspectFit" :src="item"></image>
 						</swiper-item>
 					</swiper>
 					<view class="imageCount">{{current+1}}/{{list.length}}</view>
 					<view class="dots">
-						<block v-for="(item, index) in list"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+						<block v-for="(item, index) in list">
+							<view :class="[index == current ? 'activieDot' : 'dot']"></view>
+						</block>
 					</view>
 				</view>
 			</view>
@@ -45,8 +47,8 @@
 			<view class="contentTitle">
 				{{articleList.data.title}}
 			</view>
-			
-			
+
+
 			<!-- 内容文章 -->
 			<view class="contentText">
 				{{articleList.data.content}}
@@ -65,15 +67,15 @@
 		<!-- 登录 -->
 		<view class="contentBottom">
 			<view class="like">
-				<image class="likeBtn" src="../../static/images/ic_fenxiang.png" @click="likeclick"></image>
-				<view class="likeNum" v-model="likemessage" >
+				<image class="likeBtn" src="../../static/images/ic_fenxiang.png" @click="clickLike"></image>
+				<view class="likeNum" v-model="likemessage">
 					{{articleList.data.like_count}}
 				</view>
 			</view>
 			<view class="fav">
-				<image  class="favBtn" src="../../static/images/fav.png" @click="favclick" >
+				<image class="favBtn" src="../../static/images/fav.png" @click="clickFav">
 				</image>
-				<view class="favNum" >
+				<view class="favNum">
 					{{articleList.data.fav_count}}
 				</view>
 			</view>
@@ -90,8 +92,9 @@
 	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue'
 	import uniIcons from "@/components/uni-icons/uni-icons.vue"
 	import uniFav from '@/components/uni-fav/uni-fav.vue'
+	// import httpType from '../../httpType.js'
 	export default {
-		comments:{
+		comments: {
 			uniNavBar,
 			uniIcons,
 			uniFav
@@ -99,97 +102,246 @@
 		data() {
 			return {
 				indicatorDots: true,
-				current:0,
-				list:[
-					{key:"1",title:"A",image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23327_s.jpg'},
-					{key:"2",title:"B",image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23325_s.jpg',},
-					{key:"3",title:"C",image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg',},
-					{key:"4",title:"D",image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/zzpic23369_s.jpg',},
-					{key:"5",title:"E",image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2130_s.jpg',},
+				current: 0,
+				list: [{
+						key: "1",
+						title: "A",
+						image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23327_s.jpg'
+					},
+					{
+						key: "2",
+						title: "B",
+						image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23325_s.jpg',
+					},
+					{
+						key: "3",
+						title: "C",
+						image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg',
+					},
+					{
+						key: "4",
+						title: "D",
+						image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/zzpic23369_s.jpg',
+					},
+					{
+						key: "5",
+						title: "E",
+						image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2130_s.jpg',
+					},
 				],
-				likemessage:144,
-				favmessage:219,
-				VX:15020779433,
-				articleList:''
+				VX: 17827277778,
+				articleList: '',
+				token: '',
+				article_id: ''
 			}
 		},
-		onLoad:function(e){
-			console.log('文章id====',e)
+		onLoad: function(e) {
+			console.log('文章id====', e)
 			this.getArticleDetail(e)
 		},
 		created() {
 			_this = this,
-			_this.getOrder()
+				_this.getOrder()
 		},
-		
+
 		methods: {
-			getArticleDetail(e){
+			// 获取文章详情
+			getArticleDetail(e) {
 				var that = this
+				uni.getStorage({
+					key: 'Authorization',
+					success: function(res) {
+						console.log("token===>", res.data)
+						that.token = res.data
+					}
+				})
 				uni.request({
-					url:'http://121.40.30.19/article',
-					data:{
-						article_id:e.article_id
+					// url:'article',
+					url: 'http://121.40.30.19/article',
+					data: {
+						article_id: e.article_id
 					},
-					success:function(res){
-						console.log('eeeeeeeeeeeeeeee',e)
+					header: {
+						'Authorization': that.token
+					},
+					success: function(res) {
+						console.log(res.data.data.liked,
+							res.data.data.like_count,
+							res.data.data.uuid,
+							444444
+						)
+						console.log('eeeeeeeeeeeeeeee', e)
+						console.log('文章详情====', res.data)
+						uni.setStorageSync('id', res.data)
+						that.articleList = res.data
+						console.log('articleList', that.articleList)
+					}
+				})
+			},
+			// 点赞
+			clickLike() {
+				var that = this
+				uni.getStorage({
+					key: 'Authorization',
+					success: function(res) {
+						console.log("token===>", res.data)
+						that.token = res.data
+					}
+				})
+
+				var article_id = uni.getStorageSync('id')
+				// console.log('art',article_id)
+
+				uni.request({
+						url: 'http://121.40.30.19/user/liked',
+						data: {
+							article_id: article_id.data.uuid,
+							liked: article_id.data.liked == 1 ? 0 : 1
+						},
+						method: 'POST',
+						header: {
+							'Authorization': that.token
+						},
+						success: function(res) {
+							console.log('点赞', res)
+						},
+
+					}),
+
+					uni.request({
+						// url:'article',
+						url: 'http://121.40.30.19/article',
+						data: {
+							article_id: article_id.data.uuid
+						},
+						header: {
+							'Authorization': that.token
+						},
+						success: function(res) {
+							console.log(res.data.data.liked,
+								res.data.data.like_count,
+								res.data.data.uuid,
+								333333
+							)
+							console.log('eeeeeeeeeeeeeeee', res)
+							console.log('文章详情====',res.data)
+							uni.setStorageSync('id',res.data)
+							that.articleList = res.data
+							console.log('articleList',that.articleList)
+						}
+					})
+
+
+			},
+			// 收藏
+			clickFav() {
+				var that = this
+				uni.getStorage({
+					key: 'Authorization',
+					success: function(res) {
+						console.log("token===>", res.data)
+						that.token = res.data
+					}
+				})
+
+				var article_id = uni.getStorageSync('id')
+				uni.request({
+					url: 'http://121.40.30.19/user/favorite',
+					data: {
+						article_id: article_id.data.uuid,
+						favorite: article_id.data.fav == 1 ? 0 : 1
+					},
+					method: 'POST',
+					header: {
+						'Authorization': that.token
+					},
+					success: function(res) {
+						console.log('收藏', res)
+					},
+
+				})
+				uni.request({
+					// url:'article',
+					url: 'http://121.40.30.19/article',
+					data: {
+						article_id: article_id.data.uuid
+					},
+					header: {
+						'Authorization': that.token
+					},
+					success: function(res) {
+						console.log(res.data.data.liked,
+							res.data.data.like_count,
+							res.data.data.uuid,
+							333333
+						)
+						console.log('eeeeeeeeeeeeeeee', res)
 						console.log('文章详情====',res.data)
 						uni.setStorageSync('id',res.data)
 						that.articleList = res.data
 						console.log('articleList',that.articleList)
 					}
 				})
+
 			},
-			change(e){
+			change(e) {
 				_this.current = e.detail.current
 			},
-			getOrder(){
+			getOrder() {
 				_this.swiperlength,
-				_this.list = [
-					{key:"1",title:"A"},
-					{key:"2",title:"B"},
-					{key:"3",title:"C"},
-					{key:"4",title:"D"},
-					{key:"5",title:"E"},
-				]
+					_this.list = [{
+							key: "1",
+							title: "A"
+						},
+						{
+							key: "2",
+							title: "B"
+						},
+						{
+							key: "3",
+							title: "C"
+						},
+						{
+							key: "4",
+							title: "D"
+						},
+						{
+							key: "5",
+							title: "E"
+						},
+					]
 			},
 			back() {
 				uni.navigateBack({
 					delta: 1
 				})
 			},
-			home(){
+			home() {
 				uni.switchTab({
-					url:"/pages/index/index"
+					url: "/pages/index/index"
 				})
 			},
-			likeclick(){
-				// console.log("cccccccccccc")
-				this.likemessage++
-			},
-			favclick(){
-				// console.log("cccccccccccc")
-				this.favmessage++
-			},
-			copy(){
+
+			copy() {
 				uni.setClipboardData({
-				    data: _this.VX,
-				    success: function () {
-				        // console.log('success');
+					data: _this.VX,
+					success: function() {
+						// console.log('success');
 						uni.showToast({
-							title:'复制成功',
-							icon:"none"
+							title: '复制成功',
+							icon: "none"
 						})
-				    }
+					}
 				});
 				uni.getClipboardData({
-				    success: function (res) {
-				        console.log(res.data);
-				    }
+					success: function(res) {
+						console.log(res.data);
+					}
 				});
 			},
-			share(){
+			share() {
 				uni.showShareMenu({
-					
+
 				})
 			}
 			// favClick() {
@@ -201,7 +353,7 @@
 </script>
 
 <style lang="scss" scoped>
-	 /* 自定义导航栏样式 */
+	/* 自定义导航栏样式 */
 	.example-body {
 		flex-direction: row;
 		flex-wrap: wrap;
@@ -210,85 +362,100 @@
 		font-size: 14px;
 		background-color: #aa557f;
 	}
+
 	.example-body {
 		flex-direction: column;
 		padding: 15px;
 		background-color: #ffffff;
 	}
+
 	.example-body {
 		padding: 0;
 	}
-	.navBar{
+
+	.navBar {
 		display: flex;
 	}
-	.slotleft{
+
+	.slotleft {
 		display: flex;
 		align-items: center;
 	}
-	.fanhui{
+
+	.fanhui {
 		width: 40rpx;
 		height: 40rpx;
 		margin-left: 40rpx;
 		margin-right: 20rpx;
 	}
-	.fhsy{
+
+	.fhsy {
 		width: 40rpx;
 		height: 40rpx;
 	}
-	.slottitle{
+
+	.slottitle {
 		margin-left: 162rpx;
 		font-size: 38rpx;
-		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:600;
-		color:rgba(0,0,0,1);
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 600;
+		color: rgba(0, 0, 0, 1);
 	}
-	.button-v-line{
+
+	.button-v-line {
 		width: 1px;
 		height: 18px;
 		background-color: #2f2f2f;
 		margin: 0 8px;
 	}
-	
+
 	/* 轮播图 */
-	.page-section-spacing{
+	.page-section-spacing {
 		position: relative;
 		height: 996rpx;
 	}
-	.swiper{
+
+	.swiper {
 		height: 996rpx;
 	}
-	.itemImg{
+
+	.itemImg {
 		height: 996rpx;
 		width: 100%;
 	}
-	.uni-bg-red{
+
+	.uni-bg-red {
 		height: 996rpx;
 		background-color: #EA552D;
 	}
-	.uni-bg-green{
+
+	.uni-bg-green {
 		height: 996rpx;
 		background-color: #4CD964;
 	}
-	.uni-bg-blue{
+
+	.uni-bg-blue {
 		height: 996rpx;
 		background-color: #007AFF;
 	}
+
 	.imageCount {
-	  // width: 90rpx;
-	  height: 40rpx;
-	  background-color: rgba(0,0,0,0.6);
-	  border-radius: 20rpx;
-	  text-align: center;
-	  line-height: 40rpx;
-	  font-size: 22rpx;
-	  font-family:PingFangSC-Regular,PingFang SC;
-	  font-weight:400;
-	  color:rgba(255,255,255,1);
-	  position: absolute;
-	  right: 28rpx;
-	  bottom: 28rpx;
-	  padding: 0 12rpx;
+		// width: 90rpx;
+		height: 40rpx;
+		background-color: rgba(0, 0, 0, 0.6);
+		border-radius: 20rpx;
+		text-align: center;
+		line-height: 40rpx;
+		font-size: 22rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(255, 255, 255, 1);
+		position: absolute;
+		right: 28rpx;
+		bottom: 28rpx;
+		padding: 0 12rpx;
 	}
+
 	//标记点样式
 	.dots {
 		width: 100%;
@@ -299,6 +466,7 @@
 		/* left: 320rpx; */
 		background: #ffff;
 		bottom: -20rpx;
+
 		.dot {
 			width: 10rpx;
 			height: 10rpx;
@@ -306,6 +474,7 @@
 			background: rgba(221, 221, 221, 1);
 			margin-right: 8rpx;
 		}
+
 		.activieDot {
 			width: 20rpx;
 			height: 10rpx;
@@ -314,171 +483,194 @@
 			margin-right: 8rpx;
 		}
 	}
+
 	/* 内容详情 */
-	.detailContent{
+	.detailContent {
 		// padding: 15px;
 	}
+
 	// 用户信息
-	.userMse{
+	.userMse {
 		display: flex;
 		margin-left: 28rpx;
 		margin-top: 40rpx;
 	}
-	.userHeard{
+
+	.userHeard {
 		width: 80rpx;
 		height: 80rpx;
 		border-radius: 50%;
 	}
-	.userMse-r{
+
+	.userMse-r {
 		margin-left: 20rpx;
 	}
-	.userNikename{
-		font-size:28rpx;
-		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:500;
-		color:rgba(48,49,51,1);
-		line-height:28rpx;
+
+	.userNikename {
+		font-size: 28rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: rgba(48, 49, 51, 1);
+		line-height: 28rpx;
 	}
-	.adress{
+
+	.adress {
 		width: 100rpx;
 		height: 40rpx;
 		margin-top: 12rpx;
-		background:rgba(255,255,255,1);
-		border-radius:20rpx;
-		border:2rpx solid rgba(0,145,255,1);
+		background: rgba(255, 255, 255, 1);
+		border-radius: 20rpx;
+		border: 2rpx solid rgba(0, 145, 255, 1);
 		display: flex;
 		align-items: center;
 		text-align: center;
 	}
-	.adreessIcon{
+
+	.adreessIcon {
 		width: 24rpx;
 		height: 24rpx;
 	}
-	.adressText{
-		font-size:22rpx;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(0,145,255,1);
+
+	.adressText {
+		font-size: 22rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(0, 145, 255, 1);
 	}
+
 	// 内容
-	.contentTitle{
-		font-size:32rpx;
-		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:600;
-		color:rgba(48,49,51,1);
-		line-height:32rpx;
+	.contentTitle {
+		font-size: 32rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 600;
+		color: rgba(48, 49, 51, 1);
+		line-height: 32rpx;
 		margin-left: 28rpx;
 		margin-top: 40rpx;
 	}
-	
-	.contentText{
-		font-size:28rpx;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(96,98,102,1);
-		line-height:56rpx;
+
+	.contentText {
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(96, 98, 102, 1);
+		line-height: 56rpx;
 		margin: 28rpx;
 	}
-	.copy{
-		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:600;
-		color:rgba(48,49,51,1);
+
+	.copy {
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 600;
+		color: rgba(48, 49, 51, 1);
 	}
-	.clcopy{
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(0,145,255,1);
+
+	.clcopy {
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(0, 145, 255, 1);
 		margin-left: 36rpx;
 	}
-	.tips{
+
+	.tips {
 		margin-top: 40rpx;
 		margin-left: 28rpx;
 		display: flex;
 	}
-	.tips view{
-		font-size:26rpx;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:500;
-		color:rgba(0,145,255,1);
+
+	.tips view {
+		font-size: 26rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 500;
+		color: rgba(0, 145, 255, 1);
 		margin-right: 38rpx;
 	}
-	.tip text{
+
+	.tip text {
 		margin-left: 6rpx;
 	}
+
 	// .tipImg{
 	// 	width: 30rpx;
 	// 	height: 30rpx;
 	// 	margin-right: 6rpx;
 	// }
-	
-	.releaseTime{
-		font-size:22rpx;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(201,202,209,1);
-		line-height:22rpx;
+
+	.releaseTime {
+		font-size: 22rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(201, 202, 209, 1);
+		line-height: 22rpx;
 		margin-top: 40rpx;
 		margin-left: 28rpx;
 	}
-	.line{
-		height:2rpx;
-		background:rgba(221,221,221,1);
+
+	.line {
+		height: 2rpx;
+		background: rgba(221, 221, 221, 1);
 		margin-top: 84rpx;
 	}
+
 	/* 底部 */
-	.contentBottom{
+	.contentBottom {
 		display: flex;
 		align-items: center;
 		margin-top: 16rpx;
-		font-size:24rpx;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(48,49,51,1);
-		line-height:24rpx;
+		font-size: 24rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(48, 49, 51, 1);
+		line-height: 24rpx;
 		margin-bottom: 68rpx;
 	}
-	.loginButton{
-		width:156rpx;
-		height:68rpx;
-		background:rgba(255,229,18,1);
-		border-radius:20px;
-		font-size:32rpx;
-		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:600;
-		color:rgba(48,49,51,1);
-		line-height:68rpx;
+
+	.loginButton {
+		width: 156rpx;
+		height: 68rpx;
+		background: rgba(255, 229, 18, 1);
+		border-radius: 20px;
+		font-size: 32rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 600;
+		color: rgba(48, 49, 51, 1);
+		line-height: 68rpx;
 		border: none;
 		text-align: center;
 		margin-left: 190rpx;
 	}
-	.like{
+
+	.like {
 		display: flex;
 		margin-left: 28rpx;
 		align-items: center;
 	}
-	.likeBtn{
+
+	.likeBtn {
 		width: 52rpx;
 		height: 52rpx;
 		margin-right: 10rpx;
 	}
-	.fav{
+
+	.fav {
 		display: flex;
 		margin-left: 56rpx;
 		align-items: center;
 	}
-	.favBtn{
+
+	.favBtn {
 		width: 52rpx;
 		height: 52rpx;
 		margin-right: 10rpx;
 	}
-	.share{
+
+	.share {
 		display: flex;
 		margin-left: 56rpx;
 		align-items: center;
 	}
-	.share image{
+
+	.share image {
 		width: 52rpx;
 		height: 52rpx;
 	}
-	
 </style>

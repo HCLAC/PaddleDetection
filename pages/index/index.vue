@@ -146,6 +146,7 @@
 	// import touring from '@/components/content/touring.vue'
 	// 引入mescroll-mixins.js
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
+	// import httpType from '../../httpType.js';
 	export default {
 		components: {
 			uniIcons,
@@ -184,6 +185,7 @@
 						
 							uni.request({
 								// url:'http://192.168.43.156:8199/user/location',
+								// url:'user/location',
 								url:'http://121.40.30.19/user/location',
 								data:{
 									state:this.province,
@@ -209,7 +211,7 @@
 					}
 				});
 			},
-			
+			// 热门景点
 			getSiteHot() {
 				var that = this
 				var city_id = uni.getStorageSync('city_id')
@@ -225,6 +227,7 @@
 				// })
 				uni.request({
 					// url:'http://192.168.43.156:8199/site/hot',
+					// url:'site/hot',
 					url:'http://121.40.30.19/site/hot',
 					data:{
 						state_id:state_id,
@@ -255,6 +258,7 @@
 				var state_id = uni.getStorageSync('state_id')
 				uni.request({
 					// url:'http://192.168.43.156:8199/article/list',
+					// url:'article/list',
 					url:'http://121.40.30.19/article/list',
 					// url:'http://192.168.43.60:8299/article/list',
 					data:{

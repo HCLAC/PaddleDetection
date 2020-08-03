@@ -491,6 +491,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _uniNavBar = _interopRequireDefault(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));
 var _uniIcons = _interopRequireDefault(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 74));
 var _uniFav = _interopRequireDefault(__webpack_require__(/*! @/components/uni-fav/uni-fav.vue */ 82));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
@@ -580,10 +582,160 @@ var _uniFav = _interopRequireDefault(__webpack_require__(/*! @/components/uni-fa
 //
 //
 //
-var _this;var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.default, uniFav: _uniFav.default }, data: function data() {return { indicatorDots: true, current: 0, list: [{ key: "1", title: "A", image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23327_s.jpg' }, { key: "2", title: "B", image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23325_s.jpg' }, { key: "3", title: "C", image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg' }, { key: "4", title: "D", image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/zzpic23369_s.jpg' }, { key: "5", title: "E", image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2130_s.jpg' }], likemessage: 144, favmessage: 219, VX: 15020779433, articleList: '' };}, onLoad: function onLoad(e) {console.log('文章id====', e);this.getArticleDetail(e);}, created: function created() {_this = this, _this.getOrder();}, methods: { getArticleDetail: function getArticleDetail(e) {var that = this;uni.request({ url: 'http://121.40.30.19/article', data: { article_id: e.article_id }, success: function success(res) {console.log('eeeeeeeeeeeeeeee', e);console.log('文章详情====', res.data);uni.setStorageSync('id', res.data);that.articleList = res.data;console.log('articleList', that.articleList);} });}, change: function change(e) {_this.current = e.detail.current;}, getOrder: function getOrder() {_this.swiperlength, _this.list = [{ key: "1", title: "A" }, { key: "2", title: "B" }, { key: "3", title: "C" }, { key: "4", title: "D" }, { key: "5", title: "E" }];}, back: function back() {uni.navigateBack({ delta: 1 });}, home: function home() {uni.switchTab({ url: "/pages/index/index" });}, likeclick: function likeclick() {// console.log("cccccccccccc")
-      this.likemessage++;}, favclick: function favclick() {// console.log("cccccccccccc")
-      this.favmessage++;}, copy: function copy() {uni.setClipboardData({ data: _this.VX, success: function success() {// console.log('success');
-          uni.showToast({ title: '复制成功', icon: "none" });} });
+//
+//
+var _this; // import httpType from '../../httpType.js'
+var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.default, uniFav: _uniFav.default }, data: function data() {return { indicatorDots: true, current: 0, list: [{ key: "1", title: "A", image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23327_s.jpg' }, { key: "2", title: "B", image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23325_s.jpg' }, { key: "3", title: "C", image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg' }, { key: "4", title: "D", image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/zzpic23369_s.jpg' }, { key: "5", title: "E", image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2130_s.jpg' }], VX: 17827277778, articleList: '', token: '', article_id: '' };}, onLoad: function onLoad(e) {console.log('文章id====', e);this.getArticleDetail(e);}, created: function created() {_this = this, _this.getOrder();}, methods: { // 获取文章详情
+    getArticleDetail: function getArticleDetail(e) {var that = this;uni.getStorage({ key: 'Authorization', success: function success(res) {console.log("token===>", res.data);that.token = res.data;} });uni.request({ // url:'article',
+        url: 'http://121.40.30.19/article', data: { article_id: e.article_id }, header: { 'Authorization': that.token }, success: function success(res) {console.log(res.data.data.liked, res.data.data.like_count, res.data.data.uuid, 444444);console.log('eeeeeeeeeeeeeeee', e);console.log('文章详情====', res.data);uni.setStorageSync('id', res.data);that.articleList = res.data;console.log('articleList', that.articleList);} });}, // 点赞
+    clickLike: function clickLike() {var that = this;uni.getStorage({ key: 'Authorization', success: function success(res) {console.log("token===>", res.data);
+          that.token = res.data;
+        } });
+
+
+      var article_id = uni.getStorageSync('id');
+      // console.log('art',article_id)
+
+      uni.request({
+        url: 'http://121.40.30.19/user/liked',
+        data: {
+          article_id: article_id.data.uuid,
+          liked: article_id.data.liked == 1 ? 0 : 1 },
+
+        method: 'POST',
+        header: {
+          'Authorization': that.token },
+
+        success: function success(res) {
+          console.log('点赞', res);
+        } }),
+
+
+
+      uni.request({
+        // url:'article',
+        url: 'http://121.40.30.19/article',
+        data: {
+          article_id: article_id.data.uuid },
+
+        header: {
+          'Authorization': that.token },
+
+        success: function success(res) {
+          console.log(res.data.data.liked,
+          res.data.data.like_count,
+          res.data.data.uuid,
+          333333);
+
+          console.log('eeeeeeeeeeeeeeee', res);
+          console.log('文章详情====', res.data);
+          uni.setStorageSync('id', res.data);
+          that.articleList = res.data;
+          console.log('articleList', that.articleList);
+        } });
+
+
+
+    },
+    // 收藏
+    clickFav: function clickFav() {
+      var that = this;
+      uni.getStorage({
+        key: 'Authorization',
+        success: function success(res) {
+          console.log("token===>", res.data);
+          that.token = res.data;
+        } });
+
+
+      var article_id = uni.getStorageSync('id');
+      uni.request({
+        url: 'http://121.40.30.19/user/favorite',
+        data: {
+          article_id: article_id.data.uuid,
+          favorite: article_id.data.fav == 1 ? 0 : 1 },
+
+        method: 'POST',
+        header: {
+          'Authorization': that.token },
+
+        success: function success(res) {
+          console.log('收藏', res);
+        } });
+
+
+      uni.request({
+        // url:'article',
+        url: 'http://121.40.30.19/article',
+        data: {
+          article_id: article_id.data.uuid },
+
+        header: {
+          'Authorization': that.token },
+
+        success: function success(res) {
+          console.log(res.data.data.liked,
+          res.data.data.like_count,
+          res.data.data.uuid,
+          333333);
+
+          console.log('eeeeeeeeeeeeeeee', res);
+          console.log('文章详情====', res.data);
+          uni.setStorageSync('id', res.data);
+          that.articleList = res.data;
+          console.log('articleList', that.articleList);
+        } });
+
+
+    },
+    change: function change(e) {
+      _this.current = e.detail.current;
+    },
+    getOrder: function getOrder() {
+      _this.swiperlength,
+      _this.list = [{
+        key: "1",
+        title: "A" },
+
+      {
+        key: "2",
+        title: "B" },
+
+      {
+        key: "3",
+        title: "C" },
+
+      {
+        key: "4",
+        title: "D" },
+
+      {
+        key: "5",
+        title: "E" }];
+
+
+    },
+    back: function back() {
+      uni.navigateBack({
+        delta: 1 });
+
+    },
+    home: function home() {
+      uni.switchTab({
+        url: "/pages/index/index" });
+
+    },
+
+    copy: function copy() {
+      uni.setClipboardData({
+        data: _this.VX,
+        success: function success() {
+          // console.log('success');
+          uni.showToast({
+            title: '复制成功',
+            icon: "none" });
+
+        } });
 
       uni.getClipboardData({
         success: function success(res) {

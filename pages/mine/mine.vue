@@ -161,33 +161,33 @@ export default {
 				
 			  }
 			});
-			// uni.getStorage({
-			// 	key:'Authorization',
-			// 	success:function(res){
-			// 		console.log("token===>",res.data)
-			// 	}
-			// })
+			uni.getStorage({
+				key:'Authorization',
+				success:function(res){
+					console.log("token===>",res.data)
+				}
+			})
 		},
 		// checkToken(){
-			// let uniIdToken = uni.getStorageSync('Authorization')
-			// uni.getStorage({
-			// 	key:'Authorization',
-			// 	success:function(res){
-			// 		console.log("token===>",res.data)
-			// 		if (e.result.code > 0) {
-			// 				//token过期或token不合法，重新登录
-			// 				if (this.forcedLogin) {
-			// 					uni.reLaunch({
-			// 						url: '../login/login'
-			// 					});
-			// 				} else {
-			// 					uni.navigateTo({
-			// 						url: '../login/login'
-			// 					});
-			// 				}
-			// 			}
-			// 	}
-			// })
+		// 	let uniIdToken = uni.getStorageSync('Authorization')
+		// 	uni.getStorage({
+		// 		key:'Authorization',
+		// 		success:function(res){
+		// 			console.log("token===>",res.data)
+		// 			if (e.result.code > 0) {
+		// 					//token过期或token不合法，重新登录
+		// 					if (this.forcedLogin) {
+		// 						uni.reLaunch({
+		// 							url: '../login/login'
+		// 						});
+		// 					} else {
+		// 						uni.navigateTo({
+		// 							url: '../login/login'
+		// 						});
+		// 					}
+		// 				}
+		// 		}
+		// 	})
 		// },
 		...mapMutations(['login']),
 		// guideToLogin() {

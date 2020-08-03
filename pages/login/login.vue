@@ -36,7 +36,7 @@
 </template>
 
 <script>
-	
+	import httpType from '../../httpType.js';
 	export default {
 		
 		data() {
@@ -115,8 +115,8 @@
 				// })
 				
 				// 获取验证码
-				uni.request({
-					url:'http://121.40.30.19/user/sendcaptcha',
+				httpType.request({
+					url:'user/sendcaptcha',
 					data:{
 						'mobile':this.phone
 					},
@@ -158,8 +158,8 @@
 				// } 
 			
 				uni.request({
-					url: 'http://121.40.30.19/user/login',
-					// url:'http://192.168.43.156:8199/user/login',
+					// url: 'user/login',
+					url:'http://121.40.30.19:8199/user/login',
 					data: {
 						// 'key': _this.key,
 						'code': _this.code,
@@ -186,20 +186,14 @@
 								// 		console.log("++++++",res)
 								// 	}
 								// }),
+								uni.showToast({
+									title: '登录成功',
+									icon: "none"
+								}),
+								uni.reLaunch({
+									url:'../mine/mine'
+								}),
 								uni.setStorageSync('Authorization',res.header.Authorization)
-									uni.showToast({
-										title: '登录成功',
-										icon: "none"
-									}),
-									// uni.getStorage({
-									// 	key:'Authorization',
-									// 	success:function(res){
-									// 		console.log(res.data)
-									// 	}
-									// })
-									uni.reLaunch({
-										url:'../mine/mine'
-									})
 							
 								
 									// uni.setStorage({

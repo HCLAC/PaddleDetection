@@ -284,8 +284,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 42));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 74));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 104));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
-{
+var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 42));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 74));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 104));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+// import httpType from '../../httpType.js';
+var _default = {
   components: {
     uniIcons: uniIcons,
     uniNavBar: uniNavBar,
@@ -323,6 +324,7 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
 
           uni.request({
             // url:'http://192.168.43.156:8199/user/location',
+            // url:'user/location',
             url: 'http://121.40.30.19/user/location',
             data: {
               state: _this.province,
@@ -348,7 +350,7 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
         } });
 
     },
-
+    // 热门景点
     getSiteHot: function getSiteHot() {
       var that = this;
       var city_id = uni.getStorageSync('city_id');
@@ -364,6 +366,7 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
       // })
       uni.request({
         // url:'http://192.168.43.156:8199/site/hot',
+        // url:'site/hot',
         url: 'http://121.40.30.19/site/hot',
         data: {
           state_id: state_id,
@@ -394,6 +397,7 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
       var state_id = uni.getStorageSync('state_id');
       uni.request({
         // url:'http://192.168.43.156:8199/article/list',
+        // url:'article/list',
         url: 'http://121.40.30.19/article/list',
         // url:'http://192.168.43.60:8299/article/list',
         data: {

@@ -276,7 +276,7 @@
 .slottitle.data-v-32e87e5c {
   margin-left: 162rpx;
   font-size: 38rpx;
-  font-family: PingFangSC-Medium,PingFang SC;
+  font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
   color: black;
 }
@@ -317,7 +317,7 @@
   text-align: center;
   line-height: 40rpx;
   font-size: 22rpx;
-  font-family: PingFangSC-Regular,PingFang SC;
+  font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: white;
   position: absolute;
@@ -371,7 +371,7 @@
 }
 .userNikename.data-v-32e87e5c {
   font-size: 28rpx;
-  font-family: PingFangSC-Medium,PingFang SC;
+  font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 500;
   color: #303133;
   line-height: 28rpx;
@@ -397,13 +397,13 @@
 }
 .adressText.data-v-32e87e5c {
   font-size: 22rpx;
-  font-family: PingFangSC-Regular,PingFang SC;
+  font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #0091ff;
 }
 .contentTitle.data-v-32e87e5c {
   font-size: 32rpx;
-  font-family: PingFangSC-Medium,PingFang SC;
+  font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
   color: #303133;
   line-height: 32rpx;
@@ -412,19 +412,19 @@
 }
 .contentText.data-v-32e87e5c {
   font-size: 28rpx;
-  font-family: PingFangSC-Regular,PingFang SC;
+  font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #606266;
   line-height: 56rpx;
   margin: 28rpx;
 }
 .copy.data-v-32e87e5c {
-  font-family: PingFangSC-Medium,PingFang SC;
+  font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
   color: #303133;
 }
 .clcopy.data-v-32e87e5c {
-  font-family: PingFangSC-Regular,PingFang SC;
+  font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #0091ff;
   margin-left: 36rpx;
@@ -438,7 +438,7 @@
 }
 .tips view.data-v-32e87e5c {
   font-size: 26rpx;
-  font-family: PingFangSC-Regular,PingFang SC;
+  font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 500;
   color: #0091ff;
   margin-right: 38rpx;
@@ -448,7 +448,7 @@
 }
 .releaseTime.data-v-32e87e5c {
   font-size: 22rpx;
-  font-family: PingFangSC-Regular,PingFang SC;
+  font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #c9cad1;
   line-height: 22rpx;
@@ -470,7 +470,7 @@
           align-items: center;
   margin-top: 16rpx;
   font-size: 24rpx;
-  font-family: PingFangSC-Regular,PingFang SC;
+  font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #303133;
   line-height: 24rpx;
@@ -482,7 +482,7 @@
   background: #ffe512;
   border-radius: 20px;
   font-size: 32rpx;
-  font-family: PingFangSC-Medium,PingFang SC;
+  font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
   color: #303133;
   line-height: 68rpx;

@@ -130,82 +130,82 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-
-{
-
-  data: function data() {
-    return {
-      phone: "",
-      code: '',
-      key: '',
-      getCodeText: '获取验证码',
-      getCodeBtnColor: "#ffffff",
-      getCodeisWaiting: false,
-      styleObj: {
-        color: '#C9CAD1' },
-
-      styleCode: {
-        color: '#C9CAD1' } };
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
-  },
-
-  components: {},
 
 
 
-  methods: {
-    onInput: function onInput(e) {
-      if (e.detail.value.length == 11) {
-        this.styleObj.color = '#303133';
-      } else {
-        this.styleObj.color = '#C9CAD1';
-      }
-    },
-    onCode: function onCode(e) {
-      if (e.detail.value.length == 6) {
-        this.styleCode.color = '#303133';
-      } else {
-        this.styleCode.color = '#C9CAD1';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js */ 127));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { phone: "", code: '', key: '', getCodeText: '获取验证码', getCodeBtnColor: "#ffffff", getCodeisWaiting: false, styleObj: { color: '#C9CAD1' }, styleCode: { color: '#C9CAD1' } };}, components: {}, methods: { onInput: function onInput(e) {if (e.detail.value.length == 11) {this.styleObj.color = '#303133';} else {this.styleObj.color = '#C9CAD1';}}, onCode: function onCode(e) {if (e.detail.value.length == 6) {this.styleCode.color = '#303133';} else {this.styleCode.color = '#C9CAD1';
       }
     },
     clearphone: function clearphone() {
@@ -247,8 +247,8 @@ var _default =
       // })
 
       // 获取验证码
-      uni.request({
-        url: 'http://121.40.30.19/user/sendcaptcha',
+      _httpType.default.request({
+        url: 'user/sendcaptcha',
         data: {
           'mobile': this.phone },
 
@@ -290,8 +290,8 @@ var _default =
       // } 
 
       uni.request({
-        url: 'http://121.40.30.19/user/login',
-        // url:'http://192.168.43.156:8199/user/login',
+        // url: 'user/login',
+        url: 'http://121.40.30.19:8199/user/login',
         data: {
           // 'key': _this.key,
           'code': _this.code,
@@ -318,20 +318,14 @@ var _default =
             // 		console.log("++++++",res)
             // 	}
             // }),
-            uni.setStorageSync('Authorization', res.header.Authorization);
             uni.showToast({
               title: '登录成功',
               icon: "none" }),
 
-            // uni.getStorage({
-            // 	key:'Authorization',
-            // 	success:function(res){
-            // 		console.log(res.data)
-            // 	}
-            // })
             uni.reLaunch({
-              url: '../mine/mine' });
+              url: '../mine/mine' }),
 
+            uni.setStorageSync('Authorization', res.header.Authorization);
 
 
             // uni.setStorage({

@@ -293,12 +293,12 @@ var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js
 
         } });
 
-      // uni.getStorage({
-      // 	key:'Authorization',
-      // 	success:function(res){
-      // 		console.log("token===>",res.data)
-      // 	}
-      // })
+      uni.getStorage({
+        key: 'Authorization',
+        success: function success(res) {
+          console.log("token===>", res.data);
+        } });
+
     } },
 
 
