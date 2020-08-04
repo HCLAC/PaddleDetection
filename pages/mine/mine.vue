@@ -14,6 +14,7 @@
 			<view class="phone"><image class="phoneImg" src="../../static/images/phone.png" mode=""></image></view>
 			
 			<view>我的收藏</view>
+			
 			<view class="contentItem" v-for="(item, index) in tipList" :key="index">
 				<view class="left">
 					<image :src="item.main_image" mode="">
@@ -34,7 +35,9 @@
 							攻略
 						</view>
 						| {{item.title}}</view>
-					<view class="content">{{item.content}}</view>
+						<view class="content">
+							<rich-text class="" :nodes="item.content"></rich-text> 
+						</view>
 					<view class="position">
 						<image src="../../static/images/positionIcon.png" mode=""></image>
 						<view>{{item.location}}</view>
@@ -65,43 +68,7 @@ export default {
 		};
 	},
 	computed: mapState(['forcedLogin', 'hasLogin', 'phone']),
-	// onLoad() {
-
-	// 	let uniIdToken = uni.getStorageSync('uniIdToken')
-	// 	this.login(uni.getStorageSync('phone'))
-	// 	if (uniIdToken) {
-	// 		uniCloud.callFunction({
-	// 			name: 'user-center',
-	// 			data: {
-	// 				action: 'checkToken',
-	// 			},
-	// 			success: (e) => {
-
-	// 				console.log('checkToken success', e);
-
-	// 				if (e.result.code > 0) {
-	// 					//token过期或token不合法，重新登录
-	// 					if (this.forcedLogin) {
-	// 						uni.reLaunch({
-	// 							url: '../login/login'
-	// 						});
-	// 					} else {
-	// 						uni.navigateTo({
-	// 							url: '../login/login'
-	// 						});
-	// 					}
-	// 				}
-	// 			},
-	// 			fail(e) {
-	// 				uni.showModal({
-	// 					content: JSON.stringify(e)
-	// 				})
-	// 			}
-	// 		})
-	// 	} else {
-	// 		this.guideToLogin()
-	// 	}
-	// },
+	
 	
 	onShow() {
 		this.getUserMsg()
@@ -178,7 +145,7 @@ export default {
 						// debugger
 						uni.showModal({
 							title: '提示',
-							content: res.data.msg,
+							content: '您好，请先登录',
 							showCancel: false,
 							success: function(res) {
 								if (res.confirm) {
@@ -318,11 +285,16 @@ export default {
 }
 
 .contentItem {
+	width:694rpx;
+	height:230rpx;
 	margin: 28rpx;
 	margin-left: 0;
 	border-radius: 8px;
 	box-shadow: 4rpx 4rpx 20rpx 0rpx rgba(0, 0, 0, 0.08);
 	display: flex;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
 	.left {
 		position: relative;
 		.imgTip {
@@ -344,11 +316,17 @@ export default {
 			width: 192rpx;
 			height: 230rpx;
 			margin-right: 20rpx;
+			box-shadow:2px 2px 10px 0px rgba(0,0,0,0.08);
+			border-radius:8px;
 		}
 	}
 
 	.right {
 		margin-top: 40rpx;
+		height: 230rpx;
+		overflow: hidden;
+		text-overflow:ellipsis;
+		// white-space: nowrap;
 	}
 	.right .title {
 		font-size: 32rpx;
@@ -358,10 +336,15 @@ export default {
 		display: flex;
 	}
 	.right .content {
+		width:448rpx;
+		height:70rpx;
 		font-size: 28rpx;
 		font-weight: 400;
 		color: #606266;
 		line-height: 40rpx;
+		overflow: hidden;
+		text-overflow:ellipsis;
+		// white-space: nowrap;
 	}
 	.right .position {
 		display: flex;

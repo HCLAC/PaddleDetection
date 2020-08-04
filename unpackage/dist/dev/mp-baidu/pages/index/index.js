@@ -282,9 +282,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
 var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 42));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 76));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 61));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 106));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 // import httpType from '../../httpType.js';
 var _default = {
@@ -427,18 +424,91 @@ var _default = {
           uni.setStorageSync('article_id', res.data);
           console.log('存储文章列表==', res.data);
           that.list = res.data.data;
-          that.leftList = that.list.list;
-          that.rightList = that.list.list;
-          console.log('list=====', that.leftList);
+          // that.leftList = that.list.list
+          // that.rightList = that.list.list
+          console.log('list=====', that.list.list);
         } });
 
     },
     onPageJump: function onPageJump(e) {
-      console.log('----------------', e);
+      console.log(e);
+      var id = e.currentTarget.id;
       // debugger
       // return
+
       uni.navigateTo({
-        url: "/pages/contentdetail/contentdetail?article_id=" + e });
+        url: "/pages/contentdetail/contentdetail?article_id=" + id });
+
+    },
+    // 点赞
+    clickLike: function clickLike() {
+      var that = this;
+      uni.getStorage({
+        key: 'Authorization',
+        success: function success(res) {
+          console.log("token===>", res.data);
+          that.token = res.data;
+        } });
+
+
+      var article_id = uni.getStorageSync('id');
+      // console.log('art',article_id)
+
+      uni.request({
+        url: 'http://121.40.30.19/user/liked',
+        data: {
+          article_id: article_id.data.uuid,
+          liked: article_id.data.liked == 0 ? 1 : 0 },
+
+        method: 'POST',
+        header: {
+          'Authorization': that.token },
+
+        success: function success(res) {
+          console.log('点赞', res);
+          if (res.data.code != 0) {
+            // debugger
+            uni.showModal({
+              title: '提示',
+              content: '您好，请先登录',
+              showCancel: false,
+              success: function success(res) {
+                if (res.confirm) {
+                  uni.redirectTo({
+                    url: '../login/login' });
+
+                }
+              } });
+
+            return;
+          }
+          uni.request({
+            // url:'http://192.168.43.156:8199/article/list',
+            // url:'article/list',
+            url: 'http://121.40.30.19/article/list',
+            // url:'http://192.168.43.60:8299/article/list',
+            data: {
+              state_id: state_id,
+              city_id: city_id,
+              count: 20,
+              page: 1,
+              sort_by: 1 },
+
+            header: {
+              'Authorization': that.token },
+
+            success: function success(res) {
+              console.log('文章列表', res);
+              uni.setStorageSync('article_id', res.data);
+              console.log('存储文章列表==', res.data);
+              that.list = res.data.data;
+              that.leftList = that.list.list;
+              that.rightList = that.list.list;
+              console.log('list=====', that.leftList);
+            } });
+
+        } });
+
 
     },
     // 设备信息

@@ -20,9 +20,9 @@
 							<image class="itemImg" mode="aspectFit" :src="item"></image>
 						</swiper-item>
 					</swiper>
-					<view class="imageCount">{{current+1}}/{{list.length}}</view>
+					<view class="imageCount">{{current+1}}/{{images.length}}</view>
 					<view class="dots">
-						<block v-for="(item, index) in list">
+						<block v-for="(item, index) in images">
 							<view :class="[index == current ? 'activieDot' : 'dot']"></view>
 						</block>
 					</view>
@@ -51,9 +51,8 @@
 
 			<!-- 内容文章 -->
 			<view class="contentText">
-				{{articleList.data.content}}
+				<rich-text :nodes="articleList.data.content"></rich-text> 
 				<view class="copy">详情请+VX: {{VX}}<text class="clcopy" @click="copy">点击复制</text></view>
-				语雀是一款优雅高效的在线文档编辑与协同工具让每个 企业轻松拥有文档中心，阿里巴巴集团内部使用多年众 多中小企业首选语雀是一款优雅高效的在线文档编辑与 协同工具，让每个企业轻松拥有文档中心阿里巴巴集团 内部使用多年众多中小企业首选。
 			</view>
 			<view class="tips">
 				<view>#<text>{{articleList.data.tags[0]}}</text></view>
@@ -181,6 +180,22 @@
 						},
 						success: function(res) {
 							console.log('点赞', res)
+							if (res.data.code != 0) {
+								// debugger
+								uni.showModal({
+									title: '提示',
+									content: res.data.msg,
+									showCancel: false,
+									success: function(res) {
+										if (res.confirm) {
+											uni.redirectTo({
+												url: '../login/login'
+											})
+										}
+									}
+								})
+								return
+							}
 							uni.request({
 								// url:'article',
 								url: 'http://121.40.30.19/article',

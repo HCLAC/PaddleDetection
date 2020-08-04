@@ -47,13 +47,14 @@
 						<!-- <u-button @click="clear">清空列表</u-button> -->
 						<u-waterfall v-model="list.list" ref="uWaterfall" >
 							<template v-slot:left="{leftList}">
-								<view class="demo-warter demo-warter-l" v-for="(item,index) in leftList" :key="index" @click="onPageJump(item.article_id)">
-									<!-- 警告：微信小程序不支持嵌入lazyload组件，请自行如下使用image标签 -->
-									<view class="" >
-										<!-- <u-lazy-load threshold="-200" border-radius="8" :image="item.image" :index="index" ></u-lazy-load> -->
+								<view class="demo-warter demo-warter-l" v-for="(item,index) in leftList" :key="index" >
+									<view class="" @click="onPageJump" :id ="item.article_id">
 										<image class="demo-image"  :src="item.image" :index="index" mode="widthFix"></image>
 										<view class="adress">
-											<image class="adreessIcon" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
+											<view class="adreessIcon">
+												<image class="" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
+											</view>
+											
 											<view class="adressText">
 												{{item.location}}
 											</view>
@@ -61,10 +62,10 @@
 										
 										<view class="titleTip">
 											<view class="demo-tag">
-												<view class="demo-tag-owner" v-if="item.type==1">
+												<view class="demo-tag-owner" v-if="item.type==0">
 													游记
 												</view>
-												<view class="demo-tag-owner" v-if="item.type==2">
+												<view class="demo-tag-owner" v-if="item.type==1">
 													攻略
 												</view>
 											</view>
@@ -72,42 +73,39 @@
 												{{item.title}}
 											</view>
 										</view>
+									</view>
 										<view class="demo-user">
 											<view class="userMessage">
 												<image class="userHeard" :src="item.avatar"></image>
 												<view class="userNikename">{{ item.author_name }}</view>
 											</view>
-											<view class="count">
+											<view class="count" @click="clickLike()">
 												<image src="../../static/images/heart.png" v-if="item.liked==0"></image>
 												<image src="../../static/images/heart-actived.png" v-if="item.liked==1"></image>
 													{{ item.like_count || 0 }}
 												</view>
 										</view>
-									</view>
-									<!-- 微信小程序无效，因为它不支持在template中引入组件 -->
-									<!-- <u-icon name="close-circle-fill" color="#fa3534" size="34" class="u-close" @click="remove(item.id)"></u-icon> -->
+									
 								</view>
 							</template>
 							<template v-slot:right="{rightList}">
-								<view class="demo-warter" v-for="(item,index) in rightList" :key="index" @click="onPageJump(item.article_id)">
-									<view class="" >
-										<!-- <u-lazy-load threshold="-200" border-radius="8" :image="item.image" :index="index"></u-lazy-load> -->
+								<view class="demo-warter" v-for="(item,index) in rightList" :key="index">
+									<view class=""  @click="onPageJump" :id= "item.article_id">
 										<image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
 										<view class="adress">
-											<image class="adreessIcon" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
+											<view class="adreessIcon">
+												<image class="" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
+											</view>
 											<view class="adressText">
 												{{item.location}}
 											</view>
 										</view>
-										<!-- <view class="demo-img-wrap">
-											 <image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
-										</view> -->
 										<view class="titleTip">
 											<view class="demo-tag">
-												<view class="demo-tag-owner" v-if="item.type==1">
+												<view class="demo-tag-owner" v-if="item.type==0">
 													游记
 												</view>
-												<view class="demo-tag-owner" v-if="item.type==2">
+												<view class="demo-tag-owner" v-if="item.type==1">
 													攻略
 												</view>
 											</view>
@@ -115,23 +113,22 @@
 												{{item.title}}
 											</view>
 										</view>
+									</view>
 										<view class="demo-user">
 											<view class="userMessage">
 												<image class="userHeard" :src="item.avatar"></image>
 												<view class="userNikename">{{ item.author_name }}</view>
 											</view>
-											<view class="count">
+											<view class="count" @click="clickLike()">
 												<image src="../../static/images/heart未选中.png" ></image>
 												{{ item.like_count || 0 }}
 											</view>
 										</view>
-									</view>
-									<!-- 微信小程序无效，因为它不支持在template中引入组件 -->
-									<!-- <u-icon name="close-circle-fill" color="#fa3534" size="34" class="u-close" @click="remove(item.id)"></u-icon> -->
+									
 								</view>
 							</template>
 						</u-waterfall>
-						<!-- <u-loadmore bg-color="rgb(240, 240, 240)" :status="loadStatus" @loadmore="addRandomData"></u-loadmore> -->
+						
 					</view>
 			    </view>
 			</view>
@@ -288,19 +285,92 @@
 						uni.setStorageSync('article_id',res.data)
 						console.log('存储文章列表==',res.data)
 						that.list = res.data.data
-						that.leftList = that.list.list
-						that.rightList = that.list.list
-						console.log('list=====',that.leftList)
+						// that.leftList = that.list.list
+						// that.rightList = that.list.list
+						console.log('list=====',that.list.list)
 					}
 				})
 			},
 			onPageJump(e) {
-				console.log('----------------',e)
+				console.log(e)
+				let id = e.currentTarget.id
 				// debugger
 				// return
+				
 				uni.navigateTo({
-					url: "/pages/contentdetail/contentdetail?article_id="+e
+					url: "/pages/contentdetail/contentdetail?article_id="+id
 				})
+			},
+			// 点赞
+			clickLike() {
+				var that = this
+				uni.getStorage({
+					key: 'Authorization',
+					success: function(res) {
+						console.log("token===>", res.data)
+						that.token = res.data
+					}
+				})
+			
+				var article_id = uni.getStorageSync('id')
+				// console.log('art',article_id)
+			
+				uni.request({
+						url: 'http://121.40.30.19/user/liked',
+						data: {
+							article_id: article_id.data.uuid,
+							liked: article_id.data.liked == 0 ? 1 : 0
+						},
+						method: 'POST',
+						header: {
+							'Authorization': that.token
+						},
+						success: function(res) {
+							console.log('点赞', res)
+							if (res.data.code != 0) {
+								// debugger
+								uni.showModal({
+									title: '提示',
+									content: '您好，请先登录',
+									showCancel: false,
+									success: function(res) {
+										if (res.confirm) {
+											uni.redirectTo({
+												url: '../login/login'
+											})
+										}
+									}
+								})
+								return
+							}
+							uni.request({
+								// url:'http://192.168.43.156:8199/article/list',
+								// url:'article/list',
+								url:'http://121.40.30.19/article/list',
+								// url:'http://192.168.43.60:8299/article/list',
+								data:{
+									state_id:state_id,
+									city_id:city_id,
+									count:20,
+									page:1,
+									sort_by:1
+								},
+								header: {
+									'Authorization': that.token
+								},
+								success:res=>{
+									console.log('文章列表',res)
+									uni.setStorageSync('article_id',res.data)
+									console.log('存储文章列表==',res.data)
+									that.list = res.data.data
+									that.leftList = that.list.list
+									that.rightList = that.list.list
+									console.log('list=====',that.leftList)
+								}
+							})
+						}
+						
+					})
 			},
 			// 设备信息
 			getSystem(){
@@ -726,6 +796,12 @@
 		width: 24rpx;
 		height: 24rpx;
 		margin-right: 4rpx;
+		display: flex;
+		align-items: center;
+	}
+	.adreessIcon image{
+		width: 24rpx;
+		height: 24rpx;
 	}
 	.adressText{
 		font-size:24rpx;
@@ -733,6 +809,9 @@
 		font-weight:500;
 		color:rgba(255,255,255,1);
 		line-height:24px;
+		overflow: hidden;
+		text-overflow:ellipsis;
+		white-space: nowrap;
 	}
 	.titleTip{
 		display: flex;

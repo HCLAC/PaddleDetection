@@ -92,7 +92,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
-var components
+var components = {
+  uLine: function() {
+    return __webpack_require__.e(/*! import() | uview-ui/components/u-line/u-line */ "uview-ui/components/u-line/u-line").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-line/u-line.vue */ 249))
+  }
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -168,6 +172,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js */ 51));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -205,9 +211,9 @@ var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js
 //
 //
 //
-var _default = { data: function data() {return { phone: "", code: '', key: '', getCodeText: '获取验证码', getCodeBtnColor: "#ffffff", getCodeisWaiting: false, styleObj: { color: '#C9CAD1' }, styleCode: { color: '#C9CAD1' } };}, components: {}, methods: { onInput: function onInput(e) {if (e.detail.value.length == 11) {this.styleObj.color = '#303133';} else {this.styleObj.color = '#C9CAD1';}}, onCode: function onCode(e) {if (e.detail.value.length == 6) {this.styleCode.color = '#303133';} else {this.styleCode.color = '#C9CAD1';
-      }
-    },
+//
+//
+var _default = { data: function data() {return { phone: "", code: '', key: '', getCodeText: '获取验证码', getCodeBtnColor: "#ffffff", getCodeisWaiting: false, styleObj: { color: '#C9CAD1' }, styleCode: { color: '#C9CAD1' } };}, components: {}, methods: { onInput: function onInput(e) {if (e.detail.value.length == 11) {this.styleObj.color = '#303133';} else {this.styleObj.color = '#C9CAD1';}}, onCode: function onCode(e) {if (e.detail.value.length == 6) {this.styleCode.color = '#303133';} else {this.styleCode.color = '#C9CAD1';}},
     clearphone: function clearphone() {
       if (this.phone) {
         this.phone = '';

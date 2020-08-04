@@ -17,12 +17,14 @@
 					<input type="number" maxlength="11" placeholder="请输入您的手机号" placeholder-style="color:'#C9CAD1',font-size:30rpx" class="is-input1" :style="styleObj" @input="onInput" v-model="phone" />
 					<image src="../../static/images/ic_search_sel@2x.png" mode="" @click="clearphone()"  class="searchSel" v-show="phone" ></image>
 				</view>
+				<u-line color="#FFEDEFF2" margin="40rpx 0rpx"></u-line>
 				<view class="login-code">
 					<input type="number" maxlength="6" placeholder="请输入您的验证码"  class="is-input1 " :style="styleCode" @input="onCode" v-model="code" />
 					<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-show="code" @click="clearcode()"></image>
 					<view class="code-sx"></view>
 					<view class="codeimg" @click.stop="getCode()">{{getCodeText}}</view>
 				</view>
+				<u-line color="#FFEDEFF2" margin="40rpx 0rpx"></u-line>
 			</view> 
 
 
