@@ -66,14 +66,15 @@
 		<view class="line"></view>
 		<!-- 登录 -->
 		<view class="contentBottom">
-			<view class="like">
-				<image class="likeBtn" src="../../static/images/ic_fenxiang.png" @click="clickLike"></image>
+			<view class="like" @click="clickLike">
+				<image class="likeBtn" src="../../static/images/heart.png" v-if="articleList.data.liked==0"></image>
+				<image class="likeBtn" src="../../static/images/heart-actived.png" v-if="articleList.data.liked==1"></image>
 				<view class="likeNum" v-model="likemessage">
 					{{articleList.data.like_count}}
 				</view>
 			</view>
-			<view class="fav">
-				<image class="favBtn" src="../../static/images/fav.png" @click="clickFav">
+			<view class="fav" @click="clickFav">
+				<image class="favBtn" src="../../static/images/fav.png" >
 				</image>
 				<view class="favNum">
 					{{articleList.data.fav_count}}
@@ -103,31 +104,7 @@
 			return {
 				indicatorDots: true,
 				current: 0,
-				list: [{
-						key: "1",
-						title: "A",
-						image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23327_s.jpg'
-					},
-					{
-						key: "2",
-						title: "B",
-						image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23325_s.jpg',
-					},
-					{
-						key: "3",
-						title: "C",
-						image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg',
-					},
-					{
-						key: "4",
-						title: "D",
-						image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/zzpic23369_s.jpg',
-					},
-					{
-						key: "5",
-						title: "E",
-						image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2130_s.jpg',
-					},
+				list: [
 				],
 				VX: 17827277778,
 				articleList: '',
@@ -196,7 +173,7 @@
 						url: 'http://121.40.30.19/user/liked',
 						data: {
 							article_id: article_id.data.uuid,
-							liked: article_id.data.liked == 1 ? 0 : 1
+							liked: article_id.data.liked == 0 ? 1 : 0
 						},
 						method: 'POST',
 						header: {
@@ -204,32 +181,33 @@
 						},
 						success: function(res) {
 							console.log('点赞', res)
-						},
-
-					}),
-
-					uni.request({
-						// url:'article',
-						url: 'http://121.40.30.19/article',
-						data: {
-							article_id: article_id.data.uuid
-						},
-						header: {
-							'Authorization': that.token
-						},
-						success: function(res) {
-							console.log(res.data.data.liked,
-								res.data.data.like_count,
-								res.data.data.uuid,
-								333333
-							)
-							console.log('eeeeeeeeeeeeeeee', res)
-							console.log('文章详情====',res.data)
-							uni.setStorageSync('id',res.data)
-							that.articleList = res.data
-							console.log('articleList',that.articleList)
+							uni.request({
+								// url:'article',
+								url: 'http://121.40.30.19/article',
+								data: {
+									article_id: article_id.data.uuid
+								},
+								header: {
+									'Authorization': that.token
+								},
+								success: function(res) {
+									console.log(res.data.data.liked,
+										res.data.data.like_count,
+										res.data.data.uuid,
+										333333
+									)
+									console.log('eeeeeeeeeeeeeeee', res)
+									console.log('文章详情====',res)
+									uni.setStorageSync('id',res.data)
+									that.articleList = res.data
+									console.log('articleList',that.articleList)
+								}
+							})
 						}
+						
 					})
+
+					
 
 
 			},

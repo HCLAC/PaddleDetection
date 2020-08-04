@@ -78,7 +78,8 @@
 												<view class="userNikename">{{ item.author_name }}</view>
 											</view>
 											<view class="count">
-												<image src="../../static/images/hear选中(1).png"></image>
+												<image src="../../static/images/heart.png" v-if="item.liked==0"></image>
+												<image src="../../static/images/heart-actived.png" v-if="item.liked==1"></image>
 													{{ item.like_count || 0 }}
 												</view>
 										</view>
@@ -165,13 +166,17 @@
 				hotAtt:'',
 				list: [],
 				leftList:[],
-				rightList:[]
+				rightList:[],
+				token:''
 			}
 		},
 		onLoad() {
 			this.getAdress(),
 			this.getSiteHot(),
-			this.getSystem(),
+			this.getSystem()
+			
+		},
+		onShow() {
 			this.getArticleList()
 		},
 		methods: {
@@ -256,6 +261,13 @@
 				var that = this
 				var city_id = uni.getStorageSync('city_id')
 				var state_id = uni.getStorageSync('state_id')
+				uni.getStorage({
+					key: 'Authorization',
+					success: function(res) {
+						console.log("token===>", res.data)
+						that.token = res.data
+					}
+				})
 				uni.request({
 					// url:'http://192.168.43.156:8199/article/list',
 					// url:'article/list',
@@ -267,6 +279,9 @@
 						count:20,
 						page:1,
 						sort_by:1
+					},
+					header: {
+						'Authorization': that.token
 					},
 					success:res=>{
 						console.log('文章列表',res)

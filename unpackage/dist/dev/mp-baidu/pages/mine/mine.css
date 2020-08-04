@@ -164,6 +164,9 @@
   font-weight: 500;
   color: #303133;
   line-height: 64rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
 }
 .contentItem .right .content {
   font-size: 28rpx;

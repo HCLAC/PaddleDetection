@@ -14,19 +14,33 @@
 			<view class="phone"><image class="phoneImg" src="../../static/images/phone.png" mode=""></image></view>
 			
 			<view>我的收藏</view>
-			<!-- <view class="contentItem" v-for="(index, item) in tipList" :key="index">
+			<view class="contentItem" v-for="(item, index) in tipList" :key="index">
 				<view class="left">
-					<image src="../../static/images/content.png" mode=""><view class="imgTip">攻略</view></image>
-				</view>
+					<image :src="item.main_image" mode="">
+						<view class="imgTip">
+							<view  v-if="item.type==1">
+								游记
+							</view>
+							<view  v-if="item.type==2">
+								攻略
+							</view></view></image>
+						</view>
 				<view class="right">
-					<view class="title">攻略 | 愿你踏遍山海觉得人间…</view>
-					<view class="content">语雀是一款优雅高效的在线文档编辑 与协同工具， 让每用户体会到</view>
+					<view class="title">
+						<view  v-if="item.type==1">
+							游记
+						</view>
+						<view  v-if="item.type==2">
+							攻略
+						</view>
+						| {{item.title}}</view>
+					<view class="content">{{item.content}}</view>
 					<view class="position">
 						<image src="../../static/images/positionIcon.png" mode=""></image>
-						<view>毛里求斯</view>
+						<view>{{item.location}}</view>
 					</view>
 				</view>
-			</view> -->
+			</view>
 			<view class="noContentItem">
 				<image src="../../static/images/wenjianjia.png" mode=""></image>
 				<view class="tipText">您的收藏夹空空如也~</view>
@@ -47,7 +61,7 @@ export default {
 		return {
 			nickName:"",
 			avatarUrl:"",
-			tipList: [			]
+			tipList:[]
 		};
 	},
 	computed: mapState(['forcedLogin', 'hasLogin', 'phone']),
@@ -89,39 +103,13 @@ export default {
 	// 	}
 	// },
 	
-	onLoad() {
-		this.getUserMsg(),
-		httpType.request({
-			url:"user/info",
-			method:'get',
-			success:function(res){
-				console.log("用户信息",res)
-				// if (res.data.code !== 0) {
-				// 	// debugger
-				// 	uni.showModal({
-				// 		title: '提示',
-				// 		content: res.data.msg,
-				// 		showCancel: false,
-				// 		success: function(res) {
-				// 			if (res.confirm) {
-				// 				uni.redirectTo({
-				// 					url: '../login/login'
-				// 				})
-				// 			}
-				// 		}
-				// 	})
-				// 	return
-				// }
-				// if(res.data.data == null){
-				// 	uni.reLaunch({
-				// 		url:"../login/login"
-				// 	})
-				// }
-			}
-		})
+	onShow() {
+		this.getUserMsg()
+		
 	},
 	methods: {
 		getUserMsg(){
+			var that = this
 			uni.getProvider({
 			    service: 'oauth',
 			    success: function (res) {
@@ -161,66 +149,59 @@ export default {
 				
 			  }
 			});
+			
 			uni.getStorage({
 				key:'Authorization',
 				success:function(res){
 					console.log("token===>",res.data)
+					// uni.request({
+					// 	url:'http://121.40.30.19/user/info',
+					// 	header:{
+					// 		'Authorization':res.data
+					// 	},
+					// 	success:function(res){
+					// 			console.log('个人信息',res)
+					// 	}
+					// })
+				}
+			}),
+			
+			uni.request({
+				url:"http://121.40.30.19/user/info",
+				header:{
+					'Authorization':uni.getStorageSync('Authorization')
+				},
+				method:'get',
+				success:function(res){
+					console.log('个人信息=',res.data)
+					if (res.data.code != 0) {
+						// debugger
+						uni.showModal({
+							title: '提示',
+							content: res.data.msg,
+							showCancel: false,
+							success: function(res) {
+								if (res.confirm) {
+									uni.redirectTo({
+										url: '../login/login'
+									})
+								}
+							}
+						})
+						return
+					}
+					uni.setStorageSync('mobile',res.data)
+					console.log('存储信息',res.data)
+					that.tipList = res.data.data.favorites.list
+					console.log('1111111',that.tipList)
+					
 				}
 			})
+			
 		},
-		// checkToken(){
-		// 	let uniIdToken = uni.getStorageSync('Authorization')
-		// 	uni.getStorage({
-		// 		key:'Authorization',
-		// 		success:function(res){
-		// 			console.log("token===>",res.data)
-		// 			if (e.result.code > 0) {
-		// 					//token过期或token不合法，重新登录
-		// 					if (this.forcedLogin) {
-		// 						uni.reLaunch({
-		// 							url: '../login/login'
-		// 						});
-		// 					} else {
-		// 						uni.navigateTo({
-		// 							url: '../login/login'
-		// 						});
-		// 					}
-		// 				}
-		// 		}
-		// 	})
-		// },
+		
 		...mapMutations(['login']),
-		// guideToLogin() {
-		// 	if (this.forcedLogin) {
-		// 		uni.navigateTo({
-		// 			url: '../login/login'
-		// 		});
-		// 	}
-			// uni.showModal({
-			// 	title: '未登录',
-			// 	content: '您未登录，需要登录后才能继续',
-			// 	/**
-			// 	 * 如果需要强制登录，不显示取消按钮
-			// 	 */
-			// 	showCancel: this.forcedLogin,
-			// 	success: (res) => {
-			// 		if (res.confirm) {
-			// 			/**
-			// 			 * 如果需要强制登录，使用reLaunch方式
-			// 			 */
-			// 			if (this.forcedLogin) {
-			// 				uni.reLaunch({
-			// 					url: '../login/login'
-			// 				});
-			// 			} else {
-			// 				uni.navigateTo({
-			// 					url: '../login/login'
-			// 				});
-			// 			}
-			// 		}
-			// 	}
-			// });
-		// }
+		
 	}
 };
 </script>
@@ -372,8 +353,9 @@ export default {
 	.right .title {
 		font-size: 32rpx;
 		font-weight: 500;
-		color: #303133;
+		color: rgba(48,49,51,1);
 		line-height: 64rpx;
+		display: flex;
 	}
 	.right .content {
 		font-size: 28rpx;

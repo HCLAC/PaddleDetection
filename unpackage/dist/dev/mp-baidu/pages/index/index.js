@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   uniNavBar: function() {
-    return __webpack_require__.e(/*! import() | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then(__webpack_require__.bind(null, /*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59))
+    return __webpack_require__.e(/*! import() | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then(__webpack_require__.bind(null, /*! @/components/uni-nav-bar/uni-nav-bar.vue */ 61))
   },
   uWaterfall: function() {
     return Promise.all(/*! import() | uview-ui/components/u-waterfall/u-waterfall */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uview-ui/components/u-waterfall/u-waterfall")]).then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-waterfall/u-waterfall.vue */ 164))
@@ -284,7 +284,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 42));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 74));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 59));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 104));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+
+var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 42));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 76));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 61));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 106));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 // import httpType from '../../httpType.js';
 var _default = {
   components: {
@@ -304,13 +305,17 @@ var _default = {
       hotAtt: '',
       list: [],
       leftList: [],
-      rightList: [] };
+      rightList: [],
+      token: '' };
 
   },
   onLoad: function onLoad() {
     this.getAdress(),
     this.getSiteHot(),
-    this.getSystem(),
+    this.getSystem();
+
+  },
+  onShow: function onShow() {
     this.getArticleList();
   },
   methods: {
@@ -395,6 +400,13 @@ var _default = {
       var that = this;
       var city_id = uni.getStorageSync('city_id');
       var state_id = uni.getStorageSync('state_id');
+      uni.getStorage({
+        key: 'Authorization',
+        success: function success(res) {
+          console.log("token===>", res.data);
+          that.token = res.data;
+        } });
+
       uni.request({
         // url:'http://192.168.43.156:8199/article/list',
         // url:'article/list',
@@ -406,6 +418,9 @@ var _default = {
           count: 20,
           page: 1,
           sort_by: 1 },
+
+        header: {
+          'Authorization': that.token },
 
         success: function success(res) {
           console.log('文章列表', res);

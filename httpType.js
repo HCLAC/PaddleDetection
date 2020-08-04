@@ -45,7 +45,7 @@ function request(obj) {
 		method: method,
 		success: function(res) {
 			// 判断token是否过期
-			console.log(res)
+			console.log('判断是否登录',res)
 			// debugger
 			if (res.data.code != 0) {
 				// debugger
