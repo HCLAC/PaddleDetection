@@ -164,22 +164,24 @@ export default {
 		border-radius: 36rpx;
 
 		.content-box {
-			width: 100%;
+			width:606rpx;
+			height:72rpx;
+			background:rgba(248,248,248,1);
+			border-radius:18px;
 			display: flex;
 			background-color: #f8f8f8;
 			align-items: center;
 			&.center {
 				justify-content: center;
 			}
-
 			.input {
-				width: 100%;
-				max-width: 100%;
-				line-height: 60upx;
-				height: 60upx;
+				width: 380rpx;
+				// max-width: 100%;
+				line-height: 72rpx;
+				height: 72rpx;
 				transition: all 0.2s linear;
 				&.center {
-					width: 200upx;
+					width: 200rpx;
 				}
 				&.sub {
 					// position: absolute;

@@ -20,9 +20,9 @@
 							<image class="itemImg" mode="aspectFit" :src="item"></image>
 						</swiper-item>
 					</swiper>
-					<view class="imageCount">{{current+1}}/{{images.length}}</view>
+					<view class="imageCount">{{current+1}}/{{articleList.data.images.length}}</view>
 					<view class="dots">
-						<block v-for="(item, index) in images">
+						<block v-for="(item, index) in articleList.data.images">
 							<view :class="[index == current ? 'activieDot' : 'dot']"></view>
 						</block>
 					</view>
@@ -55,8 +55,8 @@
 				<view class="copy">详情请+VX: {{VX}}<text class="clcopy" @click="copy">点击复制</text></view>
 			</view>
 			<view class="tips">
-				<view>#<text>{{articleList.data.tags[0]}}</text></view>
-				<view>#<text>{{articleList.data.topics[0]}}</text></view>
+				<view v-for="item in  articleList.data.tags">#<text>{{item}}</text></view>
+				<view v-for="item in articleList.data.topics">#<text>{{item}}</text></view>
 				<!-- <view>#<text></text></view> -->
 			</view>
 			<view class="releaseTime">发布于{{articleList.data.update_at}}</view>
@@ -82,7 +82,7 @@
 			<view class="share" @click="share">
 				<image src="../../static/images/share.png"></image>
 			</view>
-			<view class="loginButton">登录</view>
+			<view class="loginButton" v-show="token == null">登录</view>
 		</view>
 	</view>
 </template>
@@ -103,8 +103,7 @@
 			return {
 				indicatorDots: true,
 				current: 0,
-				list: [
-				],
+				list: [],
 				VX: 17827277778,
 				articleList: '',
 				token: '',
@@ -166,7 +165,7 @@
 				})
 
 				var article_id = uni.getStorageSync('id')
-				// console.log('art',article_id)
+				console.log('art',article_id)
 
 				uni.request({
 						url: 'http://121.40.30.19/user/liked',

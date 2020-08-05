@@ -136,7 +136,7 @@ export default {
 		return {
 			indicatorDots: true,
 			current: 0,
-			list: [{ key: '1', title: 'A' }, { key: '2', title: 'B' }, { key: '3', title: 'C' }, { key: '4', title: 'D' }, { key: '6', title: 'E' }, { key: '7', title: 'F' }],
+			list: [],
 			likemessage: 144,
 			favmessage: 219,
 			isShow: true,

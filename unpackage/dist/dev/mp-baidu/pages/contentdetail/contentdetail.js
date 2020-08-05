@@ -75,7 +75,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   uniStatusBar: function() {
-    return __webpack_require__.e(/*! import() | components/uni-status-bar/uni-status-bar */ "components/uni-status-bar/uni-status-bar").then(__webpack_require__.bind(null, /*! @/components/uni-status-bar/uni-status-bar.vue */ 174))
+    return __webpack_require__.e(/*! import() | components/uni-status-bar/uni-status-bar */ "components/uni-status-bar/uni-status-bar").then(__webpack_require__.bind(null, /*! @/components/uni-status-bar/uni-status-bar.vue */ 181))
   },
   uniIcons: function() {
     return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 76))
@@ -116,7 +116,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniStatusBar = function uniStatusBar() {__webpack_require__.e(/*! require.ensure | components/uni-status-bar/uni-status-bar */ "components/uni-status-bar/uni-status-bar").then((function () {return resolve(__webpack_require__(/*! ../uni-status-bar/uni-status-bar.vue */ 174));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! ../uni-icons/uni-icons.vue */ 76));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniStatusBar = function uniStatusBar() {__webpack_require__.e(/*! require.ensure | components/uni-status-bar/uni-status-bar */ "components/uni-status-bar/uni-status-bar").then((function () {return resolve(__webpack_require__(/*! ../uni-status-bar/uni-status-bar.vue */ 181));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! ../uni-icons/uni-icons.vue */ 76));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 
 
@@ -588,8 +588,7 @@ var _this; // import httpType from '../../httpType.js'
 var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.default, uniFav: _uniFav.default }, data: function data() {return { indicatorDots: true, current: 0, list: [], VX: 17827277778, articleList: '', token: '', article_id: '' };}, onLoad: function onLoad(e) {console.log('文章id====', e);this.getArticleDetail(e);}, created: function created() {_this = this, _this.getOrder();}, methods: { // 获取文章详情
     getArticleDetail: function getArticleDetail(e) {var that = this;uni.getStorage({ key: 'Authorization', success: function success(res) {console.log("token===>", res.data);that.token = res.data;} });uni.request({ // url:'article',
         url: 'http://121.40.30.19/article', data: { article_id: e.article_id }, header: { 'Authorization': that.token }, success: function success(res) {console.log(res.data.data.liked, res.data.data.like_count, res.data.data.uuid, 444444);console.log('eeeeeeeeeeeeeeee', e);console.log('文章详情====', res.data);uni.setStorageSync('id', res.data);that.articleList = res.data;console.log('articleList', that.articleList);} });}, // 点赞
-    clickLike: function clickLike() {var that = this;uni.getStorage({ key: 'Authorization', success: function success(res) {console.log("token===>", res.data);that.token = res.data;} });var article_id = uni.getStorageSync('id'); // console.log('art',article_id)
-      uni.request({ url: 'http://121.40.30.19/user/liked', data: { article_id: article_id.data.uuid, liked: article_id.data.liked == 0 ? 1 : 0 }, method: 'POST', header: { 'Authorization': that.token }, success: function success(res) {console.log('点赞', res);if (res.data.code != 0) {// debugger
+    clickLike: function clickLike() {var that = this;uni.getStorage({ key: 'Authorization', success: function success(res) {console.log("token===>", res.data);that.token = res.data;} });var article_id = uni.getStorageSync('id');console.log('art', article_id);uni.request({ url: 'http://121.40.30.19/user/liked', data: { article_id: article_id.data.uuid, liked: article_id.data.liked == 0 ? 1 : 0 }, method: 'POST', header: { 'Authorization': that.token }, success: function success(res) {console.log('点赞', res);if (res.data.code != 0) {// debugger
             uni.showModal({ title: '提示', content: res.data.msg, showCancel: false, success: function success(res) {
                 if (res.confirm) {
                   uni.redirectTo({

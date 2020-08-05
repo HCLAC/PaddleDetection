@@ -49,7 +49,10 @@
   border-radius: 36rpx;
 }
 .serach .content .content-box {
-  width: 100%;
+  width: 606rpx;
+  height: 72rpx;
+  background: #f8f8f8;
+  border-radius: 18px;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -64,10 +67,9 @@
           justify-content: center;
 }
 .serach .content .content-box .input {
-  width: 100%;
-  max-width: 100%;
-  line-height: 60rpx;
-  height: 60rpx;
+  width: 380rpx;
+  line-height: 72rpx;
+  height: 72rpx;
   -webkit-transition: all 0.2s linear;
   transition: all 0.2s linear;
 }

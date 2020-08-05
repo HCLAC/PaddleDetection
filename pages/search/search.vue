@@ -1,9 +1,10 @@
 <template>
 	<view class="content">
+		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
-					<uni-icons type="arrowleft" class="icons" color="#333333" size="22" @click="back" />
+					<image class="fanhui" src="../../static/images/icon-fanhui.png" @click="back" />
 				</view>
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
@@ -20,15 +21,7 @@
 				@confirm="doSearch(false)"
 				v-model="keyValue"
 			></mSearch>
-			<!-- 原样式 如果使用原样式，恢复下方注销代码 -->
-			<!-- 						
-			<view class="input-box">
-				<input type="text" :adjust-position="true" :placeholder="defaultKeyword" @input="inputChange" v-model="keyword" @confirm="doSearch(false)"
-				 placeholder-class="placeholder-class" confirm-type="search">
-			</view>
-			<view class="search-btn" @tap="doSearch(false)">搜索</view> 
-			 -->
-			<!-- 原样式 end -->
+			
 		</view>
 		<view class="search-keyword">
 			<scroll-view class="keyword-list-box" scroll-y v-show="isShowKeywordList">
@@ -357,7 +350,7 @@ view {
 	appearance: none;
 	padding: 0 3%;
 	margin: 0;
-	background-color: #ffffff;
+	background-color: #ff557f;
 }
 
 .search-keyword {
@@ -532,7 +525,7 @@ view {
 		margin-left: 220rpx;
 		font-size: 38rpx;
 		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:500;
+		font-weight:600;
 		color:rgba(0,0,0,1);
 	}
 	.button-v-line{

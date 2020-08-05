@@ -26,15 +26,24 @@
 			        <view class="hot-bot"  >
 						<view class="hb-l" @click='toAtt'  >
 							<image :src="hotAtt[0].image"></image>
+							<view class="imgMask">
+								
+							</view>
 							<text>{{hotAtt[0].name}}</text>
 						</view>
 						<view class="hb-r">
 							<view class="hb-r1" @click='toAtt'>
 								<image :src="hotAtt[1].image"></image>
+								<view class="imgMask">
+									
+								</view>
 								<text>{{hotAtt[1].name}}</text>
 							</view>
 							<view class="hb-r2" @click='toAtt'>
 								<image :src="hotAtt[2].image"></image>
+								<view class="imgMask">
+									
+								</view>
 								<text>{{hotAtt[2].name}}</text>
 							</view>
 						</view>
@@ -79,7 +88,7 @@
 												<image class="userHeard" :src="item.avatar"></image>
 												<view class="userNikename">{{ item.author_name }}</view>
 											</view>
-											<view class="count" @click="clickLike()">
+											<view class="count" @click="clickLike" :id="item.article_id">
 												<image src="../../static/images/heart.png" v-if="item.liked==0"></image>
 												<image src="../../static/images/heart-actived.png" v-if="item.liked==1"></image>
 													{{ item.like_count || 0 }}
@@ -119,7 +128,7 @@
 												<image class="userHeard" :src="item.avatar"></image>
 												<view class="userNikename">{{ item.author_name }}</view>
 											</view>
-											<view class="count" @click="clickLike()">
+											<view class="count" @click="clickLike"  :id="item.article_id">
 												<image src="../../static/images/heart未选中.png" ></image>
 												{{ item.like_count || 0 }}
 											</view>
@@ -164,7 +173,8 @@
 				list: [],
 				leftList:[],
 				rightList:[],
-				token:''
+				token:'',
+				liked:''
 			}
 		},
 		onLoad() {
@@ -285,8 +295,6 @@
 						uni.setStorageSync('article_id',res.data)
 						console.log('存储文章列表==',res.data)
 						that.list = res.data.data
-						// that.leftList = that.list.list
-						// that.rightList = that.list.list
 						console.log('list=====',that.list.list)
 					}
 				})
@@ -296,14 +304,17 @@
 				let id = e.currentTarget.id
 				// debugger
 				// return
-				
 				uni.navigateTo({
 					url: "/pages/contentdetail/contentdetail?article_id="+id
 				})
 			},
 			// 点赞
-			clickLike() {
+			clickLike(e) {
+				// console.log('qwer',e)
+				let article = e.currentTarget.id
 				var that = this
+				var city_id = uni.getStorageSync('city_id')
+				var state_id = uni.getStorageSync('state_id')
 				uni.getStorage({
 					key: 'Authorization',
 					success: function(res) {
@@ -311,15 +322,38 @@
 						that.token = res.data
 					}
 				})
-			
-				var article_id = uni.getStorageSync('id')
-				// console.log('art',article_id)
+				uni.request({
+					// url:'article',
+					url: 'http://121.40.30.19/article',
+					data: {
+						article_id: article
+					},
+					header: {
+						'Authorization': that.token
+					},
+					success: function(res) {
+						console.log(res.data.data.liked,
+							res.data.data.like_count,
+							res.data.data.uuid,
+							444444
+						)
+						// console.log('eeeeeeeeeeeeeeee', e)
+						console.log('文章详情====', res.data.data)
+						uni.setStorageSync('id', res.data)
+						that.articleList = res.data.data
+						console.log('articleList', that.articleList)
+						console.log('liked',that.articleList.liked)
+						that.liked = that.articleList.liked
+					}
+				})
+				
+				
 			
 				uni.request({
 						url: 'http://121.40.30.19/user/liked',
 						data: {
-							article_id: article_id.data.uuid,
-							liked: article_id.data.liked == 0 ? 1 : 0
+							article_id: article,
+							liked:that.liked == 0 ? 1 : 0
 						},
 						method: 'POST',
 						header: {
@@ -721,6 +755,16 @@
 		height: 100%;
 		border-radius: 16rpx;
 		background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+	}
+	.imgMask{
+		width:360rpx;
+		height:108rpx;
+		background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+		border-radius:0px 0px 4px 4px;
+		opacity:0.8;
+		position: absolute;
+		bottom: 0;
+		left: 0;
 	}
 	.hb-r{
 		margin: 0 0 0 10rpx;
