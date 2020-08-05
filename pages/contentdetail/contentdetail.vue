@@ -15,7 +15,7 @@
 		<view class="uni-padding-wrap">
 			<view class="page-section swiper">
 				<view class="page-section-spacing">
-					<swiper @change="change" class="swiper" :indicator-dots="false">
+					<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
 						<swiper-item v-for="(item,index) in articleList.data.images">
 							<image class="itemImg" mode="aspectFit" :src="item"></image>
 						</swiper-item>

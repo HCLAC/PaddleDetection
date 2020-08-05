@@ -861,7 +861,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-baidu","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-baidu","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -2990,9 +2990,17 @@ var _$parent = _interopRequireDefault(__webpack_require__(/*! ./libs/function/$p
 
 
 
-var _config = _interopRequireDefault(__webpack_require__(/*! ./libs/config/config.js */ 34));
+var _sys = __webpack_require__(/*! ./libs/function/sys.js */ 34);
 
-var _zIndex = _interopRequireDefault(__webpack_require__(/*! ./libs/config/zIndex.js */ 35));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // 引入全局mixin
+var _debounce = _interopRequireDefault(__webpack_require__(/*! ./libs/function/debounce.js */ 35));
+
+var _throttle = _interopRequireDefault(__webpack_require__(/*! ./libs/function/throttle.js */ 36));
+
+
+
+var _config = _interopRequireDefault(__webpack_require__(/*! ./libs/config/config.js */ 37));
+
+var _zIndex = _interopRequireDefault(__webpack_require__(/*! ./libs/config/zIndex.js */ 38));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // 引入全局mixin
 // 引入关于是否mixin集成小程序分享的配置
 // import wxshare from './libs/mixin/mpShare.js'
 // 全局挂载引入http相关请求拦截插件
@@ -3009,7 +3017,9 @@ function wranning(str) {// 开发环境进行信息输出,主要是一些报错�
 // }
 // post类型对象参数转为get类型url参数
 var $u = { queryParams: _queryParams.default, route: _route.default, timeFormat: _timeFormat.default, date: _timeFormat.default, // 另名date
-  timeFrom: _timeFrom.default, colorGradient: _colorGradient.default.colorGradient, guid: _guid.default, color: _color.default, type2icon: _type2icon.default, randomArray: _randomArray.default, wranning: wranning, get: _request.default.get, post: _request.default.post, put: _request.default.put, 'delete': _request.default.delete,
+  timeFrom: _timeFrom.default, colorGradient: _colorGradient.default.colorGradient, guid: _guid.default, color: _color.default, sys: _sys.sys, os: _sys.os, type2icon: _type2icon.default, randomArray: _randomArray.default, wranning: wranning, get: _request.default.get, post: _request.default.post,
+  put: _request.default.put,
+  'delete': _request.default.delete,
   hexToRgb: _colorGradient.default.hexToRgb,
   rgbToHex: _colorGradient.default.rgbToHex,
   test: _test.default,
@@ -3024,7 +3034,9 @@ var $u = { queryParams: _queryParams.default, route: _route.default, timeFormat:
   http: _request.default,
   toast: _toast.default,
   config: _config.default, // uView配置信息相关，比如版本号
-  zIndex: _zIndex.default };
+  zIndex: _zIndex.default,
+  debounce: _debounce.default,
+  throttle: _throttle.default };
 
 
 var install = function install(Vue) {
@@ -3118,11 +3130,11 @@ Request = /*#__PURE__*/function () {_createClass(Request, [{ key: "setConfig",
         var tmpConfig = {};
         var interceptorReuest = this.interceptor.request(options);
         if (interceptorReuest === false) {
-          return false;
+          // 返回一个处于pending状态中的Promise，来取消原promise
+          return new Promise(function () {});
         }
         this.options = interceptorReuest;
       }
-
       options.dataType = options.dataType || this.config.dataType;
       options.responseType = options.responseType || this.config.responseType;
       options.url = options.url || '';
@@ -3195,6 +3207,10 @@ Request = /*#__PURE__*/function () {_createClass(Request, [{ key: "setConfig",
           }, _this.config.loadingTime);
         }
         uni.request(options);
+      }).catch(function (res) {
+        // 如果返回reject()，不让其进入this.$u.post().then().catch()后面的catct()
+        // 因为很多人都会忘了写后面的catch()，导致报错捕获不到catch
+        return new Promise(function () {});
       });
     } }]);
 
@@ -3311,7 +3327,7 @@ deepMerge;exports.default = _default;
 
 /***/ }),
 
-/***/ 160:
+/***/ 163:
 /*!***********************************************************************!*\
   !*** D:/work/test/fengyan-mp/components/mescroll-uni/mescroll-uni.js ***!
   \***********************************************************************/
@@ -4194,7 +4210,7 @@ MeScroll.prototype.setBounce = function (isBounce) {
 
 /***/ }),
 
-/***/ 161:
+/***/ 164:
 /*!******************************************************************************!*\
   !*** D:/work/test/fengyan-mp/components/mescroll-uni/mescroll-uni-option.js ***!
   \******************************************************************************/
@@ -4242,17 +4258,6 @@ GlobalOption;exports.default = _default;
 
 /***/ }),
 
-/***/ 169:
-/*!*********************************************************************************************!*\
-  !*** ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator/index.js ***!
-  \*********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! regenerator-runtime */ 170);
-
-/***/ }),
-
 /***/ 17:
 /*!*******************************************************************!*\
   !*** D:/work/test/fengyan-mp/uview-ui/libs/function/deepClone.js ***!
@@ -4287,7 +4292,18 @@ deepClone;exports.default = _default;
 
 /***/ }),
 
-/***/ 170:
+/***/ 172:
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator/index.js ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! regenerator-runtime */ 173);
+
+/***/ }),
+
+/***/ 173:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -4318,7 +4334,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 171);
+module.exports = __webpack_require__(/*! ./runtime */ 174);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -4335,7 +4351,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 171:
+/***/ 174:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -10896,7 +10912,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-baidu","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-baidu","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -10917,14 +10933,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-baidu","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-baidu","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-baidu","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-baidu","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -11009,7 +11025,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-baidu","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-baidu","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -11506,7 +11522,7 @@ route;exports.default = _default;
 
 /***/ }),
 
-/***/ 200:
+/***/ 203:
 /*!**********************************************************!*\
   !*** D:/work/test/fengyan-mp/components/content/data.js ***!
   \**********************************************************/
@@ -13415,7 +13431,30 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function timeFormat() {var timestamp = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;var fmt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'yyyy-mm-dd';
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // padStart 的 polyfill，因为某些机型或情况，还无法支持es7的padStart，比如电脑版的微信小程序
+// 所以这里做一个兼容polyfill的兼容处理
+if (!String.prototype.padStart) {
+  String.prototype.padStart =
+  // 为了方便表示这里 fillString 用了ES6 的默认参数，不影响理解
+  function (maxLength) {var fillString = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ' ';
+    if (Object.prototype.toString.call(fillString) !== "[object String]") throw new TypeError('fillString must be String');
+    var str = this;
+    // 返回 String(str) 这里是为了使返回的值是字符串字面量，在控制台中更符合直觉
+    if (str.length >= maxLength) return String(str);
+
+    var fillLength = maxLength - str.length,
+    times = Math.ceil(fillLength / fillString.length);
+    while (times >>= 1) {
+      fillString += fillString;
+      if (times === 1) {
+        fillString += fillString;
+      }
+    }
+    return fillString.slice(0, fillLength) + str;
+  };
+}
+
+function timeFormat() {var timestamp = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;var fmt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'yyyy-mm-dd';
   // 其他更多是格式化有如下:
   // yyyy:mm:dd|yyyy:mm|yyyy年mm月dd日|yyyy年mm月dd日 hh时MM分等,可自定义组合
   timestamp = parseInt(timestamp);
@@ -13437,6 +13476,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   for (var k in opt) {
     ret = new RegExp("(" + k + ")").exec(fmt);
     if (ret) {
+      console.log(k, ret, opt[k]);
       fmt = fmt.replace(ret[1], ret[1].length == 1 ? opt[k] : opt[k].padStart(ret[1].length, "0"));
     };
   };
@@ -13964,12 +14004,14 @@ function getParent(name, keys) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = $parent; // 获取父组件的参数，因为支付宝小程序不支持provide/inject的写法
 // this.$parent在非H5中，可以准确获取到父组件，但是在H5中，需要多次this.$parent.$parent.xxx
-function $parent(name, keys) {
+// 这里默认值等于undefined有它的含义，因为最顶层元素(组件)的$parent就是undefined，意味着不传name
+// 值(默认为undefined)，就是查找最顶层的$parent
+function $parent() {var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
   var parent = this.$parent;
   // 通过while历遍，这里主要是为了H5需要多层解析的问题
   while (parent) {
     // 父组件
-    if (parent.$options.name !== name) {
+    if (parent.$options && parent.$options.name !== name) {
       // 如果组件的name不相等，继续上一级寻找
       parent = parent.$parent;
     } else {
@@ -13982,6 +14024,108 @@ function $parent(name, keys) {
 /***/ }),
 
 /***/ 34:
+/*!*************************************************************!*\
+  !*** D:/work/test/fengyan-mp/uview-ui/libs/function/sys.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.os = os;exports.sys = sys;function os() {
+  return uni.getSystemInfoSync().platform;
+};
+
+function sys() {
+  return uni.getSystemInfoSync();
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-baidu/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 35:
+/*!******************************************************************!*\
+  !*** D:/work/test/fengyan-mp/uview-ui/libs/function/debounce.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var timeout = null;
+
+/**
+                                                                                                                         * 防抖原理：一定时间内，只有最后一次操作，再过wait毫秒后才执行函数
+                                                                                                                         * 
+                                                                                                                         * @param {Function} func 要执行的回调函数 
+                                                                                                                         * @param {Number} wait 延时的时间
+                                                                                                                         * @param {Boolean} immediate 是否立即执行 
+                                                                                                                         * @return null
+                                                                                                                         */
+function debounce(func) {var wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  // 清除定时器
+  if (timeout !== null) clearTimeout(timeout);
+  // 立即执行，此类情况一般用不到
+  if (immediate) {
+    var callNow = !timeout;
+    timeout = setTimeout(function () {
+      timeout = null;
+    }, wait);
+    if (callNow) typeof func === 'function' && func();
+  } else {
+    // 设置定时器，当最后一次操作后，timeout不会再被清除，所以在延时wait毫秒后执行func回调方法
+    timeout = setTimeout(function () {
+      typeof func === 'function' && func();
+    }, wait);
+  }
+}var _default =
+
+debounce;exports.default = _default;
+
+/***/ }),
+
+/***/ 36:
+/*!******************************************************************!*\
+  !*** D:/work/test/fengyan-mp/uview-ui/libs/function/throttle.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var timer, flag;
+/**
+                                                                                                                      * 节流原理：在一定时间内，只能触发一次
+                                                                                                                      * 
+                                                                                                                      * @param {Function} func 要执行的回调函数 
+                                                                                                                      * @param {Number} wait 延时的时间
+                                                                                                                      * @param {Boolean} immediate 是否立即执行
+                                                                                                                      * @return null
+                                                                                                                      */
+function throttle(func) {var wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  if (immediate) {
+    if (!flag) {
+      flag = true;
+      // 如果是立即执行，则在wait毫秒内开始时执行
+      typeof func === 'function' && func();
+      timer = setTimeout(function () {
+        flag = false;
+      }, wait);
+    }
+  } else {
+    if (!flag) {
+      flag = true;
+      // 如果是非立即执行，则在wait毫秒内的结束处执行
+      timer = setTimeout(function () {
+        flag = false;
+        typeof func === 'function' && func();
+      }, wait);
+    }
+
+  }
+};var _default =
+throttle;exports.default = _default;
+
+/***/ }),
+
+/***/ 37:
 /*!**************************************************************!*\
   !*** D:/work/test/fengyan-mp/uview-ui/libs/config/config.js ***!
   \**************************************************************/
@@ -13989,8 +14133,8 @@ function $parent(name, keys) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // 此版本发布于2020-07-21
-var version = '1.5.4';var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // 此版本发布于2020-08-04
+var version = '1.5.9';var _default =
 
 {
   v: version,
@@ -14005,7 +14149,7 @@ var version = '1.5.4';var _default =
 
 /***/ }),
 
-/***/ 35:
+/***/ 38:
 /*!**************************************************************!*\
   !*** D:/work/test/fengyan-mp/uview-ui/libs/config/zIndex.js ***!
   \**************************************************************/
@@ -14046,7 +14190,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 42:
+/***/ 45:
 /*!**************************************************************************!*\
   !*** D:/work/test/fengyan-mp/components/mescroll-uni/mescroll-mixins.js ***!
   \**************************************************************************/
@@ -14117,7 +14261,7 @@ MescrollMixin;exports.default = _default;
 
 /***/ }),
 
-/***/ 51:
+/***/ 54:
 /*!*******************************************!*\
   !*** D:/work/test/fengyan-mp/httpType.js ***!
   \*******************************************/
@@ -14125,7 +14269,7 @@ MescrollMixin;exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _config = _interopRequireDefault(__webpack_require__(/*! ./config.js */ 52));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _config = _interopRequireDefault(__webpack_require__(/*! ./config.js */ 55));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 // try{
 
@@ -14203,7 +14347,7 @@ function request(obj) {
 
 /***/ }),
 
-/***/ 52:
+/***/ 55:
 /*!*****************************************!*\
   !*** D:/work/test/fengyan-mp/config.js ***!
   \*****************************************/
@@ -14217,7 +14361,7 @@ baseurl;exports.default = _default;
 
 /***/ }),
 
-/***/ 81:
+/***/ 84:
 /*!*************************************************************!*\
   !*** D:/work/test/fengyan-mp/components/uni-icons/icons.js ***!
   \*************************************************************/

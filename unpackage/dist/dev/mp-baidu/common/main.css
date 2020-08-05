@@ -35,7 +35,6 @@
 }
 image {
   display: inline-block;
-  will-change: transform;
 }
 view,
 text {

@@ -19,19 +19,19 @@
 				<view class="left">
 					<image :src="item.main_image" mode="">
 						<view class="imgTip">
-							<view  v-if="item.type==1">
+							<view  v-if="item.type==0">
 								游记
 							</view>
-							<view  v-if="item.type==2">
+							<view  v-if="item.type==1">
 								攻略
 							</view></view></image>
 						</view>
 				<view class="right">
 					<view class="title">
-						<view  v-if="item.type==1">
+						<view  v-if="item.type==0">
 							游记
 						</view>
-						<view  v-if="item.type==2">
+						<view  v-if="item.type==1">
 							攻略
 						</view>
 						| {{item.title}}</view>
@@ -44,13 +44,14 @@
 					</view>
 				</view>
 			</view>
-			<view class="noContentItem">
+			<view class="noContent">~我也是有底线~</view>
+		
+			<view class="noContentItem" v-show="tipList == null">
 				<image src="../../static/images/wenjianjia.png" mode=""></image>
 				<view class="tipText">您的收藏夹空空如也~</view>
 			</view>
 		</view>
-<!-- 		<view class="noContent">~我也是有底线~</view>
- -->		
+		
 	</view>
 </template>
 
@@ -211,7 +212,7 @@ export default {
 	margin-left: 15px;
 	width: 130rpx;
 	height: 130rpx;
-	border: 1px #333333 solid;
+	// border: 1px #333333 solid;
 	border-radius: 50%;
 }
 .userR {
@@ -280,6 +281,7 @@ export default {
 .noContent {
 	font-size: 22rpx;
 	color: rgba(201, 202, 209, 1);
+	// color: red;
 	text-align: center;
 	
 }

@@ -7,7 +7,7 @@
 					<image class="fanhui" src="../../static/images/icon-fanhui.png" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.png" @click="home" />
 				</view>
-				<view class="slottitle">热门景点</view>
+				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
 		<!-- 用户信息 -->
@@ -18,11 +18,15 @@
 				<view class="page-section swiper">
 					<view class="page-section-spacing">
 						<swiper @change="change" :autoplay="true" class="swiper" :indicator-dots="false">
-							<swiper-item v-for="item in list" class="swiper-item"><image src="" mode=""></image></swiper-item>
+							<swiper-item v-for="item in attDetail.data.images" class="swiper-item">
+								<image :src="item" mode="aspectFit" ></image>
+							</swiper-item>
 						</swiper>
-						<view class="imageCount">{{ current + 1 }}/{{ list.length }}</view>
+						<view class="imageCount">{{ current + 1 }}/{{ attDetail.data.images.length }}</view>
 						<view class="dots">
-							<block v-for="(item, index) in list"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+							<block v-for="(item, index) in attDetail.data.images">
+								<view :class="[index == current ? 'activieDot' : 'dot']"></view>
+							</block>
 						</view>
 					</view>
 				</view>
@@ -34,16 +38,11 @@
 				</view>
 				<view class="tips">
 					<view class="tipHot">{{attDetail.data.tags[0]}}</view>
-					<view class="tip">直布罗陀</view>
+					<view class="tip">{{attDetail.data.city}}</view>
 				</view>
-				<view class="rateBox">
-					<view class="iconBox">
-						<image src="../../static/images/rateOver.png"></image>
-						<image src="../../static/images/rateOver.png"></image>
-						<image src="../../static/images/rateOver.png"></image>
-						<image src="../../static/images/rateHalf.png"></image>
-						<image src="../../static/images/rateNo.png"></image>
-					</view>
+				<view class="rateBox" >
+					<uni-rate  :readonly="true" allow-half :value="attDetail.data.rate" />
+					<!-- <u-rate :disabled="true" current="4"></u-rate> -->
 					<view class="rate">{{attDetail.data.rate}} 星</view>
 					<view class="goTo">{{attDetail.data.visited}}人去过</view>
 				</view>
@@ -66,8 +65,11 @@
 				<view class="title">景点位置</view>
 				<view class="adress">
 					<view class="left">
-						<image src="../../static/images/mapIcon.png" mode=""></image>
-						<text>中国浙江省杭州市西湖区弯糖路118号</text>
+						<view class="adreessIcon">
+							<image class="" src="../../static/images/mapIcon.png" mode=""></image>
+						</view>
+						
+						<text class="adressText">{{attDetail.data.pos}}</text>
 					</view>
 					<view class="right">
 						<image src="../../static/images/mapBack.png" mode=""></image>
@@ -119,6 +121,7 @@
 			</view>
 		</view>
 	</view>
+	
 </template>
 
 <script>
@@ -137,8 +140,6 @@ export default {
 			indicatorDots: true,
 			current: 0,
 			list: [],
-			likemessage: 144,
-			favmessage: 219,
 			isShow: true,
 			attDetail:''
 		};
@@ -389,13 +390,10 @@ export default {
 		margin-top: 60rpx;
 		display: flex;
 		align-items: center;
-		.iconBox {
-			display: flex;
-			image {
-				height: 36rpx;
-				width: 36rpx;
-				margin-right: 16rpx;
-			}
+		.rateStart{
+			width: 300rpx;
+			height: 40rpx;
+			// background-color: #007AFF;
 		}
 		.rate {
 			margin-left: 20rpx;
@@ -474,17 +472,23 @@ export default {
 			display: flex;
 			align-items: center;
 			width: 50%;
-			image {
+			.adreessIcon {
 				height: 34rpx;
 				width: 34rpx;
 				margin-right: 16rpx;
+				image {
+					width: 100%;
+					height: 100%;
+				}
 			}
-			text {
+			.adressText {
 				font-size: 28rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
 				font-weight: 400;
 				color: rgba(96, 98, 102, 1);
 				line-height: 36rpx;
+				width:308rpx;
+				height:70rpx;
 			}
 		}
 		.right {
