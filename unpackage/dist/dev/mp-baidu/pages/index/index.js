@@ -318,14 +318,15 @@ var _default = {
   },
   onLoad: function onLoad() {
     this.getAdress(),
-    this.getSiteHot(),
-    this.getSystem();
+    this.getSiteHot();
+    // this.getSystem()
 
   },
   onShow: function onShow() {
     this.getArticleList();
   },
   methods: {
+    // 获取当前地理位置
     getAdress: function getAdress() {var _this = this;
       uni.getLocation({
         type: 'wgs84',
@@ -438,6 +439,7 @@ var _default = {
         } });
 
     },
+    // 跳转文章详情
     onPageJump: function onPageJump(e) {
       console.log(e);
       var id = e.currentTarget.id;
@@ -546,13 +548,13 @@ var _default = {
 
     },
     // 设备信息
-    getSystem: function getSystem() {
-      uni.getSystemInfo({
-        success: function success(res) {
-          console.log('设备信息', res);
-        } });
-
-    },
+    // getSystem(){
+    // 	uni.getSystemInfo({
+    // 		success:function(res){
+    // 			console.log('设备信息',res)
+    // 		}
+    // 	})
+    // },
     lookAll: function lookAll() {
       uni.navigateTo({
         url: '/pages/attractionsList/attractionsList' });

@@ -44,7 +44,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="noContent">~我也是有底线~</view>
+			<view class="noContent" v-show="tipList != null">~我也是有底线~</view>
 		
 			<view class="noContentItem" v-show="tipList == null">
 				<image src="../../static/images/wenjianjia.png" mode=""></image>

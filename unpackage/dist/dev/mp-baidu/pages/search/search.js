@@ -281,7 +281,7 @@ var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js
 
         return;
       }
-
+      this.isShowKeywordList = true;
       //以下示例截取淘宝的关键字，请替换成你的接口
       uni.request({
         url: 'http://121.40.30.19/search/suggest',
@@ -307,15 +307,16 @@ var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js
     },
     //高亮关键字
     drawCorrelativeKeyword: function drawCorrelativeKeyword(keywords, keyword) {
-      var len = keywords.length,
-      keywordArr = [];
+      var len = keywords.length;
+      var keywordArr = [];
       for (var i = 0; i < len; i++) {
         var row = keywords[i];
+        console.log(row, 1);
         //定义高亮#9f9f9f
-        var html = row[0].replace(keyword, "<span style='color: #303133;font-weight:bold'>" + keyword + '</span>');
+        var html = row.replace(keyword, "<span style='color: #303133;font-weight:bold'>" + keyword + "</span>");
         html = '<div>' + html + '</div>';
         var tmpObj = {
-          keyword: row[0],
+          keyword: row,
           htmlStr: html };
 
         keywordArr.push(tmpObj);
@@ -328,10 +329,10 @@ var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js
         url: "http://121.40.30.19/search",
         data: {
           'query': keyword,
-          'hit': 8 },
+          'hit': 2 },
 
         success: function success(res) {
-          console.log(res);
+          console.log('搜素数据', res);
           uni.navigateTo({
             url: '../searchResults/searchResults' });
 

@@ -179,14 +179,15 @@
 		},
 		onLoad() {
 			this.getAdress(),
-			this.getSiteHot(),
-			this.getSystem()
+			this.getSiteHot()
+			// this.getSystem()
 			
 		},
 		onShow() {
 			this.getArticleList()
 		},
 		methods: {
+			// 获取当前地理位置
 			getAdress(){
 				uni.getLocation({
 				    type: 'wgs84',
@@ -299,6 +300,7 @@
 					}
 				})
 			},
+			// 跳转文章详情
 			onPageJump(e) {
 				console.log(e)
 				let id = e.currentTarget.id
@@ -407,13 +409,13 @@
 					})
 			},
 			// 设备信息
-			getSystem(){
-				uni.getSystemInfo({
-					success:function(res){
-						console.log('设备信息',res)
-					}
-				})
-			},
+			// getSystem(){
+			// 	uni.getSystemInfo({
+			// 		success:function(res){
+			// 			console.log('设备信息',res)
+			// 		}
+			// 	})
+			// },
 			lookAll(){
 				uni.navigateTo({
 					url:'/pages/attractionsList/attractionsList'
