@@ -96,8 +96,8 @@ var components = {
   uniNavBar: function() {
     return __webpack_require__.e(/*! import() | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then(__webpack_require__.bind(null, /*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64))
   },
-  uniIcons: function() {
-    return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 79))
+  uWaterfall: function() {
+    return Promise.all(/*! import() | uview-ui/components/u-waterfall/u-waterfall */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uview-ui/components/u-waterfall/u-waterfall")]).then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-waterfall/u-waterfall.vue */ 167))
   }
 }
 var render = function() {
@@ -137,7 +137,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search-revision/mehaotian-search-revision */ "components/mehaotian-search-revision/mehaotian-search-revision").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search-revision/mehaotian-search-revision.vue */ 191));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var touring = function touring() {Promise.all(/*! require.ensure | components/content/touring */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/content/touring")]).then((function () {return resolve(__webpack_require__(/*! @/components/content/touring.vue */ 198));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search-revision/mehaotian-search-revision */ "components/mehaotian-search-revision/mehaotian-search-revision").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search-revision/mehaotian-search-revision.vue */ 191));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 
 
@@ -166,22 +166,232 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import touring from '@/components/content/touring.vue'
+var _default = {
   data: function data() {
     return {
       defaultKeyword: "",
-      keyword: "" };
+      keyword: "",
+      list: [] };
 
   },
 
   components: {
     mSearch: mSearch,
-    uniNavBar: uniNavBar,
-    touring: touring },
-
+    uniNavBar: uniNavBar
+    // touring
+  },
+  onLoad: function onLoad() {
+    this.getResults();
+  },
   // 方法
   methods: {
+    getResults: function getResults() {
+      var that = this;
+      uni.getStorage({
+        key: 'article_id',
+        success: function success(res) {
+          console.log('取数据', res.data.data);
+          that.list = res.data.data;
+        } });
 
+    },
+    // 跳转文章详情
+    onPageJump: function onPageJump(e) {
+      console.log(e);
+      var id = e.currentTarget.id;
+      // debugger
+      // return
+      uni.navigateTo({
+        url: "/pages/contentdetail/contentdetail?article_id=" + id });
+
+    },
+    // 点赞
+    clickLike: function clickLike(e) {
+      // console.log('qwer',e)
+      var article = e.currentTarget.id;
+      var that = this;
+      var city_id = uni.getStorageSync('city_id');
+      var state_id = uni.getStorageSync('state_id');
+      uni.getStorage({
+        key: 'Authorization',
+        success: function success(res) {
+          console.log("token===>", res.data);
+          that.token = res.data;
+        } });
+
+      uni.request({
+        // url:'article',
+        url: 'http://121.40.30.19/article',
+        data: {
+          article_id: article },
+
+        header: {
+          'Authorization': that.token },
+
+        success: function success(res) {
+          console.log(res.data.data.liked,
+          res.data.data.like_count,
+          res.data.data.uuid,
+          444444);
+
+          // console.log('eeeeeeeeeeeeeeee', e)
+          console.log('文章详情====', res.data.data);
+          uni.setStorageSync('id', res.data);
+          that.articleList = res.data.data;
+          console.log('articleList', that.articleList);
+          console.log('liked', that.articleList.liked);
+          that.liked = that.articleList.liked;
+        } });
+
+
+
+
+      uni.request({
+        url: 'http://121.40.30.19/user/liked',
+        data: {
+          article_id: article,
+          liked: that.liked == 0 ? 1 : 0 },
+
+        method: 'POST',
+        header: {
+          'Authorization': that.token },
+
+        success: function success(res) {
+          console.log('点赞', res);
+          if (res.data.code != 0) {
+            // debugger
+            uni.showModal({
+              title: '提示',
+              content: '您好，请先登录',
+              showCancel: false,
+              success: function success(res) {
+                if (res.confirm) {
+                  uni.redirectTo({
+                    url: '../login/login' });
+
+                }
+              } });
+
+            return;
+          }
+          uni.request({
+            // url:'http://192.168.43.156:8199/article/list',
+            // url:'article/list',
+            url: 'http://121.40.30.19/article/list',
+            // url:'http://192.168.43.60:8299/article/list',
+            data: {
+              state_id: state_id,
+              city_id: city_id,
+              count: 20,
+              page: 1,
+              sort_by: 1 },
+
+            header: {
+              'Authorization': that.token },
+
+            success: function success(res) {
+              console.log('文章列表', res);
+              uni.setStorageSync('article_id', res.data);
+              console.log('存储文章列表==', res.data);
+              that.list = res.data.data;
+              that.leftList = that.list.list;
+              that.rightList = that.list.list;
+              console.log('list=====', that.leftList);
+            } });
+
+        } });
+
+
+    },
     back: function back() {
       uni.navigateBack({
         delta: 1 });

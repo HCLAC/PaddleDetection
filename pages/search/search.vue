@@ -193,10 +193,12 @@ export default {
 				url:"http://121.40.30.19/search",
 				data:{
 					'query':keyword,
-					'hit':2
+					'hit':8
 				},
 				success:(res)=> {
 					console.log('搜素数据',res)
+					uni.setStorageSync('article_id',res.data)
+					console.log('存储数据',res.data)
 					uni.navigateTo({
 						url: '../searchResults/searchResults'
 					});
