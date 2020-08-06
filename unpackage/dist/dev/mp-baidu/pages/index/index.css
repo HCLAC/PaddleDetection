@@ -545,6 +545,13 @@
 
 
 
+
+
+
+
+
+
+
 	/* 头条小程序组件内不能引入字体 */
 page.data-v-57280228 {
 		display: -webkit-box;
@@ -693,7 +700,7 @@ view.data-v-57280228 {
 		border-radius: 36rpx;
 		-webkit-flex-wrap: nowrap;
 		        flex-wrap: nowrap;
-		margin: 0rpx 28rpx;
+		margin-left: 24rpx;
 }
 .input-uni-icon.data-v-57280228 {
 		width: 28rpx;
@@ -843,17 +850,21 @@ view.data-v-57280228 {
 		margin-top: 0;
 		margin-right: 10rpx;
 		margin-bottom: 48rpx;
-		position: relative;
+		/* position: relative; */
 		background-color: #FFFFFF;
+}
+.demo-top.data-v-57280228{
+		position: relative;
 }
 .demo-image.data-v-57280228 {
 		width: 100%;
 		border-radius: 8rpx 8rpx 0 0 ;
+		position: relative;
 }
 .adress.data-v-57280228{
 		position: absolute;
-		left: 4rpx;
-		bottom: 174rpx;
+		left: 0;
+		bottom: 8rpx;
 		display: -webkit-box;
 		display: -webkit-flex;
 		display: flex;

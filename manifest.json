@@ -9,6 +9,18 @@
         "nvueCompiler" : "uni-app",
         "compilerVersion" : 3,
         "modules" : {},
+		"safearea": {  
+		    "background":"#CCCCCC",  
+			"bottom":{  
+				"offset":"auto"  
+			},  
+			"left": {  
+				"offset":"auto"  
+			},  
+			"right": {  
+				"offset":"auto"  
+			}   
+		},
         "distribute" : {
             "android" : {
                 "permissions" : [

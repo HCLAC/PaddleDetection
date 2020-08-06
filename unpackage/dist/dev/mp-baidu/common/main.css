@@ -3246,15 +3246,7 @@ page {
 
 
 /* end-微信小程序编译后页面有组件名的元素，特别处理--end */
-
-
-
-
-
-
-
-
-
-
-
+uni-rich-text ._img {
+  max-width: 100% !important;
+}
 

@@ -7,7 +7,7 @@
 					<image class="fanhui" src="../../static/images/icon-fanhui.png" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.png" @click="home" />
 				</view>
-				<view class="slottitle">内容详情</view>
+				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
 
@@ -51,7 +51,7 @@
 
 			<!-- 内容文章 -->
 			<view class="contentText">
-				<rich-text :nodes="articleList.data.content"></rich-text> 
+				<rich-text :nodes="articleList.data.content|formatRichText"></rich-text> 
 				<view class="copy">详情请+VX: {{VX}}<text class="clcopy" @click="copy">点击复制</text></view>
 			</view>
 			<view class="tips">
@@ -340,7 +340,34 @@
 			// 	this.checked = !this.checked
 			//  this.$forceUpdate()
 			// }
-		}
+		},
+		filters: {
+					/**
+					 * 处理富文本里的图片宽度自适应
+					 * 1.去掉img标签里的style、width、height属性
+					 * 2.img标签添加style属性：max-width:100%;height:auto
+					 * 3.修改所有style里的width属性为max-width:100%
+					 * 4.去掉<br/>标签
+					 * @param html
+					 * @returns {void|string|*}
+					 */
+					formatRichText (html) { //控制小程序中图片大小
+					    let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
+					        match = match.replace(/style="[^"]+"/gi, '').replace(/style='[^']+'/gi, '');
+					        match = match.replace(/width="[^"]+"/gi, '').replace(/width='[^']+'/gi, '');
+					        match = match.replace(/height="[^"]+"/gi, '').replace(/height='[^']+'/gi, '');
+					        return match;
+					    });
+					    newContent = newContent.replace(/style="[^"]+"/gi,function(match,capture){
+					        match = match.replace(/width:[^;]+;/gi, 'max-width:100%;').replace(/width:[^;]+;/gi, 'max-width:100%;');
+					        return match;
+					    });
+					    newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+					    newContent = newContent.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');
+					    return newContent;
+					}	
+				}
+
 	}
 </script>
 

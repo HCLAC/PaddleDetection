@@ -5,11 +5,11 @@
 				<block slot="left">
 					<view class="city">
 						<view><text class="uni-nav-bar-text">{{ city }}</text></view>
-						<image src="../../static/images/shouqiIcon.png" class="down" />
+						<image src="../../static/images/pulldown.svg" class="down" />
 					</view>
 				</block>
 				<view class="input-view" @click="confirm">
-					<image class="input-uni-icon" src="../../static/images/icon-search@2x.png" />
+					<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
 					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" >
 				</view>
 			</uni-nav-bar>
@@ -21,7 +21,7 @@
 			    <view class="hot">
 			        <view class="hot-top">
 			            <text class="ht-l">热门景点</text>
-			            <view class="ht-r" @click="lookAll">查看更多<image src="../../static/images/查看更多@2x.png" class="moreIcon" mode=""></image></view>
+			            <view class="ht-r" @click="lookAll">查看更多<image src="../../static/images/more.svg" class="moreIcon" mode=""></image></view>
 			        </view>
 			        <view class="hot-bot"  >
 						<view class="hb-l" @click='toAtt'  >
@@ -58,16 +58,19 @@
 							<template v-slot:left="{leftList}">
 								<view class="demo-warter demo-warter-l" v-for="(item,index) in leftList" :key="index" >
 									<view class="" @click="onPageJump" :id ="item.article_id">
-										<image class="demo-image"  :src="item.image" :index="index" mode="widthFix"></image>
-										<view class="adress">
-											<view class="adreessIcon">
-												<image class="" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
-											</view>
-											
-											<view class="adressText">
-												{{item.location}}
+										<view class="demo-top">
+											<image class="demo-image"  :src="item.image" :index="index" mode="widthFix"></image>
+											<view class="adress">
+												<view class="adreessIcon">
+													<image class="" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
+												</view>
+												
+												<view class="adressText">
+													{{item.location}}
+												</view>
 											</view>
 										</view>
+										
 										
 										<view class="titleTip">
 											<view class="demo-tag">
@@ -100,15 +103,18 @@
 							<template v-slot:right="{rightList}">
 								<view class="demo-warter" v-for="(item,index) in rightList" :key="index">
 									<view class=""  @click="onPageJump" :id= "item.article_id">
-										<image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
-										<view class="adress">
-											<view class="adreessIcon">
-												<image class="" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
-											</view>
-											<view class="adressText">
-												{{item.location}}
+										<view class="demo-top">
+											<image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
+											<view class="adress">
+												<view class="adreessIcon">
+													<image class="" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
+												</view>
+												<view class="adressText">
+													{{item.location}}
+												</view>
 											</view>
 										</view>
+										
 										<view class="titleTip">
 											<view class="demo-tag">
 												<view class="demo-tag-owner" v-if="item.type==0">
@@ -129,7 +135,8 @@
 												<view class="userNikename">{{ item.author_name }}</view>
 											</view>
 											<view class="count" @click="clickLike"  :id="item.article_id">
-												<image src="../../static/images/heart未选中.png" ></image>
+												<image src="../../static/images/heart.png" v-if="item.liked==0"></image>
+												<image src="../../static/images/heart-actived.png" v-if="item.liked==1"></image>
 												{{ item.like_count || 0 }}
 											</view>
 										</view>
@@ -678,7 +685,7 @@
 		background:rgba(248,248,248,1);
 		border-radius: 36rpx;
 		flex-wrap: nowrap;
-		margin: 0rpx 28rpx;
+		margin-left: 24rpx;
 	}
 
 	.input-uni-icon {
@@ -817,20 +824,23 @@
 		margin-top: 0;
 		margin-right: 10rpx;
 		margin-bottom: 48rpx;
-		position: relative;
+		/* position: relative; */
 		background-color: #FFFFFF;
 	}
 	
-	
+	.demo-top{
+		position: relative;
+	}
 	
 	.demo-image {
 		width: 100%;
 		border-radius: 8rpx 8rpx 0 0 ;
+		position: relative;
 	}
 	.adress{
 		position: absolute;
-		left: 4rpx;
-		bottom: 174rpx;
+		left: 0;
+		bottom: 8rpx;
 		display: flex;
 		align-items: center;
 		width:144rpx;
