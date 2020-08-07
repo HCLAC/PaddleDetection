@@ -4,8 +4,8 @@
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
 				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.png" @click="back" />
-					<image class="fhsy" src="../../static/images/icon-fhsy.png" @click="home" />
+					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
@@ -36,7 +36,7 @@
 				<view class="userMse-r">
 					<view class="userNikename"> {{articleList.data.author_name}} </view>
 					<view class="adress">
-						<image src="../../static/images/Icon／Map.png" mode="" class="adreessIcon"></image>
+						<image src="../../static/images/Icon／Map.svg" mode="" class="adreessIcon"></image>
 						<view class="adressText">
 							{{articleList.data.city}}
 						</view>
@@ -51,7 +51,7 @@
 
 			<!-- 内容文章 -->
 			<view class="contentText">
-				<rich-text :nodes="articleList.data.content|formatRichText"></rich-text> 
+				<rich-text :nodes="articleList.data.content | formatRichText"></rich-text> 
 				<view class="copy">详情请+VX: {{VX}}<text class="clcopy" @click="copy">点击复制</text></view>
 			</view>
 			<view class="tips">
@@ -61,28 +61,31 @@
 			</view>
 			<view class="releaseTime">发布于{{articleList.data.update_at}}</view>
 		</view>
-		<!-- 分割线 -->
-		<view class="line"></view>
-		<!-- 登录 -->
-		<view class="contentBottom">
-			<view class="like" @click="clickLike">
-				<image class="likeBtn" src="../../static/images/heart.png" v-if="articleList.data.liked==0"></image>
-				<image class="likeBtn" src="../../static/images/heart-actived.png" v-if="articleList.data.liked==1"></image>
-				<view class="likeNum" v-model="likemessage">
-					{{articleList.data.like_count}}
+		<view class="bottom">
+			
+			<!-- 分割线 -->
+			<view class="line"></view>
+			<!-- 登录 -->
+			<view class="contentBottom">
+				<view class="like" @click="clickLike">
+					<image class="likeBtn" src="../../static/images/like.svg" v-if="articleList.data.liked==0"></image>
+					<image class="likeBtn" src="../../static/images/heart-actived.png" v-if="articleList.data.liked==1"></image>
+					<view class="likeNum" v-model="likemessage">
+						{{articleList.data.like_count}}
+					</view>
 				</view>
-			</view>
-			<view class="fav" @click="clickFav">
-				<image class="favBtn" src="../../static/images/fav.png" >
-				</image>
-				<view class="favNum">
-					{{articleList.data.fav_count}}
+				<view class="fav" @click="clickFav">
+					<image class="favBtn" src="../../static/images/shouchang.svg" >
+					</image>
+					<view class="favNum">
+						{{articleList.data.fav_count}}
+					</view>
 				</view>
+				<view class="share" @click="share">
+					<image src="../../static/images/fenxiang.svg"></image>
+				</view>
+				<view class="loginButton" v-show="token == null">登录</view>
 			</view>
-			<view class="share" @click="share">
-				<image src="../../static/images/share.png"></image>
-			</view>
-			<view class="loginButton" v-show="token == null">登录</view>
 		</view>
 	</view>
 </template>
@@ -624,13 +627,27 @@
 		margin-left: 28rpx;
 	}
 
+	
+	/* 底部 */
+	.bottom{
+		width: 100%;
+		height:98rpx;
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		z-index: 111;
+		background-color: #FFFFFF;
+		padding-bottom: 68rpx;
+		padding-bottom: 0;
+		padding-bottom: constant(safe-area-inset-bottom);  
+		padding-bottom: env(safe-area-inset-bottom); 
+	}
 	.line {
 		height: 2rpx;
 		background: rgba(221, 221, 221, 1);
-		margin-top: 84rpx;
+		// margin-top: 84rpx;
 	}
-
-	/* 底部 */
+	
 	.contentBottom {
 		display: flex;
 		align-items: center;
@@ -639,8 +656,10 @@
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: rgba(48, 49, 51, 1);
+		
 		line-height: 24rpx;
-		margin-bottom: 68rpx;
+		
+		 
 	}
 
 	.loginButton {

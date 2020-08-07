@@ -503,9 +503,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 var _uniNavBar = _interopRequireDefault(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64));
 var _uniIcons = _interopRequireDefault(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 79));
 var _uniFav = _interopRequireDefault(__webpack_require__(/*! @/components/uni-fav/uni-fav.vue */ 87));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
 //
 //
 //
@@ -599,10 +605,7 @@ var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.
     getArticleDetail: function getArticleDetail(e) {var that = this;uni.getStorage({ key: 'Authorization', success: function success(res) {console.log("token===>", res.data);that.token = res.data;} });uni.request({ // url:'article',
         url: 'http://121.40.30.19/article', data: { article_id: e.article_id }, header: { 'Authorization': that.token }, success: function success(res) {console.log(res.data.data.liked, res.data.data.like_count, res.data.data.uuid, 444444);console.log('eeeeeeeeeeeeeeee', e);console.log('文章详情====', res.data);uni.setStorageSync('id', res.data);that.articleList = res.data;console.log('articleList', that.articleList);} });}, // 点赞
     clickLike: function clickLike() {var that = this;uni.getStorage({ key: 'Authorization', success: function success(res) {console.log("token===>", res.data);that.token = res.data;} });var article_id = uni.getStorageSync('id');console.log('art', article_id);uni.request({ url: 'http://121.40.30.19/user/liked', data: { article_id: article_id.data.uuid, liked: article_id.data.liked == 0 ? 1 : 0 }, method: 'POST', header: { 'Authorization': that.token }, success: function success(res) {console.log('点赞', res);if (res.data.code != 0) {// debugger
-            uni.showModal({ title: '提示', content: res.data.msg, showCancel: false, success: function success(res) {
-                if (res.confirm) {
-                  uni.redirectTo({
-                    url: '../login/login' });
+            uni.showModal({ title: '提示', content: res.data.msg, showCancel: false, success: function success(res) {if (res.confirm) {uni.redirectTo({ url: '../login/login' });
 
                 }
               } });

@@ -4,8 +4,8 @@
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.png" @click="back" />
-					<image class="fhsy" src="../../static/images/icon-fhsy.png" @click="home" />
+					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<view class="slottitle">热门景点</view>
 			</uni-nav-bar>

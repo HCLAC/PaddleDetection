@@ -24,9 +24,11 @@
 							</view>
 							<view  v-if="item.type==1">
 								攻略
-							</view></view></image>
+							</view>
 						</view>
-				<view class="right">
+					</image>
+				</view>
+				<view class="right" @click="onPageJump" :id= "item.article_id">
 					<view class="title">
 						<view  v-if="item.type==0">
 							游记
@@ -39,7 +41,7 @@
 							<rich-text class="" :nodes="item.content"></rich-text> 
 						</view>
 					<view class="position">
-						<image src="../../static/images/positionIcon.png" mode=""></image>
+						<image src="../../static/images/Icon／Map.svg" mode=""></image>
 						<view>{{item.location}}</view>
 					</view>
 				</view>
@@ -166,6 +168,16 @@ export default {
 				}
 			})
 			
+		},
+		// 跳转文章详情
+		onPageJump(e) {
+			console.log(e)
+			let id = e.currentTarget.id
+			// debugger
+			// return
+			uni.navigateTo({
+				url: "/pages/contentdetail/contentdetail?article_id="+id
+			})
 		},
 		
 		...mapMutations(['login']),
@@ -301,8 +313,8 @@ export default {
 		position: relative;
 		.imgTip {
 			position: absolute;
-			left: 15rpx;
-			top: 15rpx;
+			left: 0rpx;
+			top: 0rpx;
 			font-size: 24rpx;
 			line-height: 44rpx;
 			font-weight: 500;
@@ -314,7 +326,7 @@ export default {
 			border-radius: 8px 0px 8px 0px;
 		}
 		image {
-			margin: 8rpx;
+			// margin: 8rpx;
 			width: 192rpx;
 			height: 230rpx;
 			margin-right: 20rpx;

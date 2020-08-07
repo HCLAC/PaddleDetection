@@ -4,8 +4,8 @@
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.png" @click="back" />
-					<image class="fhsy" src="../../static/images/icon-fhsy.png" @click="home" />
+					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
@@ -34,7 +34,7 @@
 			<view class="content" >
 				<view class="contentHeader">
 					<view class="title">{{attDetail.data.name}}</view>
-					<image src="../../static/images/shareHere.png" mode="" @click="share"></image>
+					<image src="../../static/images/fenxiang.svg" mode="" @click="share"></image>
 				</view>
 				<view class="tips">
 					<view class="tipHot">{{attDetail.data.tags[0]}}</view>
@@ -49,15 +49,17 @@
 				<view class="contentText">
 					<text :class="[isShow ? 'loseText' : 'moreText']">
 						简介：{{attDetail.data.description}}
+					
+						<view class="btnBox" @click="showMore" v-if="!isShow">
+							<text>收起</text>
+							<image class="iconImg" src="../../static/images/zhankaiIcon.png" mode=""></image>
+						</view>
+						<view class="btnBox" @click="showMore" v-else>
+							<view class="mask"></view>
+							<text>展开</text>
+							<image class="iconImg" src="../../static/images/shouqiIcon.png" mode=""></image>
+						</view>
 					</text>
-					<view class="btnBox" @click="showMore" v-if="!isShow">
-						<text>收起</text>
-						<image class="iconImg" src="../../static/images/zhankaiIcon.png" mode=""></image>
-					</view>
-					<view class="btnBox" @click="showMore" v-else>
-						<text>展开</text>
-						<image class="iconImg" src="../../static/images/shouqiIcon.png" mode=""></image>
-					</view>
 				</view>
 			</view>
 			<view class="magrinBck"></view>
@@ -413,12 +415,14 @@ export default {
 
 	.contentText {
 		margin-top: 30rpx;
+		position: relative;
 		.moreText {
 			font-size: 28rpx;
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			color: rgba(144, 147, 153, 1);
 			line-height: 56rpx;
+			// position: relative;
 		}
 		.loseText {
 			font-size: 28rpx;
@@ -430,23 +434,35 @@ export default {
 			-webkit-box-orient: vertical;
 			text-overflow: ellipsis;
 			overflow: hidden;
-			-webkit-line-clamp: 2;
+			-webkit-line-clamp: 1;
+			
 		}
 		.btnBox {
-			margin-right: 10rpx;
-
+			// margin-right: 10rpx;
+			position: absolute;
+			right: 10rpx;
+			bottom: 0;
 			display: flex;
 			justify-content: flex-end;
 			align-items: center;
+			z-index: 111;
+			// background:linear-gradient(90deg,rgba(255,255,255,0) 50%,rgba(255,255,255,1) 100%);
+			.mask{
+				width: 50rpx;
+				height: 28rpx;
+				background: linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+			}
 			text {
 				font-size: 24rpx;
 				font-family: PingFangSC-Medium, PingFang SC;
 				font-weight: 500;
 				color: rgba(48, 49, 51, 1);
+				background-color: #FFFFFF;
 			}
 			.iconImg {
 				height: 24rpx;
 				width: 24rpx;
+				background-color: #FFFFFF;
 			}
 		}
 	}
@@ -547,6 +563,9 @@ export default {
 }
 .gonglueBox {
 	padding: 40rpx 30rpx;
+	padding-bottom: 0;  
+	padding-bottom: constant(safe-area-inset-bottom);  
+	padding-bottom: env(safe-area-inset-bottom);  
 	.title{
 		font-size:36rpx;
 		font-family:PingFangSC-Medium,PingFang SC;

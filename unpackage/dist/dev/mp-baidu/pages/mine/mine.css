@@ -142,8 +142,8 @@
 }
 .contentItem .left .imgTip {
   position: absolute;
-  left: 15rpx;
-  top: 15rpx;
+  left: 0rpx;
+  top: 0rpx;
   font-size: 24rpx;
   line-height: 44rpx;
   font-weight: 500;
@@ -155,7 +155,6 @@
   border-radius: 8px 0px 8px 0px;
 }
 .contentItem .left image {
-  margin: 8rpx;
   width: 192rpx;
   height: 230rpx;
   margin-right: 20rpx;

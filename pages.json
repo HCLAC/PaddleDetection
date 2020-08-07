@@ -78,7 +78,8 @@
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "领途羊"
+		"navigationBarTitleText": "领途羊",
+		"backgroundColorBottom":"#F8F8F8"
 	},
 	"window": {
 		"navigationBarBackgroundColor": "#ccc",

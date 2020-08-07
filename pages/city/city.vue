@@ -4,7 +4,7 @@
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.png" @click="back" />
+					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 				</view>
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
@@ -15,7 +15,7 @@
 				enable-back-to-top="true">
 				<!-- 定位 -->
 				<view class='item'>
-					<image src="/static/images/Mapt.png" class="dd"></image>
+					<image src="/static/images/Icon／Mapt.svg" class="dd"></image>
 					<view class='cityname'>{{city}}</view>
 					<text class="nowcity">当前位置</text>
 					<!-- <text class="getNowCity">获取当前位置</text> -->

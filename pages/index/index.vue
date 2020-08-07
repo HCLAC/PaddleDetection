@@ -92,8 +92,8 @@
 												<view class="userNikename">{{ item.author_name }}</view>
 											</view>
 											<view class="count" @click="clickLike" :id="item.article_id">
-												<image src="../../static/images/heart.png" v-if="item.liked==0"></image>
-												<image src="../../static/images/heart-actived.png" v-if="item.liked==1"></image>
+												<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
+												<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
 													{{ item.like_count || 0 }}
 												</view>
 										</view>
@@ -135,8 +135,8 @@
 												<view class="userNikename">{{ item.author_name }}</view>
 											</view>
 											<view class="count" @click="clickLike"  :id="item.article_id">
-												<image src="../../static/images/heart.png" v-if="item.liked==0"></image>
-												<image src="../../static/images/heart-actived.png" v-if="item.liked==1"></image>
+												<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
+												<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
 												{{ item.like_count || 0 }}
 											</view>
 										</view>
@@ -695,7 +695,7 @@
 	}
 
 	.nav-bar-input {
-		width: 396rpx;
+		/* width: 396rpx; */
 		height: 72rpx;
 		line-height: 28rpx;
 		/* #ifdef APP-PLUS-NVUE */
@@ -708,7 +708,6 @@
 	.example-body {
 		padding: 0;
 	}
-	
 	.cus-sty{
 		background-color: #F8F8F8;
 	}
@@ -804,7 +803,7 @@
 	}
 	/* 正在旅行 */
 	.touring{
-		margin-top: 48rpx;
+		margin-top: 24rpx;
 	}
 	.touring .tourtext{
 		width: 160rpx;
@@ -823,7 +822,8 @@
 	.demo-warter {
 		margin-top: 0;
 		margin-right: 10rpx;
-		margin-bottom: 48rpx;
+		margin-bottom: 16rpx;
+		padding-bottom: 16rpx;
 		/* position: relative; */
 		background-color: #FFFFFF;
 	}
@@ -876,7 +876,7 @@
 	}
 	.demo-title {
 		width: 278rpx;
-		height: 70rpx;
+		/* height: 70rpx; */
 		font-size: 28rpx;
 		font-family:PingFangSC-Medium,PingFang SC;
 		font-weight:500;
@@ -913,7 +913,7 @@
 	.demo-user {
 		font-size: 10rpx;
 		margin-top: 24rpx;
-		margin-bottom: 16rpx;
+		/* margin-bottom: 16rpx; */
 		display: flex;
 		justify-content: space-between;
 	}

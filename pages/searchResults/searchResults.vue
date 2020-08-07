@@ -4,8 +4,8 @@
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.png" @click="back" />
-					<image class="fhsy" src="../../static/images/icon-fhsy.png" @click="home" />
+					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
@@ -53,8 +53,8 @@
 										<view class="userNikename">{{ item.author_name }}</view>
 									</view>
 									<view class="count" @click="clickLike" :id="item.article_id">
-										<image src="../../static/images/heart.png" v-if="item.liked==0"></image>
-										<image src="../../static/images/heart-actived.png" v-if="item.liked==1"></image>
+										<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
+										<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
 											{{ item.like_count || 0 }}
 										</view>
 								</view>
@@ -93,7 +93,8 @@
 										<view class="userNikename">{{ item.author_name }}</view>
 									</view>
 									<view class="count" @click="clickLike"  :id="item.article_id">
-										<image src="../../static/images/heart未选中.png" ></image>
+										<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
+										<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
 										{{ item.like_count || 0 }}
 									</view>
 								</view>

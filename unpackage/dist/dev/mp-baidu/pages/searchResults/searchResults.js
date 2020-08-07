@@ -254,6 +254,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 // import touring from '@/components/content/touring.vue'
 var _default = {
   data: function data() {

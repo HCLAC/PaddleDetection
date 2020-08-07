@@ -708,7 +708,7 @@ view.data-v-57280228 {
 		margin-left: 42rpx;
 }
 .nav-bar-input.data-v-57280228 {
-		width: 396rpx;
+		/* width: 396rpx; */
 		height: 72rpx;
 		line-height: 28rpx;
 
@@ -831,7 +831,7 @@ view.data-v-57280228 {
 }
 	/* 正在旅行 */
 .touring.data-v-57280228{
-		margin-top: 48rpx;
+		margin-top: 24rpx;
 }
 .touring .tourtext.data-v-57280228{
 		width: 160rpx;
@@ -849,7 +849,8 @@ view.data-v-57280228 {
 .demo-warter.data-v-57280228 {
 		margin-top: 0;
 		margin-right: 10rpx;
-		margin-bottom: 48rpx;
+		margin-bottom: 16rpx;
+		padding-bottom: 16rpx;
 		/* position: relative; */
 		background-color: #FFFFFF;
 }
@@ -910,7 +911,7 @@ view.data-v-57280228 {
 }
 .demo-title.data-v-57280228 {
 		width: 278rpx;
-		height: 70rpx;
+		/* height: 70rpx; */
 		font-size: 28rpx;
 		font-family:PingFangSC-Medium,PingFang SC;
 		font-weight:500;
@@ -944,7 +945,7 @@ view.data-v-57280228 {
 .demo-user.data-v-57280228 {
 		font-size: 10rpx;
 		margin-top: 24rpx;
-		margin-bottom: 16rpx;
+		/* margin-bottom: 16rpx; */
 		display: -webkit-box;
 		display: -webkit-flex;
 		display: flex;

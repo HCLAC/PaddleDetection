@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>xq_fenxiang</title>
+    <desc>Created with Sketch.</desc>
+    <g id="xq_fenxiang" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="编组" transform="translate(3.000000, 2.000000)" stroke="#303133" stroke-width="1.5">
+            <path d="M10.308375,1.21275 C4.61521669,1.21275 0,5.82796669 0,11.521125 C0,17.2142833 4.61521669,21.8295 10.308375,21.8295 C16.0015333,21.8295 20.61675,17.2142833 20.61675,11.521125" id="路径"></path>
+            <path d="M20.1619687,4.39621875 L16.2205313,4.39621875 C13.5413979,4.39621875 11.3695312,6.63595626 11.3695312,9.3988125 L11.3695312,11.6727188" id="路径" transform="translate(15.765750, 8.034469) scale(1, -1) rotate(-90.000000) translate(-15.765750, -8.034469) "></path>
+            <polyline id="路径" transform="translate(16.727331, 3.638250) rotate(-315.000000) translate(-16.727331, -3.638250) " points="14.3018313 1.21275 14.3018313 1.21275 19.1528313 1.21275 19.1528313 6.06375"></polyline>
+        </g>
+    </g>
+</svg>
