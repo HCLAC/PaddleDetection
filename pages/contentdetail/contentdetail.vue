@@ -47,8 +47,6 @@
 			<view class="contentTitle">
 				{{articleList.data.title}}
 			</view>
-
-
 			<!-- 内容文章 -->
 			<view class="contentText">
 				<rich-text :nodes="articleList.data.content | formatRichText"></rich-text> 
@@ -476,7 +474,7 @@
 	}
 
 	.swiper {
-		min-height: 400rpx;
+		min-height: 580rpx;;
 		max-height: 996rpx;
 	}
 
@@ -511,8 +509,7 @@
 		position: absolute;
 		/* left: 320rpx; */
 		background: #ffff;
-		bottom: -20rpx;
-
+		bottom: -30rpx;
 		.dot {
 			width: 10rpx;
 			height: 10rpx;
@@ -570,7 +567,7 @@
 		display: flex;
 		align-items: center;
 		text-align: center;
-		padding: 0 8rpx;
+		padding: 0 14rpx;
 	}
 
 	.adreessIcon {
@@ -651,6 +648,7 @@
 		line-height: 22rpx;
 		margin-top: 40rpx;
 		margin-left: 28rpx;
+		margin-bottom: 200rpx;
 	}
 
 	
@@ -664,12 +662,12 @@
 		z-index: 111;
 		background-color: #FFFFFF;
 		padding-bottom: 68rpx;
-		padding-bottom: 0;
 		padding-bottom: constant(safe-area-inset-bottom);  
 		padding-bottom: env(safe-area-inset-bottom); 
+		box-sizing: content-box;
 	}
 	.line {
-		height: 2rpx;
+		height: 1rpx;
 		background: rgba(221, 221, 221, 1);
 		// margin-top: 84rpx;
 	}

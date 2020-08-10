@@ -321,6 +321,9 @@
   height: 100%;
   width: 100%;
 }
+.swiper {
+  width: 100%;
+}
 .uni-bg-red {
   background-color: #ea552d;
 }

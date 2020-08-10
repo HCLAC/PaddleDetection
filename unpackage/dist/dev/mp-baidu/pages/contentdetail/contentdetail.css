@@ -317,7 +317,7 @@
   width: 100%;
 }
 .swiper.data-v-32e87e5c {
-  min-height: 400rpx;
+  min-height: 580rpx;
   max-height: 996rpx;
 }
 .itemImg.data-v-32e87e5c {
@@ -351,7 +351,7 @@
   position: absolute;
   /* left: 320rpx; */
   background: #ffff;
-  bottom: -20rpx;
+  bottom: -30rpx;
 }
 .dots .dot.data-v-32e87e5c {
   width: 10rpx;
@@ -403,7 +403,7 @@
   -webkit-align-items: center;
           align-items: center;
   text-align: center;
-  padding: 0 8rpx;
+  padding: 0 14rpx;
 }
 .adreessIcon.data-v-32e87e5c {
   width: 24rpx;
@@ -468,6 +468,7 @@
   line-height: 22rpx;
   margin-top: 40rpx;
   margin-left: 28rpx;
+  margin-bottom: 200rpx;
 }
 /* 底部 */
 .bottom.data-v-32e87e5c {
@@ -479,12 +480,12 @@
   z-index: 111;
   background-color: #FFFFFF;
   padding-bottom: 68rpx;
-  padding-bottom: 0;
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
+  box-sizing: content-box;
 }
 .line.data-v-32e87e5c {
-  height: 2rpx;
+  height: 1px;
   background: #dddddd;
 }
 .contentBottom.data-v-32e87e5c {

@@ -68,7 +68,7 @@
 				<view class="adress">
 					<view class="left">
 						<view class="adreessIcon">
-							<image class="" src="../../static/images/Icon／Map.svg" mode=""></image>
+							<image class="" src="../../static/images/attmap.svg" mode=""></image>
 						</view>
 						
 						<text class="adressText">{{attDetail.data.pos}}</text>
@@ -294,10 +294,15 @@ export default {
 
 .swiper-item {
 	width: 100%;
+	
 	image {
 		height: 100%;
 		width: 100%;
 	}
+}
+.swiper{
+	// min-height: 580rpx;
+	width: 100%;
 }
 .uni-bg-red {
 	background-color: #ea552d;
