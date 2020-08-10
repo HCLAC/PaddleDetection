@@ -7,13 +7,15 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationStyle": "custom"
-		
+				"navigationStyle": "custom",
+				"backgroundColorBottom":"#F8F8F8"
 			}
 		},
 		{
 		    "path" : "pages/login/login",
-		    "style" : {}
+		    "style" : {
+				"navigationBarBackgroundColor":"#FFFFFF"
+			}
 		},
 		
 		{
@@ -78,7 +80,7 @@
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "领途羊",
+		// "navigationBarTitleText": "领途羊",
 		"backgroundColorBottom":"#F8F8F8"
 	},
 	"window": {

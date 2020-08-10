@@ -213,7 +213,10 @@ var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js
 //
 //
 //
-var _default = { data: function data() {return { phone: "", code: '', key: '', getCodeText: '获取验证码', getCodeBtnColor: "#ffffff", getCodeisWaiting: false, styleObj: { color: '#C9CAD1' }, styleCode: { color: '#C9CAD1' } };}, components: {}, methods: { onInput: function onInput(e) {if (e.detail.value.length == 11) {this.styleObj.color = '#303133';} else {this.styleObj.color = '#C9CAD1';}}, onCode: function onCode(e) {if (e.detail.value.length == 6) {this.styleCode.color = '#303133';} else {this.styleCode.color = '#C9CAD1';}},
+var _default = { data: function data() {return { phone: "", code: '', key: '', getCodeText: '获取验证码', getCodeBtnColor: "#ffffff", getCodeisWaiting: false, codeColor: { color: '#0091FF' }, styleObj: { color: '#C9CAD1' }, styleCode: { color: '#C9CAD1' } };}, components: {}, methods: { onInput: function onInput(e) {if (e.detail.value.length == 11) {this.styleObj.color = '#303133';} else {this.styleObj.color = '#C9CAD1';}}, onCode: function onCode(e) {if (e.detail.value.length == 6) {this.styleCode.color = '#303133';} else {
+        this.styleCode.color = '#C9CAD1';
+      }
+    },
     clearphone: function clearphone() {
       if (this.phone) {
         this.phone = '';
@@ -273,6 +276,7 @@ var _default = { data: function data() {return { phone: "", code: '', key: '', g
     setTimer: function setTimer() {
       var holdTime = 59,
       _this = this;
+      _this.codeColor.color = 'rgba(0,145,255,0.52)';
       _this.getCodeText = "60s重新获取";
       _this.Timer = setInterval(function () {
         if (holdTime <= 0) {

@@ -68,15 +68,15 @@
 			<!-- 登录 -->
 			<view class="contentBottom">
 				<view class="like" @click="clickLike">
-					<image class="likeBtn" src="../../static/images/like.svg" v-if="articleList.data.liked==0"></image>
-					<image class="likeBtn" src="../../static/images/heart-actived.png" v-if="articleList.data.liked==1"></image>
+					<image class="likeBtn" src="../../static/images/attheart.svg" v-if="articleList.data.liked==0"></image>
+					<image class="likeBtn" src="../../static/images/heart-actived.svg" v-if="articleList.data.liked==1"></image>
 					<view class="likeNum" v-model="likemessage">
 						{{articleList.data.like_count}}
 					</view>
 				</view>
 				<view class="fav" @click="clickFav">
-					<image class="favBtn" src="../../static/images/shouchang.svg" >
-					</image>
+					<image class="favBtn" src="../../static/images/shouchang.svg" v-if="articleList.data.fav==0"></image>
+					<image class="favBtn" src="../../static/images/fav-actived.svg" v-if="articleList.data.fav==1"></image>
 					<view class="favNum">
 						{{articleList.data.fav_count}}
 					</view>
@@ -84,9 +84,12 @@
 				<view class="share" @click="share">
 					<image src="../../static/images/fenxiang.svg"></image>
 				</view>
-				<view class="loginButton" v-show="token == null">登录</view>
+				<view class="" v-if="token == null">
+					<view class="loginButton" @click="login" >登录</view>
+				</view>
 			</view>
 		</view>
+		
 	</view>
 </template>
 
@@ -95,12 +98,14 @@
 	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue'
 	import uniIcons from "@/components/uni-icons/uni-icons.vue"
 	import uniFav from '@/components/uni-fav/uni-fav.vue'
+	// import ourLoading from '@/components/our-loading/our-loading.vue'
 	// import httpType from '../../httpType.js'
 	export default {
 		comments: {
 			uniNavBar,
 			uniIcons,
 			uniFav
+			// ourLoading
 		},
 		data() {
 			return {
@@ -126,11 +131,18 @@
 			// 获取文章详情
 			getArticleDetail(e) {
 				var that = this
+				uni.showLoading({
+					title:'请求中',
+					mask:true
+				})
+				
 				uni.getStorage({
 					key: 'Authorization',
 					success: function(res) {
 						console.log("token===>", res.data)
 						that.token = res.data
+						
+						// console.log("存储token",that.token)
 					}
 				})
 				uni.request({
@@ -149,12 +161,13 @@
 							444444
 						)
 						console.log('eeeeeeeeeeeeeeee', e)
-						console.log('文章详情====', res.data)
+						console.log('文章详情====', res)
 						uni.setStorageSync('id', res.data)
 						that.articleList = res.data
 						console.log('articleList', that.articleList)
 					}
 				})
+				uni.hideLoading();
 			},
 			// 点赞
 			clickLike() {
@@ -186,7 +199,7 @@
 								// debugger
 								uni.showModal({
 									title: '提示',
-									content: res.data.msg,
+									content: '您好，请先登录',
 									showCancel: false,
 									success: function(res) {
 										if (res.confirm) {
@@ -252,32 +265,55 @@
 					},
 					success: function(res) {
 						console.log('收藏', res)
-					},
-
-				})
-				uni.request({
-					// url:'article',
-					url: 'http://121.40.30.19/article',
-					data: {
-						article_id: article_id.data.uuid
-					},
-					header: {
-						'Authorization': that.token
-					},
-					success: function(res) {
-						console.log(res.data.data.liked,
-							res.data.data.like_count,
-							res.data.data.uuid,
-							333333
-						)
-						console.log('eeeeeeeeeeeeeeee', res)
-						console.log('文章详情====',res.data)
-						uni.setStorageSync('id',res.data)
-						that.articleList = res.data
-						console.log('articleList',that.articleList)
+						if (res.data.code != 0) {
+							// debugger
+							uni.showModal({
+								title: '提示',
+								content: '您好，请先登录',
+								showCancel: false,
+								success: function(res) {
+									if (res.confirm) {
+										uni.redirectTo({
+											url: '../login/login'
+										})
+									}
+								}
+							})
+							return
+						}
+						uni.request({
+							// url:'article',
+							url: 'http://121.40.30.19/article',
+							data: {
+								article_id: article_id.data.uuid
+							},
+							header: {
+								'Authorization': that.token
+							},
+							success: function(res) {
+								console.log(res.data.data.fav,
+									res.data.data.fav_count,
+									res.data.data.uuid,
+									333333
+								)
+								console.log('eeeeeeeeeeeeeeee', res)
+								console.log('文章详情====',res.data)
+								uni.setStorageSync('id',res.data)
+								that.articleList = res.data
+								console.log('articleList',that.articleList)
+							}
+						})
 					}
-				})
 
+				})
+				
+
+			},
+			// 登录
+			login(){
+				uni.redirectTo({
+					url: '../login/login'
+				})
 			},
 			change(e) {
 				_this.current = e.detail.current
@@ -434,31 +470,19 @@
 	/* 轮播图 */
 	.page-section-spacing {
 		position: relative;
-		height: 996rpx;
-	}
-
-	.swiper {
-		height: 996rpx;
-	}
-
-	.itemImg {
-		height: 996rpx;
+		min-height: 400rpx;
+		max-height: 996rpx;
 		width: 100%;
 	}
 
-	.uni-bg-red {
-		height: 996rpx;
-		background-color: #EA552D;
+	.swiper {
+		min-height: 400rpx;
+		max-height: 996rpx;
 	}
 
-	.uni-bg-green {
-		height: 996rpx;
-		background-color: #4CD964;
-	}
-
-	.uni-bg-blue {
-		height: 996rpx;
-		background-color: #007AFF;
+	.itemImg {
+		height: 100%;
+		width: 100%;
 	}
 
 	.imageCount {
@@ -537,7 +561,7 @@
 	}
 
 	.adress {
-		width: 100rpx;
+		// width: 100rpx;
 		height: 40rpx;
 		margin-top: 12rpx;
 		background: rgba(255, 255, 255, 1);
@@ -546,6 +570,7 @@
 		display: flex;
 		align-items: center;
 		text-align: center;
+		padding: 0 8rpx;
 	}
 
 	.adreessIcon {
@@ -558,6 +583,7 @@
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: rgba(0, 145, 255, 1);
+		
 	}
 
 	// 内容
@@ -711,4 +737,5 @@
 		width: 52rpx;
 		height: 52rpx;
 	}
+	
 </style>

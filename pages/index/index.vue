@@ -24,7 +24,7 @@
 			            <view class="ht-r" @click="lookAll">查看更多<image src="../../static/images/more.svg" class="moreIcon" mode=""></image></view>
 			        </view>
 			        <view class="hot-bot"  >
-						<view class="hb-l" @click='toAtt'  >
+						<view class="hb-l" @click='toAtt(hotAtt[0].id)'  >
 							<image :src="hotAtt[0].image"></image>
 							<view class="imgMask">
 								
@@ -32,14 +32,14 @@
 							<text>{{hotAtt[0].name}}</text>
 						</view>
 						<view class="hb-r">
-							<view class="hb-r1" @click='toAtt'>
+							<view class="hb-r1" @click='toAtt(hotAtt[1].id)'>
 								<image :src="hotAtt[1].image"></image>
 								<view class="imgMask">
 									
 								</view>
 								<text>{{hotAtt[1].name}}</text>
 							</view>
-							<view class="hb-r2" @click='toAtt'>
+							<view class="hb-r2" @click='toAtt(hotAtt[2].id)'>
 								<image :src="hotAtt[2].image"></image>
 								<view class="imgMask">
 									
@@ -62,7 +62,7 @@
 											<image class="demo-image"  :src="item.image" :index="index" mode="widthFix"></image>
 											<view class="adress">
 												<view class="adreessIcon">
-													<image class="" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
+													<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
 												</view>
 												
 												<view class="adressText">
@@ -70,8 +70,6 @@
 												</view>
 											</view>
 										</view>
-										
-										
 										<view class="titleTip">
 											<view class="demo-tag">
 												<view class="demo-tag-owner" v-if="item.type==0">
@@ -107,7 +105,7 @@
 											<image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
 											<view class="adress">
 												<view class="adreessIcon">
-													<image class="" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
+													<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
 												</view>
 												<view class="adressText">
 													{{item.location}}
@@ -176,7 +174,7 @@
 				province:'',
 				state_id:'',
 				city_id:'',
-				hotAtt:'',
+				hotAtt:[],
 				list: [],
 				leftList:[],
 				rightList:[],
@@ -200,8 +198,11 @@
 				    type: 'wgs84',
 				    success:  (res)=> {
 						console.log(res)
-						this.city = res.city,
-						this.province = res.province,
+						// if(this.city == null){
+							this.city = res.city
+							this.province = res.province
+						// }
+						
 						
 							uni.request({
 								// url:'http://192.168.43.156:8199/user/location',
@@ -219,12 +220,57 @@
 									'content-type': 'application/x-www-form-urlencoded', 
 								},
 								success: res => {
-									console.log(this.city)
+									// console.log(this.city)
 									// debugger
-									console.log(this.province)
+									// console.log(this.province)
 									console.log('获取地址id',res);
+									if(res.data.code != 0){
+										uni.request({
+											url:'http://121.40.30.19/site/hot',
+											data:{
+												count:3,
+												sort_by:0
+											},
+											success:res=>{
+												console.log("热门景点=========",res)
+												// uni.setStorageSync('description',res.data)
+												this.hotAtt = res.data.data
+											}
+										}),
+										uni.request({
+											url:'http://121.40.30.19/article/list',
+											data:{
+												count:20,
+												page:1,
+												sort_by:1
+											},
+											success:res=>{
+												console.log('文章列表',res)
+												// uni.setStorageSync('article_id',res.data)
+												// console.log('存储文章列表==',res.data)
+												this.list = res.data.data
+												console.log('list=====',this.list.list)
+											}
+										})
+									}
 									uni.setStorageSync('city_id',res.data)
 									console.log('存储本地',res.data.data)
+									var city = uni.getStorageSync('city_id')
+									uni.request({
+										// url:'http://192.168.43.156:8199/site/hot',
+										// url:'site/hot',
+										url:'http://121.40.30.19/site/hot',
+										data:{
+											state_id:city.data.state_id,
+											city_id:city.data.city_id,
+											count:3,
+											sort_by:0
+										},
+										success:res=>{
+											console.log('热门景点',res)
+											this.hotAtt = res.data.data
+										}
+									})
 								}
 							})
 						
@@ -234,48 +280,20 @@
 			// 热门景点
 			getSiteHot() {
 				var that = this
-				var city_id = uni.getStorageSync('city_id')
-				var state_id = uni.getStorageSync('state_id')
-				// console.log('取本地存储城市id',city_id)
-				// uni.getStorage({
-				// 	key:'city_id',
-				// 	success:function(res){
-				// 		console.log('取本地存储城市id',res.data)
-				// 		this.state_id = res.data.data.state_id,
-				// 		this.city_id = res.data.data.city_id
-				// 	}
-				// })
-				uni.request({
-					// url:'http://192.168.43.156:8199/site/hot',
-					// url:'site/hot',
-					url:'http://121.40.30.19/site/hot',
-					data:{
-						state_id:state_id,
-						city_id:city_id,
-						count:3,
-						sort_by:0
-					},
-					success:res=>{
-						// console.log('热门景点',res)
-						uni.setStorageSync('id',res.data)
-						// console.log('存储热门景点==',res)
+				that.city = uni.getStorageSync('city')
+				uni.getStorage({
+					key:'id',
+					success:function(res){
+						console.log('res',res.data)
 						that.hotAtt = res.data.data
-						// console.log('hotAtt=====',that.hotAtt)
-						// uni.setStorage({
-						// 	key:'id',
-						// 	data:res.data,
-						// 	success:function(res) {
-						// 		console.log('存储热门景点==',res)
-						// 	}
-						// })
 					}
 				})
+				
 			},
 			// 获取文章列表
 			getArticleList(){
 				var that = this
-				var city_id = uni.getStorageSync('city_id')
-				var state_id = uni.getStorageSync('state_id')
+				var city = uni.getStorageSync('city_id')
 				uni.getStorage({
 					key: 'Authorization',
 					success: function(res) {
@@ -289,8 +307,8 @@
 					url:'http://121.40.30.19/article/list',
 					// url:'http://192.168.43.60:8299/article/list',
 					data:{
-						state_id:state_id,
-						city_id:city_id,
+						state_id:city.data.state_id,
+						city_id:city.data.city_id,
 						count:20,
 						page:1,
 						sort_by:1
@@ -331,30 +349,30 @@
 						that.token = res.data
 					}
 				})
-				uni.request({
-					// url:'article',
-					url: 'http://121.40.30.19/article',
-					data: {
-						article_id: article
-					},
-					header: {
-						'Authorization': that.token
-					},
-					success: function(res) {
-						console.log(res.data.data.liked,
-							res.data.data.like_count,
-							res.data.data.uuid,
-							444444
-						)
-						// console.log('eeeeeeeeeeeeeeee', e)
-						console.log('文章详情====', res.data.data)
-						uni.setStorageSync('id', res.data)
-						that.articleList = res.data.data
-						console.log('articleList', that.articleList)
-						console.log('liked',that.articleList.liked)
-						that.liked = that.articleList.liked
-					}
-				})
+				// uni.request({
+				// 	// url:'article',
+				// 	url: 'http://121.40.30.19/article',
+				// 	data: {
+				// 		article_id: article
+				// 	},
+				// 	header: {
+				// 		'Authorization': that.token
+				// 	},
+				// 	success: function(res) {
+				// 		console.log(res.data.data.liked,
+				// 			res.data.data.like_count,
+				// 			res.data.data.uuid,
+				// 			444444
+				// 		)
+				// 		// console.log('eeeeeeeeeeeeeeee', e)
+				// 		console.log('文章详情====', res.data.data)
+				// 		uni.setStorageSync('id', res.data)
+				// 		that.articleList = res.data.data
+				// 		console.log('articleList', that.articleList)
+				// 		console.log('liked',that.articleList.liked)
+				// 		that.liked = that.articleList.liked
+				// 	}
+				// })
 				
 				
 			
@@ -406,9 +424,9 @@
 									uni.setStorageSync('article_id',res.data)
 									console.log('存储文章列表==',res.data)
 									that.list = res.data.data
-									that.leftList = that.list.list
-									that.rightList = that.list.list
-									console.log('list=====',that.leftList)
+									// that.leftList = that.list.list
+									// that.rightList = that.list.list
+									console.log('list=====',that.list.list)
 								}
 							})
 						}
@@ -428,10 +446,10 @@
 					url:'/pages/attractionsList/attractionsList'
 				})
 			},
-			toAtt(){
-				
+			toAtt(e){
+				console.log('----------------',e)
 				uni.navigateTo({
-					url:'/pages/attractionsList/attractionsList'
+					url:"/pages/positionContent/positionContent?id="+e
 				})
 			},
 			clickLeft() {
@@ -678,7 +696,7 @@
 		display: flex;
 		/* #endif */
 		flex-direction: row;
-		width: 396rpx;
+		min-width: 396rpx;
 		height: 72rpx;
 		align-items: center;
 		flex: 1;
@@ -695,14 +713,14 @@
 	}
 
 	.nav-bar-input {
-		/* width: 396rpx; */
 		height: 72rpx;
-		line-height: 28rpx;
+		line-height: 72rpx;
 		/* #ifdef APP-PLUS-NVUE */
 		/* #endif */
 		font-size: 28rpx;
 		color: #C9CAD1;
 		margin-left: 12rpx;
+		font-size: 28rpx;
 	}
 
 	.example-body {
@@ -741,6 +759,7 @@
 		line-height:28rpx;
 		margin: 54rpx 32rpx 0 0;
 		display: flex;
+		align-items: center;
 	}
 	.moreIcon{
 		width: 28rpx;
@@ -795,11 +814,14 @@
 		position: relative;
 	}
 	.hot-bot  text{
+		font-size:32rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:500;
+		color:rgba(255,255,255,1);
+		line-height:16px;
 		position: absolute;
 		left: 22rpx;
 		bottom: 28rpx;
-	    font-size: 32rpx;
-		color: #FFFFFF;
 	}
 	/* 正在旅行 */
 	.touring{
@@ -845,13 +867,14 @@
 		align-items: center;
 		width:144rpx;
 		height:40rpx;
+		line-height: 40rpx;
 		background:rgba(0,0,0,0.6);
 		border-radius:0px 14rpx 0px 0px;
 	}
 	.adreessIcon{
 		width: 24rpx;
 		height: 24rpx;
-		margin-right: 4rpx;
+		margin:0 4rpx;
 		display: flex;
 		align-items: center;
 	}
@@ -882,7 +905,7 @@
 		font-weight:500;
 		color:rgba(48,49,51,1);
 		margin-left: 8rpx;
-		// line-height:28rpx;
+		line-height: 28rpx;
 	}
 	
 	.demo-tag {
@@ -901,13 +924,7 @@
 		font-family:PingFangSC-Regular,PingFang SC;
 		font-weight:400;
 		color:rgba(0,145,255,1);
-		margin-top: 6rpx;
-	}
-	
-	.demo-price {
-		font-size: 30rpx;
-		color: $u-type-error;
-		margin-top: 5px;
+		/* margin-top: 6rpx; */
 	}
 	
 	.demo-user {

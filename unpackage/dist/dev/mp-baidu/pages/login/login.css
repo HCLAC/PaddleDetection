@@ -34,7 +34,7 @@
 /* @import url("../../components/watch-login/css/icon.css"); */
 /* @import url("./css/main.css"); */
 .header.data-v-b237504c {
-  margin-top: 246rpx;
+  margin-top: 84rpx;
   margin-left: 32rpx;
 }
 .headerTitle.data-v-b237504c {
@@ -60,6 +60,7 @@
   margin: 210rpx 32rpx 0rpx;
 }
 .login-phone.data-v-b237504c {
+  width: 718rpx;
   height: 30rpx;
   font-size: 30rpx;
   font-family: PingFangSC-Regular,PingFang SC;
@@ -77,6 +78,7 @@
   color: #303133;
 }
 .login-code.data-v-b237504c {
+  width: 718rpx;
   height: 30rpx;
   font-size: 30rpx;
   font-family: PingFangSC-Regular,PingFang SC;
@@ -97,9 +99,9 @@
 .searchSel.data-v-b237504c {
   width: 44rpx;
   height: 44rpx;
+  margin-right: 32rpx;
 }
 .codeimg.data-v-b237504c {
-  width: 204rpx;
   height: 30rpx;
   font-size: 30rpx;
   font-family: PingFangSC-Regular,PingFang SC;
@@ -107,6 +109,7 @@
   color: #0091ff;
   line-height: 30rpx;
   margin-left: 20rpx;
+  margin-right: 32rpx;
 }
 .loginButton .lb.data-v-b237504c {
   width: 692rpx;
@@ -116,6 +119,7 @@
   margin-top: 154rpx;
   font-size: 36rpx;
   color: #303133;
+  line-height: 100rpx;
 }
 button.data-v-b237504c::after {
   border: none;

@@ -22,7 +22,7 @@
 					<input type="number" maxlength="6" placeholder="请输入您的验证码"  class="is-input1 " :style="styleCode" @input="onCode" v-model="code" />
 					<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-show="code" @click="clearcode()"></image>
 					<view class="code-sx"></view>
-					<view class="codeimg" @click.stop="getCode()">{{getCodeText}}</view>
+					<view class="codeimg" @click.stop="getCode()" :style="codeColor">{{getCodeText}}</view>
 				</view>
 				<u-line color="#FFEDEFF2" margin="40rpx 0rpx"></u-line>
 			</view> 
@@ -49,6 +49,9 @@
 				getCodeText: '获取验证码',
 				getCodeBtnColor: "#ffffff",
 				getCodeisWaiting: false,
+				codeColor:{
+					color:'#0091FF'
+				},
 				styleObj: {
 	                color: '#C9CAD1'
 	            },
@@ -137,6 +140,7 @@
 			setTimer() {
 				let holdTime = 59,
 					_this = this;
+					_this.codeColor.color = 'rgba(0,145,255,0.52)'
 				_this.getCodeText = "60s重新获取"
 				_this.Timer = setInterval(() => {
 					if (holdTime <= 0) {
@@ -228,7 +232,7 @@
 	/* @import url("../../components/watch-login/css/icon.css"); */
 	/* @import url("./css/main.css"); */
 	.header{
-		margin-top: 246rpx;
+		margin-top: 84rpx;
 		margin-left: 32rpx;
 	}
 	.headerTitle{
@@ -255,7 +259,7 @@
 		
 	}
 	.login-phone{
-		// width:240rpx;
+		width:718rpx;
 		height:30rpx;
 		font-size:30rpx;
 		font-family:PingFangSC-Regular,PingFang SC;
@@ -269,6 +273,7 @@
 		color: #303133;
 	}
 	.login-code{
+		width:718rpx;
 		height:30rpx;
 		font-size:30rpx;
 		font-family:PingFangSC-Regular,PingFang SC;
@@ -287,11 +292,12 @@
 	.searchSel{
 		width: 44rpx;
 		height: 44rpx;
+		margin-right: 32rpx;
 		// display: none;
 	}
 	// .is-input1:valid + .searchSel {display: block;}
 	.codeimg{
-		width:204rpx;
+		// width:204rpx;
 		height:30rpx;
 		font-size:30rpx;
 		font-family:PingFangSC-Regular,PingFang SC;
@@ -299,6 +305,7 @@
 		color:rgba(0,145,255,1);
 		line-height:30rpx;
 		margin-left: 20rpx;
+		margin-right: 32rpx;
 	}
 	.loginButton .lb{
 		width:692rpx;
@@ -308,6 +315,7 @@
 		margin-top: 154rpx;
 		font-size: 36rpx;
 		color: #303133;
+		line-height: 100rpx;
 	}
 	button::after{ border: none;}
 </style>

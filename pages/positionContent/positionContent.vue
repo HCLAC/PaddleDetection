@@ -81,7 +81,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="phone">
+				<view class="phone" v-show="attDetail.data.butler_mobile != null">
 					<image src="../../static/images/dianhua.png"></image>
 					<text>旅行管家：{{attDetail.data.butler_mobile}}</text>
 				</view>
@@ -289,6 +289,7 @@ export default {
 /* 轮播图 */
 .page-section-spacing {
 	position: relative;
+	width: 100%;
 }
 
 .swiper-item {
@@ -440,7 +441,7 @@ export default {
 		.btnBox {
 			// margin-right: 10rpx;
 			position: absolute;
-			right: 10rpx;
+			right: 0;
 			bottom: 0;
 			display: flex;
 			justify-content: flex-end;

@@ -552,6 +552,24 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/* 头条小程序组件内不能引入字体 */
 page.data-v-57280228 {
 		display: -webkit-box;
@@ -688,7 +706,7 @@ view.data-v-57280228 {
 		-webkit-box-direction: normal;
 		-webkit-flex-direction: row;
 		        flex-direction: row;
-		width: 396rpx;
+		min-width: 396rpx;
 		height: 72rpx;
 		-webkit-box-align: center;
 		-webkit-align-items: center;
@@ -708,14 +726,14 @@ view.data-v-57280228 {
 		margin-left: 42rpx;
 }
 .nav-bar-input.data-v-57280228 {
-		/* width: 396rpx; */
 		height: 72rpx;
-		line-height: 28rpx;
+		line-height: 72rpx;
 
 
 		font-size: 28rpx;
 		color: #C9CAD1;
 		margin-left: 12rpx;
+		font-size: 28rpx;
 }
 .example-body.data-v-57280228 {
 		padding: 0;
@@ -764,6 +782,9 @@ view.data-v-57280228 {
 		display: -webkit-box;
 		display: -webkit-flex;
 		display: flex;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		        align-items: center;
 }
 .moreIcon.data-v-57280228{
 		width: 28rpx;
@@ -823,11 +844,14 @@ view.data-v-57280228 {
 		position: relative;
 }
 .hot-bot  text.data-v-57280228{
+		font-size:32rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:500;
+		color:rgba(255,255,255,1);
+		line-height:16px;
 		position: absolute;
 		left: 22rpx;
 		bottom: 28rpx;
-	    font-size: 32rpx;
-		color: #FFFFFF;
 }
 	/* 正在旅行 */
 .touring.data-v-57280228{
@@ -874,13 +898,14 @@ view.data-v-57280228 {
 		        align-items: center;
 		width:144rpx;
 		height:40rpx;
+		line-height: 40rpx;
 		background:rgba(0,0,0,0.6);
 		border-radius:0px 14rpx 0px 0px;
 }
 .adreessIcon.data-v-57280228{
 		width: 24rpx;
 		height: 24rpx;
-		margin-right: 4rpx;
+		margin:0 4rpx;
 		display: -webkit-box;
 		display: -webkit-flex;
 		display: flex;
@@ -917,7 +942,7 @@ view.data-v-57280228 {
 		font-weight:500;
 		color:rgba(48,49,51,1);
 		margin-left: 8rpx;
-		/* line-height:28rpx; */
+		line-height: 28rpx;
 }
 .demo-tag.data-v-57280228 {
 }
@@ -935,12 +960,7 @@ view.data-v-57280228 {
 		font-family:PingFangSC-Regular,PingFang SC;
 		font-weight:400;
 		color:rgba(0,145,255,1);
-		margin-top: 6rpx;
-}
-.demo-price.data-v-57280228 {
-		font-size: 30rpx;
-		color: $u-type-error;
-		margin-top: 5px;
+		/* margin-top: 6rpx; */
 }
 .demo-user.data-v-57280228 {
 		font-size: 10rpx;

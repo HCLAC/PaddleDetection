@@ -296,8 +296,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
 var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 45));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 79));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 109));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 // import httpType from '../../httpType.js';
 var _default = {
@@ -315,7 +313,7 @@ var _default = {
       province: '',
       state_id: '',
       city_id: '',
-      hotAtt: '',
+      hotAtt: [],
       list: [],
       leftList: [],
       rightList: [],
@@ -339,8 +337,11 @@ var _default = {
         type: 'wgs84',
         success: function success(res) {
           console.log(res);
-          _this.city = res.city,
-          _this.province = res.province,
+          // if(this.city == null){
+          _this.city = res.city;
+          _this.province = res.province;
+          // }
+
 
           uni.request({
             // url:'http://192.168.43.156:8199/user/location',
@@ -358,12 +359,57 @@ var _default = {
               'content-type': 'application/x-www-form-urlencoded' },
 
             success: function success(res) {
-              console.log(_this.city);
+              // console.log(this.city)
               // debugger
-              console.log(_this.province);
+              // console.log(this.province)
               console.log('获取地址id', res);
+              if (res.data.code != 0) {
+                uni.request({
+                  url: 'http://121.40.30.19/site/hot',
+                  data: {
+                    count: 3,
+                    sort_by: 0 },
+
+                  success: function success(res) {
+                    console.log("热门景点=========", res);
+                    // uni.setStorageSync('description',res.data)
+                    _this.hotAtt = res.data.data;
+                  } }),
+
+                uni.request({
+                  url: 'http://121.40.30.19/article/list',
+                  data: {
+                    count: 20,
+                    page: 1,
+                    sort_by: 1 },
+
+                  success: function success(res) {
+                    console.log('文章列表', res);
+                    // uni.setStorageSync('article_id',res.data)
+                    // console.log('存储文章列表==',res.data)
+                    _this.list = res.data.data;
+                    console.log('list=====', _this.list.list);
+                  } });
+
+              }
               uni.setStorageSync('city_id', res.data);
               console.log('存储本地', res.data.data);
+              var city = uni.getStorageSync('city_id');
+              uni.request({
+                // url:'http://192.168.43.156:8199/site/hot',
+                // url:'site/hot',
+                url: 'http://121.40.30.19/site/hot',
+                data: {
+                  state_id: city.data.state_id,
+                  city_id: city.data.city_id,
+                  count: 3,
+                  sort_by: 0 },
+
+                success: function success(res) {
+                  console.log('热门景点', res);
+                  _this.hotAtt = res.data.data;
+                } });
+
             } });
 
 
@@ -373,48 +419,20 @@ var _default = {
     // 热门景点
     getSiteHot: function getSiteHot() {
       var that = this;
-      var city_id = uni.getStorageSync('city_id');
-      var state_id = uni.getStorageSync('state_id');
-      // console.log('取本地存储城市id',city_id)
-      // uni.getStorage({
-      // 	key:'city_id',
-      // 	success:function(res){
-      // 		console.log('取本地存储城市id',res.data)
-      // 		this.state_id = res.data.data.state_id,
-      // 		this.city_id = res.data.data.city_id
-      // 	}
-      // })
-      uni.request({
-        // url:'http://192.168.43.156:8199/site/hot',
-        // url:'site/hot',
-        url: 'http://121.40.30.19/site/hot',
-        data: {
-          state_id: state_id,
-          city_id: city_id,
-          count: 3,
-          sort_by: 0 },
-
+      that.city = uni.getStorageSync('city');
+      uni.getStorage({
+        key: 'id',
         success: function success(res) {
-          // console.log('热门景点',res)
-          uni.setStorageSync('id', res.data);
-          // console.log('存储热门景点==',res)
+          console.log('res', res.data);
           that.hotAtt = res.data.data;
-          // console.log('hotAtt=====',that.hotAtt)
-          // uni.setStorage({
-          // 	key:'id',
-          // 	data:res.data,
-          // 	success:function(res) {
-          // 		console.log('存储热门景点==',res)
-          // 	}
-          // })
         } });
+
 
     },
     // 获取文章列表
     getArticleList: function getArticleList() {
       var that = this;
-      var city_id = uni.getStorageSync('city_id');
-      var state_id = uni.getStorageSync('state_id');
+      var city = uni.getStorageSync('city_id');
       uni.getStorage({
         key: 'Authorization',
         success: function success(res) {
@@ -428,8 +446,8 @@ var _default = {
         url: 'http://121.40.30.19/article/list',
         // url:'http://192.168.43.60:8299/article/list',
         data: {
-          state_id: state_id,
-          city_id: city_id,
+          state_id: city.data.state_id,
+          city_id: city.data.city_id,
           count: 20,
           page: 1,
           sort_by: 1 },
@@ -470,30 +488,30 @@ var _default = {
           that.token = res.data;
         } });
 
-      uni.request({
-        // url:'article',
-        url: 'http://121.40.30.19/article',
-        data: {
-          article_id: article },
-
-        header: {
-          'Authorization': that.token },
-
-        success: function success(res) {
-          console.log(res.data.data.liked,
-          res.data.data.like_count,
-          res.data.data.uuid,
-          444444);
-
-          // console.log('eeeeeeeeeeeeeeee', e)
-          console.log('文章详情====', res.data.data);
-          uni.setStorageSync('id', res.data);
-          that.articleList = res.data.data;
-          console.log('articleList', that.articleList);
-          console.log('liked', that.articleList.liked);
-          that.liked = that.articleList.liked;
-        } });
-
+      // uni.request({
+      // 	// url:'article',
+      // 	url: 'http://121.40.30.19/article',
+      // 	data: {
+      // 		article_id: article
+      // 	},
+      // 	header: {
+      // 		'Authorization': that.token
+      // 	},
+      // 	success: function(res) {
+      // 		console.log(res.data.data.liked,
+      // 			res.data.data.like_count,
+      // 			res.data.data.uuid,
+      // 			444444
+      // 		)
+      // 		// console.log('eeeeeeeeeeeeeeee', e)
+      // 		console.log('文章详情====', res.data.data)
+      // 		uni.setStorageSync('id', res.data)
+      // 		that.articleList = res.data.data
+      // 		console.log('articleList', that.articleList)
+      // 		console.log('liked',that.articleList.liked)
+      // 		that.liked = that.articleList.liked
+      // 	}
+      // })
 
 
 
@@ -545,9 +563,9 @@ var _default = {
               uni.setStorageSync('article_id', res.data);
               console.log('存储文章列表==', res.data);
               that.list = res.data.data;
-              that.leftList = that.list.list;
-              that.rightList = that.list.list;
-              console.log('list=====', that.leftList);
+              // that.leftList = that.list.list
+              // that.rightList = that.list.list
+              console.log('list=====', that.list.list);
             } });
 
         } });
@@ -567,10 +585,10 @@ var _default = {
         url: '/pages/attractionsList/attractionsList' });
 
     },
-    toAtt: function toAtt() {
-
+    toAtt: function toAtt(e) {
+      console.log('----------------', e);
       uni.navigateTo({
-        url: '/pages/attractionsList/attractionsList' });
+        url: "/pages/positionContent/positionContent?id=" + e });
 
     },
     clickLeft: function clickLeft() {

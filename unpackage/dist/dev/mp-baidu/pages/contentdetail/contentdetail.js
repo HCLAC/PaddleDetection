@@ -506,6 +506,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 var _uniNavBar = _interopRequireDefault(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64));
 var _uniIcons = _interopRequireDefault(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 79));
 var _uniFav = _interopRequireDefault(__webpack_require__(/*! @/components/uni-fav/uni-fav.vue */ 87));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
@@ -600,12 +603,22 @@ var _uniFav = _interopRequireDefault(__webpack_require__(/*! @/components/uni-fa
 //
 //
 //
-var _this; // import httpType from '../../httpType.js'
-var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.default, uniFav: _uniFav.default }, data: function data() {return { indicatorDots: true, current: 0, list: [], VX: 17827277778, articleList: '', token: '', article_id: '' };}, onLoad: function onLoad(e) {console.log('文章id====', e);this.getArticleDetail(e);}, created: function created() {_this = this, _this.getOrder();}, methods: { // 获取文章详情
-    getArticleDetail: function getArticleDetail(e) {var that = this;uni.getStorage({ key: 'Authorization', success: function success(res) {console.log("token===>", res.data);that.token = res.data;} });uni.request({ // url:'article',
-        url: 'http://121.40.30.19/article', data: { article_id: e.article_id }, header: { 'Authorization': that.token }, success: function success(res) {console.log(res.data.data.liked, res.data.data.like_count, res.data.data.uuid, 444444);console.log('eeeeeeeeeeeeeeee', e);console.log('文章详情====', res.data);uni.setStorageSync('id', res.data);that.articleList = res.data;console.log('articleList', that.articleList);} });}, // 点赞
+//
+//
+//
+var _this; // import ourLoading from '@/components/our-loading/our-loading.vue'
+// import httpType from '../../httpType.js'
+var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.default, uniFav: _uniFav.default // ourLoading
+  }, data: function data() {return { indicatorDots: true, current: 0, list: [], VX: 17827277778, articleList: '', token: '', article_id: '' };}, onLoad: function onLoad(e) {console.log('文章id====', e);this.getArticleDetail(e);}, created: function created() {_this = this, _this.getOrder();}, methods: { // 获取文章详情
+    getArticleDetail: function getArticleDetail(e) {var that = this;uni.showLoading({ title: '请求中', mask: true });uni.getStorage({ key: 'Authorization', success: function success(res) {console.log("token===>", res.data);that.token = res.data; // console.log("存储token",that.token)
+        } });uni.request({ // url:'article',
+        url: 'http://121.40.30.19/article', data: { article_id: e.article_id }, header: { 'Authorization': that.token }, success: function success(res) {console.log(res.data.data.liked, res.data.data.like_count, res.data.data.uuid, 444444);console.log('eeeeeeeeeeeeeeee', e);console.log('文章详情====', res);uni.setStorageSync('id', res.data);that.articleList = res.data;console.log('articleList', that.articleList);} });uni.hideLoading();}, // 点赞
     clickLike: function clickLike() {var that = this;uni.getStorage({ key: 'Authorization', success: function success(res) {console.log("token===>", res.data);that.token = res.data;} });var article_id = uni.getStorageSync('id');console.log('art', article_id);uni.request({ url: 'http://121.40.30.19/user/liked', data: { article_id: article_id.data.uuid, liked: article_id.data.liked == 0 ? 1 : 0 }, method: 'POST', header: { 'Authorization': that.token }, success: function success(res) {console.log('点赞', res);if (res.data.code != 0) {// debugger
-            uni.showModal({ title: '提示', content: res.data.msg, showCancel: false, success: function success(res) {if (res.confirm) {uni.redirectTo({ url: '../login/login' });
+            uni.showModal({ title: '提示', content: '您好，请先登录', showCancel: false,
+              success: function success(res) {
+                if (res.confirm) {
+                  uni.redirectTo({
+                    url: '../login/login' });
 
                 }
               } });
@@ -666,31 +679,54 @@ var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.
 
         success: function success(res) {
           console.log('收藏', res);
+          if (res.data.code != 0) {
+            // debugger
+            uni.showModal({
+              title: '提示',
+              content: '您好，请先登录',
+              showCancel: false,
+              success: function success(res) {
+                if (res.confirm) {
+                  uni.redirectTo({
+                    url: '../login/login' });
+
+                }
+              } });
+
+            return;
+          }
+          uni.request({
+            // url:'article',
+            url: 'http://121.40.30.19/article',
+            data: {
+              article_id: article_id.data.uuid },
+
+            header: {
+              'Authorization': that.token },
+
+            success: function success(res) {
+              console.log(res.data.data.fav,
+              res.data.data.fav_count,
+              res.data.data.uuid,
+              333333);
+
+              console.log('eeeeeeeeeeeeeeee', res);
+              console.log('文章详情====', res.data);
+              uni.setStorageSync('id', res.data);
+              that.articleList = res.data;
+              console.log('articleList', that.articleList);
+            } });
+
         } });
 
 
-      uni.request({
-        // url:'article',
-        url: 'http://121.40.30.19/article',
-        data: {
-          article_id: article_id.data.uuid },
 
-        header: {
-          'Authorization': that.token },
 
-        success: function success(res) {
-          console.log(res.data.data.liked,
-          res.data.data.like_count,
-          res.data.data.uuid,
-          333333);
-
-          console.log('eeeeeeeeeeeeeeee', res);
-          console.log('文章详情====', res.data);
-          uni.setStorageSync('id', res.data);
-          that.articleList = res.data;
-          console.log('articleList', that.articleList);
-        } });
-
+    },
+    // 登录
+    login: function login() {
+      uni.redirectTo({
+        url: '../login/login' });
 
     },
     change: function change(e) {

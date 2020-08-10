@@ -12,7 +12,7 @@
 		"safearea": {  
 		    "background":"#CCCCCC",  
 			"bottom":{  
-				"offset":"auto"  
+				"offset":"none"  
 			},  
 			"left": {  
 				"offset":"auto"  

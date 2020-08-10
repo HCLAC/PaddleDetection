@@ -16,9 +16,10 @@
 				:mode="2"
 				button="inside"
 				:placeholder="defaultKeyword"
-				@search="doSearch(false)"
+				@search="doSearch(keyword)"
 				@input="inputChange"
-				@confirm="doSearch(false)"
+				confirm-type="search"
+				@confirm="Toresults()"
 				v-model="keyValue"
 			></mSearch>
 			
@@ -31,7 +32,7 @@
 						<view class="keyword-text" @tap.stop="doSearch(keywordList[index].keyword)" @click="Toresults"><rich-text :nodes="row.htmlStr"></rich-text></view>
 					</view>
 				</block>
-				<view class="search-bottom">
+				<view class="search-bottom" @click="Toresults(keyword)">
 					搜索更多关于“
 					<veiw>{{ keyValue }}</veiw>
 					”的结果
@@ -181,7 +182,11 @@ export default {
 			forbid: '',
 			noResult: null,
 			isShowKeywordList: false,
-			list:[]
+			list:[],
+			leftList:[],
+			rightList:[],
+			token:'',
+			liked:''
 		};
 	},
 	onLoad() {
@@ -201,10 +206,11 @@ export default {
 				key:'article_id',
 				success:function(res){
 					console.log('取数据',res.data.data)
-					that.list = res.data.data.list
+					that.list = res.data.data
 				}
 			})
 		},
+		
 		// 跳转文章详情
 		onPageJump(e) {
 			console.log(e)
@@ -398,7 +404,7 @@ export default {
 			return keywordArr;
 		},
 		Toresults() {
-			var keyword = this.keyword;
+			var keyword = this.keyValue;
 			uni.request({
 				url:"http://121.40.30.19/search",
 				data:{

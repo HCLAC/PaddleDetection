@@ -1,5 +1,6 @@
 {
   "navigationStyle": "custom",
+  "backgroundColorBottom": "#F8F8F8",
   "component": true,
   "usingComponents": {
     "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar",

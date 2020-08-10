@@ -2,7 +2,7 @@
 	<view class="">
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 				</view>
@@ -11,8 +11,7 @@
 		</view>
 		<!-- 定位选择 -->
 		<view class='list-city'>
-			<scroll-view scroll-y="true" style="height:100%;"  scroll-with-animation="true"
-				enable-back-to-top="true">
+			<scroll-view scroll-y="true" style="height:100%;" scroll-with-animation="true" enable-back-to-top="true">
 				<!-- 定位 -->
 				<view class='item'>
 					<image src="/static/images/Icon／Mapt.svg" class="dd"></image>
@@ -26,8 +25,9 @@
 				<!-- 热门城市 -->
 				<view class='item-hot'>
 					<view class='py' id="hot">国内热门省市</view>
-					<view class="hot-city" v-for="item in hotCityDate">
-						<button  class="city-button" type="default" size="mini">
+					<view class="hot-city">
+						<button class="city-button" :class="{active: city === item.name}" v-for="(item,index) in hotCityDate" :key="index"
+						 @click="onSelect(item)" type="default" size="mini">
 							{{item.name}}
 						</button>
 					</view>
@@ -44,11 +44,13 @@
 			return {
 				citySelected: '',
 				city: '',
+				state_id: '',
+				city_id: '',
 				cityData: {},
 				//搜索历史记录
 				historyListShow: true,
 				historyList: [],
-				hotCityDate:[]
+				hotCityDate: []
 			}
 		},
 		onLoad() {
@@ -56,40 +58,82 @@
 			this.getHotCity()
 		},
 		methods: {
-			getHotCity(){
+			getHotCity() {
 				uni.request({
-					url:'http://121.40.30.19/city/hot',
-					method:"GET",
-					success:(res)=> {
-						console.log(res)
-						this.hotCityDate = res.data.data
-						console.log('热门城市===>',res.data.data),
-						uni.setStorageSync('state_id',res.data.data)
+						url: 'http://121.40.30.19/city/hot',
+						method: "GET",
+						success: (res) => {
+							console.log(res)
+							this.hotCityDate = res.data.data
+							console.log('热门城市===>', res.data.data),
+								uni.setStorageSync('state_id', res.data.data)
+						}
+					}),
+					uni.getStorage({
+						key: 'state_id',
+						success: function(res) {
+							console.log("city===>", res.data)
+						}
+					})
+			},
+			onSelect(item) {
+
+				this.city = item.name
+				// this.city_id = item.city_id
+				// this.state_id = item.state_id
+				uni.setStorageSync('city', item.name)
+				// uni.setStorageSync('state_id', item.state_id)
+				uni.request({
+					// url:'http://192.168.43.156:8199/site/hot',
+					// url:'site/hot',
+					url:'http://121.40.30.19/site/hot',
+					data:{
+						state_id:item.state_id,
+						city_id:item.city_id,
+						count:3,
+						sort_by:0
+					},
+					success:res=>{
+						console.log('热门景点',res)
+						uni.setStorageSync('id',res.data)
 					}
 				}),
-				uni.getStorage({
-					key:'state_id',
-					success:function(res){
-						console.log("city===>",res.data)
+				uni.request({
+					url:'http://121.40.30.19/site/list',
+					data:{
+						state_id:item.state_id,
+						city_id:item.city_id,
+						count:20,
+						page:1,
+						sort_by:1
+					},
+					success:res=>{
+						console.log("热门景点列表=========",res)
+						uni.setStorageSync('description',res.data)
+						
 					}
 				})
+				uni.reLaunch({
+					url:'../index/index'
+				})
+				
 			},
 			back() {
 				uni.navigateBack({
 					delta: 1
 				})
 			},
-			home(){
+			home() {
 				uni.switchTab({
-					url:"/pages/index/index"
+					url: "/pages/index/index"
 				})
 			},
-			getAdress(){
+			getAdress() {
 				uni.getLocation({
-				    type: 'wgs84',
-				    success:  (res)=> {
+					type: 'wgs84',
+					success: (res) => {
 						this.city = res.city
-				    }
+					}
 				});
 			},
 		}
@@ -106,122 +150,144 @@
 		font-size: 14px;
 		background-color: #aa557f;
 	}
+
 	.example-body {
 		flex-direction: column;
 		padding: 15px;
 		background-color: #ffffff;
 	}
+
 	.example-body {
 		padding: 0;
 	}
-	.navBar{
+
+	.navBar {
 		display: flex;
 	}
-	.slotleft{
+
+	.slotleft {
 		display: flex;
 		align-items: center;
 	}
-	.fanhui{
+
+	.fanhui {
 		width: 40rpx;
 		height: 40rpx;
 		margin-left: 40rpx;
 		/* margin-right: 20rpx; */
 	}
-	.fhsy{
+
+	.fhsy {
 		width: 40rpx;
 		height: 40rpx;
 	}
-	.slottitle{
+
+	.slottitle {
 		margin-left: 220rpx;
 		font-size: 38rpx;
-		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:600;
-		color:rgba(0,0,0,1);
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 600;
+		color: rgba(0, 0, 0, 1);
 	}
-	.button-v-line{
+
+	.button-v-line {
 		width: 1px;
 		height: 18px;
 		background-color: #2f2f2f;
 		margin: 0 8px;
 	}
+
 	/* 定位 */
-	.list-city{
-	}
-	.item{
+	.list-city {}
+
+	.item {
 		margin-top: 34rpx;
 		margin-left: 36rpx;
 		display: flex;
 		/* align-items: center; */
 	}
-	.dd{
+
+	.dd {
 		width: 32rpx;
 		height: 32rpx;
 		margin-right: 8rpx;
 	}
-	.item .cityname{
-		font-size:32rpx;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(48,49,51,1);
-		line-height:32rpx;
+
+	.item .cityname {
+		font-size: 32rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(48, 49, 51, 1);
+		line-height: 32rpx;
 	}
-	.item .nowcity{
-		font-size:22rpx;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(201,202,209,1);
-		line-height:22rpx;
+
+	.item .nowcity {
+		font-size: 22rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(201, 202, 209, 1);
+		line-height: 22rpx;
 		margin-left: 4rpx;
 		margin-top: 10rpx;
 	}
-	.getNowCity{
-		font-size:24rpx;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(0,145,255,1);
-		line-height:22rpx;
+
+	.getNowCity {
+		font-size: 24rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(0, 145, 255, 1);
+		line-height: 22rpx;
 		margin-left: 4rpx;
 		margin-top: 10rpx;
 	}
-	.tip{
-		font-size:22rpx;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(201,202,209,1);
-		line-height:22rpx;
+
+	.tip {
+		font-size: 22rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(201, 202, 209, 1);
+		line-height: 22rpx;
 		margin-left: 4rpx;
 		margin-top: 10rpx;
 	}
-	.line{
-		height:2rpx;
-		background:rgba(221,221,221,1);
+
+	.line {
+		height: 2rpx;
+		background: rgba(221, 221, 221, 1);
 		margin-top: 34rpx;
 		margin-bottom: 26rpx;
 	}
-	.item-hot{
+
+	.item-hot {
 		margin-left: 40rpx;
 	}
-	.item-hot .py{
-		font-size:26rpx;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(96,98,102,1);
-		line-height:26rpx;
-		
+
+	.item-hot .py {
+		font-size: 26rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(96, 98, 102, 1);
+		line-height: 26rpx;
+
 		margin-bottom: 20rpx;
 	}
-	.item-hot .hot-city{
+
+	.item-hot .hot-city {
 		float: left;
 	}
-	.item-hot .city-button{
+
+	.item-hot .city-button {
 		width: 156rpx;
 		height: 60rpx;
 		margin-right: 16rpx;
 		margin-bottom: 16rpx;
-		background:rgba(237,239,242,1);
-		border-radius:8rpx;
+		background: rgba(237, 239, 242, 1);
+		border-radius: 8rpx;
 		line-height: 60rpx;
 		font-size: 26rpx;
 	}
-	.city-button::after{ border: none; }
+
+	.city-button::after {
+		border: none;
+	}
 </style>

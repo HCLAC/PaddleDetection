@@ -308,6 +308,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js */ 54));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search-revision/mehaotian-search-revision */ "components/mehaotian-search-revision/mehaotian-search-revision").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search-revision/mehaotian-search-revision.vue */ 191));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var touring = function touring() {Promise.all(/*! require.ensure | components/content/touring */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/content/touring")]).then((function () {return resolve(__webpack_require__(/*! @/components/content/touring.vue */ 198));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   data: function data() {
@@ -320,7 +321,11 @@ var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js
       forbid: '',
       noResult: null,
       isShowKeywordList: false,
-      list: [] };
+      list: [],
+      leftList: [],
+      rightList: [],
+      token: '',
+      liked: '' };
 
   },
   onLoad: function onLoad() {
@@ -340,10 +345,11 @@ var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js
         key: 'article_id',
         success: function success(res) {
           console.log('取数据', res.data.data);
-          that.list = res.data.data.list;
+          that.list = res.data.data;
         } });
 
     },
+
     // 跳转文章详情
     onPageJump: function onPageJump(e) {
       console.log(e);
@@ -537,7 +543,7 @@ var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js
       return keywordArr;
     },
     Toresults: function Toresults() {
-      var keyword = this.keyword;
+      var keyword = this.keyValue;
       uni.request({
         url: "http://121.40.30.19/search",
         data: {

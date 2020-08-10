@@ -312,6 +312,7 @@
 /* 轮播图 */
 .page-section-spacing {
   position: relative;
+  width: 100%;
 }
 .swiper-item {
   width: 100%;
@@ -472,7 +473,7 @@
 }
 .content .contentText .btnBox {
   position: absolute;
-  right: 10rpx;
+  right: 0;
   bottom: 0;
   display: -webkit-box;
   display: -webkit-flex;

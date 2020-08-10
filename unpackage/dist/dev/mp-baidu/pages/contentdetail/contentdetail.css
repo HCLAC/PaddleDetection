@@ -312,26 +312,17 @@
 /* 轮播图 */
 .page-section-spacing.data-v-32e87e5c {
   position: relative;
-  height: 996rpx;
-}
-.swiper.data-v-32e87e5c {
-  height: 996rpx;
-}
-.itemImg.data-v-32e87e5c {
-  height: 996rpx;
+  min-height: 400rpx;
+  max-height: 996rpx;
   width: 100%;
 }
-.uni-bg-red.data-v-32e87e5c {
-  height: 996rpx;
-  background-color: #EA552D;
+.swiper.data-v-32e87e5c {
+  min-height: 400rpx;
+  max-height: 996rpx;
 }
-.uni-bg-green.data-v-32e87e5c {
-  height: 996rpx;
-  background-color: #4CD964;
-}
-.uni-bg-blue.data-v-32e87e5c {
-  height: 996rpx;
-  background-color: #007AFF;
+.itemImg.data-v-32e87e5c {
+  height: 100%;
+  width: 100%;
 }
 .imageCount.data-v-32e87e5c {
   height: 40rpx;
@@ -400,7 +391,6 @@
   line-height: 28rpx;
 }
 .adress.data-v-32e87e5c {
-  width: 100rpx;
   height: 40rpx;
   margin-top: 12rpx;
   background: white;
@@ -413,6 +403,7 @@
   -webkit-align-items: center;
           align-items: center;
   text-align: center;
+  padding: 0 8rpx;
 }
 .adreessIcon.data-v-32e87e5c {
   width: 24rpx;
