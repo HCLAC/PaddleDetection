@@ -88,6 +88,7 @@
 }
 .content.data-v-2796015c {
   background-color: #F8F8F8;
+  padding-top: 20rpx;
 }
 .card.data-v-2796015c {
   width: 694rpx;
@@ -95,7 +96,7 @@
   background: white;
   box-shadow: 0px 8rpx 16rpx 0px #ededed;
   border-radius: 16rpx;
-  margin: 20rpx 28rpx;
+  margin: 0rpx 28rpx 20rpx 28rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;

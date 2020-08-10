@@ -423,7 +423,7 @@
   color: #fff;
 }
 .content .rateBox {
-  margin-top: 60rpx;
+  margin-top: 32rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -444,12 +444,14 @@
 .content .rateBox .goTo {
   margin-left: 46rpx;
   font-size: 24rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
+  font-family: PingFangSC-Regular,PingFang SC;
   font-weight: 400;
-  color: #606266;
+  color: #909399;
+  line-height: 44rpx;
 }
 .content .contentText {
   margin-top: 30rpx;
+  padding-bottom: 40rpx;
   position: relative;
 }
 .content .contentText .moreText {
@@ -467,14 +469,13 @@
   line-height: 56rpx;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
   overflow: hidden;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
 }
 .content .contentText .btnBox {
   position: absolute;
   right: 0;
-  bottom: 0;
+  bottom: 40rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -488,7 +489,7 @@
 }
 .content .contentText .btnBox .mask {
   width: 50rpx;
-  height: 28rpx;
+  height: 56rpx;
   background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, white 100%);
   background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, white 100%);
 }
@@ -531,9 +532,6 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
   width: 50%;
 }
 .adressBox .adress .left .adreessIcon {
@@ -555,7 +553,6 @@
   height: 70rpx;
 }
 .adressBox .adress .right {
-  margin-top: 20rpx;
   height: 96rpx;
   width: 196rpx;
   position: relative;
@@ -663,6 +660,9 @@
   line-height: 38rpx;
 }
 .gonglueBox .contentBox .contentItem .bottom {
+  position: absolute;
+  right: 24rpx;
+  bottom: 12rpx;
   margin-top: 6rpx;
   display: -webkit-box;
   display: -webkit-flex;

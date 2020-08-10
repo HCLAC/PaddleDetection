@@ -184,6 +184,7 @@
 	// 卡片样式
 	.content{
 		background-color: #F8F8F8;
+		padding-top: 20rpx;
 	}
 	.card{
 		width: 694rpx;
@@ -191,7 +192,7 @@
 		background:rgba(255,255,255,1);
 		box-shadow:0px 8rpx 16rpx 0px rgba(237,237,237,1);
 		border-radius:16rpx;
-		margin: 20rpx 28rpx;
+		margin: 0rpx 28rpx 20rpx 28rpx;
 		display: flex;
 		flex-direction: column;
 	}

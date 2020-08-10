@@ -205,12 +205,12 @@ __webpack_require__.r(__webpack_exports__);
     color: {
       // 星星未选中的颜色
       type: String,
-      default: "#ececec" },
+      default: "#EDEFF2" },
 
     activeColor: {
       // 星星选中状态颜色
       type: String,
-      default: "#ffca3e" },
+      default: "#FFC53D" },
 
     disabledColor: {
       // 星星禁用状态颜色

@@ -68,7 +68,7 @@
 				<view class="adress">
 					<view class="left">
 						<view class="adreessIcon">
-							<image class="" src="../../static/images/mapIcon.png" mode=""></image>
+							<image class="" src="../../static/images/Icon／Map.svg" mode=""></image>
 						</view>
 						
 						<text class="adressText">{{attDetail.data.pos}}</text>
@@ -76,7 +76,7 @@
 					<view class="right">
 						<image src="../../static/images/mapBack.png" mode=""></image>
 						<view class="insideBox" @click="map">
-							<image src="../../static/images/dingwei.png" mode=""></image>
+							<image src="../../static/images/dingwei.svg" mode=""></image>
 							<text>导航</text>
 						</view>
 					</view>
@@ -91,31 +91,31 @@
 				<view class="title">热门攻略</view>
 				<view class="contentBox">
 					<view class="contentItem">
-						<image class="topHot" src="../../static/images/topHot.png" mode=""></image>
+						<image class="topHot" src="../../static/images/top.svg" mode=""></image>
 						<view class="top">{{attDetail.data.articles[0].title}}</view>
 						<view class="bottom">
-							<image src="../../static/images/liulan.png" mode=""></image>
+							<image src="../../static/images/liulan.svg" mode=""></image>
 							<text>{{attDetail.data.articles[0].visit_count}}</text>
 						</view>
 					</view>
 					<view class="contentItem">
 						<view class="top">{{attDetail.data.articles[1].title}}</view>
 						<view class="bottom">
-							<image src="../../static/images/liulan.png" mode=""></image>
+							<image src="../../static/images/liulan.svg" mode=""></image>
 							<text>{{attDetail.data.articles[1].visit_count}}</text>
 						</view>
 					</view>
 					<view class="contentItem">
 						<view class="top">{{attDetail.data.articles[2].title}}</view>
 						<view class="bottom">
-							<image src="../../static/images/liulan.png" mode=""></image>
+							<image src="../../static/images/liulan.svg" mode=""></image>
 							<text>{{attDetail.data.articles[2].visit_count}}</text>
 						</view>
 					</view>
 					<view class="contentItem">
 						<view class="top">{{attDetail.data.articles[3].title}}</view>
 						<view class="bottom">
-							<image src="../../static/images/liulan.png" mode=""></image>
+							<image src="../../static/images/liulan.svg" mode=""></image>
 							<text>{{attDetail.data.articles[3].visit_count}}</text>
 						</view>
 					</view>
@@ -390,7 +390,7 @@ export default {
 		}
 	}
 	.rateBox {
-		margin-top: 60rpx;
+		margin-top: 32rpx;
 		display: flex;
 		align-items: center;
 		.rateStart{
@@ -407,15 +407,17 @@ export default {
 
 		.goTo {
 			margin-left: 46rpx;
-			font-size: 24rpx;
-			font-family: PingFangSC-Regular, PingFang SC;
-			font-weight: 400;
-			color: rgba(96, 98, 102, 1);
+			font-size:24rpx;
+			font-family:PingFangSC-Regular,PingFang SC;
+			font-weight:400;
+			color:rgba(144,147,153,1);
+			line-height:44rpx;
 		}
 	}
 
 	.contentText {
 		margin-top: 30rpx;
+		padding-bottom: 40rpx;
 		position: relative;
 		.moreText {
 			font-size: 28rpx;
@@ -433,16 +435,16 @@ export default {
 			line-height: 56rpx;
 			display: -webkit-box;
 			-webkit-box-orient: vertical;
-			text-overflow: ellipsis;
+			// text-overflow: ellipsis;
 			overflow: hidden;
-			-webkit-line-clamp: 1;
+			-webkit-line-clamp: 2;
 			
 		}
 		.btnBox {
 			// margin-right: 10rpx;
 			position: absolute;
 			right: 0;
-			bottom: 0;
+			bottom: 40rpx;
 			display: flex;
 			justify-content: flex-end;
 			align-items: center;
@@ -450,7 +452,7 @@ export default {
 			// background:linear-gradient(90deg,rgba(255,255,255,0) 50%,rgba(255,255,255,1) 100%);
 			.mask{
 				width: 50rpx;
-				height: 28rpx;
+				height: 56rpx;
 				background: linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
 			}
 			text {
@@ -487,7 +489,7 @@ export default {
 		justify-content: space-between;
 		.left {
 			display: flex;
-			align-items: center;
+			// align-items: center;
 			width: 50%;
 			.adreessIcon {
 				height: 34rpx;
@@ -509,7 +511,7 @@ export default {
 			}
 		}
 		.right {
-			margin-top: 20rpx;
+			// margin-top: 20rpx;
 			height: 96rpx;
 			width: 196rpx;
 			position: relative;
@@ -601,6 +603,9 @@ export default {
 				line-height: 38rpx;
 			}
 			.bottom{
+				position: absolute;
+				right: 24rpx;
+				bottom: 12rpx;
 				margin-top: 6rpx;
 				display: flex;
 				justify-content: flex-end;
