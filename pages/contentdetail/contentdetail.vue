@@ -126,7 +126,7 @@
 				mask:true
 			})
 			this.getArticleDetail(e)
-			uni.hideLoading();
+			uni.hideLoading()
 		},
 		created() {
 			_this = this,
@@ -304,6 +304,7 @@
 								console.log('文章详情====',res.data)
 								uni.setStorageSync('id',res.data)
 								that.articleList = res.data
+								
 								console.log('articleList',that.articleList)
 							}
 						})
@@ -313,6 +314,7 @@
 				
 
 			},
+		
 			// 登录
 			login(){
 				uni.redirectTo({
@@ -321,30 +323,6 @@
 			},
 			change(e) {
 				_this.current = e.detail.current
-			},
-			getOrder() {
-				_this.swiperlength,
-					_this.list = [{
-							key: "1",
-							title: "A"
-						},
-						{
-							key: "2",
-							title: "B"
-						},
-						{
-							key: "3",
-							title: "C"
-						},
-						{
-							key: "4",
-							title: "D"
-						},
-						{
-							key: "5",
-							title: "E"
-						},
-					]
 			},
 			back() {
 				uni.navigateBack({
@@ -406,8 +384,12 @@
 					        return match;
 					    });
 					    newContent = newContent.replace(/<br[^>]*\/>/gi, '');
-					    newContent = newContent.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');
-					    return newContent;
+					    // newContent = newContent.replace(/\<img/gi, '<img style="width:350px;height:auto;display:inline-block;margin:5px auto;"');
+						newContent = newContent.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');	
+						// newContent = newContent.replace(/\<div/gi, '<div style="width:360px;');
+							// console.log(newContent)
+							// debugger
+						return newContent;
 					}	
 				}
 
@@ -422,7 +404,7 @@
 		justify-content: center;
 		padding: 0;
 		font-size: 14px;
-		background-color: #aa557f;
+		background-color: #aa557f; 
 	}
 
 	.example-body {
@@ -536,6 +518,10 @@
 	/* 内容详情 */
 	.detailContent {
 		// padding: 15px;
+		margin-bottom: 200rpx;
+		padding-bottom: constant(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom); 
+		box-sizing: content-box;
 	}
 
 	// 用户信息
@@ -606,7 +592,7 @@
 		font-weight: 400;
 		color: rgba(96, 98, 102, 1);
 		line-height: 56rpx;
-		margin: 28rpx;
+		margin: 20rpx;
 	}
 
 	.copy {
@@ -626,6 +612,7 @@
 		margin-top: 40rpx;
 		margin-left: 28rpx;
 		display: flex;
+		flex-wrap: wrap;
 	}
 
 	.tips view {
@@ -634,6 +621,7 @@
 		font-weight: 500;
 		color: rgba(0, 145, 255, 1);
 		margin-right: 38rpx;
+		margin-top: 10rpx;
 	}
 
 	.tip text {
@@ -654,7 +642,6 @@
 		line-height: 22rpx;
 		margin-top: 40rpx;
 		margin-left: 28rpx;
-		margin-bottom: 200rpx;
 	}
 
 	
@@ -673,7 +660,7 @@
 		box-sizing: content-box;
 	}
 	.line {
-		height: 1rpx;
+		height: 0.5rpx;
 		background: rgba(221, 221, 221, 1);
 		// margin-top: 84rpx;
 	}
@@ -686,10 +673,7 @@
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: rgba(48, 49, 51, 1);
-		
 		line-height: 24rpx;
-		
-		 
 	}
 
 	.loginButton {

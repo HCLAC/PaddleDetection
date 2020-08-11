@@ -18,6 +18,7 @@
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- <tcontent></tcontent> -->
 			<view class="cus-sty">
+				<!-- 热门景点 -->
 			    <view class="hot">
 			        <view class="hot-top">
 			            <text class="ht-l">热门景点</text>
@@ -25,7 +26,7 @@
 			        </view>
 			        <view class="hot-bot"  >
 						<view class="hb-l" @click='toAtt(hotAtt[0].id)'  >
-							<image :src="hotAtt[0].image"></image>
+							<image mode="aspectFill" :src="hotAtt[0].image"></image>
 							<view class="imgMask">
 								
 							</view>
@@ -33,14 +34,14 @@
 						</view>
 						<view class="hb-r">
 							<view class="hb-r1" @click='toAtt(hotAtt[1].id)'>
-								<image :src="hotAtt[1].image"></image>
+								<image mode="aspectFill" :src="hotAtt[1].image"></image>
 								<view class="imgMask">
 									
 								</view>
 								<text>{{hotAtt[1].name}}</text>
 							</view>
 							<view class="hb-r2" @click='toAtt(hotAtt[2].id)'>
-								<image :src="hotAtt[2].image"></image>
+								<image mode="aspectFill" :src="hotAtt[2].image"></image>
 								<view class="imgMask">
 									
 								</view>
@@ -49,11 +50,11 @@
 						</view>
 			        </view>
 			    </view>
+				<!-- 正在旅行 -->
 			    <view class="touring">
 			        <text class="tourtext">正在旅行</text>
 					<!-- <touring class="touringList" ></touring> -->
 					<view class="wrap">
-						<!-- <u-button @click="clear">清空列表</u-button> -->
 						<u-waterfall v-model="list.list" ref="uWaterfall" >
 							<template v-slot:left="{leftList}">
 								<view class="demo-warter demo-warter-l" v-for="(item,index) in leftList" :key="index" >
@@ -170,7 +171,7 @@
 		mixins: [MescrollMixin],
 		data() {
 			return {
-				city: '',
+				city: null,
 				province:'',
 				state_id:'',
 				city_id:'',
@@ -197,7 +198,7 @@
 				uni.getLocation({
 				    type: 'wgs84',
 				    success:  (res)=> {
-						console.log(res)
+						console.log('地址---',res)
 						// if(this.city == null){
 							this.city = res.city
 							this.province = res.province
@@ -229,7 +230,7 @@
 											url:'http://121.40.30.19/site/hot',
 											data:{
 												count:3,
-												sort_by:0
+												sort_by:3
 											},
 											success:res=>{
 												console.log("热门景点=========",res)
@@ -284,7 +285,7 @@
 				uni.getStorage({
 					key:'id',
 					success:function(res){
-						console.log('res',res.data)
+						console.log('热门景点---',res.data)
 						that.hotAtt = res.data.data
 					}
 				})
@@ -696,7 +697,7 @@
 		display: flex;
 		/* #endif */
 		flex-direction: row;
-		min-width: 396rpx;
+		max-width: 396rpx;
 		height: 72rpx;
 		align-items: center;
 		flex: 1;
@@ -855,6 +856,7 @@
 	}
 	
 	.demo-image {
+		min-height: 300rpx;
 		width: 100%;
 		border-radius: 8rpx 8rpx 0 0 ;
 		position: relative;

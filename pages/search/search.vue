@@ -72,23 +72,26 @@
 			</view>
 			<!-- <touring></touring> -->
 			<view class="touring">
+			    <!-- <text class="tourtext">正在旅行</text> -->
+				<!-- <touring class="touringList" ></touring> -->
 				<view class="wrap">
 					<!-- <u-button @click="clear">清空列表</u-button> -->
 					<u-waterfall v-model="list" ref="uWaterfall" >
 						<template v-slot:left="{leftList}">
 							<view class="demo-warter demo-warter-l" v-for="(item,index) in leftList" :key="index" >
 								<view class="" @click="onPageJump" :id ="item.article_id">
-									<image class="demo-image"  :src="item.image" :index="index" mode="widthFix"></image>
-									<view class="adress">
-										<view class="adreessIcon">
-											<image class="" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
-										</view>
-										
-										<view class="adressText">
-											{{item.location}}
+									<view class="demo-top">
+										<image class="demo-image"  :src="item.image" :index="index" mode="widthFix"></image>
+										<view class="adress">
+											<view class="adreessIcon">
+												<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
+											</view>
+											
+											<view class="adressText">
+												{{item.location}}
+											</view>
 										</view>
 									</view>
-									
 									<view class="titleTip">
 										<view class="demo-tag">
 											<view class="demo-tag-owner" v-if="item.type==0">
@@ -120,15 +123,18 @@
 						<template v-slot:right="{rightList}">
 							<view class="demo-warter" v-for="(item,index) in rightList" :key="index">
 								<view class=""  @click="onPageJump" :id= "item.article_id">
-									<image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
-									<view class="adress">
-										<view class="adreessIcon">
-											<image class="" src="../../static/images/Icon／Map3@2x(1).png" mode=""></image>
-										</view>
-										<view class="adressText">
-											{{item.location}}
+									<view class="demo-top">
+										<image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
+										<view class="adress">
+											<view class="adreessIcon">
+												<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
+											</view>
+											<view class="adressText">
+												{{item.location}}
+											</view>
 										</view>
 									</view>
+									
 									<view class="titleTip">
 										<view class="demo-tag">
 											<view class="demo-tag-owner" v-if="item.type==0">

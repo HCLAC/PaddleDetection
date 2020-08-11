@@ -718,6 +718,7 @@ var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.
               console.log('文章详情====', res.data);
               uni.setStorageSync('id', res.data);
               that.articleList = res.data;
+
               console.log('articleList', that.articleList);
             } });
 
@@ -727,6 +728,7 @@ var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.
 
 
     },
+
     // 登录
     login: function login() {
       uni.redirectTo({
@@ -735,30 +737,6 @@ var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.
     },
     change: function change(e) {
       _this.current = e.detail.current;
-    },
-    getOrder: function getOrder() {
-      _this.swiperlength,
-      _this.list = [{
-        key: "1",
-        title: "A" },
-
-      {
-        key: "2",
-        title: "B" },
-
-      {
-        key: "3",
-        title: "C" },
-
-      {
-        key: "4",
-        title: "D" },
-
-      {
-        key: "5",
-        title: "E" }];
-
-
     },
     back: function back() {
       uni.navigateBack({
@@ -820,7 +798,11 @@ var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.
         return match;
       });
       newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+      // newContent = newContent.replace(/\<img/gi, '<img style="width:350px;height:auto;display:inline-block;margin:5px auto;"');
       newContent = newContent.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');
+      // newContent = newContent.replace(/\<div/gi, '<div style="width:360px;');
+      // console.log(newContent)
+      // debugger
       return newContent;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-baidu/dist/index.js */ 1)["default"]))

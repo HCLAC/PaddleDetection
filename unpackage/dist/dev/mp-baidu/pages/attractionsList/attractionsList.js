@@ -213,7 +213,7 @@ __webpack_require__.r(__webpack_exports__);
               data: {
                 count: 20,
                 page: 1,
-                sort_by: 1 },
+                sort_by: 3 },
 
               success: function success(res) {
                 console.log("热门景点列表=========", res);

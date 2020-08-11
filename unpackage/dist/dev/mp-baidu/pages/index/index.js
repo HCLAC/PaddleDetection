@@ -296,6 +296,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 45));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 79));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 109));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 // import httpType from '../../httpType.js';
 var _default = {
@@ -309,7 +310,7 @@ var _default = {
   mixins: [_mescrollMixins.default],
   data: function data() {
     return {
-      city: '',
+      city: null,
       province: '',
       state_id: '',
       city_id: '',
@@ -336,7 +337,7 @@ var _default = {
       uni.getLocation({
         type: 'wgs84',
         success: function success(res) {
-          console.log(res);
+          console.log('地址---', res);
           // if(this.city == null){
           _this.city = res.city;
           _this.province = res.province;
@@ -368,7 +369,7 @@ var _default = {
                   url: 'http://121.40.30.19/site/hot',
                   data: {
                     count: 3,
-                    sort_by: 0 },
+                    sort_by: 3 },
 
                   success: function success(res) {
                     console.log("热门景点=========", res);
@@ -423,7 +424,7 @@ var _default = {
       uni.getStorage({
         key: 'id',
         success: function success(res) {
-          console.log('res', res.data);
+          console.log('热门景点---', res.data);
           that.hotAtt = res.data.data;
         } });
 

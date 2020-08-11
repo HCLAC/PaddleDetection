@@ -77,7 +77,7 @@
 								data:{
 									count:20,
 									page:1,
-									sort_by:1
+									sort_by:3
 								},
 								success:res=>{
 									console.log("热门景点列表=========",res)

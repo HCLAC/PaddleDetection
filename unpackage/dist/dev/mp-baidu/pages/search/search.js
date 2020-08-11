@@ -309,6 +309,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
 var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js */ 54));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search-revision/mehaotian-search-revision */ "components/mehaotian-search-revision/mehaotian-search-revision").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search-revision/mehaotian-search-revision.vue */ 191));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var touring = function touring() {Promise.all(/*! require.ensure | components/content/touring */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/content/touring")]).then((function () {return resolve(__webpack_require__(/*! @/components/content/touring.vue */ 198));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   data: function data() {

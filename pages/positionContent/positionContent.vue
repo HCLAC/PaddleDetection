@@ -19,7 +19,7 @@
 					<view class="page-section-spacing">
 						<swiper @change="change" :autoplay="true" class="swiper" :indicator-dots="false">
 							<swiper-item v-for="item in attDetail.data.images" class="swiper-item">
-								<image :src="item" mode="aspectFit" ></image>
+								<image :src="item" mode="scaleToFill" ></image>
 							</swiper-item>
 						</swiper>
 						<view class="imageCount">{{ current + 1 }}/{{ attDetail.data.images.length }}</view>
@@ -313,6 +313,7 @@ export default {
 }
 .swiper{
 	// min-height: 580rpx;
+	height: 400rpx;
 	width: 100%;
 }
 .uni-bg-red {

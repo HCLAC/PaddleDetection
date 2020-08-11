@@ -368,6 +368,12 @@
   margin-right: 8rpx;
 }
 /* 内容详情 */
+.detailContent.data-v-32e87e5c {
+  margin-bottom: 200rpx;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+  box-sizing: content-box;
+}
 .userMse.data-v-32e87e5c {
   display: -webkit-box;
   display: -webkit-flex;
@@ -430,7 +436,7 @@
   font-weight: 400;
   color: #606266;
   line-height: 56rpx;
-  margin: 28rpx;
+  margin: 20rpx;
 }
 .copy.data-v-32e87e5c {
   font-family: PingFangSC-Medium, PingFang SC;
@@ -449,6 +455,8 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
 }
 .tips view.data-v-32e87e5c {
   font-size: 26rpx;
@@ -456,6 +464,7 @@
   font-weight: 500;
   color: #0091ff;
   margin-right: 38rpx;
+  margin-top: 10rpx;
 }
 .tip text.data-v-32e87e5c {
   margin-left: 6rpx;
@@ -468,7 +477,6 @@
   line-height: 22rpx;
   margin-top: 40rpx;
   margin-left: 28rpx;
-  margin-bottom: 200rpx;
 }
 /* 底部 */
 .bottom.data-v-32e87e5c {
@@ -485,7 +493,7 @@
   box-sizing: content-box;
 }
 .line.data-v-32e87e5c {
-  height: 1px;
+  height: 0.5rpx;
   background: #dddddd;
 }
 .contentBottom.data-v-32e87e5c {

@@ -46,7 +46,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="noContent" v-show="tipList != null">~我也是有底线~</view>
+			<view class="noContent" v-show="tipList != null">~我也是有底线的~</view>
 		
 			<view class="noContentItem" v-show="tipList == null">
 				<image src="../../static/images/wenjianjia.png" mode=""></image>
@@ -62,7 +62,6 @@ import { mapState, mapMutations } from 'vuex';
 import httpType from '../../httpType.js';
 
 export default {
-	
 	data() {
 		return {
 			nickName:"",
@@ -108,14 +107,14 @@ export default {
 			    uni.getUserInfo({
 			      provider: 'baidu',
 			      success:  (infoRes) => {
-			        // console.log('用户昵称为：' + infoRes.userInfo.nickName);
+			        console.log('用户昵称为：' + infoRes.userInfo.nickName);
 					var infoRes = infoRes.userInfo
 					console.log(infoRes.nickName)
 					this.nickName = infoRes.nickName
 					this.avatarUrl = infoRes.avatarUrl
 					uni.setStorageSync('nickName',infoRes.nickName)
 			      }
-			    });
+			    })
 				
 			  }
 			});
