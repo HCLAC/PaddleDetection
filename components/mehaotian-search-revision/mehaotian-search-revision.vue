@@ -3,7 +3,7 @@
 		<view class="content" :style="{ 'border-radius': radius + 'px' }">
 			<!-- HM修改 增加进入输入状态的点击范围 -->
 			<view class="content-box" :class="{ center: mode === 2 }">
-				<text class="icon icon-serach"></text>
+				<image class="icon icon-serach" src="../../static/images/icon-search.svg"></image>
 				<!-- HM修改 增加placeholder input confirm-type confirm-->
 				<input
 					:placeholder="placeholder"
@@ -20,13 +20,13 @@
 				/>
 				<!-- <view v-if="!active && mode === 2" class="input sub" @click="getFocus">请输入搜索内容</view> -->
 				<!-- HM修改 @click换成@click.stop阻止冒泡 -->
-				<image @click.stop="clear" class="iconImg" src="../../static/images/deleteIcon.png"></image>
+				<image @click.stop="clear" class="iconImg" src="../../static/images/ic_search_sel.svg"></image>
 			</view>
 			<!-- <view v-show="(active&&show&&button === 'inside')||(isDelShow && button === 'inside')" class="serachBtn" @click="search">
 				搜索
 			</view> -->
 		</view>
-		<text class="iconTitle " @click.stop="clear">取消</text>
+		<view class="iconTitle " @click.stop="clear">取消</view>
 		<!-- <view  v-if="button === 'outside'" class="button" :class="{'active':show||active}" @click="search">
 			<view class="button-item">{{!show?searchName:'搜索'}}</view>
 		</view> -->
@@ -148,6 +148,7 @@ export default {
 <style lang="scss">
 .serach {
 	display: flex;
+	height: 72rpx;
 	width: 100%;
 	//border-bottom: 1px #f5f5f5 solid; //HM修改 去掉边框
 	box-sizing: border-box;
@@ -156,7 +157,7 @@ export default {
 		display: flex;
 		align-items: center;
 		width: 100%;
-		height: 62rpx;
+		height: 72rpx;
 		//border: 1px #ccc solid; //HM修改 去掉边框
 		background: #fff;
 		overflow: hidden;
@@ -171,14 +172,15 @@ export default {
 			display: flex;
 			background-color: #f8f8f8;
 			align-items: center;
+			line-height: 72rpx;
 			&.center {
 				justify-content: center;
 			}
 			.input {
 				width: 380rpx;
 				// max-width: 100%;
-				line-height: 72rpx;
 				height: 72rpx;
+				line-height: 72rpx;
 				transition: all 0.2s linear;
 				&.center {
 					width: 200rpx;
@@ -205,6 +207,8 @@ export default {
 	}
 	.icon {
 		padding: 0 30rpx;
+		width: 28rpx;
+		height: 28rpx;
 		display: flex;
 		// text-align: center;
 		align-items: center;
@@ -213,9 +217,9 @@ export default {
 		// 	font-size: 38upx;
 		// 	&:before {content:"\e644";}
 		// }
-		&.icon-serach:before {
-			content: '\e61c';
-		}
+		// &.icon-serach:before {
+		// 	content: '\e61c';
+		// }
 	}
 	.iconImg {
 		width: 36rpx;
@@ -226,7 +230,7 @@ export default {
 		margin-left: 30rpx;
 		color: #303133;
 		font-size: 32rpx;
-		width: 120rpx;
+		width: 100rpx;
 		display: flex;
 		align-items: center;
 	}

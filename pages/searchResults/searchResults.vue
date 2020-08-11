@@ -297,7 +297,7 @@
 </script>
 
 <style lang="scss">
-	.search-box {width:95%;padding:15upx 2.5%;display:flex;justify-content:space-between;position:sticky;top: 0;}
+	.search-box {width:100%;padding:15upx 2.5%;display:flex;justify-content:space-between;position:sticky;top: 0;}
 	.search-box .mSearch-input-box{width: 100%;}
 	// 自定义导航栏样式
 	.example-body {
@@ -347,9 +347,9 @@
 		margin: 0 8px;
 	}
 	// 瀑布流
+	/* 正在旅行 */
 	.touring{
-		padding-top: 24rpx;
-		background-color: #F8F8F8;
+		margin-top: 24rpx;
 	}
 	.touring .tourtext{
 		width: 160rpx;
@@ -368,32 +368,37 @@
 	.demo-warter {
 		margin-top: 0;
 		margin-right: 10rpx;
-		margin-bottom: 48rpx;
-		position: relative;
+		margin-bottom: 16rpx;
+		padding-bottom: 16rpx;
+		/* position: relative; */
 		background-color: #FFFFFF;
 	}
 	
-	
+	.demo-top{
+		position: relative;
+	}
 	
 	.demo-image {
 		width: 100%;
 		border-radius: 8rpx 8rpx 0 0 ;
+		position: relative;
 	}
 	.adress{
 		position: absolute;
-		left: 4rpx;
-		bottom: 174rpx;
+		left: 0;
+		bottom: 8rpx;
 		display: flex;
 		align-items: center;
 		width:144rpx;
 		height:40rpx;
+		line-height: 40rpx;
 		background:rgba(0,0,0,0.6);
 		border-radius:0px 14rpx 0px 0px;
 	}
 	.adreessIcon{
 		width: 24rpx;
 		height: 24rpx;
-		margin-right: 4rpx;
+		margin:0 4rpx;
 		display: flex;
 		align-items: center;
 	}
@@ -418,13 +423,13 @@
 	}
 	.demo-title {
 		width: 278rpx;
-		height: 70rpx;
+		/* height: 70rpx; */
 		font-size: 28rpx;
 		font-family:PingFangSC-Medium,PingFang SC;
 		font-weight:500;
 		color:rgba(48,49,51,1);
 		margin-left: 8rpx;
-		// line-height:28rpx;
+		line-height: 28rpx;
 	}
 	
 	.demo-tag {
@@ -443,19 +448,13 @@
 		font-family:PingFangSC-Regular,PingFang SC;
 		font-weight:400;
 		color:rgba(0,145,255,1);
-		margin-top: 6rpx;
-	}
-	
-	.demo-price {
-		font-size: 30rpx;
-		color: $u-type-error;
-		margin-top: 5px;
+		/* margin-top: 6rpx; */
 	}
 	
 	.demo-user {
 		font-size: 10rpx;
 		margin-top: 24rpx;
-		margin-bottom: 16rpx;
+		/* margin-bottom: 16rpx; */
 		display: flex;
 		justify-content: space-between;
 	}

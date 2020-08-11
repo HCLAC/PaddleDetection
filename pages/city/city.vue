@@ -252,7 +252,7 @@
 	}
 
 	.line {
-		height: 2rpx;
+		height: 0.5rpx;
 		background: rgba(221, 221, 221, 1);
 		margin-top: 34rpx;
 		margin-bottom: 26rpx;
@@ -285,6 +285,9 @@
 		border-radius: 8rpx;
 		line-height: 60rpx;
 		font-size: 26rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(48,49,51,1);
 	}
 
 	.city-button::after {

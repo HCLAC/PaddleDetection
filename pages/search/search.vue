@@ -42,7 +42,7 @@
 				<view class="keyword-block" v-if="oldKeywordList.length > 0">
 					<view class="keyword-list-header">
 						<view>历史记录</view>
-						<view><image @tap="oldDelete" src="/static/images/delete.png"></image></view>
+						<view><image @tap="oldDelete" src="/static/images/icon-shanchu.svg"></image></view>
 					</view>
 					<view class="keyword">
 						<view v-for="(keyword, index) in oldKeywordList" @tap="doSearch(keyword)" :key="index">{{ keyword }}</view>
@@ -56,7 +56,7 @@
 					<view class="hotList" v-if="forbid == ''">
 						<view class="hotItem" v-for="(keyword, index) in hotKeywordList" @tap="doSearch(keyword)" :key="index">
 							<!-- <image class="hotImg " :src="`../../static/images/icon-${index+1>=3?3:index+1}.png`" mode=""></image> -->
-							<image class="hotImg " :src="`../../static/images/icon-${index+1}.png`" mode=""></image>
+							<image class="hotImg " :src="`../../static/images/icon-${index+1}.svg`" mode=""></image>
 							<view class="hotContent">{{ keyword }}</view>
 						</view>
 					</view>
@@ -190,7 +190,7 @@ export default {
 		};
 	},
 	onLoad() {
-		this.init();
+		this.init(),
 		this.getResults()
 	},
 	components: {
@@ -206,7 +206,8 @@ export default {
 				key:'article_id',
 				success:function(res){
 					console.log('取数据',res.data.data)
-					that.list = res.data.data
+					that.list = res.data.data.list
+					console.log('list----',that.list)
 				}
 			})
 		},
@@ -523,7 +524,7 @@ export default {
 	}
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 view {
 	display: block;
 }
@@ -538,6 +539,7 @@ view {
 }
 .search-box .mSearch-input-box {
 	width: 100%;
+	height: 72rpx;
 }
 .search-box .input-box {
 	width: 606rpx;
@@ -587,7 +589,7 @@ view {
 }
 .keyword-entry {
 	width: 94%;
-	height: 80upx;
+	height: 96rpx;
 	margin: 0 3%;
 	font-size: 32rpx;
 	color: #606266;
@@ -599,17 +601,18 @@ view {
 	margin-left: 40rpx;
 	width: 16rpx;
 	height: 16rpx;
-	border: 4rpx solid #ffb64d;
+	background:rgba(255,255,255,1);
+	border:4rpx solid rgba(255,182,77,1);
 	border-radius: 50%;
 }
 .keyword-entry .keyword-text {
-	height: 80rpx;
+	height: 96rpx;
 	display: flex;
 	align-items: center;
 }
 .keyword-entry .keyword-text {
 	width: 90%;
-	border-bottom: solid 1rpx #e7e7e7;
+	border-bottom: solid 0.5rpx #EDEFF2;
 }
 
 .search-bottom {
@@ -754,9 +757,9 @@ view {
 		margin: 0 8px;
 	}
 	// 瀑布流
+	/* 正在旅行 */
 	.touring{
-		padding-top: 24rpx;
-		background-color: #F8F8F8;
+		margin-top: 24rpx;
 	}
 	.touring .tourtext{
 		width: 160rpx;
@@ -775,32 +778,37 @@ view {
 	.demo-warter {
 		margin-top: 0;
 		margin-right: 10rpx;
-		margin-bottom: 48rpx;
-		position: relative;
+		margin-bottom: 16rpx;
+		padding-bottom: 16rpx;
+		/* position: relative; */
 		background-color: #FFFFFF;
 	}
 	
-	
+	.demo-top{
+		position: relative;
+	}
 	
 	.demo-image {
 		width: 100%;
 		border-radius: 8rpx 8rpx 0 0 ;
+		position: relative;
 	}
 	.adress{
 		position: absolute;
-		left: 4rpx;
-		bottom: 174rpx;
+		left: 0;
+		bottom: 8rpx;
 		display: flex;
 		align-items: center;
 		width:144rpx;
 		height:40rpx;
+		line-height: 40rpx;
 		background:rgba(0,0,0,0.6);
 		border-radius:0px 14rpx 0px 0px;
 	}
 	.adreessIcon{
 		width: 24rpx;
 		height: 24rpx;
-		margin-right: 4rpx;
+		margin:0 4rpx;
 		display: flex;
 		align-items: center;
 	}
@@ -825,13 +833,13 @@ view {
 	}
 	.demo-title {
 		width: 278rpx;
-		height: 70rpx;
+		/* height: 70rpx; */
 		font-size: 28rpx;
 		font-family:PingFangSC-Medium,PingFang SC;
 		font-weight:500;
 		color:rgba(48,49,51,1);
 		margin-left: 8rpx;
-		// line-height:28rpx;
+		line-height: 28rpx;
 	}
 	
 	.demo-tag {
@@ -850,19 +858,13 @@ view {
 		font-family:PingFangSC-Regular,PingFang SC;
 		font-weight:400;
 		color:rgba(0,145,255,1);
-		margin-top: 6rpx;
-	}
-	
-	.demo-price {
-		font-size: 30rpx;
-		color: $u-type-error;
-		margin-top: 5px;
+		/* margin-top: 6rpx; */
 	}
 	
 	.demo-user {
 		font-size: 10rpx;
 		margin-top: 24rpx;
-		margin-bottom: 16rpx;
+		/* margin-bottom: 16rpx; */
 		display: flex;
 		justify-content: space-between;
 	}

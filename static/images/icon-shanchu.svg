@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="17px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>icon-shanchu</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon-shanchu" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="编组" transform="translate(1.000000, 1.000000)" stroke="#909399">
+            <path d="M5.00394643,3.03166071 C5.00394643,1.57880357 6.18091071,0.401839286 7.63376786,0.401839286 C9.08716071,0.401839286 10.2635893,1.57880357 10.2635893,3.03166071" id="Stroke-1"></path>
+            <line x1="0.401732143" y1="3.03166071" x2="14.8660179" y2="3.03166071" id="Stroke-3"></line>
+            <path d="M11.3423036,14.8660179 L3.925875,14.8660179 C2.887125,14.8660179 2.04551786,14.0244107 2.04551786,12.9856607 L2.04551786,3.03155357 L13.2226607,3.03155357 L13.2226607,12.9856607 C13.2226607,14.0244107 12.3805179,14.8660179 11.3423036,14.8660179 Z" id="Stroke-5"></path>
+            <line x1="5.16846429" y1="6.64773214" x2="5.16846429" y2="11.2500536" id="Stroke-7"></line>
+            <line x1="7.633875" y1="6.64773214" x2="7.633875" y2="11.2500536" id="Stroke-9"></line>
+            <line x1="10.0995" y1="6.64773214" x2="10.0995" y2="11.2500536" id="Stroke-11"></line>
+        </g>
+    </g>
+</svg>
