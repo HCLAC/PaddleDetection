@@ -11,79 +11,82 @@
 			</uni-nav-bar>
 		</view>
 
-		<!-- 内容详情轮播图 -->
-		<view class="uni-padding-wrap" v-show="articleList != null">
-			<view class="page-section swiper">
-				<view class="page-section-spacing">
-					<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
-						<swiper-item v-for="(item,index) in articleList.data.images">
-							<image class="itemImg" mode="aspectFit" :src="item"></image>
-						</swiper-item>
-					</swiper>
-					<view class="imageCount">{{current+1}}/{{articleList.data.images.length}}</view>
-					<view class="dots">
-						<block v-for="(item, index) in articleList.data.images">
-							<view :class="[index == current ? 'activieDot' : 'dot']"></view>
-						</block>
-					</view>
-				</view>
-			</view>
-		</view>
-		<!-- 内容详情 -->
-		<view class="detailContent">
-			<view class="userMse">
-				<image class="userHeard" :src="articleList.data.avatar"></image>
-				<view class="userMse-r">
-					<view class="userNikename"> {{articleList.data.author_name}} </view>
-					<view class="adress">
-						<image src="../../static/images/Icon／Map.svg" mode="" class="adreessIcon"></image>
-						<view class="adressText">
-							{{articleList.data.city}}
+		<view class="" v-show="articleList != null">
+			
+			<!-- 内容详情轮播图 -->
+			<view class="uni-padding-wrap">
+				<view class="page-section swiper">
+					<view class="page-section-spacing">
+						<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
+							<swiper-item v-for="(item,index) in articleList.data.images">
+								<image class="itemImg" mode="aspectFit" :src="item"></image>
+							</swiper-item>
+						</swiper>
+						<view class="imageCount">{{current+1}}/{{articleList.data.images.length}}</view>
+						<view class="dots">
+							<block v-for="(item, index) in articleList.data.images">
+								<view :class="[index == current ? 'activieDot' : 'dot']"></view>
+							</block>
 						</view>
 					</view>
 				</view>
 			</view>
-			<!-- 标题 -->
-			<view class="contentTitle">
-				{{articleList.data.title}}
-			</view>
-			<!-- 内容文章 -->
-			<view class="contentText">
-				<rich-text :nodes="articleList.data.content | formatRichText"></rich-text> 
-				<view class="copy">详情请+VX: {{VX}}<text class="clcopy" @click="copy">点击复制</text></view>
-			</view>
-			<view class="tips">
-				<view v-for="item in  articleList.data.tags">#<text>{{item}}</text></view>
-				<view v-for="item in articleList.data.topics">#<text>{{item}}</text></view>
-				<!-- <view>#<text></text></view> -->
-			</view>
-			<view class="releaseTime">发布于{{articleList.data.update_at}}</view>
-		</view>
-		<view class="bottom">
-			
-			<!-- 分割线 -->
-			<view class="line"></view>
-			<!-- 登录 -->
-			<view class="contentBottom">
-				<view class="like" @click="clickLike">
-					<image class="likeBtn" src="../../static/images/attheart.svg" v-if="articleList.data.liked==0"></image>
-					<image class="likeBtn" src="../../static/images/heart-actived.svg" v-if="articleList.data.liked==1"></image>
-					<view class="likeNum" v-model="likemessage">
-						{{articleList.data.like_count}}
+			<!-- 内容详情 -->
+			<view class="detailContent">
+				<view class="userMse">
+					<image class="userHeard" :src="articleList.data.avatar"></image>
+					<view class="userMse-r">
+						<view class="userNikename"> {{articleList.data.author_name}} </view>
+						<view class="adress">
+							<image src="../../static/images/Icon／Map.svg" mode="" class="adreessIcon"></image>
+							<view class="adressText">
+								{{articleList.data.city}}
+							</view>
+						</view>
 					</view>
 				</view>
-				<view class="fav" @click="clickFav">
-					<image class="favBtn" src="../../static/images/shouchang.svg" v-if="articleList.data.fav==0"></image>
-					<image class="favBtn" src="../../static/images/fav-actived.svg" v-if="articleList.data.fav==1"></image>
-					<view class="favNum">
-						{{articleList.data.fav_count}}
+				<!-- 标题 -->
+				<view class="contentTitle">
+					{{articleList.data.title}}
+				</view>
+				<!-- 内容文章 -->
+				<view class="contentText">
+					<rich-text :nodes="articleList.data.content | formatRichText"></rich-text> 
+					<view class="copy">详情请+VX: {{VX}}<text class="clcopy" @click="copy">点击复制</text></view>
+				</view>
+				<view class="tips">
+					<view v-for="item in  articleList.data.tags">#<text>{{item}}</text></view>
+					<view v-for="item in articleList.data.topics">#<text>{{item}}</text></view>
+					<!-- <view>#<text></text></view> -->
+				</view>
+				<view class="releaseTime">发布于{{articleList.data.update_at}}</view>
+			</view>
+			<view class="bottom">
+				
+				<!-- 分割线 -->
+				<view class="line"></view>
+				<!-- 登录 -->
+				<view class="contentBottom">
+					<view class="like" @click="clickLike">
+						<image class="likeBtn" src="../../static/images/attheart.svg" v-if="articleList.data.liked==0"></image>
+						<image class="likeBtn" src="../../static/images/heart-actived.svg" v-if="articleList.data.liked==1"></image>
+						<view class="likeNum" v-model="likemessage">
+							{{articleList.data.like_count}}
+						</view>
 					</view>
-				</view>
-				<view class="share" @click="share">
-					<image src="../../static/images/fenxiang.svg"></image>
-				</view>
-				<view class="" v-if="token == null">
-					<view class="loginButton" @click="login" >登录</view>
+					<view class="fav" @click="clickFav">
+						<image class="favBtn" src="../../static/images/shouchang.svg" v-if="articleList.data.fav==0"></image>
+						<image class="favBtn" src="../../static/images/fav-actived.svg" v-if="articleList.data.fav==1"></image>
+						<view class="favNum">
+							{{articleList.data.fav_count}}
+						</view>
+					</view>
+					<view class="share" @click="share">
+						<image src="../../static/images/fenxiang.svg"></image>
+					</view>
+					<view class="" v-if="token == null">
+						<view class="loginButton" @click="login" >登录</view>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -111,14 +114,19 @@
 				current: 0,
 				list: [],
 				VX: 17827277778,
-				articleList: '',
+				articleList: null,
 				token: '',
 				article_id: ''
 			}
 		},
 		onLoad: function(e) {
 			console.log('文章id====', e)
+			uni.showLoading({
+				title:'加载中',
+				mask:true
+			})
 			this.getArticleDetail(e)
+			uni.hideLoading();
 		},
 		created() {
 			_this = this,
@@ -126,13 +134,11 @@
 		},
 
 		methods: {
+			
 			// 获取文章详情
 			getArticleDetail(e) {
 				var that = this
-				uni.showLoading({
-					title:'加载中',
-					mask:true
-				})
+				
 				
 				uni.getStorage({
 					key: 'Authorization',
@@ -165,7 +171,7 @@
 						console.log('articleList', that.articleList)
 					}
 				})
-				uni.hideLoading();
+				
 			},
 			// 点赞
 			clickLike() {

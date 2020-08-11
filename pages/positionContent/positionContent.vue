@@ -11,9 +11,9 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 用户信息 -->
-
+		
 		<!-- 内容详情轮播图 -->
-		<view class="" >
+		<view class="" v-show="attDetail != null">
 			<view class="uni-padding-wrap">
 				<view class="page-section swiper">
 					<view class="page-section-spacing">
@@ -81,9 +81,9 @@
 						</view>
 					</view>
 				</view>
-				<view class="phone" v-show="attDetail.data.butler_mobile != null">
+				<view class="phone"  @click="phoneCall">
 					<image src="../../static/images/dianhua.png"></image>
-					<text>旅行管家：{{attDetail.data.butler_mobile}}</text>
+					<text >旅行管家：{{attDetail.data.butler_mobile}}</text>
 				</view>
 			</view>
 			<view class="magrinBck"></view>
@@ -143,7 +143,7 @@ export default {
 			current: 0,
 			list: [],
 			isShow: true,
-			attDetail:''
+			attDetail:null
 		};
 	},
 	created() {
@@ -151,10 +151,16 @@ export default {
 	},
 	onLoad:function(e) {
 		console.log('详情id====',e)
+		uni.showLoading({
+			title:'加载中',
+			mask:true
+		})
 		this.getAttDetail(e)
+		uni.hideLoading();
 	},
 	methods: {
 		getAttDetail(e){
+			
 			var that = this
 			uni.request({
 				url:'http://121.40.30.19/site',
@@ -169,8 +175,13 @@ export default {
 					console.log('attDetail--',that.attDetail)
 				}
 			})
+			
 		},
-		
+		phoneCall(){
+			uni.makePhoneCall({
+				phoneNumber:this.attDetail.data.butler_mobile
+			})
+		},
 		share(){
 			uni.showShareMenu({
 				

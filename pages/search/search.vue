@@ -51,7 +51,7 @@
 				<view class="keyword-block">
 					<view class="keyword-list-header">
 						<view>热门搜索</view>
-						<view><image @tap="hotToggle" :src="'/static/images/attention' + forbid + '.png'"></image></view>
+						<!-- <view><image @tap="hotToggle" :src="'/static/images/attention' + forbid + '.png'"></image></view> -->
 					</view>
 					<view class="hotList" v-if="forbid == ''">
 						<view class="hotItem" v-for="(keyword, index) in hotKeywordList" @tap="doSearch(keyword)" :key="index">
