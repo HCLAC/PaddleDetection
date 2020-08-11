@@ -12,7 +12,7 @@
 		</view>
 
 		<!-- 内容详情轮播图 -->
-		<view class="uni-padding-wrap">
+		<view class="uni-padding-wrap" v-show="articleList != null">
 			<view class="page-section swiper">
 				<view class="page-section-spacing">
 					<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
@@ -130,7 +130,7 @@
 			getArticleDetail(e) {
 				var that = this
 				uni.showLoading({
-					title:'请求中',
+					title:'加载中',
 					mask:true
 				})
 				

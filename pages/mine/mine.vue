@@ -226,9 +226,11 @@ export default {
 	height: 130rpx;
 	// border: 1px #333333 solid;
 	border-radius: 50%;
+	margin-top: 86rpx;
 }
 .userR {
 	margin-left: 32rpx;
+	margin-top: 104rpx;
 }
 .userName {
 	font-size: 36rpx;
@@ -258,7 +260,7 @@ export default {
 	padding-left: 32rpx;
 	padding-top: 52rpx;
 	position: relative;
-	top: 86rpx;
+	top: 190rpx;
 	position: relative;
 	.phone {
 		height: 120rpx;
@@ -285,9 +287,12 @@ export default {
 		position: fi;
 	}
 	.tipText{
-		color: #909399;
-		font-size: 28rpx;
-		line-height: 80rpx;
+		font-size:28rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(144,147,153,1);
+		line-height:30rpx;
+		margin-top: 40rpx;
 	}
 }
 .noContent {
@@ -295,7 +300,7 @@ export default {
 	color: rgba(201, 202, 209, 1);
 	// color: red;
 	text-align: center;
-	
+	margin-top: 80rpx;
 }
 
 .contentItem {
@@ -322,8 +327,8 @@ export default {
 			width: 96rpx;
 			height: 44rpx;
 			text-align: center;
-			background-color: #000000;
-			border-radius: 8px 0px 8px 0px;
+			background-color: rgba(0,0,0,0.6);
+			border-radius: 16rpx 0 16rpx 0;
 		}
 		image {
 			// margin: 8rpx;
@@ -331,7 +336,7 @@ export default {
 			height: 230rpx;
 			margin-right: 20rpx;
 			box-shadow:2px 2px 10px 0px rgba(0,0,0,0.08);
-			border-radius:8px;
+			border-radius:16rpx 0 0 16rpx;
 		}
 	}
 
@@ -367,7 +372,7 @@ export default {
 		image {
 			height: 20rpx;
 			width: 20rpx;
-			margin-right: 10rpx;
+			margin-right: 4rpx;
 		}
 		view {
 			font-size: 22rpx;

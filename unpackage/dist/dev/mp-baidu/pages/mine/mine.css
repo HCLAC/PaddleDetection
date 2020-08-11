@@ -46,9 +46,11 @@
   width: 130rpx;
   height: 130rpx;
   border-radius: 50%;
+  margin-top: 86rpx;
 }
 .userR {
   margin-left: 32rpx;
+  margin-top: 104rpx;
 }
 .userName {
   font-size: 36rpx;
@@ -77,7 +79,7 @@
   padding-left: 32rpx;
   padding-top: 52rpx;
   position: relative;
-  top: 86rpx;
+  top: 190rpx;
   position: relative;
 }
 .myCollection .phone {
@@ -114,14 +116,18 @@
   position: fi;
 }
 .noContentItem .tipText {
-  color: #909399;
   font-size: 28rpx;
-  line-height: 80rpx;
+  font-family: PingFangSC-Regular,PingFang SC;
+  font-weight: 400;
+  color: #909399;
+  line-height: 30rpx;
+  margin-top: 40rpx;
 }
 .noContent {
   font-size: 22rpx;
   color: #c9cad1;
   text-align: center;
+  margin-top: 80rpx;
 }
 .contentItem {
   width: 694rpx;
@@ -151,15 +157,15 @@
   width: 96rpx;
   height: 44rpx;
   text-align: center;
-  background-color: #000000;
-  border-radius: 8px 0px 8px 0px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 16rpx 0 16rpx 0;
 }
 .contentItem .left image {
   width: 192rpx;
   height: 230rpx;
   margin-right: 20rpx;
   box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.08);
-  border-radius: 8px;
+  border-radius: 16rpx 0 0 16rpx;
 }
 .contentItem .right {
   margin-top: 40rpx;
@@ -198,7 +204,7 @@
 .contentItem .right .position image {
   height: 20rpx;
   width: 20rpx;
-  margin-right: 10rpx;
+  margin-right: 4rpx;
 }
 .contentItem .right .position view {
   font-size: 22rpx;
