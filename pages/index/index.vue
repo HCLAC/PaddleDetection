@@ -55,7 +55,7 @@
 			        <text class="tourtext">正在旅行</text>
 					<!-- <touring class="touringList" ></touring> -->
 					<view class="wrap">
-						<u-waterfall v-model="list.list" ref="uWaterfall" >
+						<u-waterfall v-model="list" ref="uWaterfall" >
 							<template v-slot:left="{leftList}">
 								<view class="demo-warter demo-warter-l" v-for="(item,index) in leftList" :key="index" >
 									<view class="" @click="onPageJump" :id ="item.article_id">
@@ -143,7 +143,9 @@
 								</view>
 							</template>
 						</u-waterfall>
-						
+						<!-- <view v-show="isLoadMore">  //loading加载提示处
+							<uni-load-more :status="loadStatus" ></uni-load-more>
+						</view> -->
 					</view>
 			    </view>
 			</view>
@@ -176,11 +178,15 @@
 				state_id:'',
 				city_id:'',
 				hotAtt:[],
-				list: [],
+				list:[],
 				leftList:[],
 				rightList:[],
 				token:'',
-				liked:''
+				liked:'',
+				page:1,
+				pagesize:6,
+				loadStatus:'loading',
+				isLoadMore:false
 			}
 		},
 		onLoad() {
@@ -192,6 +198,15 @@
 		onShow() {
 			this.getArticleList()
 		},
+		
+		// onReachBottom(){  //上拉触底函数
+		//           if(!this.isLoadMore){  //此处判断，上锁，防止重复请求
+		//                 this.isLoadMore=true
+		//                 this.page+=1
+		//                 this.getArticleList()
+		//           }
+		//     },
+
 		methods: {
 			// 获取当前地理位置
 			getAdress(){
@@ -241,7 +256,7 @@
 										uni.request({
 											url:'http://121.40.30.19/article/list',
 											data:{
-												count:20,
+												count:6,
 												page:1,
 												sort_by:1
 											},
@@ -249,8 +264,8 @@
 												console.log('文章列表',res)
 												// uni.setStorageSync('article_id',res.data)
 												// console.log('存储文章列表==',res.data)
-												this.list = res.data.data
-												console.log('list=====',this.list.list)
+												this.list = res.data.data.list
+												console.log('list=====',this.list)
 											}
 										})
 									}
@@ -310,7 +325,7 @@
 					data:{
 						state_id:city.data.state_id,
 						city_id:city.data.city_id,
-						count:20,
+						count:6,
 						page:1,
 						sort_by:1
 					},
@@ -321,8 +336,8 @@
 						console.log('文章列表',res)
 						uni.setStorageSync('article_id',res.data)
 						console.log('存储文章列表==',res.data)
-						that.list = res.data.data
-						console.log('list=====',that.list.list)
+						that.list = res.data.data.list
+						console.log('list=====',that.list)
 					}
 				})
 			},
@@ -482,91 +497,96 @@
 				uni.navigateTo({
 					url:'../search/search'
 				})
+			},
+			/*下拉刷新的回调, 有三种处理方式:*/
+			downCallback(){
+				// 第1种: 请求具体接口
+				uni.request({
+					url: 'http://121.40.30.19/article/list',
+					data:{
+						count:6,
+						page:1,
+						sort_by:1
+					},
+					success: (res) => {
+						// console.log('下拉刷新',res)
+						// 请求成功,隐藏加载状态
+						this.mescroll.endSuccess()
+					},
+					fail: () => {
+						// 请求失败,隐藏加载状态
+						this.mescroll.endErr()
+					}
+				})
+				// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
+				// this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+				// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
+				// this.mescroll.endSuccess()
+				
+				// 此处仍可以继续写其他接口请求...
+				// 调用其他方法...
+			},
+			/*上拉加载的回调*/
+			upCallback(page) {
+				// mescroll.setPageSize(6)
+				let pageNum = page.num; // 页码, 默认从1开始
+				let pageSize = page.size; // 页长, 默认每页10条
+				uni.request({
+					url: 'http://121.40.30.19/article/list?page='+pageNum+'&count='+pageSize,
+					success: (data) => {
+						console.log('data',data)
+						// 接口返回的当前页数据列表 (数组)
+						let curPageData = data.data.data.list; 
+						console.log('curPageData',curPageData)
+						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+						let curPageLen = curPageData.length; 
+						console.log('curPageLen',curPageLen)
+						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+						// let totalPage = data.data.data.list; 
+						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+						let totalSize = data.data.data.total; 
+						console.log('totalSize',totalSize)
+						// 接口返回的是否有下一页 (true/false)
+						// let hasNext = data.data.data.list; 
+						
+						//设置列表数据
+						if(page.num == 1) this.list = []; //如果是第一页需手动置空列表
+						this.list = this.list.concat(curPageData); //追加新数据
+						console.log('list-',this.list)
+						// 请求成功,隐藏加载状态
+						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+						// this.mescroll.endByPage(curPageLen, totalPage); 
+						
+						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+						this.mescroll.endBySize(curPageLen, totalSize); 
+						
+						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+						//this.mescroll.endSuccess(curPageLen, hasNext); 
+						
+						//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+						//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+						//如果传了hasNext,则翻到第二页即可显示无更多数据.
+						//this.mescroll.endSuccess(curPageLen);
+						
+						// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+						// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+						setTimeout(()=>{
+							this.mescroll.endSuccess(curPageLen)
+						},20)
+						
+						
+					},
+					fail: () => {
+						//  请求失败,隐藏加载状态
+						this.mescroll.endErr()
+					}
+				})
+				
+				// 此处仍可以继续写其他接口请求...
+				// 调用其他方法...
 			}
-		},
-		onPullDownRefresh() {
-			console.log('onPullDownRefresh')
-			setTimeout(function() {
-				uni.stopPullDownRefresh()
-				console.log('stopPullDownRefresh')
-			}, 1000)
-		},
-		/*下拉刷新的回调, 有三种处理方式:*/
-						downCallback(){
-							// 第1种: 请求具体接口
-							uni.request({
-								url: 'http://121.40.30.19/site/hot',
-								success: () => {
-									// 请求成功,隐藏加载状态
-									this.mescroll.endSuccess()
-								},
-								fail: () => {
-									// 请求失败,隐藏加载状态
-									this.mescroll.endErr()
-								}
-							})
-							// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
-							this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
-							// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
-							this.mescroll.endSuccess()
-							
-							// 此处仍可以继续写其他接口请求...
-							// 调用其他方法...
-						},
-						/*上拉加载的回调*/
-						upCallback(page) {
-							let pageNum = page.num; // 页码, 默认从1开始
-							let pageSize = page.size; // 页长, 默认每页10条
-							uni.request({
-								url: 'xxxx?pageNum='+pageNum+'&pageSize='+pageSize,
-								success: (data) => {
-									// 接口返回的当前页数据列表 (数组)
-									let curPageData = data.xxx; 
-									// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-									let curPageLen = curPageData.length; 
-									// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-									let totalPage = data.xxx; 
-									// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-									let totalSize = data.xxx; 
-									// 接口返回的是否有下一页 (true/false)
-									let hasNext = data.xxx; 
-									
-									//设置列表数据
-									if(page.num == 1) this.dataList = []; //如果是第一页需手动置空列表
-									this.dataList = this.dataList.concat(curPageData); //追加新数据
-									
-									// 请求成功,隐藏加载状态
-									//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-									this.mescroll.endByPage(curPageLen, totalPage); 
-									
-									//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-									//this.mescroll.endBySize(curPageLen, totalSize); 
-									
-									//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-									//this.mescroll.endSuccess(curPageLen, hasNext); 
-									
-									//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-									//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-									//如果传了hasNext,则翻到第二页即可显示无更多数据.
-									//this.mescroll.endSuccess(curPageLen);
-									
-									// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-									// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-									setTimeout(()=>{
-										this.mescroll.endSuccess(curPageLen)
-									},20)
-									
-									
-								},
-								fail: () => {
-									//  请求失败,隐藏加载状态
-									this.mescroll.endErr()
-								}
-							})
-							
-							// 此处仍可以继续写其他接口请求...
-							// 调用其他方法...
-						}
+		}
+		
 	}
 </script>
 
@@ -698,6 +718,7 @@
 		/* #endif */
 		flex-direction: row;
 		max-width: 396rpx;
+		min-width: 340rpx;
 		height: 72rpx;
 		align-items: center;
 		flex: 1;

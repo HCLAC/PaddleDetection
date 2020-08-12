@@ -41,7 +41,78 @@
 					<view class="tip">{{attDetail.data.city}}</view>
 				</view>
 				<view class="rateBox" >
-					<uni-rate  :readonly="true" allow-half :value="attDetail.data.rate" />
+					<!-- <uni-rate  :readonly="true" allow-half :value="attDetail.data.rate" /> -->
+					<!-- 评分图标 -->
+					<view class="rateStart" v-if="attDetail.data.rate == 5">
+						<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 4">
+						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 3">
+						<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 2">
+						<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 1">
+						<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 4.5">
+						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1备份(3).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 3.5">
+						<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1备份(2).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 2.5">
+						<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1备份(1).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 1.5">
+						<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 0.5">
+						<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+					</view>
 					<!-- <u-rate :disabled="true" current="4"></u-rate> -->
 					<view class="rate">{{attDetail.data.rate}} 星</view>
 					<view class="goTo">{{attDetail.data.visited}}人去过</view>
@@ -90,7 +161,7 @@
 			<view class="gonglueBox">
 				<view class="title">热门攻略</view>
 				<view class="contentBox">
-					<view class="contentItem">
+					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[0].article_id">
 						<image class="topHot" src="../../static/images/top.svg" mode=""></image>
 						<view class="top">{{attDetail.data.articles[0].title}}</view>
 						<view class="bottom">
@@ -98,21 +169,21 @@
 							<text>{{attDetail.data.articles[0].visit_count}}</text>
 						</view>
 					</view>
-					<view class="contentItem">
+					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[1].article_id">
 						<view class="top">{{attDetail.data.articles[1].title}}</view>
 						<view class="bottom">
 							<image src="../../static/images/liulan.svg" mode=""></image>
 							<text>{{attDetail.data.articles[1].visit_count}}</text>
 						</view>
 					</view>
-					<view class="contentItem">
+					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[2].article_id">
 						<view class="top">{{attDetail.data.articles[2].title}}</view>
 						<view class="bottom">
 							<image src="../../static/images/liulan.svg" mode=""></image>
 							<text>{{attDetail.data.articles[2].visit_count}}</text>
 						</view>
 					</view>
-					<view class="contentItem">
+					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[3].article_id">
 						<view class="top">{{attDetail.data.articles[3].title}}</view>
 						<view class="bottom">
 							<image src="../../static/images/liulan.svg" mode=""></image>
@@ -177,11 +248,23 @@ export default {
 			})
 			
 		},
+		// 跳转文章详情
+		onPageJump(e) {
+			console.log(e)
+			let id = e.currentTarget.id
+			// debugger
+			// return
+			uni.navigateTo({
+				url: "/pages/contentdetail/contentdetail?article_id="+id
+			})
+		},
+		// 调用拨打手机
 		phoneCall(){
 			uni.makePhoneCall({
 				phoneNumber:this.attDetail.data.butler_mobile
 			})
 		},
+		// 分享
 		share(){
 			uni.showShareMenu({
 				
@@ -404,6 +487,8 @@ export default {
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			color: #fff;
+			height: 36rpx;
+			line-height: 36rpx;
 		}
 	}
 	.rateBox {
@@ -411,12 +496,15 @@ export default {
 		display: flex;
 		align-items: center;
 		.rateStart{
-			width: 300rpx;
-			height: 40rpx;
-			// background-color: #007AFF;
+			display: flex;
+		}
+		.rateStart image{
+			width: 36rpx;
+			height: 36rpx;
+			margin-right: 16rpx;
 		}
 		.rate {
-			margin-left: 20rpx;
+			margin-left: 16rpx;
 			font-size: 28rpx;
 			font-family: HelveticaNeue;
 			color: rgba(96, 98, 102, 1);

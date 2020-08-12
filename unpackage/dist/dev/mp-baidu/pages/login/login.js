@@ -298,7 +298,7 @@ var _default = { data: function data() {return { phone: "", code: '', key: '', g
       // 	uni.showToast({title: '请填写正确手机号码',icon:"none"});
       // 	return false; 
       // } 
-
+      // var nick_name = uni.getStorageSync('nickName')
       uni.request({
         // url: 'user/login',
         url: 'http://121.40.30.19:8199/user/login',

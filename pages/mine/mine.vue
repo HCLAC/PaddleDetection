@@ -6,48 +6,49 @@
 			<image class="userAva" :src="avatarUrl"></image>
 			<view class="userR">
 				<view class="userName">{{ nickName }}</view>
-<!-- 				<view class="logout">退出登录</view>
- -->			</view>
+				<!-- <view class="logout">退出登录</view> -->
+ 			</view>
 		</view>
 		<!-- 我的收藏 -->
 		<view class="myCollection">
 			<view class="phone"><image class="phoneImg" src="../../static/images/phone.png" mode=""></image></view>
 			
 			<view>我的收藏</view>
-			
-			<view class="contentItem" v-for="(item, index) in tipList" :key="index">
-				<view class="left">
-					<image :src="item.main_image" mode="">
-						<view class="imgTip">
+			<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+				<view class="contentItem" v-for="(item, index) in tipList" :key="index">
+					<view class="left">
+						<image :src="item.main_image" mode="">
+							<view class="imgTip">
+								<view  v-if="item.type==0">
+									游记
+								</view>
+								<view  v-if="item.type==1">
+									攻略
+								</view>
+							</view>
+						</image>
+					</view>
+					<view class="right" @click="onPageJump" :id= "item.article_id">
+						<view class="title">
 							<view  v-if="item.type==0">
 								游记
 							</view>
 							<view  v-if="item.type==1">
 								攻略
 							</view>
+							| {{item.title}}</view>
+							<view class="content">
+								<rich-text class="" :nodes="item.content | formatRichText"></rich-text> 
+							</view>
+						<view class="position">
+							<image src="../../static/images/Icon／Map.svg" mode=""></image>
+							<view>{{item.location}}</view>
 						</view>
-					</image>
-				</view>
-				<view class="right" @click="onPageJump" :id= "item.article_id">
-					<view class="title">
-						<view  v-if="item.type==0">
-							游记
-						</view>
-						<view  v-if="item.type==1">
-							攻略
-						</view>
-						| {{item.title}}</view>
-						<view class="content">
-							<rich-text class="" :nodes="item.content"></rich-text> 
-						</view>
-					<view class="position">
-						<image src="../../static/images/Icon／Map.svg" mode=""></image>
-						<view>{{item.location}}</view>
 					</view>
 				</view>
-			</view>
+			</mescroll-body>
 			<view class="noContent" v-show="tipList != null">~我也是有底线的~</view>
-		
+						
 			<view class="noContentItem" v-show="tipList == null">
 				<image src="../../static/images/wenjianjia.png" mode=""></image>
 				<view class="tipText">您的收藏夹空空如也~</view>
@@ -60,7 +61,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import httpType from '../../httpType.js';
-
+import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 export default {
 	data() {
 		return {
@@ -69,50 +70,33 @@ export default {
 			tipList:[]
 		};
 	},
+	mixins: [MescrollMixin],
 	computed: mapState(['forcedLogin', 'hasLogin', 'phone']),
 	
 	
-	onShow() {
+	onLoad() {
 		this.getUserMsg()
-		
 	},
+	
 	methods: {
 		getUserMsg(){
 			var that = this
-			uni.getProvider({
-			    service: 'oauth',
-			    success: function (res) {
-			        console.log(res.provider)
-			        if (~res.provider.indexOf('baidu')) {
-			            uni.login({
-			                provider: 'baidu',
-			                success: function (loginRes) {
-			                    // console.log(JSON.stringify(loginRes));
-			                }
-			            });
-			        }
-			    }
-			});
+			
 			uni.login({
 			  provider: 'baidu',
-			  success: (loginRes) => {
-			    // console.log(loginRes.authResult);
-			  }
-			});
-			uni.login({
-			  provider: 'baidu',
-			  success: (loginRes) => {
-			    // console.log(loginRes.authResult);
+			  success: function(loginRes) {
+			    console.log(loginRes.authResult);
 			    // 获取用户信息
 			    uni.getUserInfo({
 			      provider: 'baidu',
-			      success:  (infoRes) => {
+			      success:  function(infoRes) {
 			        console.log('用户昵称为：' + infoRes.userInfo.nickName);
 					var infoRes = infoRes.userInfo
 					console.log(infoRes.nickName)
-					this.nickName = infoRes.nickName
-					this.avatarUrl = infoRes.avatarUrl
+					that.nickName = infoRes.nickName
+					that.avatarUrl = infoRes.avatarUrl
 					uni.setStorageSync('nickName',infoRes.nickName)
+					uni.setStorageSync('avatarUrl',infoRes.avatarUrl)
 			      }
 			    })
 				
@@ -179,8 +163,128 @@ export default {
 			})
 		},
 		
+		/*下拉刷新的回调, 有三种处理方式:*/
+		downCallback(){
+			// 第1种: 请求具体接口
+			uni.request({
+				url: 'http://121.40.30.19/user/info',
+				header:{
+					'Authorization':uni.getStorageSync('Authorization')
+				},
+				success: (res) => {
+					// console.log('下拉刷新',res)
+					// 请求成功,隐藏加载状态
+					this.mescroll.endSuccess()
+				},
+				fail: () => {
+					// 请求失败,隐藏加载状态
+					this.mescroll.endErr()
+				}
+			})
+			// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
+			// this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+			// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
+			// this.mescroll.endSuccess()
+			
+			// 此处仍可以继续写其他接口请求...
+			// 调用其他方法...
+		},
+		/*上拉加载的回调*/
+		upCallback(page) {
+			// mescroll.setPageSize(6)
+			let pageNum = page.num; // 页码, 默认从1开始
+			let pageSize = page.size; // 页长, 默认每页10条
+			uni.request({
+				url: 'http://121.40.30.19/user/info?page='+pageNum+'&count='+pageSize,
+				header:{
+					'Authorization':uni.getStorageSync('Authorization')
+				},
+				success: (data) => {
+					console.log('data',data)
+					// 接口返回的当前页数据列表 (数组)
+					let curPageData = data.data.data.favorites.list; 
+					console.log('curPageData',curPageData)
+					// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+					let curPageLen = curPageData.length; 
+					console.log('curPageLen',curPageLen)
+					// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+					// let totalPage = data.data.data.list; 
+					// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+					let totalSize = data.data.data.favorites.list.total; 
+					console.log('totalSize',totalSize)
+					// 接口返回的是否有下一页 (true/false)
+					// let hasNext = data.data.data.list; 
+					
+					//设置列表数据
+					if(page.num == 1) this.tipList = []; //如果是第一页需手动置空列表
+					this.tipList = this.tipList.concat(curPageData); //追加新数据
+					console.log('tipList',this.tipList)
+					// 请求成功,隐藏加载状态
+					//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+					// this.mescroll.endByPage(curPageLen, totalPage); 
+					
+					//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+					this.mescroll.endBySize(curPageLen, totalSize); 
+					
+					//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+					//this.mescroll.endSuccess(curPageLen, hasNext); 
+					
+					//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+					//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+					//如果传了hasNext,则翻到第二页即可显示无更多数据.
+					//this.mescroll.endSuccess(curPageLen);
+					
+					// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+					// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+					setTimeout(()=>{
+						this.mescroll.endSuccess(curPageLen)
+					},20)
+					
+					
+				},
+				fail: () => {
+					//  请求失败,隐藏加载状态
+					this.mescroll.endErr()
+				}
+			})
+			
+			// 此处仍可以继续写其他接口请求...
+			// 调用其他方法...
+		},
 		...mapMutations(['login']),
 		
+	},
+	filters: {
+		/**
+		 * 处理富文本里的图片宽度自适应
+		 * 1.去掉img标签里的style、width、height属性
+		 * 2.img标签添加style属性：max-width:100%;height:auto
+		 * 3.修改所有style里的width属性为max-width:100%
+		 * 4.去掉<br/>标签
+		 * @param html
+		 * @returns {void|string|*}
+		 */
+		formatRichText (html) { //控制小程序中图片大小
+			let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
+				match = match.replace(/style="[^"]+"/gi, '').replace(/style='[^']+'/gi, '');
+				match = match.replace(/width="[^"]+"/gi, '').replace(/width='[^']+'/gi, '');
+				match = match.replace(/height="[^"]+"/gi, '').replace(/height='[^']+'/gi, '');
+				return match;
+			});
+			newContent = newContent.replace(/style="[^"]+"/gi,function(match,capture){
+				match = match.replace(/width:[^;]+;/gi, 'max-width:100%;').replace(/width:[^;]+;/gi, 'max-width:100%;');
+				return match;
+			});
+			newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+			// newContent = newContent.replace(/\<img/gi, '<img style="width:350px;height:auto;display:inline-block;margin:5px auto;"');
+			// newContent = newContent.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');	
+			newContent = newContent.replace(/<h2[^>]*>(?:(?!<\/h2>)[\s\S])*<\/h2>/gi, '');
+			newContent = newContent.replace(/<p[^>]*>(?:(?!<\/p>)[\s\S])*<\/p>/gi, '<p style="font-size:14px;line-height:14px"');
+			newContent = newContent.replace(/\<img/gi, '');
+				// console.log(newContent)
+				// debugger
+			return newContent;
+		}	
 	}
 };
 </script>
@@ -275,7 +379,7 @@ export default {
 	}
 }
 .noContentItem{
-	height: 600rpx;
+	// height: 600rpx;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -350,23 +454,26 @@ export default {
 		font-size: 32rpx;
 		font-weight: 500;
 		color: rgba(48,49,51,1);
-		line-height: 64rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		line-height:32rpx;
 		display: flex;
 	}
+	
 	.right .content {
 		width:448rpx;
-		height:70rpx;
+		height:120rpx;
 		font-size: 28rpx;
 		font-weight: 400;
-		color: #606266;
-		line-height: 40rpx;
+		color:rgba(96,98,102,1);
+		line-height:24rpx;
 		overflow: hidden;
 		text-overflow:ellipsis;
-		// white-space: nowrap;
+		white-space: nowrap;
 	}
+	
 	.right .position {
 		display: flex;
-		line-height: 40rpx;
+		// line-height: 40rpx;
 		align-items: center;
 		image {
 			height: 20rpx;
@@ -375,8 +482,10 @@ export default {
 		}
 		view {
 			font-size: 22rpx;
-			color: #0091ff;
-			font-weight: 400;
+			font-family:PingFangSC-Regular,PingFang SC;
+			font-weight:400;
+			color:rgba(0,145,255,1);
+			line-height:22rpx;
 		}
 	}
 }

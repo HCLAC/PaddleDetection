@@ -106,9 +106,11 @@
           flex-direction: column;
 }
 .title.data-v-2796015c {
+  height: 32rpx;
+  line-height: 32rpx;
   font-size: 32rpx;
   font-family: PingFangSC-Medium,PingFang SC;
-  font-weight: 600;
+  font-weight: 500;
   color: #303133;
   margin-top: 40rpx;
   margin-left: 28rpx;
@@ -117,7 +119,7 @@
 .cardContent.data-v-2796015c {
   width: 642rpx;
   height: 28rpx;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 28rpx;
   font-family: PingFangSC-Regular,PingFang SC;
   font-weight: 400;

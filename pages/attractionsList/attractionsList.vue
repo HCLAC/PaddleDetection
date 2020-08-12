@@ -197,9 +197,11 @@
 		flex-direction: column;
 	}
 	.title{
+		height: 32rpx;
+		line-height: 32rpx;
 		font-size: 32rpx;
 		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:600;
+		font-weight:500;
 		color:rgba(48,49,51,1);
 		margin-top: 40rpx;
 		margin-left: 28rpx;
@@ -208,7 +210,7 @@
 	.cardContent{
 		width:642rpx;
 		height:28rpx;
-		font-size:14px;
+		font-size:13px;
 		line-height: 28rpx;
 		font-family:PingFangSC-Regular,PingFang SC;
 		font-weight:400;

@@ -425,6 +425,8 @@
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #fff;
+  height: 36rpx;
+  line-height: 36rpx;
 }
 .content .rateBox {
   margin-top: 32rpx;
@@ -436,11 +438,17 @@
           align-items: center;
 }
 .content .rateBox .rateStart {
-  width: 300rpx;
-  height: 40rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.content .rateBox .rateStart image {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 16rpx;
 }
 .content .rateBox .rate {
-  margin-left: 20rpx;
+  margin-left: 16rpx;
   font-size: 28rpx;
   font-family: HelveticaNeue;
   color: #606266;

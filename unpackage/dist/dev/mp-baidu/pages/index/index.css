@@ -571,6 +571,26 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/* 头条小程序组件内不能引入字体 */
 page.data-v-57280228 {
 		display: -webkit-box;
@@ -708,6 +728,7 @@ view.data-v-57280228 {
 		-webkit-flex-direction: row;
 		        flex-direction: row;
 		max-width: 396rpx;
+		min-width: 340rpx;
 		height: 72rpx;
 		-webkit-box-align: center;
 		-webkit-align-items: center;

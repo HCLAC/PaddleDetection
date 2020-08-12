@@ -95,9 +95,6 @@ __webpack_require__.r(__webpack_exports__);
 var components = {
   uniNavBar: function() {
     return Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64))
-  },
-  uniRate: function() {
-    return __webpack_require__.e(/*! import() | components/uni-rate/uni-rate */ "components/uni-rate/uni-rate").then(__webpack_require__.bind(null, /*! @/components/uni-rate/uni-rate.vue */ 102))
   }
 }
 var render = function() {
@@ -138,6 +135,77 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -397,7 +465,83 @@ var _uniFav = _interopRequireDefault(__webpack_require__(/*! @/components/uni-fa
 //
 //
 //
-var _this;var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.default, uniFav: _uniFav.default }, data: function data() {return { indicatorDots: true, current: 0, list: [], isShow: true, attDetail: null };}, created: function created() {_this = this, _this.getOrder();}, onLoad: function onLoad(e) {console.log('详情id====', e);uni.showLoading({ title: '加载中', mask: true });this.getAttDetail(e);uni.hideLoading();}, methods: { getAttDetail: function getAttDetail(e) {var that = this;uni.request({ url: 'http://121.40.30.19/site', data: { id: e.id }, success: function success(res) {console.log('eeeeeeeeeeeeeeee', e);console.log('景点详情====', res.data);uni.setStorageSync('id', res.data);that.attDetail = res.data;console.log('attDetail--', that.attDetail);} });}, phoneCall: function phoneCall() {uni.makePhoneCall({ phoneNumber: this.attDetail.data.butler_mobile });}, share: function share() {uni.showShareMenu({});}, change: function change(e) {_this.current = e.detail.current;}, getOrder: function getOrder() {_this.swiperlength, _this.list = [{ key: '1', title: 'A' }, { key: '2', title: 'B' }, { key: '3', title: 'C' }, { key: '4', title: 'D' }, { key: '6', title: 'E' }, { key: '7', title: 'F' }];}, back: function back() {uni.navigateBack({ delta: 1 });}, home: function home() {uni.switchTab({ url: '/pages/index/index' });}, likeclick: function likeclick() {// console.log("cccccccccccc")
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _this;var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.default, uniFav: _uniFav.default }, data: function data() {return { indicatorDots: true, current: 0, list: [], isShow: true, attDetail: null };}, created: function created() {_this = this, _this.getOrder();}, onLoad: function onLoad(e) {console.log('详情id====', e);uni.showLoading({ title: '加载中', mask: true });this.getAttDetail(e);uni.hideLoading();}, methods: { getAttDetail: function getAttDetail(e) {var that = this;uni.request({ url: 'http://121.40.30.19/site', data: { id: e.id }, success: function success(res) {console.log('eeeeeeeeeeeeeeee', e);console.log('景点详情====', res.data);uni.setStorageSync('id', res.data);that.attDetail = res.data;console.log('attDetail--', that.attDetail);} });}, // 跳转文章详情
+    onPageJump: function onPageJump(e) {console.log(e);var id = e.currentTarget.id; // debugger
+      // return
+      uni.navigateTo({ url: "/pages/contentdetail/contentdetail?article_id=" + id });}, // 调用拨打手机
+    phoneCall: function phoneCall() {uni.makePhoneCall({ phoneNumber: this.attDetail.data.butler_mobile });}, // 分享
+    share: function share() {uni.showShareMenu({});}, change: function change(e) {_this.current = e.detail.current;}, getOrder: function getOrder() {_this.swiperlength, _this.list = [{ key: '1', title: 'A' }, { key: '2', title: 'B' }, { key: '3', title: 'C' }, { key: '4', title: 'D' }, { key: '6', title: 'E' }, { key: '7', title: 'F' }];}, back: function back() {uni.navigateBack({ delta: 1 });}, home: function home() {uni.switchTab({ url: '/pages/index/index' });}, likeclick: function likeclick() {// console.log("cccccccccccc")
       this.likemessage++;}, favclick: function favclick() {// console.log("cccccccccccc")
       this.favmessage++;}, showMore: function showMore() {this.isShow = !this.isShow;}, // favClick() {
     // 	this.checked = !this.checked

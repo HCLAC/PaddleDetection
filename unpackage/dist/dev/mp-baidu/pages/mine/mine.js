@@ -97,6 +97,23 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var l0 = _vm.__map(_vm.tipList, function(item, index) {
+    var f0 = _vm._f("formatRichText")(item.content)
+
+    return {
+      $orig: _vm.__get_orig(item),
+      f0: f0
+    }
+  })
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        l0: l0
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -190,9 +207,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 12);
-var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js */ 54));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 
+var _vuex = __webpack_require__(/*! vuex */ 12);
+var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js */ 54));
+var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 45));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
   data: function data() {
     return {
@@ -201,40 +219,22 @@ var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js
       tipList: [] };
 
   },
+  mixins: [_mescrollMixins.default],
   computed: (0, _vuex.mapState)(['forcedLogin', 'hasLogin', 'phone']),
 
 
-  onShow: function onShow() {
+  onLoad: function onLoad() {
     this.getUserMsg();
-
   },
+
   methods: _objectSpread({
-    getUserMsg: function getUserMsg() {var _this = this;
+    getUserMsg: function getUserMsg() {
       var that = this;
-      uni.getProvider({
-        service: 'oauth',
-        success: function success(res) {
-          console.log(res.provider);
-          if (~res.provider.indexOf('baidu')) {
-            uni.login({
-              provider: 'baidu',
-              success: function success(loginRes) {
-                // console.log(JSON.stringify(loginRes));
-              } });
-
-          }
-        } });
 
       uni.login({
         provider: 'baidu',
         success: function success(loginRes) {
-          // console.log(loginRes.authResult);
-        } });
-
-      uni.login({
-        provider: 'baidu',
-        success: function success(loginRes) {
-          // console.log(loginRes.authResult);
+          console.log(loginRes.authResult);
           // 获取用户信息
           uni.getUserInfo({
             provider: 'baidu',
@@ -242,9 +242,10 @@ var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js
               console.log('用户昵称为：' + infoRes.userInfo.nickName);
               var infoRes = infoRes.userInfo;
               console.log(infoRes.nickName);
-              _this.nickName = infoRes.nickName;
-              _this.avatarUrl = infoRes.avatarUrl;
+              that.nickName = infoRes.nickName;
+              that.avatarUrl = infoRes.avatarUrl;
               uni.setStorageSync('nickName', infoRes.nickName);
+              uni.setStorageSync('avatarUrl', infoRes.avatarUrl);
             } });
 
 
@@ -309,9 +310,130 @@ var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js
       uni.navigateTo({
         url: "/pages/contentdetail/contentdetail?article_id=" + id });
 
-    } },
+    },
 
-  (0, _vuex.mapMutations)(['login'])) };exports.default = _default;
+    /*下拉刷新的回调, 有三种处理方式:*/
+    downCallback: function downCallback() {var _this = this;
+      // 第1种: 请求具体接口
+      uni.request({
+        url: 'http://121.40.30.19/user/info',
+        header: {
+          'Authorization': uni.getStorageSync('Authorization') },
+
+        success: function success(res) {
+          // console.log('下拉刷新',res)
+          // 请求成功,隐藏加载状态
+          _this.mescroll.endSuccess();
+        },
+        fail: function fail() {
+          // 请求失败,隐藏加载状态
+          _this.mescroll.endErr();
+        } });
+
+      // 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
+      // this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+      // 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
+      // this.mescroll.endSuccess()
+
+      // 此处仍可以继续写其他接口请求...
+      // 调用其他方法...
+    },
+    /*上拉加载的回调*/
+    upCallback: function upCallback(page) {var _this2 = this;
+      // mescroll.setPageSize(6)
+      var pageNum = page.num; // 页码, 默认从1开始
+      var pageSize = page.size; // 页长, 默认每页10条
+      uni.request({
+        url: 'http://121.40.30.19/user/info?page=' + pageNum + '&count=' + pageSize,
+        header: {
+          'Authorization': uni.getStorageSync('Authorization') },
+
+        success: function success(data) {
+          console.log('data', data);
+          // 接口返回的当前页数据列表 (数组)
+          var curPageData = data.data.data.favorites.list;
+          console.log('curPageData', curPageData);
+          // 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+          var curPageLen = curPageData.length;
+          console.log('curPageLen', curPageLen);
+          // 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+          // let totalPage = data.data.data.list; 
+          // 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+          var totalSize = data.data.data.favorites.list.total;
+          console.log('totalSize', totalSize);
+          // 接口返回的是否有下一页 (true/false)
+          // let hasNext = data.data.data.list; 
+
+          //设置列表数据
+          if (page.num == 1) _this2.tipList = []; //如果是第一页需手动置空列表
+          _this2.tipList = _this2.tipList.concat(curPageData); //追加新数据
+          console.log('tipList', _this2.tipList);
+          // 请求成功,隐藏加载状态
+          //方法一(推荐): 后台接口有返回列表的总页数 totalPage
+          // this.mescroll.endByPage(curPageLen, totalPage); 
+
+          //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+          _this2.mescroll.endBySize(curPageLen, totalSize);
+
+          //方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+          //this.mescroll.endSuccess(curPageLen, hasNext); 
+
+          //方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+          //如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+          //如果传了hasNext,则翻到第二页即可显示无更多数据.
+          //this.mescroll.endSuccess(curPageLen);
+
+          // 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+          // 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+          setTimeout(function () {
+            _this2.mescroll.endSuccess(curPageLen);
+          }, 20);
+
+
+        },
+        fail: function fail() {
+          //  请求失败,隐藏加载状态
+          _this2.mescroll.endErr();
+        } });
+
+
+      // 此处仍可以继续写其他接口请求...
+      // 调用其他方法...
+    } },
+  (0, _vuex.mapMutations)(['login'])),
+
+
+  filters: {
+    /**
+              * 处理富文本里的图片宽度自适应
+              * 1.去掉img标签里的style、width、height属性
+              * 2.img标签添加style属性：max-width:100%;height:auto
+              * 3.修改所有style里的width属性为max-width:100%
+              * 4.去掉<br/>标签
+              * @param html
+              * @returns {void|string|*}
+              */
+    formatRichText: function formatRichText(html) {//控制小程序中图片大小
+      var newContent = html.replace(/<img[^>]*>/gi, function (match, capture) {
+        match = match.replace(/style="[^"]+"/gi, '').replace(/style='[^']+'/gi, '');
+        match = match.replace(/width="[^"]+"/gi, '').replace(/width='[^']+'/gi, '');
+        match = match.replace(/height="[^"]+"/gi, '').replace(/height='[^']+'/gi, '');
+        return match;
+      });
+      newContent = newContent.replace(/style="[^"]+"/gi, function (match, capture) {
+        match = match.replace(/width:[^;]+;/gi, 'max-width:100%;').replace(/width:[^;]+;/gi, 'max-width:100%;');
+        return match;
+      });
+      newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+      // newContent = newContent.replace(/\<img/gi, '<img style="width:350px;height:auto;display:inline-block;margin:5px auto;"');
+      // newContent = newContent.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');	
+      newContent = newContent.replace(/<h2[^>]*>(?:(?!<\/h2>)[\s\S])*<\/h2>/gi, '');
+      newContent = newContent.replace(/<p[^>]*>(?:(?!<\/p>)[\s\S])*<\/p>/gi, '<p style="font-size:14px;line-height:14px"');
+      newContent = newContent.replace(/\<img/gi, '');
+      // console.log(newContent)
+      // debugger
+      return newContent;
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-baidu/dist/index.js */ 1)["default"]))
 
 /***/ }),
