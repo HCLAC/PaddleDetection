@@ -410,7 +410,7 @@ export default {
 }
 .imageCount {
 	height: 40rpx;
-	background-color: #000000;
+	background:rgba(0,0,0,0.6);
 	border-radius: 20rpx;
 	line-height: 40rpx;
 	color: #fff;

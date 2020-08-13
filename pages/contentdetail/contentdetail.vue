@@ -32,7 +32,7 @@
 				</view>
 			</view>
 			<!-- 内容详情 -->
-			<view class="detailContent">
+			<view class="detailContent savebottom">
 				<view class="userMse">
 					<image class="userHeard" :src="articleList.data.avatar"></image>
 					<view class="userMse-r">
@@ -52,7 +52,7 @@
 				<!-- 内容文章 -->
 				<view class="contentText">
 					<rich-text :nodes="articleList.data.content | formatRichText"></rich-text> 
-					<view class="copy">详情请+VX: {{VX}}<text class="clcopy" @click="copy">点击复制</text></view>
+					<!-- <view class="copy">详情请+VX: {{VX}}<text class="clcopy" @click="copy">点击复制</text></view> -->
 				</view>
 				<view class="tips">
 					<view v-for="item in  articleList.data.tags">#<text>{{item}}</text></view>
@@ -60,13 +60,16 @@
 					<!-- <view>#<text></text></view> -->
 				</view>
 				<view class="releaseTime">发布于{{articleList.data.update_at}}</view>
+				<view class="safeBox">
+					
+				</view>
 			</view>
 			<view class="bottom">
 				
 				<!-- 分割线 -->
 				<view class="line"></view>
 				<!-- 登录 -->
-				<view class="contentBottom">
+				<view class="contentBottom savepadding">
 					<view class="like" @click="clickLike">
 						<image class="likeBtn" src="../../static/images/attheart.svg" v-if="articleList.data.liked==0"></image>
 						<image class="likeBtn" src="../../static/images/heart-actived.svg" v-if="articleList.data.liked==1"></image>
@@ -84,8 +87,8 @@
 					<view class="share" @click="share">
 						<image src="../../static/images/fenxiang.svg"></image>
 					</view>
-					<view class="" v-if="token == null">
-						<view class="loginButton" @click="login" >登录</view>
+					<view class="">
+						<view class="loginButton" @click="login" :v-if="flag">登录</view>
 					</view>
 				</view>
 			</view>
@@ -115,8 +118,9 @@
 				list: [],
 				VX: 17827277778,
 				articleList: null,
-				token: '',
-				article_id: ''
+				token:'',
+				article_id: '',
+				flag:false
 			}
 		},
 		onLoad: function(e) {
@@ -130,7 +134,7 @@
 		},
 		created() {
 			_this = this,
-				_this.getOrder()
+			_this.getOrder()
 		},
 
 		methods: {
@@ -139,25 +143,35 @@
 			getArticleDetail(e) {
 				var that = this
 				
-				
-				uni.getStorage({
-					key: 'Authorization',
-					success: function(res) {
-						console.log("token===>", res.data)
-						that.token = res.data
-						
-						// console.log("存储token",that.token)
-					}
-				})
+				// uni.getStorage({
+				// 	key: 'Authorization',
+				// 	success: function(res) {
+				// 		console.log("token===>", res.data)
+				// 		that.token = res.data
+				// 		console.log("存储token",that.token)
+				// 		if(that.token == null){
+				// 			that.flag = true
+				// 		}
+				// 	}
+				// })
+				var token = uni.getStorageSync('Authorization')
+				// var that.token = token
+				console.log("token===>", token)
+				if(token == null ){
+					that.flag = true
+				}
+				else{
+					that.flag = false
+				}
 				uni.request({
 					// url:'article',
 					url: 'http://121.40.30.19/article',
 					data: {
 						article_id: e.article_id
 					},
-					header: {
-						'Authorization': that.token
-					},
+					// header: {
+					// 	'Authorization': that.token
+					// },
 					success: function(res) {
 						console.log(res.data.data.liked,
 							res.data.data.like_count,
@@ -518,12 +532,21 @@
 	/* 内容详情 */
 	.detailContent {
 		// padding: 15px;
-		margin-bottom: 200rpx;
-		padding-bottom: constant(safe-area-inset-bottom);
+		
+		// margin-bottom: 200rpx;
+	}
+	// ios底部安全距离-padding
+	.savepadding{
+		padding-bottom: constant(safe-area-inset-bottom);  
 		padding-bottom: env(safe-area-inset-bottom); 
 		box-sizing: content-box;
 	}
 
+	// ios底部安全距离-bottom
+	.savebottom{
+		bottom: constant(safe-area-inset-bottom);  
+		bottom: env(safe-area-inset-bottom); 
+	}
 	// 用户信息
 	.userMse {
 		display: flex;
@@ -642,8 +665,15 @@
 		line-height: 22rpx;
 		margin-top: 40rpx;
 		margin-left: 28rpx;
+		// margin-bottom: 480rpx;
+		padding-bottom: 0;
+		padding-bottom: constant(safe-area-inset-bottom);  
+		padding-bottom: env(safe-area-inset-bottom);
 	}
-
+	.safeBox{
+		height: 142rpx;
+		width: 100%;
+	}
 	
 	/* 底部 */
 	.bottom{
@@ -651,7 +681,7 @@
 		height:98rpx;
 		position: fixed;
 		left: 0;
-		bottom: 0;
+		bottom: var(--window-bottom);
 		z-index: 111;
 		background-color: #FFFFFF;
 		padding-bottom: 68rpx;

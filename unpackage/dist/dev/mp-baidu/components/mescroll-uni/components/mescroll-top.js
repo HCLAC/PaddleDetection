@@ -81,9 +81,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var m0 = _vm.addUnit(_vm.mOption.bottom)
-  var m1 = _vm.addUnit(_vm.mOption.width)
-  var m2 = _vm.addUnit(_vm.mOption.radius)
+  var m0 = _vm.mOption.src ? _vm.addUnit(_vm.mOption.bottom) : null
+  var m1 = _vm.mOption.src ? _vm.addUnit(_vm.mOption.width) : null
+  var m2 = _vm.mOption.src ? _vm.addUnit(_vm.mOption.radius) : null
   _vm.$mp.data = Object.assign(
     {},
     {

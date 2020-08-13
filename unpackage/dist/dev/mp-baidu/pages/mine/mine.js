@@ -97,23 +97,6 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var l0 = _vm.__map(_vm.tipList, function(item, index) {
-    var f0 = _vm._f("formatRichText")(item.content)
-
-    return {
-      $orig: _vm.__get_orig(item),
-      f0: f0
-    }
-  })
-
-  _vm.$mp.data = Object.assign(
-    {},
-    {
-      $root: {
-        l0: l0
-      }
-    }
-  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -148,6 +131,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
 
 
 
@@ -359,7 +347,7 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
           // 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
           // let totalPage = data.data.data.list; 
           // 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-          var totalSize = data.data.data.favorites.list.total;
+          var totalSize = data.data.data.favorites.total;
           console.log('totalSize', totalSize);
           // 接口返回的是否有下一页 (true/false)
           // let hasNext = data.data.data.list; 
@@ -427,10 +415,17 @@ var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/component
       newContent = newContent.replace(/<br[^>]*\/>/gi, '');
       // newContent = newContent.replace(/\<img/gi, '<img style="width:350px;height:auto;display:inline-block;margin:5px auto;"');
       // newContent = newContent.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');	
-      newContent = newContent.replace(/<h2[^>]*>(?:(?!<\/h2>)[\s\S])*<\/h2>/gi, '');
-      newContent = newContent.replace(/<p[^>]*>(?:(?!<\/p>)[\s\S])*<\/p>/gi, '<p style="font-size:14px;line-height:14px"');
-      newContent = newContent.replace(/\<img/gi, '');
-      // console.log(newContent)
+      // newContent = newContent.replace(/<h2[^>]*>(?:(?!<\/h2>)[\s\S])*<\/h2>/gi, '<h2 style="font-size:14px;line-height:14px"');
+      newContent = newContent.replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/gi, '<p');
+      newContent = newContent.replace(/<p([\s\w"=\/\.:;]+)((?:(class="[^"]+")))/gi, '<p');
+      newContent = newContent.replace(/<p>/gi, '<p style="font-size:14px;line-height:14px;"');
+      newContent = newContent.replace(/<h2([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/gi, '<h2');
+      newContent = newContent.replace(/<h2>/gi, '<h2 style="font-size:14px;line-height:14px;"');
+      newContent = newContent.replace(/<div([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/gi, '<div');
+      newContent = newContent.replace(/<div>/gi, '<div style="font-size:14px;line-height:14px;"');
+      // newContent = newContent.replace(/<span[^>]*>(?:(?!<\/span>)[\s\S])*<\/span>/gi, '<span style="font-size:14px;line-height:14px"');
+      newContent = newContent.replace(/<img[^>]*>/gi, '');
+      console.log(newContent);
       // debugger
       return newContent;
     } } };exports.default = _default;

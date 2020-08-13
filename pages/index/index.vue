@@ -73,10 +73,10 @@
 										</view>
 										<view class="titleTip">
 											<view class="demo-tag">
-												<view class="demo-tag-owner" v-if="item.type==0">
+												<view class="demo-tag-owner" v-if="item.type==1">
 													游记
 												</view>
-												<view class="demo-tag-owner" v-if="item.type==1">
+												<view class="demo-tag-owner" v-if="item.type==2">
 													攻略
 												</view>
 											</view>
@@ -116,10 +116,10 @@
 										
 										<view class="titleTip">
 											<view class="demo-tag">
-												<view class="demo-tag-owner" v-if="item.type==0">
+												<view class="demo-tag-owner" v-if="item.type==1">
 													游记
 												</view>
-												<view class="demo-tag-owner" v-if="item.type==1">
+												<view class="demo-tag-owner" v-if="item.type==2">
 													攻略
 												</view>
 											</view>
@@ -888,9 +888,9 @@
 		bottom: 8rpx;
 		display: flex;
 		align-items: center;
-		width:144rpx;
+		max-width:240rpx;
 		height:40rpx;
-		line-height: 40rpx;
+		padding-right: 16rpx;
 		background:rgba(0,0,0,0.6);
 		border-radius:0px 14rpx 0px 0px;
 	}
@@ -899,40 +899,41 @@
 		height: 24rpx;
 		margin:0 4rpx;
 		display: flex;
-		align-items: center;
 	}
 	.adreessIcon image{
-		width: 24rpx;
-		height: 24rpx;
+		width: 100%;
+		height: 100%;
 	}
 	.adressText{
+		max-width: 192rpx;
 		font-size:24rpx;
 		font-family:PingFangSC-Medium,PingFang SC;
 		font-weight:500;
 		color:rgba(255,255,255,1);
-		line-height:24px;
+		/* line-height:24px; */
+		/* margin-right: 16rpx; */
 		overflow: hidden;
 		text-overflow:ellipsis;
 		white-space: nowrap;
 	}
 	.titleTip{
 		display: flex;
-		margin-top: 24rpx;
+		margin-top: 18rpx;
 		margin-left: 8rpx;
 	}
 	.demo-title {
 		width: 278rpx;
-		/* height: 70rpx; */
+		/* max-height: 70rpx; */
 		font-size: 28rpx;
 		font-family:PingFangSC-Medium,PingFang SC;
 		font-weight:500;
 		color:rgba(48,49,51,1);
 		margin-left: 8rpx;
-		line-height: 28rpx;
+		line-height: 46rpx;
 	}
 	
 	.demo-tag {
-		
+		margin-top: 9rpx;
 	}
 	
 	.demo-tag-owner {

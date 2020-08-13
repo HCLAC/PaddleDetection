@@ -30,7 +30,7 @@
 
 			<!-- 登录按钮 -->
 			<view class="loginButton" >
-				<button class="lb"   
+				<button class="lb"   :disabled="disabled" :style="styleBtn" open-type="getUserInfo" @getuserinfo="getUserInfo"
 				  @tap="doLogin">登录</button>
 			</view>
 		</view>
@@ -58,7 +58,10 @@
 				styleCode: {
 	                color: '#C9CAD1'
 	            },
-				
+				disabled:true,
+				styleBtn:{
+					background:'#F8F8F8'
+				}
 			}
 		},
 		
@@ -77,8 +80,12 @@
 			onCode(e){
 				if(e.detail.value.length  ==6){
 					this.styleCode.color = '#303133'
+					this.disabled=false
+					this.styleBtn.background = '#FFE512'
 				}else{
 					this.styleCode.color = '#C9CAD1'
+					this.disabled=true
+					this.styleBtn.background = '#F8F8F8'
 				}
 			},
 			clearphone(){
@@ -136,6 +143,7 @@
 					//uni.showToast({title: '验证码已发送',icon:"none"});
 					_this.setTimer();
 				}, 1000)
+				
 			},
 			setTimer() {
 				let holdTime = 59,

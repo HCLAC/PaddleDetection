@@ -14,15 +14,15 @@
 			<view class="phone"><image class="phoneImg" src="../../static/images/phone.png" mode=""></image></view>
 			
 			<view>我的收藏</view>
-			<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+			<!-- <mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"> -->
 				<view class="contentItem" v-for="(item, index) in tipList" :key="index">
 					<view class="left">
 						<image :src="item.main_image" mode="">
 							<view class="imgTip">
-								<view  v-if="item.type==0">
+								<view  v-if="item.type==1">
 									游记
 								</view>
-								<view  v-if="item.type==1">
+								<view  v-if="item.type==2">
 									攻略
 								</view>
 							</view>
@@ -30,23 +30,28 @@
 					</view>
 					<view class="right" @click="onPageJump" :id= "item.article_id">
 						<view class="title">
-							<view  v-if="item.type==0">
+							<view class="tips" v-if="item.type==1">
 								游记
 							</view>
-							<view  v-if="item.type==1">
+							<view class="tips" v-if="item.type==2">
 								攻略
 							</view>
-							| {{item.title}}</view>
-							<view class="content">
-								<rich-text class="" :nodes="item.content | formatRichText"></rich-text> 
+							| 
+							<view class="titleText">
+								{{item.title}}
 							</view>
+						</view>
+						<view class="content">
+							<rich-text class="richText" :nodes="item.content "></rich-text>
+							<!-- {{item.title}} -->
+						</view>
 						<view class="position">
-							<image src="../../static/images/Icon／Map.svg" mode=""></image>
+							<image src="../../static/images/Icon／Map.svg" mode="aspectFill"></image>
 							<view>{{item.location}}</view>
 						</view>
 					</view>
 				</view>
-			</mescroll-body>
+			<!-- </mescroll-body> -->
 			<view class="noContent" v-show="tipList != null">~我也是有底线的~</view>
 						
 			<view class="noContentItem" v-show="tipList == null">
@@ -210,7 +215,7 @@ export default {
 					// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
 					// let totalPage = data.data.data.list; 
 					// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-					let totalSize = data.data.data.favorites.list.total; 
+					let totalSize = data.data.data.favorites.total; 
 					console.log('totalSize',totalSize)
 					// 接口返回的是否有下一页 (true/false)
 					// let hasNext = data.data.data.list; 
@@ -278,10 +283,17 @@ export default {
 			newContent = newContent.replace(/<br[^>]*\/>/gi, '');
 			// newContent = newContent.replace(/\<img/gi, '<img style="width:350px;height:auto;display:inline-block;margin:5px auto;"');
 			// newContent = newContent.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');	
-			newContent = newContent.replace(/<h2[^>]*>(?:(?!<\/h2>)[\s\S])*<\/h2>/gi, '');
-			newContent = newContent.replace(/<p[^>]*>(?:(?!<\/p>)[\s\S])*<\/p>/gi, '<p style="font-size:14px;line-height:14px"');
-			newContent = newContent.replace(/\<img/gi, '');
-				// console.log(newContent)
+			// newContent = newContent.replace(/<h2[^>]*>(?:(?!<\/h2>)[\s\S])*<\/h2>/gi, '<h2 style="font-size:14px;line-height:14px"');
+			newContent = newContent.replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/gi, '<p');
+			newContent = newContent.replace(/<p([\s\w"=\/\.:;]+)((?:(class="[^"]+")))/gi, '<p');
+			newContent = newContent.replace(/<p>/gi, '<p style="font-size:14px;line-height:14px;"');
+			newContent = newContent.replace(/<h2([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/gi, '<h2');
+			newContent = newContent.replace(/<h2>/gi, '<h2 style="font-size:14px;line-height:14px;"');
+			newContent = newContent.replace(/<div([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/gi, '<div');
+			newContent = newContent.replace(/<div>/gi, '<div style="font-size:14px;line-height:14px;"');
+			// newContent = newContent.replace(/<span[^>]*>(?:(?!<\/span>)[\s\S])*<\/span>/gi, '<span style="font-size:14px;line-height:14px"');
+			newContent = newContent.replace(/<img[^>]*>/gi, '');
+				console.log(newContent)
 				// debugger
 			return newContent;
 		}	
@@ -435,8 +447,8 @@ export default {
 		}
 		image {
 			// margin: 8rpx;
-			width: 192rpx;
-			height: 230rpx;
+			width: 208rpx;
+			height: 246rpx;
 			margin-right: 20rpx;
 			box-shadow:2px 2px 10px 0px rgba(0,0,0,0.08);
 			border-radius:16rpx 0 0 16rpx;
@@ -446,33 +458,55 @@ export default {
 	.right {
 		margin-top: 40rpx;
 		height: 230rpx;
-		overflow: hidden;
-		text-overflow:ellipsis;
+		// overflow: hidden;
+		// text-overflow:ellipsis;
 		// white-space: nowrap;
 	}
 	.right .title {
+		width: 444rpx;
+		height: 32rpx;
 		font-size: 32rpx;
 		font-weight: 500;
 		color: rgba(48,49,51,1);
 		font-family:PingFangSC-Medium,PingFang SC;
 		line-height:32rpx;
 		display: flex;
+		
 	}
-	
-	.right .content {
-		width:448rpx;
-		height:120rpx;
-		font-size: 28rpx;
-		font-weight: 400;
-		color:rgba(96,98,102,1);
-		line-height:24rpx;
+	.tips{
+		margin-right: 10rpx;
+	}
+	.titleText{
+		margin-left: 10rpx;
 		overflow: hidden;
 		text-overflow:ellipsis;
 		white-space: nowrap;
 	}
-	
+	.right .content {
+		
+		
+		
+	}
+	.richText{
+		width:448rpx;
+		height:70rpx;
+		font-size: 28rpx;
+		font-weight: 400;
+		color:rgba(96,98,102,1);
+		line-height:38rpx;
+		margin-top: 20rpx;
+		display: -webkit-box;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		word-wrap: break-word;
+		white-space: normal !important;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		
+	}
 	.right .position {
 		display: flex;
+		margin-top: 20rpx;
 		// line-height: 40rpx;
 		align-items: center;
 		image {
@@ -481,11 +515,15 @@ export default {
 			margin-right: 4rpx;
 		}
 		view {
+			width: 176rpx;
 			font-size: 22rpx;
 			font-family:PingFangSC-Regular,PingFang SC;
 			font-weight:400;
 			color:rgba(0,145,255,1);
 			line-height:22rpx;
+			overflow: hidden;
+			text-overflow:ellipsis;
+			white-space: nowrap;
 		}
 	}
 }

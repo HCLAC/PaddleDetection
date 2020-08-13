@@ -14,7 +14,8 @@
 		{
 		    "path" : "pages/login/login",
 		    "style" : {
-				"navigationBarBackgroundColor":"#FFFFFF"
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"backgroundColor":"#FFFFFF"
 			}
 		},
 		
