@@ -194,13 +194,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getHotAttList: function getHotAttList() {
       var that = this;
-      // uni.getStorage({
-      // 	key:'description',
-      // 	success:function(res){
-      // 		that.cardList = res.data.data
-      // 		console.log('cardList====',that.cardList)
-      // 	}
-      // })
       that.city = uni.getStorageSync('city');
       var city = uni.getStorageSync('city_id');
       uni.getStorage({

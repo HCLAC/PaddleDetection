@@ -351,7 +351,7 @@
   position: absolute;
   /* left: 320rpx; */
   background: #ffff;
-  bottom: -30rpx;
+  bottom: -20rpx;
 }
 .dots .dot.data-v-32e87e5c {
   width: 10rpx;
@@ -382,7 +382,7 @@
   display: -webkit-flex;
   display: flex;
   margin-left: 28rpx;
-  margin-top: 40rpx;
+  margin-top: 50rpx;
 }
 .userHeard.data-v-32e87e5c {
   width: 80rpx;

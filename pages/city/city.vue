@@ -81,40 +81,11 @@
 				this.city = item.name
 				// this.city_id = item.city_id
 				// this.state_id = item.state_id
-				uni.setStorageSync('city', item.name)
-				// uni.setStorageSync('state_id', item.state_id)
-				uni.request({
-					// url:'http://192.168.43.156:8199/site/hot',
-					// url:'site/hot',
-					url:'http://121.40.30.19/site/hot',
-					data:{
-						state_id:item.state_id,
-						city_id:item.city_id,
-						count:3,
-						sort_by:0
-					},
-					success:res=>{
-						console.log('热门景点',res)
-						uni.setStorageSync('id',res.data)
-					}
-				}),
-				uni.request({
-					url:'http://121.40.30.19/site/list',
-					data:{
-						state_id:item.state_id,
-						city_id:item.city_id,
-						count:20,
-						page:1,
-						sort_by:1
-					},
-					success:res=>{
-						console.log("热门景点列表=========",res)
-						uni.setStorageSync('description',res.data)
-						
-					}
-				})
-				uni.reLaunch({
-					url:'../index/index'
+				
+				getApp().globalData.item = item;
+				// console.log('item',item)
+				uni.switchTab({
+					url:'../index/index?item='+item
 				})
 				
 			},

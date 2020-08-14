@@ -85,7 +85,7 @@
 				}else{
 					this.styleCode.color = '#C9CAD1'
 					this.disabled=true
-					this.styleBtn.background = '#F8F8F8'
+					this.styleBtn.background = 'rgba(237,239,242,1)'
 				}
 			},
 			clearphone(){
@@ -162,6 +162,15 @@
 					holdTime--;
 				}, 1000)
 			},
+			getUserInfo(){
+				uni.getUserInfo({
+					// provider:'baidu',
+					success:(res)=>{
+						console.log('用户信息',res.userInfo)
+					}
+				})
+			},
+			
 			doLogin() {
 				let _this = this;
 				uni.hideKeyboard()
@@ -171,6 +180,7 @@
 				// 	return false; 
 				// } 
 				// var nick_name = uni.getStorageSync('nickName')
+				
 				uni.request({
 					// url: 'user/login',
 					url:'http://121.40.30.19:8199/user/login',

@@ -312,7 +312,7 @@ var _default = {
   mixins: [_mescrollMixins.default],
   data: function data() {
     return {
-      city: null,
+      city: '正在定位...',
       province: '',
       state_id: '',
       city_id: '',
@@ -325,27 +325,22 @@ var _default = {
       page: 1,
       pagesize: 6,
       loadStatus: 'loading',
-      isLoadMore: false };
+      isLoadMore: false,
+      item: null };
 
+  },
+
+  onShow: function onShow() {
+    this.item = getApp().globalData.item,
+    console.log('item', this.item);
+    this.getCity();
   },
   onLoad: function onLoad() {
-    this.getAdress(),
-    this.getSiteHot();
-    // this.getSystem()
+    if (this.item == undefined || null) {
+      this.getAdress();
+    }
 
   },
-  onShow: function onShow() {
-    this.getArticleList();
-  },
-
-  // onReachBottom(){  //上拉触底函数
-  //           if(!this.isLoadMore){  //此处判断，上锁，防止重复请求
-  //                 this.isLoadMore=true
-  //                 this.page+=1
-  //                 this.getArticleList()
-  //           }
-  //     },
-
   methods: {
     // 获取当前地理位置
     getAdress: function getAdress() {var _this = this;
@@ -353,31 +348,22 @@ var _default = {
         type: 'wgs84',
         success: function success(res) {
           console.log('地址---', res);
-          // if(this.city == null){
+          // if(this.item == undefined){
           _this.city = res.city;
           _this.province = res.province;
-          // }
-
-
           uni.request({
             // url:'http://192.168.43.156:8199/user/location',
             // url:'user/location',
             url: 'http://121.40.30.19/user/location',
             data: {
               state: _this.province,
-              city: _this.city
+              city: _this.city },
 
-              // state:'山东省',
-              // city:'青岛市'
-            },
             method: 'POST',
             header: {
               'content-type': 'application/x-www-form-urlencoded' },
 
             success: function success(res) {
-              // console.log(this.city)
-              // debugger
-              // console.log(this.province)
               console.log('获取地址id', res);
               if (res.data.code != 0) {
                 uni.request({
@@ -404,32 +390,92 @@ var _default = {
                     // uni.setStorageSync('article_id',res.data)
                     // console.log('存储文章列表==',res.data)
                     _this.list = res.data.data.list;
-                    console.log('list=====', _this.list);
+                    // console.log('list=====',this.list)
+                  } });
+
+              } else {
+                uni.setStorageSync('city_id', res.data);
+                console.log('存储本地', res.data);
+                var city = uni.getStorageSync('city_id');
+                console.log('取数据', city);
+                uni.request({
+                  // url:'http://192.168.43.156:8199/site/hot',
+                  // url:'site/hot',
+                  url: 'http://121.40.30.19/site/hot',
+                  data: {
+                    state_id: city.data.state_id,
+                    city_id: city.data.city_id,
+                    count: 3,
+                    sort_by: 0 },
+
+                  success: function success(res) {
+                    console.log('热门景点', res);
+                    _this.hotAtt = res.data.data;
+                  } }),
+
+                uni.request({
+                  url: 'http://121.40.30.19/article/list',
+                  data: {
+                    state_id: city.data.state_id,
+                    city_id: city.data.city_id,
+                    count: 6,
+                    page: 1,
+                    sort_by: 1 },
+
+                  success: function success(res) {
+                    console.log('文章列表', res);
+                    uni.setStorageSync('article_id', res.data);
+                    _this.list = res.data.data.list;
                   } });
 
               }
-              uni.setStorageSync('city_id', res.data);
-              console.log('存储本地', res.data.data);
-              var city = uni.getStorageSync('city_id');
-              uni.request({
-                // url:'http://192.168.43.156:8199/site/hot',
-                // url:'site/hot',
-                url: 'http://121.40.30.19/site/hot',
-                data: {
-                  state_id: city.data.state_id,
-                  city_id: city.data.city_id,
-                  count: 3,
-                  sort_by: 0 },
-
-                success: function success(res) {
-                  console.log('热门景点', res);
-                  _this.hotAtt = res.data.data;
-                } });
 
             } });
 
 
+
         } });
+
+    },
+    // 城市切换数据
+    getCity: function getCity() {var _this2 = this;
+      this.city = this.item.name;
+      // this.list = null
+      // var city = uni.getStorageSync('city_id');
+      uni.request({
+        url: 'http://121.40.30.19/site/hot',
+        data: {
+          state_id: this.item.state_id,
+          city_id: this.item.city_id,
+          count: 3,
+          sort_by: 3 },
+
+        success: function success(res) {
+          console.log("跳转热门景点=========", res);
+          // uni.setStorageSync('description',res.data)
+          _this2.hotAtt = res.data.data;
+        } }),
+
+      // 清除旧数据
+      this.$refs.uWaterfall.clear();
+      uni.request({
+        url: 'http://121.40.30.19/article/list',
+        // url:'http://192.168.43.60:8299/article/list',
+        data: {
+          state_id: this.item.state_id,
+          city_id: this.item.city_id,
+          count: 6,
+          page: 1,
+          sort_by: 1 },
+
+        // header: {
+        // 	'Authorization': this.token
+        // },
+        success: function success(res) {
+          console.log('切换文章列表', res);
+          _this2.list = res.data.data.list;
+        } });
+
 
     },
     // 热门景点
@@ -449,35 +495,39 @@ var _default = {
     getArticleList: function getArticleList() {
       var that = this;
       var city = uni.getStorageSync('city_id');
+      console.log('idid', city);
       uni.getStorage({
         key: 'Authorization',
         success: function success(res) {
           console.log("token===>", res.data);
           that.token = res.data;
+          if (that.token != null) {
+            uni.request({
+              // url:'http://192.168.43.156:8199/article/list',
+              // url:'article/list',
+              url: 'http://121.40.30.19/article/list',
+              // url:'http://192.168.43.60:8299/article/list',
+              data: {
+                state_id: city.data.state_id,
+                city_id: city.data.city_id,
+                count: 6,
+                page: 1,
+                sort_by: 1 },
+
+              header: {
+                'Authorization': that.token },
+
+              success: function success(res) {
+                console.log('文章列表', res);
+                uni.setStorageSync('article_id', res.data);
+                console.log('存储文章列表==', res.data);
+                that.list = res.data.data.list;
+                console.log('list=====', that.list);
+              } });
+
+          }
         } });
 
-      uni.request({
-        // url:'http://192.168.43.156:8199/article/list',
-        // url:'article/list',
-        url: 'http://121.40.30.19/article/list',
-        // url:'http://192.168.43.60:8299/article/list',
-        data: {
-          state_id: city.data.state_id,
-          city_id: city.data.city_id,
-          count: 6,
-          page: 1,
-          sort_by: 1 },
-
-        header: {
-          'Authorization': that.token },
-
-        success: function success(res) {
-          console.log('文章列表', res);
-          uni.setStorageSync('article_id', res.data);
-          console.log('存储文章列表==', res.data);
-          that.list = res.data.data.list;
-          console.log('list=====', that.list);
-        } });
 
     },
     // 跳转文章详情
@@ -638,7 +688,7 @@ var _default = {
 
     },
     /*下拉刷新的回调, 有三种处理方式:*/
-    downCallback: function downCallback() {var _this2 = this;
+    downCallback: function downCallback() {var _this3 = this;
       // 第1种: 请求具体接口
       uni.request({
         url: 'http://121.40.30.19/article/list',
@@ -650,11 +700,11 @@ var _default = {
         success: function success(res) {
           // console.log('下拉刷新',res)
           // 请求成功,隐藏加载状态
-          _this2.mescroll.endSuccess();
+          _this3.mescroll.endSuccess();
         },
         fail: function fail() {
           // 请求失败,隐藏加载状态
-          _this2.mescroll.endErr();
+          _this3.mescroll.endErr();
         } });
 
       // 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
@@ -666,59 +716,125 @@ var _default = {
       // 调用其他方法...
     },
     /*上拉加载的回调*/
-    upCallback: function upCallback(page) {var _this3 = this;
+    upCallback: function upCallback(page) {var _this4 = this;
       // mescroll.setPageSize(6)
+      var city = uni.getStorageSync('city_id');
       var pageNum = page.num; // 页码, 默认从1开始
       var pageSize = page.size; // 页长, 默认每页10条
-      uni.request({
-        url: 'http://121.40.30.19/article/list?page=' + pageNum + '&count=' + pageSize,
-        success: function success(data) {
-          console.log('data', data);
-          // 接口返回的当前页数据列表 (数组)
-          var curPageData = data.data.data.list;
-          console.log('curPageData', curPageData);
-          // 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-          var curPageLen = curPageData.length;
-          console.log('curPageLen', curPageLen);
-          // 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-          // let totalPage = data.data.data.list; 
-          // 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-          var totalSize = data.data.data.total;
-          console.log('totalSize', totalSize);
-          // 接口返回的是否有下一页 (true/false)
-          // let hasNext = data.data.data.list; 
-
-          //设置列表数据
-          if (page.num == 1) _this3.list = []; //如果是第一页需手动置空列表
-          _this3.list = _this3.list.concat(curPageData); //追加新数据
-          console.log('list-', _this3.list);
-          // 请求成功,隐藏加载状态
-          //方法一(推荐): 后台接口有返回列表的总页数 totalPage
-          // this.mescroll.endByPage(curPageLen, totalPage); 
-
-          //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-          _this3.mescroll.endBySize(curPageLen, totalSize);
-
-          //方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-          //this.mescroll.endSuccess(curPageLen, hasNext); 
-
-          //方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-          //如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-          //如果传了hasNext,则翻到第二页即可显示无更多数据.
-          //this.mescroll.endSuccess(curPageLen);
-
-          // 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-          // 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-          setTimeout(function () {
-            _this3.mescroll.endSuccess(curPageLen);
-          }, 20);
+      var that = this;
+      if (that.item == undefined || null) {
+        uni.request({
+          url: 'http://121.40.30.19/article/list?page=' + pageNum + '&count=' + pageSize,
+          data: {
+            state_id: city.data.state_id,
+            city_id: city.data.city_id },
 
 
-        },
-        fail: function fail() {
-          //  请求失败,隐藏加载状态
-          _this3.mescroll.endErr();
-        } });
+          success: function success(data) {
+            console.log('data', data);
+            // 接口返回的当前页数据列表 (数组)
+            var curPageData = data.data.data.list;
+            console.log('curPageData', curPageData);
+            // 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+            var curPageLen = curPageData.length;
+            console.log('curPageLen', curPageLen);
+            // 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+            // let totalPage = data.data.data.list; 
+            // 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+            var totalSize = data.data.data.total;
+            console.log('totalSize', totalSize);
+            // 接口返回的是否有下一页 (true/false)
+            // let hasNext = data.data.data.list; 
+
+            //设置列表数据
+            if (page.num == 1) _this4.list = []; //如果是第一页需手动置空列表
+            _this4.list = _this4.list.concat(curPageData); //追加新数据
+            console.log('list-', _this4.list);
+            // 请求成功,隐藏加载状态
+            //方法一(推荐): 后台接口有返回列表的总页数 totalPage
+            // this.mescroll.endByPage(curPageLen, totalPage); 
+
+            //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+            _this4.mescroll.endBySize(curPageLen, totalSize);
+
+            //方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+            //this.mescroll.endSuccess(curPageLen, hasNext); 
+
+            //方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+            //如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+            //如果传了hasNext,则翻到第二页即可显示无更多数据.
+            //this.mescroll.endSuccess(curPageLen);
+
+            // 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+            // 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+            setTimeout(function () {
+              _this4.mescroll.endSuccess(curPageLen);
+            }, 20);
+
+
+          },
+          fail: function fail() {
+            //  请求失败,隐藏加载状态
+            _this4.mescroll.endErr();
+          } });
+
+      } else {
+        uni.request({
+          url: 'http://121.40.30.19/article/list?page=' + pageNum + '&count=' + pageSize,
+          data: {
+            state_id: that.item.state_id,
+            city_id: that.item.city_id },
+
+
+          success: function success(data) {
+            console.log('data', data);
+            // 接口返回的当前页数据列表 (数组)
+            var curPageData = data.data.data.list;
+            console.log('curPageData', curPageData);
+            // 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+            var curPageLen = curPageData.length;
+            console.log('curPageLen', curPageLen);
+            // 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+            // let totalPage = data.data.data.list; 
+            // 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+            var totalSize = data.data.data.total;
+            console.log('totalSize', totalSize);
+            // 接口返回的是否有下一页 (true/false)
+            // let hasNext = data.data.data.list; 
+
+            //设置列表数据
+            if (page.num == 1) _this4.list = []; //如果是第一页需手动置空列表
+            _this4.list = _this4.list.concat(curPageData); //追加新数据
+            console.log('list-', _this4.list);
+            // 请求成功,隐藏加载状态
+            //方法一(推荐): 后台接口有返回列表的总页数 totalPage
+            // this.mescroll.endByPage(curPageLen, totalPage); 
+
+            //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+            _this4.mescroll.endBySize(curPageLen, totalSize);
+
+            //方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+            //this.mescroll.endSuccess(curPageLen, hasNext); 
+
+            //方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+            //如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+            //如果传了hasNext,则翻到第二页即可显示无更多数据.
+            //this.mescroll.endSuccess(curPageLen);
+
+            // 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+            // 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+            setTimeout(function () {
+              _this4.mescroll.endSuccess(curPageLen);
+            }, 20);
+
+
+          },
+          fail: function fail() {
+            //  请求失败,隐藏加载状态
+            _this4.mescroll.endErr();
+          } });
+
+      }
 
 
       // 此处仍可以继续写其他接口请求...

@@ -88,7 +88,7 @@
 						<image src="../../static/images/fenxiang.svg"></image>
 					</view>
 					<view class="">
-						<view class="loginButton" @click="login" :v-if="flag">登录</view>
+						<view class="loginButton" @click="login" v-if="flag">登录</view>
 					</view>
 				</view>
 			</view>
@@ -120,7 +120,7 @@
 				articleList: null,
 				token:'',
 				article_id: '',
-				flag:false
+				flag:true
 			}
 		},
 		onLoad: function(e) {
@@ -129,49 +129,44 @@
 				title:'加载中',
 				mask:true
 			})
+			
+			this.flag = uni.getStorageSync("Authorization") ? false : true
+			console.log(this.flag)
+			// debugger
 			this.getArticleDetail(e)
 			uni.hideLoading()
 		},
 		created() {
-			_this = this,
-			_this.getOrder()
+			(_this = this),_this.getOrder()
 		},
 
 		methods: {
-			
+			getOrder(){
+				
+			},
 			// 获取文章详情
 			getArticleDetail(e) {
 				var that = this
 				
-				// uni.getStorage({
-				// 	key: 'Authorization',
-				// 	success: function(res) {
-				// 		console.log("token===>", res.data)
-				// 		that.token = res.data
-				// 		console.log("存储token",that.token)
-				// 		if(that.token == null){
-				// 			that.flag = true
-				// 		}
-				// 	}
-				// })
-				var token = uni.getStorageSync('Authorization')
-				// var that.token = token
-				console.log("token===>", token)
-				if(token == null ){
-					that.flag = true
-				}
-				else{
-					that.flag = false
-				}
+
+				// var token = uni.getStorageSync('Authorization')
+				// // var that.token = token
+				// console.log("token===>", token)
+				// if(token == null ){
+				// 	that.flag = true
+				// }
+				// else{
+				// 	that.flag = false
+				// }
 				uni.request({
 					// url:'article',
 					url: 'http://121.40.30.19/article',
 					data: {
 						article_id: e.article_id
 					},
-					// header: {
-					// 	'Authorization': that.token
-					// },
+					header: {
+						'Authorization': that.token
+					},
 					success: function(res) {
 						console.log(res.data.data.liked,
 							res.data.data.like_count,
@@ -511,7 +506,7 @@
 		position: absolute;
 		/* left: 320rpx; */
 		background: #ffff;
-		bottom: -30rpx;
+		bottom: -20rpx;
 		.dot {
 			width: 10rpx;
 			height: 10rpx;
@@ -551,7 +546,7 @@
 	.userMse {
 		display: flex;
 		margin-left: 28rpx;
-		margin-top: 40rpx;
+		margin-top: 50rpx;
 	}
 
 	.userHeard {

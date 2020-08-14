@@ -32,13 +32,19 @@
 				</view>
 			</view>
 			<view class="content" >
-				<view class="contentHeader">
-					<view class="title">{{attDetail.data.name}}</view>
-					<image src="../../static/images/fenxiang.svg" mode="" @click="share"></image>
-				</view>
-				<view class="tips">
-					<view class="tipHot">{{attDetail.data.tags[0]}}</view>
-					<view class="tip">{{attDetail.data.city}}</view>
+				<view class="contentTop">
+					<view class="">
+						<view class="contentHeader">
+							<view class="title">{{attDetail.data.name}}</view>
+						</view>
+						<view class="tips">
+							<view class="tipHot">{{attDetail.data.tags[0]}}</view>
+							<view class="tip">{{attDetail.data.city}}</view>
+						</view>
+					</view>
+					<view class="shareBox">
+						<image src="../../static/images/icon／share.svg" mode="" @click="share"></image>
+					</view>
 				</view>
 				<view class="rateBox" >
 					<!-- <uni-rate  :readonly="true" allow-half :value="attDetail.data.rate" /> -->
@@ -449,6 +455,10 @@ export default {
 // 内容区
 .content {
 	padding: 60rpx 30rpx 0;
+	.contentTop{
+		display: flex;
+		justify-content: space-between;
+	}
 	.contentHeader {
 		height: 52rpx;
 		display: flex;
@@ -460,10 +470,20 @@ export default {
 			font-weight: 500;
 			color: rgba(48, 49, 51, 1);
 		}
-		image {
-			height: 52rpx;
-			width: 52rpx;
-		}
+	}
+	.shareBox{
+		width:78rpx;
+		height:78rpx;
+		background:rgba(255,229,18,1);
+		box-shadow:0px 2px 4px 0px rgba(255,229,18,0.5);
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.shareBox image {
+		height: 34rpx;
+		width: 34rpx;
 	}
 	.tips {
 		margin-top: 10rpx;
