@@ -39,8 +39,8 @@
 						<view class="userNikename"> {{articleList.data.author_name}} </view>
 						<view class="adress">
 							<image src="../../static/images/Icon／Map.svg" mode="" class="adreessIcon"></image>
-							<view class="adressText">
-								{{articleList.data.city}}
+							<view class="adressText" @click="map()">
+								{{articleList.data.location}}
 							</view>
 						</view>
 					</view>
@@ -344,6 +344,22 @@
 				})
 			},
 
+			map(){
+				uni.getLocation({
+					type: 'gcj02', //返回可以用于uni.openLocation的经纬度
+					success: function (res) {
+						const latitude = res.latitude;
+						const longitude = res.longitude;
+						uni.openLocation({
+							latitude: latitude,
+							longitude: longitude,
+							success: function () {
+								console.log('success');
+							}
+						});
+					}
+				});
+			},
 			copy() {
 				uni.setClipboardData({
 					data: _this.VX,

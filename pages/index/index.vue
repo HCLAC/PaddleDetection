@@ -847,7 +847,7 @@
 	.input-uni-icon {
 		width: 28rpx;
 		height: 28rpx;
-		margin-left: 42rpx;
+		margin-left: 32rpx;
 	}
 
 	.nav-bar-input {
@@ -857,7 +857,7 @@
 		/* #endif */
 		font-size: 28rpx;
 		color: #C9CAD1;
-		margin-left: 12rpx;
+		margin-left: 16rpx;
 		font-size: 28rpx;
 	}
 

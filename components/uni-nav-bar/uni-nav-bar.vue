@@ -162,8 +162,8 @@
 		display: flex;
 		/* #endif */
 		flex-direction: row;
-		height: 44px;
-		line-height: 44px;
+		height: 88rpx;
+		line-height: 88rpx;
 		font-size: 16px;
 		/* background-color: #ffffff;
  */

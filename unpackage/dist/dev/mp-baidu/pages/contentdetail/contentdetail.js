@@ -758,6 +758,22 @@ var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.
 
     },
 
+    map: function map() {
+      uni.getLocation({
+        type: 'gcj02', //返回可以用于uni.openLocation的经纬度
+        success: function success(res) {
+          var latitude = res.latitude;
+          var longitude = res.longitude;
+          uni.openLocation({
+            latitude: latitude,
+            longitude: longitude,
+            success: function success() {
+              console.log('success');
+            } });
+
+        } });
+
+    },
     copy: function copy() {
       uni.setClipboardData({
         data: _this.VX,
