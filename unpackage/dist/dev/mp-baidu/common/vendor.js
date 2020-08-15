@@ -3429,7 +3429,7 @@ MeScroll.prototype.extendUpScroll = function (optUp) {
     noMoreSize: 5, // 如果列表已无数据,可设置列表的总数量要大于等于5条才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看
     offset: 80, // 距底部多远时,触发upCallback
     textLoading: '加载中 ...', // 加载中的提示文本
-    textNoMore: '没有更多了', // 没有更多数据的提示文本
+    textNoMore: '~我也是有底线的~', // 没有更多数据的提示文本
     bgColor: "#F8F8F8", // 背景颜色 (建议在pages.json中再设置一下backgroundColorBottom)
     textColor: "gray", // 文本颜色 (当bgColor配置了颜色,而textColor未配置时,则textColor会默认为白色)
     inited: null, // 初始化完毕的回调
@@ -4236,8 +4236,10 @@ var GlobalOption = {
   up: {
     // 其他up的配置参数也可以写,这里只展示了常用的配置:
     textLoading: '加载中 ...', // 加载中的提示文本
-    textNoMore: '没有更多了', // 没有更多数据的提示文本
+    textNoMore: '~我也是有底线的~', // 没有更多数据的提示文本
     textErr: "加载失败",
+    bgColor: '#FFFFFF',
+    textColor: 'rgba(201,202,209,1)',
     offset: 80, // 距底部多远时,触发upCallback
     isBounce: false, // 默认禁止橡皮筋的回弹效果, 必读事项: http://www.mescroll.com/qa.html?v=190725#q25
     toTop: {

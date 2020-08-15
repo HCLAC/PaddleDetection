@@ -14,7 +14,7 @@
 			<view class="phone"><image class="phoneImg" src="../../static/images/phone.png" mode=""></image></view>
 			
 			<view>我的收藏</view>
-			<!-- <mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"> -->
+				<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 				<view class="contentItem" v-for="(item, index) in tipList" :key="index">
 					<view class="left">
 						<image :src="item.main_image" mode="">
@@ -51,16 +51,20 @@
 						</view>
 					</view>
 				</view>
-			<!-- </mescroll-body> -->
-			<view class="noContent" v-show="tipList != null">~我也是有底线的~</view>
-						
-			<view class="noContentItem" v-show="tipList == null">
-				<image src="../../static/images/wenjianjia.png" mode=""></image>
-				<view class="tipText">您的收藏夹空空如也~</view>
-			</view>
+				</mescroll-body>
+				<!-- <view class="noContent" v-show="tipList != null">~我也是有底线的~</view> -->
+							
+				<view class="noContentItem" v-show="tipList == null">
+					<image src="../../static/images/wenjianjia.png" mode=""></image>
+					<view class="tipText">您的收藏夹空空如也~</view>
+				</view>
+			
 		</view>
 		
+		
+	
 	</view>
+	
 </template>
 
 <script>
@@ -82,7 +86,12 @@ export default {
 	onShow() {
 		this.getUserMsg()
 	},
-	
+	onPullDownRefresh() {
+		console.log('refresh');
+		setTimeout(function () {
+			uni.stopPullDownRefresh();
+		}, 1000);
+	},
 	methods: {
 		getUserMsg(){
 			var that = this
