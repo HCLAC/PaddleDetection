@@ -402,7 +402,7 @@
 .adress.data-v-32e87e5c {
   height: 40rpx;
   margin-top: 12rpx;
-  background: white;
+  background: rgba(0, 145, 255, 0.1);
   border-radius: 20rpx;
   border: 2rpx solid #0091ff;
   display: -webkit-box;

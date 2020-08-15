@@ -1,18 +1,21 @@
 {
-    "appid": "21554227",
     "appInfo": {},
+    "appid": "21554227",
     "appkey": "",
     "condition": {},
+    "host": "baiduboxapp",
+    "libVersion": "",
+    "preview": {
+        "packageId": 592235
+    },
+    "projectname": "ygctour",
     "setting": {
         "urlCheck": false
     },
-    "libVersion": "",
-    "projectname": "ygctour",
-    "host": "baiduboxapp",
     "swan": {
         "baiduboxapp": {
-            "swanJsVersion": "3.190.255-rc",
-            "extensionJsVersion": "100.14.255"
+            "extensionJsVersion": "100.14.255",
+            "swanJsVersion": "3.190.255-rc"
         }
     }
 }

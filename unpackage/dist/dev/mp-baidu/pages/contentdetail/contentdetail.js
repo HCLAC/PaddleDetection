@@ -629,23 +629,16 @@ var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.
       // 	that.flag = false
       // }
       uni.request({ // url:'article',
-        url: 'http://121.40.30.19/article', data: { article_id: e.article_id }, header: { 'Authorization': that.token }, success: function success(res) {console.log(res.data.data.liked, res.data.data.like_count, res.data.data.uuid, 444444);console.log('eeeeeeeeeeeeeeee', e);console.log('文章详情====', res);uni.setStorageSync('id', res.data);that.articleList = res.data;console.log('articleList', that.articleList);} });}, // 点赞
-    clickLike: function clickLike() {var that = this;uni.getStorage({ key: 'Authorization', success: function success(res) {console.log("token===>", res.data);that.token = res.data;} });var article_id = uni.getStorageSync('id');console.log('art', article_id);uni.request({ url: 'http://121.40.30.19/user/liked', data: { article_id: article_id.data.uuid, liked: article_id.data.liked == 0 ? 1 : 0 }, method: 'POST', header: { 'Authorization': that.token }, success: function success(res) {console.log('点赞', res);if (res.data.code != 0) {// debugger
-            uni.showModal({ title: '提示', content: '您好，请先登录', showCancel: false, success: function success(res) {if (res.confirm) {uni.redirectTo({ url: '../login/login' });
-
-                }
-              } });
-
-            return;
-          }
-          uni.request({
+        url: 'http://121.40.30.19/article', data: { article_id: e.article_id }, header: { 'Authorization': uni.getStorageSync('Authorization') }, success: function success(res) {console.log(res.data.data.liked, res.data.data.like_count, res.data.data.uuid, 444444);console.log('eeeeeeeeeeeeeeee', e);console.log('文章详情====', res);uni.setStorageSync('id', res.data);that.articleList = res.data;console.log('articleList', that.articleList);} });}, // 点赞
+    clickLike: function clickLike() {var that = this;var article_id = uni.getStorageSync('id');console.log('art', article_id);uni.request({ url: 'http://121.40.30.19/user/liked', data: { article_id: article_id.data.uuid, liked: article_id.data.liked == 0 ? 1 : 0 }, method: 'POST', header: { 'Authorization': uni.getStorageSync('Authorization') }, success: function success(res) {console.log('点赞', res);if (res.data.code != 0) {// debugger
+            uni.showModal({ title: '提示', content: '您好，请先登录', showCancel: false, success: function success(res) {if (res.confirm) {uni.redirectTo({ url: '../login/login' });}} });return;}uni.request({
             // url:'article',
             url: 'http://121.40.30.19/article',
             data: {
               article_id: article_id.data.uuid },
 
             header: {
-              'Authorization': that.token },
+              'Authorization': uni.getStorageSync('Authorization') },
 
             success: function success(res) {
               console.log(res.data.data.liked,
@@ -671,13 +664,6 @@ var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.
     // 收藏
     clickFav: function clickFav() {
       var that = this;
-      uni.getStorage({
-        key: 'Authorization',
-        success: function success(res) {
-          console.log("token===>", res.data);
-          that.token = res.data;
-        } });
-
 
       var article_id = uni.getStorageSync('id');
       uni.request({
@@ -688,7 +674,7 @@ var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.
 
         method: 'POST',
         header: {
-          'Authorization': that.token },
+          'Authorization': uni.getStorageSync('Authorization') },
 
         success: function success(res) {
           console.log('收藏', res);
@@ -715,7 +701,7 @@ var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.
               article_id: article_id.data.uuid },
 
             header: {
-              'Authorization': that.token },
+              'Authorization': uni.getStorageSync('Authorization') },
 
             success: function success(res) {
               console.log(res.data.data.fav,

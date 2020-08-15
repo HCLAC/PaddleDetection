@@ -129,7 +129,6 @@
 				title:'加载中',
 				mask:true
 			})
-			
 			this.flag = uni.getStorageSync("Authorization") ? false : true
 			console.log(this.flag)
 			// debugger
@@ -165,7 +164,7 @@
 						article_id: e.article_id
 					},
 					header: {
-						'Authorization': that.token
+						'Authorization': uni.getStorageSync('Authorization')
 					},
 					success: function(res) {
 						console.log(res.data.data.liked,
@@ -185,13 +184,7 @@
 			// 点赞
 			clickLike() {
 				var that = this
-				uni.getStorage({
-					key: 'Authorization',
-					success: function(res) {
-						console.log("token===>", res.data)
-						that.token = res.data
-					}
-				})
+			
 
 				var article_id = uni.getStorageSync('id')
 				console.log('art',article_id)
@@ -204,7 +197,7 @@
 						},
 						method: 'POST',
 						header: {
-							'Authorization': that.token
+							'Authorization': uni.getStorageSync('Authorization')
 						},
 						success: function(res) {
 							console.log('点赞', res)
@@ -231,7 +224,7 @@
 									article_id: article_id.data.uuid
 								},
 								header: {
-									'Authorization': that.token
+									'Authorization': uni.getStorageSync('Authorization')
 								},
 								success: function(res) {
 									console.log(res.data.data.liked,
@@ -257,13 +250,6 @@
 			// 收藏
 			clickFav() {
 				var that = this
-				uni.getStorage({
-					key: 'Authorization',
-					success: function(res) {
-						console.log("token===>", res.data)
-						that.token = res.data
-					}
-				})
 
 				var article_id = uni.getStorageSync('id')
 				uni.request({
@@ -274,7 +260,7 @@
 					},
 					method: 'POST',
 					header: {
-						'Authorization': that.token
+						'Authorization': uni.getStorageSync('Authorization')
 					},
 					success: function(res) {
 						console.log('收藏', res)
@@ -301,7 +287,7 @@
 								article_id: article_id.data.uuid
 							},
 							header: {
-								'Authorization': that.token
+								'Authorization': uni.getStorageSync('Authorization')
 							},
 							success: function(res) {
 								console.log(res.data.data.fav,
@@ -587,7 +573,7 @@
 		// width: 100rpx;
 		height: 40rpx;
 		margin-top: 12rpx;
-		background: rgba(255, 255, 255, 1);
+		background: rgba(0,145,255,0.1);
 		border-radius: 20rpx;
 		border: 2rpx solid rgba(0, 145, 255, 1);
 		display: flex;
@@ -605,7 +591,7 @@
 		font-size: 22rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
-		color: rgba(0, 145, 255, 1);
+		color: rgba(0,145,255,1);
 		
 	}
 

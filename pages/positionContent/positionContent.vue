@@ -632,7 +632,12 @@ export default {
 				color: rgba(96, 98, 102, 1);
 				line-height: 36rpx;
 				width:308rpx;
-				height:70rpx;
+				max-height:70rpx;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				-webkit-line-clamp: 2;
 			}
 		}
 		.right {

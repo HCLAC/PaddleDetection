@@ -248,7 +248,7 @@
 	}
 
 	.item-hot .city-button {
-		width: 156rpx;
+		/* width: 156rpx; */
 		height: 60rpx;
 		margin-right: 16rpx;
 		margin-bottom: 16rpx;

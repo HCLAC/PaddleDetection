@@ -299,6 +299,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 45));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 79));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 109));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 // import httpType from '../../httpType.js';
 var _default = {
@@ -334,6 +335,7 @@ var _default = {
     this.item = getApp().globalData.item,
     console.log('item', this.item);
     this.getCity();
+
   },
   onLoad: function onLoad() {
     if (this.item == undefined || null) {
@@ -365,6 +367,7 @@ var _default = {
 
             success: function success(res) {
               console.log('获取地址id', res);
+              // 地址未定义
               if (res.data.code != 0) {
                 uni.request({
                   url: 'http://121.40.30.19/site/hot',
@@ -384,6 +387,9 @@ var _default = {
                     count: 6,
                     page: 1,
                     sort_by: 1 },
+
+                  header: {
+                    'Authorization': uni.getStorageSync('Authorization') },
 
                   success: function success(res) {
                     console.log('文章列表', res);
@@ -421,6 +427,9 @@ var _default = {
                     count: 6,
                     page: 1,
                     sort_by: 1 },
+
+                  header: {
+                    'Authorization': uni.getStorageSync('Authorization') },
 
                   success: function success(res) {
                     console.log('文章列表', res);
@@ -468,9 +477,9 @@ var _default = {
           page: 1,
           sort_by: 1 },
 
-        // header: {
-        // 	'Authorization': this.token
-        // },
+        header: {
+          'Authorization': uni.getStorageSync('Authorization') },
+
         success: function success(res) {
           console.log('切换文章列表', res);
           _this2.list = res.data.data.list;
@@ -478,58 +487,7 @@ var _default = {
 
 
     },
-    // 热门景点
-    getSiteHot: function getSiteHot() {
-      var that = this;
-      that.city = uni.getStorageSync('city');
-      uni.getStorage({
-        key: 'id',
-        success: function success(res) {
-          console.log('热门景点---', res.data);
-          that.hotAtt = res.data.data;
-        } });
 
-
-    },
-    // 获取文章列表
-    getArticleList: function getArticleList() {
-      var that = this;
-      var city = uni.getStorageSync('city_id');
-      console.log('idid', city);
-      uni.getStorage({
-        key: 'Authorization',
-        success: function success(res) {
-          console.log("token===>", res.data);
-          that.token = res.data;
-          if (that.token != null) {
-            uni.request({
-              // url:'http://192.168.43.156:8199/article/list',
-              // url:'article/list',
-              url: 'http://121.40.30.19/article/list',
-              // url:'http://192.168.43.60:8299/article/list',
-              data: {
-                state_id: city.data.state_id,
-                city_id: city.data.city_id,
-                count: 6,
-                page: 1,
-                sort_by: 1 },
-
-              header: {
-                'Authorization': that.token },
-
-              success: function success(res) {
-                console.log('文章列表', res);
-                uni.setStorageSync('article_id', res.data);
-                console.log('存储文章列表==', res.data);
-                that.list = res.data.data.list;
-                console.log('list=====', that.list);
-              } });
-
-          }
-        } });
-
-
-    },
     // 跳转文章详情
     onPageJump: function onPageJump(e) {
       console.log(e);
@@ -545,42 +503,6 @@ var _default = {
       // console.log('qwer',e)
       var article = e.currentTarget.id;
       var that = this;
-      var city_id = uni.getStorageSync('city_id');
-      var state_id = uni.getStorageSync('state_id');
-      uni.getStorage({
-        key: 'Authorization',
-        success: function success(res) {
-          console.log("token===>", res.data);
-          that.token = res.data;
-        } });
-
-      // uni.request({
-      // 	// url:'article',
-      // 	url: 'http://121.40.30.19/article',
-      // 	data: {
-      // 		article_id: article
-      // 	},
-      // 	header: {
-      // 		'Authorization': that.token
-      // 	},
-      // 	success: function(res) {
-      // 		console.log(res.data.data.liked,
-      // 			res.data.data.like_count,
-      // 			res.data.data.uuid,
-      // 			444444
-      // 		)
-      // 		// console.log('eeeeeeeeeeeeeeee', e)
-      // 		console.log('文章详情====', res.data.data)
-      // 		uni.setStorageSync('id', res.data)
-      // 		that.articleList = res.data.data
-      // 		console.log('articleList', that.articleList)
-      // 		console.log('liked',that.articleList.liked)
-      // 		that.liked = that.articleList.liked
-      // 	}
-      // })
-
-
-
       uni.request({
         url: 'http://121.40.30.19/user/liked',
         data: {
@@ -589,7 +511,7 @@ var _default = {
 
         method: 'POST',
         header: {
-          'Authorization': that.token },
+          'Authorization': uni.getStorageSync('Authorization') },
 
         success: function success(res) {
           console.log('点赞', res);
@@ -609,31 +531,53 @@ var _default = {
 
             return;
           }
-          uni.request({
-            // url:'http://192.168.43.156:8199/article/list',
-            // url:'article/list',
-            url: 'http://121.40.30.19/article/list',
-            // url:'http://192.168.43.60:8299/article/list',
-            data: {
-              state_id: state_id,
-              city_id: city_id,
-              count: 20,
-              page: 1,
-              sort_by: 1 },
-
-            header: {
-              'Authorization': that.token },
-
-            success: function success(res) {
-              console.log('文章列表', res);
-              uni.setStorageSync('article_id', res.data);
-              console.log('存储文章列表==', res.data);
-              that.list = res.data.data;
-              // that.leftList = that.list.list
-              // that.rightList = that.list.list
-              console.log('list=====', that.list.list);
-            } });
-
+          if (that.item == undefined || null) {
+            that.getAdress();
+            // var city = uni.getStorageSync('city_id')
+            // console.log('取数据',city)
+            // uni.request({
+            // 	url:'http://121.40.30.19/article/list',
+            // 	data:{
+            // 		state_id:city.data.state_id,
+            // 		city_id:city.data.city_id,
+            // 		count:6,
+            // 		page:1,
+            // 		sort_by:1
+            // 	},
+            // 	header: {
+            // 		'Authorization': uni.getStorageSync('Authorization')
+            // 	},
+            // 	success:(res)=>{
+            // 		console.log('点赞后文章列表',res)
+            // 		uni.setStorageSync('article_id',res.data)
+            // 		that.list = res.data.data.list
+            // 	}
+            // })
+          } else {
+            that.getCity();
+            // uni.request({
+            // 	// url:'http://192.168.43.156:8199/article/list',
+            // 	// url:'article/list',
+            // 	url:'http://121.40.30.19/article/list',
+            // 	// url:'http://192.168.43.60:8299/article/list',
+            // 	data:{
+            // 		state_id:that.item.state_id,
+            // 		city_id:that.item.city_id,
+            // 		count:20,
+            // 		page:1,
+            // 		sort_by:1
+            // 	},
+            // 	header: {
+            // 		'Authorization': uni.getStorageSync('Authorization')
+            // 	},
+            // 	success:(res)=>{
+            // 		console.log('点赞后文章列表',res)
+            // 		uni.setStorageSync('article_id',res.data)
+            // 		that.list = res.data.data.list
+            // 		console.log('点赞后list=====',that.list)
+            // 	}
+            // })
+          }
         } });
 
 
@@ -716,8 +660,11 @@ var _default = {
           page: 1,
           sort_by: 1 },
 
+        header: {
+          'Authorization': uni.getStorageSync('Authorization') },
+
         success: function success(res) {
-          // console.log('下拉刷新',res)
+          console.log('下拉刷新', res);
           // 请求成功,隐藏加载状态
           _this3.mescroll.endSuccess();
         },

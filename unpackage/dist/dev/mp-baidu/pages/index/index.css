@@ -673,59 +673,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	/* 头条小程序组件内不能引入字体 */
 page.data-v-57280228 {
 		display: -webkit-box;
@@ -1040,6 +987,7 @@ view.data-v-57280228 {
 }
 .demo-image.data-v-57280228 {
 		min-height: 300rpx;
+		max-height: 460rpx;
 		width: 100%;
 		border-radius: 8rpx 8rpx 0 0 ;
 		position: relative;
