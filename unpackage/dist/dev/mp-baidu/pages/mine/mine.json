@@ -1,7 +1,5 @@
 {
   "navigationStyle": "custom",
   "component": true,
-  "usingComponents": {
-    "mescroll-body": "/components/mescroll-uni/mescroll-body"
-  }
+  "usingComponents": {}
 }

@@ -436,7 +436,7 @@ export default {
 	position: absolute;
 	/* left: 320rpx; */
 	background: #ffff;
-	bottom: -40rpx;
+	bottom: -20rpx;
 	.dot {
 		width: 10rpx;
 		height: 10rpx;
@@ -454,7 +454,7 @@ export default {
 }
 // 内容区
 .content {
-	padding: 60rpx 30rpx 0;
+	padding: 40rpx 30rpx 0;
 	.contentTop{
 		display: flex;
 		justify-content: space-between;

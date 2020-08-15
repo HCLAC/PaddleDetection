@@ -508,9 +508,28 @@
 			// 	})
 			// },
 			lookAll(){
-				uni.navigateTo({
-					url:'/pages/attractionsList/attractionsList'
-				})
+				if(this.item == undefined || null){
+					var city = uni.getStorageSync('city_id')
+					console.log('city----',city)
+					if(city.data == null ){
+						uni.navigateTo({
+							url:'/pages/attractionsList/attractionsList'
+						})
+					}else{
+						var state_id = city.data.state_id
+						var city_id = city.data.city_id
+						uni.navigateTo({
+							url:'/pages/attractionsList/attractionsList?state_id='+state_id+'&city_id='+city_id
+						})
+					}
+				}else{
+					var state_id = this.item.state_id
+					var city_id = this.item.city_id
+					uni.navigateTo({
+						url:'/pages/attractionsList/attractionsList?state_id='+state_id+'&city_id='+city_id
+					})
+				}
+				
 			},
 			toAtt(e){
 				console.log('----------------',e)

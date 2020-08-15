@@ -213,7 +213,7 @@ var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js
 //
 //
 //
-var _default = { data: function data() {return { phone: "", code: '', key: '', getCodeText: '获取验证码', getCodeBtnColor: "#ffffff", getCodeisWaiting: false, codeColor: { color: '#0091FF' }, styleObj: { color: '#C9CAD1' }, styleCode: { color: '#C9CAD1' }, disabled: true, styleBtn: { background: '#F8F8F8' } };}, components: {}, methods: { onInput: function onInput(e) {if (e.detail.value.length == 11) {this.styleObj.color = '#303133';} else {this.styleObj.color = '#C9CAD1';}}, onCode: function onCode(e) {
+var _default = { data: function data() {return { phone: "", code: '', key: '', getCodeText: '获取验证码', getCodeBtnColor: "#ffffff", getCodeisWaiting: false, codeColor: { color: '#0091FF' }, styleObj: { color: '#C9CAD1' }, styleCode: { color: '#C9CAD1' }, disabled: true, styleBtn: { background: '#FFE512' } };}, components: {}, methods: { onInput: function onInput(e) {if (e.detail.value.length == 11) {this.styleObj.color = '#303133';} else {this.styleObj.color = '#C9CAD1';}}, onCode: function onCode(e) {
       if (e.detail.value.length == 6) {
         this.styleCode.color = '#303133';
         this.disabled = false;

@@ -183,64 +183,101 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     uniNavBar: uniNavBar },
 
-  onLoad: function onLoad() {
+  onLoad: function onLoad(option) {
+    var that = this;
+    console.log('stateid---', option.state_id);
+    console.log('cityid----', option.city_id);
+    that.state_id = option.state_id;
+    that.city_id = option.city_id;
     this.getHotAttList();
-    // this.showHotAttList()
   },
-  // onShow() {
-  // 	this.getHotAttList()
-  // 	this.showHotAttList()
-  // },
+
   methods: {
     getHotAttList: function getHotAttList() {
       var that = this;
-      that.city = uni.getStorageSync('city');
-      var city = uni.getStorageSync('city_id');
-      uni.getStorage({
-        key: 'city_id',
-        success: function success(res) {
-          console.log('取本地存储城市id', res.data);
-          if (res.data.code != 0) {
-            uni.request({
-              url: 'http://121.40.30.19/site/list',
-              data: {
-                count: 20,
-                page: 1,
-                sort_by: 3 },
+      if (this.state_id == undefined || null) {
+        uni.request({
+          url: 'http://121.40.30.19/site/list',
+          data: {
+            count: 20,
+            page: 1,
+            sort_by: 3 },
 
-              success: function success(res) {
-                console.log("热门景点列表=========", res);
-                uni.setStorageSync('id', res.data);
-                that.cardList = res.data.data;
-                console.log('cardList====', that.cardList);
-              } });
+          success: function success(res) {
+            console.log("热门景点列表=========", res);
+            uni.setStorageSync('id', res.data);
+            that.cardList = res.data.data;
+            console.log('cardList====', that.cardList);
+          } });
 
-          }
-          var state_id = res.data.data.state_id;
-          var city_id = res.data.data.city_id;
-          console.log('city_id', city_id);
-          console.log('state_id', state_id);
-          console.log('----===', city_id);
-          uni.request({
-            url: 'http://121.40.30.19/site/list',
-            data: {
-              state_id: city.data.state_id,
-              city_id: city.data.city_id,
-              count: 20,
-              page: 1,
-              sort_by: 1 },
+      } else {
+        uni.request({
+          url: 'http://121.40.30.19/site/list',
+          data: {
+            state_id: that.state_id,
+            city_id: that.city_id,
+            count: 20,
+            page: 1,
+            sort_by: 1 },
 
-            success: function success(res) {
-              console.log("热门景点列表=========", res);
-              uni.setStorageSync('id', res.data);
-              that.cardList = res.data.data;
-              console.log('cardList====', that.cardList);
-            } });
+          success: function success(res) {
+            console.log("热门景点列表=========", res);
+            uni.setStorageSync('id', res.data);
+            that.cardList = res.data.data;
+            console.log('cardList====', that.cardList);
+          } });
 
-        } });
-
-
+      }
     },
+    // getHotAttList(){
+    // 	var that = this
+    // 	that.city = uni.getStorageSync('city')
+    // 	var city = uni.getStorageSync('city_id')
+    // 	uni.getStorage({
+    // 		key:'city_id',
+    // 		success:function(res){
+    // 			console.log('取本地存储城市id',res.data)
+    // 			if(res.data.code != 0){
+    // 				uni.request({
+    // 					url:'http://121.40.30.19/site/list',
+    // 					data:{
+    // 						count:20,
+    // 						page:1,
+    // 						sort_by:3
+    // 					},
+    // 					success:res=>{
+    // 						console.log("热门景点列表=========",res)
+    // 						uni.setStorageSync('id',res.data)
+    // 						that.cardList = res.data.data
+    // 						console.log('cardList====',that.cardList)
+    // 					}
+    // 				})
+    // 			}
+    // 			var state_id = res.data.data.state_id
+    // 			var city_id = res.data.data.city_id
+    // 			console.log('city_id',city_id)
+    // 			console.log('state_id',state_id)
+    // 			console.log('----===',city_id)
+    // 			uni.request({
+    // 				url:'http://121.40.30.19/site/list',
+    // 				data:{
+    // 					state_id:city.data.state_id,
+    // 					city_id:city.data.city_id,
+    // 					count:20,
+    // 					page:1,
+    // 					sort_by:1
+    // 				},
+    // 				success:res=>{
+    // 					console.log("热门景点列表=========",res)
+    // 					uni.setStorageSync('id',res.data)
+    // 					that.cardList = res.data.data
+    // 					console.log('cardList====',that.cardList)
+    // 				}
+    // 			})
+    // 		}
+    // 	})
+
+    // },
     back: function back() {
       uni.navigateBack({
         delta: 1 });
