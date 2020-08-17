@@ -217,9 +217,10 @@ var _default = { data: function data() {return { citySelected: '', city: '', sta
       historyListShow: true, historyList: [], hotCityDate: [] };}, onLoad: function onLoad() {this.getAdress();this.getHotCity();}, methods: { getHotCity: function getHotCity() {var _this = this;uni.request({ url: 'http://121.40.30.19/city/hot', method: "GET", success: function success(res) {console.log(res);_this.hotCityDate = res.data.data;console.log('热门城市===>', res.data.data), uni.setStorageSync('state_id', res.data.data);} }), uni.getStorage({ key: 'state_id', success: function success(res) {console.log("city===>", res.data);} });}, onSelect: function onSelect(item) {this.city = item.name;
       // this.city_id = item.city_id
       // this.state_id = item.state_id
-
+      // uni.setStorageSync('item',item)
+      // console.log('item--',item)
       getApp().globalData.item = item;
-      // console.log('item',item)
+      console.log('item', item);
       uni.switchTab({
         url: '../index/index?item=' + item });
 

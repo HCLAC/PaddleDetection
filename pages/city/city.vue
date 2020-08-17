@@ -81,9 +81,10 @@
 				this.city = item.name
 				// this.city_id = item.city_id
 				// this.state_id = item.state_id
-				
-				getApp().globalData.item = item;
-				// console.log('item',item)
+				// uni.setStorageSync('item',item)
+				// console.log('item--',item)
+				getApp().globalData.item = item
+				console.log('item',item)
 				uni.switchTab({
 					url:'../index/index?item='+item
 				})

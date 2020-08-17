@@ -195,15 +195,17 @@
 		onShow() {
 			this.item = getApp().globalData.item,
 			console.log('item',this.item)
-			this.getCity()
-			
+			if(this.item != null || undefined){
+				this.getCity()
+			}
 		},
 		onLoad() {
 			if(this.item == undefined || null){
 				this.getAdress()
 			}
-			
 		},
+		
+		
 		methods: {
 			// 获取当前地理位置
 			getAdress(){
