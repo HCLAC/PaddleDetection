@@ -63,7 +63,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	@import '@/style/mixin.scss';
 	
 </style>

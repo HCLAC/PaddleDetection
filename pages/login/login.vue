@@ -17,26 +17,28 @@
 					<input type="number" maxlength="11" placeholder="请输入您的手机号" placeholder-style="color:'#C9CAD1',font-size:30rpx" class="is-input1" :style="styleObj" @input="onInput" v-model="phone" />
 					<image src="../../static/images/ic_search_sel@2x.png" mode="" @click="clearphone()"  class="searchSel" v-show="phone" ></image>
 				</view>
+				<u-line color="#FFEDEFF2" margin="40rpx 0rpx"></u-line>
 				<view class="login-code">
 					<input type="number" maxlength="6" placeholder="请输入您的验证码"  class="is-input1 " :style="styleCode" @input="onCode" v-model="code" />
 					<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-show="code" @click="clearcode()"></image>
 					<view class="code-sx"></view>
-					<view class="codeimg" @click.stop="getCode()">{{getCodeText}}</view>
+					<view class="codeimg" @click.stop="getCode()" :style="codeColor">{{getCodeText}}</view>
 				</view>
+				<u-line color="#FFEDEFF2" margin="40rpx 0rpx"></u-line>
 			</view> 
 
 
 			<!-- 登录按钮 -->
 			<view class="loginButton" >
-				<button class="lb"   
-				 @click="submit" >登录</button>
+				<button class="lb"   :disabled="disabled" :style="styleBtn" open-type="getUserInfo" @getuserinfo="getUserInfo"
+				  @tap="doLogin">登录</button>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	
+	import httpType from '../../httpType.js';
 	export default {
 		
 		data() {
@@ -47,13 +49,19 @@
 				getCodeText: '获取验证码',
 				getCodeBtnColor: "#ffffff",
 				getCodeisWaiting: false,
+				codeColor:{
+					color:'#0091FF'
+				},
 				styleObj: {
 	                color: '#C9CAD1'
 	            },
 				styleCode: {
 	                color: '#C9CAD1'
 	            },
-				
+				disabled:true,
+				styleBtn:{
+					background:'#FFE512'
+				}
 			}
 		},
 		
@@ -72,8 +80,12 @@
 			onCode(e){
 				if(e.detail.value.length  ==6){
 					this.styleCode.color = '#303133'
+					this.disabled=false
+					this.styleBtn.background = '#FFE512'
 				}else{
 					this.styleCode.color = '#C9CAD1'
+					this.disabled=true
+					this.styleBtn.background = 'rgba(237,239,242,1)'
 				}
 			},
 			clearphone(){
@@ -86,14 +98,142 @@
 					this.code = '';
 				}
 			},
-			submit(){
-				uni.reLaunch({
-					url:'../mine/mine'
+			
+			getCode() {
+				let _this = this;
+				uni.hideKeyboard()
+				if (_this.getCodeisWaiting) {
+					return;
+				}
+				if (!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(_this.phone))) {
+					uni.showToast({
+						title: '请填写正确手机号码',
+						icon: "none"
+					});
+					return false;
+				}
+				_this.getCodeText = "发送中..."
+				_this.getCodeisWaiting = true;
+				_this.getCodeBtnColor = "rgba(255,255,255,0.5)"
+				
+				// this.$ajax.post({
+				// 	url:'/user/sendcaptcha',
+				// 	param:{
+				// 		'mobile': _this.phone
+				// 	}
+				// }).then((res)=>{
+				// 	console.log(res.data)
+				// 	_this.code = res.data.data.code;
+				// })
+				
+				// 获取验证码
+				httpType.request({
+					url:'user/sendcaptcha',
+					data:{
+						'mobile':this.phone
+					},
+					method:'POST',
+					success: (res)=> {
+						_this.code = res.data.data.code;
+					}
+				}),
+				
+				//示例用定时器模拟请求效果
+				setTimeout(() => {
+					//uni.showToast({title: '验证码已发送',icon:"none"});
+					_this.setTimer();
+				}, 1000)
+				
+			},
+			setTimer() {
+				let holdTime = 59,
+					_this = this;
+					_this.codeColor.color = 'rgba(0,145,255,0.52)'
+				_this.getCodeText = "60s重新获取"
+				_this.Timer = setInterval(() => {
+					if (holdTime <= 0) {
+						_this.getCodeisWaiting = false;
+						_this.getCodeBtnColor = "#ffffff";
+						_this.getCodeText = "获取验证码"
+						clearInterval(_this.Timer);
+						return;
+					}
+					_this.getCodeText = holdTime + "s重新获取"
+					holdTime--;
+				}, 1000)
+			},
+			getUserInfo(){
+				uni.getUserInfo({
+					// provider:'baidu',
+					success:(res)=>{
+						console.log('用户信息',res.userInfo)
+					}
 				})
-				// uni.setStorage({
-				// 	// phone:data.phone
-				// }),
-			}
+			},
+			
+			doLogin() {
+				let _this = this;
+				uni.hideKeyboard()
+				//模板示例部分验证规则
+				// if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phone))){ 
+				// 	uni.showToast({title: '请填写正确手机号码',icon:"none"});
+				// 	return false; 
+				// } 
+				// var nick_name = uni.getStorageSync('nickName')
+				
+				uni.request({
+					// url: 'user/login',
+					url:'http://121.40.30.19:8199/user/login',
+					data: {
+						// 'key': _this.key,
+						'code': _this.code,
+						'mobile': _this.phone,
+						'source':1
+					},
+					method: 'POST',
+					// header: {
+					// 	'Content-Type': 'application/x-www-form-urlencoded',
+					// },
+					success: (res) => {
+						console.log(res)
+						if (res.data.code == 0) {
+							// _this.login(true, res.data.data, function() {
+								// _this.getRongyToken();
+								// uni.setStorage('Authorization',res.header.Authorization),
+								// // success:function(res){
+								// 	console.log("+++++",res)
+								// } 
+								// uni.setStorage({
+								// 	key:'Authorization',
+								// 	data:res.header.Authorization,
+								// 	success:function(res) {
+								// 		console.log("++++++",res)
+								// 	}
+								// }),
+								uni.showToast({
+									title: '登录成功',
+									icon: "none"
+								}),
+								uni.reLaunch({
+									url:'../mine/mine'
+								}),
+								uni.setStorageSync('Authorization',res.header.Authorization)
+							
+								
+									// uni.setStorage({
+									// 	// phone:data.phone
+									// }),
+							// });
+						} else {
+							uni.showToast({
+								title: '手机验证码错误',
+								icon: "none"
+							});
+							return false;
+						}
+					}
+				});
+			},
 		}
 	}
 </script>
@@ -110,7 +250,7 @@
 	/* @import url("../../components/watch-login/css/icon.css"); */
 	/* @import url("./css/main.css"); */
 	.header{
-		margin-top: 246rpx;
+		margin-top: 84rpx;
 		margin-left: 32rpx;
 	}
 	.headerTitle{
@@ -137,7 +277,7 @@
 		
 	}
 	.login-phone{
-		// width:240rpx;
+		width:718rpx;
 		height:30rpx;
 		font-size:30rpx;
 		font-family:PingFangSC-Regular,PingFang SC;
@@ -151,6 +291,7 @@
 		color: #303133;
 	}
 	.login-code{
+		width:718rpx;
 		height:30rpx;
 		font-size:30rpx;
 		font-family:PingFangSC-Regular,PingFang SC;
@@ -169,11 +310,12 @@
 	.searchSel{
 		width: 44rpx;
 		height: 44rpx;
+		margin-right: 32rpx;
 		// display: none;
 	}
 	// .is-input1:valid + .searchSel {display: block;}
 	.codeimg{
-		width:150rpx;
+		// width:204rpx;
 		height:30rpx;
 		font-size:30rpx;
 		font-family:PingFangSC-Regular,PingFang SC;
@@ -181,6 +323,7 @@
 		color:rgba(0,145,255,1);
 		line-height:30rpx;
 		margin-left: 20rpx;
+		margin-right: 32rpx;
 	}
 	.loginButton .lb{
 		width:692rpx;
@@ -190,6 +333,7 @@
 		margin-top: 154rpx;
 		font-size: 36rpx;
 		color: #303133;
+		line-height: 100rpx;
 	}
 	button::after{ border: none;}
 </style>

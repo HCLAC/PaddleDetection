@@ -10,7 +10,7 @@
 .mescroll-upwarp .upwarp-tip,
 .mescroll-upwarp .upwarp-nodata {
 	display: inline-block;
-	font-size: 28rpx;
+	font-size: 22rpx;
 	vertical-align: middle;
 	/* color: gray; 已在style设置color,此处删去*/
 }

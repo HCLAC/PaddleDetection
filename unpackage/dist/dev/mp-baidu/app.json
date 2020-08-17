@@ -1,6 +1,5 @@
 {
   "pages": [
-      "pages/positionContent/positionContent",
     "pages/index/index",
     "pages/login/login",
     "pages/city/city",
@@ -9,13 +8,14 @@
     "pages/attractionsList/attractionsList",
     "pages/mine/mine",
     "pages/searchResults/searchResults",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/positionContent/positionContent"
   ],
   "subPackages": [],
   "window": {
     "navigationBarBackgroundColor": "#F7F7F7",
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "领途羊"
+    "backgroundColorBottom": "#F8F8F8"
   },
   "tabBar": {
     "list": [
@@ -33,7 +33,6 @@
       }
     ],
     "backgroundColor": "#ffffff",
-    "borderStyle": "black",
     "color": "#C9CAD1",
     "selectedColor": "#303133"
   },

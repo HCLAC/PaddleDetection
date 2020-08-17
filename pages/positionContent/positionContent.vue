@@ -1,122 +1,206 @@
 <template>
-	<view>
+	<view> 
+		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
-					<uni-icons type="arrowleft" class="icons" color="#333333" size="22" @click="back" />
-					<image src="../../static/images/home.png" class="homeIcon" mode=""></image>
+					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
 		<!-- 用户信息 -->
-
+		
 		<!-- 内容详情轮播图 -->
-		<view class="uni-padding-wrap">
-			<view class="page-section swiper">
-				<view class="page-section-spacing">
-					<swiper @change="change" :autoplay="true" class="swiper" :indicator-dots="false">
-						<swiper-item v-for="item in list" class="swiper-item"><image src="../../static/images/photos/WechatIMG3.png" mode=""></image></swiper-item>
-					</swiper>
-					<view class="imageCount">{{ current + 1 }}/{{ list.length }}</view>
-					<view class="dots">
-						<block v-for="(item, index) in list"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+		<view class="" v-show="attDetail != null">
+			<view class="uni-padding-wrap">
+				<view class="page-section swiper">
+					<view class="page-section-spacing">
+						<swiper @change="change" :autoplay="true" class="swiper" :indicator-dots="false">
+							<swiper-item v-for="item in attDetail.data.images" class="swiper-item">
+								<image :src="item" mode="scaleToFill" ></image>
+							</swiper-item>
+						</swiper>
+						<view class="imageCount">{{ current + 1 }}/{{ attDetail.data.images.length }}</view>
+						<view class="dots">
+							<block v-for="(item, index) in attDetail.data.images">
+								<view :class="[index == current ? 'activieDot' : 'dot']"></view>
+							</block>
+						</view>
 					</view>
 				</view>
 			</view>
-		</view>
-		<view class="content">
-			<view class="contentHeader">
-				<view class="title">纳米比亚</view>
-				<image src="../../static/images/shareHere.png" mode=""></image>
-			</view>
-			<view class="tips">
-				<view class="tipHot">5A景区</view>
-				<view class="tip">直布罗陀</view>
-			</view>
-			<view class="rateBox">
-				<view class="iconBox">
-					<image src="../../static/images/rateOver.png"></image>
-					<image src="../../static/images/rateOver.png"></image>
-					<image src="../../static/images/rateOver.png"></image>
-					<image src="../../static/images/rateHalf.png"></image>
-					<image src="../../static/images/rateNo.png"></image>
-				</view>
-				<view class="rate">3.5 星</view>
-				<view class="goTo">2688人去过</view>
-			</view>
-			<view class="contentText">
-				<text :class="[isShow ? 'loseText' : 'moreText']">
-					简介：语雀是一款优雅高效的在线文档编辑与协同工让 个企业轻松拥有文档中心阿里巴巴集团内部使语雀是一 款优雅高效的在线文档编辑与协同工让个企业轻松拥有
-					文档中心阿里巴巴集团内部使语雀是一款优雅高效的在 线文档编辑与协同工让个企业轻松拥有文档中心阿里巴 巴集团内部使。
-				</text>
-				<view class="btnBox" @click="showMore" v-if="!isShow">
-					<text>收起</text>
-					<image class="iconImg" src="../../static/images/zhankaiIcon.png" mode=""></image>
-				</view>
-				<view class="btnBox" @click="showMore" v-else>
-					<text>展开</text>
-					<image class="iconImg" src="../../static/images/shouqiIcon.png" mode=""></image>
-				</view>
-			</view>
-		</view>
-		<view class="magrinBck"></view>
-		<view class="adressBox">
-			<view class="title">景点位置</view>
-			<view class="adress">
-				<view class="left">
-					<image src="../../static/images/mapIcon.png" mode=""></image>
-					<text>中国浙江省杭州市西湖区弯糖路118号</text>
-				</view>
-				<view class="right">
-					<image src="../../static/images/mapBack.png" mode=""></image>
-					<view class="insideBox">
-						<image src="../../static/images/dingwei.png" mode=""></image>
-						<text>导航</text>
+			<view class="content" >
+				<view class="contentTop">
+					<view class="">
+						<view class="contentHeader">
+							<view class="title">{{attDetail.data.name}}</view>
+						</view>
+						<view class="tips">
+							<view class="tipHot">{{attDetail.data.tags[0]}}</view>
+							<view class="tip">{{attDetail.data.city}}</view>
+						</view>
+					</view>
+					<view class="shareBox">
+						<image src="../../static/images/icon／share.svg" mode="" @click="share"></image>
 					</view>
 				</view>
+				<view class="rateBox" >
+					<!-- <uni-rate  :readonly="true" allow-half :value="attDetail.data.rate" /> -->
+					<!-- 评分图标 -->
+					<view class="rateStart" v-if="attDetail.data.rate == 5">
+						<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 4">
+						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 3">
+						<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 2">
+						<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 1">
+						<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 4.5">
+						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1备份(3).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 3.5">
+						<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1备份(2).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 2.5">
+						<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1备份(1).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 1.5">
+						<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+					</view>
+					<view class="rateStart" v-if="attDetail.data.rate == 0.5">
+						<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+					</view>
+					<!-- <u-rate :disabled="true" current="4"></u-rate> -->
+					<view class="rate">{{attDetail.data.rate}} 星</view>
+					<view class="goTo">{{attDetail.data.visited}}人去过</view>
+				</view>
+				<view class="contentText">
+					<text :class="[isShow ? 'loseText' : 'moreText']">
+						简介：{{attDetail.data.description}}
+					
+						<view class="btnBox" @click="showMore" v-if="!isShow">
+							<text>收起</text>
+							<image class="iconImg" src="../../static/images/zhankaiIcon.png" mode=""></image>
+						</view>
+						<view class="btnBox" @click="showMore" v-else>
+							<view class="mask"></view>
+							<text>展开</text>
+							<image class="iconImg" src="../../static/images/shouqiIcon.png" mode=""></image>
+						</view>
+					</text>
+				</view>
 			</view>
-			<view class="phone">
-				<image src="../../static/images/dianhua.png"></image>
-				<text>旅行管家：15846985068</text>
+			<view class="magrinBck"></view>
+			<view class="adressBox">
+				<view class="title">景点位置</view>
+				<view class="adress">
+					<view class="left">
+						<view class="adreessIcon">
+							<image class="" src="../../static/images/attmap.svg" mode=""></image>
+						</view>
+						
+						<text class="adressText">{{attDetail.data.pos}}</text>
+					</view>
+					<view class="right">
+						<image src="../../static/images/mapBack.png" mode=""></image>
+						<view class="insideBox" @click="map">
+							<image src="../../static/images/dingwei.svg" mode=""></image>
+							<text>导航</text>
+						</view>
+					</view>
+				</view>
+				<view class="phone"  @click="phoneCall">
+					<image src="../../static/images/dianhua.png"></image>
+					<text >旅行管家：{{attDetail.data.butler_mobile}}</text>
+				</view>
 			</view>
-		</view>
-		<view class="magrinBck"></view>
-		<view class="gonglueBox">
-			<view class="title">热门攻略</view>
-			<view class="contentBox">
-				<view class="contentItem">
-					<image class="topHot" src="../../static/images/topHot.png" mode=""></image>
-					<view class="top">故宫 | 故宫游玩新姿势 红墙黄瓦欣赏get技…</view>
-					<view class="bottom">
-						<image src="../../static/images/liulan.png" mode=""></image>
-						<text>2389</text>
+			<view class="magrinBck"></view>
+			<view class="gonglueBox">
+				<view class="title">热门攻略</view>
+				<view class="contentBox">
+					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[0].article_id">
+						<image class="topHot" src="../../static/images/top.svg" mode=""></image>
+						<view class="top">{{attDetail.data.articles[0].title}}</view>
+						<view class="bottom">
+							<image src="../../static/images/liulan.svg" mode=""></image>
+							<text>{{attDetail.data.articles[0].visit_count}}</text>
+						</view>
 					</view>
-				</view>
-				<view class="contentItem">
-					<view class="top">故宫 | 故宫游玩新姿势 红墙黄瓦欣赏get技…</view>
-					<view class="bottom">
-						<image src="../../static/images/liulan.png" mode=""></image>
-						<text>2389</text>
+					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[1].article_id">
+						<view class="top">{{attDetail.data.articles[1].title}}</view>
+						<view class="bottom">
+							<image src="../../static/images/liulan.svg" mode=""></image>
+							<text>{{attDetail.data.articles[1].visit_count}}</text>
+						</view>
 					</view>
-				</view>
-				<view class="contentItem">
-					<view class="top">故宫 | 故宫游玩新姿势 红墙黄瓦欣赏get技…</view>
-					<view class="bottom">
-						<image src="../../static/images/liulan.png" mode=""></image>
-						<text>2389</text>
+					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[2].article_id">
+						<view class="top">{{attDetail.data.articles[2].title}}</view>
+						<view class="bottom">
+							<image src="../../static/images/liulan.svg" mode=""></image>
+							<text>{{attDetail.data.articles[2].visit_count}}</text>
+						</view>
 					</view>
-				</view>
-				<view class="contentItem">
-					<view class="top">故宫 | 故宫游玩新姿势 红墙黄瓦欣赏get技…</view>
-					<view class="bottom">
-						<image src="../../static/images/liulan.png" mode=""></image>
-						<text>2389</text>
+					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[3].article_id">
+						<view class="top">{{attDetail.data.articles[3].title}}</view>
+						<view class="bottom">
+							<image src="../../static/images/liulan.svg" mode=""></image>
+							<text>{{attDetail.data.articles[3].visit_count}}</text>
+						</view>
 					</view>
 				</view>
 			</view>
 		</view>
 	</view>
+	
 </template>
 
 <script>
@@ -134,17 +218,64 @@ export default {
 		return {
 			indicatorDots: true,
 			current: 0,
-			list: [{ key: '1', title: 'A' }, { key: '2', title: 'B' }, { key: '3', title: 'C' }, { key: '4', title: 'D' }, { key: '6', title: 'E' }, { key: '7', title: 'F' }],
-			likemessage: 144,
-			favmessage: 219,
-			isShow: true
+			list: [],
+			isShow: true,
+			attDetail:null
 		};
 	},
 	created() {
 		(_this = this), _this.getOrder();
 	},
-
+	onLoad:function(e) {
+		console.log('详情id====',e)
+		uni.showLoading({
+			title:'加载中',
+			mask:true
+		})
+		this.getAttDetail(e)
+		uni.hideLoading();
+	},
 	methods: {
+		getAttDetail(e){
+			
+			var that = this
+			uni.request({
+				url:'http://121.40.30.19/site',
+				data:{
+					id:e.id
+				},
+				success:function(res){
+					console.log('eeeeeeeeeeeeeeee',e)
+					console.log('景点详情====',res.data)
+					uni.setStorageSync('id',res.data)
+					that.attDetail = res.data
+					console.log('attDetail--',that.attDetail)
+				}
+			})
+			
+		},
+		// 跳转文章详情
+		onPageJump(e) {
+			console.log(e)
+			let id = e.currentTarget.id
+			// debugger
+			// return
+			uni.navigateTo({
+				url: "/pages/contentdetail/contentdetail?article_id="+id
+			})
+		},
+		// 调用拨打手机
+		phoneCall(){
+			uni.makePhoneCall({
+				phoneNumber:this.attDetail.data.butler_mobile
+			})
+		},
+		// 分享
+		share(){
+			uni.showShareMenu({
+				
+			})
+		},
 		change(e) {
 			_this.current = e.detail.current;
 		},
@@ -179,69 +310,100 @@ export default {
 		},
 		showMore() {
 			this.isShow = !this.isShow;
-		}
+		},
 		// favClick() {
 		// 	this.checked = !this.checked
 		//  this.$forceUpdate()
 		// }
+		map(){
+			uni.getLocation({
+			    type: 'gcj02', //返回可以用于uni.openLocation的经纬度
+			    success: function (res) {
+			        const latitude = res.latitude;
+			        const longitude = res.longitude;
+			        uni.openLocation({
+			            latitude: latitude,
+			            longitude: longitude,
+			            success: function () {
+			                console.log('success');
+			            }
+			        });
+			    }
+			});
+		}
 	}
 };
 </script>
 
 <style lang="scss">
-.example-body {
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: center;
-	padding: 0;
-	font-size: 28rpx;
-	background-color: #aa557f;
-}
-.example-body {
-	flex-direction: column;
-	padding: 30rpx;
-	background-color: #ffffff;
-}
-.example-body {
-	padding: 0;
-}
-.navBar {
-	display: flex;
-}
-.slotleft {
-	display: flex;
-	align-items: center;
-	.icon {
-		font-weight: 600;
+// 自定义导航栏样式
+	.example-body {
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 0;
+		font-size: 14px;
+		background-color: #aa557f;
+	}
+	.example-body {
+		flex-direction: column;
+		padding: 15px;
+		background-color: #ffffff;
+	}
+	.example-body {
+		padding: 0;
+	}
+	.navBar{
+		display: flex;
+	}
+	.slotleft{
+		display: flex;
+		align-items: center;
+	}
+	.fanhui{
+		width: 40rpx;
+		height: 40rpx;
+		margin-left: 40rpx;
 		margin-right: 20rpx;
 	}
-	.homeIcon {
+	.fhsy{
 		width: 40rpx;
 		height: 40rpx;
 	}
-}
-.slottitle {
-	margin-left: 180rpx;
-	font-size: 38rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 500;
-	color: rgba(0, 0, 0, 1);
-	margin-left: 64px;
-}
+	.slottitle{
+		margin-left: 162rpx;
+		font-size: 38rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:600;
+		color:rgba(0,0,0,1);
+	}
+	.button-v-line{
+		width: 1px;
+		height: 18px;
+		background-color: #2f2f2f;
+		margin: 0 8px;
+	}
 
 /* 用户信息 */
 
 /* 轮播图 */
 .page-section-spacing {
 	position: relative;
+	width: 100%;
 }
 
 .swiper-item {
 	width: 100%;
+	
 	image {
 		height: 100%;
 		width: 100%;
 	}
+}
+.swiper{
+	// min-height: 580rpx;
+	height: 400rpx;
+	width: 100%;
 }
 .uni-bg-red {
 	background-color: #ea552d;
@@ -254,7 +416,7 @@ export default {
 }
 .imageCount {
 	height: 40rpx;
-	background-color: #000000;
+	background:rgba(0,0,0,0.6);
 	border-radius: 20rpx;
 	line-height: 40rpx;
 	color: #fff;
@@ -274,7 +436,7 @@ export default {
 	position: absolute;
 	/* left: 320rpx; */
 	background: #ffff;
-	bottom: -40rpx;
+	bottom: -20rpx;
 	.dot {
 		width: 10rpx;
 		height: 10rpx;
@@ -292,7 +454,11 @@ export default {
 }
 // 内容区
 .content {
-	padding: 60rpx 30rpx 0;
+	padding: 40rpx 30rpx 0;
+	.contentTop{
+		display: flex;
+		justify-content: space-between;
+	}
 	.contentHeader {
 		height: 52rpx;
 		display: flex;
@@ -304,10 +470,20 @@ export default {
 			font-weight: 500;
 			color: rgba(48, 49, 51, 1);
 		}
-		image {
-			height: 52rpx;
-			width: 52rpx;
-		}
+	}
+	.shareBox{
+		width:78rpx;
+		height:78rpx;
+		background:rgba(255,229,18,1);
+		box-shadow:0px 2px 4px 0px rgba(255,229,18,0.5);
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.shareBox image {
+		height: 34rpx;
+		width: 34rpx;
 	}
 	.tips {
 		margin-top: 10rpx;
@@ -331,22 +507,24 @@ export default {
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			color: #fff;
+			height: 36rpx;
+			line-height: 36rpx;
 		}
 	}
 	.rateBox {
-		margin-top: 60rpx;
+		margin-top: 32rpx;
 		display: flex;
 		align-items: center;
-		.iconBox {
+		.rateStart{
 			display: flex;
-			image {
-				height: 36rpx;
-				width: 36rpx;
-				margin-right: 16rpx;
-			}
+		}
+		.rateStart image{
+			width: 36rpx;
+			height: 36rpx;
+			margin-right: 16rpx;
 		}
 		.rate {
-			margin-left: 20rpx;
+			margin-left: 16rpx;
 			font-size: 28rpx;
 			font-family: HelveticaNeue;
 			color: rgba(96, 98, 102, 1);
@@ -354,21 +532,25 @@ export default {
 
 		.goTo {
 			margin-left: 46rpx;
-			font-size: 24rpx;
-			font-family: PingFangSC-Regular, PingFang SC;
-			font-weight: 400;
-			color: rgba(96, 98, 102, 1);
+			font-size:24rpx;
+			font-family:PingFangSC-Regular,PingFang SC;
+			font-weight:400;
+			color:rgba(144,147,153,1);
+			line-height:44rpx;
 		}
 	}
 
 	.contentText {
 		margin-top: 30rpx;
+		padding-bottom: 40rpx;
+		position: relative;
 		.moreText {
 			font-size: 28rpx;
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			color: rgba(144, 147, 153, 1);
 			line-height: 56rpx;
+			// position: relative;
 		}
 		.loseText {
 			font-size: 28rpx;
@@ -378,25 +560,37 @@ export default {
 			line-height: 56rpx;
 			display: -webkit-box;
 			-webkit-box-orient: vertical;
-			text-overflow: ellipsis;
+			// text-overflow: ellipsis;
 			overflow: hidden;
 			-webkit-line-clamp: 2;
+			
 		}
 		.btnBox {
-			margin-right: 10rpx;
-
+			// margin-right: 10rpx;
+			position: absolute;
+			right: 0;
+			bottom: 40rpx;
 			display: flex;
 			justify-content: flex-end;
 			align-items: center;
+			z-index: 111;
+			// background:linear-gradient(90deg,rgba(255,255,255,0) 50%,rgba(255,255,255,1) 100%);
+			.mask{
+				width: 50rpx;
+				height: 56rpx;
+				background: linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+			}
 			text {
 				font-size: 24rpx;
 				font-family: PingFangSC-Medium, PingFang SC;
 				font-weight: 500;
 				color: rgba(48, 49, 51, 1);
+				background-color: #FFFFFF;
 			}
 			.iconImg {
 				height: 24rpx;
 				width: 24rpx;
+				background-color: #FFFFFF;
 			}
 		}
 	}
@@ -420,23 +614,34 @@ export default {
 		justify-content: space-between;
 		.left {
 			display: flex;
-			align-items: center;
+			// align-items: center;
 			width: 50%;
-			image {
+			.adreessIcon {
 				height: 34rpx;
 				width: 34rpx;
 				margin-right: 16rpx;
+				image {
+					width: 100%;
+					height: 100%;
+				}
 			}
-			text {
+			.adressText {
 				font-size: 28rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
 				font-weight: 400;
 				color: rgba(96, 98, 102, 1);
 				line-height: 36rpx;
+				width:308rpx;
+				max-height:70rpx;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				-webkit-line-clamp: 2;
 			}
 		}
 		.right {
-			margin-top: 20rpx;
+			// margin-top: 20rpx;
 			height: 96rpx;
 			width: 196rpx;
 			position: relative;
@@ -491,6 +696,9 @@ export default {
 }
 .gonglueBox {
 	padding: 40rpx 30rpx;
+	padding-bottom: 0;  
+	padding-bottom: constant(safe-area-inset-bottom);  
+	padding-bottom: env(safe-area-inset-bottom);  
 	.title{
 		font-size:36rpx;
 		font-family:PingFangSC-Medium,PingFang SC;
@@ -525,6 +733,9 @@ export default {
 				line-height: 38rpx;
 			}
 			.bottom{
+				position: absolute;
+				right: 24rpx;
+				bottom: 12rpx;
 				margin-top: 6rpx;
 				display: flex;
 				justify-content: flex-end;

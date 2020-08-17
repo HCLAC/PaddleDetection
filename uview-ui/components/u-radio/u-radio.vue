@@ -119,7 +119,7 @@
 			},
 			iconClass() {
 				let classes = [];
-				classes.push('u-radio__icon-wrap--' + this.shape);
+				classes.push('u-radio__icon-wrap--' + this.elShape);
 				if (this.name == this.parent.value) classes.push('u-radio__icon-wrap--checked');
 				if (this.elDisabled) classes.push('u-radio__icon-wrap--disabled');
 				if (this.name == this.parent.value && this.elDisabled) classes.push(
@@ -152,7 +152,7 @@
 		},
 		methods: {
 			onClickLabel() {
-				if (!this.elLabelDisabled) {
+				if (!this.elLabelDisabled && !this.elDisabled) {
 					this.parent.setValue(this.name);
 					this.emitEvent();
 				}

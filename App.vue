@@ -9,10 +9,12 @@ export default {
 	},
 	onHide: function() {
 		console.log('App Hide');
-	}
+	},
+	
 };
 </script>
 
 <style lang="scss">
 @import 'uview-ui/index.scss';
+uni-rich-text img{ max-width: 100% !important;}
 </style>

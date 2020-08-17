@@ -1,22 +1,22 @@
 <template>
-	<view class="cus-sty">
+	<!-- <view class="cus-sty">
 	    <view class="hot">
 	        <view class="hot-top">
 	            <text class="ht-l">热门景点</text>
 	            <view class="ht-r" @click="lookAll">查看更多<image src="../../static/images/查看更多@2x.png" class="moreIcon" mode=""></image></view>
 	        </view>
-	        <view class="hot-bot">
-	            <view class="hb-l">
-	                <image src="../../static/images/photos/f0e1fe97524085.5ec6dde3b745f.jpg"></image>
+	        <view class="hot-bot" >
+	            <view class="hb-l" @click='toAtt'>
+	                <image src="../../static/images/photos/48d2d599831121.5efb7ae587e4e.jpg"></image>
 	                <text>直布罗陀</text>
 	            </view>
 				<view class="hb-r">
-					<view class="hb-r1">
+					<view class="hb-r1" @click='toAtt'>
 					    <image src="../../static/images/photos/sda.jpeg"></image>
 					    <text>海南藏族自治州</text>
 					</view>
-					<view class="hb-r2">
-					    <image src="../../static/images/photos/asxds.png"></image>
+					<view class="hb-r2" @click='toAtt'>
+					    <image src="../../static/images/photos/15a4e698667005.5ee13e809affe.jpg"></image>
 					    <text>科索沃</text>
 					</view>
 				</view>
@@ -26,7 +26,7 @@
 	        <text class="tourtext">正在旅行</text>
 			<touring class="touringList" ></touring>
 	    </view>
-	</view>
+	</view> -->
 </template>
 
 <script>
@@ -34,10 +34,28 @@
 	export default {
 		data() {
 			return {
+				hotAtt:''
 			}
 		},
+		onLoad() {
+			this.getHotAtt()
+		},
 		methods: {
+			getHotAtt(){
+				uni.getStorage({
+					key:'id',
+					success:function(res){
+						console.log('getHotAtt==',res)
+						this.hotAtt = res.data
+					}
+				})
+			},
 			lookAll(){
+				uni.navigateTo({
+					url:'/pages/attractionsList/attractionsList'
+				})
+			},
+			toAtt(){
 				uni.navigateTo({
 					url:'/pages/attractionsList/attractionsList'
 				})
