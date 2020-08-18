@@ -38,7 +38,7 @@
 							<view class="title">{{attDetail.data.name}}</view>
 						</view>
 						<view class="tips">
-							<view class="tipHot">{{attDetail.data.tags[0]}}</view>
+							<view class="tipHot" v-for="(item,index) in attDetail.data.tags" :key="index" >{{item}}</view>
 							<view class="tip">{{attDetail.data.city}}</view>
 						</view>
 					</view>
