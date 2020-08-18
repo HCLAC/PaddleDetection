@@ -86,7 +86,12 @@
 				getApp().globalData.item = item
 				console.log('item',item)
 				uni.switchTab({
-					url:'../index/index?item='+item
+					url:'../index/index?item='+item,
+					success:(res)=> {
+						let page = getCurrentPages().pop();
+						if (page == undefined || page == null) return;
+						page.onLoad();
+					}
 				})
 				
 			},

@@ -758,9 +758,6 @@
 
 
 
-
-
-
 	/* 头条小程序组件内不能引入字体 */
 page.data-v-57280228 {
 		display: -webkit-box;
@@ -855,15 +852,15 @@ view.data-v-57280228 {
 		background-color: #4ca2ff;
 }
 .uni-nav-bar-text.data-v-57280228 {
-		width:64rpx;
-		height:32rpx;
-		font-size:32rpx;
-		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:500;
-		color:#303133;
-		line-height:32rpx;
+		width: 64rpx;
+		height: 32rpx;
+		font-size: 32rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #303133;
+		line-height: 32rpx;
 }
-.down.data-v-57280228{
+.down.data-v-57280228 {
 		width: 18rpx;
 		height: 18rpx;
 }
@@ -906,7 +903,7 @@ view.data-v-57280228 {
 		-webkit-box-flex: 1;
 		-webkit-flex: 1;
 		        flex: 1;
-		background:rgba(248,248,248,1);
+		background: rgba(248, 248, 248, 1);
 		border-radius: 36rpx;
 		-webkit-flex-wrap: nowrap;
 		        flex-wrap: nowrap;
@@ -930,46 +927,46 @@ view.data-v-57280228 {
 .example-body.data-v-57280228 {
 		padding: 0;
 }
-.cus-sty.data-v-57280228{
+.cus-sty.data-v-57280228 {
 		background-color: #F8F8F8;
 }
 	/* 热门景点 */
-.hot.data-v-57280228{
-	    display: -webkit-box;
-	    display: -webkit-flex;
-	    display: flex;
-	    -webkit-box-orient: vertical;
-	    -webkit-box-direction: normal;
-	    -webkit-flex-direction: column;
-	            flex-direction: column;
+.hot.data-v-57280228 {
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		-webkit-flex-direction: column;
+		        flex-direction: column;
 }
-.hot .hot-top.data-v-57280228{
-	    display: -webkit-box;
-	    display: -webkit-flex;
-	    display: flex;
-	    -webkit-box-pack: justify;
-	    -webkit-justify-content: space-between;
-	            justify-content: space-between;
+.hot .hot-top.data-v-57280228 {
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-box-pack: justify;
+		-webkit-justify-content: space-between;
+		        justify-content: space-between;
 }
-.ht-l.data-v-57280228{
+.ht-l.data-v-57280228 {
 		width: 160rpx;
 		height: 40rpx;
 		font-size: 40rpx;
-		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:500;
-		color:rgba(48,49,51,1);
-		line-height:40rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: rgba(48, 49, 51, 1);
+		line-height: 40rpx;
 		margin-top: 48rpx;
 		margin-left: 32rpx;
 }
-.hot-top .ht-r.data-v-57280228{
+.hot-top .ht-r.data-v-57280228 {
 		width: 152rpx;
 		height: 28rpx;
-	    font-size: 28rpx;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(96,98,102,1);
-		line-height:28rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(96, 98, 102, 1);
+		line-height: 28rpx;
 		margin: 54rpx 32rpx 0 0;
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -978,89 +975,89 @@ view.data-v-57280228 {
 		-webkit-align-items: center;
 		        align-items: center;
 }
-.moreIcon.data-v-57280228{
+.moreIcon.data-v-57280228 {
 		width: 28rpx;
 		height: 28rpx;
 		margin-left: 12rpx;
 }
 	/* 热门景点图 */
 .hot .hot-bot.data-v-57280228 {
-	    display: -webkit-box;
-	    display: -webkit-flex;
-	    display: flex;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
 		margin-top: 32rpx;
 }
-.hb-l.data-v-57280228{
+.hb-l.data-v-57280228 {
 		width: 360rpx;
 		height: 360rpx;
 		margin-left: 10rpx;
 		position: relative;
 }
-.hb-l image.data-v-57280228{
+.hb-l image.data-v-57280228 {
 		width: 100%;
 		height: 100%;
 		border-radius: 16rpx;
-		background:-webkit-linear-gradient(top,rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
-		background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+		background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+		background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
 }
-.imgMask.data-v-57280228{
-		width:360rpx;
-		height:108rpx;
-		background:-webkit-linear-gradient(top,rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
-		background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
-		border-radius:0px 0px 4px 4px;
-		opacity:0.8;
+.imgMask.data-v-57280228 {
+		width: 360rpx;
+		height: 108rpx;
+		background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+		background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+		border-radius: 0px 0px 4px 4px;
+		opacity: 0.8;
 		position: absolute;
 		bottom: 0;
 		left: 0;
 }
-.hb-r.data-v-57280228{
+.hb-r.data-v-57280228 {
 		margin: 0 0 0 10rpx;
 }
-.hb-r image.data-v-57280228{
+.hb-r image.data-v-57280228 {
 		width: 100%;
 		height: 100%;
 		border-radius: 8rpx;
-		background:-webkit-linear-gradient(top,rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
-		background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+		background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+		background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
 }
-.hb-r1.data-v-57280228{
+.hb-r1.data-v-57280228 {
 		width: 360rpx;
 		height: 174rpx;
 		margin-bottom: 10rpx;
 		position: relative;
 }
-.hb-r2.data-v-57280228{
+.hb-r2.data-v-57280228 {
 		width: 360rpx;
 		height: 174rpx;
 		position: relative;
 }
-.hot-bot  text.data-v-57280228{
-		font-size:32rpx;
-		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:500;
-		color:rgba(255,255,255,1);
-		line-height:16px;
+.hot-bot text.data-v-57280228 {
+		font-size: 32rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: rgba(255, 255, 255, 1);
+		line-height: 16px;
 		position: absolute;
 		left: 22rpx;
 		bottom: 28rpx;
 }
 	/* 正在旅行 */
-.touring.data-v-57280228{
+.touring.data-v-57280228 {
 		margin-top: 24rpx;
 }
-.touring .tourtext.data-v-57280228{
+.touring .tourtext.data-v-57280228 {
 		width: 160rpx;
 		height: 104rpx;
 		line-height: 104rpx;
 		font-size: 40rpx;
-		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:500;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
 		color: #303133;
 		margin-left: 32rpx;
 }
-.demo-warter-l.data-v-57280228{
-		margin-left:10rpx ;
+.demo-warter-l.data-v-57280228 {
+		margin-left: 10rpx;
 }
 .demo-warter.data-v-57280228 {
 		margin-top: 0;
@@ -1070,17 +1067,17 @@ view.data-v-57280228 {
 		/* position: relative; */
 		background-color: #FFFFFF;
 }
-.demo-top.data-v-57280228{
+.demo-top.data-v-57280228 {
 		position: relative;
 }
 .demo-image.data-v-57280228 {
 		min-height: 300rpx;
 		max-height: 460rpx;
 		width: 100%;
-		border-radius: 8rpx 8rpx 0 0 ;
+		border-radius: 8rpx 8rpx 0 0;
 		position: relative;
 }
-.adress.data-v-57280228{
+.adress.data-v-57280228 {
 		position: absolute;
 		left: 0;
 		bottom: 8rpx;
@@ -1090,37 +1087,37 @@ view.data-v-57280228 {
 		-webkit-box-align: center;
 		-webkit-align-items: center;
 		        align-items: center;
-		max-width:240rpx;
-		height:40rpx;
+		max-width: 240rpx;
+		height: 40rpx;
 		padding-right: 16rpx;
-		background:rgba(0,0,0,0.6);
-		border-radius:0px 14rpx 0px 0px;
+		background: rgba(0, 0, 0, 0.6);
+		border-radius: 0px 14rpx 0px 0px;
 }
-.adreessIcon.data-v-57280228{
+.adreessIcon.data-v-57280228 {
 		width: 24rpx;
 		height: 24rpx;
-		margin:0 4rpx;
+		margin: 0 4rpx;
 		display: -webkit-box;
 		display: -webkit-flex;
 		display: flex;
 }
-.adreessIcon image.data-v-57280228{
+.adreessIcon image.data-v-57280228 {
 		width: 100%;
 		height: 100%;
 }
-.adressText.data-v-57280228{
+.adressText.data-v-57280228 {
 		max-width: 192rpx;
-		font-size:24rpx;
-		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:500;
-		color:rgba(255,255,255,1);
+		font-size: 24rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: rgba(255, 255, 255, 1);
 		/* line-height:24px; */
 		/* margin-right: 16rpx; */
 		overflow: hidden;
-		text-overflow:ellipsis;
+		text-overflow: ellipsis;
 		white-space: nowrap;
 }
-.titleTip.data-v-57280228{
+.titleTip.data-v-57280228 {
 		display: -webkit-box;
 		display: -webkit-flex;
 		display: flex;
@@ -1131,9 +1128,9 @@ view.data-v-57280228 {
 		width: 278rpx;
 		/* max-height: 70rpx; */
 		font-size: 28rpx;
-		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:500;
-		color:rgba(48,49,51,1);
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: rgba(48, 49, 51, 1);
 		margin-left: 8rpx;
 		line-height: 46rpx;
 }
@@ -1148,12 +1145,12 @@ view.data-v-57280228 {
 		-webkit-align-items: center;
 		        align-items: center;
 		color: #0091FF;
-		border: 2rpx solid rgba(0,145,255,1);
+		border: 2rpx solid rgba(0, 145, 255, 1);
 		border-radius: 14rpx;
 		font-size: 16rpx;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(0,145,255,1);
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(0, 145, 255, 1);
 		/* margin-top: 6rpx; */
 }
 .demo-user.data-v-57280228 {
@@ -1178,33 +1175,33 @@ view.data-v-57280228 {
 		-webkit-align-items: center;
 		        align-items: center;
 }
-.userHeard.data-v-57280228{
-			width: 40rpx;
-			height: 40rpx;
-			border-radius: 50%;
-			margin-left: 14rpx;
+.userHeard.data-v-57280228 {
+		width: 40rpx;
+		height: 40rpx;
+		border-radius: 50%;
+		margin-left: 14rpx;
 }
-.userNikename.data-v-57280228{
-			font-size: 24rpx;
-			margin-left: 16rpx;
-			font-family:PingFangSC-Regular,PingFang SC;
-			font-weight:400;
-			color:rgba(96,98,102,1);
+.userNikename.data-v-57280228 {
+		font-size: 24rpx;
+		margin-left: 16rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(96, 98, 102, 1);
 }
 .count.data-v-57280228 {
 		display: -webkit-box;
 		display: -webkit-flex;
 		display: flex;
 		font-size: 22rpx;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(96,98,102,1);
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(96, 98, 102, 1);
 		-webkit-box-align: center;
 		-webkit-align-items: center;
 		        align-items: center;
 		margin-right: 20rpx;
 }
-.count image.data-v-57280228{
+.count image.data-v-57280228 {
 		width: 26rpx;
 		height: 26rpx;
 		margin-right: 8rpx;

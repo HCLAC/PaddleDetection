@@ -222,7 +222,12 @@ var _default = { data: function data() {return { citySelected: '', city: '', sta
       getApp().globalData.item = item;
       console.log('item', item);
       uni.switchTab({
-        url: '../index/index?item=' + item });
+        url: '../index/index?item=' + item,
+        success: function success(res) {
+          var page = getCurrentPages().pop();
+          if (page == undefined || page == null) return;
+          page.onLoad();
+        } });
 
 
     },

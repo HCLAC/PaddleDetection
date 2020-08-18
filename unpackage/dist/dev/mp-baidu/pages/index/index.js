@@ -300,6 +300,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 45));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 79));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 109));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 // import httpType from '../../httpType.js';
 var _default = {
@@ -332,46 +335,40 @@ var _default = {
   },
 
   onShow: function onShow() {
-    this.item = getApp().globalData.item,
-    console.log('item', this.item);
-    if (this.item != null || undefined) {
-      this.getCity();
-    }
-    // var num = this.scrollTopNum;
-    var num = uni.getStorageSync('scrollTop');
-    var numTop = parseInt(num);
-    console.log(numTop, 217122121355217777777777777);
-    uni.pageScrollTo({
-      scrollTop: numTop,
-      duration: numTop * 0.5,
-      success: function success(res) {
-        console.log(res, num, "成功----------1222222222");
-      },
-      fail: function fail(error) {
-        console.log(error, "失败————————");
-      } });
-
-
-
-  },
-  onPageScroll: function onPageScroll(res) {
-    this.scrollTopNum = res.scrollTop;
-    uni.setStorageSync('scrollTop', res.scrollTop);
-    console.log('top距离', this.scrollTopNum);
-  },
-  onLoad: function onLoad() {
     // this.item = getApp().globalData.item,
     // console.log('item',this.item)
     // if(this.item != null || undefined){
-
+    // 	this.getCity()
     // }
+    this.getItem();
+
+  },
+
+  onLoad: function onLoad() {
+
     if (this.item == undefined || null) {
       this.getAdress();
     }
-    // this.gestCity()
+
+
   },
 
   methods: {
+    getItem: function getItem() {
+
+      console.log('item-------', this.item);
+      if (this.item != getApp().globalData.item) {
+        this.item = getApp().globalData.item,
+        this.getCity();
+      }
+    },
+    scrollTop: function scrollTop(e) {
+      console.log(e);
+      debugger;
+      if (e.detail.scrollTop != 0) {
+        console.log(e.detail.scrollTop, 1111111111);
+      }
+    },
     // 获取当前地理位置
     getAdress: function getAdress() {var _this = this;
       uni.getLocation({
@@ -714,7 +711,7 @@ var _default = {
     upCallback: function upCallback(page) {var _this4 = this;
       // mescroll.setPageSize(6)
       var city = uni.getStorageSync('city_id');
-      console.log('上拉刷新数据', city);
+      // console.log('上拉刷新数据', city)
       var pageNum = page.num; // 页码, 默认从1开始
       var pageSize = page.size; // 页长, 默认每页10条
       var that = this;
