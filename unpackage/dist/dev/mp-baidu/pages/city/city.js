@@ -245,7 +245,9 @@ var _default = { data: function data() {return { citySelected: '', city: '', sta
       uni.getLocation({
         type: 'wgs84',
         success: function success(res) {
-          _this2.city = res.city;
+          console.log('dizhi----', res);
+          _this2.city = res.city.substr(0, res.city.length - 1);
+          console.log('ccccccc', _this2.city);
         } });
 
     } } };exports.default = _default;

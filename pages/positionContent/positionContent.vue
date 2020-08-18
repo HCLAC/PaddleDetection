@@ -158,16 +158,16 @@
 						</view>
 					</view>
 				</view>
-				<view class="phone"  @click="phoneCall">
+				<view class="phone" v-show="attDetail.data.butler_mobile" @click="phoneCall">
 					<image src="../../static/images/dianhua.png"></image>
 					<text >旅行管家：{{attDetail.data.butler_mobile}}</text>
 				</view>
 			</view>
-			<view class="magrinBck"></view>
-			<view class="gonglueBox">
+			<view class="magrinBck" v-show="attDetail.data.articles"></view>
+			<view class="gonglueBox" v-show="attDetail.data.articles">
 				<view class="title">热门攻略</view>
 				<view class="contentBox">
-					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[0].article_id">
+					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[0].article_id" v-show="attDetail.data.articles[0]">
 						<image class="topHot" src="../../static/images/top.svg" mode=""></image>
 						<view class="top">{{attDetail.data.articles[0].title}}</view>
 						<view class="bottom">
@@ -175,21 +175,21 @@
 							<text>{{attDetail.data.articles[0].visit_count}}</text>
 						</view>
 					</view>
-					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[1].article_id">
+					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[1].article_id" v-show="attDetail.data.articles[1]">
 						<view class="top">{{attDetail.data.articles[1].title}}</view>
 						<view class="bottom">
 							<image src="../../static/images/liulan.svg" mode=""></image>
 							<text>{{attDetail.data.articles[1].visit_count}}</text>
 						</view>
 					</view>
-					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[2].article_id">
+					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[2].article_id" v-show="attDetail.data.articles[2]">
 						<view class="top">{{attDetail.data.articles[2].title}}</view>
 						<view class="bottom">
 							<image src="../../static/images/liulan.svg" mode=""></image>
 							<text>{{attDetail.data.articles[2].visit_count}}</text>
 						</view>
 					</view>
-					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[3].article_id">
+					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[3].article_id" v-show="attDetail.data.articles[3]">
 						<view class="top">{{attDetail.data.articles[3].title}}</view>
 						<view class="bottom">
 							<image src="../../static/images/liulan.svg" mode=""></image>

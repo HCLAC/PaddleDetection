@@ -51,7 +51,8 @@
 				</view>
 				<!-- 内容文章 -->
 				<view class="contentText">
-					<rich-text :nodes="articleList.data.content | formatRichText"></rich-text> 
+					<!-- <rich-text :nodes="articleList.data.content | formatRichText"></rich-text> -->
+					<u-parse :html="articleList.data.content | formatRichText"></u-parse>
 					<!-- <view class="copy">详情请+VX: {{VX}}<text class="clcopy" @click="copy">点击复制</text></view> -->
 				</view>
 				<view class="tips">

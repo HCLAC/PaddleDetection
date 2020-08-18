@@ -242,6 +242,7 @@
 						this.cityName = res.city.substr(0, res.city.length - 1);
 						this.city = res.city;
 						this.province = res.province
+						console.log(this.city,this.province)
 						uni.request({
 							// url:'http://192.168.43.156:8199/user/location',
 							// url:'user/location',
@@ -251,9 +252,9 @@
 								city: this.city,
 							},
 							method: 'POST',
-							header: {
-								'content-type': 'application/x-www-form-urlencoded',
-							},
+							// header: {
+							// 	'content-type': 'application/x-www-form-urlencoded',
+							// },
 							success: (res) => {
 								console.log('获取地址id', res);
 								// 地址未定义

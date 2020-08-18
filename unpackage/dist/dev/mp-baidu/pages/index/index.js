@@ -381,6 +381,7 @@ var _default = {
           _this.cityName = res.city.substr(0, res.city.length - 1);
           _this.city = res.city;
           _this.province = res.province;
+          console.log(_this.city, _this.province);
           uni.request({
             // url:'http://192.168.43.156:8199/user/location',
             // url:'user/location',
@@ -390,9 +391,9 @@ var _default = {
               city: _this.city },
 
             method: 'POST',
-            header: {
-              'content-type': 'application/x-www-form-urlencoded' },
-
+            // header: {
+            // 	'content-type': 'application/x-www-form-urlencoded',
+            // },
             success: function success(res) {
               console.log('获取地址id', res);
               // 地址未定义
