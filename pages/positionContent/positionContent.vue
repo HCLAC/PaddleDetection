@@ -229,8 +229,7 @@ export default {
 	onLoad:function(e) {
 		console.log('详情id====',e)
 		uni.showLoading({
-			title:'加载中',
-			mask:true
+			title:'加载中'
 		})
 		this.getAttDetail(e)
 		uni.hideLoading();
@@ -316,11 +315,12 @@ export default {
 		//  this.$forceUpdate()
 		// }
 		map(){
+			var that = this
 			uni.getLocation({
 			    type: 'gcj02', //返回可以用于uni.openLocation的经纬度
 			    success: function (res) {
-			        const latitude = res.latitude;
-			        const longitude = res.longitude;
+			        const latitude = that.attDetail.data.latitude;
+			        const longitude = that.attDetail.data.longitude;
 			        uni.openLocation({
 			            latitude: latitude,
 			            longitude: longitude,

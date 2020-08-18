@@ -617,7 +617,7 @@ var _uniFav = _interopRequireDefault(__webpack_require__(/*! @/components/uni-fa
 var _this; // import ourLoading from '@/components/our-loading/our-loading.vue'
 // import httpType from '../../httpType.js'
 var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.default, uniFav: _uniFav.default // ourLoading
-  }, data: function data() {return { indicatorDots: true, current: 0, list: [], VX: 17827277778, articleList: null, token: '', article_id: '', flag: true };}, onLoad: function onLoad(e) {console.log('文章id====', e);uni.showLoading({ title: '加载中', mask: true });this.flag = uni.getStorageSync("Authorization") ? false : true;console.log(this.flag); // debugger
+  }, data: function data() {return { indicatorDots: true, current: 0, list: [], VX: 17827277778, articleList: null, token: '', article_id: '', flag: true };}, onLoad: function onLoad(e) {console.log('文章id====', e);uni.showLoading({ title: '加载中' });this.flag = uni.getStorageSync("Authorization") ? false : true;console.log(this.flag); // debugger
     this.getArticleDetail(e);uni.hideLoading();}, created: function created() {_this = this, _this.getOrder();}, methods: { getOrder: function getOrder() {}, // 获取文章详情
     getArticleDetail: function getArticleDetail(e) {var that = this; // var token = uni.getStorageSync('Authorization')
       // // var that.token = token
@@ -631,8 +631,7 @@ var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.
       uni.request({ // url:'article',
         url: 'http://121.40.30.19/article', data: { article_id: e.article_id }, header: { 'Authorization': uni.getStorageSync('Authorization') }, success: function success(res) {console.log(res.data.data.liked, res.data.data.like_count, res.data.data.uuid, 444444);console.log('eeeeeeeeeeeeeeee', e);console.log('文章详情====', res);uni.setStorageSync('id', res.data);that.articleList = res.data;console.log('articleList', that.articleList);} });}, // 点赞
     clickLike: function clickLike() {var that = this;var article_id = uni.getStorageSync('id');console.log('art', article_id);uni.request({ url: 'http://121.40.30.19/user/liked', data: { article_id: article_id.data.uuid, liked: article_id.data.liked == 0 ? 1 : 0 }, method: 'POST', header: { 'Authorization': uni.getStorageSync('Authorization') }, success: function success(res) {console.log('点赞', res);if (res.data.code != 0) {// debugger
-            uni.showModal({ title: '提示', content: '您好，请先登录', showCancel: false, success: function success(res) {if (res.confirm) {uni.redirectTo({ url: '../login/login' });}} });return;}uni.request({
-            // url:'article',
+            uni.showModal({ title: '提示', content: '您好，请先登录', showCancel: false, success: function success(res) {if (res.confirm) {uni.redirectTo({ url: '../login/login' });}} });return;}uni.request({ // url:'article',
             url: 'http://121.40.30.19/article',
             data: {
               article_id: article_id.data.uuid },
@@ -745,11 +744,12 @@ var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.
     },
 
     map: function map() {
+      var that = this;
       uni.getLocation({
         type: 'gcj02', //返回可以用于uni.openLocation的经纬度
         success: function success(res) {
-          var latitude = res.latitude;
-          var longitude = res.longitude;
+          var latitude = that.articleList.data.latitude;
+          var longitude = that.articleList.data.longitude;
           uni.openLocation({
             latitude: latitude,
             longitude: longitude,

@@ -64,6 +64,7 @@
 										<view class="" @click="onPageJump" :id="item.article_id">
 											<view class="demo-top">
 												<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+												<!-- <u-lazy-load class="demo-image" :image="item.image"  ></u-lazy-load> -->
 												<view class="adress">
 													<view class="adreessIcon">
 														<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
@@ -107,6 +108,7 @@
 										<view class="" @click="onPageJump" :id="item.article_id">
 											<view class="demo-top">
 												<image class="demo-image" :src="item.image" :index="index"  mode="widthFix"></image>
+												<!-- <u-lazy-load class="demo-image" :image="item.image"  ></u-lazy-load> -->
 												<view class="adress">
 													<view class="adreessIcon">
 														<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
@@ -1064,7 +1066,7 @@
 	}
 
 	.demo-image {
-		min-height: 300rpx;
+		min-height: 300rpx !important;
 		max-height: 460rpx;
 		width: 100%;
 		border-radius: 8rpx 8rpx 0 0;

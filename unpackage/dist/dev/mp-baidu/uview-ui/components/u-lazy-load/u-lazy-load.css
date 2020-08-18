@@ -31,6 +31,8 @@
 }
 .u-lazy-item.data-v-28c0cdd0 {
   width: 100%;
+  min-height: 300rpx;
+  max-height: 460rpx;
   -webkit-transform: transition3d(0, 0, 0);
           transform: transition3d(0, 0, 0);
   will-change: transform;

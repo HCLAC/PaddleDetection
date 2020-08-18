@@ -10,7 +10,7 @@
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
-
+		
 		<view class="" v-show="articleList != null">
 			
 			<!-- 内容详情轮播图 -->
@@ -126,8 +126,7 @@
 		onLoad: function(e) {
 			console.log('文章id====', e)
 			uni.showLoading({
-				title:'加载中',
-				mask:true
+				title:'加载中'
 			})
 			this.flag = uni.getStorageSync("Authorization") ? false : true
 			console.log(this.flag)
@@ -331,11 +330,12 @@
 			},
 
 			map(){
+				var that = this
 				uni.getLocation({
 					type: 'gcj02', //返回可以用于uni.openLocation的经纬度
 					success: function (res) {
-						const latitude = res.latitude;
-						const longitude = res.longitude;
+						const latitude = that.articleList.data.latitude;
+						const longitude = that.articleList.data.longitude;
 						uni.openLocation({
 							latitude: latitude,
 							longitude: longitude,
