@@ -90,7 +90,7 @@
 					success:(res)=> {
 						let page = getCurrentPages().pop();
 						if (page == undefined || page == null) return;
-						page.onLoad();
+						
 					}
 				})
 				
