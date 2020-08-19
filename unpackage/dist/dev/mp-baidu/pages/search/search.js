@@ -603,6 +603,21 @@ var _httpType = _interopRequireDefault(__webpack_require__(/*! ../../httpType.js
         icon: 'none',
         duration: 2000 });
 
+      uni.request({
+        url: "http://121.40.30.19/search",
+        data: {
+          'query': keyword,
+          'hit': 8 },
+
+        success: function success(res) {
+          console.log('搜素数据', res);
+          uni.setStorageSync('article_id', res.data);
+          console.log('存储数据', res.data);
+          uni.navigateTo({
+            url: '../searchResults/searchResults' });
+
+        } });
+
       //以下是示例跳转淘宝搜索，可自己实现搜索逻辑
       /*
       

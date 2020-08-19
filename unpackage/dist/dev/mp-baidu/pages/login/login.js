@@ -300,7 +300,7 @@ var _default = { data: function data() {return { phone: "", code: '', key: '', g
     },
     getUserInfo: function getUserInfo() {
       uni.getUserInfo({
-        // provider:'baidu',
+        provider: 'baidu',
         success: function success(res) {
           console.log('用户信息', res.userInfo);
         } });

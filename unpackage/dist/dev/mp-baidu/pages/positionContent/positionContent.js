@@ -548,7 +548,7 @@ var _uniFav = _interopRequireDefault(__webpack_require__(/*! @/components/uni-fa
 //
 //
 //
-var _this;var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.default, uniFav: _uniFav.default }, data: function data() {return { indicatorDots: true, current: 0, list: [], isShow: true, attDetail: null };}, created: function created() {_this = this, _this.getOrder();}, onLoad: function onLoad(e) {console.log('详情id====', e);uni.showLoading({ title: '加载中', mask: true });this.getAttDetail(e);uni.hideLoading();}, methods: { getAttDetail: function getAttDetail(e) {var that = this;uni.request({ url: 'http://121.40.30.19/site', data: { id: e.id }, success: function success(res) {console.log('eeeeeeeeeeeeeeee', e);console.log('景点详情====', res.data);uni.setStorageSync('id', res.data);that.attDetail = res.data;console.log('attDetail--', that.attDetail);} });}, // 跳转文章详情
+var _this;var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: _uniIcons.default, uniFav: _uniFav.default }, data: function data() {return { indicatorDots: true, current: 0, list: [], isShow: true, attDetail: null };}, created: function created() {_this = this, _this.getOrder();}, onLoad: function onLoad(e) {console.log('详情id====', e);uni.showLoading({ title: '加载中' });this.getAttDetail(e);uni.hideLoading();}, methods: { getAttDetail: function getAttDetail(e) {var that = this;uni.request({ url: 'http://121.40.30.19/site', data: { id: e.id }, success: function success(res) {console.log('eeeeeeeeeeeeeeee', e);console.log('景点详情====', res.data);uni.setStorageSync('id', res.data);that.attDetail = res.data;console.log('attDetail--', that.attDetail);} });}, // 跳转文章详情
     onPageJump: function onPageJump(e) {console.log(e);var id = e.currentTarget.id; // debugger
       // return
       uni.navigateTo({ url: "/pages/contentdetail/contentdetail?article_id=" + id });}, // 调用拨打手机
@@ -559,8 +559,8 @@ var _this;var _default = { comments: { uniNavBar: _uniNavBar.default, uniIcons: 
     // 	this.checked = !this.checked
     //  this.$forceUpdate()
     // }
-    map: function map() {uni.getLocation({ type: 'gcj02', //返回可以用于uni.openLocation的经纬度
-        success: function success(res) {var latitude = res.latitude;var longitude = res.longitude;uni.openLocation({ latitude: latitude, longitude: longitude, success: function success() {console.log('success');} });} });} } };exports.default = _default;
+    map: function map() {var that = this;uni.getLocation({ type: 'gcj02', //返回可以用于uni.openLocation的经纬度
+        success: function success(res) {var latitude = that.attDetail.data.latitude;var longitude = that.attDetail.data.longitude;uni.openLocation({ latitude: latitude, longitude: longitude, success: function success() {console.log('success');} });} });} } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-baidu/dist/index.js */ 1)["default"]))
 
 /***/ }),

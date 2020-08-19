@@ -164,7 +164,7 @@
 			},
 			getUserInfo(){
 				uni.getUserInfo({
-					// provider:'baidu',
+					provider:'baidu',
 					success:(res)=>{
 						console.log('用户信息',res.userInfo)
 					}

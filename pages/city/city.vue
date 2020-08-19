@@ -86,7 +86,12 @@
 				getApp().globalData.item = item
 				console.log('item',item)
 				uni.switchTab({
-					url:'../index/index?item='+item
+					url:'../index/index?item='+item,
+					success:(res)=> {
+						let page = getCurrentPages().pop();
+						if (page == undefined || page == null) return;
+						page.onLoad();
+					}
 				})
 				
 			},
@@ -104,7 +109,9 @@
 				uni.getLocation({
 					type: 'wgs84',
 					success: (res) => {
-						this.city = res.city
+						console.log('dizhi----',res)
+						this.city = res.city.substr(0, res.city.length - 1)
+						console.log('ccccccc',this.city)
 					}
 				});
 			},
