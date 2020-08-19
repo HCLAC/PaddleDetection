@@ -10,7 +10,7 @@
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
-
+		
 		<view class="" v-show="articleList != null">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap">
@@ -43,7 +43,12 @@
 				<!-- 内容文章 -->
 				<view class="contentText">
 					<!-- <rich-text :nodes="articleList.data.content | formatRichText"></rich-text> -->
+<<<<<<< HEAD
 					<u-parse lazy-load use-cache @linkpress="templateAdd" :html="articleList.data.content | formatRichText"></u-parse>
+=======
+					<u-parse :html="articleList.data.content | formatRichText"></u-parse>
+					<!-- <view class="copy">详情请+VX: {{VX}}<text class="clcopy" @click="copy">点击复制</text></view> -->
+>>>>>>> 07ef2a7ecce5bef9340ae97502f368fa8a933c68
 				</view>
 				<view class="tips">
 					<view v-for="item in articleList.data.tags">
@@ -83,6 +88,7 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 var _this;
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import uniIcons from '@/components/uni-icons/uni-icons.vue';
@@ -136,6 +142,66 @@ export default {
 			console.log(e)
 			
 			if(e.group && e.groupid){
+=======
+	var _this
+	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue'
+	import uniIcons from "@/components/uni-icons/uni-icons.vue"
+	import uniFav from '@/components/uni-fav/uni-fav.vue'
+	// import ourLoading from '@/components/our-loading/our-loading.vue'
+	// import httpType from '../../httpType.js'
+	export default {
+		comments: {
+			uniNavBar,
+			uniIcons,
+			uniFav
+			// ourLoading
+		},
+		data() {
+			return {
+				indicatorDots: true,
+				current: 0,
+				list: [],
+				VX: 17827277778,
+				articleList: null,
+				token:'',
+				article_id: '',
+				flag:true
+			}
+		},
+		onLoad: function(e) {
+			console.log('文章id====', e)
+			uni.showLoading({
+				title:'加载中'
+			})
+			this.flag = uni.getStorageSync("Authorization") ? false : true
+			console.log(this.flag)
+			// debugger
+			this.getArticleDetail(e)
+			uni.hideLoading()
+		},
+		created() {
+			(_this = this),_this.getOrder()
+		},
+
+		methods: {
+			getOrder(){
+				
+			},
+			// 获取文章详情
+			getArticleDetail(e) {
+				var that = this
+				
+
+				// var token = uni.getStorageSync('Authorization')
+				// // var that.token = token
+				// console.log("token===>", token)
+				// if(token == null ){
+				// 	that.flag = true
+				// }
+				// else{
+				// 	that.flag = false
+				// }
+>>>>>>> 07ef2a7ecce5bef9340ae97502f368fa8a933c68
 				uni.request({
 					url: 'http://121.40.30.19/marketing/copy',
 					data: {
@@ -307,11 +373,66 @@ export default {
 							content: '您好，请先登录',
 							showCancel: false,
 							success: function(res) {
+<<<<<<< HEAD
 								if (res.confirm) {
 									uni.redirectTo({
 										url: '../login/login'
 									});
 								}
+=======
+								console.log(res.data.data.fav,
+									res.data.data.fav_count,
+									res.data.data.uuid,
+									333333
+								)
+								console.log('eeeeeeeeeeeeeeee', res)
+								console.log('文章详情====',res.data)
+								uni.setStorageSync('id',res.data)
+								that.articleList = res.data
+								
+								console.log('articleList',that.articleList)
+							}
+						})
+					}
+
+				})
+				
+
+			},
+		
+			// 登录
+			login(){
+				uni.redirectTo({
+					url: '../login/login'
+				})
+			},
+			change(e) {
+				_this.current = e.detail.current
+			},
+			back() {
+				uni.navigateBack({
+					delta: 1
+				})
+			},
+			home() {
+				uni.switchTab({
+					url: "/pages/index/index"
+				})
+			},
+
+			map(){
+				var that = this
+				uni.getLocation({
+					type: 'gcj02', //返回可以用于uni.openLocation的经纬度
+					success: function (res) {
+						const latitude = that.articleList.data.latitude;
+						const longitude = that.articleList.data.longitude;
+						uni.openLocation({
+							latitude: latitude,
+							longitude: longitude,
+							success: function () {
+								console.log('success');
+>>>>>>> 07ef2a7ecce5bef9340ae97502f368fa8a933c68
 							}
 						});
 						return;

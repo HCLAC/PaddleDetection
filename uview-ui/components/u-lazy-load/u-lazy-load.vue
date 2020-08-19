@@ -227,6 +227,8 @@
 
 	.u-lazy-item {
 		width: 100%;
+		min-height: 300rpx;
+		max-height: 460rpx;
 		// 骗系统开启硬件加速
 		transform: transition3d(0, 0, 0);
 		// 防止图片加载“闪一下”

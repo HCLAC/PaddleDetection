@@ -1,68 +1,68 @@
 <template>
 	<view class="content">
-		<image src="../../static/images/mineBack.png" class="backImg"></image>
-		<!-- 用户信息 -->
-		<view class="usermes">
-			<image class="userAva" :src="avatarUrl"></image>
-			<view class="userR">
-				<view class="userName">{{ nickName }}</view>
-				<!-- <view class="logout">退出登录</view> -->
- 			</view>
+		<view class="contentTop">
+			<image src="../../static/images/mineBack.png" class="backImg"></image>
+			<!-- 用户信息 -->
+			<view class="usermes">
+				<image class="userAva" :src="avatarUrl"></image>
+				<view class="userR">
+					<view class="userName">{{ nickName }}</view>
+					<!-- <view class="logout">退出登录</view> -->
+				</view>
+			</view>
 		</view>
+		
 		<!-- 我的收藏 -->
 		<view class="myCollection">
 			<view class="phone"><image class="phoneImg" src="../../static/images/phone.png" mode=""></image></view>
 			
 			<view>我的收藏</view>
-				<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-				<view class="contentItem" v-for="(item, index) in tipList" :key="index">
-					<view class="left">
-						<image :src="item.main_image" mode="">
-							<view class="imgTip">
-								<view  v-if="item.type==1">
+			<scroll-view scroll-y="true" class="list">
+			
+				<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption"  :up="upOption">
+					<view class="contentItem" v-for="(item, index) in tipList" :key="index">
+						<view class="left">
+							<image :src="item.main_image" mode="">
+								<view class="imgTip">
+									<view  v-if="item.type==1">
+										游记
+									</view>
+									<view  v-if="item.type==2">
+										攻略
+									</view>
+								</view>
+							</image>
+						</view>
+						<view class="right" @click="onPageJump" :id= "item.article_id">
+							<view class="title">
+								<view class="tips" v-if="item.type==1">
 									游记
 								</view>
-								<view  v-if="item.type==2">
+								<view class="tips" v-if="item.type==2">
 									攻略
 								</view>
+								| 
+								<view class="titleText">
+									{{item.title}}
+								</view>
 							</view>
-						</image>
-					</view>
-					<view class="right" @click="onPageJump" :id= "item.article_id">
-						<view class="title">
-							<view class="tips" v-if="item.type==1">
-								游记
+							<view class="content">
+								<rich-text class="richText" :nodes="item.content "></rich-text>
+								<!-- {{item.title}} -->
 							</view>
-							<view class="tips" v-if="item.type==2">
-								攻略
+							<view class="position">
+								<image src="../../static/images/Icon／Map.svg" mode="aspectFill"></image>
+								<view>{{item.location}}</view>
 							</view>
-							| 
-							<view class="titleText">
-								{{item.title}}
-							</view>
-						</view>
-						<view class="content">
-							<rich-text class="richText" :nodes="item.content "></rich-text>
-							<!-- {{item.title}} -->
-						</view>
-						<view class="position">
-							<image src="../../static/images/Icon／Map.svg" mode="aspectFill"></image>
-							<view>{{item.location}}</view>
 						</view>
 					</view>
-				</view>
 				</mescroll-body>
-				<!-- <view class="noContent" v-show="tipList != null">~我也是有底线的~</view> -->
-							
-				<view class="noContentItem" v-show="tipList == null">
+				<!-- <view class="noContentItem" v-show="tipList == null">
 					<image src="../../static/images/wenjianjia.png" mode=""></image>
 					<view class="tipText">您的收藏夹空空如也~</view>
-				</view>
-			
+				</view> -->
+			</scroll-view>
 		</view>
-		
-		
-	
 	</view>
 	
 </template>
@@ -83,15 +83,10 @@ export default {
 	computed: mapState(['forcedLogin', 'hasLogin', 'phone']),
 	
 	
-	onShow() {
+	onLoad() {
 		this.getUserMsg()
 	},
-	onPullDownRefresh() {
-		console.log('refresh');
-		setTimeout(function () {
-			uni.stopPullDownRefresh();
-		}, 1000);
-	},
+	
 	methods: {
 		getUserMsg(){
 			var that = this
@@ -194,24 +189,9 @@ export default {
 		
 		/*下拉刷新的回调, 有三种处理方式:*/
 		downCallback(){
-			// 第1种: 请求具体接口
-			uni.request({
-				url: 'http://121.40.30.19/user/favorite/list',
-				header:{
-					'Authorization':uni.getStorageSync('Authorization')
-				},
-				success: (res) => {
-					// console.log('下拉刷新',res)
-					// 请求成功,隐藏加载状态
-					this.mescroll.endSuccess()
-				},
-				fail: () => {
-					// 请求失败,隐藏加载状态
-					this.mescroll.endErr()
-				}
-			})
+			
 			// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
-			// this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+			this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
 			// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
 			// this.mescroll.endSuccess()
 			
@@ -283,75 +263,21 @@ export default {
 		...mapMutations(['login']),
 		
 	},
-	filters: {
-		/**
-		 * 处理富文本里的图片宽度自适应
-		 * 1.去掉img标签里的style、width、height属性
-		 * 2.img标签添加style属性：max-width:100%;height:auto
-		 * 3.修改所有style里的width属性为max-width:100%
-		 * 4.去掉<br/>标签
-		 * @param html
-		 * @returns {void|string|*}
-		 */
-		formatRichText (html) { //控制小程序中图片大小
-			let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
-				match = match.replace(/style="[^"]+"/gi, '').replace(/style='[^']+'/gi, '');
-				match = match.replace(/width="[^"]+"/gi, '').replace(/width='[^']+'/gi, '');
-				match = match.replace(/height="[^"]+"/gi, '').replace(/height='[^']+'/gi, '');
-				return match;
-			});
-			newContent = newContent.replace(/style="[^"]+"/gi,function(match,capture){
-				match = match.replace(/width:[^;]+;/gi, 'max-width:100%;').replace(/width:[^;]+;/gi, 'max-width:100%;');
-				return match;
-			});
-			newContent = newContent.replace(/<br[^>]*\/>/gi, '');
-			// newContent = newContent.replace(/\<img/gi, '<img style="width:350px;height:auto;display:inline-block;margin:5px auto;"');
-			// newContent = newContent.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');	
-			// newContent = newContent.replace(/<h2[^>]*>(?:(?!<\/h2>)[\s\S])*<\/h2>/gi, '<h2 style="font-size:14px;line-height:14px"');
-			newContent = newContent.replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/gi, '<p');
-			newContent = newContent.replace(/<p([\s\w"=\/\.:;]+)((?:(class="[^"]+")))/gi, '<p');
-			newContent = newContent.replace(/<p>/gi, '<p style="font-size:14px;line-height:14px;"');
-			newContent = newContent.replace(/<h2([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/gi, '<h2');
-			newContent = newContent.replace(/<h2>/gi, '<h2 style="font-size:14px;line-height:14px;"');
-			newContent = newContent.replace(/<div([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/gi, '<div');
-			newContent = newContent.replace(/<div>/gi, '<div style="font-size:14px;line-height:14px;"');
-			// newContent = newContent.replace(/<span[^>]*>(?:(?!<\/span>)[\s\S])*<\/span>/gi, '<span style="font-size:14px;line-height:14px"');
-			newContent = newContent.replace(/<img[^>]*>/gi, '');
-				console.log(newContent)
-				// debugger
-			return newContent;
-		}	
-	}
+	
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.contentTop{
+}
+
 .backImg {
 	position: absolute;
 	height: 440rpx;
 	width: 100%;
-	z-index: -21;
+	z-index: -11;
 }
-// .hello {
-// 	display: flex;
-// 	flex: 1;
-// 	flex-direction: column;
-// }
 
-// .title {
-// 	color: #8f8f94;
-// 	margin-top: 25px;
-// }
-
-// .ul {
-// 	font-size: 15px;
-// 	color: #8f8f94;
-// 	margin-top: 25px;
-// }
-
-// .ul > view {
-// 	line-height: 25px;
-// }
 // /* 用户信息 */
 .usermes {
 	padding-top: 174rpx;
@@ -393,14 +319,14 @@ export default {
 	border-radius: 40rpx 40rpx 0rpx 0rpx;
 	background-color: #fff;
 	color: #303133;
-	height: 180rpx;
+	height: 1106rpx;
 	font-size: 40rpx;
 	font-weight: 500;
 	padding-left: 32rpx;
 	padding-top: 52rpx;
 	position: relative;
 	top: 190rpx;
-	position: relative;
+	z-index: 21;
 	.phone {
 		height: 120rpx;
 		width: 120rpx;
@@ -413,6 +339,9 @@ export default {
 		width: 120rpx;
 		height: 120rpx;
 	}
+}
+.list{
+	height: 100%;
 }
 .noContentItem{
 	// height: 600rpx;

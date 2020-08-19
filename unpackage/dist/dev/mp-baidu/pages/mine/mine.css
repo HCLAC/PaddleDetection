@@ -25,13 +25,13 @@
 /* 透明度 */
 /* 文章场景相关 */
 /* uni.scss */
-.backImg {
+.backImg.data-v-dcbcfe34 {
   position: absolute;
   height: 440rpx;
   width: 100%;
-  z-index: -21;
+  z-index: -11;
 }
-.usermes {
+.usermes.data-v-dcbcfe34 {
   padding-top: 174rpx;
   height: 130rpx;
   display: -webkit-box;
@@ -41,23 +41,23 @@
   -webkit-align-items: center;
           align-items: center;
 }
-.userAva {
+.userAva.data-v-dcbcfe34 {
   margin-left: 15px;
   width: 130rpx;
   height: 130rpx;
   border-radius: 50%;
   margin-top: 86rpx;
 }
-.userR {
+.userR.data-v-dcbcfe34 {
   margin-left: 32rpx;
   margin-top: 104rpx;
 }
-.userName {
+.userName.data-v-dcbcfe34 {
   font-size: 36rpx;
   font-weight: 500;
   color: #303133;
 }
-.logout {
+.logout.data-v-dcbcfe34 {
   margin-top: 4px;
   width: 80px;
   height: 20px;
@@ -69,20 +69,20 @@
   text-align: center;
 }
 /* 我的收藏卡片 */
-.myCollection {
+.myCollection.data-v-dcbcfe34 {
   border-radius: 40rpx 40rpx 0rpx 0rpx;
   background-color: #fff;
   color: #303133;
-  height: 180rpx;
+  height: 1106rpx;
   font-size: 40rpx;
   font-weight: 500;
   padding-left: 32rpx;
   padding-top: 52rpx;
   position: relative;
   top: 190rpx;
-  position: relative;
+  z-index: 21;
 }
-.myCollection .phone {
+.myCollection .phone.data-v-dcbcfe34 {
   height: 120rpx;
   width: 120rpx;
   border-radius: 50%;
@@ -90,11 +90,14 @@
   top: -60rpx;
   right: 32rpx;
 }
-.myCollection .phone .phoneImg {
+.myCollection .phone .phoneImg.data-v-dcbcfe34 {
   width: 120rpx;
   height: 120rpx;
 }
-.noContentItem {
+.list.data-v-dcbcfe34 {
+  height: 100%;
+}
+.noContentItem.data-v-dcbcfe34 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -109,12 +112,12 @@
   -webkit-justify-content: center;
           justify-content: center;
 }
-.noContentItem image {
+.noContentItem image.data-v-dcbcfe34 {
   width: 154rpx;
   height: 122rpx;
   position: fi;
 }
-.noContentItem .tipText {
+.noContentItem .tipText.data-v-dcbcfe34 {
   font-size: 28rpx;
   font-family: PingFangSC-Regular,PingFang SC;
   font-weight: 400;
@@ -122,13 +125,13 @@
   line-height: 30rpx;
   margin-top: 40rpx;
 }
-.noContent {
+.noContent.data-v-dcbcfe34 {
   font-size: 22rpx;
   color: #c9cad1;
   text-align: center;
   margin-top: 80rpx;
 }
-.contentItem {
+.contentItem.data-v-dcbcfe34 {
   width: 694rpx;
   height: 230rpx;
   margin: 28rpx;
@@ -142,10 +145,10 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.contentItem .left {
+.contentItem .left.data-v-dcbcfe34 {
   position: relative;
 }
-.contentItem .left .imgTip {
+.contentItem .left .imgTip.data-v-dcbcfe34 {
   position: absolute;
   left: 0rpx;
   top: 0rpx;
@@ -159,18 +162,18 @@
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 16rpx 0 16rpx 0;
 }
-.contentItem .left image {
+.contentItem .left image.data-v-dcbcfe34 {
   width: 208rpx;
   height: 246rpx;
   margin-right: 20rpx;
   box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.08);
   border-radius: 16rpx 0 0 16rpx;
 }
-.contentItem .right {
+.contentItem .right.data-v-dcbcfe34 {
   margin-top: 40rpx;
   height: 230rpx;
 }
-.contentItem .right .title {
+.contentItem .right .title.data-v-dcbcfe34 {
   width: 444rpx;
   height: 32rpx;
   font-size: 32rpx;
@@ -182,16 +185,16 @@
   display: -webkit-flex;
   display: flex;
 }
-.contentItem .tips {
+.contentItem .tips.data-v-dcbcfe34 {
   margin-right: 10rpx;
 }
-.contentItem .titleText {
+.contentItem .titleText.data-v-dcbcfe34 {
   margin-left: 10rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.contentItem .richText {
+.contentItem .richText.data-v-dcbcfe34 {
   width: 448rpx;
   height: 70rpx;
   font-size: 28rpx;
@@ -207,7 +210,7 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-.contentItem .right .position {
+.contentItem .right .position.data-v-dcbcfe34 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -216,12 +219,12 @@
   -webkit-align-items: center;
           align-items: center;
 }
-.contentItem .right .position image {
+.contentItem .right .position image.data-v-dcbcfe34 {
   height: 20rpx;
   width: 20rpx;
   margin-right: 4rpx;
 }
-.contentItem .right .position view {
+.contentItem .right .position view.data-v-dcbcfe34 {
   width: 176rpx;
   font-size: 22rpx;
   font-family: PingFangSC-Regular,PingFang SC;
