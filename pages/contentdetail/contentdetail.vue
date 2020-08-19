@@ -43,8 +43,7 @@
 				<!-- 内容文章 -->
 				<view class="contentText">
 					<!-- <rich-text :nodes="articleList.data.content | formatRichText"></rich-text> -->
-					<u-parse lazy-load use-cache @linkpress="templateAdd" :html="articleList.data.content | formatRichText(this)"></u-parse>
-					<!-- <view class="copy">详情请+VX: {{VX}}<text class="clcopy" @click="copy">点击复制</text></view> -->
+					<u-parse lazy-load use-cache @linkpress="templateAdd" :html="articleList.data.content | formatRichText"></u-parse>
 				</view>
 				<view class="tips">
 					<view v-for="item in articleList.data.tags">
@@ -106,7 +105,7 @@ export default {
 			articleList: null,
 			token: '',
 			article_id: '',
-			artiecle_num: null,
+			article_num: null,
 			flag: true,
 			wechat_id: null
 		};
@@ -121,18 +120,51 @@ export default {
 		console.log(this.flag);
 		// debugger
 		this.article_num = e.article_id;
-		debugger
+
 		this.getArticleDetail(e);
 		uni.hideLoading();
 	},
 	created() {
-		(_this = this), _this.getOrder();
+		
+		_this = this 
+		_this.getOrder();
 	},
 
 	methods: {
 		getOrder() {},
-		templateAdd() {
-			console.log(11111);
+		templateAdd(e) {
+			console.log(e)
+			
+			if(e.group && e.groupid){
+				uni.request({
+					url: 'http://121.40.30.19/marketing/copy',
+					data: {
+						id: e.groupid
+					},
+					method: 'PUT',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: (res)=>{
+						if(res.data.code == 0){
+							uni.setClipboardData({
+								data: e.group,
+								success: ()=>{
+									uni.showToast({
+										title: "复制成功",
+										icon: "success"
+									})
+								}
+							})
+						}else{
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							})
+						}
+					}
+				})
+			}
 		},
 		// 获取文章详情
 		getArticleDetail(e) {
@@ -156,13 +188,27 @@ export default {
 				header: {
 					Authorization: uni.getStorageSync('Authorization')
 				},
-				success: function(res) {
+				success: async function(res) {
 					console.log(res.data.data.liked, res.data.data.like_count, res.data.data.uuid, 444444);
 					console.log('eeeeeeeeeeeeeeee', e);
 					console.log('文章详情====', res);
 					uni.setStorageSync('id', res.data);
-					that.articleList = res.data;
-					console.log('articleList', that.articleList);
+
+					let strIndex = res.data.data.content.search('此处为营销组件');
+					if (strIndex != -1) {
+						// let strId =  newContent.substring(strIndex,1)
+
+						let strId = res.data.data.content[strIndex + 8];
+						let numStr = await  that.getTemplate(strId);
+							let wechat_id = numStr.wechat_id
+							let str =  '<div><span style="font-size: 32rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</span><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 32rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></div>'
+							
+						res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
+						console.log(res.data.data.content);
+						
+						that.articleList = res.data;
+
+					}
 				}
 			});
 		},
@@ -210,12 +256,27 @@ export default {
 						header: {
 							Authorization: uni.getStorageSync('Authorization')
 						},
-						success: function(res) {
+						success: async function(res) {
 							console.log(res.data.data.liked, res.data.data.like_count, res.data.data.uuid, 333333);
 							console.log('eeeeeeeeeeeeeeee', res);
 							console.log('文章详情====', res);
 							uni.setStorageSync('id', res.data);
-							that.articleList = res.data;
+							
+							let strIndex = res.data.data.content.search('此处为营销组件');
+							if (strIndex != -1) {
+								// let strId =  newContent.substring(strIndex,1)
+							
+								let strId = res.data.data.content[strIndex + 8];
+								let numStr = await  that.getTemplate(strId);
+									let wechat_id = numStr.wechat_id
+									let str =  '<div><span style="font-size: 32rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</span><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 32rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></div>'
+									
+								res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
+								console.log(res.data.data.content);
+								
+								that.articleList = res.data;
+							
+							}
 							console.log('articleList', that.articleList);
 						}
 					});
@@ -264,12 +325,26 @@ export default {
 						header: {
 							Authorization: uni.getStorageSync('Authorization')
 						},
-						success: function(res) {
+						success: async function(res) {
 							console.log(res.data.data.fav, res.data.data.fav_count, res.data.data.uuid, 333333);
 							console.log('eeeeeeeeeeeeeeee', res);
 							console.log('文章详情====', res.data);
 							uni.setStorageSync('id', res.data);
+							
+							let strIndex = res.data.data.content.search('此处为营销组件');
+							if (strIndex != -1) {
+								// let strId =  newContent.substring(strIndex,1)
+							let strId = res.data.data.content[strIndex + 8];
+							let numStr = await  that.getTemplate(strId);
+								let wechat_id = numStr.wechat_id
+								let str =  '<div><span style="font-size: 32rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</span><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 32rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></div>'
+								
+							res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
+							console.log(res.data.data.content);
+							
 							that.articleList = res.data;
+							
+							}
 
 							console.log('articleList', that.articleList);
 						}
@@ -279,31 +354,37 @@ export default {
 		},
 		getTemplate(id) {
 			if (id) {
-				uni.request({
-					// url:'article',
-					url: 'http://121.40.30.19/marketing/unit',
-					method: 'get',
-					data: {
-						group_id: id,
-						article_id: this.artiecle_num
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-
-					success: res => {
-						console.log(res);
-
-						if (res.data.code == 0) {
-							this.wechat_id = res.data.data.wechat_id;
-						} else {
-							uni.showToast({
-								title: res.data.msg,
-								icon: none
-							});
+				return new Promise((reslove,reject)=>{
+					uni.request({
+						// url:'article',
+						url: 'http://121.40.30.19/marketing/unit',
+						method: 'get',
+						data: {
+							group_id: id,
+							article_id: this.article_num
+						},
+						header: {
+							Authorization: uni.getStorageSync('Authorization')
+						},
+					
+						success: res => {
+							
+					
+							if (res.data.code == 0) {
+								// this.wechat_id = res.data.data.wechat_id;
+								reslove(res.data.data)
+							} else {
+								uni.showToast({
+									title: res.data.msg,
+									icon: 'none'
+								});
+							}
+						},
+						fail: (error)=>{
+							reject(error)
 						}
-					}
-				});
+					});
+				})
 			}
 		},
 		// 登录
@@ -378,7 +459,7 @@ export default {
 		 * @returns {void|string|*}
 		 */
 
-		 formatRichText(html, that) {
+		formatRichText(html) {
 			//控制小程序中图片大小
 			let newContent = html.replace(/<img[^>]*>/gi, function(match, capture) {
 				match = match.replace(/style="[^"]+"/gi, '').replace(/style='[^']+'/gi, '');
@@ -394,16 +475,6 @@ export default {
 			// newContent = newContent.replace(/\<img/gi, '<img style="width:350px;height:auto;display:inline-block;margin:5px auto;"');
 			newContent = newContent.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');
 			//   newContent = newContent.replace(/<input[^>]*\/>/gi, '<div><p>营销组件</p><a >点击复制</a></div>');
-			let strIndex = newContent.search('此处为营销组件');
-			if (strIndex != -1) {
-				// let strId =  newContent.substring(strIndex,1)
-				
-				let strId = newContent[strIndex + 8];
-
-				 that.getTemplate(strId);
-				newContent = newContent.replace(/<input[^>]*\/>/gi, '<div><p>详情请+VX：' + that.wechat_id + '</p><a >点击复制</a></div>');
-				
-			}
 
 			return newContent;
 		}
