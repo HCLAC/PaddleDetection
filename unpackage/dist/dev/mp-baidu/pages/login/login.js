@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   uLine: function() {
-    return __webpack_require__.e(/*! import() | uview-ui/components/u-line/u-line */ "uview-ui/components/u-line/u-line").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-line/u-line.vue */ 177))
+    return __webpack_require__.e(/*! import() | uview-ui/components/u-line/u-line */ "uview-ui/components/u-line/u-line").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-line/u-line.vue */ 184))
   }
 }
 var render = function() {
@@ -300,7 +300,7 @@ var _default = { data: function data() {return { phone: "", code: '', key: '', g
     },
     getUserInfo: function getUserInfo() {
       uni.getUserInfo({
-        // provider:'baidu',
+        provider: 'baidu',
         success: function success(res) {
           console.log('用户信息', res.userInfo);
         } });

@@ -342,21 +342,22 @@
 				// this.list = null
 				// var city = uni.getStorageSync('city_id');
 				uni.request({
-						url: 'http://121.40.30.19/site/hot',
-						data: {
-							state_id: this.item.state_id,
-							city_id: this.item.city_id,
-							count: 3,
-							sort_by: 3
-						},
-						success: (res) => {
-							console.log("跳转热门景点=========", res)
-							// uni.setStorageSync('description',res.data)
-							this.hotAtt = res.data.data
-						}
-					}),
-					// 清除旧数据
-					this.$refs.uWaterfall.clear()
+					url: 'http://121.40.30.19/site/hot',
+					data: {
+						state_id: this.item.state_id,
+						city_id: this.item.city_id,
+						count: 3,
+						sort_by: 3
+					},
+					success: (res) => {
+						console.log("跳转热门景点=========", res)
+						// uni.setStorageSync('description',res.data)
+						this.hotAtt = res.data.data
+					}
+				}),
+				// 清除旧数据
+				this.$refs.uWaterfall.clear()
+				
 				uni.request({
 					url: 'http://121.40.30.19/article/list',
 					// url:'http://192.168.43.60:8299/article/list',
@@ -372,7 +373,10 @@
 					},
 					success: (res) => {
 						console.log('切换文章列表', res)
+						
 						this.list = res.data.data.list
+						console.log(this.list,88888)
+						
 					}
 				})
 
@@ -543,28 +547,28 @@
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {
 				// 第1种: 请求具体接口
-				uni.request({
-					url: 'http://121.40.30.19/article/list',
-					data: {
-						count: 6,
-						page: 1,
-						sort_by: 1
-					},
-					header: {
-						'Authorization': uni.getStorageSync('Authorization')
-					},
-					success: (res) => {
-						console.log('下拉刷新', res)
-						// 请求成功,隐藏加载状态
-						this.mescroll.endSuccess()
-					},
-					fail: () => {
-						// 请求失败,隐藏加载状态
-						this.mescroll.endErr()
-					}
-				})
+				// uni.request({
+				// 	url: 'http://121.40.30.19/article/list',
+				// 	data: {
+				// 		count: 6,
+				// 		page: 1,
+				// 		sort_by: 1
+				// 	},
+				// 	header: {
+				// 		'Authorization': uni.getStorageSync('Authorization')
+				// 	},
+				// 	success: (res) => {
+				// 		console.log('下拉刷新', res)
+				// 		// 请求成功,隐藏加载状态
+				// 		this.mescroll.endSuccess()
+				// 	},
+				// 	fail: () => {
+				// 		// 请求失败,隐藏加载状态
+				// 		this.mescroll.endErr()
+				// 	}
+				// })
 				// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
-				// this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+				this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
 				// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
 				// this.mescroll.endSuccess()
 
@@ -647,6 +651,7 @@
 								console.log('data', data)
 								// 接口返回的当前页数据列表 (数组)
 								let curPageData = data.data.data.list;
+								
 								console.log('curPageData', curPageData)
 								// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 								let curPageLen = curPageData.length;
@@ -1064,6 +1069,7 @@
 
 	.demo-top {
 		position: relative;
+		
 	}
 
 	.demo-image {

@@ -160,7 +160,7 @@
 				</view>
 				<view class="phone" v-show="attDetail.data.butler_mobile" @click="phoneCall">
 					<image src="../../static/images/dianhua.png"></image>
-					<text >旅行管家：{{attDetail.data.butler_mobile}}</text>
+					<text>旅行管家：{{attDetail.data.butler_mobile}}</text>
 				</view>
 			</view>
 			<view class="magrinBck" v-show="attDetail.data.articles"></view>
