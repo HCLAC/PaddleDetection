@@ -1,5 +1,5 @@
 <template>
-	<view class="content">
+	<view class="content" style="height: 100%; overflow: hidden;">
 		<view class="contentTop">
 			<image src="../../static/images/mineBack.png" class="backImg"></image>
 			<!-- 用户信息 -->
@@ -13,11 +13,11 @@
 		</view>
 		
 		<!-- 我的收藏 -->
-		<view class="myCollection">
+		<view class="myCollection"  style="margin-bottom: 400rpx;">
 			<view class="phone"><image class="phoneImg" src="../../static/images/phone.png" mode=""></image></view>
 			
 			<view>我的收藏</view>
-			<scroll-view scroll-y="true" class="list">
+			<scroll-view scroll-y="true" class="list" >
 			
 				<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption"  :up="upOption">
 					<view class="contentItem" v-for="(item, index) in tipList" :key="index">
