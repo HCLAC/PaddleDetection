@@ -208,7 +208,10 @@ export default {
 						
 						that.articleList = res.data;
 
+					}else{
+						that.articleList = res.data;
 					}
+					
 				}
 			});
 		},
@@ -276,8 +279,10 @@ export default {
 								
 								that.articleList = res.data;
 							
+							}else{
+								that.articleList = res.data;
+								console.log('articleList', that.articleList);
 							}
-							console.log('articleList', that.articleList);
 						}
 					});
 				}
@@ -344,9 +349,11 @@ export default {
 							
 							that.articleList = res.data;
 							
+							}else{
+								that.articleList = res.data;
+								console.log('articleList', that.articleList);
 							}
 
-							console.log('articleList', that.articleList);
 						}
 					});
 				}
@@ -408,11 +415,12 @@ export default {
 		},
 
 		map() {
+			var that = this
 			uni.getLocation({
 				type: 'gcj02', //返回可以用于uni.openLocation的经纬度
 				success: function(res) {
-					const latitude = res.latitude;
-					const longitude = res.longitude;
+					const latitude = that.articleList.data.latitude;
+					const longitude = that.articleList.data.longitude;
 					uni.openLocation({
 						latitude: latitude,
 						longitude: longitude,

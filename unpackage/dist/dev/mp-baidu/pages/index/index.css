@@ -716,56 +716,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	/* 头条小程序组件内不能引入字体 */
 page.data-v-57280228 {
 		display: -webkit-box;
@@ -1064,7 +1014,20 @@ view.data-v-57280228 {
 		color: #303133;
 		margin-left: 32rpx;
 }
-.demo-warter-l.data-v-57280228 {
+.wrap.data-v-57280228{
+		width:750rpx;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-box-orient: horizontal;
+		-webkit-box-direction: normal;
+		-webkit-flex-flow: row;
+		        flex-flow: row;
+		-webkit-flex-wrap: wrap;
+		        flex-wrap: wrap;
+}
+.demo-warter.data-v-57280228 {
+		width: 350rpx;
 		margin-left: 10rpx;
 }
 .demo-warter.data-v-57280228 {
