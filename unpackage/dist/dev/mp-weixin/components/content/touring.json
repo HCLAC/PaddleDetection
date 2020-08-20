@@ -1,6 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "waterfall-touring": "/components/module/complete_waterfall_touring"
-  }
-}

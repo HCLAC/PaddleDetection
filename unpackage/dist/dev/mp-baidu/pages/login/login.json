@@ -1,8 +1,0 @@
-{
-  "navigationBarBackgroundColor": "#FFFFFF",
-  "backgroundColor": "#fff",
-  "component": true,
-  "usingComponents": {
-    "u-line": "/uview-ui/components/u-line/u-line"
-  }
-}
