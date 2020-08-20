@@ -95,6 +95,9 @@ __webpack_require__.r(__webpack_exports__);
 var components = {
   uniNavBar: function() {
     return __webpack_require__.e(/*! import() | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then(__webpack_require__.bind(null, /*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64))
+  },
+  uWaterfall: function() {
+    return Promise.all(/*! import() | uview-ui/components/u-waterfall/u-waterfall */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uview-ui/components/u-waterfall/u-waterfall")]).then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-waterfall/u-waterfall.vue */ 194))
   }
 }
 var render = function() {
@@ -250,6 +253,95 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 45));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 82));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 112));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 // import httpType from '../../httpType.js';
 var _default = {
@@ -263,7 +355,7 @@ var _default = {
   mixins: [_mescrollMixins.default],
   data: function data() {
     return {
-      cityName: '正在定位...',
+      cityName: '正在定位',
       province: '',
       state_id: '',
       city_id: '',
@@ -415,6 +507,41 @@ var _default = {
 
 
 
+        },
+        // 未开启定位
+        fail: function fail(res) {
+          console.log('未开启定位', res);
+          // this.cityName = 
+          uni.request({
+            url: 'http://121.40.30.19/site/hot',
+            data: {
+              count: 3,
+              sort_by: 3 },
+
+            success: function success(res) {
+              console.log("热门景点=========", res);
+              // uni.setStorageSync('description',res.data)
+              _this.hotAtt = res.data.data;
+            } }),
+
+          uni.request({
+            url: 'http://121.40.30.19/article/list',
+            data: {
+              count: 6,
+              page: 1,
+              sort_by: 1 },
+
+            header: {
+              'Authorization': uni.getStorageSync('Authorization') },
+
+            success: function success(res) {
+              console.log('文章列表', res);
+              // uni.setStorageSync('article_id',res.data)
+              // console.log('存储文章列表==',res.data)
+              _this.list = res.data.data.list;
+              // console.log('list=====',this.list)
+            } });
+
         } });
 
     },
@@ -438,7 +565,7 @@ var _default = {
         } }),
 
       // 清除旧数据
-      // this.$refs.uWaterfall.clear()
+      this.$refs.uWaterfall.clear();
 
       uni.request({
         url: 'http://121.40.30.19/article/list',

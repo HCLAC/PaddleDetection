@@ -277,6 +277,7 @@ var _default = {
   },
   onLoad: function onLoad() {
     this.getResults();
+    this.init();
   },
   // 方法
   methods: {
@@ -410,8 +411,8 @@ var _default = {
     },
     init: function init() {
       this.loadDefaultKeyword();
-      this.loadOldKeyword();
-      this.loadHotKeyword();
+      // this.loadOldKeyword();
+      // this.loadHotKeyword();
 
     },
     blur: function blur() {
@@ -424,6 +425,9 @@ var _default = {
       uni.getStorage({
         key: "OldKeys",
         success: function success(res) {
+          var OldKeys = JSON.parse(res.data);
+          console.log('关键字', OldKeys);
+          var OldKeys = OldKeys[0];
           _this.defaultKeyword = OldKeys;
         } });
 

@@ -138,6 +138,7 @@
 		},
 		onLoad() {
 			this.getResults()
+			this.init()
 		},
 		// 方法
 		methods: {
@@ -271,8 +272,8 @@
 			},
 			init() {
 				this.loadDefaultKeyword();
-				this.loadOldKeyword();
-				this.loadHotKeyword();
+				// this.loadOldKeyword();
+				// this.loadHotKeyword();
 			
 			},
 			blur(){
@@ -285,6 +286,9 @@
 				uni.getStorage({
 					key:"OldKeys",
 					success: res =>{
+						var OldKeys = JSON.parse(res.data);
+						console.log('关键字',OldKeys);
+						var OldKeys = OldKeys[0]
 						this.defaultKeyword = OldKeys;
 					},
 				})

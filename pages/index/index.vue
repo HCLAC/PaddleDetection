@@ -58,11 +58,100 @@
 						<text class="tourtext">正在旅行</text>
 						<!-- <touring class="touringList" ></touring> -->
 						<view class="wrap">
-							<view class="demo-warter" v-for="(item,index) in list" :key="index">
+							<u-waterfall v-model="list" ref="uWaterfall">
+								<template v-slot:left="{leftList}">
+									<view class="demo-warter demo-warter-l" v-for="(item,index) in leftList" :key="index">
+										<view class="" @click="onPageJump" :id="item.article_id">
+											<view class="demo-top">
+												<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+												<!-- <u-lazy-load class="demo-image" :image="item.image"  ></u-lazy-load> -->
+												<view class="adress">
+													<view class="adreessIcon">
+														<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
+													</view>
+							
+													<view class="adressText">
+														{{item.location}}
+													</view>
+												</view>
+											</view>
+											<view class="titleTip">
+												<view class="demo-tag">
+													<view class="demo-tag-owner" v-if="item.type==1">
+														游记
+													</view>
+													<view class="demo-tag-owner" v-if="item.type==2">
+														攻略
+													</view>
+												</view>
+												<view class="demo-title">
+													{{item.title}}
+												</view>
+											</view>
+										</view>
+										<view class="demo-user">
+											<view class="userMessage">
+												<image class="userHeard" :src="item.avatar"></image>
+												<view class="userNikename">{{ item.author_name }}</view>
+											</view>
+											<view class="count" @click="clickLike" :id="item.article_id">
+												<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
+												<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
+												{{ item.like_count || 0 }}
+											</view>
+										</view>
+							
+									</view>
+								</template>
+								<template v-slot:right="{rightList}">
+									<view class="demo-warter" v-for="(item,index) in rightList" :key="index">
+										<view class="" @click="onPageJump" :id="item.article_id">
+											<view class="demo-top">
+												<image class="demo-image" :src="item.image" :index="index"  mode="widthFix"></image>
+												<!-- <u-lazy-load class="demo-image" :image="item.image"  ></u-lazy-load> -->
+												<view class="adress">
+													<view class="adreessIcon">
+														<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
+													</view>
+													<view class="adressText">
+														{{item.location}}
+													</view>
+												</view>
+											</view>
+							
+											<view class="titleTip">
+												<view class="demo-tag">
+													<view class="demo-tag-owner" v-if="item.type==1">
+														游记
+													</view>
+													<view class="demo-tag-owner" v-if="item.type==2">
+														攻略
+													</view>
+												</view>
+												<view class="demo-title">
+													{{item.title}}
+												</view>
+											</view>
+										</view>
+										<view class="demo-user">
+											<view class="userMessage">
+												<image class="userHeard" :src="item.avatar"></image>
+												<view class="userNikename">{{ item.author_name }}</view>
+											</view>
+											<view class="count" @click="clickLike" :id="item.article_id">
+												<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
+												<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
+												{{ item.like_count || 0 }}
+											</view>
+										</view>
+							
+									</view>
+								</template>
+							</u-waterfall>
+							<!-- <view class="demo-warter" v-for="(item,index) in list" :key="index">
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-										<!-- <u-lazy-load class="demo-image" :image="item.image"  ></u-lazy-load> -->
 										<view class="adress">
 											<view class="adreessIcon">
 												<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
@@ -98,7 +187,7 @@
 										{{ item.like_count || 0 }}
 									</view>
 								</view>
-							</view>
+							</view> -->
 						</view>
 					</view>
 				<!-- </scroll-view> -->
@@ -127,7 +216,7 @@
 		mixins: [MescrollMixin],
 		data() {
 			return {
-				cityName: '正在定位...',
+				cityName: '正在定位',
 				province: '',
 				state_id: '',
 				city_id: '',
@@ -279,6 +368,41 @@
 						})
 
 
+					},
+					// 未开启定位
+					fail: (res) => {
+						console.log('未开启定位',res)
+						// this.cityName = 
+						uni.request({
+								url: 'http://121.40.30.19/site/hot',
+								data: {
+									count: 3,
+									sort_by: 3
+								},
+								success: (res) => {
+									console.log("热门景点=========", res)
+									// uni.setStorageSync('description',res.data)
+									this.hotAtt = res.data.data
+								}
+							}),
+							uni.request({
+								url: 'http://121.40.30.19/article/list',
+								data: {
+									count: 6,
+									page: 1,
+									sort_by: 1
+								},
+								header: {
+									'Authorization': uni.getStorageSync('Authorization')
+								},
+								success: (res) => {
+									console.log('文章列表', res)
+									// uni.setStorageSync('article_id',res.data)
+									// console.log('存储文章列表==',res.data)
+									this.list = res.data.data.list
+									// console.log('list=====',this.list)
+								}
+							})
 					}
 				});
 			},
@@ -302,7 +426,7 @@
 					}
 				}),
 				// 清除旧数据
-				// this.$refs.uWaterfall.clear()
+				this.$refs.uWaterfall.clear()
 				
 				uni.request({
 					url: 'http://121.40.30.19/article/list',
@@ -991,12 +1115,12 @@
 		flex-flow: row;
 		flex-wrap: wrap;
 	}
-	.demo-warter {
-		width: 350rpx;
+	.demo-warter-l {
 		margin-left: 10rpx;
 	}
 
 	.demo-warter {
+		width: 360rpx;
 		margin-top: 0;
 		margin-right: 10rpx;
 		margin-bottom: 16rpx;
