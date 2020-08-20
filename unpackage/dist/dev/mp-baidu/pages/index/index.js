@@ -456,6 +456,7 @@ var _default = {
         success: function success(res) {
           console.log('切换文章列表', res);
           _this2.list = [];
+          _this2.mescroll.scrollTo(0, _this2.mescroll.optUp.toTop.duration);
           _this2.list = res.data.data.list;
           _this2.downCallback();
           // let totalSize = res.data.data.total
@@ -633,26 +634,6 @@ var _default = {
     /*下拉刷新的回调, 有三种处理方式:*/
     downCallback: function downCallback() {
       // 第1种: 请求具体接口
-      // uni.request({
-      // 	url: 'http://121.40.30.19/article/list',
-      // 	data: {
-      // 		count: 6,
-      // 		page: 1,
-      // 		sort_by: 1
-      // 	},
-      // 	header: {
-      // 		'Authorization': uni.getStorageSync('Authorization')
-      // 	},
-      // 	success: (res) => {
-      // 		console.log('下拉刷新', res)
-      // 		// 请求成功,隐藏加载状态
-      // 		this.mescroll.endSuccess()
-      // 	},
-      // 	fail: () => {
-      // 		// 请求失败,隐藏加载状态
-      // 		this.mescroll.endErr()
-      // 	}
-      // })
       // 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
       this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
       // 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
@@ -685,7 +666,7 @@ var _default = {
             var curPageLen = curPageData.length;
             console.log('curPageLen', curPageLen);
             // 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-            // let totalPage = data.data.data.list; 
+            var totalPage = data.data.data.total / pageSize;
             // 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
             var totalSize = data.data.data.total;
             console.log('totalSize', totalSize);
@@ -698,10 +679,10 @@ var _default = {
             console.log('list-', _this3.list);
             // 请求成功,隐藏加载状态
             //方法一(推荐): 后台接口有返回列表的总页数 totalPage
-            // this.mescroll.endByPage(curPageLen, totalPage); 
+            _this3.mescroll.endByPage(curPageLen, totalPage);
 
             //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-            _this3.mescroll.endBySize(curPageLen, totalSize);
+            // this.mescroll.endBySize(curPageLen, totalSize);
 
             //方法三(推荐): 您有其他方式知道是否有下一页 hasNext
             //this.mescroll.endSuccess(curPageLen, hasNext); 
@@ -713,9 +694,9 @@ var _default = {
 
             // 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
             // 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-            setTimeout(function () {
-              _this3.mescroll.endSuccess(curPageLen);
-            }, 20);
+            // setTimeout(() => {
+            // 	this.mescroll.endSuccess(curPageLen)
+            // }, 20)
 
 
           },
@@ -743,7 +724,7 @@ var _default = {
               var curPageLen = curPageData.length;
               console.log('curPageLen', curPageLen);
               // 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-              // let totalPage = data.data.data.list; 
+              var totalPage = data.data.data.total / pageSize;
               // 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
               var totalSize = data.data.data.total;
               console.log('totalSize', totalSize);
@@ -756,10 +737,10 @@ var _default = {
               console.log('list-', _this3.list);
               // 请求成功,隐藏加载状态
               //方法一(推荐): 后台接口有返回列表的总页数 totalPage
-              // this.mescroll.endByPage(curPageLen, totalPage); 
+              _this3.mescroll.endByPage(curPageLen, totalPage);
 
               //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-              _this3.mescroll.endBySize(curPageLen, totalSize);
+              // this.mescroll.endBySize(curPageLen, totalSize);
 
               //方法三(推荐): 您有其他方式知道是否有下一页 hasNext
               //this.mescroll.endSuccess(curPageLen, hasNext); 
@@ -771,9 +752,9 @@ var _default = {
 
               // 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
               // 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-              setTimeout(function () {
-                _this3.mescroll.endSuccess(curPageLen);
-              }, 20);
+              // setTimeout(() => {
+              // 	this.mescroll.endSuccess(curPageLen)
+              // }, 20)
 
 
             },
@@ -799,7 +780,7 @@ var _default = {
               var curPageLen = curPageData.length;
               console.log('curPageLen', curPageLen);
               // 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-              // let totalPage = data.data.data.list; 
+              var totalPage = data.data.data.total / pageSize;
               // 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
               var totalSize = data.data.data.total;
               console.log('totalSize', totalSize);
@@ -812,10 +793,10 @@ var _default = {
               console.log('list-', _this3.list);
               // 请求成功,隐藏加载状态
               //方法一(推荐): 后台接口有返回列表的总页数 totalPage
-              // this.mescroll.endByPage(curPageLen, totalPage); 
+              _this3.mescroll.endByPage(curPageLen, totalPage);
 
               //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-              _this3.mescroll.endBySize(curPageLen, totalSize);
+              // this.mescroll.endBySize(curPageLen, totalSize);
 
               //方法三(推荐): 您有其他方式知道是否有下一页 hasNext
               //this.mescroll.endSuccess(curPageLen, hasNext); 
@@ -827,9 +808,9 @@ var _default = {
 
               // 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
               // 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-              setTimeout(function () {
-                _this3.mescroll.endSuccess(curPageLen);
-              }, 20);
+              // setTimeout(() => {
+              // 	this.mescroll.endSuccess(curPageLen)
+              // }, 20)
 
 
             },

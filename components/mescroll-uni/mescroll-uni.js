@@ -87,7 +87,7 @@ MeScroll.prototype.extendUpScroll = function(optUp) {
 			size: 6, // 每页数据的数量
 			time: null // 加载第一页数据服务器返回的时间; 防止用户翻页时,后台新增了数据从而导致下一页数据重复;
 		},
-		noMoreSize: 5, // 如果列表已无数据,可设置列表的总数量要大于等于5条才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看
+		noMoreSize: 3, // 如果列表已无数据,可设置列表的总数量要大于等于5条才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看
 		offset: 80, // 距底部多远时,触发upCallback
 		textLoading: '加载中 ...', // 加载中的提示文本
 		textNoMore: '~我也是有底线的~', // 没有更多数据的提示文本
@@ -116,7 +116,7 @@ MeScroll.prototype.extendUpScroll = function(optUp) {
 		empty: {
 			use: true, // 是否显示空布局
 			icon: null, // 图标路径
-			tip: '~ 暂无相关数据 ~', // 提示
+			tip: '您的收藏夹空空如也~', // 提示
 			btnText: '', // 按钮
 			btnClick: null, // 点击按钮的回调
 			onShow: null, // 是否显示的回调
@@ -599,7 +599,8 @@ MeScroll.prototype.endBySize = function(dataSize, totalSize, systime) {
 	let hasNext;
 	if (this.optUp.use && totalSize != null) {
 		let loadSize = (this.optUp.page.num - 1) * this.optUp.page.size + dataSize; // 已加载的数据总数
-		hasNext = loadSize < totalSize; // 是否还有下一页
+		hasNext = loadSize <= totalSize; // 是否还有下一页
+		
 	}
 	this.endSuccess(dataSize, hasNext, systime);
 }
@@ -648,6 +649,7 @@ MeScroll.prototype.endSuccess = function(dataSize, hasNext, systime) {
 
 		// 隐藏上拉
 		me.endUpScroll(isShowNoMore);
+		// debugger
 	}
 	// 结束下拉刷新
 	if (me.isDownScrolling) {
