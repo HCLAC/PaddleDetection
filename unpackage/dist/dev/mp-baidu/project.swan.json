@@ -1,16 +1,3 @@
 {
-    "appInfo": {},
-    "appid": "21554227",
-    "appkey": "",
-    "compilation-args": {
-        "common": {},
-        "options": [],
-        "selected": -2
-    },
-    "condition": {},
-    "libVersion": "",
-    "projectname": "lingtuyang",
-    "setting": {
-        "urlCheck": false
-    }
+    "appid": "21554227"
 }
