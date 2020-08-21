@@ -368,7 +368,7 @@ var _default = {
       loadStatus: 'loading',
       isLoadMore: false,
       item: null,
-      topHotCity: '' };
+      topHotCity: [] };
 
   },
 
@@ -522,41 +522,42 @@ var _default = {
               _this.cityName = res.data.data[0].name;
               _this.topHotCity = res.data.data[0];
               console.log(_this.topHotCity);
-            } }),
+              uni.request({
+                url: 'http://121.40.30.19/site/hot',
+                data: {
+                  state_id: _this.topHotCity.state_id,
+                  city_id: _this.topHotCity.city_id,
+                  count: 3,
+                  sort_by: 0 },
 
-          uni.request({
-            url: 'http://121.40.30.19/site/hot',
-            data: {
-              state_id: _this.topHotCity.state_id,
-              city_id: _this.topHotCity.city_id,
-              count: 3,
-              sort_by: 0 },
+                success: function success(res) {
+                  console.log("未定位时获取的热门景点=========", res);
+                  // uni.setStorageSync('description',res.data)
+                  _this.hotAtt = res.data.data;
+                } }),
 
-            success: function success(res) {
-              console.log("未定位时获取的热门景点=========", res);
-              // uni.setStorageSync('description',res.data)
-              _this.hotAtt = res.data.data;
-            } }),
+              uni.request({
+                url: 'http://121.40.30.19/article/list',
+                data: {
+                  state_id: _this.topHotCity.state_id,
+                  city_id: _this.topHotCity.city_id,
+                  count: 6,
+                  page: 1,
+                  sort_by: 1 },
 
-          uni.request({
-            url: 'http://121.40.30.19/article/list',
-            data: {
-              state_id: _this.topHotCity.state_id,
-              city_id: _this.topHotCity.city_id,
-              count: 6,
-              page: 1,
-              sort_by: 1 },
+                // header: {
+                // 	'Authorization': uni.getStorageSync('Authorization')
+                // },
+                success: function success(res) {
+                  console.log('未定位时获取的文章列表', res);
+                  // uni.setStorageSync('article_id',res.data)
+                  // console.log('存储文章列表==',res.data)
+                  _this.list = res.data.data.list;
+                  // console.log('list=====',this.list)
+                } });
 
-            // header: {
-            // 	'Authorization': uni.getStorageSync('Authorization')
-            // },
-            success: function success(res) {
-              console.log('未定位时获取的文章列表', res);
-              // uni.setStorageSync('article_id',res.data)
-              // console.log('存储文章列表==',res.data)
-              _this.list = res.data.data.list;
-              // console.log('list=====',this.list)
             } });
+
 
         } });
 

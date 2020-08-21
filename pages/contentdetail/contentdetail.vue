@@ -416,18 +416,14 @@ export default {
 
 		map() {
 			var that = this
-			uni.getLocation({
-				type: 'gcj02', //返回可以用于uni.openLocation的经纬度
-				success: function(res) {
-					const latitude = that.articleList.data.latitude;
-					const longitude = that.articleList.data.longitude;
-					uni.openLocation({
-						latitude: latitude,
-						longitude: longitude,
-						success: function() {
-							console.log('success');
-						}
-					});
+			
+			const latitude = that.articleList.data.latitude;
+			const longitude = that.articleList.data.longitude;
+			uni.openLocation({
+				latitude: latitude,
+				longitude: longitude,
+				success: function() {
+					console.log('success');
 				}
 			});
 		},

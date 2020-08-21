@@ -229,7 +229,7 @@
 				loadStatus: 'loading',
 				isLoadMore: false,
 				item: null,
-				topHotCity:''
+				topHotCity:[]
 			}
 		},
 
@@ -383,42 +383,43 @@
 								this.cityName = res.data.data[0].name
 								this.topHotCity = res.data.data[0]
 								console.log(this.topHotCity)
-							}
-						}),
-						uni.request({
-							url: 'http://121.40.30.19/site/hot',
-							data: {
-								state_id: this.topHotCity.state_id,
-								city_id: this.topHotCity.city_id,
-								count: 3,
-								sort_by: 0
-							},
-							success: (res) => {
-								console.log("未定位时获取的热门景点=========", res)
-								// uni.setStorageSync('description',res.data)
-								this.hotAtt = res.data.data
-							}
-						}),
-						uni.request({
-							url: 'http://121.40.30.19/article/list',
-							data: {
-								state_id: this.topHotCity.state_id,
-								city_id: this.topHotCity.city_id,
-								count: 6,
-								page: 1,
-								sort_by: 1
-							},
-							// header: {
-							// 	'Authorization': uni.getStorageSync('Authorization')
-							// },
-							success: (res) => {
-								console.log('未定位时获取的文章列表', res)
-								// uni.setStorageSync('article_id',res.data)
-								// console.log('存储文章列表==',res.data)
-								this.list = res.data.data.list
-								// console.log('list=====',this.list)
+								uni.request({
+									url: 'http://121.40.30.19/site/hot',
+									data: {
+										state_id:this.topHotCity.state_id,
+										city_id: this.topHotCity.city_id,
+										count: 3,
+										sort_by: 0
+									},
+									success: (res) => {
+										console.log("未定位时获取的热门景点=========", res)
+										// uni.setStorageSync('description',res.data)
+										this.hotAtt = res.data.data
+									}
+								}),
+								uni.request({
+									url: 'http://121.40.30.19/article/list',
+									data: {
+										state_id: this.topHotCity.state_id,
+										city_id: this.topHotCity.city_id,
+										count: 6,
+										page: 1,
+										sort_by: 1
+									},
+									// header: {
+									// 	'Authorization': uni.getStorageSync('Authorization')
+									// },
+									success: (res) => {
+										console.log('未定位时获取的文章列表', res)
+										// uni.setStorageSync('article_id',res.data)
+										// console.log('存储文章列表==',res.data)
+										this.list = res.data.data.list
+										// console.log('list=====',this.list)
+									}
+								})
 							}
 						})
+						
 					}
 				});
 			},
