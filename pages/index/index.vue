@@ -53,18 +53,16 @@
 				</view>
 			
 				<!-- 正在旅行 -->
-				<!-- <scroll-view scroll-y="true" style="height: 100rpx;" @scroll="scrollTop"> -->
 					<view class="touring" id="touring">
 						<text class="tourtext">正在旅行</text>
 						<!-- <touring class="touringList" ></touring> -->
 						<view class="wrap">
-							<u-waterfall v-model="list" ref="uWaterfall">
+							<!-- <u-waterfall v-model="list" ref="uWaterfall">
 								<template v-slot:left="{leftList}">
 									<view class="demo-warter demo-warter-l" v-for="(item,index) in leftList" :key="index">
 										<view class="" @click="onPageJump" :id="item.article_id">
 											<view class="demo-top">
 												<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-												<!-- <u-lazy-load class="demo-image" :image="item.image"  ></u-lazy-load> -->
 												<view class="adress">
 													<view class="adreessIcon">
 														<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
@@ -108,7 +106,6 @@
 										<view class="" @click="onPageJump" :id="item.article_id">
 											<view class="demo-top">
 												<image class="demo-image" :src="item.image" :index="index"  mode="widthFix"></image>
-												<!-- <u-lazy-load class="demo-image" :image="item.image"  ></u-lazy-load> -->
 												<view class="adress">
 													<view class="adreessIcon">
 														<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
@@ -147,8 +144,8 @@
 							
 									</view>
 								</template>
-							</u-waterfall>
-							<!-- <view class="demo-warter" v-for="(item,index) in list" :key="index">
+							</u-waterfall> -->
+							<view class="demo-warter" v-for="(item,index) in list" :key="index">
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
@@ -187,10 +184,9 @@
 										{{ item.like_count || 0 }}
 									</view>
 								</view>
-							</view> -->
+							</view>
 						</view>
 					</view>
-				<!-- </scroll-view> -->
 			</view>
 		</mescroll-body>
 	</view>
@@ -234,11 +230,7 @@
 		},
 
 		onShow() {
-			// this.item = getApp().globalData.item,
-			// console.log('item',this.item)
-			// if(this.item != null || undefined){
-			// 	this.getCity()
-			// }
+			
 			this.getItem()
 
 		},
@@ -253,17 +245,58 @@
 		},
 
 		methods: {
+			// 接收切换城市信息，请求数据
 			getItem(){
-				
-				console.log('item-------', this.item)
 				if(this.item != getApp().globalData.item){
 					this.item = getApp().globalData.item,
-					this.getCity()
+					console.log('item-------', this.item)
+					this.cityName = this.item.name
+					uni.request({
+						url: 'http://121.40.30.19/site/hot',
+						data: {
+							state_id: this.item.state_id,
+							city_id: this.item.city_id,
+							count: 3,
+							sort_by: 3
+						},
+						success: (res) => {
+							console.log("跳转热门景点=========", res)
+							// uni.setStorageSync('description',res.data)
+							this.hotAtt = res.data.data
+						}
+					}),
+					// 清除旧数据
+					// this.$refs.uWaterfall.clear()
+					uni.request({
+						url: 'http://121.40.30.19/article/list',
+						// url:'http://192.168.43.60:8299/article/list',
+						data: {
+							state_id: this.item.state_id,
+							city_id: this.item.city_id,
+							count: 6,
+							page: 1,
+							sort_by: 1
+						},
+						header: {
+							'Authorization': uni.getStorageSync('Authorization')
+						},
+						success: (res) => {
+							console.log('切换文章列表', res)
+							this.list = []
+							this.mescroll.scrollTo(0, this.mescroll.optUp.toTop.duration);
+							this.list = res.data.data.list
+							this.downCallback()
+							// let totalSize = res.data.data.total
+							// let curPageLen = res.data.data.list.length
+							// this.mescroll.endBySize(curPageLen, totalSize);
+							console.log(this.list,88888)
+							
+						}
+					})
 				}
 			},
 			scrollTop(e) {
 				console.log(e)
-				debugger
 				if (e.detail.scrollTop != 0) {
 					console.log(e.detail.scrollTop,1111111111)
 				}
@@ -296,69 +329,69 @@
 								// 地址未定义
 								if (res.data.code != 0) {
 									uni.request({
-											url: 'http://121.40.30.19/site/hot',
-											data: {
-												count: 3,
-												sort_by: 3
-											},
-											success: (res) => {
-												console.log("热门景点=========", res)
-												this.hotAtt = res.data.data
-											}
-										}),
-										uni.request({
-											url: 'http://121.40.30.19/article/list',
-											data: {
-												count: 6,
-												page: 1,
-												sort_by: 1
-											},
-											header: {
-												'Authorization': uni.getStorageSync('Authorization')
-											},
-											success: (res) => {
-												console.log('文章列表', res)
-												this.list = res.data.data.list
-											}
-										})
+										url: 'http://121.40.30.19/site/hot',
+										data: {
+											count: 3,
+											sort_by: 3
+										},
+										success: (res) => {
+											console.log("热门景点=========", res)
+											this.hotAtt = res.data.data
+										}
+									}),
+									uni.request({
+										url: 'http://121.40.30.19/article/list',
+										data: {
+											count: 6,
+											page: 1,
+											sort_by: 1
+										},
+										header: {
+											'Authorization': uni.getStorageSync('Authorization')
+										},
+										success: (res) => {
+											console.log('文章列表', res)
+											this.list = res.data.data.list
+										}
+									})
 								} else {
 									uni.setStorageSync('city_id', res.data)
 									console.log('存储本地', res.data)
 									var city = uni.getStorageSync('city_id')
 									console.log('取数据', city)
 									uni.request({
-											// url:'http://192.168.43.156:8199/site/hot',
-											// url:'site/hot',
-											url: 'http://121.40.30.19/site/hot',
-											data: {
-												state_id: city.data.state_id,
-												city_id: city.data.city_id,
-												count: 3,
-												sort_by: 0
-											},
-											success: (res) => {
-												console.log('热门景点', res)
-												this.hotAtt = res.data.data
-											}
-										}),
-										uni.request({
-											url: 'http://121.40.30.19/article/list',
-											data: {
-												state_id: city.data.state_id,
-												city_id: city.data.city_id,
-												count: 6,
-												page: 1,
-												sort_by: 1
-											},
-											header: {
-												'Authorization': uni.getStorageSync('Authorization')
-											},
-											success: (res) => {
-												console.log('文章列表', res)
-												uni.setStorageSync('article_id', res.data)
-												this.list = res.data.data.list
-											}
-										})
+										// url:'http://192.168.43.156:8199/site/hot',
+										// url:'site/hot',
+										url: 'http://121.40.30.19/site/hot',
+										data: {
+											state_id: city.data.state_id,
+											city_id: city.data.city_id,
+											count: 3,
+											sort_by: 0
+										},
+										success: (res) => {
+											console.log('热门景点', res)
+											this.hotAtt = res.data.data
+										}
+									}),
+									uni.request({
+										url: 'http://121.40.30.19/article/list',
+										data: {
+											state_id: city.data.state_id,
+											city_id: city.data.city_id,
+											count: 6,
+											page: 1,
+											sort_by: 1
+										},
+										header: {
+											'Authorization': uni.getStorageSync('Authorization')
+										},
+										success: (res) => {
+											console.log('文章列表', res)
+											uni.setStorageSync('article_id', res.data)
+											this.list = res.data.data.list
+										}
+									})
 								}
 
 							}
@@ -370,7 +403,7 @@
 					fail: (res) => {
 						console.log('未开启定位',res)
 						uni.showToast({
-							title:'未获取定位权限，将为您展示最热门城市的信息',
+							title:'未获取定位权限，将为您展示最热门城市信息',
 							icon:'none',
 							duration:2000
 						})
@@ -400,8 +433,8 @@
 								uni.request({
 									url: 'http://121.40.30.19/article/list',
 									data: {
-										state_id: this.topHotCity.state_id,
-										city_id: this.topHotCity.city_id,
+										state_id: res.data.data[0].state_id,
+										city_id: res.data.data[0].city_id,
 										count: 6,
 										page: 1,
 										sort_by: 1
@@ -423,56 +456,7 @@
 					}
 				});
 			},
-			// 城市切换数据
-			getCity() {
-				this.cityName = this.item.name
-				// this.list = null
-				// var city = uni.getStorageSync('city_id');
-				uni.request({
-					url: 'http://121.40.30.19/site/hot',
-					data: {
-						state_id: this.item.state_id,
-						city_id: this.item.city_id,
-						count: 3,
-						sort_by: 3
-					},
-					success: (res) => {
-						console.log("跳转热门景点=========", res)
-						// uni.setStorageSync('description',res.data)
-						this.hotAtt = res.data.data
-					}
-				}),
-				// 清除旧数据
-				this.$refs.uWaterfall.clear()
-				
-				uni.request({
-					url: 'http://121.40.30.19/article/list',
-					// url:'http://192.168.43.60:8299/article/list',
-					data: {
-						state_id: this.item.state_id,
-						city_id: this.item.city_id,
-						count: 6,
-						page: 1,
-						sort_by: 1
-					},
-					header: {
-						'Authorization': uni.getStorageSync('Authorization')
-					},
-					success: (res) => {
-						console.log('切换文章列表', res)
-						this.list = [] 
-						this.mescroll.scrollTo(0, this.mescroll.optUp.toTop.duration);
-						this.list = res.data.data.list
-						this.downCallback()
-						// let totalSize = res.data.data.total
-						// let curPageLen = res.data.data.list.length
-						// this.mescroll.endBySize(curPageLen, totalSize);
-						console.log(this.list,88888)
-						
-					}
-				})
-
-			},
+			
 
 			// 跳转文章详情
 			onPageJump(e) {
@@ -519,50 +503,10 @@
 						}
 						if (that.item == undefined || null) {
 							that.getAdress()
-							// var city = uni.getStorageSync('city_id')
-							// console.log('取数据',city)
-							// uni.request({
-							// 	url:'http://121.40.30.19/article/list',
-							// 	data:{
-							// 		state_id:city.data.state_id,
-							// 		city_id:city.data.city_id,
-							// 		count:6,
-							// 		page:1,
-							// 		sort_by:1
-							// 	},
-							// 	header: {
-							// 		'Authorization': uni.getStorageSync('Authorization')
-							// 	},
-							// 	success:(res)=>{
-							// 		console.log('点赞后文章列表',res)
-							// 		uni.setStorageSync('article_id',res.data)
-							// 		that.list = res.data.data.list
-							// 	}
-							// })
+							
 						} else {
 							that.getCity()
-							// uni.request({
-							// 	// url:'http://192.168.43.156:8199/article/list',
-							// 	// url:'article/list',
-							// 	url:'http://121.40.30.19/article/list',
-							// 	// url:'http://192.168.43.60:8299/article/list',
-							// 	data:{
-							// 		state_id:that.item.state_id,
-							// 		city_id:that.item.city_id,
-							// 		count:20,
-							// 		page:1,
-							// 		sort_by:1
-							// 	},
-							// 	header: {
-							// 		'Authorization': uni.getStorageSync('Authorization')
-							// 	},
-							// 	success:(res)=>{
-							// 		console.log('点赞后文章列表',res)
-							// 		uni.setStorageSync('article_id',res.data)
-							// 		that.list = res.data.data.list
-							// 		console.log('点赞后list=====',that.list)
-							// 	}
-							// })
+							
 						}
 					}
 
@@ -699,9 +643,9 @@
 
 							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
 							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-							// setTimeout(() => {
-							// 	this.mescroll.endSuccess(curPageLen)
-							// }, 20)
+							setTimeout(() => {
+								this.mescroll.endSuccess(curPageLen)
+							}, 20)
 
 
 						},
@@ -757,9 +701,9 @@
 
 								// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
 								// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-								// setTimeout(() => {
-								// 	this.mescroll.endSuccess(curPageLen)
-								// }, 20)
+								setTimeout(() => {
+									this.mescroll.endSuccess(curPageLen)
+								}, 20)
 
 
 							},
@@ -813,9 +757,9 @@
 
 								// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
 								// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-								// setTimeout(() => {
-								// 	this.mescroll.endSuccess(curPageLen)
-								// }, 20)
+								setTimeout(() => {
+									this.mescroll.endSuccess(curPageLen)
+								}, 20)
 
 
 							},

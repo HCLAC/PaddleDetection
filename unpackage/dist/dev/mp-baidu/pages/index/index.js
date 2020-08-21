@@ -95,9 +95,6 @@ __webpack_require__.r(__webpack_exports__);
 var components = {
   uniNavBar: function() {
     return __webpack_require__.e(/*! import() | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then(__webpack_require__.bind(null, /*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64))
-  },
-  uWaterfall: function() {
-    return Promise.all(/*! import() | uview-ui/components/u-waterfall/u-waterfall */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uview-ui/components/u-waterfall/u-waterfall")]).then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-waterfall/u-waterfall.vue */ 170))
   }
 }
 var render = function() {
@@ -338,10 +335,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
 var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 45));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 82));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 112));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 // import httpType from '../../httpType.js';
 var _default = {
@@ -373,11 +366,7 @@ var _default = {
   },
 
   onShow: function onShow() {
-    // this.item = getApp().globalData.item,
-    // console.log('item',this.item)
-    // if(this.item != null || undefined){
-    // 	this.getCity()
-    // }
+
     this.getItem();
 
   },
@@ -392,39 +381,80 @@ var _default = {
   },
 
   methods: {
-    getItem: function getItem() {
-
-      console.log('item-------', this.item);
+    // 接收切换城市信息，请求数据
+    getItem: function getItem() {var _this = this;
       if (this.item != getApp().globalData.item) {
         this.item = getApp().globalData.item,
-        this.getCity();
+        console.log('item-------', this.item);
+        this.cityName = this.item.name;
+        uni.request({
+          url: 'http://121.40.30.19/site/hot',
+          data: {
+            state_id: this.item.state_id,
+            city_id: this.item.city_id,
+            count: 3,
+            sort_by: 3 },
+
+          success: function success(res) {
+            console.log("跳转热门景点=========", res);
+            // uni.setStorageSync('description',res.data)
+            _this.hotAtt = res.data.data;
+          } }),
+
+        // 清除旧数据
+        // this.$refs.uWaterfall.clear()
+        uni.request({
+          url: 'http://121.40.30.19/article/list',
+          // url:'http://192.168.43.60:8299/article/list',
+          data: {
+            state_id: this.item.state_id,
+            city_id: this.item.city_id,
+            count: 6,
+            page: 1,
+            sort_by: 1 },
+
+          header: {
+            'Authorization': uni.getStorageSync('Authorization') },
+
+          success: function success(res) {
+            console.log('切换文章列表', res);
+            _this.list = [];
+            _this.mescroll.scrollTo(0, _this.mescroll.optUp.toTop.duration);
+            _this.list = res.data.data.list;
+            _this.downCallback();
+            // let totalSize = res.data.data.total
+            // let curPageLen = res.data.data.list.length
+            // this.mescroll.endBySize(curPageLen, totalSize);
+            console.log(_this.list, 88888);
+
+          } });
+
       }
     },
     scrollTop: function scrollTop(e) {
       console.log(e);
-      debugger;
       if (e.detail.scrollTop != 0) {
         console.log(e.detail.scrollTop, 1111111111);
       }
     },
     // 获取当前地理位置
-    getAdress: function getAdress() {var _this = this;
+    getAdress: function getAdress() {var _this2 = this;
       uni.getLocation({
         type: 'wgs84',
         success: function success(res) {
           console.log('地址---', res);
           // if(this.item == undefined){
-          _this.cityName = res.city.substr(0, res.city.length - 1);
-          _this.city = res.city;
-          _this.province = res.province;
-          console.log(_this.city, _this.province);
+          _this2.cityName = res.city.substr(0, res.city.length - 1);
+          _this2.city = res.city;
+          _this2.province = res.province;
+          console.log(_this2.city, _this2.province);
           uni.request({
             // url:'http://192.168.43.156:8199/user/location',
             // url:'user/location',
             url: 'http://121.40.30.19/user/location',
             data: {
-              state: _this.province,
-              city: _this.city },
+              state: _this2.province,
+              city: _this2.city },
 
             method: 'POST',
             // header: {
@@ -442,7 +472,7 @@ var _default = {
 
                   success: function success(res) {
                     console.log("热门景点=========", res);
-                    _this.hotAtt = res.data.data;
+                    _this2.hotAtt = res.data.data;
                   } }),
 
                 uni.request({
@@ -457,7 +487,7 @@ var _default = {
 
                   success: function success(res) {
                     console.log('文章列表', res);
-                    _this.list = res.data.data.list;
+                    _this2.list = res.data.data.list;
                   } });
 
               } else {
@@ -477,7 +507,7 @@ var _default = {
 
                   success: function success(res) {
                     console.log('热门景点', res);
-                    _this.hotAtt = res.data.data;
+                    _this2.hotAtt = res.data.data;
                   } }),
 
                 uni.request({
@@ -495,7 +525,7 @@ var _default = {
                   success: function success(res) {
                     console.log('文章列表', res);
                     uni.setStorageSync('article_id', res.data);
-                    _this.list = res.data.data.list;
+                    _this2.list = res.data.data.list;
                   } });
 
               }
@@ -509,7 +539,7 @@ var _default = {
         fail: function fail(res) {
           console.log('未开启定位', res);
           uni.showToast({
-            title: '未获取定位权限，将为您展示最热门城市的信息',
+            title: '未获取定位权限，将为您展示最热门城市信息',
             icon: 'none',
             duration: 2000 });
 
@@ -519,28 +549,28 @@ var _default = {
             method: "GET",
             success: function success(res) {
               console.log('热门城市===>', res.data.data);
-              _this.cityName = res.data.data[0].name;
-              _this.topHotCity = res.data.data[0];
-              console.log(_this.topHotCity);
+              _this2.cityName = res.data.data[0].name;
+              _this2.topHotCity = res.data.data[0];
+              console.log(_this2.topHotCity);
               uni.request({
                 url: 'http://121.40.30.19/site/hot',
                 data: {
-                  state_id: _this.topHotCity.state_id,
-                  city_id: _this.topHotCity.city_id,
+                  state_id: _this2.topHotCity.state_id,
+                  city_id: _this2.topHotCity.city_id,
                   count: 3,
                   sort_by: 0 },
 
                 success: function success(res) {
                   console.log("未定位时获取的热门景点=========", res);
                   // uni.setStorageSync('description',res.data)
-                  _this.hotAtt = res.data.data;
+                  _this2.hotAtt = res.data.data;
                 } }),
 
               uni.request({
                 url: 'http://121.40.30.19/article/list',
                 data: {
-                  state_id: _this.topHotCity.state_id,
-                  city_id: _this.topHotCity.city_id,
+                  state_id: res.data.data[0].state_id,
+                  city_id: res.data.data[0].city_id,
                   count: 6,
                   page: 1,
                   sort_by: 1 },
@@ -552,7 +582,7 @@ var _default = {
                   console.log('未定位时获取的文章列表', res);
                   // uni.setStorageSync('article_id',res.data)
                   // console.log('存储文章列表==',res.data)
-                  _this.list = res.data.data.list;
+                  _this2.list = res.data.data.list;
                   // console.log('list=====',this.list)
                 } });
 
@@ -562,56 +592,7 @@ var _default = {
         } });
 
     },
-    // 城市切换数据
-    getCity: function getCity() {var _this2 = this;
-      this.cityName = this.item.name;
-      // this.list = null
-      // var city = uni.getStorageSync('city_id');
-      uni.request({
-        url: 'http://121.40.30.19/site/hot',
-        data: {
-          state_id: this.item.state_id,
-          city_id: this.item.city_id,
-          count: 3,
-          sort_by: 3 },
 
-        success: function success(res) {
-          console.log("跳转热门景点=========", res);
-          // uni.setStorageSync('description',res.data)
-          _this2.hotAtt = res.data.data;
-        } }),
-
-      // 清除旧数据
-      this.$refs.uWaterfall.clear();
-
-      uni.request({
-        url: 'http://121.40.30.19/article/list',
-        // url:'http://192.168.43.60:8299/article/list',
-        data: {
-          state_id: this.item.state_id,
-          city_id: this.item.city_id,
-          count: 6,
-          page: 1,
-          sort_by: 1 },
-
-        header: {
-          'Authorization': uni.getStorageSync('Authorization') },
-
-        success: function success(res) {
-          console.log('切换文章列表', res);
-          _this2.list = [];
-          _this2.mescroll.scrollTo(0, _this2.mescroll.optUp.toTop.duration);
-          _this2.list = res.data.data.list;
-          _this2.downCallback();
-          // let totalSize = res.data.data.total
-          // let curPageLen = res.data.data.list.length
-          // this.mescroll.endBySize(curPageLen, totalSize);
-          console.log(_this2.list, 88888);
-
-        } });
-
-
-    },
 
     // 跳转文章详情
     onPageJump: function onPageJump(e) {
@@ -658,50 +639,10 @@ var _default = {
           }
           if (that.item == undefined || null) {
             that.getAdress();
-            // var city = uni.getStorageSync('city_id')
-            // console.log('取数据',city)
-            // uni.request({
-            // 	url:'http://121.40.30.19/article/list',
-            // 	data:{
-            // 		state_id:city.data.state_id,
-            // 		city_id:city.data.city_id,
-            // 		count:6,
-            // 		page:1,
-            // 		sort_by:1
-            // 	},
-            // 	header: {
-            // 		'Authorization': uni.getStorageSync('Authorization')
-            // 	},
-            // 	success:(res)=>{
-            // 		console.log('点赞后文章列表',res)
-            // 		uni.setStorageSync('article_id',res.data)
-            // 		that.list = res.data.data.list
-            // 	}
-            // })
+
           } else {
             that.getCity();
-            // uni.request({
-            // 	// url:'http://192.168.43.156:8199/article/list',
-            // 	// url:'article/list',
-            // 	url:'http://121.40.30.19/article/list',
-            // 	// url:'http://192.168.43.60:8299/article/list',
-            // 	data:{
-            // 		state_id:that.item.state_id,
-            // 		city_id:that.item.city_id,
-            // 		count:20,
-            // 		page:1,
-            // 		sort_by:1
-            // 	},
-            // 	header: {
-            // 		'Authorization': uni.getStorageSync('Authorization')
-            // 	},
-            // 	success:(res)=>{
-            // 		console.log('点赞后文章列表',res)
-            // 		uni.setStorageSync('article_id',res.data)
-            // 		that.list = res.data.data.list
-            // 		console.log('点赞后list=====',that.list)
-            // 	}
-            // })
+
           }
         } });
 
@@ -838,9 +779,9 @@ var _default = {
 
             // 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
             // 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-            // setTimeout(() => {
-            // 	this.mescroll.endSuccess(curPageLen)
-            // }, 20)
+            setTimeout(function () {
+              _this3.mescroll.endSuccess(curPageLen);
+            }, 20);
 
 
           },
@@ -896,9 +837,9 @@ var _default = {
 
               // 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
               // 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-              // setTimeout(() => {
-              // 	this.mescroll.endSuccess(curPageLen)
-              // }, 20)
+              setTimeout(function () {
+                _this3.mescroll.endSuccess(curPageLen);
+              }, 20);
 
 
             },
@@ -952,9 +893,9 @@ var _default = {
 
               // 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
               // 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-              // setTimeout(() => {
-              // 	this.mescroll.endSuccess(curPageLen)
-              // }, 20)
+              setTimeout(function () {
+                _this3.mescroll.endSuccess(curPageLen);
+              }, 20);
 
 
             },
