@@ -654,7 +654,7 @@ export default {
 	margin-top: 12rpx;
 	background: rgba(0, 145, 255, 0.1);
 	border-radius: 20rpx;
-	border: 2rpx solid rgba(0, 145, 255, 1);
+	// border: 2rpx solid rgba(0, 145, 255, 1);
 	display: flex;
 	align-items: center;
 	text-align: center;

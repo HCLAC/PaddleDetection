@@ -16,7 +16,7 @@
 				<view class='item'>
 					<image src="/static/images/Icon／Mapt.svg" class="dd"></image>
 					<view class='cityname'>{{city}}</view>
-					<text class="nowcity">当前位置</text>
+					<text class="nowcity" @click="resetAd()" >{{showText}}</text>
 					<!-- <text class="getNowCity">获取当前位置</text> -->
 					<!-- <text class="tip">暂未开放，请选择以下热门城市</text> -->
 				</view>
@@ -44,6 +44,7 @@
 			return {
 				citySelected: '',
 				city: '',
+				showText:'当前位置',
 				state_id: '',
 				city_id: '',
 				cityData: {},
@@ -53,7 +54,7 @@
 				hotCityDate: []
 			}
 		},
-		onLoad() {
+		onShow() {
 			this.getAdress()
 			this.getHotCity()
 		},
@@ -107,9 +108,48 @@
 						console.log('dizhi----',res)
 						this.city = res.city.substr(0, res.city.length - 1)
 						console.log('ccccccc',this.city)
+						uni.request({
+							url: 'http://121.40.30.19/user/location',
+							data: {
+								state: res.province,
+								city: res.city,
+							},
+							method: 'POST',
+							success: (res) => {
+								console.log('判断是否开放',res)
+								// 地址未定义
+								if (res.data.data.city_id == 0){
+									this.showText = "暂未开放,请选择以下热门城市"
+								}
+							}
+						})
+					},
+					fail: (res) => {
+						console.log('city未开启定位',res)
+						this.showText = '正在获取当前位置...'
+						
 					}
 				});
 			},
+			resetAd(){
+				console.log('1111111111111')
+				uni.authorize({
+				    scope: 'scope.userLocation',
+				    success(res) {
+				        console.log('成功',res)
+						uni.getLocation()
+				    },
+					fail(res) {
+						console.log('失败',res)
+						uni.openSetting({
+						  success(res) {
+						    console.log(res.authSetting)
+						  }
+						});
+					}
+				})
+				this.showText = '当前位置'
+			}
 		}
 	}
 </script>
