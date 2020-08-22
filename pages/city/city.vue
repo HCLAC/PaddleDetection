@@ -212,7 +212,7 @@
 	}
 
 	/* 定位 */
-	.list-city {}
+	
 
 	.item {
 		margin-top: 34rpx;

@@ -74,7 +74,7 @@ import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 export default {
 	data() {
 		return {
-			nickName:"",
+			nickName: uni.getStorageSync('nickName'),
 			avatarUrl:"",
 			tipList:[]
 		};
@@ -268,8 +268,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.contentTop{
-}
 
 .backImg {
 	position: absolute;
@@ -434,11 +432,7 @@ export default {
 		overflow: hidden;
 		text-overflow:ellipsis;
 		white-space: nowrap;
-	}
-	.right .content {
-		
-		
-		
+
 	}
 	.richText{
 		width:448rpx;
