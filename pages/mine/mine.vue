@@ -1,5 +1,5 @@
 <template>
-	<view class="content">
+	<view class="content" style="height: 100%; overflow: hidden;">
 		<view class="contentTop">
 			<image src="../../static/images/mineBack.png" class="backImg"></image>
 			<!-- 用户信息 -->
@@ -17,9 +17,9 @@
 			<view class="phone"><image class="phoneImg" src="../../static/images/phone.png" mode=""></image></view>
 			
 			<view>我的收藏</view>
-			<scroll-view scroll-y="true" class="list">
+			<view  class="list">
 			
-				<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption"  :up="upOption">
+				<mescroll-body  ref="mescrollRef" @down="downCallback" @up="upCallback" >
 					<view class="contentItem" v-for="(item, index) in tipList" :key="index">
 						<view class="left">
 							<image :src="item.main_image" mode="">
@@ -61,7 +61,7 @@
 					<image src="../../static/images/wenjianjia.png" mode=""></image>
 					<view class="tipText">您的收藏夹空空如也~</view>
 				</view> -->
-			</scroll-view>
+			</view>
 		</view>
 	</view>
 	
@@ -74,7 +74,7 @@ import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 export default {
 	data() {
 		return {
-			nickName:"",
+			nickName: uni.getStorageSync('nickName'),
 			avatarUrl:"",
 			tipList:[]
 		};
@@ -217,7 +217,7 @@ export default {
 					let curPageLen = curPageData.length; 
 					console.log('curPageLen',curPageLen)
 					// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-					// let totalPage = data.data.data.list; 
+					let totalPage = (data.data.data.total % pageSize == 0) ? (data.data.data.total / pageSize) : (parseInt(data.data.data.total / pageSize) + 1)
 					// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
 					let totalSize = data.data.data.total; 
 					console.log('totalSize',totalSize)
@@ -235,19 +235,10 @@ export default {
 					//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
 					this.mescroll.endBySize(curPageLen, totalSize); 
 					
-					//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-					//this.mescroll.endSuccess(curPageLen, hasNext); 
 					
-					//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-					//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-					//如果传了hasNext,则翻到第二页即可显示无更多数据.
-					//this.mescroll.endSuccess(curPageLen);
-					
-					// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-					// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-					setTimeout(()=>{
-						this.mescroll.endSuccess(curPageLen)
-					},20)
+					// setTimeout(()=>{
+					// 	this.mescroll.endSuccess(curPageLen)
+					// },20)
 					
 					
 				},
@@ -342,6 +333,8 @@ export default {
 }
 .list{
 	height: 100%;
+	overflow: auto;
+	padding-bottom: 250rpx;
 }
 .noContentItem{
 	// height: 600rpx;

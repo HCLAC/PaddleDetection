@@ -586,7 +586,7 @@ MeScroll.prototype.setPageSize = function(size) {
  */
 MeScroll.prototype.endByPage = function(dataSize, totalPage, systime) {
 	let hasNext;
-	if (this.optUp.use && totalPage != null) hasNext = this.optUp.page.num < totalPage; // 是否还有下一页
+	if (this.optUp.use && totalPage != null) hasNext = this.optUp.page.num < totalPage;
 	this.endSuccess(dataSize, hasNext, systime);
 }
 
