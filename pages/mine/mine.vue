@@ -13,7 +13,7 @@
 		</view>
 		
 		<!-- 我的收藏 -->
-		<view class="myCollection" style="padding-bottom: 300rpx;">
+		<view class="myCollection" style="padding-bottom: 200rpx;">
 			<view class="phone"><image class="phoneImg" src="../../static/images/phone.png" mode=""></image></view>
 			
 			<view>我的收藏</view>

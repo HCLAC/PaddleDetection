@@ -3337,11 +3337,11 @@ deepMerge;exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = MeScroll; /* mescroll
-                                                                                                        * version 1.2.5
-                                                                                                        * 2020-03-15 wenju
-                                                                                                        * http://www.mescroll.com
-                                                                                                        */
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = MeScroll;function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} /* mescroll
+                                                                                                                                                                                                                                                                                                                  * version 1.2.5
+                                                                                                                                                                                                                                                                                                                  * 2020-03-15 wenju
+                                                                                                                                                                                                                                                                                                                  * http://www.mescroll.com
+                                                                                                                                                                                                                                                                                                                  */
 
 function MeScroll(options, isScrollBody) {
   var me = this;
@@ -3412,9 +3412,9 @@ MeScroll.prototype.extendDownScroll = function (optDown) {
 };
 
 /* 配置参数:上拉加载 */
-MeScroll.prototype.extendUpScroll = function (optUp) {
+MeScroll.prototype.extendUpScroll = function (optUp) {var _MeScroll$extend;
   // 上拉加载的配置
-  MeScroll.extend(optUp, {
+  MeScroll.extend(optUp, (_MeScroll$extend = {
     use: true, // 是否启用上拉加载; 默认true
     auto: true, // 是否在初始化完毕之后自动执行上拉加载的回调; 默认true
     isLock: false, // 是否锁定上拉加载,默认false;
@@ -3427,44 +3427,46 @@ MeScroll.prototype.extendUpScroll = function (optUp) {
       time: null // 加载第一页数据服务器返回的时间; 防止用户翻页时,后台新增了数据从而导致下一页数据重复;
     },
     noMoreSize: 5, // 如果列表已无数据,可设置列表的总数量要大于等于5条才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看
-    offset: 60, // 距底部多远时,触发upCallback
-    textLoading: '加载中 ...', // 加载中的提示文本
-    textNoMore: '~我也是有底线的~', // 没有更多数据的提示文本
-    bgColor: "#F8F8F8", // 背景颜色 (建议在pages.json中再设置一下backgroundColorBottom)
-    textColor: "gray", // 文本颜色 (当bgColor配置了颜色,而textColor未配置时,则textColor会默认为白色)
-    inited: null, // 初始化完毕的回调
-    showLoading: null, // 显示加载中的回调
-    showNoMore: null, // 显示无更多数据的回调
-    hideUpScroll: null, // 隐藏上拉加载的回调
-    errDistance: 60, // endErr的时候需往上滑动一段距离,使其往下滑动时再次触发onReachBottom,仅mescroll-body生效
-    toTop: {
-      // 回到顶部按钮,需配置src才显示
-      src: null, // 图片路径,默认null (绝对路径或网络图)
-      offset: 1000, // 列表滚动多少距离才显示回到顶部按钮,默认1000
-      duration: 300, // 回到顶部的动画时长,默认300ms (当值为0或300则使用系统自带回到顶部,更流畅; 其他值则通过step模拟,部分机型可能不够流畅,所以非特殊情况不建议修改此项)
-      btnClick: null, // 点击按钮的回调
-      onShow: null, // 是否显示的回调
-      zIndex: 9990, // fixed定位z-index值
-      left: null, // 到左边的距离, 默认null. 此项有值时,right不生效. (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
-      right: 20, // 到右边的距离, 默认20 (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
-      bottom: 120, // 到底部的距离, 默认120 (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
-      safearea: false, // bottom的偏移量是否加上底部安全区的距离, 默认false, 需要适配iPhoneX时使用 (具体的界面如果不配置此项,则取本vue的safearea值)
-      width: 72, // 回到顶部图标的宽度, 默认72 (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
-      radius: "50%" // 圆角, 默认"50%" (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
-    },
-    empty: {
-      use: true, // 是否显示空布局
-      icon: null, // 图标路径
-      tip: '您的收藏夹空空如也~', // 提示
-      btnText: '', // 按钮
-      btnClick: null, // 点击按钮的回调
-      onShow: null, // 是否显示的回调
-      fixed: false, // 是否使用fixed定位,默认false; 配置fixed为true,以下的top和zIndex才生效 (transform会使fixed失效,最终会降级为absolute)
-      top: "100rpx", // fixed定位的top值 (完整的单位值,如 "10%"; "100rpx")
-      zIndex: 99 // fixed定位z-index值
-    },
-    onScroll: false // 是否监听滚动事件
-  });
+    offset: 60 }, _defineProperty(_MeScroll$extend, "noMoreSize",
+  3), _defineProperty(_MeScroll$extend, "offset",
+  40), _defineProperty(_MeScroll$extend, "textLoading",
+  '加载中 ...'), _defineProperty(_MeScroll$extend, "textNoMore",
+  '~我也是有底线的~'), _defineProperty(_MeScroll$extend, "bgColor",
+  "#F8F8F8"), _defineProperty(_MeScroll$extend, "textColor",
+  "gray"), _defineProperty(_MeScroll$extend, "inited",
+  null), _defineProperty(_MeScroll$extend, "showLoading",
+  null), _defineProperty(_MeScroll$extend, "showNoMore",
+  null), _defineProperty(_MeScroll$extend, "hideUpScroll",
+  null), _defineProperty(_MeScroll$extend, "errDistance",
+  60), _defineProperty(_MeScroll$extend, "toTop",
+  {
+    // 回到顶部按钮,需配置src才显示
+    src: null, // 图片路径,默认null (绝对路径或网络图)
+    offset: 1000, // 列表滚动多少距离才显示回到顶部按钮,默认1000
+    duration: 300, // 回到顶部的动画时长,默认300ms (当值为0或300则使用系统自带回到顶部,更流畅; 其他值则通过step模拟,部分机型可能不够流畅,所以非特殊情况不建议修改此项)
+    btnClick: null, // 点击按钮的回调
+    onShow: null, // 是否显示的回调
+    zIndex: 9990, // fixed定位z-index值
+    left: null, // 到左边的距离, 默认null. 此项有值时,right不生效. (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
+    right: 20, // 到右边的距离, 默认20 (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
+    bottom: 120, // 到底部的距离, 默认120 (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
+    safearea: false, // bottom的偏移量是否加上底部安全区的距离, 默认false, 需要适配iPhoneX时使用 (具体的界面如果不配置此项,则取本vue的safearea值)
+    width: 72, // 回到顶部图标的宽度, 默认72 (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
+    radius: "50%" // 圆角, 默认"50%" (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
+  }), _defineProperty(_MeScroll$extend, "empty",
+  {
+    use: true, // 是否显示空布局
+    icon: null, // 图标路径
+    tip: '您的收藏夹空空如也~', // 提示
+    btnText: '', // 按钮
+    btnClick: null, // 点击按钮的回调
+    onShow: null, // 是否显示的回调
+    fixed: false, // 是否使用fixed定位,默认false; 配置fixed为true,以下的top和zIndex才生效 (transform会使fixed失效,最终会降级为absolute)
+    top: "100rpx", // fixed定位的top值 (完整的单位值,如 "10%"; "100rpx")
+    zIndex: 99 // fixed定位z-index值
+  }), _defineProperty(_MeScroll$extend, "onScroll",
+  false), _MeScroll$extend));
+
 };
 
 /* 配置参数 */

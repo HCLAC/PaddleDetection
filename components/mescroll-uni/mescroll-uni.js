@@ -89,6 +89,8 @@ MeScroll.prototype.extendUpScroll = function(optUp) {
 		},
 		noMoreSize: 5, // 如果列表已无数据,可设置列表的总数量要大于等于5条才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看
 		offset: 60, // 距底部多远时,触发upCallback
+		noMoreSize: 3, // 如果列表已无数据,可设置列表的总数量要大于等于5条才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看
+		offset: 40, // 距底部多远时,触发upCallback
 		textLoading: '加载中 ...', // 加载中的提示文本
 		textNoMore: '~我也是有底线的~', // 没有更多数据的提示文本
 		bgColor: "#F8F8F8", // 背景颜色 (建议在pages.json中再设置一下backgroundColorBottom)
