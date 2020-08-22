@@ -150,15 +150,15 @@
 						
 						<text class="adressText">{{attDetail.data.pos}}</text>
 					</view>
-					<view class="right">
+					<view class="right" @click="map()">
 						<image src="../../static/images/mapBack.png" mode=""></image>
-						<view class="insideBox" @click="map">
+						<view class="insideBox" >
 							<image src="../../static/images/dingwei.svg" mode=""></image>
 							<text>导航</text>
 						</view>
 					</view>
 				</view>
-				<view class="phone" v-show="attDetail.data.butler_mobile" @click="phoneCall">
+				<view class="phone" v-if="attDetail.data.butler_mobile" @click="phoneCall">
 					<image src="../../static/images/dianhua.png"></image>
 					<text>旅行管家：{{attDetail.data.butler_mobile}}</text>
 				</view>
@@ -316,19 +316,15 @@ export default {
 		// }
 		map(){
 			var that = this
-			uni.getLocation({
-			    type: 'gcj02', //返回可以用于uni.openLocation的经纬度
-			    success: function (res) {
-			        const latitude = that.attDetail.data.latitude;
-			        const longitude = that.attDetail.data.longitude;
-			        uni.openLocation({
-			            latitude: latitude,
-			            longitude: longitude,
-			            success: function () {
-			                console.log('success');
-			            }
-			        });
-			    }
+			
+			const latitude = that.attDetail.data.latitude;
+			const longitude = that.attDetail.data.longitude;
+			uni.openLocation({
+				latitude: latitude,
+				longitude: longitude,
+				success: function () {
+					console.log('success');
+				}
 			});
 		}
 	}

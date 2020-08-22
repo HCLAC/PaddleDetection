@@ -17,94 +17,90 @@
 		<!-- <touring></touring> -->
 		<view class="touring">
 			<view class="wrap">
-				<u-waterfall v-model="list" ref="uWaterfall" >
-					<template v-slot:left="{leftList}">
-						<view class="demo-warter demo-warter-l" v-for="(item,index) in leftList" :key="index" >
-							<view class="" @click="onPageJump" :id ="item.article_id">
-								<view class="demo-top">
-									<image class="demo-image"  :src="item.image" :index="index" mode="widthFix"></image>
-									<view class="adress">
-										<view class="adreessIcon">
-											<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
-										</view>
-										
-										<view class="adressText">
-											{{item.location}}
-										</view>
+				<view class="left">
+					<view class="demo-warter" v-for="(item,index) in list" :key="index" v-if="index%2==0">
+						<view class="" @click="onPageJump" :id="item.article_id" >
+							<view class="demo-top">
+								<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+								<view class="adress">
+									<view class="adreessIcon">
+										<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
 									</view>
-								</view>
-								<view class="titleTip">
-									<view class="demo-tag">
-										<view class="demo-tag-owner" v-if="item.type==1">
-											游记
-										</view>
-										<view class="demo-tag-owner" v-if="item.type==2">
-											攻略
-										</view>
-									</view>
-									<view class="demo-title">
-										{{item.title}}
+					
+									<view class="adressText">
+										{{item.location}}
 									</view>
 								</view>
 							</view>
-								<view class="demo-user">
-									<view class="userMessage">
-										<image class="userHeard" :src="item.avatar"></image>
-										<view class="userNikename">{{ item.author_name }}</view>
+							<view class="titleTip">
+								<view class="demo-tag">
+									<view class="demo-tag-owner" v-if="item.type==1">
+										游记
 									</view>
-									<view class="count" @click="clickLike" :id="item.article_id">
-										<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
-										<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
-											{{ item.like_count || 0 }}
-										</view>
+									<view class="demo-tag-owner" v-if="item.type==2">
+										攻略
+									</view>
 								</view>
-							
+								<view class="demo-title">
+									{{item.title}}
+								</view>
+							</view>
 						</view>
-					</template>
-					<template v-slot:right="{rightList}">
-						<view class="demo-warter" v-for="(item,index) in rightList" :key="index">
-							<view class=""  @click="onPageJump" :id= "item.article_id">
-								<view class="demo-top">
-									<image class="demo-image" :src="item.image" :index="index" mode="widthFix"></image>
-									<view class="adress">
-										<view class="adreessIcon">
-											<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
-										</view>
-										<view class="adressText">
-											{{item.location}}
-										</view>
+						<view class="demo-user">
+							<view class="userMessage">
+								<image class="userHeard" :src="item.avatar"></image>
+								<view class="userNikename">{{ item.author_name }}</view>
+							</view>
+							<view class="count" @click="clickLike" :id="item.article_id">
+								<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
+								<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
+								{{ item.like_count || 0 }}
+							</view>
+						</view>
+					</view>  
+				</view>  
+				<view class="right">  
+					<view class="demo-warter" v-for="(item,index) in list" :key="index" v-if="index%2==1">
+						<view class="" @click="onPageJump" :id="item.article_id" >
+							<view class="demo-top">
+								<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+								<view class="adress">
+									<view class="adreessIcon">
+										<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
 									</view>
-								</view>
-								
-								<view class="titleTip">
-									<view class="demo-tag">
-										<view class="demo-tag-owner" v-if="item.type==1">
-											游记
-										</view>
-										<view class="demo-tag-owner" v-if="item.type==2">
-											攻略
-										</view>
-									</view>
-									<view class="demo-title">
-										{{item.title}}
+					
+									<view class="adressText">
+										{{item.location}}
 									</view>
 								</view>
 							</view>
-								<view class="demo-user">
-									<view class="userMessage">
-										<image class="userHeard" :src="item.avatar"></image>
-										<view class="userNikename">{{ item.author_name }}</view>
+							<view class="titleTip">
+								<view class="demo-tag">
+									<view class="demo-tag-owner" v-if="item.type==1">
+										游记
 									</view>
-									<view class="count" @click="clickLike"  :id="item.article_id">
-										<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
-										<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
-										{{ item.like_count || 0 }}
+									<view class="demo-tag-owner" v-if="item.type==2">
+										攻略
 									</view>
 								</view>
-							
+								<view class="demo-title">
+									{{item.title}}
+								</view>
+							</view>
 						</view>
-					</template>
-				</u-waterfall>
+						<view class="demo-user">
+							<view class="userMessage">
+								<image class="userHeard" :src="item.avatar"></image>
+								<view class="userNikename">{{ item.author_name }}</view>
+							</view>
+							<view class="count" @click="clickLike" :id="item.article_id">
+								<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
+								<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
+								{{ item.like_count || 0 }}
+							</view>
+						</view>
+					</view> 
+				</view> 
 				<!-- <view v-show="isLoadMore">  //loading加载提示处
 					<uni-load-more :status="loadStatus" ></uni-load-more>
 				</view> -->
@@ -138,6 +134,7 @@
 		},
 		onLoad() {
 			this.getResults()
+			this.init()
 		},
 		// 方法
 		methods: {
@@ -275,6 +272,12 @@
 				this.loadHotKeyword();
 			
 			},
+			init() {
+				this.loadDefaultKeyword();
+				// this.loadOldKeyword();
+				// this.loadHotKeyword();
+			
+			},
 			blur(){
 				uni.hideKeyboard()
 			},
@@ -285,6 +288,9 @@
 				uni.getStorage({
 					key:"OldKeys",
 					success: res =>{
+						var OldKeys = JSON.parse(res.data);
+						console.log('关键字',OldKeys);
+						var OldKeys = OldKeys[0]
 						this.defaultKeyword = OldKeys;
 					},
 				})
@@ -353,6 +359,11 @@
 	}
 	// 瀑布流
 	/* 正在旅行 */
+	.left,.right{
+	  display: inline-block;  
+	  vertical-align: top;  
+	  width: 49%;  
+	}
 	.touring{
 		margin-top: 24rpx;
 	}

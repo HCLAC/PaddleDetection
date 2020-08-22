@@ -10,18 +10,18 @@
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
-
+		
 		<view class="" v-show="articleList != null">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap">
 				<view class="page-section swiper">
 					<view class="page-section-spacing">
 						<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
-							<swiper-item v-for="(item, index) in articleList.data.images" :key="index"><image class="itemImg" mode="aspectFit" :src="item"></image></swiper-item>
+							<swiper-item v-for="(item, index) in articleList.data.images"><image class="itemImg" mode="aspectFit" :src="item"></image></swiper-item>
 						</swiper>
 						<view class="imageCount">{{ current + 1 }}/{{ articleList.data.images.length }}</view>
 						<view class="dots">
-							<block v-for="(item, index) in articleList.data.images" :key="index"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+							<block v-for="(item, index) in articleList.data.images"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
 						</view>
 					</view>
 				</view>
@@ -46,11 +46,11 @@
 					<u-parse lazy-load use-cache @linkpress="templateAdd" :html="articleList.data.content | formatRichText"></u-parse>
 				</view>
 				<view class="tips">
-					<view v-for="item in articleList.data.tags" :key="item.id">
+					<view v-for="item in articleList.data.tags">
 						#
 						<text>{{ item }}</text>
 					</view>
-					<view v-for="item in articleList.data.topics" :key="item.id">
+					<view v-for="item in articleList.data.topics">
 						#
 						<text>{{ item }}</text>
 					</view>
@@ -125,16 +125,17 @@ export default {
 		uni.hideLoading();
 	},
 	created() {
-		_this = this;
+		
+		_this = this 
 		_this.getOrder();
 	},
 
 	methods: {
 		getOrder() {},
 		templateAdd(e) {
-			console.log(e);
-
-			if (e.group && e.groupid) {
+			console.log(e)
+			
+			if(e.group && e.groupid){
 				uni.request({
 					url: 'http://121.40.30.19/marketing/copy',
 					data: {
@@ -144,25 +145,25 @@ export default {
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
-					success: res => {
-						if (res.data.code == 0) {
+					success: (res)=>{
+						if(res.data.code == 0){
 							uni.setClipboardData({
 								data: e.group,
-								success: () => {
+								success: ()=>{
 									uni.showToast({
-										title: '复制成功',
-										icon: 'success'
-									});
+										title: "复制成功",
+										icon: "success"
+									})
 								}
-							});
-						} else {
+							})
+						}else{
 							uni.showToast({
 								title: res.data.msg,
 								icon: 'none'
-							});
+							})
 						}
 					}
-				});
+				})
 			}
 		},
 		// 获取文章详情
@@ -194,29 +195,23 @@ export default {
 					uni.setStorageSync('id', res.data);
 
 					let strIndex = res.data.data.content.search('此处为营销组件');
-
 					if (strIndex != -1) {
 						// let strId =  newContent.substring(strIndex,1)
 
 						let strId = res.data.data.content[strIndex + 8];
-						let numStr = await that.getTemplate(strId);
-						let wechat_id = numStr.wechat_id;
-						let str =
-							'<div><span style="font-size: 32rpx; font-weight: 500;">详情请+VX：' +
-							wechat_id +
-							'</span><a group="' +
-							wechat_id +
-							'" groupId="' +
-							strId +
-							'" style="color: #0091FF; font-size: 32rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></div>';
-
+						let numStr = await  that.getTemplate(strId);
+							let wechat_id = numStr.wechat_id
+							let str =  '<div><span style="font-size: 32rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</span><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 32rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></div>'
+							
 						res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 						console.log(res.data.data.content);
-
+						
 						that.articleList = res.data;
-					} else {
+
+					}else{
 						that.articleList = res.data;
 					}
+					
 				}
 			});
 		},
@@ -269,29 +264,24 @@ export default {
 							console.log('eeeeeeeeeeeeeeee', res);
 							console.log('文章详情====', res);
 							uni.setStorageSync('id', res.data);
-
+							
 							let strIndex = res.data.data.content.search('此处为营销组件');
 							if (strIndex != -1) {
 								// let strId =  newContent.substring(strIndex,1)
-
+							
 								let strId = res.data.data.content[strIndex + 8];
-								let numStr = await that.getTemplate(strId);
-								let wechat_id = numStr.wechat_id;
-								let str =
-									'<div><span style="font-size: 32rpx; font-weight: 500;">详情请+VX：' +
-									wechat_id +
-									'</span><a group="' +
-									wechat_id +
-									'" groupId="' +
-									strId +
-									'" style="color: #0091FF; font-size: 32rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></div>';
-
+								let numStr = await  that.getTemplate(strId);
+									let wechat_id = numStr.wechat_id
+									let str =  '<div><span style="font-size: 32rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</span><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 32rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></div>'
+									
 								res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 								console.log(res.data.data.content);
-
+								
 								that.articleList = res.data;
-							} else {
+							
+							}else{
 								that.articleList = res.data;
+								console.log('articleList', that.articleList);
 							}
 						}
 					});
@@ -345,29 +335,25 @@ export default {
 							console.log('eeeeeeeeeeeeeeee', res);
 							console.log('文章详情====', res.data);
 							uni.setStorageSync('id', res.data);
-
+							
 							let strIndex = res.data.data.content.search('此处为营销组件');
 							if (strIndex != -1) {
 								// let strId =  newContent.substring(strIndex,1)
-								let strId = res.data.data.content[strIndex + 8];
-								let numStr = await that.getTemplate(strId);
-								let wechat_id = numStr.wechat_id;
-								let str =
-									'<div><span style="font-size: 32rpx; font-weight: 500;">详情请+VX：' +
-									wechat_id +
-									'</span><a group="' +
-									wechat_id +
-									'" groupId="' +
-									strId +
-									'" style="color: #0091FF; font-size: 32rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></div>';
-
-								res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
-								console.log(res.data.data.content);
-
+							let strId = res.data.data.content[strIndex + 8];
+							let numStr = await  that.getTemplate(strId);
+								let wechat_id = numStr.wechat_id
+								let str =  '<div><span style="font-size: 32rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</span><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 32rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></div>'
+								
+							res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
+							console.log(res.data.data.content);
+							
+							that.articleList = res.data;
+							
+							}else{
 								that.articleList = res.data;
-							} else {
-								that.articleList = res.data;
+								console.log('articleList', that.articleList);
 							}
+
 						}
 					});
 				}
@@ -375,7 +361,7 @@ export default {
 		},
 		getTemplate(id) {
 			if (id) {
-				return new Promise((reslove, reject) => {
+				return new Promise((reslove,reject)=>{
 					uni.request({
 						// url:'article',
 						url: 'http://121.40.30.19/marketing/unit',
@@ -387,11 +373,13 @@ export default {
 						header: {
 							Authorization: uni.getStorageSync('Authorization')
 						},
-
+					
 						success: res => {
+							
+					
 							if (res.data.code == 0) {
 								// this.wechat_id = res.data.data.wechat_id;
-								reslove(res.data.data);
+								reslove(res.data.data)
 							} else {
 								uni.showToast({
 									title: res.data.msg,
@@ -399,11 +387,11 @@ export default {
 								});
 							}
 						},
-						fail: error => {
-							reject(error);
+						fail: (error)=>{
+							reject(error)
 						}
 					});
-				});
+				})
 			}
 		},
 		// 登录
@@ -427,18 +415,15 @@ export default {
 		},
 
 		map() {
-			uni.getLocation({
-				type: 'gcj02', //返回可以用于uni.openLocation的经纬度
-				success: function(res) {
-					const latitude = res.latitude;
-					const longitude = res.longitude;
-					uni.openLocation({
-						latitude: latitude,
-						longitude: longitude,
-						success: function() {
-							console.log('success');
-						}
-					});
+			var that = this
+			
+			const latitude = that.articleList.data.latitude;
+			const longitude = that.articleList.data.longitude;
+			uni.openLocation({
+				latitude: latitude,
+				longitude: longitude,
+				success: function() {
+					console.log('success');
 				}
 			});
 		},
@@ -621,7 +606,11 @@ export default {
 }
 
 /* 内容详情 */
+.detailContent {
+	// padding: 15px;
 
+	// margin-bottom: 200rpx;
+}
 // ios底部安全距离-padding
 .savepadding {
 	padding-bottom: constant(safe-area-inset-bottom);
@@ -665,7 +654,7 @@ export default {
 	margin-top: 12rpx;
 	background: rgba(0, 145, 255, 0.1);
 	border-radius: 20rpx;
-	border: 2rpx solid rgba(0, 145, 255, 1);
+	// border: 2rpx solid rgba(0, 145, 255, 1);
 	display: flex;
 	align-items: center;
 	text-align: center;
