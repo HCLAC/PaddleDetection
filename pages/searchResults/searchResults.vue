@@ -372,6 +372,7 @@
 		height: 104rpx;
 		line-height: 104rpx;
 		font-size: 40rpx;
+		
 		font-family:PingFangSC-Medium,PingFang SC;
 		font-weight:500;
 		color: #303133;
