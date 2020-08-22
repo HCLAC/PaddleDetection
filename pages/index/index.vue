@@ -57,6 +57,92 @@
 						<text class="tourtext">正在旅行</text>
 						<!-- <touring class="touringList" ></touring> -->
 						<view class="wrap">
+							<view class="left">  
+								<view class="demo-warter" v-for="(item,index) in list" :key="index" v-if="index%2==0">
+									<view class="" @click="onPageJump" :id="item.article_id" >
+										<view class="demo-top">
+											<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+											<view class="adress">
+												<view class="adreessIcon">
+													<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
+												</view>
+								
+												<view class="adressText">
+													{{item.location}}
+												</view>
+											</view>
+										</view>
+										<view class="titleTip">
+											<view class="demo-tag">
+												<view class="demo-tag-owner" v-if="item.type==1">
+													游记
+												</view>
+												<view class="demo-tag-owner" v-if="item.type==2">
+													攻略
+												</view>
+											</view>
+											<view class="demo-title">
+												{{item.title}}
+											</view>
+										</view>
+									</view>
+									<view class="demo-user">
+										<view class="userMessage">
+											<image class="userHeard" :src="item.avatar"></image>
+											<view class="userNikename">{{ item.author_name }}</view>
+										</view>
+										<view class="count" @click="clickLike" :id="item.article_id">
+											<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
+											<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
+											{{ item.like_count || 0 }}
+										</view>
+									</view>
+								</view>  
+							</view>  
+					
+							<view class="right">  
+								<view class="demo-warter" v-for="(item,index) in list" :key="index" v-if="index%2==1">
+									<view class="" @click="onPageJump" :id="item.article_id" >
+										<view class="demo-top">
+											<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+											<view class="adress">
+												<view class="adreessIcon">
+													<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
+												</view>
+								
+												<view class="adressText">
+													{{item.location}}
+												</view>
+											</view>
+										</view>
+										<view class="titleTip">
+											<view class="demo-tag">
+												<view class="demo-tag-owner" v-if="item.type==1">
+													游记
+												</view>
+												<view class="demo-tag-owner" v-if="item.type==2">
+													攻略
+												</view>
+											</view>
+											<view class="demo-title">
+												{{item.title}}
+											</view>
+										</view>
+									</view>
+									<view class="demo-user">
+										<view class="userMessage">
+											<image class="userHeard" :src="item.avatar"></image>
+											<view class="userNikename">{{ item.author_name }}</view>
+										</view>
+										<view class="count" @click="clickLike" :id="item.article_id">
+											<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
+											<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
+											{{ item.like_count || 0 }}
+										</view>
+									</view>
+								</view> 
+									 
+							</view>  
 							<!-- <u-waterfall v-model="list" ref="uWaterfall">
 								<template v-slot:left="{leftList}">
 									<view class="demo-warter demo-warter-l" v-for="(item,index) in leftList" :key="index">
@@ -145,7 +231,7 @@
 									</view>
 								</template>
 							</u-waterfall> -->
-							<view class="demo-warter" v-for="(item,index) in list" :key="index">
+							<!-- <view class="demo-warter" v-for="(item,index) in list" :key="index">
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
@@ -184,7 +270,7 @@
 										{{ item.like_count || 0 }}
 									</view>
 								</view>
-							</view>
+							</view> -->
 						</view>
 					</view>
 			</view>
@@ -247,6 +333,7 @@
 		methods: {
 			// 接收切换城市信息，请求数据
 			getItem(){
+				var that  = this
 				if(this.item != getApp().globalData.item){
 					this.item = getApp().globalData.item,
 					console.log('item-------', this.item)
@@ -282,14 +369,14 @@
 						},
 						success: (res) => {
 							console.log('切换文章列表', res)
-							this.list = []
+							that.list = []
 							this.mescroll.scrollTo(0, this.mescroll.optUp.toTop.duration);
-							this.list = res.data.data.list
+							that.list = res.data.data.list
 							this.downCallback()
 							// let totalSize = res.data.data.total
 							// let curPageLen = res.data.data.list.length
 							// this.mescroll.endBySize(curPageLen, totalSize);
-							console.log(this.list,88888)
+							console.log(that.list,88888)
 							
 						}
 					})
@@ -643,9 +730,9 @@
 
 							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
 							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-							setTimeout(() => {
-								this.mescroll.endSuccess(curPageLen)
-							}, 20)
+							// setTimeout(() => {
+							// 	this.mescroll.endSuccess(curPageLen)
+							// }, 20)
 
 
 						},
@@ -701,9 +788,9 @@
 
 								// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
 								// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-								setTimeout(() => {
-									this.mescroll.endSuccess(curPageLen)
-								}, 20)
+								// setTimeout(() => {
+								// 	this.mescroll.endSuccess(curPageLen)
+								// }, 20)
 
 
 							},
@@ -757,9 +844,9 @@
 
 								// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
 								// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-								setTimeout(() => {
-									this.mescroll.endSuccess(curPageLen)
-								}, 20)
+								// setTimeout(() => {
+								// 	this.mescroll.endSuccess(curPageLen)
+								// }, 20)
 
 
 							},
@@ -782,6 +869,11 @@
 </script>
 
 <style scoped>
+	.left,.right{  
+	  display: inline-block;  
+	  vertical-align: top;  
+	  width: 49%;  
+	}
 	/* 头条小程序组件内不能引入字体 */
 	/* #ifdef MP-TOUTIAO */
 	@font-face {

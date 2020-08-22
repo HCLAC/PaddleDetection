@@ -1,15 +1,14 @@
 {
+    "appInfo": {},
     "appid": "21554227",
-    "compilation-args": {
-        "common": {
-            "useStrict": false
-        }
-    },
+    "appkey": "",
+    "condition": {},
     "host": "baiduboxapp",
+    "libVersion": "",
     "preview": {
-        "packageId": 598528
+        "packageId": 598872
     },
-    "projectname": "ygctour",
+    "projectname": "lingtuyang",
     "setting": {
         "urlCheck": false
     },
