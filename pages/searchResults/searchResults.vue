@@ -360,29 +360,39 @@
 	// 瀑布流
 	/* 正在旅行 */
 	.left,.right{
-	  display: inline-block;  
+	  display: inline-block; 
+	   margin-left: 10rpx;
 	  vertical-align: top;  
-	  width: 49%;  
+	  width: 48%;  
 	}
-	.touring{
+	.touring {
 		margin-top: 24rpx;
 	}
-	.touring .tourtext{
+	
+	.touring .tourtext {
 		width: 160rpx;
 		height: 104rpx;
 		line-height: 104rpx;
 		font-size: 40rpx;
-		
-		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:500;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
 		color: #303133;
 		margin-left: 32rpx;
-		
+	
 	}
-	.demo-warter-l{
-		margin-left:10rpx ;
+	
+	.wrap{
+		width:750rpx;
+		display: flex;
+		flex-flow: row;
+		flex-wrap: wrap;
 	}
+	.demo-warter-l {
+		margin-left: 10rpx;
+	}
+	
 	.demo-warter {
+		width: 360rpx;
 		margin-top: 0;
 		margin-right: 10rpx;
 		margin-bottom: 16rpx;
@@ -391,63 +401,70 @@
 		background-color: #FFFFFF;
 	}
 	
-	.demo-top{
+	.demo-top {
 		position: relative;
+		
 	}
 	
 	.demo-image {
-		min-height: 300rpx;
+		min-height: 300rpx !important;
 		max-height: 460rpx;
 		width: 100%;
-		border-radius: 8rpx 8rpx 0 0 ;
+		border-radius: 8rpx 8rpx 0 0;
 		position: relative;
 	}
-	.adress{
+	
+	.adress {
 		position: absolute;
 		left: 0;
 		bottom: 8rpx;
 		display: flex;
 		align-items: center;
-		max-width:240rpx;
-		height:40rpx;
+		max-width: 240rpx;
+		height: 40rpx;
 		padding-right: 16rpx;
-		background:rgba(0,0,0,0.6);
-		border-radius:0px 14rpx 0px 0px;
+		background: rgba(0, 0, 0, 0.6);
+		border-radius: 0px 14rpx 0px 0px;
 	}
-	.adreessIcon{
+	
+	.adreessIcon {
 		width: 24rpx;
 		height: 24rpx;
-		margin:0 4rpx;
+		margin: 0 4rpx;
 		display: flex;
 	}
-	.adreessIcon image{
+	
+	.adreessIcon image {
 		width: 100%;
 		height: 100%;
 	}
-	.adressText{
+	
+	.adressText {
 		max-width: 192rpx;
-		font-size:24rpx;
-		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:500;
-		color:rgba(255,255,255,1);
+		font-size: 24rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: rgba(255, 255, 255, 1);
 		/* line-height:24px; */
 		/* margin-right: 16rpx; */
 		overflow: hidden;
-		text-overflow:ellipsis;
+		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-	.titleTip{
+	
+	.titleTip {
 		display: flex;
-		margin-top: 18rpx;
+		margin-top: 10rpx;
 		margin-left: 8rpx;
 	}
+	
 	.demo-title {
 		width: 278rpx;
 		/* max-height: 70rpx; */
 		font-size: 28rpx;
-		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:500;
-		color:rgba(48,49,51,1);
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: rgba(48, 49, 51, 1);
 		margin-left: 8rpx;
 		line-height: 46rpx;
 	}
@@ -462,12 +479,12 @@
 		text-align: center;
 		align-items: center;
 		color: #0091FF;
-		border: 2rpx solid rgba(0,145,255,1);
+		border: 2rpx solid rgba(0, 145, 255, 1);
 		border-radius: 14rpx;
 		font-size: 16rpx;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(0,145,255,1);
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(0, 145, 255, 1);
 		/* margin-top: 6rpx; */
 	}
 	
@@ -478,38 +495,42 @@
 		display: flex;
 		justify-content: space-between;
 	}
+	
 	.userMessage {
 		font-size: 10px;
 		font-weight: 900;
 		color: #464646;
 		display: flex;
 		align-items: center;
-		}
-	.userHeard{
-			width: 40rpx;
-			height: 40rpx;
-			border-radius: 50%;
-			margin-left: 14rpx;
-		}
-		.userNikename{
-			font-size: 24rpx;
-			margin-left: 16rpx;
-			font-family:PingFangSC-Regular,PingFang SC;
-			font-weight:400;
-			color:rgba(96,98,102,1);
-		}
-		
+	}
+	
+	.userHeard {
+		width: 40rpx;
+		height: 40rpx;
+		border-radius: 50%;
+		margin-left: 14rpx;
+	}
+	
+	.userNikename {
+		font-size: 24rpx;
+		margin-left: 16rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(96, 98, 102, 1);
+	}
+	
 	
 	.count {
 		display: flex;
 		font-size: 22rpx;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(96,98,102,1);
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(96, 98, 102, 1);
 		align-items: center;
 		margin-right: 20rpx;
 	}
-	.count image{
+	
+	.count image {
 		width: 26rpx;
 		height: 26rpx;
 		margin-right: 8rpx;

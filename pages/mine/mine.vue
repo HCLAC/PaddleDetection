@@ -74,7 +74,7 @@ import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 export default {
 	data() {
 		return {
-			nickName:"",
+			nickName:uni.getStorageSync('nickName'),
 			avatarUrl:"",
 			tipList:[]
 		};

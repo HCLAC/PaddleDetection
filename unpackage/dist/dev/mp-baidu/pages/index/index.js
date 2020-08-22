@@ -375,6 +375,7 @@ var _default = {
 
           success: function success(res) {
             console.log('切换文章列表', res);
+            uni.setStorageSync('article_id', res.data);
             that.list = [];
             _this.mescroll.scrollTo(0, _this.mescroll.optUp.toTop.duration);
             that.list = res.data.data.list;

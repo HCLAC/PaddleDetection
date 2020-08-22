@@ -239,6 +239,7 @@
 						},
 						success: (res) => {
 							console.log('切换文章列表', res)
+							uni.setStorageSync('article_id', res.data)
 							that.list = []
 							this.mescroll.scrollTo(0, this.mescroll.optUp.toTop.duration);
 							that.list = res.data.data.list
@@ -740,9 +741,10 @@
 
 <style scoped>
 	.left,.right{  
-	  display: inline-block;  
+	  display: inline-block;
+		margin-left: 10rpx;
 	  vertical-align: top;  
-	  width: 49%;  
+	  width: 48%;  
 	}
 	/* 头条小程序组件内不能引入字体 */
 	/* #ifdef MP-TOUTIAO */
@@ -871,8 +873,7 @@
 		display: flex;
 		/* #endif */
 		flex-direction: row;
-		max-width: 396rpx;
-		min-width: 340rpx;
+		/* min-width: 350rpx; */
 		height: 72rpx;
 		align-items: center;
 		flex: 1;
@@ -891,6 +892,7 @@
 	.nav-bar-input {
 		height: 72rpx;
 		line-height: 72rpx;
+		margin-right: 116rpx;
 		/* #ifdef APP-PLUS-NVUE */
 		/* #endif */
 		font-size: 28rpx;
@@ -1105,7 +1107,7 @@
 
 	.titleTip {
 		display: flex;
-		margin-top: 18rpx;
+		margin-top: 10rpx;
 		margin-left: 8rpx;
 	}
 
