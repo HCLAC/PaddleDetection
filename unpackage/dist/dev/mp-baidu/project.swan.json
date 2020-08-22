@@ -1,11 +1,14 @@
 {
-  "appid": "21554227",
-  "appInfo": {},
-  "appkey": "",
-  "condition": {},
-  "setting": {
-    "urlCheck": false
-  },
-  "libVersion": "",
-  "projectname": "lingtuyang"
+    "appInfo": {},
+    "appid": "21554227",
+    "appkey": "",
+    "condition": {},
+    "libVersion": "",
+    "preview": {
+        "packageId": 599003
+    },
+    "projectname": "lingtuyang",
+    "setting": {
+        "urlCheck": false
+    }
 }
