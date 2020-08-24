@@ -134,7 +134,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _methods;function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search-revision/mehaotian-search-revision */ "components/mehaotian-search-revision/mehaotian-search-revision").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search-revision/mehaotian-search-revision.vue */ 179));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search-revision/mehaotian-search-revision */ "components/mehaotian-search-revision/mehaotian-search-revision").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search-revision/mehaotian-search-revision.vue */ 179));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 64));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 
 
@@ -273,7 +273,7 @@ var _default = {
     this.init();
   },
   // 方法
-  methods: (_methods = {
+  methods: {
     getResults: function getResults() {
       var that = this;
       uni.getStorage({
@@ -295,55 +295,20 @@ var _default = {
 
     },
     // 点赞
-    clickLike: function clickLike(e) {
-      // console.log('qwer',e)
-      var article = e.currentTarget.id;
+    clickLike: function clickLike(e, index) {
+      console.log('qaz', e, index);
+      // debugger
+      var article = e.article_id;
       var that = this;
-      var city_id = uni.getStorageSync('city_id');
-      var state_id = uni.getStorageSync('state_id');
-      uni.getStorage({
-        key: 'Authorization',
-        success: function success(res) {
-          console.log("token===>", res.data);
-          that.token = res.data;
-        } });
-
-      uni.request({
-        // url:'article',
-        url: 'http://121.40.30.19/article',
-        data: {
-          article_id: article },
-
-        header: {
-          'Authorization': that.token },
-
-        success: function success(res) {
-          console.log(res.data.data.liked,
-          res.data.data.like_count,
-          res.data.data.uuid,
-          444444);
-
-          // console.log('eeeeeeeeeeeeeeee', e)
-          console.log('文章详情====', res.data.data);
-          uni.setStorageSync('id', res.data);
-          that.articleList = res.data.data;
-          console.log('articleList', that.articleList);
-          console.log('liked', that.articleList.liked);
-          that.liked = that.articleList.liked;
-        } });
-
-
-
-
       uni.request({
         url: 'http://121.40.30.19/user/liked',
         data: {
           article_id: article,
-          liked: that.liked == 0 ? 1 : 0 },
+          liked: e.liked == 0 ? 1 : 0 },
 
         method: 'POST',
         header: {
-          'Authorization': that.token },
+          'Authorization': uni.getStorageSync('Authorization') },
 
         success: function success(res) {
           console.log('点赞', res);
@@ -363,30 +328,9 @@ var _default = {
 
             return;
           }
-          uni.request({
-            // url:'http://192.168.43.156:8199/article/list',
-            // url:'article/list',
-            url: 'http://121.40.30.19/article/list',
-            // url:'http://192.168.43.60:8299/article/list',
-            data: {
-              state_id: state_id,
-              city_id: city_id,
-              count: 20,
-              page: 1,
-              sort_by: 1 },
 
-            header: {
-              'Authorization': that.token },
-
-            success: function success(res) {
-              console.log('文章列表', res);
-              uni.setStorageSync('article_id', res.data);
-              console.log('存储文章列表==', res.data);
-              that.list = res.data.data;
-              that.leftList = that.list.list;
-              that.rightList = that.list.list;
-              console.log('list=====', that.leftList);
-            } });
+          that.list[index].liked = e.liked == 1 ? 0 : 1;
+          that.list[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
 
         } });
 
@@ -402,35 +346,38 @@ var _default = {
         url: "/pages/index/index" });
 
     },
+
     init: function init() {
       this.loadDefaultKeyword();
-      this.loadOldKeyword();
-      this.loadHotKeyword();
+      this.blur();
+      // this.loadOldKeyword();
+      // this.loadHotKeyword();
 
-    } }, _defineProperty(_methods, "init", function init()
-  {
-    this.loadDefaultKeyword();
-    // this.loadOldKeyword();
-    // this.loadHotKeyword();
+    },
+    blur: function blur() {
+      uni.hideKeyboard();
+    },
+    //加载默认搜索关键字
+    loadDefaultKeyword: function loadDefaultKeyword() {var _this = this;
+      //定义默认搜索关键字，可以自己实现ajax请求数据再赋值,用户未输入时，以水印方式显示在输入框，直接不输入内容搜索会搜索默认关键字
+      // this.defaultKeyword = "云南旅游";
+      uni.getStorage({
+        key: "OldKeys",
+        success: function success(res) {
+          var OldKeys = JSON.parse(res.data);
+          console.log('关键字', OldKeys);
+          var OldKeys = OldKeys[0];
+          _this.defaultKeyword = OldKeys;
+        } });
 
-  }), _defineProperty(_methods, "blur", function blur()
-  {
-    uni.hideKeyboard();
-  }), _defineProperty(_methods, "loadDefaultKeyword", function loadDefaultKeyword()
+    }
 
-  {var _this = this;
-    //定义默认搜索关键字，可以自己实现ajax请求数据再赋值,用户未输入时，以水印方式显示在输入框，直接不输入内容搜索会搜索默认关键字
-    // this.defaultKeyword = "云南旅游";
-    uni.getStorage({
-      key: "OldKeys",
-      success: function success(res) {
-        var OldKeys = JSON.parse(res.data);
-        console.log('关键字', OldKeys);
-        var OldKeys = OldKeys[0];
-        _this.defaultKeyword = OldKeys;
-      } });
-
-  }), _methods) };exports.default = _default;
+    // getLoadNum(num){
+    //     console.log('共加载了:'+num);
+    //     !this.isNewRenderDone&&uni.hideLoading()
+    //     this.isNewRenderDone = true
+    // }
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-baidu/dist/index.js */ 1)["default"]))
 
 /***/ }),

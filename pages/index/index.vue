@@ -92,7 +92,7 @@
 											<image class="userHeard" :src="item.avatar"></image>
 											<view class="userNikename">{{ item.author_name }}</view>
 										</view>
-										<view class="count" @click="clickLike" :id="item.article_id">
+										<view class="count" @click="clickLike(item,index)"  >
 											<image src="../../static/images/heart.svg" mode="aspectFit" v-if="item.liked==0"></image>
 											<image src="../../static/images/heart-actived.svg" mode="aspectFit" v-if="item.liked==1"></image>
 											<view class="likeCount">
@@ -136,7 +136,7 @@
 											<image class="userHeard" :src="item.avatar"></image>
 											<view class="userNikename">{{ item.author_name }}</view>
 										</view>
-										<view class="count" @click="clickLike" :id="item.article_id">
+										<view class="count" @click="clickLike(item,index)" >
 											<image src="../../static/images/heart.svg" mode="aspectFit" v-if="item.liked==0"></image>
 											<image src="../../static/images/heart-actived.svg" mode="aspectFit" v-if="item.liked==1"></image>
 											<view class="likeCount">
@@ -187,7 +187,9 @@
 				isLoadMore: false,
 				item: null,
 				topHotCity:[],
-				errCode:0
+				errCode:0,
+				isLike:false,
+				likeNum:0
 			}
 		},
 
@@ -219,7 +221,9 @@
 							state_id: this.item.state_id,
 							city_id: this.item.city_id,
 							count: 3,
-							sort_by: 3
+						},
+						header: {
+							'Authorization': uni.getStorageSync('Authorization')
 						},
 						success: (res) => {
 							console.log("跳转热门景点=========", res)
@@ -237,7 +241,6 @@
 							city_id: this.item.city_id,
 							count: 6,
 							page: 1,
-							sort_by: 3
 						},
 						header: {
 							'Authorization': uni.getStorageSync('Authorization')
@@ -249,9 +252,6 @@
 							this.mescroll.scrollTo(0, this.mescroll.optUp.toTop.duration);
 							that.list = res.data.data.list
 							this.downCallback()
-							// let totalSize = res.data.data.total
-							// let curPageLen = res.data.data.list.length
-							// this.mescroll.endBySize(curPageLen, totalSize);
 							console.log(that.list,88888)
 							
 						}
@@ -307,7 +307,6 @@
 										data: {
 											count: 6,
 											page: 1,
-											sort_by: 3
 										},
 										header: {
 											'Authorization': uni.getStorageSync('Authorization')
@@ -344,7 +343,6 @@
 											city_id: city.data.city_id,
 											count: 6,
 											page: 1,
-											sort_by: 3
 										},
 										header: {
 											'Authorization': uni.getStorageSync('Authorization')
@@ -402,7 +400,6 @@
 										city_id: res.data.data[0].city_id,
 										count: 6,
 										page: 1,
-										sort_by: 3
 									},
 									// header: {
 									// 	'Authorization': uni.getStorageSync('Authorization')
@@ -434,15 +431,16 @@
 				})
 			},
 			// 点赞
-			clickLike(e) {
-				// console.log('qwer',e)
-				let article = e.currentTarget.id
+			clickLike(e,index) {
+				console.log('qaz',e,index)
+				// debugger
+				let article = e.article_id
 				var that = this
 				uni.request({
 					url: 'http://121.40.30.19/user/liked',
 					data: {
 						article_id: article,
-						liked: that.liked == 0 ? 1 : 0
+						liked: e.liked == 0 ? 1 : 0
 					},
 					method: 'POST',
 					header: {
@@ -466,13 +464,10 @@
 							})
 							return
 						}
-						if (that.item == undefined || null) {
-							that.getAdress()
-							
-						} else {
-							that.getCity()
-							
-						}
+						
+						that.list[index].liked = (e.liked == 1 ? 0 : 1)
+						that.list[index].like_count = (e.liked == 1 ? e.like_count + 1 : e.like_count  - 1)
+						
 					}
 
 				})
@@ -638,6 +633,7 @@
 				if (city.code != 0) {
 					uni.request({
 						url: 'http://121.40.30.19/article/list?page=' + pageNum + '&count=' + pageSize,
+						
 						header: {
 							'Authorization': uni.getStorageSync('Authorization')
 						},
@@ -696,7 +692,6 @@
 							data: {
 								state_id: city.data.state_id,
 								city_id: city.data.city_id,
-
 							},
 							success: (data) => {
 								console.log('data', data)
@@ -753,7 +748,6 @@
 							data: {
 								state_id: that.item.state_id,
 								city_id: that.item.city_id,
-
 							},
 							success: (data) => {
 								console.log('data', data)
@@ -950,7 +944,8 @@
 		display: flex;
 		/* #endif */
 		flex-direction: row;
-		min-width: 350rpx;
+		/* min-width: 350rpx; */
+		/* width: 396rpx; */
 		height: 72rpx;
 		align-items: center;
 		flex: 1;
@@ -968,6 +963,8 @@
 
 	.nav-bar-input {
 		height: 72rpx;
+		/* min-width: 350rpx; */
+		width: 300rpx;
 		line-height: 72rpx;
 		/* #ifdef APP-PLUS-NVUE */
 		/* #endif */
@@ -1222,6 +1219,7 @@
 		margin-top: 24rpx;
 		/* margin-bottom: 16rpx; */
 		display: flex;
+		align-items: center;
 		justify-content: space-between;
 	}
 

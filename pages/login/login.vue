@@ -96,7 +96,9 @@ export default {
 				this.code = '';
 			}
 		},
-
+		blur() {
+			
+		},
 		getCode() {
 			let _this = this;
 			uni.hideKeyboard();

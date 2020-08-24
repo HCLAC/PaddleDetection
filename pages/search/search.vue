@@ -29,7 +29,7 @@
 				<block v-for="(row, index) in keywordList" :key="index">
 					<view class="keyword-entry" hover-class="keyword-entry-tap">
 						<view class="liIcon"></view>
-						<view class="keyword-text" @tap.stop="doSearch(keywordList[index].keyword)" @click="Toresults"><rich-text :nodes="row.htmlStr"></rich-text></view>
+						<view class="keyword-text" @tap.stop="doSearch(keywordList[index].keyword)" ><rich-text :nodes="row.htmlStr"></rich-text></view>
 					</view>
 				</block>
 				<view class="search-bottom" @click="Toresults(keyword)">
@@ -57,7 +57,7 @@
 						<view class="hotItem" v-for="(keyword, index) in hotKeywordList" @tap="doSearch(keyword)" :key="index">
 							<!-- <image class="hotImg " :src="`../../static/images/icon-${index+1>=3?3:index+1}.png`" mode=""></image> -->
 							<view class="hotImg">
-								<image class=" " :src="`../../static/images/icon-${index+1}.svg`" mode=""></image>
+								<image class=" " :src="`../../static/images/icon-${index+1}.svg`" mode="aspectFit"></image>
 							</view>
 							<view class="hotContent">{{ keyword }}</view>
 						</view>
@@ -108,7 +108,7 @@
 									<image class="userHeard" :src="item.avatar"></image>
 									<view class="userNikename">{{ item.author_name }}</view>
 								</view>
-								<view class="count" @click="clickLike" :id="item.article_id">
+								<view class="count" @click="clickLike(item,index)">
 									<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
 									<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
 									{{ item.like_count || 0 }}
@@ -150,7 +150,7 @@
 									<image class="userHeard" :src="item.avatar"></image>
 									<view class="userNikename">{{ item.author_name }}</view>
 								</view>
-								<view class="count" @click="clickLike" :id="item.article_id">
+								<view class="count" @click="clickLike(item,index)">
 									<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
 									<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
 									{{ item.like_count || 0 }}
@@ -223,102 +223,46 @@ export default {
 			})
 		},
 		// 点赞
-		clickLike(e) {
-			// console.log('qwer',e)
-			let article = e.currentTarget.id
+		clickLike(e,index) {
+			console.log('qaz',e,index)
+			// debugger
+			let article = e.article_id
 			var that = this
-			var city_id = uni.getStorageSync('city_id')
-			var state_id = uni.getStorageSync('state_id')
-			uni.getStorage({
-				key: 'Authorization',
-				success: function(res) {
-					console.log("token===>", res.data)
-					that.token = res.data
-				}
-			})
 			uni.request({
-				// url:'article',
-				url: 'http://121.40.30.19/article',
+				url: 'http://121.40.30.19/user/liked',
 				data: {
-					article_id: article
+					article_id: article,
+					liked: e.liked == 0 ? 1 : 0
 				},
+				method: 'POST',
 				header: {
-					'Authorization': that.token
+					'Authorization': uni.getStorageSync('Authorization')
 				},
 				success: function(res) {
-					console.log(res.data.data.liked,
-						res.data.data.like_count,
-						res.data.data.uuid,
-						444444
-					)
-					// console.log('eeeeeeeeeeeeeeee', e)
-					console.log('文章详情====', res.data.data)
-					uni.setStorageSync('id', res.data)
-					that.articleList = res.data.data
-					console.log('articleList', that.articleList)
-					console.log('liked',that.articleList.liked)
-					that.liked = that.articleList.liked
-				}
-			})
-			
-			
-		
-			uni.request({
-					url: 'http://121.40.30.19/user/liked',
-					data: {
-						article_id: article,
-						liked:that.liked == 0 ? 1 : 0
-					},
-					method: 'POST',
-					header: {
-						'Authorization': that.token
-					},
-					success: function(res) {
-						console.log('点赞', res)
-						if (res.data.code != 0) {
-							// debugger
-							uni.showModal({
-								title: '提示',
-								content: '您好，请先登录',
-								showCancel: false,
-								success: function(res) {
-									if (res.confirm) {
-										uni.redirectTo({
-											url: '../login/login'
-										})
-									}
+					console.log('点赞', res)
+					if (res.data.code != 0) {
+						// debugger
+						uni.showModal({
+							title: '提示',
+							content: '您好，请先登录',
+							showCancel: false,
+							success: function(res) {
+								if (res.confirm) {
+									uni.redirectTo({
+										url: '../login/login'
+									})
 								}
-							})
-							return
-						}
-						uni.request({
-							// url:'http://192.168.43.156:8199/article/list',
-							// url:'article/list',
-							url:'http://121.40.30.19/article/list',
-							// url:'http://192.168.43.60:8299/article/list',
-							data:{
-								state_id:state_id,
-								city_id:city_id,
-								count:20,
-								page:1,
-								sort_by:1
-							},
-							header: {
-								'Authorization': that.token
-							},
-							success:res=>{
-								console.log('文章列表',res)
-								uni.setStorageSync('article_id',res.data)
-								console.log('存储文章列表==',res.data)
-								that.list = res.data.data
-								that.leftList = that.list.list
-								that.rightList = that.list.list
-								console.log('list=====',that.leftList)
 							}
 						})
+						return
 					}
 					
-				})
+					that.list[index].liked = (e.liked == 1 ? 0 : 1)
+					that.list[index].like_count = (e.liked == 1 ? e.like_count + 1 : e.like_count  - 1)
+					
+				}
+		
+			})
 		},
 		init() {
 			this.loadDefaultKeyword();
@@ -698,6 +642,7 @@ view {
 		width: 28rpx;
 		height: 28rpx;
 		line-height: 28rpx;
+		align-self: center;
 		image{
 			width: 100%;
 			height: 100%;
@@ -708,7 +653,7 @@ view {
 		margin-left: 8rpx;
 		color:rgba(48,49,51,1);
 		font-size: 28rpx;
-		line-height: 28rpx;
+		// line-height: 28rpx;
 		font-weight: 500;
 	}
 }

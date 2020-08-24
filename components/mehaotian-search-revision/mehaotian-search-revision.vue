@@ -107,6 +107,9 @@ export default {
 			//HM修改 清空内容时候触发组件input
 			this.$emit('input', '');
 			//this.$emit('search', '');//HM修改 清空内容时候不进行搜索
+			uni.navigateBack({
+				delta: 1
+			})
 		},
 		getFocus() {
 			if (!this.isFocus) {
