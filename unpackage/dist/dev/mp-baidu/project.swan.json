@@ -10,5 +10,12 @@
     "projectname": "lingtuyang",
     "setting": {
         "urlCheck": false
+    },
+    "host": "baiduboxapp",
+    "swan": {
+        "baiduboxapp": {
+            "swanJsVersion": "3.190.255-rc",
+            "extensionJsVersion": "100.14.255"
+        }
     }
 }
