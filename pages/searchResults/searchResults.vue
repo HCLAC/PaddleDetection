@@ -139,14 +139,18 @@
 		// 方法
 		methods: {
 			getResults(){
-				var that = this
-				uni.getStorage({
-					key:'article_id',
-					success:function(res){
-						console.log('取数据',res.data.data)
-						that.list = res.data.data
-					}
-				})
+				let res = uni.getStorageSync('article_id')
+				if(res){
+					this.list = res.data
+				}
+				// var that = this
+				// uni.getStorage({
+				// 	key:'article_id',
+				// 	success:function(res){
+				// 		console.log('取数据',res.data.data)
+				// 		that.list = res.data.data
+				// 	}
+				// })
 			},
 			// 跳转文章详情
 			onPageJump(e) {
