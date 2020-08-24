@@ -18,13 +18,13 @@
 				<view class="page-section swiper">
 					<view class="page-section-spacing">
 						<swiper @change="change" :autoplay="true" class="swiper" :indicator-dots="false">
-							<swiper-item v-for="item in attDetail.data.images" class="swiper-item">
+							<swiper-item v-for="item in attDetail.data.images" :key="item.id" class="swiper-item">
 								<image :src="item" mode="scaleToFill" ></image>
 							</swiper-item>
 						</swiper>
 						<view class="imageCount">{{ current + 1 }}/{{ attDetail.data.images.length }}</view>
 						<view class="dots">
-							<block v-for="(item, index) in attDetail.data.images">
+							<block v-for="(item, index) in attDetail.data.images" :key="index">
 								<view :class="[index == current ? 'activieDot' : 'dot']"></view>
 							</block>
 						</view>

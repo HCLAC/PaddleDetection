@@ -17,11 +17,11 @@
 				<view class="page-section swiper">
 					<view class="page-section-spacing">
 						<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
-							<swiper-item v-for="(item, index) in articleList.data.images"><image class="itemImg" mode="aspectFit" :src="item"></image></swiper-item>
+							<swiper-item v-for="(item, index) in articleList.data.images" :key="index"><image class="itemImg" mode="aspectFit" :src="item"></image></swiper-item>
 						</swiper>
 						<view class="imageCount">{{ current + 1 }}/{{ articleList.data.images.length }}</view>
 						<view class="dots">
-							<block v-for="(item, index) in articleList.data.images"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+							<block v-for="(item, index) in articleList.data.images" :key="index"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
 						</view>
 					</view>
 				</view>
@@ -46,11 +46,11 @@
 					<u-parse lazy-load use-cache @linkpress="templateAdd" :html="articleList.data.content | formatRichText"></u-parse>
 				</view>
 				<view class="tips">
-					<view v-for="item in articleList.data.tags">
+					<view v-for="item in articleList.data.tags" :key="item.id">
 						#
 						<text>{{ item }}</text>
 					</view>
-					<view v-for="item in articleList.data.topics">
+					<view v-for="item in articleList.data.topics" :key="item.id">
 						#
 						<text>{{ item }}</text>
 					</view>
@@ -606,11 +606,7 @@ export default {
 }
 
 /* 内容详情 */
-.detailContent {
-	// padding: 15px;
 
-	// margin-bottom: 200rpx;
-}
 // ios底部安全距离-padding
 .savepadding {
 	padding-bottom: constant(safe-area-inset-bottom);

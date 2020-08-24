@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "appid": "21554227",
     "appInfo": {},
     "appkey": "",
@@ -8,6 +9,20 @@
     },
     "libVersion": "",
     "projectname": "lingtuyang",
+=======
+    "appInfo": {},
+    "appid": "21554227",
+    "appkey": "",
+    "condition": {},
+    "libVersion": "",
+    "preview": {
+        "packageId": 599003
+    },
+    "projectname": "lingtuyang",
+    "setting": {
+        "urlCheck": false
+    },
+>>>>>>> feature/sz
     "host": "baiduboxapp",
     "swan": {
         "baiduboxapp": {
