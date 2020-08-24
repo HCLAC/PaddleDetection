@@ -240,7 +240,7 @@
 	.cardContent{
 		width:642rpx;
 		height:28rpx;
-		font-size:13px;
+		font-size:28rpx;
 		line-height: 28rpx;
 		font-family:PingFangSC-Regular,PingFang SC;
 		font-weight:400;

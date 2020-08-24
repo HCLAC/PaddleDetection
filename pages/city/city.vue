@@ -266,7 +266,12 @@
 	}
 
 	.line {
-		height: 0.5rpx;
+		width: 100%;
+		height:1px;
+		-webkit-transform: scaleY(0.5);
+		transform: scaleY(0.5);
+		transform-origin: 0 0;
+		-webkit-transform-origin: 0 0;
 		background: rgba(221, 221, 221, 1);
 		margin-top: 34rpx;
 		margin-bottom: 26rpx;

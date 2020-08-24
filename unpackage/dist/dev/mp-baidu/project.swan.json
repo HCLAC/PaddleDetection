@@ -1,14 +1,18 @@
 {
-    "appInfo": {},
     "appid": "21554227",
+    "appInfo": {},
     "appkey": "",
     "condition": {},
-    "libVersion": "",
-    "preview": {
-        "packageId": 598905
-    },
-    "projectname": "lingtuyang",
     "setting": {
         "urlCheck": false
+    },
+    "libVersion": "",
+    "projectname": "lingtuyang",
+    "host": "baiduboxapp",
+    "swan": {
+        "baiduboxapp": {
+            "swanJsVersion": "3.190.255-rc",
+            "extensionJsVersion": "100.14.255"
+        }
     }
 }

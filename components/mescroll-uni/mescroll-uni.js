@@ -93,7 +93,7 @@ MeScroll.prototype.extendUpScroll = function(optUp) {
 		offset: 40, // 距底部多远时,触发upCallback
 		textLoading: '加载中 ...', // 加载中的提示文本
 		textNoMore: '~我也是有底线的~', // 没有更多数据的提示文本
-		bgColor: "#F8F8F8", // 背景颜色 (建议在pages.json中再设置一下backgroundColorBottom)
+		bgColor: "transparent", // 背景颜色 (建议在pages.json中再设置一下backgroundColorBottom)
 		textColor: "gray", // 文本颜色 (当bgColor配置了颜色,而textColor未配置时,则textColor会默认为白色)
 		inited: null, // 初始化完毕的回调
 		showLoading: null, // 显示加载中的回调

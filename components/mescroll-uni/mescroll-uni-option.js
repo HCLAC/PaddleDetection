@@ -16,7 +16,7 @@ const GlobalOption = {
 		textLoading: '加载中 ...', // 加载中的提示文本
 		textNoMore: '~我也是有底线的~', // 没有更多数据的提示文本
 		textErr: "加载失败",
-		bgColor:'#FFFFFF',
+		bgColor:'#F8F8F8',
 		textColor:'rgba(201,202,209,1)',
 		offset: 80, // 距底部多远时,触发upCallback
 		isBounce: false, // 默认禁止橡皮筋的回弹效果, 必读事项: http://www.mescroll.com/qa.html?v=190725#q25

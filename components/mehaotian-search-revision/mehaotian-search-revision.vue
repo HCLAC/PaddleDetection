@@ -3,7 +3,7 @@
 		<view class="content" :style="{ 'border-radius': radius + 'px' }">
 			<!-- HM修改 增加进入输入状态的点击范围 -->
 			<view class="content-box" :class="{ center: mode === 2 }">
-				<image class="icon icon-serach" src="../../static/images/icon-search.svg"></image>
+				<image class=" icon-serach" mode="aspectFit" src="../../static/images/icon-search.svg"></image>
 				<!-- HM修改 增加placeholder input confirm-type confirm-->
 				<input
 					:placeholder="placeholder"
@@ -205,21 +205,10 @@ export default {
 			transition: all 0.3s;
 		}
 	}
-	.icon {
-		padding: 0 30rpx;
+	.icon-serach {
 		width: 28rpx;
 		height: 28rpx;
-		display: flex;
-		// text-align: center;
-		align-items: center;
-		color: #cbcbd8;
-		// &.icon-del {
-		// 	font-size: 38upx;
-		// 	&:before {content:"\e644";}
-		// }
-		// &.icon-serach:before {
-		// 	content: '\e61c';
-		// }
+		margin: 0 30rpx;
 	}
 	.iconImg {
 		width: 36rpx;

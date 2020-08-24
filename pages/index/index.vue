@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<!-- 824 -->
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" color="#333333" background-color="#FFFFFF" @clickLeft="showCity">
 				<block slot="left">
@@ -92,9 +93,11 @@
 											<view class="userNikename">{{ item.author_name }}</view>
 										</view>
 										<view class="count" @click="clickLike" :id="item.article_id">
-											<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
-											<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
-											{{ item.like_count || 0 }}
+											<image src="../../static/images/heart.svg" mode="aspectFit" v-if="item.liked==0"></image>
+											<image src="../../static/images/heart-actived.svg" mode="aspectFit" v-if="item.liked==1"></image>
+											<view class="likeCount">
+												{{ item.like_count || 0 }}
+											</view> 
 										</view>
 									</view>
 								</view>  
@@ -134,9 +137,11 @@
 											<view class="userNikename">{{ item.author_name }}</view>
 										</view>
 										<view class="count" @click="clickLike" :id="item.article_id">
-											<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
-											<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
-											{{ item.like_count || 0 }}
+											<image src="../../static/images/heart.svg" mode="aspectFit" v-if="item.liked==0"></image>
+											<image src="../../static/images/heart-actived.svg" mode="aspectFit" v-if="item.liked==1"></image>
+											<view class="likeCount">
+												{{ item.like_count || 0 }}
+											</view> 
 										</view>
 									</view>
 								</view> 
@@ -181,14 +186,13 @@
 				loadStatus: 'loading',
 				isLoadMore: false,
 				item: null,
-				topHotCity:[]
+				topHotCity:[],
+				errCode:0
 			}
 		},
 
 		onShow() {
-			
 			this.getItem()
-
 		},
 
 		onLoad() {
@@ -204,6 +208,7 @@
 			// 接收切换城市信息，请求数据
 			getItem(){
 				var that  = this
+				this.errCode = 0
 				if(this.item != getApp().globalData.item){
 					this.item = getApp().globalData.item,
 					console.log('item-------', this.item)
@@ -232,7 +237,7 @@
 							city_id: this.item.city_id,
 							count: 6,
 							page: 1,
-							sort_by: 1
+							sort_by: 3
 						},
 						header: {
 							'Authorization': uni.getStorageSync('Authorization')
@@ -302,7 +307,7 @@
 										data: {
 											count: 6,
 											page: 1,
-											sort_by: 1
+											sort_by: 3
 										},
 										header: {
 											'Authorization': uni.getStorageSync('Authorization')
@@ -325,7 +330,7 @@
 											state_id: city.data.state_id,
 											city_id: city.data.city_id,
 											count: 3,
-											sort_by: 0
+											sort_by: 3
 										},
 										success: (res) => {
 											console.log('热门景点', res)
@@ -339,7 +344,7 @@
 											city_id: city.data.city_id,
 											count: 6,
 											page: 1,
-											sort_by: 1
+											sort_by: 3
 										},
 										header: {
 											'Authorization': uni.getStorageSync('Authorization')
@@ -360,6 +365,8 @@
 					// 未开启定位
 					fail: (res) => {
 						console.log('未开启定位',res)
+						// uni.setStorageSync('errCode',res.errCode)
+						this.errCode = 1
 						uni.showToast({
 							title:'未获取定位权限，将为您展示最热门城市信息',
 							icon:'none',
@@ -380,7 +387,7 @@
 										state_id:this.topHotCity.state_id,
 										city_id: this.topHotCity.city_id,
 										count: 3,
-										sort_by: 0
+										sort_by: 3
 									},
 									success: (res) => {
 										console.log("未定位时获取的热门景点=========", res)
@@ -395,7 +402,7 @@
 										city_id: res.data.data[0].city_id,
 										count: 6,
 										page: 1,
-										sort_by: 1
+										sort_by: 3
 									},
 									// header: {
 									// 	'Authorization': uni.getStorageSync('Authorization')
@@ -557,6 +564,76 @@
 				console.log('pagem=num----',pageNum)
 				let pageSize = page.size; // 页长, 默认每页10条
 				var that = this
+				if(this.errCode == 1){
+					// 获取热门景点第一位
+					uni.request({
+						url: 'http://121.40.30.19/city/hot',
+						method: "GET",
+						success: (res) => {
+							console.log('热门城市===>', res.data.data)
+							this.cityName = res.data.data[0].name
+							this.topHotCity = res.data.data[0]
+							console.log(this.topHotCity)
+							
+							uni.request({
+								url: 'http://121.40.30.19/article/list?page=' + pageNum + '&count=' + pageSize,
+								data: {
+									state_id: res.data.data[0].state_id,
+									city_id: res.data.data[0].city_id,
+								},
+								success: (data) => {
+									console.log('data', data)
+									// 接口返回的当前页数据列表 (数组)
+									let curPageData = data.data.data.list;
+									
+									console.log('curPageData', curPageData)
+									// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+									let curPageLen = curPageData.length ;
+									console.log('curPageLen', curPageLen)
+									// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+									let totalPage = data.data.data.total / pageSize; 
+									// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+									let totalSize = data.data.data.total;
+									console.log('totalSize', totalSize)
+									// 接口返回的是否有下一页 (true/false)
+									// let hasNext = data.data.data.list; 
+								
+									//设置列表数据
+									if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
+									this.list = this.list.concat(curPageData); //追加新数据
+									console.log('list-', this.list)
+									// 请求成功,隐藏加载状态
+									//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+									this.mescroll.endByPage(curPageLen, totalPage); 
+								
+									//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+									// this.mescroll.endBySize(curPageLen, totalSize);
+								
+									//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+									//this.mescroll.endSuccess(curPageLen, hasNext); 
+								
+									//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+									//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+									//如果传了hasNext,则翻到第二页即可显示无更多数据.
+									//this.mescroll.endSuccess(curPageLen);
+								
+									// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+									// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+									// setTimeout(() => {
+									// 	this.mescroll.endSuccess(curPageLen)
+									// }, 20)
+								
+								
+								},
+								fail: () => {
+									//  请求失败,隐藏加载状态
+									this.mescroll.endErr()
+								}
+							})
+						}
+					})
+				}else{
+				
 				// 地址未定义
 				if (city.code != 0) {
 					uni.request({
@@ -727,10 +804,10 @@
 							}
 						})
 					}
+					
 				}
-
-
-
+				
+				}
 				// 此处仍可以继续写其他接口请求...
 				// 调用其他方法...
 			}
@@ -873,7 +950,7 @@
 		display: flex;
 		/* #endif */
 		flex-direction: row;
-		/* min-width: 350rpx; */
+		min-width: 350rpx;
 		height: 72rpx;
 		align-items: center;
 		flex: 1;
@@ -892,7 +969,6 @@
 	.nav-bar-input {
 		height: 72rpx;
 		line-height: 72rpx;
-		margin-right: 116rpx;
 		/* #ifdef APP-PLUS-NVUE */
 		/* #endif */
 		font-size: 28rpx;
@@ -1184,8 +1260,15 @@
 	}
 
 	.count image {
-		width: 26rpx;
-		height: 26rpx;
-		margin-right: 8rpx;
+		width: 28rpx;
+		height: 28rpx;
+	}
+	.likeCount{
+		margin-left: 8rpx;
+		font-size:22rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(96,98,102,1);
+		line-height:20rpx;
 	}
 </style>

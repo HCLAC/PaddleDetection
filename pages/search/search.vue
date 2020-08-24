@@ -49,14 +49,16 @@
 					</view>
 				</view>
 				<view class="keyword-block">
-					<view class="keyword-list-header">
+					<view class="keyword-list-header1">
 						<view>热门搜索</view>
 						<!-- <view><image @tap="hotToggle" :src="'/static/images/attention' + forbid + '.png'"></image></view> -->
 					</view>
 					<view class="hotList" v-if="forbid == ''">
 						<view class="hotItem" v-for="(keyword, index) in hotKeywordList" @tap="doSearch(keyword)" :key="index">
 							<!-- <image class="hotImg " :src="`../../static/images/icon-${index+1>=3?3:index+1}.png`" mode=""></image> -->
-							<image class="hotImg " :src="`../../static/images/icon-${index+1}.svg`" mode=""></image>
+							<view class="hotImg">
+								<image class=" " :src="`../../static/images/icon-${index+1}.svg`" mode=""></image>
+							</view>
 							<view class="hotContent">{{ keyword }}</view>
 						</view>
 					</view>
@@ -557,8 +559,8 @@ view {
 	top: 0;
 }
 .search-box .mSearch-input-box {
-	width: 100%;
-	height: 72rpx;
+	// width: 100%;
+	// height: 72rpx;
 }
 .search-box .input-box {
 	width: 606rpx;
@@ -645,9 +647,18 @@ view {
 	background-color: #fff;
 }
 .keyword-box .keyword-block {
-	padding: 10upx 0;
+	// padding: 10upx 0;
 }
 .keyword-box .keyword-block .keyword-list-header {
+	width: 100%;
+	padding: 40rpx;
+	font-size: 28rpx;
+	font-weight: 600;
+	color: #303133;
+	display: flex;
+	justify-content: space-between;
+}
+.keyword-box .keyword-block .keyword-list-header1 {
 	width: 100%;
 	padding: 40rpx;
 	font-size: 28rpx;
@@ -686,12 +697,18 @@ view {
 	.hotImg {
 		width: 28rpx;
 		height: 28rpx;
-		margin-right: 8rpx;
+		line-height: 28rpx;
+		image{
+			width: 100%;
+			height: 100%;
+		}
 	}
 	
 	.hotContent {
-		color: #303133;
+		margin-left: 8rpx;
+		color:rgba(48,49,51,1);
 		font-size: 28rpx;
+		line-height: 28rpx;
 		font-weight: 500;
 	}
 }

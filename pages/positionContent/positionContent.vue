@@ -7,7 +7,7 @@
 					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="slottitle">领途羊</view>
+				<view class="slottitle">景点详情</view>
 			</uni-nav-bar>
 		</view>
 		<!-- 用户信息 -->
@@ -432,7 +432,7 @@ export default {
 	position: absolute;
 	/* left: 320rpx; */
 	background: #ffff;
-	bottom: -20rpx;
+	bottom: -30rpx;
 	.dot {
 		width: 10rpx;
 		height: 10rpx;
@@ -450,7 +450,7 @@ export default {
 }
 // 内容区
 .content {
-	padding: 40rpx 30rpx 0;
+	padding: 70rpx 30rpx 0;
 	.contentTop{
 		display: flex;
 		justify-content: space-between;
@@ -482,7 +482,7 @@ export default {
 		width: 34rpx;
 	}
 	.tips {
-		margin-top: 10rpx;
+		margin-top: 16rpx;
 		display: flex;
 		.tip {
 			margin-right: 8rpx;
@@ -508,7 +508,7 @@ export default {
 		}
 	}
 	.rateBox {
-		margin-top: 32rpx;
+		margin-top: 28rpx;
 		display: flex;
 		align-items: center;
 		.rateStart{
@@ -537,15 +537,15 @@ export default {
 	}
 
 	.contentText {
-		margin-top: 30rpx;
-		padding-bottom: 40rpx;
+		margin-top: 20rpx;
+		margin-bottom: 40rpx;
 		position: relative;
 		.moreText {
 			font-size: 28rpx;
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			color: rgba(144, 147, 153, 1);
-			line-height: 56rpx;
+			line-height: 42rpx;
 			// position: relative;
 		}
 		.loseText {
@@ -553,7 +553,7 @@ export default {
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			color: rgba(144, 147, 153, 1);
-			line-height: 56rpx;
+			line-height: 42rpx;
 			display: -webkit-box;
 			-webkit-box-orient: vertical;
 			// text-overflow: ellipsis;
@@ -563,27 +563,29 @@ export default {
 		}
 		.btnBox {
 			// margin-right: 10rpx;
+			height: 42rpx;
 			position: absolute;
 			right: 0;
-			bottom: 40rpx;
+			bottom: 0;
 			display: flex;
 			justify-content: flex-end;
-			align-items: center;
+			// align-items: center;
 			z-index: 111;
-			// background:linear-gradient(90deg,rgba(255,255,255,0) 50%,rgba(255,255,255,1) 100%);
 			.mask{
 				width: 50rpx;
-				height: 56rpx;
 				background: linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
 			}
 			text {
+				margin-top: 10rpx;
 				font-size: 24rpx;
 				font-family: PingFangSC-Medium, PingFang SC;
 				font-weight: 500;
+				line-height: 24rpx;
 				color: rgba(48, 49, 51, 1);
 				background-color: #FFFFFF;
 			}
 			.iconImg {
+				margin-top: 10rpx;
 				height: 24rpx;
 				width: 24rpx;
 				background-color: #FFFFFF;
@@ -628,7 +630,7 @@ export default {
 				color: rgba(96, 98, 102, 1);
 				line-height: 36rpx;
 				width:308rpx;
-				max-height:70rpx;
+				// max-height:70rpx;
 				display: -webkit-box;
 				-webkit-box-orient: vertical;
 				text-overflow: ellipsis;
@@ -673,7 +675,7 @@ export default {
 		}
 	}
 	.phone {
-		margin-top: 10rpx;
+		// margin-top: 10rpx;
 		height: 36rpx;
 		display: flex;
 		align-items: center;

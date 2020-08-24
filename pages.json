@@ -31,12 +31,6 @@
 				"navigationStyle":"custom"
 			}
 		},
-		{
-			"path": "pages/attractionsDetails/attractionsDetails",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
 		
 		{
 			"path": "pages/attractionsList/attractionsList",
@@ -80,16 +74,7 @@
     ],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",
-		"navigationBarTextStyle": "black",
-		// "navigationBarTitleText": "领途羊",
-		"backgroundColorTop":"#F8F8F8",
-		"backgroundColorBottom":"#F8F8F8"
-	},
-	"window": {
-		"navigationBarBackgroundColor": "#ccc",
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "智能小程序",
-		"backgroundTextStyle": "dark"
+		"navigationBarTextStyle": "black"
 	},
 	"tabBar": {
 		"list": [{
@@ -107,7 +92,8 @@
 		],
 		"backgroundColor": "#ffffff",
 		"color": "#C9CAD1",
-		"selectedColor": "#303133"
+		"selectedColor": "#303133",
+		"borderStyle":"white"
 	},
 	"dynamicLib": {
 		"smartUI": {
