@@ -43,7 +43,7 @@
 				<!-- 内容文章 -->
 				<view class="contentText">
 					<!-- <rich-text :nodes="articleList.data.content | formatRichText"></rich-text> -->
-					<u-parse lazy-load use-cache @linkpress="templateAdd" :html="articleList.data.content | formatRichText"></u-parse>
+					<u-parse lazy-load use-cache @imgtap="imgTap" @linkpress="templateAdd" :html="articleList.data.content | formatRichText"></u-parse>
 				</view>
 				<view class="tips">
 					<view v-for="item in articleList.data.tags" :key="item.id">
@@ -164,6 +164,10 @@ export default {
 						}
 					}
 				})
+			}else{
+				console.log(e)
+			e.ignore()
+				return false
 			}
 		},
 		// 获取文章详情
@@ -215,6 +219,12 @@ export default {
 				}
 			});
 		},
+		imgTap(e){
+			console.log(e)
+		
+			return false
+		},
+	
 		// 点赞
 		clickLike() {
 			var that = this;

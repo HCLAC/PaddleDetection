@@ -180,6 +180,7 @@ export default {
 					provider: 'baidu',
 				
 					success: result => {
+						console.log(result)
 						if (result.code) {
 							this.baiduLogin({
 									code: result.code,
@@ -189,9 +190,11 @@ export default {
 							
 						}
 					},
+				
 					fail: error => {
+
 						uni.showToast({
-							title: error,
+							title: error.errMsg,
 							icon: 'none'
 						});
 					}
