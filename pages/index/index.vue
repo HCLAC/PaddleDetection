@@ -198,11 +198,19 @@
 		},
 
 		onLoad() {
+			uni.showLoading({
+				title: '加载中',
+				mask: true,
+				success: () => {
+					if (this.item == undefined || null) {
+						this.getAdress()
+					}
+				}
+			});
 			
-			if (this.item == undefined || null) {
-				this.getAdress()
-			}
-			
+			setTimeout(function () {
+			    uni.hideLoading();
+			}, 1000);
 			
 		},
 

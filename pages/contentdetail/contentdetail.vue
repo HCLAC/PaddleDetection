@@ -114,15 +114,20 @@ export default {
 		console.log('文章id====', e);
 		uni.showLoading({
 			title: '加载中',
-			mask: true
+			mask: true,
+			success: () => {
+				this.flag = uni.getStorageSync('Authorization') ? false : true;
+				console.log(this.flag);
+				// debugger
+				this.article_num = e.article_id;
+				
+				this.getArticleDetail(e);
+			}
 		});
-		this.flag = uni.getStorageSync('Authorization') ? false : true;
-		console.log(this.flag);
-		// debugger
-		this.article_num = e.article_id;
-
-		this.getArticleDetail(e);
-		uni.hideLoading();
+		
+		setTimeout(function () {
+		    uni.hideLoading();
+		}, 1000);
 	},
 	created() {
 		
@@ -385,8 +390,6 @@ export default {
 						},
 					
 						success: res => {
-							
-					
 							if (res.data.code == 0) {
 								// this.wechat_id = res.data.data.wechat_id;
 								reslove(res.data.data)

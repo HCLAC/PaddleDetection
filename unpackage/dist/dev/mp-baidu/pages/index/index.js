@@ -333,18 +333,26 @@ var _default = {
     this.getItem();
   },
 
-  onLoad: function onLoad() {
+  onLoad: function onLoad() {var _this = this;
+    uni.showLoading({
+      title: '加载中',
+      mask: true,
+      success: function success() {
+        if (_this.item == undefined || null) {
+          _this.getAdress();
+        }
+      } });
 
-    if (this.item == undefined || null) {
-      this.getAdress();
-    }
 
+    setTimeout(function () {
+      uni.hideLoading();
+    }, 1000);
 
   },
 
   methods: {
     // 接收切换城市信息，请求数据
-    getItem: function getItem() {var _this = this;
+    getItem: function getItem() {var _this2 = this;
       var that = this;
       this.errCode = 0;
       if (this.item != getApp().globalData.item) {
@@ -364,7 +372,7 @@ var _default = {
           success: function success(res) {
             console.log("跳转热门景点=========", res);
             // uni.setStorageSync('description',res.data)
-            _this.hotAtt = res.data.data;
+            _this2.hotAtt = res.data.data;
           } }),
 
         // 清除旧数据
@@ -385,9 +393,9 @@ var _default = {
             console.log('切换文章列表', res);
             uni.setStorageSync('article_id', res.data);
             that.list = [];
-            _this.mescroll.scrollTo(0, _this.mescroll.optUp.toTop.duration);
+            _this2.mescroll.scrollTo(0, _this2.mescroll.optUp.toTop.duration);
             that.list = res.data.data.list;
-            _this.downCallback();
+            _this2.downCallback();
             console.log(that.list, 88888);
 
           } });
@@ -401,23 +409,23 @@ var _default = {
       }
     },
     // 获取当前地理位置
-    getAdress: function getAdress() {var _this2 = this;
+    getAdress: function getAdress() {var _this3 = this;
       uni.getLocation({
         type: 'wgs84',
         success: function success(res) {
           console.log('地址---', res);
           // if(this.item == undefined){
-          _this2.cityName = res.city.substr(0, res.city.length - 1);
-          _this2.city = res.city;
-          _this2.province = res.province;
-          console.log(_this2.city, _this2.province);
+          _this3.cityName = res.city.substr(0, res.city.length - 1);
+          _this3.city = res.city;
+          _this3.province = res.province;
+          console.log(_this3.city, _this3.province);
           uni.request({
             // url:'http://192.168.43.156:8199/user/location',
             // url:'user/location',
             url: 'http://121.40.30.19/user/location',
             data: {
-              state: _this2.province,
-              city: _this2.city },
+              state: _this3.province,
+              city: _this3.city },
 
             method: 'POST',
             // header: {
@@ -433,21 +441,21 @@ var _default = {
                   method: "GET",
                   success: function success(res) {
                     console.log('热门城市===>', res.data.data);
-                    _this2.cityName = res.data.data[0].name;
-                    _this2.topHotCity = res.data.data[0];
-                    console.log(_this2.topHotCity);
+                    _this3.cityName = res.data.data[0].name;
+                    _this3.topHotCity = res.data.data[0];
+                    console.log(_this3.topHotCity);
                     uni.request({
                       url: 'http://121.40.30.19/site/hot',
                       data: {
-                        state_id: _this2.topHotCity.state_id,
-                        city_id: _this2.topHotCity.city_id,
+                        state_id: _this3.topHotCity.state_id,
+                        city_id: _this3.topHotCity.city_id,
                         count: 3,
                         sort_by: 3 },
 
                       success: function success(res) {
                         console.log("未定位时获取的热门景点=========", res);
                         // uni.setStorageSync('description',res.data)
-                        _this2.hotAtt = res.data.data;
+                        _this3.hotAtt = res.data.data;
                       } }),
 
                     uni.request({
@@ -465,7 +473,7 @@ var _default = {
                         console.log('未定位时获取的文章列表', res);
                         uni.setStorageSync('article_id', res.data);
                         // console.log('存储文章列表==',res.data)
-                        _this2.list = res.data.data.list;
+                        _this3.list = res.data.data.list;
                         // console.log('list=====',this.list)
                       } });
 
@@ -488,7 +496,7 @@ var _default = {
 
                   success: function success(res) {
                     console.log('热门景点', res);
-                    _this2.hotAtt = res.data.data;
+                    _this3.hotAtt = res.data.data;
                   } }),
 
                 uni.request({
@@ -505,7 +513,7 @@ var _default = {
                   success: function success(res) {
                     console.log('文章列表', res);
                     uni.setStorageSync('article_id', res.data);
-                    _this2.list = res.data.data.list;
+                    _this3.list = res.data.data.list;
                   } });
 
               }
@@ -519,7 +527,7 @@ var _default = {
         fail: function fail(res) {
           console.log('未开启定位', res);
           // uni.setStorageSync('errCode',res.errCode)
-          _this2.errCode = 1;
+          _this3.errCode = 1;
           uni.showToast({
             title: '未获取定位权限，将为您展示最热门城市信息',
             icon: 'none',
@@ -531,21 +539,21 @@ var _default = {
             method: "GET",
             success: function success(res) {
               console.log('热门城市===>', res.data.data);
-              _this2.cityName = res.data.data[0].name;
-              _this2.topHotCity = res.data.data[0];
-              console.log(_this2.topHotCity);
+              _this3.cityName = res.data.data[0].name;
+              _this3.topHotCity = res.data.data[0];
+              console.log(_this3.topHotCity);
               uni.request({
                 url: 'http://121.40.30.19/site/hot',
                 data: {
-                  state_id: _this2.topHotCity.state_id,
-                  city_id: _this2.topHotCity.city_id,
+                  state_id: _this3.topHotCity.state_id,
+                  city_id: _this3.topHotCity.city_id,
                   count: 3,
                   sort_by: 3 },
 
                 success: function success(res) {
                   console.log("未定位时获取的热门景点=========", res);
                   // uni.setStorageSync('description',res.data)
-                  _this2.hotAtt = res.data.data;
+                  _this3.hotAtt = res.data.data;
                 } }),
 
               uni.request({
@@ -563,7 +571,7 @@ var _default = {
                   console.log('未定位时获取的文章列表', res);
                   uni.setStorageSync('article_id', res.data);
                   // console.log('存储文章列表==',res.data)
-                  _this2.list = res.data.data.list;
+                  _this3.list = res.data.data.list;
                   // console.log('list=====',this.list)
                 } });
 
@@ -706,7 +714,7 @@ var _default = {
       // 调用其他方法...
     },
     /*上拉加载的回调*/
-    upCallback: function upCallback(page) {var _this3 = this;
+    upCallback: function upCallback(page) {var _this4 = this;
       // mescroll.setPageSize(6)
       var city = uni.getStorageSync('city_id');
       // console.log('上拉刷新数据', city)
@@ -721,9 +729,9 @@ var _default = {
           method: "GET",
           success: function success(res) {
             console.log('热门城市===>', res.data.data);
-            _this3.cityName = res.data.data[0].name;
-            _this3.topHotCity = res.data.data[0];
-            console.log(_this3.topHotCity);
+            _this4.cityName = res.data.data[0].name;
+            _this4.topHotCity = res.data.data[0];
+            console.log(_this4.topHotCity);
 
             uni.request({
               url: 'http://121.40.30.19/article/list?page=' + pageNum + '&count=' + pageSize,
@@ -752,12 +760,12 @@ var _default = {
                 // let hasNext = data.data.data.list; 
 
                 //设置列表数据
-                if (page.num == 1) _this3.list = []; //如果是第一页需手动置空列表
-                _this3.list = _this3.list.concat(curPageData); //追加新数据
-                console.log('list-', _this3.list);
+                if (page.num == 1) _this4.list = []; //如果是第一页需手动置空列表
+                _this4.list = _this4.list.concat(curPageData); //追加新数据
+                console.log('list-', _this4.list);
                 // 请求成功,隐藏加载状态
                 //方法一(推荐): 后台接口有返回列表的总页数 totalPage
-                _this3.mescroll.endByPage(curPageLen, totalPage);
+                _this4.mescroll.endByPage(curPageLen, totalPage);
 
                 //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
                 // this.mescroll.endBySize(curPageLen, totalSize);
@@ -780,7 +788,7 @@ var _default = {
               },
               fail: function fail() {
                 //  请求失败,隐藏加载状态
-                _this3.mescroll.endErr();
+                _this4.mescroll.endErr();
               } });
 
           } });
@@ -812,12 +820,12 @@ var _default = {
               // let hasNext = data.data.data.list; 
 
               //设置列表数据
-              if (page.num == 1) _this3.list = []; //如果是第一页需手动置空列表
-              _this3.list = _this3.list.concat(curPageData); //追加新数据
-              console.log('list-', _this3.list);
+              if (page.num == 1) _this4.list = []; //如果是第一页需手动置空列表
+              _this4.list = _this4.list.concat(curPageData); //追加新数据
+              console.log('list-', _this4.list);
               // 请求成功,隐藏加载状态
               //方法一(推荐): 后台接口有返回列表的总页数 totalPage
-              _this3.mescroll.endByPage(curPageLen, totalPage);
+              _this4.mescroll.endByPage(curPageLen, totalPage);
 
               //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
               // this.mescroll.endBySize(curPageLen, totalSize);
@@ -840,7 +848,7 @@ var _default = {
             },
             fail: function fail() {
               //  请求失败,隐藏加载状态
-              _this3.mescroll.endErr();
+              _this4.mescroll.endErr();
             } });
 
         } else {
@@ -872,12 +880,12 @@ var _default = {
                 // let hasNext = data.data.data.list; 
 
                 //设置列表数据
-                if (page.num == 1) _this3.list = []; //如果是第一页需手动置空列表
-                _this3.list = _this3.list.concat(curPageData); //追加新数据
-                console.log('list-', _this3.list);
+                if (page.num == 1) _this4.list = []; //如果是第一页需手动置空列表
+                _this4.list = _this4.list.concat(curPageData); //追加新数据
+                console.log('list-', _this4.list);
                 // 请求成功,隐藏加载状态
                 //方法一(推荐): 后台接口有返回列表的总页数 totalPage
-                _this3.mescroll.endByPage(curPageLen, totalPage);
+                _this4.mescroll.endByPage(curPageLen, totalPage);
 
                 //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
                 // this.mescroll.endBySize(curPageLen, totalSize);
@@ -900,7 +908,7 @@ var _default = {
               },
               fail: function fail() {
                 //  请求失败,隐藏加载状态
-                _this3.mescroll.endErr();
+                _this4.mescroll.endErr();
               } });
 
           } else {
@@ -930,12 +938,12 @@ var _default = {
                 // let hasNext = data.data.data.list; 
 
                 //设置列表数据
-                if (page.num == 1) _this3.list = []; //如果是第一页需手动置空列表
-                _this3.list = _this3.list.concat(curPageData); //追加新数据
-                console.log('list-', _this3.list);
+                if (page.num == 1) _this4.list = []; //如果是第一页需手动置空列表
+                _this4.list = _this4.list.concat(curPageData); //追加新数据
+                console.log('list-', _this4.list);
                 // 请求成功,隐藏加载状态
                 //方法一(推荐): 后台接口有返回列表的总页数 totalPage
-                _this3.mescroll.endByPage(curPageLen, totalPage);
+                _this4.mescroll.endByPage(curPageLen, totalPage);
 
                 //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
                 // this.mescroll.endBySize(curPageLen, totalSize);
@@ -958,7 +966,7 @@ var _default = {
               },
               fail: function fail() {
                 //  请求失败,隐藏加载状态
-                _this3.mescroll.endErr();
+                _this4.mescroll.endErr();
               } });
 
           }
