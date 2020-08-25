@@ -18,13 +18,16 @@
 						:style="styleObj"
 						@input="onInput"
 						v-model="phone"
+						@focus="isfocus"
+						@blur="isblur"
 					/>
-					<image src="../../static/images/ic_search_sel@2x.png" mode="" @click="clearphone()" class="searchSel" v-show="phone"></image>
+					<image src="../../static/images/ic_search_sel@2x.png" mode="" @click="clearphone()" class="searchSel" v-if="isShowphone"></image>
 				</view>
 				<u-line color="#FFEDEFF2" margin="40rpx 0rpx"></u-line>
 				<view class="login-code">
-					<input type="number" maxlength="6" placeholder="请输入您的验证码" class="is-input1 " :style="styleCode" @input="onCode" v-model="code" />
-					<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-show="code" @click="clearcode()"></image>
+					<input type="number" maxlength="6" placeholder="请输入您的验证码" class="is-input1 " :style="styleCode" @input="onCode" v-model="code" @focus="isfocus1"
+						@blur="isblur1" />
+					<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-if="isShowcode" @click="clearcode()"></image>
 					<view class="code-sx"></view>
 					<view class="codeimg" @click.stop="getCode()" :style="codeColor">{{ getCodeText }}</view>
 				</view>
@@ -61,7 +64,9 @@ export default {
 			disabled: true,
 			styleBtn: {
 				background: '#FFE512'
-			}
+			},
+			isShowphone:false,
+			isShowcode:false
 		};
 	},
 
@@ -96,8 +101,17 @@ export default {
 				this.code = '';
 			}
 		},
-		blur() {
-			
+		isfocus(){
+			this.isShowphone = true
+		},
+		isblur(){
+			this.isShowphone = false
+		},
+		isfocus1(){
+			this.isShowcode = true
+		},
+		isblur1(){
+			this.isShowcode = false
 		},
 		getCode() {
 			let _this = this;
