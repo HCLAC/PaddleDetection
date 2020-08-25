@@ -25,7 +25,7 @@
 				</view>
 				<u-line color="#FFEDEFF2" margin="40rpx 0rpx"></u-line>
 				<view class="login-code">
-					<input type="number" maxlength="6" placeholder="请输入您的验证码" class="is-input1 " :style="styleCode" @input="onCode" v-model="code" @focus="isfocus1"
+					<input type="number" maxlength="6" placeholder="请输入您的验证码" placeholder-style="color:'#C9CAD1',font-size:30rpx" class="is-input1 " :style="styleCode" @input="onCode" v-model="code" @focus="isfocus1"
 						@blur="isblur1" />
 					<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-if="isShowcode" @click="clearcode()"></image>
 					<view class="code-sx"></view>
@@ -63,7 +63,7 @@ export default {
 			},
 			disabled: true,
 			styleBtn: {
-				background: 'rgba(237,239,242,1)'
+				background: 'rgba(255,229,18,1)'
 			},
 			isShowphone:false,
 			isShowcode:false
@@ -94,11 +94,13 @@ export default {
 		clearphone() {
 			if (this.phone) {
 				this.phone = '';
+				this.styleObj.color = '#C9CAD1';
 			}
 		},
 		clearcode() {
 			if (this.code) {
 				this.code = '';
+				this.styleCode.color = '#C9CAD1';
 			}
 		},
 		isfocus(){
