@@ -291,29 +291,48 @@
 								console.log('获取地址id', res);
 								// 地址未定义
 								if (res.data.code != 0) {
+									// 获取热门景点第一位
 									uni.request({
-										url: 'http://121.40.30.19/site/hot',
-										data: {
-											count: 3,
-											sort_by: 3
-										},
+										url: 'http://121.40.30.19/city/hot',
+										method: "GET",
 										success: (res) => {
-											console.log("热门景点=========", res)
-											this.hotAtt = res.data.data
-										}
-									}),
-									uni.request({
-										url: 'http://121.40.30.19/article/list',
-										data: {
-											count: 6,
-											page: 1,
-										},
-										header: {
-											'Authorization': uni.getStorageSync('Authorization')
-										},
-										success: (res) => {
-											console.log('文章列表', res)
-											this.list = res.data.data.list
+											console.log('热门城市===>', res.data.data)
+											this.cityName = res.data.data[0].name
+											this.topHotCity = res.data.data[0]
+											console.log(this.topHotCity)
+											uni.request({
+												url: 'http://121.40.30.19/site/hot',
+												data: {
+													state_id:this.topHotCity.state_id,
+													city_id: this.topHotCity.city_id,
+													count: 3,
+													sort_by: 3
+												},
+												success: (res) => {
+													console.log("未定位时获取的热门景点=========", res)
+													// uni.setStorageSync('description',res.data)
+													this.hotAtt = res.data.data
+												}
+											}),
+											uni.request({
+												url: 'http://121.40.30.19/article/list',
+												data: {
+													state_id: res.data.data[0].state_id,
+													city_id: res.data.data[0].city_id,
+													count: 6,
+													page: 1,
+												},
+												// header: {
+												// 	'Authorization': uni.getStorageSync('Authorization')
+												// },
+												success: (res) => {
+													console.log('未定位时获取的文章列表', res)
+													// uni.setStorageSync('article_id',res.data)
+													// console.log('存储文章列表==',res.data)
+													this.list = res.data.data.list
+													// console.log('list=====',this.list)
+												}
+											})
 										}
 									})
 								} else {
@@ -576,6 +595,9 @@
 									state_id: res.data.data[0].state_id,
 									city_id: res.data.data[0].city_id,
 								},
+								header: {
+									'Authorization': uni.getStorageSync('Authorization')
+								},
 								success: (data) => {
 									console.log('data', data)
 									// 接口返回的当前页数据列表 (数组)
@@ -693,6 +715,9 @@
 								state_id: city.data.state_id,
 								city_id: city.data.city_id,
 							},
+							header: {
+								'Authorization': uni.getStorageSync('Authorization')
+							},
 							success: (data) => {
 								console.log('data', data)
 								// 接口返回的当前页数据列表 (数组)
@@ -748,6 +773,9 @@
 							data: {
 								state_id: that.item.state_id,
 								city_id: that.item.city_id,
+							},
+							header: {
+								'Authorization': uni.getStorageSync('Authorization')
 							},
 							success: (data) => {
 								console.log('data', data)

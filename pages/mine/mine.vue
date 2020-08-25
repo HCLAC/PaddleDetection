@@ -15,7 +15,7 @@
 			
 			<!-- 我的收藏 -->
 			<view class="myCollection">
-				<view class="phone"><image class="phoneImg" src="../../static/images/phone.png" mode=""></image></view>
+				<view class="phone" @click="tell"><image class="phoneImg" src="../../static/images/phone.png" mode=""></image></view>
 				<view>我的收藏</view>
 			</view>
 		</view>
@@ -163,7 +163,11 @@ export default {
 				url: '/pages/contentdetail/contentdetail?article_id=' + id
 			});
 		},
-
+		tell(){
+			uni.makePhoneCall({
+				phoneNumber:15020779433
+			})
+		},
 		/*下拉刷新的回调, 有三种处理方式:*/
 		downCallback() {
 			// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可

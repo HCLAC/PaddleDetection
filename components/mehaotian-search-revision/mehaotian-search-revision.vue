@@ -26,7 +26,7 @@
 				搜索
 			</view> -->
 		</view>
-		<view class="iconTitle " @click.stop="clear">取消</view>
+		<view class="iconTitle " @click.stop="back">取消</view>
 		<!-- <view  v-if="button === 'outside'" class="button" :class="{'active':show||active}" @click="search">
 			<view class="button-item">{{!show?searchName:'搜索'}}</view>
 		</view> -->
@@ -107,6 +107,9 @@ export default {
 			//HM修改 清空内容时候触发组件input
 			this.$emit('input', '');
 			//this.$emit('search', '');//HM修改 清空内容时候不进行搜索
+			
+		},
+		back(){
 			uni.navigateBack({
 				delta: 1
 			})
