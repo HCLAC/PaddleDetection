@@ -11,8 +11,5 @@
     </defs>
     <g id="icon-one" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <path d="M2,15 C1.44771525,15 1,14.5522847 1,14 L1,8 L1.00405902,7.75935025 C1.13090132,4.00478338 4.21454828,1 8,1 C11.8659932,1 15,4.13400675 15,8 C15,11.8659932 11.8659932,15 8,15 L8,15 L2,15 Z" id="形状结合" fill="url(#linearGradient-1)"></path>
-        <text id="1" font-family="HelveticaNeue-Medium, Helvetica Neue" font-size="10" font-weight="400" line-spacing="10" fill="#FFFFFF">
-            <tspan x="5" y="13">1</tspan>
-        </text>
     </g>
 </svg>

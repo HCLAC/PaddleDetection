@@ -463,7 +463,7 @@ var _default = {
                       // },
                       success: function success(res) {
                         console.log('未定位时获取的文章列表', res);
-                        // uni.setStorageSync('article_id',res.data)
+                        uni.setStorageSync('article_id', res.data);
                         // console.log('存储文章列表==',res.data)
                         _this2.list = res.data.data.list;
                         // console.log('list=====',this.list)
@@ -561,7 +561,7 @@ var _default = {
                 // },
                 success: function success(res) {
                   console.log('未定位时获取的文章列表', res);
-                  // uni.setStorageSync('article_id',res.data)
+                  uni.setStorageSync('article_id', res.data);
                   // console.log('存储文章列表==',res.data)
                   _this2.list = res.data.data.list;
                   // console.log('list=====',this.list)

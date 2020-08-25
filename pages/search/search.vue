@@ -25,7 +25,7 @@
 			
 		</view>
 		<view class="search-keyword">
-			<scroll-view class="keyword-list-box" scroll-y v-show="isShowKeywordList">
+			<scroll-view class="keyword-list-box" scroll-y v-if="isShowKeywordList">
 				<block v-for="(row, index) in keywordList" :key="index">
 					<view class="keyword-entry" hover-class="keyword-entry-tap">
 						<view class="liIcon"></view>
@@ -38,7 +38,7 @@
 					”的结果
 				</view>
 			</scroll-view>
-			<scroll-view class="keyword-box" scroll-y v-show="noResult != '暂无结果'">
+			<scroll-view class="keyword-box" scroll-y v-if="isShowHt">
 				<view class="keyword-block" v-if="oldKeywordList.length > 0">
 					<view class="keyword-list-header">
 						<view>历史记录</view>
@@ -58,6 +58,7 @@
 							<!-- <image class="hotImg " :src="`../../static/images/icon-${index+1>=3?3:index+1}.png`" mode=""></image> -->
 							<view class="hotImg">
 								<image class=" " :src="`../../static/images/icon-${index+1}.svg`" mode="aspectFit"></image>
+								<text class="rankNum">{{index+1}}</text>
 							</view>
 							<view class="hotContent">{{ keyword }}</view>
 						</view>
@@ -66,7 +67,7 @@
 				</view>
 			</scroll-view>
 		</view>
-		<view v-show="noResult == '暂无结果'">
+		<view v-if="noResult == '暂无结果'">
 			<view class="noResult">
 				没找到“
 				<veiw>{{ keyValue }}</veiw>
@@ -158,7 +159,6 @@
 							</view>
 						</view> 
 					</view> 
-					
 				</view>
 			</view>
 		</view>
@@ -171,6 +171,7 @@ import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-rev
 import touring from '@/components/content/touring.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import httpType from '../../httpType.js';
+import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 export default {
 	data() {
 		return {
@@ -182,6 +183,7 @@ export default {
 			forbid: '',
 			noResult: null,
 			isShowKeywordList: false,
+			isShowHt:true,
 			list:[],
 			leftList:[],
 			rightList:[],
@@ -199,13 +201,14 @@ export default {
 		touring,
 		uniNavBar
 	},
+	mixins: [MescrollMixin],
 	methods: {
 		getResults(){
 			var that = this
 			uni.getStorage({
 				key:'article_id',
 				success:function(res){
-					console.log('取数据',res.data.data)
+					console.log('取数据',res)
 					that.list = res.data.data.list
 					console.log('list----',that.list)
 				}
@@ -303,11 +306,10 @@ export default {
 				this.keywordList = [];
 				this.noResult = '无数据';
 				this.isShowKeywordList = false;
-
+				this.isShowHt = true
 				return;
 			}
 			this.isShowKeywordList = true;
-			//以下示例截取淘宝的关键字，请替换成你的接口
 			uni.request({
 				url:'http://121.40.30.19/search/suggest',
 				data:{
@@ -322,10 +324,12 @@ export default {
 						this.noResult = '有结果';
 						this.keywordList = this.drawCorrelativeKeyword(res.data.data, keyword);
 						this.isShowKeywordList = true;
+						this.isShowHt = false
 					} else {
 						this.keywordList = [];
 						this.noResult = '暂无结果';
 						this.isShowKeywordList = false;
+						this.isShowHt = false
 					}
 				}
 			});
@@ -396,6 +400,7 @@ export default {
 		doSearch(keyword) {
 			keyword = keyword === false ? this.keyword : keyword;
 			this.keyword = keyword;
+			this.defaultKeyword = keyword;
 			this.saveKeyword(keyword); //保存为历史
 			uni.showToast({
 				title: keyword,
@@ -479,6 +484,26 @@ export default {
 					this.oldKeywordList = OldKeys;
 				}
 			});
+		},
+		/*下拉刷新的回调, 有三种处理方式:*/
+		downCallback() {
+			// 第1种: 请求具体接口
+			// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
+			this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+			// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
+			// this.mescroll.endSuccess()
+			// 此处仍可以继续写其他接口请求...
+			// 调用其他方法...
+		},
+		/*上拉加载的回调*/
+		upCallback(page) {
+			// mescroll.setPageSize(6)
+			// console.log('上拉刷新数据', city)
+			let pageNum = page.num; // 页码, 默认从1开始
+			console.log('pagem=num----',pageNum)
+			let pageSize = 8; // 页长, 默认每页10条
+			var that = this
+					
 		}
 	}
 };
@@ -639,13 +664,25 @@ view {
 
 .hotItem {
 	.hotImg {
-		width: 28rpx;
-		height: 28rpx;
-		line-height: 28rpx;
+		width: 32rpx;
+		height: 32rpx;
+		line-height: 32rpx;
 		align-self: center;
+		position: relative;
 		image{
 			width: 100%;
 			height: 100%;
+		}
+		.rankNum{
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform:translate(-50%,-50%);
+			font-size:20rpx;
+			font-family:HelveticaNeue-Bold,HelveticaNeue;
+			font-weight:bold;
+			color:rgba(255,255,255,1);
+			line-height:20rpx;
 		}
 	}
 	

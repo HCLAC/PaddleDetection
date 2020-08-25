@@ -6,11 +6,7 @@
     "host": "baiduboxapp",
     "libVersion": "",
     "preview": {
-<<<<<<< HEAD
-        "packageId": 600550
-=======
-        "packageId": 600552
->>>>>>> 0549b67711bb77382116dd0926885208f2faf8cc
+        "packageId": 600647
     },
     "projectname": "lingtuyang",
     "setting": {

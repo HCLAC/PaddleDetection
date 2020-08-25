@@ -11,7 +11,7 @@
 			</uni-nav-bar>
 		</view>
 		<view class="search-box">
-			<mSearch class="mSearch-input-box" :mode="2" button="inside" :placeholder="defaultKeyword" @search="doSearch(false)" @input="inputChange" @confirm="doSearch(false)" v-model="keyword" @blur="blur"></mSearch>
+			<mSearch class="mSearch-input-box" :mode="2" button="inside" :placeholder="defaultKeyword"  @click="back" @input="inputChange" @confirm="doSearch(false)" v-model="keyword" @blur="blur"></mSearch>
 		</view>
 		<!-- 搜索结果瀑布流 -->
 		<!-- <touring></touring> -->
