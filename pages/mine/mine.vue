@@ -267,7 +267,7 @@ export default {
 	
 	// border: 1px #333333 solid;
 	border-radius: 50%;
-	margin-top: 86rpx;
+	// margin-top: 24rpx;
 }
 .userR {
 	margin-left: 32rpx;

@@ -259,7 +259,8 @@ var _default = {
     return {
       defaultKeyword: "",
       keyword: "",
-      list: [] };
+      list: [],
+      isFocus: false };
 
   },
 
@@ -352,13 +353,13 @@ var _default = {
     },
 
     init: function init() {
+      this.focus();
       this.loadDefaultKeyword();
-      this.blur();
       // this.loadOldKeyword();
       // this.loadHotKeyword();
 
     },
-    blur: function blur() {
+    focus: function focus() {
       uni.hideKeyboard();
     },
     //加载默认搜索关键字

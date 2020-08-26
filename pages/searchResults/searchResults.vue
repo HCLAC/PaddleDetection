@@ -10,8 +10,8 @@
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
-		<view class="search-box">
-			<mSearch class="mSearch-input-box" :mode="2" button="inside" :placeholder="defaultKeyword"  @click="back" @input="inputChange" @confirm="doSearch(false)" v-model="keyword" @blur="blur"></mSearch>
+		<view class="search-box" @click="back">
+			<mSearch class="mSearch-input-box" :mode="2" button="inside" :placeholder="defaultKeyword"  v-model="keyword" :focus="isFocus" ></mSearch>
 		</view>
 		<!-- 搜索结果瀑布流 -->
 		<!-- <touring></touring> -->
@@ -124,6 +124,7 @@
 				defaultKeyword: "",
 				keyword: "",
 				list: [],
+				isFocus: false
 			}
 		},
 		
@@ -216,13 +217,13 @@
 			},
 			
 			init() {
+				this.focus()
 				this.loadDefaultKeyword();
-				this.blur()
 				// this.loadOldKeyword();
 				// this.loadHotKeyword();
 			
 			},
-			blur(){
+			focus(){
 				uni.hideKeyboard()
 			},
 			//加载默认搜索关键字

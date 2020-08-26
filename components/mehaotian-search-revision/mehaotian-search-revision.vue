@@ -20,13 +20,13 @@
 				/>
 				<!-- <view v-if="!active && mode === 2" class="input sub" @click="getFocus">请输入搜索内容</view> -->
 				<!-- HM修改 @click换成@click.stop阻止冒泡 -->
-				<image @click.stop="clear" class="iconImg" src="../../static/images/ic_search_sel.svg"></image>
+				<image @click.stop="clear" v-if="inputVal" class="iconImg" src="../../static/images/ic_search_sel.svg"></image>
 			</view>
 			<!-- <view v-show="(active&&show&&button === 'inside')||(isDelShow && button === 'inside')" class="serachBtn" @click="search">
 				搜索
 			</view> -->
 		</view>
-		<view class="iconTitle " @click.stop="back">取消</view>
+		<view class="iconTitle "  @click.stop="back">取消</view>
 		<!-- <view  v-if="button === 'outside'" class="button" :class="{'active':show||active}" @click="search">
 			<view class="button-item">{{!show?searchName:'搜索'}}</view>
 		</view> -->
@@ -68,7 +68,7 @@ export default {
 			inputVal: '',
 			searchName: '取消',
 			isDelShow: false,
-			isFocus: true
+			isFocus: false
 		};
 	},
 	methods: {

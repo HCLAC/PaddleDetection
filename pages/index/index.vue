@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<!-- 824 -->
+		<!-- 自定义导航栏 -->
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" color="#333333" background-color="#FFFFFF" @clickLeft="showCity">
 				<block slot="left">
@@ -18,7 +18,7 @@
 		<!-- 内容 -->
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- <tcontent></tcontent> -->
-			<view class="cus-sty">
+			<view class="cus-sty " >
 				<!-- 热门景点 -->
 				<view class="hot">
 					<view class="hot-top">
@@ -149,6 +149,8 @@
 						</view>
 					</view>
 			</view>
+			<!-- 骨架屏 -->
+			<!-- <u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton> -->
 		</mescroll-body>
 	</view>
 </template>

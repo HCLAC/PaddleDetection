@@ -35,7 +35,7 @@
 			</view>
 
 			<!-- 登录按钮 -->
-			<view class="loginButton"><button class="lb"  :style="styleBtn"  @tap="doLogin">登录</button></view>
+			<view class="loginButton"><button class="lb" :disabled="disabled" :style="styleBtn"  @tap="doLogin">登录</button></view>
 			<view class="loginButton"><button class="badiduBtn" :style="styleBtn" open-type="getPhoneNumber" @getphonenumber="getphonenumber">百度账号一键登录</button></view>
 		</view>
 	</view>
@@ -63,7 +63,7 @@ export default {
 			},
 			disabled: true,
 			styleBtn: {
-				background: 'rgba(255,229,18,1)'
+				background: 'rgba(237,239,242,1)'
 			},
 			isShowphone:false,
 			isShowcode:false

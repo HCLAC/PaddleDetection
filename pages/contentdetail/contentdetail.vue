@@ -17,7 +17,9 @@
 				<view class="page-section swiper">
 					<view class="page-section-spacing">
 						<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
-							<swiper-item v-for="(item, index) in articleList.data.images" :key="index"><image class="itemImg" mode="aspectFit" :src="item"></image></swiper-item>
+							<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
+								<image class="itemImg" mode="aspectFit" :src="item"></image>
+							</swiper-item>
 						</swiper>
 						<view class="imageCount">{{ current + 1 }}/{{ articleList.data.images.length }}</view>
 						<view class="dots">
@@ -213,7 +215,7 @@ export default {
 							let str =  '<div><span style="font-size: 32rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</span><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 32rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></div>'
 							
 						res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
-						console.log(res.data.data.content);
+						// console.log(res.data.data.content);
 						
 						that.articleList = res.data;
 
@@ -360,13 +362,13 @@ export default {
 								let str =  '<div><span style="font-size: 32rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</span><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 32rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></div>'
 								
 							res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
-							console.log(res.data.data.content);
+							// console.log(res.data.data.content);
 							
 							that.articleList = res.data;
 							
 							}else{
 								that.articleList = res.data;
-								console.log('articleList', that.articleList);
+								// console.log('articleList', that.articleList);
 							}
 
 						}
@@ -559,7 +561,7 @@ export default {
 /* 轮播图 */
 .page-section-spacing {
 	position: relative;
-	min-height: 400rpx;
+	min-height: 580rpx;
 	max-height: 996rpx;
 	width: 100%;
 }
@@ -570,7 +572,8 @@ export default {
 }
 
 .itemImg {
-	height: 100%;
+	min-height: 580rpx;
+	max-height: 996rpx;
 	width: 100%;
 }
 
