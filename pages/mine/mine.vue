@@ -59,7 +59,10 @@ export default {
 		return {
 			nickName: uni.getStorageSync('nickName'),
 			avatarUrl: '',
-			tipList: []
+			tipList: [],
+			upOption:{
+				bgColor:'#ffffff'
+			}
 		};
 	},
 	mixins: [MescrollMixin],
@@ -98,7 +101,7 @@ export default {
 				success: function(res) {
 					console.log('token===>', res.data);
 					// uni.request({
-					// 	url:'http://121.40.30.19/user/info',
+					// 	url:'http://devapi.lingtuyang.cn/user/info',
 					// 	header:{
 					// 		'Authorization':res.data
 					// 	},
@@ -109,7 +112,7 @@ export default {
 				}
 			}),
 				uni.request({
-					url: 'http://121.40.30.19/user/info',
+					url: 'http://devapi.lingtuyang.cn/user/info',
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
@@ -137,7 +140,7 @@ export default {
 					}
 				}),
 				uni.request({
-					url: 'http://121.40.30.19/user/favorite/list',
+					url: 'http://devapi.lingtuyang.cn/user/favorite/list',
 					data: {
 						count: 5,
 						page: 1
@@ -184,7 +187,7 @@ export default {
 			let pageNum = page.num; // 页码, 默认从1开始
 			let pageSize = page.size; // 页长, 默认每页10条
 			uni.request({
-				url: 'http://121.40.30.19/user/favorite/list?page=' + pageNum + '&count=' + pageSize,
+				url: 'http://devapi.lingtuyang.cn/user/favorite/list?page=' + pageNum + '&count=' + pageSize,
 				header: {
 					Authorization: uni.getStorageSync('Authorization')
 				},

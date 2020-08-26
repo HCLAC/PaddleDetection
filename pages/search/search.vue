@@ -232,7 +232,7 @@ export default {
 			let article = e.article_id
 			var that = this
 			uni.request({
-				url: 'http://121.40.30.19/user/liked',
+				url: 'http://devapi.lingtuyang.cn/user/liked',
 				data: {
 					article_id: article,
 					liked: e.liked == 0 ? 1 : 0
@@ -290,7 +290,7 @@ export default {
 		loadHotKeyword() {
 			//定义热门搜索关键字，可以自己实现ajax请求数据再赋值
 			uni.request({
-				url:"http://121.40.30.19/search/hot",
+				url:"http://devapi.lingtuyang.cn/search/hot",
 				method:"get",
 				success:(res)=>{
 					console.log(res)
@@ -311,7 +311,7 @@ export default {
 			}
 			this.isShowKeywordList = true;
 			uni.request({
-				url:'http://121.40.30.19/search/suggest',
+				url:'http://devapi.lingtuyang.cn/search/suggest',
 				data:{
 					'query':keyword,
 					'hit':8
@@ -355,7 +355,7 @@ export default {
 		Toresults() {
 			var keyword = this.keyValue;
 			uni.request({
-				url:"http://121.40.30.19/search",
+				url:"http://devapi.lingtuyang.cn/search",
 				data:{
 					'query':keyword,
 					'hit':8
@@ -408,7 +408,7 @@ export default {
 				duration: 2000
 			});
 			uni.request({
-				url:"http://121.40.30.19/search",
+				url:"http://devapi.lingtuyang.cn/search",
 				data:{
 					'query':keyword,
 					'hit':8

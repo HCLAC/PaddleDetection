@@ -61,7 +61,7 @@
 		methods: {
 			getHotCity() {
 				uni.request({
-					url: 'http://121.40.30.19/city/hot',
+					url: 'http://devapi.lingtuyang.cn/city/hot',
 					method: "GET",
 					success: (res) => {
 						console.log(res)
@@ -109,7 +109,7 @@
 						this.city = res.city.substr(0, res.city.length - 1)
 						console.log('ccccccc',this.city)
 						uni.request({
-							url: 'http://121.40.30.19/user/location',
+							url: 'http://devapi.lingtuyang.cn/user/location',
 							data: {
 								state: res.province,
 								city: res.city,

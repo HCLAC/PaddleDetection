@@ -169,7 +169,7 @@
 				let article = e.article_id
 				var that = this
 				uni.request({
-					url: 'http://121.40.30.19/user/liked',
+					url: 'http://devapi.lingtuyang.cn/user/liked',
 					data: {
 						article_id: article,
 						liked: e.liked == 0 ? 1 : 0
