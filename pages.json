@@ -4,19 +4,20 @@
 	},
     "pages": [
 		{
-			"path": "pages/attractionsRank/attractionsRank",
-			"style": {
-				"navigationStyle": "custom",
-				"backgroundColor":"#000000"
-			}
-		},
-		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom",
 				"backgroundColorBottom":"#F8F8F8"
 			}
 		},
+		{
+			"path": "pages/attractionsRank/attractionsRank",
+			"style": {
+				"navigationStyle": "custom",
+				"backgroundColor":"#000000"
+			}
+		},
+		
 		{
 		    "path" : "pages/login/login",
 		    "style" : {
