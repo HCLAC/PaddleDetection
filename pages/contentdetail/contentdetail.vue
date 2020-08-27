@@ -731,7 +731,6 @@ export default {
 	font-weight: 500;
 	color: rgba(0, 145, 255, 1);
 	margin-right: 38rpx;
-	margin-top: 10rpx;
 }
 
 .tip text {

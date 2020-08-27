@@ -6,6 +6,7 @@
 				<!-- 用户信息 -->
 				<view class="usermes">
 					<image class="userAva" :src="avatarUrl" v-if="avatarUrl"></image>
+
 					<image src="../../static/images/userImg.svg" class="userAva" v-if="nickName" mode=""></image>
 					<view class="userR">
 						<view class="userName">{{ nickName }}</view>
@@ -20,7 +21,7 @@
 				<view>我的收藏</view>
 			</view>
 		</view>
-		<view style="margin-top: 60%; padding: 0 24rpx;">
+		<view style="margin-top: 68%; padding: 0 24rpx;">
 				<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 					<view class="contentItem" v-for="(item, index) in tipList" :key="index">
 						<view class="left">
@@ -90,6 +91,8 @@ export default {
 							console.log(infoRes.nickName);
 							that.nickName = infoRes.nickName;
 							that.avatarUrl = infoRes.avatarUrl;
+							// that.nickName = infoRes.nickName;
+							// that.avatarUrl = infoRes.avatarUrl;
 							uni.setStorageSync('nickName', infoRes.nickName);
 							uni.setStorageSync('avatarUrl', infoRes.avatarUrl);
 						}
@@ -262,7 +265,7 @@ export default {
 	display: flex;
 	height:340rpx ;
 	align-items: center;
-	
+	margin-bottom: 38rpx;
 }
 .userAva {
 	margin-left: 15px;
@@ -303,7 +306,7 @@ export default {
 	font-size: 40rpx;
 	font-weight: 500;
 	padding-left: 32rpx;
-	padding-top: 52rpx;
+	padding-top: 50rpx;
 	position: absolute;
 	// top: 190rpx;
 	.phone {

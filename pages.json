@@ -66,7 +66,10 @@
 		{
          "path" : "pages/search/search",
             "style" : {
-				"navigationStyle":"custom"
+				"navigationStyle":"custom",
+				"mp-baidu":{
+					"disableScroll":true
+				}
 				
 			}
         }
@@ -100,7 +103,7 @@
 		"backgroundColor": "#ffffff",
 		"color": "#C9CAD1",
 		"selectedColor": "#303133",
-		"borderStyle":"white"
+		"borderStyle":"black"
 	},
 	"dynamicLib": {
 		"smartUI": {

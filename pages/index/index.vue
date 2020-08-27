@@ -99,8 +99,10 @@
 											<view class="userNikename">{{ item.author_name }}</view>
 										</view>
 										<view class="count" @click="clickLike(item,index)"  >
-											<image src="../../static/images/heart.svg" mode="aspectFit" v-if="item.liked==0"></image>
-											<image src="../../static/images/heart-actived.svg" mode="aspectFit" v-if="item.liked==1"></image>
+											<view class="countImg">
+												<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
+												<image src="../../static/images/heart-actived.svg"  v-if="item.liked==1"></image>
+											</view>
 											<view class="likeCount">
 												{{ item.like_count || 0 }}
 											</view> 
@@ -143,8 +145,10 @@
 											<view class="userNikename">{{ item.author_name }}</view>
 										</view>
 										<view class="count" @click="clickLike(item,index)" >
-											<image src="../../static/images/heart.svg" mode="aspectFit" v-if="item.liked==0"></image>
-											<image src="../../static/images/heart-actived.svg" mode="aspectFit" v-if="item.liked==1"></image>
+											<view class="countImg">
+												<image src="../../static/images/heart.svg"  v-if="item.liked==0"></image>
+												<image src="../../static/images/heart-actived.svg"  v-if="item.liked==1"></image>
+											</view>
 											<view class="likeCount">
 												{{ item.like_count || 0 }}
 											</view> 
@@ -1293,24 +1297,26 @@
 
 	.count {
 		display: flex;
-		font-size: 22rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: rgba(96, 98, 102, 1);
 		align-items: center;
 		margin-right: 20rpx;
 	}
 
-	.count image {
-		width: 28rpx;
-		height: 28rpx;
+	.countImg{
+		width: 26rpx;
+		height: 26rpx;
+		margin-right: 8rpx;
+		display: flex;
+		align-items: center;
+	}
+	.countImg image{
+		width: 100%;
+		height: 100%;
 	}
 	.likeCount{
-		margin-left: 8rpx;
 		font-size:22rpx;
 		font-family:PingFangSC-Regular,PingFang SC;
 		font-weight:400;
 		color:rgba(96,98,102,1);
-		line-height:20rpx;
+		/* line-height:20rpx; */
 	}
 </style>

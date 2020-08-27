@@ -25,7 +25,7 @@
 			
 		</view>
 		<view class="search-keyword">
-			<scroll-view class="keyword-list-box" scroll-y v-if="isShowKeywordList">
+			<scroll-view class="keyword-list-box" scroll-y scroll-x="false" v-if="isShowKeywordList">
 				<block v-for="(row, index) in keywordList" :key="index">
 					<view class="keyword-entry" hover-class="keyword-entry-tap">
 						<view class="liIcon"></view>
@@ -38,7 +38,7 @@
 					”的结果
 				</view>
 			</scroll-view>
-			<scroll-view class="keyword-box" scroll-y v-if="isShowHt">
+			<scroll-view class="keyword-box" scroll-y scroll-x="false" v-if="isShowHt">
 				<view class="keyword-block" v-if="oldKeywordList.length > 0">
 					<view class="keyword-list-header">
 						<view>历史记录</view>
@@ -354,6 +354,14 @@ export default {
 		},
 		Toresults() {
 			var keyword = this.keyValue;
+			this.keyword = keyword;
+			this.defaultKeyword = keyword;
+			this.saveKeyword(keyword); //保存为历史
+			uni.showToast({
+				title: keyword,
+				icon: 'none',
+				duration: 2000
+			});
 			uni.request({
 				url:"http://devapi.lingtuyang.cn/search",
 				data:{
@@ -512,6 +520,10 @@ export default {
 view {
 	display: block;
 }
+.content{
+	width: 100%;
+	overflow-x: hidden;
+}
 .left,.right{  
 	  display: inline-block;  
 	  margin-left: 10rpx;
@@ -520,6 +532,7 @@ view {
 	}
 .search-box {
 	width: 100%;
+	box-sizing: border-box;
 	background-color: rgb(255, 255, 255);
 	padding: 15upx 2.5%;
 	display: flex;
@@ -554,6 +567,7 @@ view {
 	width: 100%;
 	height: 60upx;
 	font-size: 32upx;
+	box-sizing: border-box;
 	border: 0;
 	border-radius: 60upx;
 	-webkit-appearance: none;
@@ -566,12 +580,14 @@ view {
 
 .search-keyword {
 	width: 100%;
+	box-sizing: border-box;
 	background-color: rgb(242, 242, 242);
 }
 .keyword-list-box {
+	
 	height: calc(100vh - 110upx);
 	padding-top: 10upx;
-	border-radius: 20upx 20upx 0 0;
+	// border-radius: 20upx 20upx 0 0;
 	background-color: #fff;
 }
 .keyword-entry-tap {
@@ -611,8 +627,10 @@ view {
 	margin-left: 15px;
 }
 .keyword-box {
-	height: calc(100vh - 110upx);
-	border-radius: 20upx 20upx 0 0;
+	width: 100%;
+	box-sizing: border-box;
+	// height: calc(100vh - 110upx);
+	// border-radius: 20upx 20upx 0 0;
 	background-color: #fff;
 }
 .keyword-box .keyword-block {
@@ -620,6 +638,7 @@ view {
 }
 .keyword-box .keyword-block .keyword-list-header {
 	width: 100%;
+	box-sizing: border-box;
 	padding: 40rpx;
 	font-size: 28rpx;
 	font-weight: 600;
@@ -629,6 +648,7 @@ view {
 }
 .keyword-box .keyword-block .keyword-list-header1 {
 	width: 100%;
+	box-sizing: border-box;
 	padding: 40rpx;
 	font-size: 28rpx;
 	font-weight: 600;
@@ -642,6 +662,7 @@ view {
 }
 .keyword-box .keyword-block .keyword {
 	width: 100%;
+	box-sizing: border-box;
 	padding: 0 40rpx;
 	display: flex;
 	flex-flow: wrap;
@@ -649,6 +670,7 @@ view {
 }
 .keyword-box .keyword-block .hotList {
 	width: 100%;
+	box-sizing: border-box;
 	padding: 0 40rpx;
 	display: flex;
 	flex-flow: wrap;

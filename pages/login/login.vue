@@ -21,13 +21,13 @@
 						@focus="isfocus"
 						@blur="isblur"
 					/>
-					<image src="../../static/images/ic_search_sel@2x.png" mode="" @click="clearphone()" class="searchSel" v-if="isShowphone"></image>
+					<image src="../../static/images/ic_search_sel@2x.png" mode="" @click="clearphone()" class="searchSel" v-if="phone && isShowphone"></image>
 				</view>
 				<u-line color="#FFEDEFF2" margin="40rpx 0rpx"></u-line>
 				<view class="login-code">
 					<input type="number" maxlength="6" placeholder="请输入您的验证码" placeholder-style="color:'#C9CAD1',font-size:30rpx" class="is-input1 " :style="styleCode" @input="onCode" v-model="code" @focus="isfocus1"
 						@blur="isblur1" />
-					<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-if="isShowcode" @click="clearcode()"></image>
+					<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-if="code && isShowcode" @click="clearcode()"></image>
 					<view class="code-sx"></view>
 					<view class="codeimg" @click.stop="getCode()" :style="codeColor">{{ getCodeText }}</view>
 				</view>
@@ -292,10 +292,10 @@ export default {
 			let _this = this;
 			uni.hideKeyboard();
 			//模板示例部分验证规则
-			// if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phone))){
-			// 	uni.showToast({title: '请填写正确手机号码',icon:"none"});
-			// 	return false;
-			// }
+			if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phone))){
+				uni.showToast({title: '请填写正确手机号码',icon:"none"});
+				return false;
+			}
 			// var nick_name = uni.getStorageSync('nickName')
 
 			uni.request({
@@ -413,7 +413,7 @@ export default {
 	color: #c9cad1;
 	line-height: 30rpx;
 	display: flex;
-	margin-top: 114rpx;
+	margin-top: 76rpx;
 	align-items: center;
 }
 .is-input1 {
@@ -421,8 +421,8 @@ export default {
 }
 // .is-input1::-ms-searchSel{display: none;}
 .searchSel {
-	width: 44rpx;
-	height: 44rpx;
+	width: 48rpx;
+	height: 48rpx;
 	margin-right: 32rpx;
 	// display: none;
 }
@@ -438,7 +438,7 @@ export default {
 	margin-left: 20rpx;
 	margin-right: 32rpx;
 }
-.loginButton .lb {
+.loginButton .lb  {
 	width: 692rpx;
 	height: 100rpx;
 	background: rgba(237,239,242,1);
@@ -447,13 +447,15 @@ export default {
 	font-size: 36rpx;
 	color: #303133;
 	line-height: 100rpx;
+	opacity:1 !important
 }
+
 .loginButton .badiduBtn {
 	width: 692rpx;
 	height: 100rpx;
 	background-color: #fff !important;
 	border-radius: 58rpx;
-	border: 2rpx solid rgba(221, 221, 208, 1);
+	border: 2rpx solid rgba(237,239,242,1);
 	margin-top: 30rpx;
 	font-size: 36rpx;
 	color: #303133;
@@ -462,4 +464,5 @@ export default {
 button::after {
 	border: none;
 }
+
 </style>
