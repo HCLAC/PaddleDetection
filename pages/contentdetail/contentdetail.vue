@@ -719,7 +719,7 @@ export default {
 }
 
 .tips {
-	margin-top: 40rpx;
+	margin-top: 42rpx;
 	margin-left: 28rpx;
 	display: flex;
 	flex-wrap: wrap;
@@ -731,7 +731,6 @@ export default {
 	font-weight: 500;
 	color: rgba(0, 145, 255, 1);
 	margin-right: 38rpx;
-	margin-top: 10rpx;
 }
 
 .tip text {

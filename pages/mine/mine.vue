@@ -5,7 +5,8 @@
 				<image src="../../static/images/mineBack.png" class="backImg"></image>
 				<!-- 用户信息 -->
 				<view class="usermes">
-					<image class="userAva" :src="avatarUrl"></image>
+					<!-- <image class="userAva" :src="avatarUrl" v-if="avatarUrl"></image> -->
+					<image src="../../static/images/userImg.svg" class="userAva" v-if="nickName" mode=""></image>
 					<view class="userR">
 						<view class="userName">{{ nickName }}</view>
 						<!-- <view class="logout">退出登录</view> -->
@@ -87,8 +88,8 @@ export default {
 							console.log('用户昵称为：' + infoRes.userInfo.nickName);
 							var infoRes = infoRes.userInfo;
 							console.log(infoRes.nickName);
-							that.nickName = infoRes.nickName;
-							that.avatarUrl = infoRes.avatarUrl;
+							// that.nickName = infoRes.nickName;
+							// that.avatarUrl = infoRes.avatarUrl;
 							uni.setStorageSync('nickName', infoRes.nickName);
 							uni.setStorageSync('avatarUrl', infoRes.avatarUrl);
 						}
@@ -119,6 +120,7 @@ export default {
 					method: 'get',
 					success: function(res) {
 						console.log('个人信息=', res.data);
+						
 						if (res.data.code != 0) {
 							// debugger
 							uni.showModal({
@@ -136,6 +138,7 @@ export default {
 							return;
 						}
 						uni.setStorageSync('mobile', res.data);
+						that.nickName = res.data.data.mobile
 						console.log('存储信息', res.data);
 					}
 				}),
@@ -156,6 +159,7 @@ export default {
 					}
 				});
 		},
+
 		// 跳转文章详情
 		onPageJump(e) {
 			console.log(e);
@@ -257,7 +261,7 @@ export default {
 	height: 130rpx;
 	display: flex;
 	height:340rpx ;
-	// align-items: center;
+	align-items: center;
 	
 }
 .userAva {
@@ -271,7 +275,7 @@ export default {
 }
 .userR {
 	margin-left: 32rpx;
-	margin-top: 24rpx;
+	// margin-top: 24rpx;
 }
 .userName {
 	font-size: 36rpx;

@@ -21,13 +21,13 @@
 						@focus="isfocus"
 						@blur="isblur"
 					/>
-					<image src="../../static/images/ic_search_sel@2x.png" mode="" @click="clearphone()" class="searchSel" v-if="isShowphone"></image>
+					<image src="../../static/images/ic_search_sel@2x.png" mode="" @click="clearphone()" class="searchSel" v-if="phone && isShowphone"></image>
 				</view>
 				<u-line color="#FFEDEFF2" margin="40rpx 0rpx"></u-line>
 				<view class="login-code">
 					<input type="number" maxlength="6" placeholder="请输入您的验证码" placeholder-style="color:'#C9CAD1',font-size:30rpx" class="is-input1 " :style="styleCode" @input="onCode" v-model="code" @focus="isfocus1"
 						@blur="isblur1" />
-					<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-if="isShowcode" @click="clearcode()"></image>
+					<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-if="code && isShowcode" @click="clearcode()"></image>
 					<view class="code-sx"></view>
 					<view class="codeimg" @click.stop="getCode()" :style="codeColor">{{ getCodeText }}</view>
 				</view>
@@ -421,8 +421,8 @@ export default {
 }
 // .is-input1::-ms-searchSel{display: none;}
 .searchSel {
-	width: 44rpx;
-	height: 44rpx;
+	width: 48rpx;
+	height: 48rpx;
 	margin-right: 32rpx;
 	// display: none;
 }
