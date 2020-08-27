@@ -719,7 +719,7 @@ export default {
 }
 
 .tips {
-	margin-top: 42rpx;
+	margin-top: 40rpx;
 	margin-left: 28rpx;
 	display: flex;
 	flex-wrap: wrap;

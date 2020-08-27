@@ -292,10 +292,10 @@ export default {
 			let _this = this;
 			uni.hideKeyboard();
 			//模板示例部分验证规则
-			// if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phone))){
-			// 	uni.showToast({title: '请填写正确手机号码',icon:"none"});
-			// 	return false;
-			// }
+			if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phone))){
+				uni.showToast({title: '请填写正确手机号码',icon:"none"});
+				return false;
+			}
 			// var nick_name = uni.getStorageSync('nickName')
 
 			uni.request({
@@ -413,7 +413,7 @@ export default {
 	color: #c9cad1;
 	line-height: 30rpx;
 	display: flex;
-	margin-top: 114rpx;
+	margin-top: 76rpx;
 	align-items: center;
 }
 .is-input1 {
@@ -438,7 +438,7 @@ export default {
 	margin-left: 20rpx;
 	margin-right: 32rpx;
 }
-.loginButton .lb {
+.loginButton .lb  {
 	width: 692rpx;
 	height: 100rpx;
 	background: rgba(237,239,242,1);
@@ -447,13 +447,15 @@ export default {
 	font-size: 36rpx;
 	color: #303133;
 	line-height: 100rpx;
+	opacity:1 !important
 }
+
 .loginButton .badiduBtn {
 	width: 692rpx;
 	height: 100rpx;
 	background-color: #fff !important;
 	border-radius: 58rpx;
-	border: 2rpx solid rgba(221, 221, 208, 1);
+	border: 2rpx solid rgba(237,239,242,1);
 	margin-top: 30rpx;
 	font-size: 36rpx;
 	color: #303133;
@@ -462,4 +464,5 @@ export default {
 button::after {
 	border: none;
 }
+
 </style>
