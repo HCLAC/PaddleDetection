@@ -3,7 +3,13 @@
 			"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
     "pages": [
-		
+		{
+			"path": "pages/attractionsRank/attractionsRank",
+			"style": {
+				"navigationStyle": "custom",
+				"backgroundColor":"#000000"
+			}
+		},
 		{
 			"path": "pages/index/index",
 			"style": {

@@ -255,7 +255,7 @@
 		display: flex;
 		justify-content: space-between;
 		position: relative;
-		align-items: center;
+		// align-items: center;
 	}
 
 	.u-back-wrap {
@@ -304,6 +304,7 @@
 	.u-slot-content {
 		flex: 1;
 		display: flex;
-		align-items: center;
+		// align-items: center;
+		padding-top: 26rpx;
 	}
 </style>

@@ -3,12 +3,18 @@
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" color="#333333" background-color="#FFFFFF" @clickLeft="showCity">
-				<block slot="left">
-					<view class="city">
-						<view><text class="uni-nav-bar-text">{{ cityName }}</text></view>
-						<image src="../../static/images/pulldown.svg" class="down" />
+				<view class="page-section swiper">
+					<view class="page-section-spacing">
+						<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
+							<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
+								<image class="itemImg" mode="aspectFit" :src="item"></image>
+							</swiper-item>
+						</swiper>
+						<!-- <view class="dots">
+							<block v-for="(item, index) in articleList.data.images" :key="index"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+						</view> -->
 					</view>
-				</block>
+				</view>
 				<view class="input-view" @click="confirm">
 					<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
 					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地">
