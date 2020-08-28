@@ -3,15 +3,6 @@
     "appInfo": {},
     "appkey": "",
     "condition": {},
-<<<<<<< HEAD
-=======
-    "host": "baiduboxapp",
-    "libVersion": "",
-    "preview": {
-        "packageId": 603390
-    },
-    "projectname": "lingtuyang",
->>>>>>> af698ece1b405c3a0b97450d12889a989fa84dd0
     "setting": {
         "urlCheck": false
     },
