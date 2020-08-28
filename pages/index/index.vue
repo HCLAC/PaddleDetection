@@ -1,34 +1,33 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" color="#333333" background-color="#FFFFFF" @clickLeft="showCity">
-				<view class="page-section swiper">
-					<view class="page-section-spacing">
-						<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
-							<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
-								<image class="itemImg" mode="aspectFit" :src="item"></image>
-							</swiper-item>
-						</swiper>
-						<!-- <view class="dots">
-							<block v-for="(item, index) in articleList.data.images" :key="index"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
-						</view> -->
-					</view>
-				</view>
-				<view class="input-view" @click="confirm">
-					<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
-					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地">
-				</view>
-			</uni-nav-bar>
+		<view class="search-wrap" @click="confirm" >
+			<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
+			<u-search  v-model="keyword" placeholderColor="#C9CAD1" search-icon-color="#C9CAD1" placeholder="搜索热门目的地" :show-action="false" height="72"  bg-color="#F8F8F8" ></u-search>
 		</view>
+		<!-- 头部轮播图 -->
+		<view class="page-section ">
+			<view class="page-section-spacing">
+				<swiper :autoplay="true" class="swiper" :indicator-dots="false"  >
+					<swiper-item v-for="(item,index) in bannerList" :key="index" class="swiper-item">
+						<image :src="bannerList[index].image" mode="scaleToFill" class="swiperImg" ></image>
+					</swiper-item>
+				</swiper>
+				<!-- <view class="dots">
+					<block v-for="" :key="">
+						<view :class="[index == current ? 'activieDot' : 'dot']"></view>
+					</block>
+				</view> -->
+			</view>
+		</view>
+			
 		<!-- 内容 -->
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			<!-- <tcontent></tcontent> -->
 			<view class="cus-sty " >
 				<!-- 热门景点 -->
 				<view class="hot">
 					<view class="hot-top">
-						<text class="ht-l">热门景点</text>
+						<text class="ht-l">热门目的地</text>
 						<view class="ht-r" @click="lookAll">查看更多<image src="../../static/images/more.svg" class="moreIcon" mode=""></image>
 						</view>
 					</view>
@@ -201,7 +200,9 @@
 				topHotCity:[],
 				errCode:0,
 				isLike:false,
-				likeNum:0
+				likeNum:0,
+				bannerList:[]
+				
 			}
 		},
 
@@ -219,7 +220,7 @@
 					}
 				}
 			});
-			
+			this.getBanner(),
 			setTimeout(function () {
 			    uni.hideLoading();
 			}, 1000);
@@ -458,7 +459,16 @@
 				});
 			},
 			
-
+			// 获取banner
+			getBanner(){
+				uni.request({
+					url:"http://192.168.43.156:8199/banner",
+					success: (res) => {
+						console.log('banner--',res)
+						this.bannerList = res.data.data
+					}
+				})
+			},
 			// 跳转文章详情
 			onPageJump(e) {
 				console.log(e)
@@ -891,6 +901,36 @@
 		line-height: inherit;
 	}
 
+/* 自定义导航栏 */
+	
+	.search-wrap{
+		position: fixed;
+		top: 96rpx;
+		width: 396rpx;
+		height: 72rpx;
+		margin-left: 134rpx;
+		z-index: 111;
+	}
+	/* 导航栏轮播图 */
+	.page-section-spacing {
+		position: relative;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 440rpx;
+	}
+	.swiper{
+		width: 100%;
+		height: 100%;
+	}
+	.swiper-item {
+		width: 100%;
+		height: 100%;
+	}
+	.swiperImg{
+		width: 100%;
+		height: 100%;
+	}
 	.example {
 		padding: 0 15px 15px;
 	}
@@ -1042,7 +1082,7 @@
 	}
 
 	.ht-l {
-		width: 160rpx;
+		/* width: 160rpx; */
 		height: 40rpx;
 		font-size: 40rpx;
 		font-family: PingFangSC-Medium, PingFang SC;

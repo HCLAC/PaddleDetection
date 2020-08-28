@@ -93,8 +93,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
-  uniNavBar: function() {
-    return __webpack_require__.e(/*! import() | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then(__webpack_require__.bind(null, /*! @/components/uni-nav-bar/uni-nav-bar.vue */ 72))
+  uSearch: function() {
+    return __webpack_require__.e(/*! import() | uview-ui/components/u-search/u-search */ "uview-ui/components/u-search/u-search").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-search/u-search.vue */ 164))
   }
 }
 var render = function() {
@@ -307,8 +307,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 45));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 90));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 72));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 156));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 45));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 91));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 76));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 178));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 // import httpType from '../../httpType.js';
 var _default = {
   components: {
@@ -337,7 +336,9 @@ var _default = {
       topHotCity: [],
       errCode: 0,
       isLike: false,
-      likeNum: 0 };
+      likeNum: 0,
+      bannerList: [] };
+
 
   },
 
@@ -355,7 +356,7 @@ var _default = {
         }
       } });
 
-
+    this.getBanner(),
     setTimeout(function () {
       uni.hideLoading();
     }, 1000);
@@ -594,7 +595,16 @@ var _default = {
 
     },
 
+    // 获取banner
+    getBanner: function getBanner() {var _this4 = this;
+      uni.request({
+        url: "http://192.168.43.156:8199/banner",
+        success: function success(res) {
+          console.log('banner--', res);
+          _this4.bannerList = res.data.data;
+        } });
 
+    },
     // 跳转文章详情
     onPageJump: function onPageJump(e) {
       console.log(e);
@@ -726,7 +736,7 @@ var _default = {
       // 调用其他方法...
     },
     /*上拉加载的回调*/
-    upCallback: function upCallback(page) {var _this4 = this;
+    upCallback: function upCallback(page) {var _this5 = this;
       // mescroll.setPageSize(6)
       var city = uni.getStorageSync('city_id');
       // console.log('上拉刷新数据', city)
@@ -741,9 +751,9 @@ var _default = {
           method: "GET",
           success: function success(res) {
             console.log('热门城市===>', res.data.data);
-            _this4.cityName = res.data.data[0].name;
-            _this4.topHotCity = res.data.data[0];
-            console.log(_this4.topHotCity);
+            _this5.cityName = res.data.data[0].name;
+            _this5.topHotCity = res.data.data[0];
+            console.log(_this5.topHotCity);
 
             uni.request({
               url: 'http://devapi.lingtuyang.cn/article/list?page=' + pageNum + '&count=' + pageSize,
@@ -772,12 +782,12 @@ var _default = {
                 // let hasNext = data.data.data.list; 
 
                 //设置列表数据
-                if (page.num == 1) _this4.list = []; //如果是第一页需手动置空列表
-                _this4.list = _this4.list.concat(curPageData); //追加新数据
-                console.log('list-', _this4.list);
+                if (page.num == 1) _this5.list = []; //如果是第一页需手动置空列表
+                _this5.list = _this5.list.concat(curPageData); //追加新数据
+                console.log('list-', _this5.list);
                 // 请求成功,隐藏加载状态
                 //方法一(推荐): 后台接口有返回列表的总页数 totalPage
-                _this4.mescroll.endByPage(curPageLen, totalPage);
+                _this5.mescroll.endByPage(curPageLen, totalPage);
 
                 //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
                 // this.mescroll.endBySize(curPageLen, totalSize);
@@ -800,7 +810,7 @@ var _default = {
               },
               fail: function fail() {
                 //  请求失败,隐藏加载状态
-                _this4.mescroll.endErr();
+                _this5.mescroll.endErr();
               } });
 
           } });
@@ -832,12 +842,12 @@ var _default = {
               // let hasNext = data.data.data.list; 
 
               //设置列表数据
-              if (page.num == 1) _this4.list = []; //如果是第一页需手动置空列表
-              _this4.list = _this4.list.concat(curPageData); //追加新数据
-              console.log('list-', _this4.list);
+              if (page.num == 1) _this5.list = []; //如果是第一页需手动置空列表
+              _this5.list = _this5.list.concat(curPageData); //追加新数据
+              console.log('list-', _this5.list);
               // 请求成功,隐藏加载状态
               //方法一(推荐): 后台接口有返回列表的总页数 totalPage
-              _this4.mescroll.endByPage(curPageLen, totalPage);
+              _this5.mescroll.endByPage(curPageLen, totalPage);
 
               //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
               // this.mescroll.endBySize(curPageLen, totalSize);
@@ -860,7 +870,7 @@ var _default = {
             },
             fail: function fail() {
               //  请求失败,隐藏加载状态
-              _this4.mescroll.endErr();
+              _this5.mescroll.endErr();
             } });
 
         } else {
@@ -892,12 +902,12 @@ var _default = {
                 // let hasNext = data.data.data.list; 
 
                 //设置列表数据
-                if (page.num == 1) _this4.list = []; //如果是第一页需手动置空列表
-                _this4.list = _this4.list.concat(curPageData); //追加新数据
-                console.log('list-', _this4.list);
+                if (page.num == 1) _this5.list = []; //如果是第一页需手动置空列表
+                _this5.list = _this5.list.concat(curPageData); //追加新数据
+                console.log('list-', _this5.list);
                 // 请求成功,隐藏加载状态
                 //方法一(推荐): 后台接口有返回列表的总页数 totalPage
-                _this4.mescroll.endByPage(curPageLen, totalPage);
+                _this5.mescroll.endByPage(curPageLen, totalPage);
 
                 //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
                 // this.mescroll.endBySize(curPageLen, totalSize);
@@ -920,7 +930,7 @@ var _default = {
               },
               fail: function fail() {
                 //  请求失败,隐藏加载状态
-                _this4.mescroll.endErr();
+                _this5.mescroll.endErr();
               } });
 
           } else {
@@ -950,12 +960,12 @@ var _default = {
                 // let hasNext = data.data.data.list; 
 
                 //设置列表数据
-                if (page.num == 1) _this4.list = []; //如果是第一页需手动置空列表
-                _this4.list = _this4.list.concat(curPageData); //追加新数据
-                console.log('list-', _this4.list);
+                if (page.num == 1) _this5.list = []; //如果是第一页需手动置空列表
+                _this5.list = _this5.list.concat(curPageData); //追加新数据
+                console.log('list-', _this5.list);
                 // 请求成功,隐藏加载状态
                 //方法一(推荐): 后台接口有返回列表的总页数 totalPage
-                _this4.mescroll.endByPage(curPageLen, totalPage);
+                _this5.mescroll.endByPage(curPageLen, totalPage);
 
                 //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
                 // this.mescroll.endBySize(curPageLen, totalSize);
@@ -978,7 +988,7 @@ var _default = {
               },
               fail: function fail() {
                 //  请求失败,隐藏加载状态
-                _this4.mescroll.endErr();
+                _this5.mescroll.endErr();
               } });
 
           }

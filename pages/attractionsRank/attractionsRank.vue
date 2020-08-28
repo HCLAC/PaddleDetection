@@ -410,8 +410,8 @@
 	}
 	.boxshow{
 		width:750rpx;
-		height:100rpx;
-		background:rgba(0,0,0,0.35);
+		height:200rpx;
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(33, 33, 33, 0.0) 100%);
 		// background: linear-gradient(rgba(126, 126, 126, 0.0) 100%,rgba(10, 42, 50, 0.0) 100%,rgba(4, 17, 20, 1.0) 100%);
 		position: absolute;
 		bottom: 0;
