@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   uSearch: function() {
-    return __webpack_require__.e(/*! import() | uview-ui/components/u-search/u-search */ "uview-ui/components/u-search/u-search").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-search/u-search.vue */ 164))
+    return __webpack_require__.e(/*! import() | uview-ui/components/u-search/u-search */ "uview-ui/components/u-search/u-search").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-search/u-search.vue */ 157))
   }
 }
 var render = function() {
@@ -307,7 +307,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 45));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 91));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 76));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 178));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+
+
+
+var _mescrollMixins = _interopRequireDefault(__webpack_require__(/*! @/components/mescroll-uni/mescroll-mixins.js */ 45));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniIcons = function uniIcons() {Promise.all(/*! require.ensure | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 91));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 76));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSection = function uniSection() {__webpack_require__.e(/*! require.ensure | components/uni-section/uni-section */ "components/uni-section/uni-section").then((function () {return resolve(__webpack_require__(/*! @/components/uni-section/uni-section.vue */ 164));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 // import httpType from '../../httpType.js';
 var _default = {
   components: {
@@ -337,7 +340,9 @@ var _default = {
       errCode: 0,
       isLike: false,
       likeNum: 0,
-      bannerList: [] };
+      bannerList: [],
+      navbg: {
+        background: '' } };
 
 
   },
@@ -605,6 +610,28 @@ var _default = {
         } });
 
     },
+    onPageScroll: function onPageScroll(Object) {
+      console.log(Object.scrollTop); //实时获取到滚动的值
+      if (Object.scrollTop <= 150) {
+        this.navbg.background = "";
+      } else {
+        this.navbg.background = "#30A2FC";
+
+      }
+    },
+
+
+    //获取导航到顶部的距离
+    // handleScroll() {                
+    // 	var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+    // 	console.log(scrollTop)
+    // 	if(scrollTop <= 150){
+    // 		this.navbg.background = ""
+    // 	}else{
+    // 		this.navbg.background = "#30A2FC"
+
+    // 	}
+    // },
     // 跳转文章详情
     onPageJump: function onPageJump(e) {
       console.log(e);
@@ -998,7 +1025,13 @@ var _default = {
       }
       // 此处仍可以继续写其他接口请求...
       // 调用其他方法...
-    } } };exports.default = _default;
+    } }
+
+  //事件监听滚动条
+  // mounted() {
+  //   window.addEventListener('scroll', this.handleScroll)
+  // },
+};exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-baidu/dist/index.js */ 1)["default"]))
 
 /***/ }),

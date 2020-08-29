@@ -1,10 +1,13 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<view class="search-wrap" @click="confirm" >
-			<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
-			<u-search  v-model="keyword" placeholderColor="#C9CAD1" search-icon-color="#C9CAD1" placeholder="搜索热门目的地" :show-action="false" height="72"  bg-color="#F8F8F8" ></u-search>
+		<view class="search-box" :style="navbg" >
+			<view class="search-wrap" @click="confirm" >
+				<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
+				<u-search  v-model="keyword" placeholderColor="#C9CAD1" search-icon-color="#C9CAD1" placeholder="搜索热门目的地" :show-action="false" height="72"  bg-color="#F8F8F8" ></u-search>
+			</view>
 		</view>
+		
 		<!-- 头部轮播图 -->
 		<view class="page-section ">
 			<view class="page-section-spacing">
@@ -201,8 +204,10 @@
 				errCode:0,
 				isLike:false,
 				likeNum:0,
-				bannerList:[]
-				
+				bannerList:[],
+				navbg:{
+					background:''
+				}
 			}
 		},
 
@@ -226,7 +231,7 @@
 			}, 1000);
 			
 		},
-
+		
 		methods: {
 			// 接收切换城市信息，请求数据
 			getItem(){
@@ -469,6 +474,28 @@
 					}
 				})
 			},
+				onPageScroll(Object) {
+				 console.log(Object.scrollTop);//实时获取到滚动的值
+				 if(Object.scrollTop <= 150){
+				 	this.navbg.background = ""
+				 }else{
+				 	this.navbg.background = "#30A2FC"
+				 	 
+				 }
+				},
+		
+			
+			//获取导航到顶部的距离
+			// handleScroll() {                
+			// 	var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+			// 	console.log(scrollTop)
+			// 	if(scrollTop <= 150){
+			// 		this.navbg.background = ""
+			// 	}else{
+			// 		this.navbg.background = "#30A2FC"
+					 
+			// 	}
+			// },
 			// 跳转文章详情
 			onPageJump(e) {
 				console.log(e)
@@ -864,7 +891,10 @@
 				// 调用其他方法...
 			}
 		}
-
+		//事件监听滚动条
+		// mounted() {
+		//   window.addEventListener('scroll', this.handleScroll)
+		// },
 	}
 </script>
 
@@ -902,14 +932,17 @@
 	}
 
 /* 自定义导航栏 */
-	
-	.search-wrap{
+	.search-box{
 		position: fixed;
-		top: 96rpx;
+		top: 50rpx;
+		width: 100%;
+		height: 72rpx;
+		padding-left: 134rpx;
+		z-index: 111;
+	}
+	.search-wrap{
 		width: 396rpx;
 		height: 72rpx;
-		margin-left: 134rpx;
-		z-index: 111;
 	}
 	/* 导航栏轮播图 */
 	.page-section-spacing {
