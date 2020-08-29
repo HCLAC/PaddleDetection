@@ -105,7 +105,7 @@ export default {
 				success: function(res) {
 					console.log('token===>', res.data);
 					// uni.request({
-					// 	url:'http://devapi.lingtuyang.cn/user/info',
+					// 	url:this.globalUrl+ '/user/info',
 					// 	header:{
 					// 		'Authorization':res.data
 					// 	},
@@ -116,7 +116,7 @@ export default {
 				}
 			}),
 				uni.request({
-					url: 'http://devapi.lingtuyang.cn/user/info',
+					url: this.globalUrl+ '/user/info',
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
@@ -146,7 +146,7 @@ export default {
 					}
 				}),
 				uni.request({
-					url: 'http://devapi.lingtuyang.cn/user/favorite/list',
+					url: this.globalUrl+ '/user/favorite/list',
 					data: {
 						count: 5,
 						page: 1
@@ -194,7 +194,7 @@ export default {
 			let pageNum = page.num; // 页码, 默认从1开始
 			let pageSize = page.size; // 页长, 默认每页10条
 			uni.request({
-				url: 'http://devapi.lingtuyang.cn/user/favorite/list?page=' + pageNum + '&count=' + pageSize,
+				url: this.globalUrl+ '/user/favorite/list?page=' + pageNum + '&count=' + pageSize,
 				header: {
 					Authorization: uni.getStorageSync('Authorization')
 				},

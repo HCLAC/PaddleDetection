@@ -247,7 +247,7 @@ export default {
 			
 			var that = this
 			uni.request({
-				url:'http://devapi.lingtuyang.cn/site',
+				url:this.globalUrl+ '/site',
 				data:{
 					id:e.id
 				},

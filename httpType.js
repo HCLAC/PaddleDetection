@@ -1,4 +1,4 @@
-import baseurl from './config.js'
+
 
 // try{
 
@@ -32,7 +32,7 @@ import baseurl from './config.js'
 
 // 请求封装
 function request(obj) {
-	let url = baseurl + obj.url; //地址
+	let url = this.globalUrl + obj.url; //地址
 	let data = obj.data || {};
 	let success = obj.success;
 	let method = obj.method || 'POST';

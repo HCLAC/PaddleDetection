@@ -861,7 +861,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-baidu","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-baidu","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -1929,9 +1929,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 11:
-/*!*************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/store/index.js ***!
-  \*************************************************/
+/*!**********************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/store/index.js ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2920,9 +2920,9 @@ var index_esm = {
 /***/ }),
 
 /***/ 13:
-/*!****************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/index.js ***!
-  \****************************************************/
+/*!*************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/index.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3067,9 +3067,9 @@ var install = function install(Vue) {
 /***/ }),
 
 /***/ 14:
-/*!***************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/mixin/mixin.js ***!
-  \***************************************************************/
+/*!************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/mixin/mixin.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3109,9 +3109,9 @@ var install = function install(Vue) {
 /***/ }),
 
 /***/ 15:
-/*!*****************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/request/index.js ***!
-  \*****************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/request/index.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3288,10 +3288,10 @@ new Request();exports.default = _default;
 
 /***/ }),
 
-/***/ 153:
-/*!**************************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/components/mescroll-uni/mescroll-uni.js ***!
-  \**************************************************************************/
+/***/ 152:
+/*!***********************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/components/mescroll-uni/mescroll-uni.js ***!
+  \***********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4175,10 +4175,10 @@ MeScroll.prototype.setBounce = function (isBounce) {
 
 /***/ }),
 
-/***/ 154:
-/*!*********************************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/components/mescroll-uni/mescroll-uni-option.js ***!
-  \*********************************************************************************/
+/***/ 153:
+/*!******************************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/components/mescroll-uni/mescroll-uni-option.js ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4226,9 +4226,9 @@ GlobalOption;exports.default = _default;
 /***/ }),
 
 /***/ 16:
-/*!**********************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/deepMerge.js ***!
-  \**********************************************************************/
+/*!*******************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/deepMerge.js ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4267,9 +4267,9 @@ deepMerge;exports.default = _default;
 /***/ }),
 
 /***/ 17:
-/*!**********************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/deepClone.js ***!
-  \**********************************************************************/
+/*!*******************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/deepClone.js ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4301,9 +4301,9 @@ deepClone;exports.default = _default;
 /***/ }),
 
 /***/ 18:
-/*!*****************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/test.js ***!
-  \*****************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/test.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4537,9 +4537,9 @@ function object(value) {
 /***/ }),
 
 /***/ 19:
-/*!************************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/queryParams.js ***!
-  \************************************************************************/
+/*!*********************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/queryParams.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10129,7 +10129,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-baidu","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-baidu","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -10150,14 +10150,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-baidu","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-baidu","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-baidu","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-baidu","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -10242,7 +10242,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-baidu","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-baidu","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -10650,9 +10650,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 20:
-/*!******************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/route.js ***!
-  \******************************************************************/
+/*!***************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/route.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10746,10 +10746,10 @@ route;exports.default = _default;
 
 /***/ }),
 
-/***/ 204:
-/*!***********************************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/components/u-parse/libs/MpHtmlParser.js ***!
-  \***********************************************************************************/
+/***/ 203:
+/*!********************************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/components/u-parse/libs/MpHtmlParser.js ***!
+  \********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10760,9 +10760,9 @@ route;exports.default = _default;
  * @author JinYufeng
  * @listens MIT
  */
-var cfg = __webpack_require__(/*! ./config.js */ 205),
+var cfg = __webpack_require__(/*! ./config.js */ 204),
 blankChar = cfg.blankChar,
-CssHandler = __webpack_require__(/*! ./CssHandler.js */ 206),
+CssHandler = __webpack_require__(/*! ./CssHandler.js */ 205),
 windowWidth = uni.getSystemInfoSync().windowWidth;
 var emoji;
 
@@ -11292,10 +11292,10 @@ module.exports = MpHtmlParser;
 
 /***/ }),
 
-/***/ 205:
-/*!*****************************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/components/u-parse/libs/config.js ***!
-  \*****************************************************************************/
+/***/ 204:
+/*!**************************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/components/u-parse/libs/config.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -11382,14 +11382,14 @@ module.exports = cfg;
 
 /***/ }),
 
-/***/ 206:
-/*!*********************************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/components/u-parse/libs/CssHandler.js ***!
-  \*********************************************************************************/
+/***/ 205:
+/*!******************************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/components/u-parse/libs/CssHandler.js ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var cfg = __webpack_require__(/*! ./config.js */ 205),
+var cfg = __webpack_require__(/*! ./config.js */ 204),
 isLetter = function isLetter(c) {return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z';};
 
 function CssHandler(tagStyle) {
@@ -11490,9 +11490,9 @@ parser.prototype.Content = function () {
 /***/ }),
 
 /***/ 21:
-/*!***********************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/timeFormat.js ***!
-  \***********************************************************************/
+/*!********************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/timeFormat.js ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11554,9 +11554,9 @@ timeFormat;exports.default = _default;
 /***/ }),
 
 /***/ 22:
-/*!*********************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/timeFrom.js ***!
-  \*********************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/timeFrom.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11610,10 +11610,10 @@ timeFrom;exports.default = _default;
 
 /***/ }),
 
-/***/ 221:
-/*!*************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/components/content/data.js ***!
-  \*************************************************************/
+/***/ 220:
+/*!**********************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/components/content/data.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13512,9 +13512,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 23:
-/*!**************************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/colorGradient.js ***!
-  \**************************************************************************/
+/*!***********************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/colorGradient.js ***!
+  \***********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13622,9 +13622,9 @@ function rgbToHex(rgb) {
 /***/ }),
 
 /***/ 24:
-/*!*****************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/guid.js ***!
-  \*****************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/guid.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13674,9 +13674,9 @@ guid;exports.default = _default;
 /***/ }),
 
 /***/ 25:
-/*!******************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/color.js ***!
-  \******************************************************************/
+/*!***************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/color.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13722,9 +13722,9 @@ color;exports.default = _default;
 /***/ }),
 
 /***/ 26:
-/*!**********************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/type2icon.js ***!
-  \**********************************************************************/
+/*!*******************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/type2icon.js ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13768,9 +13768,9 @@ type2icon;exports.default = _default;
 /***/ }),
 
 /***/ 27:
-/*!************************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/randomArray.js ***!
-  \************************************************************************/
+/*!*********************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/randomArray.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13786,9 +13786,9 @@ randomArray;exports.default = _default;
 /***/ }),
 
 /***/ 28:
-/*!********************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/addUnit.js ***!
-  \********************************************************************/
+/*!*****************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/addUnit.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13805,9 +13805,9 @@ function addUnit() {var value = arguments.length > 0 && arguments[0] !== undefin
 /***/ }),
 
 /***/ 29:
-/*!*******************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/random.js ***!
-  \*******************************************************************/
+/*!****************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/random.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13857,9 +13857,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 30:
-/*!*****************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/trim.js ***!
-  \*****************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/trim.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13883,9 +13883,9 @@ trim;exports.default = _default;
 /***/ }),
 
 /***/ 31:
-/*!******************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/toast.js ***!
-  \******************************************************************/
+/*!***************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/toast.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13904,9 +13904,9 @@ toast;exports.default = _default;
 /***/ }),
 
 /***/ 32:
-/*!**********************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/getParent.js ***!
-  \**********************************************************************/
+/*!*******************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/getParent.js ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13962,9 +13962,9 @@ function getParent(name, keys) {
 /***/ }),
 
 /***/ 33:
-/*!********************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/$parent.js ***!
-  \********************************************************************/
+/*!*****************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/$parent.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13991,9 +13991,9 @@ function $parent() {var name = arguments.length > 0 && arguments[0] !== undefine
 /***/ }),
 
 /***/ 34:
-/*!****************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/sys.js ***!
-  \****************************************************************/
+/*!*************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/sys.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14010,9 +14010,9 @@ function sys() {
 /***/ }),
 
 /***/ 35:
-/*!*********************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/debounce.js ***!
-  \*********************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/debounce.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14050,9 +14050,9 @@ debounce;exports.default = _default;
 /***/ }),
 
 /***/ 36:
-/*!*********************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/function/throttle.js ***!
-  \*********************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/function/throttle.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14093,9 +14093,9 @@ throttle;exports.default = _default;
 /***/ }),
 
 /***/ 37:
-/*!*****************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/config/config.js ***!
-  \*****************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/config/config.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14117,9 +14117,9 @@ var version = '1.5.9';var _default =
 /***/ }),
 
 /***/ 38:
-/*!*****************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/uview-ui/libs/config/zIndex.js ***!
-  \*****************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/uview-ui/libs/config/zIndex.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14147,9 +14147,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 4:
-/*!*********************************************!*\
-  !*** D:/work/test/lingtuyang2.0/pages.json ***!
-  \*********************************************/
+/*!******************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/pages.json ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -14158,9 +14158,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 45:
-/*!*****************************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/components/mescroll-uni/mescroll-mixins.js ***!
-  \*****************************************************************************/
+/*!**************************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/components/mescroll-uni/mescroll-mixins.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15020,9 +15020,9 @@ if (hadRuntime) {
 /***/ }),
 
 /***/ 57:
-/*!*********************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/components/common/classify.data.js ***!
-  \*********************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/components/common/classify.data.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16114,14 +16114,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 66:
-/*!**********************************************!*\
-  !*** D:/work/test/lingtuyang2.0/httpType.js ***!
-  \**********************************************/
+/*!*******************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/httpType.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _config = _interopRequireDefault(__webpack_require__(/*! ./config.js */ 67));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 // try{
 
@@ -16155,7 +16155,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 // 请求封装
 function request(obj) {
-  var url = _config.default + obj.url; //地址
+  var url = this.globalUrl + obj.url; //地址
   var data = obj.data || {};
   var success = obj.success;
   var method = obj.method || 'POST';
@@ -16199,25 +16199,10 @@ function request(obj) {
 
 /***/ }),
 
-/***/ 67:
-/*!********************************************!*\
-  !*** D:/work/test/lingtuyang2.0/config.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // const baseurl = 'http://192.168.43.156:8199/';  //公共接口请求地址
-// const baseurl = 'http://121.40.30.19/';
-var baseurl = 'http://devapi.lingtuyang.cn/';var _default =
-baseurl;exports.default = _default;
-
-/***/ }),
-
-/***/ 96:
-/*!****************************************************************!*\
-  !*** D:/work/test/lingtuyang2.0/components/uni-icons/icons.js ***!
-  \****************************************************************/
+/***/ 95:
+/*!*************************************************************************!*\
+  !*** C:/Users/wang/Desktop/凤眼/fengyan-mp/components/uni-icons/icons.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

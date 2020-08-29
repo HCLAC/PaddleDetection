@@ -221,7 +221,7 @@ export default {
 		baiduLogin(obj) {
 			uni.hideKeyboard();
 			uni.request({
-				url: 'http://devapi.lingtuyang.cn:8199/user/baiduMP/oauth',
+				url: this.globalUrl+ '/user/baiduMP/oauth',
 				data: {
 					code:obj.code
 				},
@@ -252,7 +252,7 @@ export default {
 		},
 		getSessionKey(obj){
 			 uni.request({
-					url: "http://devapi.lingtuyang.cn:8199/user/baiduMP/login",
+					url: this.globalUrl+ "/user/baiduMP/login",
 					data: {
 						data: obj.data,
 						iv: obj.iv,
@@ -300,7 +300,7 @@ export default {
 
 			uni.request({
 				// url: 'user/login',
-				url: 'http://devapi.lingtuyang.cn:8199/user/login',
+				url: this.globalUrl+ '/user/login',
 				data: {
 					// 'key': _this.key,
 					code: _this.code,

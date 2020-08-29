@@ -144,7 +144,7 @@ export default {
 			
 			if(e.group && e.groupid){
 				uni.request({
-					url: 'http://devapi.lingtuyang.cn/marketing/copy',
+					url: this.globalUrl+ '/marketing/copy',
 					data: {
 						id: e.groupid
 					},
@@ -192,7 +192,7 @@ export default {
 			// }
 			uni.request({
 				// url:'article',
-				url: 'http://devapi.lingtuyang.cn/article',
+				url: this.globalUrl+ '/article',
 				data: {
 					article_id: e.article_id
 				},
@@ -240,7 +240,7 @@ export default {
 			console.log('art', article_id);
 
 			uni.request({
-				url: 'http://devapi.lingtuyang.cn/user/liked',
+				url: this.globalUrl+ '/user/liked',
 				data: {
 					article_id: article_id.data.uuid,
 					liked: article_id.data.liked == 0 ? 1 : 0
@@ -269,7 +269,7 @@ export default {
 					}
 					uni.request({
 						// url:'article',
-						url: 'http://devapi.lingtuyang.cn/article',
+						url: this.globalUrl+ '/article',
 						data: {
 							article_id: article_id.data.uuid
 						},
@@ -311,7 +311,7 @@ export default {
 
 			var article_id = uni.getStorageSync('id');
 			uni.request({
-				url: 'http://devapi.lingtuyang.cn/user/favorite',
+				url: this.globalUrl+ '/user/favorite',
 				data: {
 					article_id: article_id.data.uuid,
 					favorite: article_id.data.fav == 1 ? 0 : 1
@@ -340,7 +340,7 @@ export default {
 					}
 					uni.request({
 						// url:'article',
-						url: 'http://devapi.lingtuyang.cn/article',
+						url: this.globalUrl+ '/article',
 						data: {
 							article_id: article_id.data.uuid
 						},
@@ -381,7 +381,7 @@ export default {
 				return new Promise((reslove,reject)=>{
 					uni.request({
 						// url:'article',
-						url: 'http://devapi.lingtuyang.cn/marketing/unit',
+						url: this.globalUrl+ '/marketing/unit',
 						method: 'get',
 						data: {
 							group_id: id,
