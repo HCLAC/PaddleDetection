@@ -80,6 +80,20 @@
 			}
 		}
         
+        ,{
+            "path" : "pages/lineList/lineList",
+            "style" : {
+							"navigationStyle": "custom",
+							"backgroundColor":"#fff"
+						}
+        }
+        ,{
+            "path" : "pages/lineDetail/lineDetail",
+            "style" : {
+							"navigationStyle": "custom",
+							"backgroundColor":"#fff"
+						}
+        }
     ],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",

@@ -6,7 +6,7 @@ import store from './store'
 Vue.prototype.$store = store
 import uView from "uview-ui";
 Vue.use(uView);
-Vue.prototype.globalUrl = '192.168.43.156:8199'
+Vue.prototype.globalUrl = 'http://192.168.5.45:8199'
 // import http from './api/api.js'
 // import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue"
 // Vue.component('mescroll-uni', MescrollUni)	
