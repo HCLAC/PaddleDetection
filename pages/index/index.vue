@@ -57,7 +57,7 @@
 					</view>
 					<view class="hot-bot">
 						<view class="hotAdress">
-							<view class="dqwz">
+							<view class="dqwz" @click="toProvinces">
 								<image class="dqwzImg" src="../../static/images/16460799831121.5efb7ae58999c.jpg" mode="scaleToFill"></image>
 								<text class="dqwzText">青岛</text>
 								<text class="dqwzText1">当前位置</text>
@@ -193,8 +193,6 @@
 					</view>
 				</view>
 			</view>
-			<!-- 骨架屏 -->
-			<!-- <u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton> -->
 		</mescroll-body>
 	</view>
 </template>
@@ -259,9 +257,9 @@ export default {
 			}
 		});
 		this.getBanner(),
-			setTimeout(function() {
-				uni.hideLoading();
-			}, 1000);
+		setTimeout(function() {
+			uni.hideLoading();
+		}, 1000);
 	},
 
 	methods: {
@@ -606,7 +604,11 @@ export default {
 				url: '../city/city'
 			});
 		},
-
+		toProvinces(){
+			uni.navigateTo({
+				url:'../provinces/provinces'
+			})
+		},
 		confirm() {
 			// uni.showToast({
 			// 	title: '搜索'

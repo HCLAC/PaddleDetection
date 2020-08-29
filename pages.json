@@ -4,6 +4,12 @@
 	},
     "pages": [
 		{
+		    "path" : "pages/provinces/provinces",
+		    "style" : {
+				"navigationStyle":"custom"
+			}
+		},
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom",
