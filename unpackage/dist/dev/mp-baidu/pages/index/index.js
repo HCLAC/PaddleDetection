@@ -93,6 +93,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
+  uNavbar: function() {
+    return __webpack_require__.e(/*! import() | uview-ui/components/u-navbar/u-navbar */ "uview-ui/components/u-navbar/u-navbar").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-navbar/u-navbar.vue */ 171))
+  },
   uSearch: function() {
     return __webpack_require__.e(/*! import() | uview-ui/components/u-search/u-search */ "uview-ui/components/u-search/u-search").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-search/u-search.vue */ 157))
   }
@@ -135,6 +138,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
 
 
 
@@ -421,9 +425,9 @@ var _default = {
       }
     },
     scrollTop: function scrollTop(e) {
-      console.log(e);
+      // console.log(e)
       if (e.detail.scrollTop != 0) {
-        console.log(e.detail.scrollTop, 1111111111);
+        // console.log(e.detail.scrollTop,1111111111)
       }
     },
     // 获取当前地理位置
@@ -610,28 +614,10 @@ var _default = {
         } });
 
     },
-    onPageScroll: function onPageScroll(Object) {
-      console.log(Object.scrollTop); //实时获取到滚动的值
-      if (Object.scrollTop <= 150) {
-        this.navbg.background = "";
-      } else {
-        this.navbg.background = "#30A2FC";
-
-      }
-    },
 
 
-    //获取导航到顶部的距离
-    // handleScroll() {                
-    // 	var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-    // 	console.log(scrollTop)
-    // 	if(scrollTop <= 150){
-    // 		this.navbg.background = ""
-    // 	}else{
-    // 		this.navbg.background = "#30A2FC"
 
-    // 	}
-    // },
+
     // 跳转文章详情
     onPageJump: function onPageJump(e) {
       console.log(e);
