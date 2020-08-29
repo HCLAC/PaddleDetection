@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<u-navbar :is-back="false" class="navbar" :style="navbg">
+		<u-navbar :is-back="false" class="navbar" >
 			<view class="search-box">
 				<view class="search-wrap" @click="confirm">
 					<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
@@ -20,13 +20,23 @@
 		<!-- 头部轮播图 -->
 		<view class="page-section ">
 			<view class="page-section-spacing">
-				<swiper :autoplay="true" class="swiper" :indicator-dots="false">
+				<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14" >
 					<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
 						<image :src="bannerList[index].image" mode="scaleToFill" class="swiperImg"></image>
 					</swiper-item>
 				</swiper>
+				<text class="bannerText">T r a v e l</text>
+				<view class="diaryBox">
+					<text class="texth">旅</text>
+					<u-line direction="col" color="#ffffff" length="16rpx" margin=" 0 8rpx"></u-line>
+					<text class="textb">游</text>
+					<u-line direction="col" color="#ffffff" length="16rpx" margin=" 0 8rpx"></u-line>
+					<text class="texth">日</text>
+					<u-line direction="col" color="#ffffff" length="16rpx" margin=" 0 8rpx"></u-line>
+					<text class="textb">记</text>
+				</view>
 				<!-- <view class="dots">
-					<block v-for="" :key="">
+					<block v-for="(item, index) in bannerList." :key="index">
 						<view :class="[index == current ? 'activieDot' : 'dot']"></view>
 					</block>
 				</view> -->
@@ -36,7 +46,7 @@
 		<!-- 内容 -->
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="cus-sty ">
-				<!-- 热门景点 -->
+				<!-- 热门目的地 -->
 				<view class="hot">
 					<view class="hot-top">
 						<text class="ht-l">热门目的地</text>
@@ -46,7 +56,48 @@
 						</view>
 					</view>
 					<view class="hot-bot">
-						<view class="hb-l" @click="toAtt(hotAtt[0].id)">
+						<view class="hotAdress">
+							<view class="dqwz">
+								<image class="dqwzImg" src="../../static/images/16460799831121.5efb7ae58999c.jpg" mode="scaleToFill"></image>
+								<text class="dqwzText">青岛</text>
+								<text class="dqwzText1">当前位置</text>
+							</view>
+							<view class="hotCity">
+								<image class="hotCityImg" src="../../static/images/16460799831121.5efb7ae58999c.jpg" mode="scaleToFill"></image>
+								<text class="hotCityText">黑龙江</text>
+							</view>
+							<view class="hotCity">
+								<image class="hotCityImg" src="../../static/images/16460799831121.5efb7ae58999c.jpg" mode="scaleToFill"></image>
+								<text class="hotCityText1">齐齐哈尔</text>
+							</view>
+						</view>
+						<view class="cityRank">
+							<view class="rankText">
+								上海
+							</view>
+							<u-line direction="col" color="#c7c7c7" length="16rpx" margin=" 0 16rpx"></u-line>
+							<view class="rankText">
+								北京
+							</view>
+							<u-line direction="col" color="#c7c7c7" length="16rpx" margin=" 0 16rpx"></u-line>
+							<view class="rankText">
+								云南
+							</view>
+						</view>
+						<view class="cityRank">
+							<view class="rankText">
+								杭州
+							</view>
+							<u-line direction="col" color="#c7c7c7" length="16rpx" margin=" 0 16rpx"></u-line>
+							<view class="rankText">
+								成都
+							</view>
+							<u-line direction="col" color="#c7c7c7" length="16rpx" margin=" 0 16rpx"></u-line>
+							<view class="rankText">
+								西安
+							</view>
+						</view>
+						<!-- <view class="hb-l" @click="toAtt(hotAtt[0].id)">
 							<image mode="aspectFill" :src="hotAtt[0].image"></image>
 							<view class="imgMask"></view>
 							<text>{{ hotAtt[0].name }}</text>
@@ -62,7 +113,7 @@
 								<view class="imgMask"></view>
 								<text>{{ hotAtt[2].name }}</text>
 							</view>
-						</view>
+						</view> -->
 					</view>
 				</view>
 
@@ -188,7 +239,8 @@ export default {
 			bannerList: [],
 			navbg: {
 				background: ''
-			}
+			},
+			indicatorDots:true
 		};
 	},
 
@@ -867,9 +919,6 @@ view {
 
 /* 自定义导航栏 */
 .search-box {
-	position: fixed;
-	top: 50rpx;
-	width: 100%;
 	height: 72rpx;
 	padding-left: 134rpx;
 	z-index: 111;
@@ -879,10 +928,15 @@ view {
 	height: 72rpx;
 }
 /* 导航栏轮播图 */
-.page-section-spacing {
+.page-section{
 	position: relative;
-	top: 0;
+	top: -184rpx;
 	left: 0;
+	width: 100%;
+	height: 440rpx;
+}
+.page-section-spacing {
+	
 	width: 100%;
 	height: 440rpx;
 }
@@ -897,6 +951,39 @@ view {
 .swiperImg {
 	width: 100%;
 	height: 100%;
+}
+.bannerText{
+	position: absolute;
+	top: 222rpx;
+	left: 240rpx;
+	width: 306rpx;
+	height: 64rpx;
+	font-size: 64rpx;
+	font-family: Roboto-Black, Roboto;
+	font-weight: 900;
+	color: #FFFFFF;
+	line-height: 64rpx;
+}
+.diaryBox{
+	display: flex;
+	align-items: center;
+	position: absolute;
+	top: 300rpx;
+	left: 280rpx;
+}
+.texth{
+	font-size: 28rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: rgba(255, 255, 255, 0.65);
+	line-height: 28rpx;
+}
+.textb{
+	font-size: 28rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #FFFFFF;
+	line-height: 28rpx;
 }
 .example {
 	padding: 0 15px 15px;
@@ -965,63 +1052,7 @@ view {
 		line-height: inherit;
 	}
 
-	/* 自定义导航栏 */
-	.navBar {
-		z-index: -1;
-	}
-	.search-box {
-		/* position: fixed; */
-		/* top: 50rpx; */
-		/* width: 100%; */
-		height: 72rpx;
-		padding-left: 134rpx;
-		z-index: -1;
-	}
-	.search-wrap {
-		width: 396rpx;
-		height: 72rpx;
-	}
-	/* 导航栏轮播图 */
-	.page-section {
-		z-index: 111;
-		position: relative;
-		top: -184rpx;
-		left: 0;
-	}
-	.page-section-spacing {
-		width: 100%;
-		height: 440rpx;
-	}
-	.swiper {
-		width: 100%;
-		height: 100%;
-	}
-	.swiper-item {
-		width: 100%;
-		height: 100%;
-	}
-	.swiperImg {
-		width: 100%;
-		height: 100%;
-	}
-	.example {
-		padding: 0 15px 15px;
-	}
-
-	.example-info {
-		padding: 15px;
-		color: #3b4144;
-		background: #ffffff;
-	}
-
-	.example-body {
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
-		padding: 0;
-		font-size: 14px;
-		background-color: #aa557f;
-	}
+	
 
 	/* #endif */
 	flex-direction: row;
@@ -1119,70 +1150,87 @@ view {
 
 /* 热门景点图 */
 .hot .hot-bot {
-	display: flex;
+	/* display: flex; */
 	margin-top: 32rpx;
 }
-
-.hb-l {
-	width: 360rpx;
-	height: 360rpx;
-	margin-left: 10rpx;
-	position: relative;
+.hotAdress{
+	display: flex;
+	/* align-items: center; */
+	margin-left: 32rpx;
 }
-
-.hb-l image {
+.dqwz{
+	width: 200rpx;
+	height: 180rpx;
+	border-radius: 32rpx;
+	position: relative;
+	border: 1rpx solid #e24b00;
+}
+.dqwzImg{
 	width: 100%;
 	height: 100%;
-	border-radius: 16rpx;
-	background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+	border-radius: 32rpx;
+	
 }
-
-.imgMask {
-	width: 360rpx;
-	height: 108rpx;
-	background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
-	border-radius: 0px 0px 4px 4px;
-	opacity: 0.8;
+.dqwzText{
 	position: absolute;
-	bottom: 0;
-	left: 0;
+	top: 50rpx;
+	left: 70rpx;
+	color: #FFFFFF;
 }
-
-.hb-r {
-	margin: 0 0 0 10rpx;
+.dqwzText1{
+	position: absolute;
+	top: 100rpx;
+	left: 40rpx;
+	color: #FFFFFF;
+	padding: 8rpx;
+	font-size: 24rpx;
+	background-color: #ef4f00;
+	border-radius: 10rpx;
 }
-
-.hb-r image {
+.hotCity{
+	width: 200rpx;
+	height: 180rpx;
+	border-radius: 32rpx;
+	margin-left: 32rpx;
+	position: relative;
+}
+.hotCityImg{
 	width: 100%;
 	height: 100%;
-	border-radius: 8rpx;
-	background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+	border-radius: 32rpx;
 }
-
-.hb-r1 {
-	width: 360rpx;
-	height: 174rpx;
-	margin-bottom: 10rpx;
-	position: relative;
-}
-
-.hb-r2 {
-	width: 360rpx;
-	height: 174rpx;
-	position: relative;
-}
-
-.hot-bot text {
-	font-size: 32rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 500;
-	color: rgba(255, 255, 255, 1);
-	line-height: 16px;
+.hotCityText{
+	width: 126rpx;
+	height: 28rpx;
+	color: #FFFFFF;
 	position: absolute;
-	left: 22rpx;
-	bottom: 28rpx;
+	left: 50%; 
+	top: 50%;
+	font-size: 28rpx;
+	margin-top: -14rpx;
+	margin-left: -48rpx;
 }
-
+.hotCityText1{
+	width: 126rpx;
+	height: 28rpx;
+	color: #FFFFFF;
+	position: absolute;
+	left: 50%; 
+	top: 50%;
+	font-size: 28rpx;
+	margin-top: -14rpx;
+	margin-left: -60rpx;
+}
+.cityRank{
+	margin-top: 28rpx;
+	margin-left: 32rpx;
+	display: flex;
+	align-items: center;
+}
+.rankText{
+	width: 200rpx;
+	text-align: center;
+}
 /* 正在旅行 */
 .touring {
 	margin-top: 24rpx;
