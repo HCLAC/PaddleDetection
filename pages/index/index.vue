@@ -1,27 +1,20 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<view class="search-box" :style="navbg">
-			<view class="search-wrap" @click="confirm">
-				<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
-				<u-search
-					v-model="keyword"
-					placeholderColor="#C9CAD1"
-					search-icon-color="#C9CAD1"
-					placeholder="搜索热门目的地"
-					:show-action="false"
-					height="72"
-					bg-color="#F8F8F8"
-				></u-search>
+		<u-navbar :is-back="false" class="navbar" :style="navbg">
+			<view class="search-box"  >
+				<view class="search-wrap" @click="confirm" >
+					<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
+					<u-search  v-model="keyword" placeholderColor="#C9CAD1" search-icon-color="#C9CAD1" placeholder="搜索热门目的地" :show-action="false" height="72"  bg-color="#F8F8F8" ></u-search>
+				</view>
 			</view>
-		</view>
-
+		</u-navbar>
 		<!-- 头部轮播图 -->
 		<view class="page-section ">
 			<view class="page-section-spacing">
-				<swiper :autoplay="true" class="swiper" :indicator-dots="false">
-					<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
-						<image :src="bannerList[index].image" mode="scaleToFill" class="swiperImg"></image>
+				<swiper :autoplay="true" class="swiper" :indicator-dots="false"  >
+					<swiper-item v-for="(item,index) in bannerList" :key="index" class="swiper-item">
+						<image :src="bannerList[index].image" mode="scaleToFill" class="swiperImg" ></image>
 					</swiper-item>
 				</swiper>
 				<!-- <view class="dots">
@@ -31,7 +24,7 @@
 				</view> -->
 			</view>
 		</view>
-
+			
 		<!-- 内容 -->
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="cus-sty ">
@@ -259,103 +252,106 @@ export default {
 							this.downCallback();
 							console.log(that.list, 88888);
 						}
-					});
-			}
-		},
-		scrollTop(e) {
-			console.log(e);
-			if (e.detail.scrollTop != 0) {
-				console.log(e.detail.scrollTop, 1111111111);
-			}
-		},
-		// 获取当前地理位置
-		getAdress() {
-			uni.getLocation({
-				type: 'wgs84',
-				success: res => {
-					console.log('地址---', res);
-					// if(this.item == undefined){
-					this.cityName = res.city.substr(0, res.city.length - 1);
-					this.city = res.city;
-					this.province = res.province;
-					console.log(this.city, this.province);
-					uni.request({
-						url: this.globalUrl + '/user/location',
-						data: {
-							state: this.province,
-							city: this.city
-						},
-						method: 'POST',
-						// header: {
-						// 	'content-type': 'application/x-www-form-urlencoded',
-						// },
-						success: res => {
-							console.log('获取地址id', res);
-							// 地址未定义
-							if (res.data.code != 0) {
-								// 获取热门景点第一位
-								uni.request({
-									url: this.globalUrl + '/city/hot',
-									method: 'GET',
-									success: res => {
-										console.log('热门城市===>', res.data.data);
-										this.cityName = res.data.data[0].name;
-										this.topHotCity = res.data.data[0];
-										console.log(this.topHotCity);
-										uni.request({
-											url: this.globalUrl + '/site/hot',
-											data: {
-												state_id: this.topHotCity.state_id,
-												city_id: this.topHotCity.city_id,
-												count: 3,
-												sort_by: 3
-											},
-											success: res => {
-												console.log('未定位时获取的热门景点=========', res);
-												// uni.setStorageSync('description',res.data)
-												this.hotAtt = res.data.data;
-											}
-										}),
+					})
+				}
+			},
+			scrollTop(e) {
+				// console.log(e)
+				if (e.detail.scrollTop != 0) {
+					// console.log(e.detail.scrollTop,1111111111)
+				}
+			},
+			// 获取当前地理位置
+			getAdress() {
+				uni.getLocation({
+					type: 'wgs84',
+					success: (res) => {
+						console.log('地址---', res)
+						// if(this.item == undefined){
+						this.cityName = res.city.substr(0, res.city.length - 1);
+						this.city = res.city;
+						this.province = res.province
+						console.log(this.city,this.province)
+						uni.request({
+							// url:'http://192.168.43.156:8199/user/location',
+							// url:'user/location',
+							url: 'http://devapi.lingtuyang.cn/user/location',
+							data: {
+								state: this.province,
+								city: this.city,
+							},
+							method: 'POST',
+							// header: {
+							// 	'content-type': 'application/x-www-form-urlencoded',
+							// },
+							success: (res) => {
+								console.log('获取地址id', res);
+								// 地址未定义
+								if (res.data.code != 0) {
+									// 获取热门景点第一位
+									uni.request({
+										url: 'http://devapi.lingtuyang.cn/city/hot',
+										method: "GET",
+										success: (res) => {
+											console.log('热门城市===>', res.data.data)
+											this.cityName = res.data.data[0].name
+											this.topHotCity = res.data.data[0]
+											console.log(this.topHotCity)
 											uni.request({
-												url: this.globalUrl + '/article/list',
+												url: 'http://devapi.lingtuyang.cn/site/hot',
+												data: {
+													state_id:this.topHotCity.state_id,
+													city_id: this.topHotCity.city_id,
+													count: 3,
+													sort_by: 3
+												},
+												success: (res) => {
+													console.log("未定位时获取的热门景点=========", res)
+													// uni.setStorageSync('description',res.data)
+													this.hotAtt = res.data.data
+												}
+											}),
+											uni.request({
+												url: 'http://devapi.lingtuyang.cn/article/list',
 												data: {
 													state_id: res.data.data[0].state_id,
 													city_id: res.data.data[0].city_id,
 													count: 6,
-													page: 1
+													page: 1,
 												},
 												// header: {
 												// 	'Authorization': uni.getStorageSync('Authorization')
 												// },
-												success: res => {
-													console.log('未定位时获取的文章列表', res);
-													uni.setStorageSync('article_id', res.data);
+												success: (res) => {
+													console.log('未定位时获取的文章列表', res)
+													uni.setStorageSync('article_id',res.data)
 													// console.log('存储文章列表==',res.data)
-													this.list = res.data.data.list;
+													this.list = res.data.data.list
 													// console.log('list=====',this.list)
 												}
-											});
-									}
-								});
-							} else {
-								uni.setStorageSync('city_id', res.data);
-								console.log('存储本地', res.data);
-								var city = uni.getStorageSync('city_id');
-								console.log('取数据', city);
-								uni.request({
-									
-									url: this.globalUrl + '/site/hot',
-									data: {
-										state_id: city.data.state_id,
-										city_id: city.data.city_id,
-										count: 3,
-										sort_by: 3
-									},
-									success: res => {
-										console.log('热门景点', res);
-										this.hotAtt = res.data.data;
-									}
-								}),
+											})
+										}
+									})
+								} else {
+									uni.setStorageSync('city_id', res.data)
+									console.log('存储本地', res.data)
+									var city = uni.getStorageSync('city_id')
+									console.log('取数据', city)
+									uni.request({
+										// url:'http://192.168.43.156:8199/site/hot',
+										// url:'site/hot',
+										url: 'http://devapi.lingtuyang.cn/site/hot',
+										data: {
+											state_id: city.data.state_id,
+											city_id: city.data.city_id,
+											count: 3,
+											sort_by: 3
+										},
+										success: (res) => {
+											console.log('热门景点', res)
+											this.hotAtt = res.data.data
+										}
+									}),
 									uni.request({
 										url: this.globalUrl + '/article/list',
 										data: {
@@ -428,82 +424,68 @@ export default {
 										this.list = res.data.data.list;
 										// console.log('list=====',this.list)
 									}
-								});
-						}
-					});
-				}
-			});
-		},
-
-		// 获取banner
-		getBanner() {
-			uni.request({
-				url: this.globalUrl + '/banner',
-				success: res => {
-					console.log('banner--', res);
-					this.bannerList = res.data.data;
-				}
-			});
-		},
-		onPageScroll(Object) {
-			console.log(Object.scrollTop); //实时获取到滚动的值
-			if (Object.scrollTop <= 150) {
-				this.navbg.background = '';
-			} else {
-				this.navbg.background = '#30A2FC';
-			}
-		},
-
-		//获取导航到顶部的距离
-		// handleScroll() {
-		// 	var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-		// 	console.log(scrollTop)
-		// 	if(scrollTop <= 150){
-		// 		this.navbg.background = ""
-		// 	}else{
-		// 		this.navbg.background = "#30A2FC"
-
-		// 	}
-		// },
-		// 跳转文章详情
-		onPageJump(e) {
-			console.log(e);
-			let id = e.currentTarget.id;
-			// debugger
-			// return
-			uni.navigateTo({
-				url: '/pages/contentdetail/contentdetail?article_id=' + id
-			});
-		},
-		// 点赞
-		clickLike(e, index) {
-			console.log('qaz', e, index);
-			// debugger
-			let article = e.article_id;
-			var that = this;
-			uni.request({
-				url: this.globalUrl + '/user/liked',
-				data: {
-					article_id: article,
-					liked: e.liked == 0 ? 1 : 0
-				},
-				method: 'POST',
-				header: {
-					Authorization: uni.getStorageSync('Authorization')
-				},
-				success: function(res) {
-					console.log('点赞', res);
-					if (res.data.code != 0) {
-						// debugger
-						uni.showModal({
-							title: '提示',
-							content: '您好，请先登录',
-							showCancel: false,
-							success: function(res) {
-								if (res.confirm) {
-									uni.redirectTo({
-										url: '../login/login'
-									});
+								})
+							}
+						})
+						
+					}
+				});
+			},
+			
+			// 获取banner
+			getBanner(){
+				uni.request({
+					url:"http://192.168.43.156:8199/banner",
+					success: (res) => {
+						console.log('banner--',res)
+						this.bannerList = res.data.data
+					}
+				})
+			},
+			
+		
+			
+			
+			// 跳转文章详情
+			onPageJump(e) {
+				console.log(e)
+				let id = e.currentTarget.id
+				// debugger
+				// return
+				uni.navigateTo({
+					url: "/pages/contentdetail/contentdetail?article_id=" + id
+				})
+			},
+			// 点赞
+			clickLike(e,index) {
+				console.log('qaz',e,index)
+				// debugger
+				let article = e.article_id
+				var that = this
+				uni.request({
+					url: 'http://devapi.lingtuyang.cn/user/liked',
+					data: {
+						article_id: article,
+						liked: e.liked == 0 ? 1 : 0
+					},
+					method: 'POST',
+					header: {
+						'Authorization': uni.getStorageSync('Authorization')
+					},
+					success: function(res) {
+						console.log('点赞', res)
+						if (res.data.code != 0) {
+							// debugger
+							uni.showModal({
+								title: '提示',
+								content: '您好，请先登录',
+								showCancel: false,
+								success: function(res) {
+									if (res.confirm) {
+										uni.redirectTo({
+											url: '../login/login'
+										})
+									}
 								}
 							}
 						});
@@ -968,39 +950,80 @@ view {
 
 .word-btn {
 	/* #ifndef APP-NVUE */
-	display: flex;
-	/* #endif */
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	border-radius: 6px;
-	height: 48px;
-	margin: 15px;
-	background-color: #007aff;
-}
+	page {
+		display: flex;
+		flex-direction: column;
+		box-sizing: border-box;
+		background-color: #efeff4;
+		min-height: 100%;
+		height: auto;
+	}
 
-.word-btn--hover {
-	background-color: #4ca2ff;
-}
+	view {
+		font-size: 14px;
+		line-height: inherit;
+	}
 
-.uni-nav-bar-text {
-	width: 64rpx;
-	height: 32rpx;
-	font-size: 32rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 500;
-	color: #303133;
-	line-height: 32rpx;
-}
+/* 自定义导航栏 */
+	.navBar{
+		z-index: -1;
+	}
+	.search-box{
+		/* position: fixed; */
+		/* top: 50rpx; */
+		/* width: 100%; */
+		height: 72rpx;
+		padding-left: 134rpx;
+		z-index: -1;
+	}
+	.search-wrap{
+		width: 396rpx;
+		height: 72rpx;
+	}
+	/* 导航栏轮播图 */
+	.page-section{
+		z-index: 111;
+		position: relative;
+		top:-184rpx;
+		left: 0;
+	}
+	.page-section-spacing {
+		
+		width: 100%;
+		height: 440rpx;
+		
+	}
+	.swiper{
+		width: 100%;
+		height: 100%;
+	}
+	.swiper-item {
+		width: 100%;
+		height: 100%;
+	}
+	.swiperImg{
+		width: 100%;
+		height: 100%;
+	}
+	.example {
+		padding: 0 15px 15px;
+	}
 
-.down {
-	width: 18rpx;
-	height: 18rpx;
-}
+	.example-info {
+		padding: 15px;
+		color: #3b4144;
+		background: #ffffff;
+	}
 
-.city {
-	/* #ifndef APP-PLUS-NVUE */
-	display: flex;
+	.example-body {
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 0;
+		font-size: 14px;
+		background-color: #aa557f;
+	}
+
 	/* #endif */
 	flex-direction: row;
 	align-items: center;

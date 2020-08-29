@@ -1,6 +1,6 @@
 <template>
 	<view class="">
-		<view class="u-navbar" :style="[navbarStyle]" :class="{ 'u-navbar-fixed': isFixed, 'u-border-bottom': borderBottom }">
+		<view class="u-navbar" :style="navbg" :class="{ 'u-navbar-fixed': isFixed, 'u-border-bottom': borderBottom }">
 			<view class="u-status-bar" :style="{ height: statusBarHeight + 'px' }"></view>
 			<view class="u-navbar-inner" :style="[navbarInnerStyle]">
 				<view class="u-back-wrap" v-if="isBack" @tap="goBack">
@@ -129,7 +129,7 @@
 				type: Object,
 				default () {
 					return {
-						background: '#ffffff'
+						background: ''
 					}
 				}
 			},
@@ -161,7 +161,10 @@
 		data() {
 			return {
 				menuButtonInfo: menuButtonInfo,
-				statusBarHeight: systemInfo.statusBarHeight
+				statusBarHeight: systemInfo.statusBarHeight,
+				navbg:{
+					background:'#ff5500'
+				}
 			};
 		},
 		computed: {
@@ -185,6 +188,15 @@
 				Object.assign(style, this.background);
 				return style;
 			},
+			onPageScroll(Object) {
+			 console.log(Object.scrollTop);//实时获取到滚动的值
+			 if(Object.scrollTop <= 0){
+			 	this.navbg.background = "#ff5500"
+			 }else{
+			 	this.navbg.background = "#30A2FC"
+			 	 
+			 }
+			},	
 			// 导航中间的标题的样式
 			titleStyle() {
 				let style = {};
@@ -228,6 +240,8 @@
 					uni.navigateBack();
 				}
 			}
+			
+			
 		}
 	};
 </script>
