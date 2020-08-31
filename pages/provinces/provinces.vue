@@ -26,7 +26,37 @@
 					<image class="changeIcon" src="../../static/images/more-down.svg" mode=""></image>
 				</view>
 			</view>
-			
+			<view class="weather">
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.icon1 == 'day/xiaoyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/baoyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/dabaoyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/dabaoxue' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/dabaoyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/dayu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/dongyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/duoyun' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/fuchen' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/leizhenyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/leizhenyubanyoubingbao' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/mai' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/qiangshachenbao' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/qing' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/shachengbao' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/tedabaoyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/wu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/xiaoxue' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/xiaoyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/yangsha' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/yin' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/yujiaxue' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/zhenxue' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/zhenyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/zhongxue' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/zhongyu' "></image>
+				<view class="temp">
+					{{weather.temp}}
+				</view>
+			</view>
 		</view>
 		<!-- 景点推荐 -->
 		<view class="content">
@@ -402,14 +432,16 @@
 		data() {
 			return {
 				rate:3.5,
-				list: []
+				list: [],
+				weather:[]
 			};
 		},
 		comments:{
 			uniNavBar
 		},
 		onLoad() {
-			this.getTour()
+			this.getTour(),
+			this.getWeather()
 		},
 		methods:{
 			getTour(){
@@ -439,6 +471,19 @@
 					}
 				});
 			},
+			getWeather(){
+				uni.request({
+					url:'https://api.asilu.com/weather/',
+					data:{
+						city:'青岛'
+					},
+					success: (res) => {
+						console.log('天气--',res)
+						this.weather = res.data.weather[0]
+					}
+				})
+			},
+				
 			back() {
 				uni.navigateBack({
 					delta: 1
@@ -553,6 +598,27 @@
 		width: 8rpx;
 		height: 8rpx;
 		margin-left: 8rpx;
+	}
+	.weather{
+		display: flex;
+		align-items: center;
+		width: 200rpx;
+		height: 80rpx;
+		position: absolute;
+		bottom: 56rpx;
+		left: 40rpx;
+	}
+	.weatherImg{
+		width: 44rpx;
+		height: 44rpx;
+	}
+	.temp{
+		font-size: 28rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #FFFFFF;
+		line-height: 40rpx;
+		margin-left: 14rpx;
 	}
 	// 景点推荐
 	.content{
