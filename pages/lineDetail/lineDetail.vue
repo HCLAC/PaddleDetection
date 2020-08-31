@@ -32,14 +32,13 @@
 				<text class="price">{{ lineContent.money }}</text>
 				<text>起</text>
 			</view>
-			<view class="lineTitle">青岛散步记/网红市南大学路citywalk，打卡青岛 超文艺：大学路转角/中国十大绝美校园/荒岛书 店绝版旧书，走街串巷遇见生活.</view>
+			<view class="lineTitle">{{ lineContent.description }}</view>
 		</view>
 		<view class="lineDriver"></view>
 		<view class="linePlan">
-			<view style="width: 60%;">
+			<view>
 				<v-tabs
 					inactive-color="#909399"
-					padding="0"
 					lineHeight="8rpx"
 					lineColor="#FFE512"
 					activeFontSize="32rpx"
@@ -55,33 +54,142 @@
 			</view>
 			<view class="planContent">
 				<u-time-line>
-					<u-time-line-item nodeTop="2">
-						<!-- 此处自定义了左边内容，用一个图标替代 -->
-						<template v-slot:node>
-							<view class="u-node" style="background: #19be6b; border-radius: 50%;">
-								<!-- 此处为uView的icon组件 -->
-								<view style="width: 10rpx; height: 10rpx;"></view>
-							</view>
-						</template>
-						<template v-slot:content>
-							<view>
-								<view class="u-order-title">
-									<view class="tui-chat-right"><view class="tui-chatbox tui-chatbox-right">D1</view></view>
+					<view v-for="(item, index) in lineContent.content" :key="index">
+						<u-time-line-item nodeTop="2">
+							<!-- 此处自定义了左边内容，用一个图标替代 -->
+							<template v-slot:node>
+								<view class="u-node" style="background: #BFC2CC ; border-radius: 50%;">
+									<!-- 此处为uView的icon组件 -->
+									<view style="width: 10rpx; height: 10rpx;"></view>
 								</view>
-								<view class="u-order-desc">[自提柜]您的快件已放在楼下侧门，直走前方53.6米，左拐约10步，再右拐直走，见一红灯笼停下，叩门三下，喊“芝麻开门”即可。</view>
-								<view class="u-order-time">2019-05-08 12:12</view>
-							</view>
-						</template>
-					</u-time-line-item>
-					<u-time-line-item>
-						<!-- 此处没有自定义左边的内容，会默认显示一个点 -->
-						<template v-slot:content>
-							<view>
-								<view class="u-order-desc">【深圳市】日照香炉生紫烟，遥看瀑布挂前川，飞流直下三千尺，疑是银河落九天。</view>
-								<view class="u-order-time">2019-12-06 22:30</view>
-							</view>
-						</template>
-					</u-time-line-item>
+							</template>
+							<template v-slot:content>
+								<view>
+									<view class="u-order-title">
+										<text class="tui-chat-right">
+											<text class="tui-chatbox tui-chatbox-right">D{{ item.day }}</text>
+										</text>
+										<text class="planTitle">{{ item.title }}</text>
+									</view>
+									<view class="u-order-desc">{{ item.description }}</view>
+									<view class="u-order-time"></view>
+								</view>
+							</template>
+						</u-time-line-item>
+						<view v-for="(eve, eveIndex) in item.event" :key="eveIndex">
+							<u-time-line-item>
+								<template v-slot:node>
+									<view class="uTime">
+										<image class="timeIcon" src="../../static/images/timeClock.svg"></image>
+										<text>{{ eve.time == '上午' ? 'AM' : 'PM' }}</text>
+									</view>
+								</template>
+								<template v-slot:content>
+									<view style="height: 40rpx;"></view>
+								</template>
+							</u-time-line-item>
+							<u-time-line-item nodeTop="2">
+								<!-- 此处自定义了左边内容，用一个图标替代 -->
+								<template v-slot:node>
+									<view class="u-node" style="background: #19be6b; border-radius: 50%;">
+										<!-- 此处为uView的icon组件 -->
+										<view style="width: 10rpx; height: 10rpx;"></view>
+									</view>
+								</template>
+								<template v-slot:content>
+									<view>
+										<view class="u-order-title">
+											<text>{{ eve.title }}</text>
+										</view>
+										<view class="u-order-desc">{{ eve.description }}</view>
+										<view class="position" v-for="(pos, posIndex) in eve.position" :key="posIndex">
+											<view class="left">
+												<image :src="pos.cover_url" class="positionImg" mode=""></image>
+												<view class="imgTag">景点</view>
+											</view>
+											<view class="right">
+												<view class="title">{{ pos.name }}</view>
+												<view class="rateBox">
+													<view class="rateStart" v-if="pos.rate == 5">
+														<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+													</view>
+													<view class="rateStart" v-if="pos.rate == 4">
+														<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+													</view>
+													<view class="rateStart" v-if="pos.rate == 3">
+														<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+													</view>
+													<view class="rateStart" v-if="pos.rate == 2">
+														<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+													</view>
+													<view class="rateStart" v-if="pos.rate == 1">
+														<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+													</view>
+													<view class="rateStart" v-if="pos.rate == 4.5">
+														<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1备份(3).svg" mode=""></image>
+													</view>
+													<view class="rateStart" v-if="pos.rate == 3.5">
+														<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1备份(2).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+													</view>
+													<view class="rateStart" v-if="pos.rate == 2.5">
+														<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1备份(1).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+													</view>
+													<view class="rateStart" v-if="pos.rate == 1.5">
+														<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+													</view>
+													<view class="rateStart" v-if="pos.rate == 0.5">
+														<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+													</view>
+													<view class="rate">{{ pos.rate }} 星</view>
+												</view>
+												<text class="content">{{ pos.description }}</text>
+											</view>
+										</view>
+									</view>
+								</template>
+							</u-time-line-item>
+						</view>
+					</view>
 				</u-time-line>
 			</view>
 		</view>
@@ -102,17 +210,18 @@ export default {
 			lineContent: null,
 			current: 0,
 			tablist: ['参考行程', '服务说明'],
-			tabCurrent: 0,
+			tabCurrent: 1,
 			barStyle: {}
 		};
 	},
 	onLoad(option) {
-		if (option.id) {
-			this.getDetail(option.id);
-		}
+		// if (option.id) {
+		this.getDetail('8b5edc98-eb65-11ea-be5e-704d7b4ab45a');
+		// }
 	},
 	methods: {
 		tabChange(index) {
+			debugger;
 			this.tabCurrent = index;
 		},
 		change(e) {
@@ -128,6 +237,8 @@ export default {
 
 				success: res => {
 					if (res.data.code == 0) {
+						res.data.data.content = res.data.data.content && res.data.data.content.length ? JSON.parse(res.data.data.content) : [];
+						console.log(res.data.data.content);
 						this.lineContent = res.data.data;
 					} else {
 						uni.showToast({
@@ -310,9 +421,10 @@ export default {
 }
 .tui-chatbox {
 	width: 64rpx;
+	padding: 0 10rpx;
 	height: 40rpx;
-	background: #FFE512;
-text-align: center;
+	background: #ffe512;
+	text-align: center;
 	position: relative;
 
 	font-size: 24rpx;
@@ -330,5 +442,123 @@ text-align: center;
 	top: 3%;
 	right: 88%;
 	border-color: transparent #ffe512 transparent transparent;
+}
+.planContent {
+	font-family: PingFangSC-Medium, PingFang SC;
+	.position {
+		width: 556rpx;
+		height: 172rpx;
+		background: #f8f8f8;
+		border-radius: 16rpx;
+		border: 2rpx solid #edeff2;
+		padding: 14rpx 16rpx;
+		margin-top: 20rpx;
+		display: flex;
+		.right {
+			margin-left: 10rpx;
+			.title {
+				font-size: 28rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
+				color: #303133;
+			}
+			.content {
+				width: 90%;
+				font-size: 22rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #909399;
+				line-height: 32rpx;
+				text-overflow: -o-ellipsis-lastline;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				line-clamp: 2;
+				-webkit-box-orient: vertical;
+			}
+			.rateBox {
+				display: flex;
+				align-items: center;
+
+				.rate {
+					margin-left: 2rpx;
+					font-size: 20rpx;
+					font-family: HelveticaNeue;
+					color: #606266;
+				}
+				.rateStart {
+					image {
+						width: 22.4rpx;
+						height: 22.4rpx;
+						margin-right: 6rpx;
+					}
+				}
+			}
+		}
+		.left {
+			position: relative;
+
+			.positionImg {
+				width: 184rpx;
+				height: 140rpx;
+				border-radius: 12rpx;
+			}
+			.imgTag {
+				width: 60rpx;
+				height: 30rpx;
+				background: #9fd873;
+				border-radius: 12rpx 0px 12rpx 0px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				color: #ffffff;
+				font-size: 16rpx;
+				text-align: center;
+				line-height: 30rpx;
+			}
+		}
+	}
+
+	.u-order-title {
+		position: relative;
+		top: -18rpx;
+		left: -18rpx;
+	}
+	.planTitle {
+		font-size: 28rpx;
+		font-weight: 500;
+		color: #303133;
+		margin-left: 20rpx;
+	}
+	.u-order-desc {
+		font-size: 24rpx;
+		color: #303133;
+
+		margin-top: 20rpx;
+		line-height: 36rpx;
+	}
+	.u-order-time {
+		margin-top: 20rpx;
+		border-bottom: 1px solid #dddddd;
+	}
+
+	.uTime {
+		display: flex;
+		align-items: center;
+		margin-left: 45rpx;
+		.timeIcon {
+			width: 34rpx;
+			height: 34rpx;
+		}
+		text {
+			color: #606266;
+			font-size: 24rpx;
+			margin-left: 10rpx;
+		}
+	}
+}
+.u-time-axis-node {
+	top: -0.5vw !important;
 }
 </style>
