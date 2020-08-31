@@ -16,6 +16,7 @@
 				"backgroundColorBottom":"#F8F8F8"
 			}
 		},
+		
 		{
 			"path": "pages/attractionsRank/attractionsRank",
 			"style": {

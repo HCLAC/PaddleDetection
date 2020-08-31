@@ -44,7 +44,7 @@
 		</view>
 
 		<!-- 内容 -->
-		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="cus-sty ">
 				<!-- 热门目的地 -->
 				<view class="hot">
@@ -55,46 +55,51 @@
 							<image src="../../static/images/more.svg" class="moreIcon" mode=""></image>
 						</view>
 					</view>
-					<view class="hot-bot">
-						<view class="hotAdress">
+					<view class="hot-bot" v-if="areaList != null">
+						<view class="hotAdress" >
+							<!-- 当前位置 -->
 							<view class="dqwz" @click="toProvinces">
-								<image class="dqwzImg" src="../../static/images/16460799831121.5efb7ae58999c.jpg" mode="scaleToFill"></image>
-								<text class="dqwzText">青岛</text>
-								<text class="dqwzText1">当前位置</text>
+								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill"></image>
+								<text class="dqwzText">{{cityName}}</text>
+								<view class="adressBox">
+									<image class="zhishi" src="../../static/images/zhishi.svg" mode=""></image>
+									<text class="dqwzText1">当前位置</text>
+								</view>
+								
+							</view>
+							<view class="hotCity" >
+								<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
+								<text class="hotCityText">{{areaList[1].name}}</text>
 							</view>
 							<view class="hotCity">
-								<image class="hotCityImg" src="../../static/images/16460799831121.5efb7ae58999c.jpg" mode="scaleToFill"></image>
-								<text class="hotCityText">黑龙江</text>
-							</view>
-							<view class="hotCity">
-								<image class="hotCityImg" src="../../static/images/16460799831121.5efb7ae58999c.jpg" mode="scaleToFill"></image>
-								<text class="hotCityText1">齐齐哈尔</text>
+								<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
+								<text class="hotCityText1">{{areaList[2].name}}</text>
 							</view>
 						</view>
 						<view class="cityRank">
 							<view class="rankText">
-								上海
+								{{areaList[3].name}}
 							</view>
 							<u-line direction="col" color="#c7c7c7" length="16rpx" margin=" 0 16rpx"></u-line>
 							<view class="rankText">
-								北京
+								{{areaList[4].name}}
 							</view>
 							<u-line direction="col" color="#c7c7c7" length="16rpx" margin=" 0 16rpx"></u-line>
 							<view class="rankText">
-								云南
+								{{areaList[5].name}}
 							</view>
 						</view>
 						<view class="cityRank">
 							<view class="rankText">
-								杭州
+								{{areaList[6].name}}
 							</view>
 							<u-line direction="col" color="#c7c7c7" length="16rpx" margin=" 0 16rpx"></u-line>
 							<view class="rankText">
-								成都
+								{{areaList[7].name}}
 							</view>
 							<u-line direction="col" color="#c7c7c7" length="16rpx" margin=" 0 16rpx"></u-line>
 							<view class="rankText">
-								西安
+								{{areaList[8].name}}
 							</view>
 						</view>
 						<!-- <view class="hb-l" @click="toAtt(hotAtt[0].id)">
@@ -238,7 +243,8 @@ export default {
 			navbg: {
 				background: ''
 			},
-			indicatorDots:true
+			indicatorDots:true,
+			areaList: null
 		};
 	},
 
@@ -429,6 +435,19 @@ export default {
 							}
 						}
 					});
+					// 获取热门目的地
+					uni.request({
+						url:'http://10.0.2.8:8199/area/hot',
+						data:{
+							state: this.province,
+							city: this.city
+						},
+						success: (res) => {
+							console.log('热门目的地==',res)
+							this.areaList = res.data.data
+							console.log('areaList--',this.areaList)
+						}
+					})
 				},
 				// 未开启定位
 				fail: res => {
@@ -486,12 +505,13 @@ export default {
 					});
 				}
 			});
+			
 		},
 
 		// 获取banner
 		getBanner() {
 			uni.request({
-				url: 'http://192.168.43.156:8199/banner',
+				url: 'http://10.0.2.11:8199/banner',
 				success: res => {
 					console.log('banner--', res);
 					this.bannerList = res.data.data;
@@ -1005,7 +1025,11 @@ view {
 	font-size: 14px;
 	background-color: #aa557f;
 }
-
+.mescroll{
+	position: relative;
+	top: -184rpx;
+	left: 0;
+}
 /* #endif */
 .example {
 	padding: 0 15px;
@@ -1177,9 +1201,12 @@ view {
 	position: absolute;
 	top: 50rpx;
 	left: 70rpx;
+	font-size: 28rpx;
 	color: #FFFFFF;
 }
-.dqwzText1{
+.adressBox{
+	display: flex;
+	align-items: center;
 	position: absolute;
 	top: 100rpx;
 	left: 40rpx;
@@ -1189,6 +1216,12 @@ view {
 	background-color: #ef4f00;
 	border-radius: 10rpx;
 }
+.zhishi{
+	width: 20rpx;
+	height: 20rpx;
+}
+
+
 .hotCity{
 	width: 200rpx;
 	height: 180rpx;
@@ -1231,6 +1264,7 @@ view {
 }
 .rankText{
 	width: 200rpx;
+	font-size: 28rpx;
 	text-align: center;
 }
 /* 正在旅行 */

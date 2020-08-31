@@ -417,7 +417,6 @@
 					url: 'http://devapi.lingtuyang.cn/city/hot',
 					method: 'GET',
 					success: res => {
-						console.log('热门城市===>', res.data.data);
 						uni.request({
 							url: 'http://devapi.lingtuyang.cn/article/list',
 							data: {
@@ -438,6 +437,16 @@
 							}
 						});
 					}
+				});
+			},
+			back() {
+				uni.navigateBack({
+					delta: 1
+				});
+			},
+			home() {
+				uni.switchTab({
+					url: '/pages/index/index'
 				});
 			}
 		}
