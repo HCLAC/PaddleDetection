@@ -35,8 +35,8 @@
 			<view class="lineTitle">{{ lineContent.description }}</view>
 		</view>
 		<view class="lineDriver"></view>
-		<view class="linePlan">
-			<view>
+		<view :class="isFixed? 'fixTabs' : 'noFix' " >
+			<view style="width: 60%;" >
 				<v-tabs
 					inactive-color="#909399"
 					lineHeight="8rpx"
@@ -52,8 +52,11 @@
 					@change="tabChange"
 				></v-tabs>
 			</view>
+		</view>
+		<view class="linePlan">
+			
 			<view class="planContent">
-				<u-time-line>
+				<u-time-line v-show="tabCurrent == 0">
 					<view v-for="(item, index) in lineContent.content" :key="index">
 						<u-time-line-item nodeTop="2">
 							<!-- 此处自定义了左边内容，用一个图标替代 -->
@@ -191,7 +194,34 @@
 						</view>
 					</view>
 				</u-time-line>
+				<view class="serverInfo" v-show="tabCurrent ==1">
+					<view class="title">服务说明</view>
+					<view class="content">如果您喜欢我们的线路推荐，可以点击收藏并点赞哦， 我们会持续输出更好的线路设计。 如果您不想自己出行，可以联系我们的旅行管家，代您 定好交通、住宿、门票等事务，或者您可询问旅行管家 参加出发地团游或者当地团游，旅行管家都将逐一为您 联系，竭诚为您服务。 想了解更多，请点击下方的”联系管家“拨打管家电话吧~</view>
+					<view class="phone">
+						<image src="../../static/images/serverCall.svg" ></image>
+					</view>
+				</view>
 			</view>
+		<view class="bottom">
+							<!-- 分割线 -->
+							<view class="line"></view>
+							<!-- 登录 -->
+							<view class="contentBottom savepadding">
+								<view class="like" >
+									<image class="likeBtn" src="../../static/images/attheart.svg" ></image>
+		<!-- 							<image class="likeBtn" src="../../static/images/heart-actived.svg" ></image>
+		 -->							<view class="likeNum">{{lineContent.like_count}}</view>
+								</view>
+								<view class="fav" @click="lineFav(lineContent.uuid)" >
+									<image class="favBtn" src="../../static/images/shouchang.svg" </image>
+<!-- 									<image class="favBtn" src="../../static/images/fav-actived.svg" ></image>
+ -->									<view class="favNum">{{lineContent.fav_count}}</view>
+								</view>
+								<view class="share" ><image src="../../static/images/fenxiang.svg"></image></view>
+								<view class=""><view class="loginButton" v-if="hasLogin" @click="login" >登录</view></view>
+							</view>
+						</view>
+					</view>	
 		</view>
 	</view>
 </template>
@@ -209,34 +239,59 @@ export default {
 		return {
 			lineContent: null,
 			current: 0,
-			tablist: ['参考行程', '服务说明'],
-			tabCurrent: 1,
-			barStyle: {}
+			tablist: ['参考路线','行程说明'],
+			tabCurrent: 0,
+			hasLogin: uni.getStorageSync('Authorization'),
+			isFixed: false,
 		};
 	},
 	onLoad(option) {
-		// if (option.id) {
-		this.getDetail('8b5edc98-eb65-11ea-be5e-704d7b4ab45a');
-		// }
+		if (option.id) {
+		this.getDetail(option.id);
+		 }
+	},
+	onPageScroll(e) {
+		if(e.scrollTop>346.5){
+			this.isFixed = true
+		}else{
+			this.isFixed = false
+		}
 	},
 	methods: {
 		tabChange(index) {
-			debugger;
+			
 			this.tabCurrent = index;
 		},
 		change(e) {
 			this.current = e.detail.current;
 		},
-		getDetail(id) {
+			
+		lineFav(id){
+		
+			if(!this.hasLogin){
+				uni.showToast({
+					title: '请先登录',
+					icon: 'none',
+					
+				})
+				uni.reLaunch({
+					url: '/pages/login/login'
+				})
+			}else{
 			uni.request({
-				url: this.globalUrl + '/route',
-				method: 'GET',
+				url: this.globalUrl + '/user/favorite',
+				method: 'POST',
+				header:{
+					
+				},
 				data: {
 					uuid: id
 				},
-
+			
 				success: res => {
 					if (res.data.code == 0) {
+						console.log(res.data.data)
+						debugger
 						res.data.data.content = res.data.data.content && res.data.data.content.length ? JSON.parse(res.data.data.content) : [];
 						console.log(res.data.data.content);
 						this.lineContent = res.data.data;
@@ -254,6 +309,41 @@ export default {
 					});
 				}
 			});
+			}
+		},
+		getDetail(id) {
+			uni.request({
+				url: this.globalUrl + '/route',
+				method: 'GET',
+				data: {
+					uuid: id
+				},
+
+				success: res => {
+					if (res.data.code == 0) {
+						console.log(res.data.data)
+						res.data.data.content = res.data.data.content && res.data.data.content.length ? JSON.parse(res.data.data.content) : [];
+						console.log(res.data.data.content);
+						this.lineContent = res.data.data;
+					} else {
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+					}
+				},
+				fail: error => {
+					uni.showToast({
+						title: '网络不给力，请稍后再试...',
+						icon: 'none'
+					});
+				}
+			});
+		},
+		login(){
+			uni.reLaunch({
+				url: '/pages/login/login'
+			})
 		},
 		back() {
 			uni.navigateBack({
@@ -380,6 +470,8 @@ export default {
 // swipper样式 end
 .container {
 	padding: 40rpx 30rpx;
+
+	
 	.linePrice {
 		font-size: 24rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
@@ -407,8 +499,9 @@ export default {
 }
 .linePlan {
 	padding: 10rpx 30rpx;
+	padding-bottom: 105rpx;
 	.planContent {
-		padding: 100rpx 30rpx 30rpx;
+		padding: 100rpx 30rpx 30rpx 20rpx;
 	}
 }
 .tui-chatbox::before {
@@ -446,6 +539,8 @@ export default {
 .planContent {
 	font-family: PingFangSC-Medium, PingFang SC;
 	.position {
+		position: relative;
+		left: -14rpx;
 		width: 556rpx;
 		height: 172rpx;
 		background: #f8f8f8;
@@ -534,12 +629,14 @@ export default {
 	.u-order-desc {
 		font-size: 24rpx;
 		color: #303133;
-
-		margin-top: 20rpx;
+		position: relative;
+		left: -14rpx;
 		line-height: 36rpx;
 	}
 	.u-order-time {
 		margin-top: 20rpx;
+		position: relative;
+		left: -14rpx;
 		border-bottom: 1px solid #dddddd;
 	}
 
@@ -560,5 +657,150 @@ export default {
 }
 .u-time-axis-node {
 	top: -0.5vw !important;
+}
+.bottom {
+	width: 100%;
+	height: 98rpx;
+	position: fixed;
+	left: 0;
+	bottom: var(--window-bottom);
+	z-index: 111;
+	background-color: #ffffff;
+	padding-bottom: 68rpx;
+	padding-bottom: constant(safe-area-inset-bottom);
+	padding-bottom: env(safe-area-inset-bottom);
+	box-sizing: content-box;
+}
+.line {
+	height: 0.5rpx;
+	background: rgba(221, 221, 221, 1);
+	// margin-top: 84rpx;
+}
+
+.contentBottom {
+	display: flex;
+	align-items: center;
+	margin-top: 16rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: rgba(48, 49, 51, 1);
+	line-height: 24rpx;
+}
+
+.loginButton {
+	width: 156rpx;
+	height: 68rpx;
+	background: rgba(255, 229, 18, 1);
+	border-radius: 20px;
+	font-size: 32rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 600;
+	color: rgba(48, 49, 51, 1);
+	line-height: 68rpx;
+	border: none;
+	text-align: center;
+	margin-left: 190rpx;
+}
+
+.like {
+	display: flex;
+	margin-left: 28rpx;
+	align-items: center;
+}
+
+.likeBtn {
+	width: 52rpx;
+	height: 52rpx;
+	margin-right: 10rpx;
+}
+
+.fav {
+	display: flex;
+	margin-left: 56rpx;
+	align-items: center;
+}
+
+.favBtn {
+	width: 52rpx;
+	height: 52rpx;
+	margin-right: 10rpx;
+}
+
+.share {
+	display: flex;
+	margin-left: 56rpx;
+	align-items: center;
+}
+
+.share image {
+	width: 52rpx;
+	height: 52rpx;
+}
+.savepadding {
+	padding-bottom: constant(safe-area-inset-bottom);
+	padding-bottom: env(safe-area-inset-bottom);
+	box-sizing: content-box;
+}
+.serverInfo{
+	width: 654rpx;
+	height: 416rpx;
+	background: #F8F8F8;
+	border-radius: 8rpx;
+	position: relative;
+	padding: 30rpx;
+	.title{
+		font-size: 28rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #303133;
+		line-height: 50rpx;
+		text-align: center;
+	}
+	.content{
+		margin-top: 10rpx;
+		font-size: 24rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #606266;
+		line-height: 36rpx;
+	}
+	.phone{
+		width: 92rpx;
+		height: 92rpx;
+		background: #FFE512;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		position: absolute;
+		bottom: 20rpx;
+		right: -20rpx;
+		justify-content: center;
+		box-shadow: 0px 0px 12rpx 4rpx rgba(255, 229, 18, 0.35);
+		image{
+			width: 46rpx;
+			height: 46rpx;
+		}
+	}
+}
+ .fixTabs{
+	position: fixed;
+	top: 135rpx;
+	padding-left: 10rpx;
+	padding-bottom: 15rpx;
+	left: 0;
+	z-index: 1000;
+	width: 100%;
+	background: #FFFFFF;
+	border-bottom: 2rpx solid #EEEEEE;
+	box-shadow: 0px 0px 12rpx 0rpx #EEEEEE;
+}
+.noFix{
+	padding-left: 10rpx;
+	left: 0;
+	z-index: 1000;
+	width: 100%;
+	background: #FFFFFF;
+	
 }
 </style>
