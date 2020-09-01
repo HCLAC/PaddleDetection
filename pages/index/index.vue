@@ -59,7 +59,8 @@
 						<view class="hotAdress" >
 							<!-- 当前位置 -->
 							<view class="dqwz" @click="toProvinces(areaList[0])">
-								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill"></image>
+								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
+								<image class="dqwzImg" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
 								<text class="dqwzText">{{cityName}}</text>
 								<view class="adressBox">
 									<image class="zhishi" src="../../static/images/Icon／Mapt.svg" mode=""></image>
@@ -338,7 +339,7 @@ export default {
 					uni.request({
 						// url:'http://192.168.43.156:8199/user/location',
 						// url:'user/location',
-						url: 'http://devapi.lingtuyang.cn/user/location',
+						url:this.globalUrl + '/user/location',
 						data: {
 							state: this.province,
 							city: this.city
@@ -353,7 +354,7 @@ export default {
 							if (res.data.code != 0) {
 								// 获取热门景点第一位
 								uni.request({
-									url: 'http://devapi.lingtuyang.cn/city/hot',
+									url: this.globalUrl +'/city/hot',
 									method: 'GET',
 									success: res => {
 										console.log('热门城市===>', res.data.data);
@@ -361,7 +362,7 @@ export default {
 										this.topHotCity = res.data.data[0];
 										console.log(this.topHotCity);
 										uni.request({
-											url: 'http://devapi.lingtuyang.cn/site/hot',
+											url: this.globalUrl+'/site/hot',
 											data: {
 												state_id: this.topHotCity.state_id,
 												city_id: this.topHotCity.city_id,
@@ -375,7 +376,7 @@ export default {
 											}
 										}),
 											uni.request({
-												url: 'http://devapi.lingtuyang.cn/article/list',
+												url: this.globalUrl + '/article/list',
 												data: {
 													state_id: res.data.data[0].state_id,
 													city_id: res.data.data[0].city_id,
@@ -403,7 +404,7 @@ export default {
 								uni.request({
 									// url:'http://192.168.43.156:8199/site/hot',
 									// url:'site/hot',
-									url: 'http://devapi.lingtuyang.cn/site/hot',
+									url: this.globalUrl + '/site/hot',
 									data: {
 										state_id: city.data.state_id,
 										city_id: city.data.city_id,
@@ -437,7 +438,7 @@ export default {
 					});
 					// 获取热门目的地
 					uni.request({
-						url:'http://10.0.2.8:8199/area/hot',
+						url:this.globalUrl + '/area/hot',
 						data:{
 							state: this.province,
 							city: this.city
@@ -511,7 +512,7 @@ export default {
 		// 获取banner
 		getBanner() {
 			uni.request({
-				url: 'http://10.0.2.11:8199/banner',
+				url: this.globalUrl + '/banner',
 				success: res => {
 					console.log('banner--', res);
 					this.bannerList = res.data.data;
@@ -536,7 +537,7 @@ export default {
 			let article = e.article_id;
 			var that = this;
 			uni.request({
-					url: 'http://devapi.lingtuyang.cn/user/liked',
+					url: this.globalUrl + '/user/liked',
 					data: {
 						article_id: article,
 						liked: e.liked == 0 ? 1 : 0

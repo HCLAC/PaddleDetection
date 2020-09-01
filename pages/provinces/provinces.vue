@@ -63,15 +63,15 @@
 				<view class="contentTitle">
 					景点推荐
 				</view>
-				<view class="contentMore">
+				<view class="contentMore" @click="toMore()">
 					<view class="moreText">
 						更多
 					</view>
 					<image class="moreIcon" src="../../static/images/more-right.svg" mode=""></image>
 				</view>
 			</view>
-			<view class="contentImgBox">
-				<view class="contentImg" v-for="(item,index) in siteHot " :key="index" >
+			<view class="contentImgBox" >
+				<view class="contentImg" v-for="(item,index) in siteHot " :key="index" @click="toAtt(item.id)">
 					<image  class="attImg" :src="item.image" mode=""></image>
 					<view class="attText">
 						{{item.name}}
@@ -169,16 +169,10 @@
 				</view>
 			</view>
 			<view class="tripBox">
-				<view class="tripContent">
-					<image class="tripImg" src="../../static/images/16460799831121.5efb7ae58999c.jpg" mode=""></image>
+				<view class="tripContent" v-for="(item,index) in routeHot" :key="index" >
+					<image class="tripImg" :src="item.image" mode=""></image>
 					<view class="tripText">
-						青岛旅行3日游
-					</view>
-				</view>
-				<view class="tripContent">
-					<image class="tripImg" src="../../static/images/16460799831121.5efb7ae58999c.jpg" mode=""></image>
-					<view class="tripText">
-						青岛旅行3日游
+						{{item.title}}
 					</view>
 				</view>
 			</view>
@@ -270,7 +264,8 @@
 				list: [],
 				weather:null,
 				item:null,
-				siteHot:null
+				siteHot:null,
+				routeHot:null
 				
 			};
 		},
@@ -283,19 +278,21 @@
 			this.item = item
 			this.getTour(),
 			this.getWeather(),
-			this.getSiteHot()
+			this.getSiteHot(),
+			this.getRouteHot()
 		},
 		methods:{
+			// 文章瀑布流接口
 			getTour(){
 				uni.request({
-					url: 'http://devapi.lingtuyang.cn/city/hot',
+					url: this.globalUrl + '/city/hot',
 					method: 'GET',
 					success: res => {
 						uni.request({
-							url: 'http://devapi.lingtuyang.cn/article/list',
+							url: this.globalUrl + '/article/list',
 							data: {
-								state_id: res.data.data[0].state_id,
-								city_id: res.data.data[0].city_id,
+								state_id: this.item.state_id,
+								city_id: this.item.city_id,
 								count: 6,
 								page: 1
 							},
@@ -303,16 +300,17 @@
 								'Authorization': uni.getStorageSync('Authorization')
 							},
 							success: res => {
-								console.log('未定位时获取的文章列表', res);
+								// console.log('未定位时获取的文章列表', res);
 								uni.setStorageSync('article_id', res.data);
 								// console.log('存储文章列表==',res.data)
 								this.list = res.data.data.list;
-								// console.log('list=====',this.list)
+								console.log('list=====',this.list)
 							}
 						});
 					}
 				});
 			},
+			// 天气接口
 			getWeather(){
 				uni.request({
 					url:'https://api.asilu.com/weather/',
@@ -325,10 +323,10 @@
 					}
 				})
 			},
-			
+			// 推荐景点接口
 			getSiteHot(){
 				uni.request({
-					url:'http://10.0.2.8:8199/site/hot',
+					url:this.globalUrl + '/site/hot',
 					data:{
 						state_id:this.item.state_id,
 						city_id:this.item.city_id,
@@ -340,6 +338,76 @@
 						this.siteHot = res.data.data
 					}
 				})
+			},
+			// 热门线路接口
+			getRouteHot(){
+				uni.request({
+					url: this.globalUrl + '/route/hot',
+					data:{
+						state_id:this.item.state_id,
+						city_id:this.item.city_id,
+						count:2,
+					},
+					success: (res) => {
+						console.log('热门线路',res)
+						this.routeHot = res.data.data
+					}
+				})
+			},
+			// 跳转景点详情页
+			toAtt(e) {
+				console.log('----------------', e);
+				uni.navigateTo({
+					url: '/pages/positionContent/positionContent?id=' + e
+				});
+			},
+			// 跳转景点榜单页
+			toMore(){
+				var state_id = this.item.state_id;
+				var city_id = this.item.city_id;
+				uni.navigateTo({
+					url: '/pages/attractionsRank/attractionsRank?state_id=' + state_id + '&city_id=' + city_id
+				});
+			},
+			// 点赞
+			clickLike(e, index) {
+				console.log('qaz', e, index);
+				// debugger
+				let article = e.article_id;
+				var that = this;
+				uni.request({
+						url: this.globalUrl + '/user/liked',
+						data: {
+							article_id: article,
+							liked: e.liked == 0 ? 1 : 0
+						},
+						method: 'POST',
+						header: {
+							'Authorization': uni.getStorageSync('Authorization')
+						},
+						success: (res)=> {
+								
+								if (res.data.code != 0) {
+										// debugger
+										uni.showModal({
+											title: '提示',
+											content: '您好，请先登录',
+											showCancel: false,
+											success: (res)=> {
+												if (res.confirm) {
+													uni.redirectTo({
+														url: '../login/login'
+													})
+												}
+											}
+									});
+									return;
+								}
+										
+								that.list[index].liked = e.liked == 1 ? 0 : 1;
+								that.list[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
+						}
+				});
 			},
 			back() {
 				uni.navigateBack({
