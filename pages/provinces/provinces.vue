@@ -12,12 +12,12 @@
 		</view>
 		<!-- 头图 -->
 		<view class="headImgBox">
-			<image class="headImg" src="../../static/images/16460799831121.5efb7ae58999c.jpg" mode="scaleToFill"></image>
+			<image class="headImg" :src="item.image" mode="scaleToFill"></image>
 			<view class="mask">
 			</view>
-			<view class="cityBox">
+			<view class="cityBox" v-if="item != null">
 				<view class="city">
-					青岛
+					{{item.name}}
 				</view>
 				<view class="change">
 					<view class="changeText">
@@ -26,33 +26,32 @@
 					<image class="changeIcon" src="../../static/images/more-down.svg" mode=""></image>
 				</view>
 			</view>
-			<view class="weather">
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.icon1 == 'day/xiaoyu' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/baoyu' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/dabaoyu' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/dabaoxue' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/dabaoyu' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/dayu' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/dongyu' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/duoyun' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/fuchen' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/leizhenyu' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/leizhenyubanyoubingbao' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/mai' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/qiangshachenbao' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/qing' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/shachengbao' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/tedabaoyu' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/wu' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/xiaoxue' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/xiaoyu' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/yangsha' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/yin' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/yujiaxue' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/zhenxue' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/zhenyu' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/zhongxue' "></image>
-				<image class="weatherImg" src="../../static/images/weather/baoxue.svg" mode="" v-if="weather.weather == 'day/zhongyu' "></image>
+			<view class="weather" v-if="weather != null">
+				<image class="weatherImg" src="../../static/images/weather/xiaoyu.svg" mode="" v-if="weather.icon1 == 'day/xiaoyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/baoyu.svg" mode="" v-if="weather.icon1 == 'day/baoyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/dabaoyu.svg" mode="" v-if="weather.icon1 == 'day/dabaoyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/daxue.svg" mode="" v-if="weather.icon1 == 'day/daxue' "></image>
+				<image class="weatherImg" src="../../static/images/weather/dayu.svg" mode="" v-if="weather.icon1 == 'day/dayu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/dongyu.svg" mode="" v-if="weather.icon1 == 'day/dongyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/duoyun.svg" mode="" v-if="weather.icon1 == 'day/duoyun' "></image>
+				<image class="weatherImg" src="../../static/images/weather/fuchen.svg" mode="" v-if="weather.icon1 == 'day/fuchen' "></image>
+				<image class="weatherImg" src="../../static/images/weather/leizhenyu.svg" mode="" v-if="weather.icon1 == 'day/leizhenyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/leizhenyubanyoubingbao.svg" mode="" v-if="weather.icon1 == 'day/leizhenyubanyoubingbao' "></image>
+				<image class="weatherImg" src="../../static/images/weather/mai.svg" mode="" v-if="weather.icon1 == 'day/mai' "></image>
+				<image class="weatherImg" src="../../static/images/weather/qiangshachenbao.svg" mode="" v-if="weather.icon1 == 'day/qiangshachenbao' "></image>
+				<image class="weatherImg" src="../../static/images/weather/qing.svg" mode="" v-if="weather.icon1 == 'day/qing' "></image>
+				<image class="weatherImg" src="../../static/images/weather/shachenbao.svg" mode="" v-if="weather.icon1 == 'day/shachengbao' "></image>
+				<image class="weatherImg" src="../../static/images/weather/tedabaoyu.svg" mode="" v-if="weather.icon1 == 'day/tedabaoyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/wu.svg" mode="" v-if="weather.icon1 == 'day/wu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/xiaoxue.svg" mode="" v-if="weather.icon1 == 'day/xiaoxue' "></image>
+				<image class="weatherImg" src="../../static/images/weather/xiaoyu.svg" mode="" v-if="weather.icon1 == 'day/xiaoyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/yangsha.svg" mode="" v-if="weather.icon1 == 'day/yangsha' "></image>
+				<image class="weatherImg" src="../../static/images/weather/yin.svg" mode="" v-if="weather.icon1 == 'day/yin' "></image>
+				<image class="weatherImg" src="../../static/images/weather/yujiaxue.svg" mode="" v-if="weather.icon1 == 'day/yujiaxue' "></image>
+				<image class="weatherImg" src="../../static/images/weather/zhenxue.svg" mode="" v-if="weather.icon1 == 'day/zhenxue' "></image>
+				<image class="weatherImg" src="../../static/images/weather/zhenyu.svg" mode="" v-if="weather.icon1 == 'day/zhenyu' "></image>
+				<image class="weatherImg" src="../../static/images/weather/zhongxue.svg" mode="" v-if="weather.icon1 == 'day/zhongxue' "></image>
+				<image class="weatherImg" src="../../static/images/weather/zhongyu.svg" mode="" v-if="weather.icon1 == 'day/zhongyu' "></image>
 				<view class="temp">
 					{{weather.temp}}
 				</view>
@@ -72,10 +71,10 @@
 				</view>
 			</view>
 			<view class="contentImgBox">
-				<view class="contentImg">
-					<image  class="attImg" src="../../static/images/16460799831121.5efb7ae58999c.jpg" mode=""></image>
+				<view class="contentImg" v-for="(item,index) in siteHot " :key="index" >
+					<image  class="attImg" :src="item.image" mode=""></image>
 					<view class="attText">
-						五四广场
+						{{item.name}}
 					</view>
 					<view class="rateBox" >
 						<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
@@ -151,171 +150,7 @@
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 						</view>
 						<!-- <u-rate :disabled="true" current="4"></u-rate> -->
-						<view class="rate">{{rate}} 星</view>
-					</view>
-				</view>
-				<view class="contentImg">
-					<image  class="attImg" src="../../static/images/16460799831121.5efb7ae58999c.jpg" mode=""></image>
-					<view class="attText">
-						五四广场
-					</view>
-					<view class="rateBox" >
-						<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
-						<!-- 评分图标 -->
-						<view class="rateStart" v-if="rate == 5">
-							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 4">
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 3">
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 2">
-							<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 1">
-							<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 4.5">
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1备份(3).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 3.5">
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1备份(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 2.5">
-							<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1备份(1).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 1.5">
-							<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 0.5">
-							<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<!-- <u-rate :disabled="true" current="4"></u-rate> -->
-						<view class="rate">{{rate}} 星</view>
-					</view>
-				</view>
-				<view class="contentImg">
-					<image  class="attImg" src="../../static/images/16460799831121.5efb7ae58999c.jpg" mode=""></image>
-					<view class="attText">
-						五四广场
-					</view>
-					<view class="rateBox" >
-						<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
-						<!-- 评分图标 -->
-						<view class="rateStart" v-if="rate == 5">
-							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 4">
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 3">
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 2">
-							<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 1">
-							<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 4.5">
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1备份(3).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 3.5">
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1备份(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 2.5">
-							<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1备份(1).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 1.5">
-							<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="rate == 0.5">
-							<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<!-- <u-rate :disabled="true" current="4"></u-rate> -->
-						<view class="rate">{{rate}} 星</view>
+						<view class="rate">{{item.rate}} 星</view>
 					</view>
 				</view>
 			</view>
@@ -433,15 +268,22 @@
 			return {
 				rate:3.5,
 				list: [],
-				weather:[]
+				weather:null,
+				item:null,
+				siteHot:null
+				
 			};
 		},
 		comments:{
 			uniNavBar
 		},
-		onLoad() {
+		onLoad(options) {
+			let item = JSON.parse(options.id)
+			console.log("参数",item)
+			this.item = item
 			this.getTour(),
-			this.getWeather()
+			this.getWeather(),
+			this.getSiteHot()
 		},
 		methods:{
 			getTour(){
@@ -475,7 +317,7 @@
 				uni.request({
 					url:'https://api.asilu.com/weather/',
 					data:{
-						city:'青岛'
+						city:this.item.name
 					},
 					success: (res) => {
 						console.log('天气--',res)
@@ -483,7 +325,22 @@
 					}
 				})
 			},
-				
+			
+			getSiteHot(){
+				uni.request({
+					url:'http://10.0.2.8:8199/site/hot',
+					data:{
+						state_id:this.item.state_id,
+						city_id:this.item.city_id,
+						count:3,
+						sort_by:3
+					},
+					success: (res) => {
+						console.log("景点推荐",res)
+						this.siteHot = res.data.data
+					}
+				})
+			},
 			back() {
 				uni.navigateBack({
 					delta: 1

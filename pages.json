@@ -4,19 +4,12 @@
 	},
     "pages": [
 		{
-		    "path" : "pages/provinces/provinces",
-		    "style" : {
-				"navigationStyle":"custom"
-			}
-		},
-		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom",
 				"backgroundColorBottom":"#F8F8F8"
 			}
 		},
-		
 		{
 			"path": "pages/attractionsRank/attractionsRank",
 			"style": {
@@ -24,6 +17,15 @@
 				"backgroundColor":"#000000"
 			}
 		},
+		{
+		    "path" : "pages/provinces/provinces",
+		    "style" : {
+				"navigationStyle":"custom"
+			}
+		},
+		
+		
+		
 		{
 		    "path" : "pages/login/login",
 		    "style" : {

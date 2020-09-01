@@ -78,27 +78,27 @@ export default {
 		getUserMsg() {
 			var that = this;
 
-			uni.login({
-				provider: 'baidu',
-				success: function(loginRes) {
-					console.log(loginRes.authResult);
-					// 获取用户信息
-					uni.getUserInfo({
-						provider: 'baidu',
-						success: function(infoRes) {
-							console.log('用户昵称为：' + infoRes.userInfo.nickName);
-							var infoRes = infoRes.userInfo;
-							console.log(infoRes.nickName);
-							that.nickName = infoRes.nickName;
-							that.avatarUrl = infoRes.avatarUrl;
-							// that.nickName = infoRes.nickName;
-							// that.avatarUrl = infoRes.avatarUrl;
-							uni.setStorageSync('nickName', infoRes.nickName);
-							uni.setStorageSync('avatarUrl', infoRes.avatarUrl);
-						}
-					});
-				}
-			});
+			// uni.login({
+			// 	provider: 'baidu',
+			// 	success: function(loginRes) {
+			// 		console.log(loginRes.authResult);
+			// 		// 获取用户信息
+			// 		uni.getUserInfo({
+			// 			provider: 'baidu',
+			// 			success: function(infoRes) {
+			// 				console.log('用户昵称为：' + infoRes.userInfo.nickName);
+			// 				var infoRes = infoRes.userInfo;
+			// 				console.log(infoRes.nickName);
+			// 				that.nickName = infoRes.nickName;
+			// 				that.avatarUrl = infoRes.avatarUrl;
+			// 				// that.nickName = infoRes.nickName;
+			// 				// that.avatarUrl = infoRes.avatarUrl;
+			// 				uni.setStorageSync('nickName', infoRes.nickName);
+			// 				uni.setStorageSync('avatarUrl', infoRes.avatarUrl);
+			// 			}
+			// 		});
+			// 	}
+			// });
 
 			uni.getStorage({
 				key: 'Authorization',

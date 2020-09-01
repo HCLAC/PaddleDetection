@@ -1,9 +1,9 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<u-navbar :is-back="false" class="navbar" >
-			<view class="search-box">
-				<view class="search-wrap" @click="confirm">
+		<u-navbar :is-back="false" class="navbar"  >
+			<view class="search-box" @click="confirm">
+				<view class="search-wrap" >
 					<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
 					<u-search
 						v-model="keyword"
@@ -51,54 +51,54 @@
 					<view class="hot-top">
 						<text class="ht-l">热门目的地</text>
 						<view class="ht-r" @click="lookAll">
-							查看更多
-							<image src="../../static/images/more.svg" class="moreIcon" mode=""></image>
+							更多
+							<image src="../../static/images/more-right.svg" class="moreIcon" mode=""></image>
 						</view>
 					</view>
 					<view class="hot-bot" v-if="areaList != null">
 						<view class="hotAdress" >
 							<!-- 当前位置 -->
-							<view class="dqwz" @click="toProvinces">
+							<view class="dqwz" @click="toProvinces(areaList[0])">
 								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill"></image>
 								<text class="dqwzText">{{cityName}}</text>
 								<view class="adressBox">
-									<image class="zhishi" src="../../static/images/zhishi.svg" mode=""></image>
+									<image class="zhishi" src="../../static/images/Icon／Mapt.svg" mode=""></image>
 									<text class="dqwzText1">当前位置</text>
 								</view>
 								
 							</view>
-							<view class="hotCity" >
+							<view class="hotCity" @click="toProvinces(areaList[1])" >
 								<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
 								<text class="hotCityText">{{areaList[1].name}}</text>
 							</view>
-							<view class="hotCity">
+							<view class="hotCity" @click="toProvinces(areaList[2])">
 								<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
 								<text class="hotCityText1">{{areaList[2].name}}</text>
 							</view>
 						</view>
 						<view class="cityRank">
-							<view class="rankText">
+							<view class="rankText" @click="toProvinces(areaList[3])">
 								{{areaList[3].name}}
 							</view>
-							<u-line direction="col" color="#c7c7c7" length="16rpx" margin=" 0 16rpx"></u-line>
-							<view class="rankText">
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[4])">
 								{{areaList[4].name}}
 							</view>
-							<u-line direction="col" color="#c7c7c7" length="16rpx" margin=" 0 16rpx"></u-line>
-							<view class="rankText">
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[5])">
 								{{areaList[5].name}}
 							</view>
 						</view>
 						<view class="cityRank">
-							<view class="rankText">
+							<view class="rankText" @click="toProvinces(areaList[6])">
 								{{areaList[6].name}}
 							</view>
-							<u-line direction="col" color="#c7c7c7" length="16rpx" margin=" 0 16rpx"></u-line>
-							<view class="rankText">
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[7])">
 								{{areaList[7].name}}
 							</view>
-							<u-line direction="col" color="#c7c7c7" length="16rpx" margin=" 0 16rpx"></u-line>
-							<view class="rankText">
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[8])">
 								{{areaList[8].name}}
 							</view>
 						</view>
@@ -624,9 +624,11 @@ export default {
 				url: '../city/city'
 			});
 		},
-		toProvinces(){
+		toProvinces(e){
+			var e = JSON.stringify(e)
+			console.log('--',e)
 			uni.navigateTo({
-				url:'../provinces/provinces'
+				url:'/pages/provinces/provinces?id=' + e
 			})
 		},
 		confirm() {
@@ -941,12 +943,13 @@ view {
 
 /* 自定义导航栏 */
 .search-box {
+	width: 486rpx;
 	height: 72rpx;
-	padding-left: 134rpx;
+	padding-left: 28rpx;
 	z-index: 111;
 }
 .search-wrap {
-	width: 396rpx;
+	width: 486rpx;
 	height: 72rpx;
 }
 /* 导航栏轮播图 */
@@ -1136,6 +1139,8 @@ view {
 .hot {
 	display: flex;
 	flex-direction: column;
+	background-color: #FFFFFF;
+	
 }
 
 .hot .hot-top {
@@ -1156,22 +1161,25 @@ view {
 }
 
 .hot-top .ht-r {
-	width: 152rpx;
-	height: 28rpx;
-	font-size: 28rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: rgba(96, 98, 102, 1);
-	line-height: 28rpx;
+	width: 94rpx;
+	height: 42rpx;
+	background: #EDEFF2;
+	border-radius: 24rpx;
+	font-size: 22rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #606266;
+	line-height: 42rpx;
 	margin: 54rpx 32rpx 0 0;
 	display: flex;
 	align-items: center;
+	justify-content: center;
 }
 
 .moreIcon {
-	width: 28rpx;
-	height: 28rpx;
-	margin-left: 12rpx;
+	width: 14rpx;
+	height: 14rpx;
+	margin-left: 4rpx;
 }
 
 /* 热门景点图 */
@@ -1185,24 +1193,27 @@ view {
 	margin-left: 32rpx;
 }
 .dqwz{
-	width: 200rpx;
+	width: 216rpx;
 	height: 180rpx;
-	border-radius: 32rpx;
+	border-radius: 16rpx;
+	border: 1px solid #FAAD14;
 	position: relative;
-	border: 1rpx solid #e24b00;
 }
 .dqwzImg{
 	width: 100%;
 	height: 100%;
-	border-radius: 32rpx;
+	border-radius: 16rpx;
 	
 }
 .dqwzText{
 	position: absolute;
 	top: 50rpx;
-	left: 70rpx;
-	font-size: 28rpx;
+	left: 78rpx;
+	font-size: 32rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
 	color: #FFFFFF;
+	line-height: 32rpx;
 }
 .adressBox{
 	display: flex;
@@ -1211,54 +1222,65 @@ view {
 	top: 100rpx;
 	left: 40rpx;
 	color: #FFFFFF;
-	padding: 8rpx;
-	font-size: 24rpx;
-	background-color: #ef4f00;
-	border-radius: 10rpx;
+	padding: 8rpx 16rpx;
+	font-size: 20rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #303133;
+	line-height: 20rpx;
+	width: 140rpx;
+	height: 40rpx;
+	background: #FFE512;
+	border-radius: 11px;
 }
 .zhishi{
-	width: 20rpx;
-	height: 20rpx;
+	width: 24rpx;
+	height: 24rpx;
+	margin-right: 4rpx;
 }
 
 
 .hotCity{
-	width: 200rpx;
+	width: 216rpx;
 	height: 180rpx;
-	border-radius: 32rpx;
-	margin-left: 32rpx;
+	border-radius: 16rpx;
+	margin-left: 24rpx;
 	position: relative;
+	
 }
 .hotCityImg{
 	width: 100%;
 	height: 100%;
-	border-radius: 32rpx;
+	border-radius: 16rpx;
 }
 .hotCityText{
-	width: 126rpx;
-	height: 28rpx;
+	font-size: 32rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
 	color: #FFFFFF;
+	line-height: 32rpx;
 	position: absolute;
 	left: 50%; 
 	top: 50%;
-	font-size: 28rpx;
-	margin-top: -14rpx;
-	margin-left: -48rpx;
+	margin-top: -16rpx;
+	margin-left: -32rpx;
 }
 .hotCityText1{
-	width: 126rpx;
-	height: 28rpx;
+	font-size: 32rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
 	color: #FFFFFF;
+	line-height: 32rpx;
 	position: absolute;
 	left: 50%; 
 	top: 50%;
-	font-size: 28rpx;
-	margin-top: -14rpx;
-	margin-left: -60rpx;
+	margin-top: -16rpx;
+	margin-left: -32rpx;
 }
 .cityRank{
 	margin-top: 28rpx;
 	margin-left: 32rpx;
+	margin-bottom: 28rpx;
 	display: flex;
 	align-items: center;
 }

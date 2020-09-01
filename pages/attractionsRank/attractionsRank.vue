@@ -12,7 +12,7 @@
 				<image src="../../static/images/rightleaves.svg" mode=""></image>
 			</view>
 			<view class="rankTime">
-				领途羊景点榜单 · 8月27日更新
+				领途羊景点榜单 · {{month}}月{{day}}日更新
 			</view>
 			<view class="boxshow">
 			</view>
@@ -275,10 +275,12 @@
 				current: 0, // 预设当前项的值
 				menuHeight: 0, // 左边菜单的高度
 				menuItemHeight: 0, // 左边菜单item的高度
+				month:new Date().getMonth() + 1,
+				day:new Date().getDate()
 			}
 		},
 		onLoad() {
-			
+			// this.getTime()
 		},
 		
 		methods: {
