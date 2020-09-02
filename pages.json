@@ -18,6 +18,15 @@
 			}
 		},
 		{
+		    "path" : "pages/provinces/provinces",
+		    "style" : {
+				"navigationStyle":"custom"
+			}
+		},
+		
+		
+		
+		{
 		    "path" : "pages/login/login",
 		    "style" : {
 				"navigationBarBackgroundColor":"#FFFFFF",

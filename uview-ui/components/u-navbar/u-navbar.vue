@@ -129,7 +129,7 @@
 				type: Object,
 				default () {
 					return {
-						background: '#ffffff'
+						background: '',
 					}
 				}
 			},
@@ -185,6 +185,7 @@
 				Object.assign(style, this.background);
 				return style;
 			},
+			
 			// 导航中间的标题的样式
 			titleStyle() {
 				let style = {};
@@ -228,6 +229,8 @@
 					uni.navigateBack();
 				}
 			}
+			
+			
 		}
 	};
 </script>
