@@ -7,11 +7,7 @@ import store from './store'
 Vue.prototype.$store = store
 import uView from "uview-ui";
 Vue.use(uView);
-<<<<<<< HEAD
-Vue.prototype.globalUrl = 'https://devapi.lingtuyang.cn/v2'
-=======
 Vue.prototype.globalUrl = globalUrl
->>>>>>> feature/sz
 // import http from './api/api.js'
 // import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue"
 // Vue.component('mescroll-uni', MescrollUni)	
