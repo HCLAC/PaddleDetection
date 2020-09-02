@@ -133,7 +133,7 @@
 			</u-navbar>
 			<!-- 城市 -->
 			<view class="nowcity">
-				<text>浙江</text>
+				<text>{{area.name}}</text>
 				<image src="../../static/images/more-down.svg" mode=""></image>
 			</view>
 			<!-- 城市选择列表 -->

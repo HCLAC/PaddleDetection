@@ -38,7 +38,7 @@
 							<view class="contentHeader">
 								<view class="title">{{attDetail.data.name}}</view>
 							</view>
-							<view class="contentRank" @click="toRank">
+							<view class="contentRank" @click="toRank()">
 								<view class="rankText">
 									{{attDetail.data.city}}市景点榜单·第{{attDetail.data.rank}}名
 								</view>
@@ -298,9 +298,12 @@ export default {
 				]);
 		},
 		toRank(){
+			var state_id = this.attDetail.data.state_id;
+			var city_id = this.attDetail.data.city_id;
+			// console.log('----',city_id)
 			uni.navigateTo({
-				url:'../attractionsRank/attractionsRank'
-			})
+				url: '/pages/attractionsRank/attractionsRank?state_id=' + state_id + '&city_id=' + city_id
+			});
 		},
 		back() {
 			uni.navigateBack({

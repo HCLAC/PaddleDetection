@@ -142,7 +142,7 @@
 			getResults(){
 				let res = uni.getStorageSync('article_id')
 				if(res){
-					this.list = res.data
+					this.list = res.data.article_list
 				}
 				// var that = this
 				// uni.getStorage({
