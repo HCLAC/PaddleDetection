@@ -40,7 +40,7 @@
 							</view>
 							<view class="contentRank" @click="toRank">
 								<view class="rankText">
-									{{attDetail.data.city}}市景点榜单·第三名
+									{{attDetail.data.city}}市景点榜单·第{{attDetail.data.rank}}名
 								</view>
 								<image src="../../static/images/icon-next.svg" mode=""></image>
 							</view>

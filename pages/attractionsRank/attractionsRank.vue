@@ -24,12 +24,10 @@
 				<image src="../../static/images/more-down.svg" mode=""></image>
 			</view>
 			<view class="cardList">
-				<view class="cards" v-for="(item,index) in  hotsiteslist" :key="index" >
+				<view class="cards" v-for="(item,index) in  hotsiteslist" :key="index" @click="toAtt(item.id)">
 					<view class="cardsleft">
-						<image :src="item.images[0]" mode=""></image>
-						<view class="rankNum">
-							TOP1
-						</view>
+						<image class="bigImg" :src="item.images[0]" mode=""></image>
+						<image class="rankImg " :src="`../../static/images/rank/top-${index+1}.svg`" mode=""></image>
 					</view>
 					<view class="cardsright">
 						<view class="title">
@@ -237,6 +235,13 @@
 					}
 				})
 			},
+			// 跳转景点详情页
+			toAtt(e) {
+				console.log('----------------', e);
+				uni.navigateTo({
+					url: '/pages/positionContent/positionContent?id=' + e
+				});
+			},
 			// 点击左边的栏目切换
 			async swichMenu(index) {
 				if (index == this.current) return;
@@ -437,7 +442,7 @@
 		border-radius: 16rpx;
 		position: relative;
 
-		image {
+		.bigImg {
 			width: 100%;
 			height: 100%;
 			border-radius: 16rpx;
@@ -445,16 +450,11 @@
 		}
 
 		.rankNum {
+			
+		}
+		.rankImg{
 			width: 88rpx;
 			height: 44rpx;
-			background: linear-gradient(90deg, #FF5A79 0%, #FF74B4 100%);
-			border-radius: 16rpx 0px 16rpx 0px;
-			font-size: 24rpx;
-			font-family: HelveticaNeue-Bold, HelveticaNeue;
-			font-weight: bold;
-			color: #FFFFFF;
-			line-height: 44rpx;
-			text-align: center;
 			position: absolute;
 			top: 0;
 			left: 0;

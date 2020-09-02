@@ -21,8 +21,10 @@
 		<view class="page-section ">
 			<view class="page-section-spacing">
 				<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14" >
-					<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
-						<image :src="bannerList[index].image" mode="scaleToFill" class="swiperImg"></image>
+					<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item"  >
+						<navigator :url="'/components/web-view/web-view?website='+item.url"  class="itemUrl">
+							<image :src="item.image" mode="scaleToFill" class="swiperImg" ></image>
+						</navigator>
 					</swiper-item>
 				</swiper>
 				<text class="bannerText">T r a v e l</text>
@@ -245,7 +247,8 @@ export default {
 				background: ''
 			},
 			indicatorDots:true,
-			areaList: null
+			areaList: null,
+			url:''
 		};
 	},
 
@@ -519,7 +522,11 @@ export default {
 				}
 			});
 		},
-
+		// 点击banner
+		toUrl(item){
+			console.log(111111)
+			var url = item.url;
+		},
 		// 跳转文章详情
 		onPageJump(e) {
 			console.log(e);
@@ -971,6 +978,10 @@ view {
 	height: 100%;
 }
 .swiper-item {
+	width: 100%;
+	height: 100%;
+}
+.itemUrl{
 	width: 100%;
 	height: 100%;
 }

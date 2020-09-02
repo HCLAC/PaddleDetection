@@ -79,70 +79,70 @@
 					<view class="rateBox" >
 						<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
 						<!-- 评分图标 -->
-						<view class="rateStart" v-if="rate == 5">
+						<view class="rateStart" v-if="item.rate == 5">
 							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
 						</view>
-						<view class="rateStart" v-if="rate == 4">
+						<view class="rateStart" v-if="item.rate == 4">
 							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 						</view>
-						<view class="rateStart" v-if="rate == 3">
+						<view class="rateStart" v-if="item.rate == 3">
 							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 						</view>
-						<view class="rateStart" v-if="rate == 2">
+						<view class="rateStart" v-if="item.rate == 2">
 							<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 						</view>
-						<view class="rateStart" v-if="rate == 1">
+						<view class="rateStart" v-if="item.rate == 1">
 							<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 						</view>
-						<view class="rateStart" v-if="rate == 4.5">
+						<view class="rateStart" v-if="item.rate == 4.5">
 							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1备份(3).svg" mode=""></image>
 						</view>
-						<view class="rateStart" v-if="rate == 3.5">
+						<view class="rateStart" v-if="item.rate == 3.5">
 							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1备份(2).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 						</view>
-						<view class="rateStart" v-if="rate == 2.5">
+						<view class="rateStart" v-if="item.rate == 2.5">
 							<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1备份(1).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 						</view>
-						<view class="rateStart" v-if="rate == 1.5">
+						<view class="rateStart" v-if="item.rate == 1.5">
 							<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 						</view>
-						<view class="rateStart" v-if="rate == 0.5">
+						<view class="rateStart" v-if="item.rate == 0.5">
 							<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
@@ -367,6 +367,16 @@
 				var city_id = this.item.city_id;
 				uni.navigateTo({
 					url: '/pages/attractionsRank/attractionsRank?state_id=' + state_id + '&city_id=' + city_id
+				});
+			},
+			// 跳转文章详情
+			onPageJump(e) {
+				console.log(e);
+				let id = e.currentTarget.id;
+				// debugger
+				// return
+				uni.navigateTo({
+					url: '/pages/contentdetail/contentdetail?article_id=' + id
 				});
 			},
 			// 点赞
