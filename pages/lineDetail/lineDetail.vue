@@ -227,10 +227,11 @@ import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import vTabs from '@/components/v-tabs/v-tabs';
 export default {
 	comments: {
-		uniNavBar,
+		uniNavBar
+	},
+	components: {
 		vTabs
 	},
-
 	data() {
 		return {
 			lineContent: null,
@@ -319,7 +320,7 @@ export default {
 
 				success: res => {
 					if (res.data.code == 0) {
-						console.log(res.data.data);
+						
 						res.data.data.content = res.data.data.content && res.data.data.content.length ? JSON.parse(res.data.data.content) : [];
 						console.log(res.data.data.content);
 						this.lineContent = res.data.data;
