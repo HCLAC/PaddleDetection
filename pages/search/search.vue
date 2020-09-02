@@ -319,17 +319,33 @@ export default {
 				// type:"GET",
 				success: (res)=> {
 					console.log('请求',res)
-					if (res.data.data && res.data.data.length) {
-						this.keywordList = [];
-						this.noResult = '有结果';
-						this.keywordList = this.drawCorrelativeKeyword(res.data.data, keyword);
-						this.isShowKeywordList = true;
-						this.isShowHt = false
-					} else {
-						this.keywordList = [];
-						this.noResult = '暂无结果';
-						this.isShowKeywordList = false;
-						this.isShowHt = false
+					if(res.data.code== 0){
+						if ((res.data.data.list && res.data.data.list.length) || (res.data.data.special )) {
+							this.keywordList = [];
+							let arr = []
+							if(res.data.data.special){
+								arr.push({...res.data.data.special})
+							}
+							if(res.data.data.list && res.data.data.list.length){
+								arr.concat(res.data.data.list)
+							}
+							console.log(arr)
+							debugger
+							this.noResult = '有结果';
+							this.keywordList = this.drawCorrelativeKeyword(res.data.data.list, keyword);
+							this.isShowKeywordList = true;
+							this.isShowHt = false
+						} else {
+							this.keywordList = [];
+							this.noResult = '暂无结果';
+							this.isShowKeywordList = false;
+							this.isShowHt = false
+						}
+					}else{
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						})
 					}
 				}
 			});
