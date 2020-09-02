@@ -270,7 +270,7 @@ export default {
 								uni.reLaunch({
 									url: '../mine/mine'
 								}),
-								uni.setStorageSync('Authorization', res.header.authorization);
+								uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
 								
 								uni.setStorageSync('nickName',res.data.data.mobile)
 								
@@ -335,7 +335,7 @@ export default {
 							uni.reLaunch({
 								url: '../mine/mine'
 							}),
-							uni.setStorageSync('Authorization', res.header.authorization);
+							uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
 
 						// uni.setStorage({
 						// 	// phone:data.phone
