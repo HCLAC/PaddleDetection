@@ -161,7 +161,7 @@
 				<view class="tripTitle">
 					行程路线
 				</view>
-				<view class="tripMore">
+				<view class="tripMore" @click="toLineMore()">
 					<view class="moreText">
 						更多
 					</view>
@@ -169,7 +169,7 @@
 				</view>
 			</view>
 			<view class="tripBox">
-				<view class="tripContent" v-for="(item,index) in routeHot" :key="index" >
+				<view class="tripContent" v-for="(item,index) in routeHot" :key="index" @click="getLineDetail(item)" >
 					<image class="tripImg" :src="item.image" mode=""></image>
 					<view class="tripText">
 						{{item.title}}
@@ -310,6 +310,13 @@
 					}
 				});
 			},
+			getLineDetail(item){
+				if(item.uuid){
+					uni.navigateTo({
+						url: '/pages/lineDetail/lineDetail?id=' + item.uuid
+					})
+				}
+				},
 			// 天气接口
 			getWeather(){
 				uni.request({
@@ -369,14 +376,11 @@
 					url: '/pages/attractionsRank/attractionsRank?state_id=' + state_id + '&city_id=' + city_id
 				});
 			},
-			// 跳转文章详情
-			onPageJump(e) {
-				console.log(e);
-				let id = e.currentTarget.id;
-				// debugger
-				// return
+			toLineMore(){
+				var state_id = this.item.state_id;
+				var city_id = this.item.city_id;
 				uni.navigateTo({
-					url: '/pages/contentdetail/contentdetail?article_id=' + id
+					url: '/pages/lineList/lineList?state_id=' + state_id + '&city_id=' + city_id
 				});
 			},
 			// 点赞

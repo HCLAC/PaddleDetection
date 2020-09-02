@@ -35,8 +35,8 @@
 			<view class="lineTitle">{{ lineContent.description }}</view>
 		</view>
 		<view class="lineDriver"></view>
-		<view :class="isFixed? 'fixTabs' : 'noFix' " >
-			<view style="width: 60%;" >
+		<view :class="isFixed ? 'fixTabs' : 'noFix'">
+			<view style="width: 60%;">
 				<v-tabs
 					inactive-color="#909399"
 					lineHeight="8rpx"
@@ -54,7 +54,6 @@
 			</view>
 		</view>
 		<view class="linePlan">
-			
 			<view class="planContent">
 				<u-time-line v-show="tabCurrent == 0">
 					<view v-for="(item, index) in lineContent.content" :key="index">
@@ -105,7 +104,7 @@
 											<text>{{ eve.title }}</text>
 										</view>
 										<view class="u-order-desc">{{ eve.description }}</view>
-										<view class="position" v-for="(pos, posIndex) in eve.position" :key="posIndex">
+										<view class="position" v-for="(pos, posIndex) in eve.position" :key="posIndex" @click="getPosition(pos)">
 											<view class="left">
 												<image :src="pos.cover_url" class="positionImg" mode=""></image>
 												<view class="imgTag">景点</view>
@@ -194,34 +193,31 @@
 						</view>
 					</view>
 				</u-time-line>
-				<view class="serverInfo" v-show="tabCurrent ==1">
+				<view class="serverInfo" v-show="tabCurrent == 1">
 					<view class="title">服务说明</view>
-					<view class="content">如果您喜欢我们的线路推荐，可以点击收藏并点赞哦， 我们会持续输出更好的线路设计。 如果您不想自己出行，可以联系我们的旅行管家，代您 定好交通、住宿、门票等事务，或者您可询问旅行管家 参加出发地团游或者当地团游，旅行管家都将逐一为您 联系，竭诚为您服务。 想了解更多，请点击下方的”联系管家“拨打管家电话吧~</view>
-					<view class="phone">
-						<image src="../../static/images/serverCall.svg" ></image>
-					</view>
+					<view class="content">{{ lineContent.description }}</view>
+					<view class="phone"><image src="../../static/images/serverCall.svg"></image></view>
 				</view>
 			</view>
-		<view class="bottom">
-							<!-- 分割线 -->
-							<view class="line"></view>
-							<!-- 登录 -->
-							<view class="contentBottom savepadding">
-								<view class="like" >
-									<image class="likeBtn" src="../../static/images/attheart.svg" ></image>
-		<!-- 							<image class="likeBtn" src="../../static/images/heart-actived.svg" ></image>
-		 -->							<view class="likeNum">{{lineContent.like_count}}</view>
-								</view>
-								<view class="fav" @click="lineFav(lineContent.uuid)" >
-									<image class="favBtn" src="../../static/images/shouchang.svg" </image>
-<!-- 									<image class="favBtn" src="../../static/images/fav-actived.svg" ></image>
- -->									<view class="favNum">{{lineContent.fav_count}}</view>
-								</view>
-								<view class="share" ><image src="../../static/images/fenxiang.svg"></image></view>
-								<view class=""><view class="loginButton" v-if="hasLogin" @click="login" >登录</view></view>
-							</view>
-						</view>
-					</view>	
+			<view class="bottom">
+				<!-- 分割线 -->
+				<view class="line"></view>
+				<!-- 登录 -->
+				<view class="contentBottom savepadding">
+					<view class="like">
+						<image v-show="!lineContent.fav" class="likeBtn" src="../../static/images/attheart.svg"></image>
+						<image v-show="lineContent.fav" class="likeBtn" src="../../static/images/heart-actived.svg"></image>
+						<view class="likeNum">{{ lineContent.like_count }}</view>
+					</view>
+					<view class="fav" @click="lineFav(lineContent.uuid)">
+						<image v-show="!lineContent.fav" class="favBtn" src="../../static/images/shouchang.svg"></image>
+						<image v-show="lineContent.fav" class="favBtn" src="../../static/images/fav-actived.svg"></image>
+						<view class="favNum">{{ lineContent.fav_count }}</view>
+					</view>
+					<view class="share"><image src="../../static/images/fenxiang.svg"></image></view>
+					<view class=""><view class="loginButton" v-if="!hasLogin" @click="login">登录</view></view>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -239,76 +235,78 @@ export default {
 		return {
 			lineContent: null,
 			current: 0,
-			tablist: ['参考路线','行程说明'],
+			tablist: ['参考行程', '服务说明'],
 			tabCurrent: 0,
 			hasLogin: uni.getStorageSync('Authorization'),
-			isFixed: false,
+			isFixed: false
 		};
 	},
 	onLoad(option) {
 		if (option.id) {
-		this.getDetail(option.id);
-		 }
+			this.getDetail(option.id);
+		}
 	},
 	onPageScroll(e) {
-		if(e.scrollTop>346.5){
-			this.isFixed = true
-		}else{
-			this.isFixed = false
+		if (e.scrollTop > 346.5) {
+			this.isFixed = true;
+		} else {
+			this.isFixed = false;
 		}
 	},
 	methods: {
 		tabChange(index) {
-			
 			this.tabCurrent = index;
 		},
 		change(e) {
 			this.current = e.detail.current;
 		},
-			
-		lineFav(id){
-		
-			if(!this.hasLogin){
+
+		lineFav(id) {
+			if (!this.hasLogin) {
 				uni.showToast({
 					title: '请先登录',
-					icon: 'none',
-					
-				})
+					icon: 'none'
+				});
 				uni.reLaunch({
 					url: '/pages/login/login'
-				})
-			}else{
-			uni.request({
-				url: this.globalUrl + '/user/favorite',
-				method: 'POST',
-				header:{
-					
-				},
-				data: {
-					uuid: id
-				},
-			
-				success: res => {
-					if (res.data.code == 0) {
-						console.log(res.data.data)
-						debugger
-						res.data.data.content = res.data.data.content && res.data.data.content.length ? JSON.parse(res.data.data.content) : [];
-						console.log(res.data.data.content);
-						this.lineContent = res.data.data;
-					} else {
+				});
+			} else {
+				uni.request({
+					url: this.globalUrl + '/user/favorite',
+					method: 'POST',
+					header: {},
+					data: {
+						uuid: id
+					},
+
+					success: res => {
+						if (res.data.code == 0) {
+							console.log(res.data.data);
+							debugger;
+							res.data.data.content = res.data.data.content && res.data.data.content.length ? JSON.parse(res.data.data.content) : [];
+							console.log(res.data.data.content);
+							this.lineContent = res.data.data;
+						} else {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+						}
+					},
+					fail: error => {
 						uni.showToast({
-							title: res.data.msg,
+							title: '网络不给力，请稍后再试...',
 							icon: 'none'
 						});
 					}
-				},
-				fail: error => {
-					uni.showToast({
-						title: '网络不给力，请稍后再试...',
-						icon: 'none'
-					});
-				}
-			});
+				});
+			}
+		},
+		getPosition(pos) {
+			if (pos.id) {
+				uni.navigateTo({
+					url: '/pages/positionContent/positionContent?id=' + pos.id
+				});
 			}
 		},
 		getDetail(id) {
@@ -321,7 +319,7 @@ export default {
 
 				success: res => {
 					if (res.data.code == 0) {
-						console.log(res.data.data)
+						console.log(res.data.data);
 						res.data.data.content = res.data.data.content && res.data.data.content.length ? JSON.parse(res.data.data.content) : [];
 						console.log(res.data.data.content);
 						this.lineContent = res.data.data;
@@ -340,10 +338,10 @@ export default {
 				}
 			});
 		},
-		login(){
+		login() {
 			uni.reLaunch({
 				url: '/pages/login/login'
-			})
+			});
 		},
 		back() {
 			uni.navigateBack({
@@ -471,7 +469,6 @@ export default {
 .container {
 	padding: 40rpx 30rpx;
 
-	
 	.linePrice {
 		font-size: 24rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
@@ -742,14 +739,14 @@ export default {
 	padding-bottom: env(safe-area-inset-bottom);
 	box-sizing: content-box;
 }
-.serverInfo{
+.serverInfo {
 	width: 654rpx;
-	height: 416rpx;
-	background: #F8F8F8;
+	min-height: 416rpx;
+	background: #f8f8f8;
 	border-radius: 8rpx;
 	position: relative;
 	padding: 30rpx;
-	.title{
+	.title {
 		font-size: 28rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
@@ -757,7 +754,7 @@ export default {
 		line-height: 50rpx;
 		text-align: center;
 	}
-	.content{
+	.content {
 		margin-top: 10rpx;
 		font-size: 24rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
@@ -765,10 +762,10 @@ export default {
 		color: #606266;
 		line-height: 36rpx;
 	}
-	.phone{
+	.phone {
 		width: 92rpx;
 		height: 92rpx;
-		background: #FFE512;
+		background: #ffe512;
 		border-radius: 50%;
 		display: flex;
 		align-items: center;
@@ -777,13 +774,13 @@ export default {
 		right: -20rpx;
 		justify-content: center;
 		box-shadow: 0px 0px 12rpx 4rpx rgba(255, 229, 18, 0.35);
-		image{
+		image {
 			width: 46rpx;
 			height: 46rpx;
 		}
 	}
 }
- .fixTabs{
+.fixTabs {
 	position: fixed;
 	top: 135rpx;
 	padding-left: 10rpx;
@@ -791,16 +788,15 @@ export default {
 	left: 0;
 	z-index: 1000;
 	width: 100%;
-	background: #FFFFFF;
-	border-bottom: 2rpx solid #EEEEEE;
-	box-shadow: 0px 0px 12rpx 0rpx #EEEEEE;
+	background: #ffffff;
+	border-bottom: 2rpx solid #eeeeee;
+	box-shadow: 0px 0px 12rpx 0rpx #eeeeee;
 }
-.noFix{
+.noFix {
 	padding-left: 10rpx;
 	left: 0;
 	z-index: 1000;
 	width: 100%;
-	background: #FFFFFF;
-	
+	background: #ffffff;
 }
 </style>

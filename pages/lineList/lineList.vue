@@ -27,10 +27,17 @@ export default {
 	comments: {
 		uniNavBar
 	},
+	onLoad(option){
+		this.state_id = option.state_id ? option.state_id : null
+		this.city_id = option.city_id ? option.city_id : null
+		
+	},
 	mixins: [MescrollMixin],
 	data() {
 		return {
-			lineList: []
+			lineList: [],
+			state_id: null,
+			city_id: null
 		};
 	},
 	methods: {
@@ -45,7 +52,9 @@ export default {
 				method: 'GET',
 				data: {
 					count: pageSize,
-					page: pageNum
+					page: pageNum,
+					city_Id: this.city_id ? this.city_id : null,
+					state_id: this.state_id? this.state_id : null
 				},
 
 				success: res => {

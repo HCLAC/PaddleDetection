@@ -144,7 +144,7 @@ export default {
 
 			// 获取验证码
 			httpType.request({
-				url: 'user/sendcaptcha',
+				url: '/user/sendcaptcha',
 				data: {
 					mobile: this.phone
 				},
@@ -270,7 +270,8 @@ export default {
 								uni.reLaunch({
 									url: '../mine/mine'
 								}),
-								uni.setStorageSync('Authorization', res.header.Authorization);
+								uni.setStorageSync('Authorization', res.header.authorization);
+								
 								uni.setStorageSync('nickName',res.data.data.mobile)
 								
 						}else{
@@ -334,7 +335,7 @@ export default {
 							uni.reLaunch({
 								url: '../mine/mine'
 							}),
-							uni.setStorageSync('Authorization', res.header.Authorization);
+							uni.setStorageSync('Authorization', res.header.authorization);
 
 						// uni.setStorage({
 						// 	// phone:data.phone
