@@ -445,6 +445,8 @@ export default {
 	border-radius: 58rpx;
 	margin-top: 150rpx;
 	font-size: 36rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
 	color: #303133;
 	line-height: 100rpx;
 	opacity:1 !important

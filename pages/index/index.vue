@@ -52,7 +52,7 @@
 				<view class="hot">
 					<view class="hot-top">
 						<text class="ht-l">热门目的地</text>
-						<view class="ht-r" @click="lookAll">
+						<view class="ht-r" @click="showCity">
 							更多
 							<image src="../../static/images/more-right.svg" class="moreIcon" mode=""></image>
 						</view>
@@ -585,6 +585,7 @@ export default {
 		// 		}
 		// 	})
 		// },
+		
 		lookAll() {
 			if (this.item == undefined || null) {
 				var city = uni.getStorageSync('city_id');

@@ -61,7 +61,11 @@
 		methods: {
 			getHotCity() {
 				uni.request({
-					url: this.globalUrl+ '/city/hot',
+					url: this.globalUrl+ '/area/list',
+					data:{
+						page:1,
+						count:20
+					},
 					method: "GET",
 					success: (res) => {
 						console.log(res)

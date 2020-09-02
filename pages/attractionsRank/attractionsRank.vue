@@ -8,7 +8,7 @@
 			</view>
 			<view class="content">
 				<image src="../../static/images/leftleaves.svg" mode=""></image>
-				<text>{{area.name}}热门景点</text>
+				<text>{{name}}热门景点</text>
 				<image src="../../static/images/rightleaves.svg" mode=""></image>
 			</view>
 			<view class="rankTime">
@@ -19,9 +19,11 @@
 		</u-navbar>
 		<!-- 排行 -->
 		<view class="rankContent">
-			<view class="city" @click="show = true">
-				<text>{{area.name}}</text>
-				<image src="../../static/images/more-down.svg" mode=""></image>
+			<view class="city" @click="show = true" >
+				<view class="" @click="getCity">
+					<text class="cityname">{{name}}</text>
+					<image src="../../static/images/more-down.svg" mode=""></image>
+				</view>
 			</view>
 			<view class="cardList">
 				<view class="cards" v-for="(item,index) in  hotsiteslist" :key="index" @click="toAtt(item.id)">
@@ -133,28 +135,28 @@
 			</u-navbar>
 			<!-- 城市 -->
 			<view class="nowcity">
-				<text>{{area.name}}</text>
+				<text>{{name}}</text>
 				<image src="../../static/images/more-down.svg" mode=""></image>
 			</view>
 			<!-- 城市选择列表 -->
 			<view class="u-menu-wrap">
 				<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
-					<view v-for="(item,index) in tabbar" :key="index" class="u-tab-item" :class="[current==index ? 'u-tab-item-active' : '']"
+					<view v-for="(item,index) in cityList" :key="index" class="u-tab-item" :class="[current==index ? 'u-tab-item-active' : '']"
 					 :data-current="index" @tap.stop="swichMenu(index)">
 						<text class="u-line-1">{{item.name}}</text>
 					</view>
 				</scroll-view>
-				<block v-for="(item,index) in tabbar" :key="index">
+				<block v-for="(item,index) in cityList" :key="index">
 					<scroll-view scroll-y class="right-box" v-if="current==index">
 						<view class="page-view">
 							<view class="class-item">
-								<view class="item-title">
+								<view class="item-title" @click="gethotsiteslist2(item)">
 									<text>{{item.name}}</text>
 								</view>
 								<view class="item-container">
-									<view class="thumb-box" v-for="(item1, index1) in item.foods" :key="index1">
+									<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
 										<image class="item-menu-image" :src="item1.icon" mode=""></image>
-										<view class="item-menu-name">{{item1.name}}</view>
+										<view class="item-menu-name" @click="gethotsiteslist1(item1)">{{item1.name}}</view>
 									</view>
 								</view>
 							</view>
@@ -167,18 +169,19 @@
 </template>
 
 <script>
-	import classifyData from '@/components/common/classify.data.js';
+	// import classifyData from '@/components/common/classify.data.js';
 	export default {
 		data() {
 			
 			return {
 				rate: 3.5,
 				show: false,
-				tabbar: classifyData,
+				// tabbar: classifyData,
 				scrollTop: 0, //tab标题的滚动条位置
 				current: 0, // 预设当前项的值
 				menuHeight: 0, // 左边菜单的高度
 				menuItemHeight: 0, // 左边菜单item的高度
+				name:null,
 				month: new Date().getMonth() + 1,
 				day: new Date().getDate(),
 				item: null,
@@ -188,7 +191,8 @@
 					background: 'url(https://devcache.lingtuyang.cn/areas/7245d209576a32ae1c31394e3b26d3d5.png) ',
 					backgroundSize:'cover',
 				},
-				hotsiteslist:null
+				hotsiteslist:null,
+				cityList:null
 			}
 		},
 		onLoad: function(option) {
@@ -196,7 +200,8 @@
 			console.log('cityid----', option.city_id)
 			this.item = option
 			this.getArea(),
-			this.gethotsiteslist()
+			this.gethotsiteslist(),
+			this.getCity()
 		},
 		
 		methods: {
@@ -214,9 +219,20 @@
 					success: (res) => {
 						console.log('省市信息', res)
 						this.area = res.data.data
+						this.name = this.area.name
 						console.log(this.imageUrl)
 						console.log(this.background)
 						this.background.background = 'url( ' + res.data.data.image + ') no-repeat'
+					}
+				})
+			},
+			// 获取全国城市
+			getCity(){
+				uni.request({
+					url:this.globalUrl + '/area/guide',
+					success: (res) => {
+						console.log('获取全国城市',res)
+						this.cityList = res.data.data.areas
 					}
 				})
 			},
@@ -232,6 +248,38 @@
 					success: (res) => {
 						console.log('热门景点==',res)
 						this.hotsiteslist = res.data.data.list
+					}
+				})
+			},
+			gethotsiteslist1(item1){
+				uni.request({
+					url:this.globalUrl + '/site/hotsiteslist',
+					data:{
+						state_id: item1.state_id,
+						city_id: item1.city_id,
+						page:1
+					},
+					success: (res) => {
+						console.log('切换热门景点==',res)
+						this.hotsiteslist = null
+						this.hotsiteslist = res.data.data.list
+						this.name = item1.name
+					}
+				})
+			},
+			gethotsiteslist2(item){
+				uni.request({
+					url:this.globalUrl + '/site/hotsiteslist',
+					data:{
+						state_id: item.state_id,
+						city_id: item.city_id,
+						page:1
+					},
+					success: (res) => {
+						console.log('切换热门景点==',res)
+						this.hotsiteslist = null
+						this.hotsiteslist = res.data.data.list
+						this.name = item.name
 					}
 				})
 			},
@@ -348,10 +396,10 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 64rpx;
+		font-size: 56rpx;
 		font-family: AlibabaPuHuiTiM;
 		color: rgba(255, 255, 255, 1);
-		line-height: 64rpx;
+		line-height: 56rpx;
 		letter-spacing: 2rpx;
 		background: url(../../static/images/TRAVEL.svg) no-repeat 4rpx 4rpx;
 
@@ -387,7 +435,7 @@
 	}
 
 	.rankContent {
-		width: 730rpx;
+		// width: 730rpx;
 		height: 1604rpx;
 		margin-left: 10rpx;
 		background: rgba(255, 255, 255, 1);
@@ -398,16 +446,17 @@
 	}
 
 	.city {
-		width: 124rpx;
+		display: inline-block;
+		min-width: 124rpx;
+		max-width: 324rpx;
 		height: 60rpx;
 		background: #FFE512;
 		border-radius: 30rpx;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		// align-items: center;
+		// justify-content: center;
 		margin: 28rpx;
-
-		text {
+		padding: 14rpx 16rpx 14rpx 20rpx;
+		.cityname {
 			height: 32rpx;
 			font-size: 32rpx;
 			font-family: PingFangSC-Medium, PingFang SC;

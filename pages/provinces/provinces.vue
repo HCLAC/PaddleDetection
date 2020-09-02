@@ -19,8 +19,8 @@
 				<view class="city">
 					{{item.name}}
 				</view>
-				<view class="change">
-					<view class="changeText">
+				<view class="change" @click="getCity">
+					<view class="changeText" @click="show = true">
 						切换
 					</view>
 					<image class="changeIcon" src="../../static/images/more-down.svg" mode=""></image>
@@ -252,6 +252,49 @@
 				</view>
 			</view>
 		</view>
+		<!-- 城市选择弹窗 -->
+		<u-popup v-model="show" mode="top" height="383px">
+			<u-navbar :is-back="false">
+				<view class="slot-wrap">
+					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+				</view>
+				<view class="navtitle">
+					领途羊
+				</view>
+			</u-navbar>
+			<!-- 城市 -->
+			<view class="nowcity">
+				<text>{{name}}</text>
+				<image src="../../static/images/more-down.svg" mode=""></image>
+			</view>
+			<!-- 城市选择列表 -->
+			<view class="u-menu-wrap">
+				<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
+					<view v-for="(item,index) in cityList" :key="index" class="u-tab-item" :class="[current==index ? 'u-tab-item-active' : '']"
+					 :data-current="index" @tap.stop="swichMenu(index)">
+						<text class="u-line-1">{{item.name}}</text>
+					</view>
+				</scroll-view>
+				<block v-for="(item,index) in cityList" :key="index">
+					<scroll-view scroll-y class="right-box" v-if="current==index">
+						<view class="page-view">
+							<view class="class-item">
+								<view class="item-title" @click="gethotsiteslist2(item)">
+									<text>{{item.name}}</text>
+								</view>
+								<view class="item-container">
+									<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
+										<image class="item-menu-image" :src="item1.icon" mode=""></image>
+										<view class="item-menu-name" @click="gethotsiteslist1(item1)">{{item1.name}}</view>
+									</view>
+								</view>
+							</view>
+						</view>
+					</scroll-view>
+				</block>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
@@ -265,7 +308,9 @@
 				weather:null,
 				item:null,
 				siteHot:null,
-				routeHot:null
+				routeHot:null,
+				show: false,
+				cityList:null
 				
 			};
 		},
@@ -378,6 +423,63 @@
 				uni.navigateTo({
 					url: '/pages/contentdetail/contentdetail?article_id=' + id
 				});
+			},
+			// 获取全国城市
+			getCity(){
+				uni.request({
+					url:this.globalUrl + '/area/guide',
+					success: (res) => {
+						console.log('获取全国城市',res)
+						this.cityList = res.data.data.areas
+					}
+				})
+			},
+			// 获取热门景点
+			gethotsiteslist(){
+				uni.request({
+					url:this.globalUrl + '/site/hotsiteslist',
+					data:{
+						state_id: this.item.state_id,
+						city_id: this.item.city_id,
+						page:1
+					},
+					success: (res) => {
+						console.log('热门景点==',res)
+						this.hotsiteslist = res.data.data.list
+					}
+				})
+			},
+			gethotsiteslist1(item1){
+				uni.request({
+					url:this.globalUrl + '/site/hotsiteslist',
+					data:{
+						state_id: item1.state_id,
+						city_id: item1.city_id,
+						page:1
+					},
+					success: (res) => {
+						console.log('切换热门景点==',res)
+						this.hotsiteslist = null
+						this.hotsiteslist = res.data.data.list
+						this.name = item1.name
+					}
+				})
+			},
+			gethotsiteslist2(item){
+				uni.request({
+					url:this.globalUrl + '/site/hotsiteslist',
+					data:{
+						state_id: item.state_id,
+						city_id: item.city_id,
+						page:1
+					},
+					success: (res) => {
+						console.log('切换热门景点==',res)
+						this.hotsiteslist = null
+						this.hotsiteslist = res.data.data.list
+						this.name = item.name
+					}
+				})
 			},
 			// 点赞
 			clickLike(e, index) {
@@ -885,5 +987,142 @@
 		font-weight: 400;
 		color: rgba(96, 98, 102, 1);
 		/* line-height:20rpx; */
+	}
+	// 弹窗
+	.navtitle {
+		font-size: 38rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #000000;
+		line-height: 38rpx;
+		margin-left: 180rpx;
+	}
+	
+	.nowcity {
+		margin: 40rpx;
+		display: flex;
+		align-items: center;
+		margin-left: 40rpx;
+	
+		text {
+			font-size: 28rpx;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 500;
+			color: #303133;
+			line-height: 28rpx;
+			margin-right: 8rpx;
+		}
+	
+		image {
+			width: 11.4rpx;
+			height: 11.4rpx;
+		}
+	}
+	
+	// 列表
+	.u-menu-wrap {
+		height: 574rpx;
+		flex: 1;
+		display: flex;
+		overflow: hidden;
+	}
+	
+	.u-search-inner {
+		background-color: rgb(234, 234, 234);
+		border-radius: 100rpx;
+		display: flex;
+		align-items: center;
+		padding: 10rpx 16rpx;
+	}
+	
+	.u-search-text {
+		font-size: 26rpx;
+		color: $u-tips-color;
+		margin-left: 10rpx;
+	}
+	
+	.u-tab-view {
+		width: 200rpx;
+		height: 100%;
+	}
+	
+	.u-tab-item {
+		height: 110rpx;
+		background: #f6f6f6;
+		box-sizing: border-box;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 26rpx;
+		color: #444;
+		font-weight: 400;
+		line-height: 1;
+	}
+	
+	.u-tab-item-active {
+		position: relative;
+		color: #000;
+		font-size: 30rpx;
+		font-weight: 600;
+		background: #fff;
+	}
+	
+	.u-tab-item-active::before {
+		content: "";
+		position: absolute;
+		border-left: 4px solid $u-type-primary;
+		height: 32rpx;
+		left: 0;
+		top: 39rpx;
+	}
+	
+	.u-tab-view {
+		height: 100%;
+	}
+	
+	.right-box {
+		background-color: rgb(250, 250, 250);
+	}
+	
+	.page-view {
+		padding: 16rpx;
+	}
+	
+	.class-item {
+		margin-bottom: 30rpx;
+		background-color: #fff;
+		padding: 16rpx;
+		border-radius: 8rpx;
+	}
+	
+	.item-title {
+		font-size: 26rpx;
+		color: $u-main-color;
+		font-weight: bold;
+	}
+	
+	.item-menu-name {
+		font-weight: normal;
+		font-size: 24rpx;
+		color: $u-main-color;
+	}
+	
+	.item-container {
+		display: flex;
+		flex-wrap: wrap;
+	}
+	
+	.thumb-box {
+		width: 33.333333%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		margin-top: 20rpx;
+	}
+	
+	.item-menu-image {
+		width: 120rpx;
+		height: 120rpx;
 	}
 </style>
