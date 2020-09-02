@@ -146,7 +146,7 @@
 			// 是否显示导航栏的下边框
 			borderBottom: {
 				type: Boolean,
-				default: true
+				default: false
 			},
 			zIndex: {
 				type: [String, Number],
