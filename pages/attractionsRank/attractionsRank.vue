@@ -155,7 +155,7 @@
 								</view>
 								<view class="item-container">
 									<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
-										<image class="item-menu-image" :src="item1.icon" mode=""></image>
+										<!-- <image class="item-menu-image" :src="item1.icon" mode=""></image> -->
 										<view class="item-menu-name" @click="gethotsiteslist1(item1)">{{item1.name}}</view>
 									</view>
 								</view>
@@ -195,6 +195,9 @@
 			}
 		},
 		onLoad: function(option) {
+			if(option.state_id == undefined){
+				this.name = "全国"
+			}
 			console.log('stateid---', option.state_id)
 			console.log('cityid----', option.city_id)
 			this.item = option
@@ -696,19 +699,20 @@
 		font-weight: normal;
 		font-size: 24rpx;
 		color: $u-main-color;
+		margin-top: 52rpx;
 	}
 
 	.item-container {
-		display: flex;
-		flex-wrap: wrap;
+		// display: flex;
+		// flex-wrap: wrap;
 	}
 
 	.thumb-box {
 		width: 33.333333%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-direction: column;
+		// display: flex;
+		// align-items: center;
+		// justify-content: center;
+		// flex-direction: column;
 		margin-top: 20rpx;
 	}
 

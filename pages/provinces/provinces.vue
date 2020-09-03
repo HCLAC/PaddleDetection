@@ -441,18 +441,33 @@
 			},
 			// 跳转景点榜单页
 			toMore(){
-				var state_id = this.item.state_id;
-				var city_id = this.item.city_id;
-				uni.navigateTo({
-					url: '/pages/attractionsRank/attractionsRank?state_id=' + state_id + '&city_id=' + city_id
-				});
+				if(this.item == null){
+					uni.navigateTo({
+						url: '/pages/attractionsRank/attractionsRank'
+					});
+				}else{
+					var state_id = this.item.state_id;
+					var city_id = this.item.city_id;
+					uni.navigateTo({
+						url: '/pages/attractionsRank/attractionsRank?state_id=' + state_id + '&city_id=' + city_id
+					});
+				}
+				
 			},
+			// 线路列表
 			toLineMore(){
-				var state_id = this.item.state_id;
-				var city_id = this.item.city_id;
-				uni.navigateTo({
-					url: '/pages/lineList/lineList?state_id=' + state_id + '&city_id=' + city_id
-				});
+				if(this.item == null){
+					uni.navigateTo({
+						url: '/pages/lineList/lineList'
+					});
+				}else{
+					var state_id = this.item.state_id;
+					var city_id = this.item.city_id;
+					uni.navigateTo({
+						url: '/pages/lineList/lineList?state_id=' + state_id + '&city_id=' + city_id
+					});
+				}
+				
 			},
 			// 获取全国城市
 			getCity(){
