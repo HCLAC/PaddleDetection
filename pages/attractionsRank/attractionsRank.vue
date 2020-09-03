@@ -174,7 +174,6 @@
 		data() {
 			
 			return {
-				rate: 3.5,
 				show: false,
 				// tabbar: classifyData,
 				scrollTop: 0, //tab标题的滚动条位置

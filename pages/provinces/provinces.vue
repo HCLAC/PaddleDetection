@@ -179,79 +179,81 @@
 			
 		</view>
 		<!-- 正在旅行 -->
-		<view class="touring" id="touring">
-			<text class="tourtext">正在旅行</text>
-			<view class="wrap">
-				<view class="left">
-					<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
-						<view class="" @click="onPageJump" :id="item.article_id">
-							<view class="demo-top">
-								<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-								<view class="adress">
-									<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
-		
-									<view class="adressText">{{ item.location }}</view>
+		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+			<view class="touring" id="touring">
+				<text class="tourtext">正在旅行</text>
+				<view class="wrap">
+					<view class="left">
+						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
+							<view class="" @click="onPageJump" :id="item.article_id">
+								<view class="demo-top">
+									<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+									<view class="adress">
+										<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
+			
+										<view class="adressText">{{ item.location }}</view>
+									</view>
+								</view>
+								<view class="titleTip">
+									<view class="demo-tag">
+										<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+										<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+									</view>
+									<view class="demo-title">{{ item.title }}</view>
 								</view>
 							</view>
-							<view class="titleTip">
-								<view class="demo-tag">
-									<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-									<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+							<view class="demo-user">
+								<view class="userMessage">
+									<image class="userHeard" :src="item.avatar"></image>
+									<view class="userNikename">{{ item.author_name }}</view>
 								</view>
-								<view class="demo-title">{{ item.title }}</view>
-							</view>
-						</view>
-						<view class="demo-user">
-							<view class="userMessage">
-								<image class="userHeard" :src="item.avatar"></image>
-								<view class="userNikename">{{ item.author_name }}</view>
-							</view>
-							<view class="count" @click="clickLike(item, index)">
-								<view class="countImg">
-									<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-									<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+								<view class="count" @click="clickLike(item, index)">
+									<view class="countImg">
+										<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+										<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+									</view>
+									<view class="likeCount">{{ item.like_count || 0 }}</view>
 								</view>
-								<view class="likeCount">{{ item.like_count || 0 }}</view>
 							</view>
 						</view>
 					</view>
-				</view>
-				<view class="right">
-					<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
-						<view class="" @click="onPageJump" :id="item.article_id">
-							<view class="demo-top">
-								<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-								<view class="adress">
-									<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
-		
-									<view class="adressText">{{ item.location }}</view>
+					<view class="right">
+						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
+							<view class="" @click="onPageJump" :id="item.article_id">
+								<view class="demo-top">
+									<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+									<view class="adress">
+										<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
+			
+										<view class="adressText">{{ item.location }}</view>
+									</view>
+								</view>
+								<view class="titleTip">
+									<view class="demo-tag">
+										<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+										<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+									</view>
+									<view class="demo-title">{{ item.title }}</view>
 								</view>
 							</view>
-							<view class="titleTip">
-								<view class="demo-tag">
-									<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-									<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+							<view class="demo-user">
+								<view class="userMessage">
+									<image class="userHeard" :src="item.avatar"></image>
+									<view class="userNikename">{{ item.author_name }}</view>
 								</view>
-								<view class="demo-title">{{ item.title }}</view>
-							</view>
-						</view>
-						<view class="demo-user">
-							<view class="userMessage">
-								<image class="userHeard" :src="item.avatar"></image>
-								<view class="userNikename">{{ item.author_name }}</view>
-							</view>
-							<view class="count" @click="clickLike(item, index)">
-								<view class="countImg">
-									<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-									<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+								<view class="count" @click="clickLike(item, index)">
+									<view class="countImg">
+										<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+										<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+									</view>
+									<view class="likeCount">{{ item.like_count || 0 }}</view>
 								</view>
-								<view class="likeCount">{{ item.like_count || 0 }}</view>
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
-		</view>
+		</mescroll-body>
 		<!-- 城市选择弹窗 -->
 		<u-popup v-model="show" mode="top" height="383px">
 			<u-navbar :is-back="false">
@@ -300,17 +302,24 @@
 
 <script>
 	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
+	// 引入mescroll-mixins.js
+	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 	export default {
+		mixins: [MescrollMixin],
 		data() {
 			return {
-				rate:3.5,
+				scrollTop: 0, //tab标题的滚动条位置
+				current: 0, // 预设当前项的值
+				menuHeight: 0, // 左边菜单的高度
+				menuItemHeight: 0, // 左边菜单item的高度
 				list: [],
 				weather:null,
 				item:null,
 				siteHot:null,
 				routeHot:null,
 				show: false,
-				cityList:null
+				cityList:null,
+				name:null
 				
 			};
 		},
@@ -324,35 +333,41 @@
 			this.getTour(),
 			this.getWeather(),
 			this.getSiteHot(),
-			this.getRouteHot()
+			this.getRouteHot(),
+			this.getCity()
+			
 		},
 		methods:{
 			// 文章瀑布流接口
 			getTour(){
 				uni.request({
-					url: this.globalUrl + '/city/hot',
-					method: 'GET',
+					url: this.globalUrl + '/article/list',
+					data: {
+						state_id: this.item.state_id,
+						city_id: this.item.city_id,
+						count: 6,
+						page: 1
+					},
+					header: {
+						'Authorization': uni.getStorageSync('Authorization')
+					},
 					success: res => {
-						uni.request({
-							url: this.globalUrl + '/article/list',
-							data: {
-								state_id: this.item.state_id,
-								city_id: this.item.city_id,
-								count: 6,
-								page: 1
-							},
-							header: {
-								'Authorization': uni.getStorageSync('Authorization')
-							},
-							success: res => {
-								// console.log('未定位时获取的文章列表', res);
-								uni.setStorageSync('article_id', res.data);
-								// console.log('存储文章列表==',res.data)
-								this.list = res.data.data.list;
-								console.log('list=====',this.list)
-							}
-						});
+						// console.log('未定位时获取的文章列表', res);
+						uni.setStorageSync('article_id', res.data);
+						// console.log('存储文章列表==',res.data)
+						this.list = res.data.data.list;
+						console.log('list=====',this.list)
 					}
+				})
+			},
+			// 跳转文章详情
+			onPageJump(e) {
+				console.log(e);
+				let id = e.currentTarget.id;
+				// debugger
+				// return
+				uni.navigateTo({
+					url: '/pages/contentdetail/contentdetail?article_id=' + id
 				});
 			},
 			getLineDetail(item){
@@ -438,51 +453,70 @@
 					}
 				})
 			},
-			// 获取热门景点
-			gethotsiteslist(){
-				uni.request({
-					url:this.globalUrl + '/site/hotsiteslist',
-					data:{
-						state_id: this.item.state_id,
-						city_id: this.item.city_id,
-						page:1
-					},
-					success: (res) => {
-						console.log('热门景点==',res)
-						this.hotsiteslist = res.data.data.list
-					}
-				})
-			},
+			// 获取
+			
 			gethotsiteslist1(item1){
 				uni.request({
-					url:this.globalUrl + '/site/hotsiteslist',
+					url:this.globalUrl + '/area',
 					data:{
 						state_id: item1.state_id,
 						city_id: item1.city_id,
-						page:1
 					},
 					success: (res) => {
-						console.log('切换热门景点==',res)
-						this.hotsiteslist = null
-						this.hotsiteslist = res.data.data.list
-						this.name = item1.name
+						console.log('城市信息==',res)
+						this.item = res.data.data
+						this.getTour(),
+						this.getWeather(),
+						this.getSiteHot(),
+						this.getRouteHot()
 					}
 				})
 			},
 			gethotsiteslist2(item){
 				uni.request({
-					url:this.globalUrl + '/site/hotsiteslist',
+					url:this.globalUrl + '/area',
 					data:{
 						state_id: item.state_id,
 						city_id: item.city_id,
-						page:1
 					},
 					success: (res) => {
-						console.log('切换热门景点==',res)
-						this.hotsiteslist = null
-						this.hotsiteslist = res.data.data.list
-						this.name = item.name
+						console.log('省份信息==',res)
+						this.item = res.data.data
+						this.getTour(),
+						this.getWeather(),
+						this.getSiteHot(),
+						this.getRouteHot()
 					}
+				})
+			},
+			// 点击左边的栏目切换
+			async swichMenu(index) {
+				if (index == this.current) return;
+				this.current = index;
+				// 如果为0，意味着尚未初始化
+				if (this.menuHeight == 0 || this.menuItemHeight == 0) {
+					await this.getElRect('menu-scroll-view', 'menuHeight');
+					await this.getElRect('u-tab-item', 'menuItemHeight');
+				}
+				// 将菜单菜单活动item垂直居中
+				this.scrollTop = index * this.menuItemHeight + this.menuItemHeight / 2 - this.menuHeight / 2;
+			},
+			// 获取一个目标元素的高度
+			getElRect(elClass, dataVal) {
+				new Promise((resolve, reject) => {
+					const query = uni.createSelectorQuery().in(this);
+					query.select('.' + elClass).fields({
+						size: true
+					}, res => {
+						// 如果节点尚未生成，res值为null，循环调用执行
+						if (!res) {
+							setTimeout(() => {
+								this.getElRect(elClass);
+							}, 10);
+							return;
+						}
+						this[dataVal] = res.height;
+					}).exec();
 				})
 			},
 			// 点赞
@@ -534,6 +568,87 @@
 				uni.switchTab({
 					url: '/pages/index/index'
 				});
+			},
+			/*下拉刷新的回调, 有三种处理方式:*/
+			downCallback() {
+				// 第1种: 请求具体接口
+				// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
+				this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+				// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
+				// this.mescroll.endSuccess()
+				// 此处仍可以继续写其他接口请求...
+				// 调用其他方法...
+			},
+			/*上拉加载的回调*/
+			upCallback(page) {
+				// mescroll.setPageSize(6)
+				var city = uni.getStorageSync('city_id');
+				// console.log('上拉刷新数据', city)
+				let pageNum = page.num; // 页码, 默认从1开始
+				console.log('pagem=num----', pageNum);
+				let pageSize = page.size; // 页长, 默认每页10条
+				var that = this;
+				uni.request({
+					url: this.globalUrl + '/city/hot',
+					method: 'GET',
+					success: res => {
+						uni.request({
+							url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
+							header: {
+								Authorization: uni.getStorageSync('Authorization')
+							},
+							success: data => {
+								console.log('data', data);
+								// 接口返回的当前页数据列表 (数组)
+								let curPageData = data.data.data.list;
+		
+								console.log('curPageData', curPageData);
+								// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+								let curPageLen = curPageData.length;
+								console.log('curPageLen', curPageLen);
+								// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+								let totalPage = data.data.data.total / pageSize;
+								// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+								let totalSize = data.data.data.total;
+								console.log('totalSize', totalSize);
+								// 接口返回的是否有下一页 (true/false)
+								// let hasNext = data.data.data.list;
+		
+								//设置列表数据
+								if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
+								this.list = this.list.concat(curPageData); //追加新数据
+								console.log('list-', this.list);
+								// 请求成功,隐藏加载状态
+								//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+								this.mescroll.endByPage(curPageLen, totalPage);
+		
+								//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+								// this.mescroll.endBySize(curPageLen, totalSize);
+		
+								//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+								//this.mescroll.endSuccess(curPageLen, hasNext);
+		
+								//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+								//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+								//如果传了hasNext,则翻到第二页即可显示无更多数据.
+								//this.mescroll.endSuccess(curPageLen);
+		
+								// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+								// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+								// setTimeout(() => {
+								// 	this.mescroll.endSuccess(curPageLen)
+								// }, 20)
+							},
+							fail: () => {
+								//  请求失败,隐藏加载状态
+								this.mescroll.endErr();
+							}
+						});
+					}
+				});
+				
+				// 此处仍可以继续写其他接口请求...
+				// 调用其他方法...
 			}
 		}
 	}
@@ -674,7 +789,7 @@
 		padding-left: 28rpx;
 	}
 	.contentTitle{
-		width: 144rpx;
+		// width: 144rpx;
 		height: 36rpx;
 		font-size: 36rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
@@ -760,7 +875,7 @@
 		background: #ffffff;
 	}
 	.tripTitle{
-		width: 144rpx;
+		// width: 144rpx;
 		height: 36rpx;
 		font-size: 36rpx;
 		font-family: PingFangSC-Medium, PingFang SC;

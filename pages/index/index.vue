@@ -66,7 +66,7 @@
 								<text class="dqwzText">{{cityName}}</text>
 								<view class="adressBox">
 									<image class="zhishi" src="../../static/images/Icon／Mapt.svg" mode=""></image>
-									<text class="dqwzText1">当前位置</text>
+									<text class="dqwzText1">{{dqdwText}}</text>
 								</view>
 								
 							</view>
@@ -225,7 +225,8 @@ export default {
 	mixins: [MescrollMixin],
 	data() {
 		return {
-			cityName: '正在定位',
+			cityName: '',
+			dqdwText:'当前位置',
 			province: '',
 			state_id: '',
 			city_id: '',
@@ -355,87 +356,45 @@ export default {
 							console.log('获取地址id', res);
 							// 地址未定义
 							if (res.data.code != 0) {
-								// 获取热门景点第一位
+								
 								uni.request({
-									url: this.globalUrl +'/city/hot',
-									method: 'GET',
+									url: this.globalUrl + '/article/list',
+									data: {
+										count: 6,
+										page: 1
+									},
+									header: {
+										'Authorization': uni.getStorageSync('Authorization')
+									},
 									success: res => {
-										console.log('热门城市===>', res.data.data);
-										this.cityName = res.data.data[0].name;
-										this.topHotCity = res.data.data[0];
-										console.log(this.topHotCity);
-										uni.request({
-											url: this.globalUrl+'/site/hot',
-											data: {
-												state_id: this.topHotCity.state_id,
-												city_id: this.topHotCity.city_id,
-												count: 3,
-												sort_by: 3
-											},
-											success: res => {
-												console.log('未定位时获取的热门景点=========', res);
-												// uni.setStorageSync('description',res.data)
-												this.hotAtt = res.data.data;
-											}
-										}),
-											uni.request({
-												url: this.globalUrl + '/article/list',
-												data: {
-													state_id: res.data.data[0].state_id,
-													city_id: res.data.data[0].city_id,
-													count: 6,
-													page: 1
-												},
-												// header: {
-												// 	'Authorization': uni.getStorageSync('Authorization')
-												// },
-												success: res => {
-													console.log('未定位时获取的文章列表', res);
-													uni.setStorageSync('article_id', res.data);
-													// console.log('存储文章列表==',res.data)
-													this.list = res.data.data.list;
-													// console.log('list=====',this.list)
-												}
-											});
+										console.log('未定位时获取的文章列表', res);
+										uni.setStorageSync('article_id', res.data);
+										// console.log('存储文章列表==',res.data)
+										this.list = res.data.data.list;
+										// console.log('list=====',this.list)
 									}
 								});
+								
 							} else {
 								uni.setStorageSync('city_id', res.data);
 								console.log('存储本地', res.data);
 								var city = uni.getStorageSync('city_id');
 								console.log('取数据', city);
 								uni.request({
-									// url:'http://192.168.43.156:8199/site/hot',
-									// url:'site/hot',
-									url: this.globalUrl + '/site/hot',
+									url: this.globalUrl + '/article/list',
 									data: {
-										state_id: city.data.state_id,
-										city_id: city.data.city_id,
-										count: 3,
-										sort_by: 3
+										count: 6,
+										page: 1
+									},
+									header: {
+										Authorization: uni.getStorageSync('Authorization')
 									},
 									success: res => {
-										console.log('热门景点', res);
-										this.hotAtt = res.data.data;
+										console.log('文章列表', res);
+										uni.setStorageSync('article_id', res.data);
+										this.list = res.data.data.list;
 									}
-								}),
-									uni.request({
-										url: this.globalUrl + '/article/list',
-										data: {
-											state_id: city.data.state_id,
-											city_id: city.data.city_id,
-											count: 6,
-											page: 1
-										},
-										header: {
-											Authorization: uni.getStorageSync('Authorization')
-										},
-										success: res => {
-											console.log('文章列表', res);
-											uni.setStorageSync('article_id', res.data);
-											this.list = res.data.data.list;
-										}
-									});
+								});
 							}
 						}
 					});
@@ -463,50 +422,37 @@ export default {
 						icon: 'none',
 						duration: 2000
 					});
-					// 获取热门景点第一位
+					this.dqdwText = '正在定位...',
 					uni.request({
-						url: this.globalUrl + '/city/hot',
-						method: 'GET',
+						url: this.globalUrl + '/article/list',
+						data: {
+							count: 6,
+							page: 1
+						},
+						header: {
+							'Authorization': uni.getStorageSync('Authorization')
+						},
 						success: res => {
-							console.log('热门城市===>', res.data.data);
-							this.cityName = res.data.data[0].name;
-							this.topHotCity = res.data.data[0];
-							console.log(this.topHotCity);
-							uni.request({
-								url: this.globalUrl + '/site/hot',
-								data: {
-									state_id: this.topHotCity.state_id,
-									city_id: this.topHotCity.city_id,
-									count: 3,
-									sort_by: 3
-								},
-								success: res => {
-									console.log('未定位时获取的热门景点=========', res);
-									// uni.setStorageSync('description',res.data)
-									this.hotAtt = res.data.data;
-								}
-							}),
-								uni.request({
-									url: this.globalUrl + '/article/list',
-									data: {
-										state_id: res.data.data[0].state_id,
-										city_id: res.data.data[0].city_id,
-										count: 6,
-										page: 1
-									},
-									// header: {
-									// 	'Authorization': uni.getStorageSync('Authorization')
-									// },
-									success: res => {
-										console.log('未定位时获取的文章列表', res);
-										uni.setStorageSync('article_id', res.data);
-										// console.log('存储文章列表==',res.data)
-										this.list = res.data.data.list;
-										// console.log('list=====',this.list)
-									}
-								});
+							console.log('未定位时获取的文章列表', res);
+							uni.setStorageSync('article_id', res.data);
+							// console.log('存储文章列表==',res.data)
+							this.list = res.data.data.list;
+							// console.log('list=====',this.list)
 						}
 					});
+					// 获取热门目的地
+					uni.request({
+						url:this.globalUrl + '/area/hot',
+						data:{
+							state: this.province,
+							city: this.city
+						},
+						success: (res) => {
+							console.log('热门目的地==',res)
+							this.areaList = res.data.data
+							console.log('areaList--',this.areaList)
+						}
+					})
 				}
 			});
 			
@@ -634,11 +580,21 @@ export default {
 			});
 		},
 		toProvinces(e){
-			var e = JSON.stringify(e)
 			console.log('--',e)
-			uni.navigateTo({
-				url:'/pages/provinces/provinces?id=' + e
-			})
+			if(e.state_id == 0){
+				uni.showToast({
+					title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
+					icon: 'none',
+					duration: 3000
+				});
+			}else{
+				var e = JSON.stringify(e)
+				uni.navigateTo({
+					url:'/pages/provinces/provinces?id=' + e
+				})
+			}
+			
+			
 		},
 		confirm() {
 			// uni.showToast({
@@ -673,17 +629,8 @@ export default {
 					url: this.globalUrl + '/city/hot',
 					method: 'GET',
 					success: res => {
-						console.log('热门城市===>', res.data.data);
-						this.cityName = res.data.data[0].name;
-						this.topHotCity = res.data.data[0];
-						console.log(this.topHotCity);
-
 						uni.request({
 							url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
-							data: {
-								state_id: res.data.data[0].state_id,
-								city_id: res.data.data[0].city_id
-							},
 							header: {
 								Authorization: uni.getStorageSync('Authorization')
 							},
@@ -741,7 +688,6 @@ export default {
 				if (city.code != 0) {
 					uni.request({
 						url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
-
 						header: {
 							Authorization: uni.getStorageSync('Authorization')
 						},
@@ -795,10 +741,6 @@ export default {
 					if (that.item == undefined || null) {
 						uni.request({
 							url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
-							data: {
-								state_id: city.data.state_id,
-								city_id: city.data.city_id
-							},
 							header: {
 								Authorization: uni.getStorageSync('Authorization')
 							},
@@ -852,10 +794,6 @@ export default {
 					} else {
 						uni.request({
 							url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
-							data: {
-								state_id: that.item.state_id,
-								city_id: that.item.city_id
-							},
 							header: {
 								Authorization: uni.getStorageSync('Authorization')
 							},
@@ -1236,11 +1174,11 @@ view {
 	left: 40rpx;
 	color: #FFFFFF;
 	padding: 8rpx 16rpx;
-	font-size: 20rpx;
+	font-size: 16rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #303133;
-	line-height: 20rpx;
+	line-height: 16rpx;
 	width: 140rpx;
 	height: 40rpx;
 	background: #FFE512;

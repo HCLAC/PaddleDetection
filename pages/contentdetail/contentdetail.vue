@@ -134,7 +134,7 @@ export default {
 	created() {
 		
 		_this = this 
-		_this.getOrder();
+		this.getOrder();
 	},
 
 	methods: {
@@ -192,7 +192,7 @@ export default {
 			// }
 			uni.request({
 				// url:'article',
-				url: this.globalUrl+ '/article',
+				url: this.globalUrl + '/article',
 				data: {
 					article_id: e.article_id
 				},
@@ -249,7 +249,7 @@ export default {
 				header: {
 					Authorization: uni.getStorageSync('Authorization')
 				},
-				success: function(res) {
+				success: (res)=> {
 					console.log('点赞', res);
 					if (res.data.code != 0) {
 						// debugger
@@ -320,7 +320,7 @@ export default {
 				header: {
 					Authorization: uni.getStorageSync('Authorization')
 				},
-				success: function(res) {
+				success: (res)=> {
 					console.log('收藏', res);
 					if (res.data.code != 0) {
 						// debugger
