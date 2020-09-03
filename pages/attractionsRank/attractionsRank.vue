@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<u-navbar :is-back="false"  :class="navbar" :is-fixed="true" >
+		<u-navbar :is-back="false"  class="navbar" :is-fixed="true" >
 			<view class="slot-wrap">
 				<image class="fanhui" src="../../static/images/icon-fanhui-white.svg" @click="back" />
 				<image class="fhsy" src="../../static/images/icon-fhsy-white.svg" @click="home" />
@@ -201,6 +201,7 @@
 				area: null,
 				hotsiteslist:null,
 				cityList:null
+				
 			}
 		},
 		onLoad: function(option) {
@@ -482,6 +483,7 @@
 <style lang="scss" scoped>
 	// 自定义导航栏样式
 	.navBar {
+		// background-color: #ff5500 !important;
 		// background-size:100% 100%;
 	}
 	.slot-wrap{
