@@ -164,6 +164,7 @@
 				statusBarHeight: systemInfo.statusBarHeight
 			};
 		},
+		
 		computed: {
 			// 导航栏内部盒子的样式
 			navbarInnerStyle() {
@@ -258,7 +259,7 @@
 		display: flex;
 		justify-content: space-between;
 		position: relative;
-		// align-items: center;
+		align-items: center;
 	}
 
 	.u-back-wrap {
@@ -307,7 +308,7 @@
 	.u-slot-content {
 		flex: 1;
 		display: flex;
-		// align-items: center;
+		align-items: center;
 		padding-top: 8rpx;
 	}
 </style>

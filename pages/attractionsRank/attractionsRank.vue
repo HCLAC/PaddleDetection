@@ -1,11 +1,14 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<u-navbar :is-back="false" :background="background" class="navbar" height="176">
+		<u-navbar :is-back="false"  :class="navbar" :is-fixed="true" >
 			<view class="slot-wrap">
 				<image class="fanhui" src="../../static/images/icon-fanhui-white.svg" @click="back" />
 				<image class="fhsy" src="../../static/images/icon-fhsy-white.svg" @click="home" />
 			</view>
+		</u-navbar>
+		<view class="bgBox">
+			<image :src="banner" mode="" class="bannerImg"></image>
 			<view class="content">
 				<image src="../../static/images/leftleaves.svg" mode=""></image>
 				<text>{{name}}热门景点</text>
@@ -16,112 +19,120 @@
 			</view>
 			<view class="boxshow">
 			</view>
-		</u-navbar>
+		</view>
+		
 		<!-- 排行 -->
-		<view class="rankContent">
-			<view class="city" @click="show = true" >
-				<view class="" @click="getCity">
-					<text class="cityname">{{name}}</text>
-					<image src="../../static/images/more-down.svg" mode=""></image>
-				</view>
-			</view>
-			<view class="cardList">
-				<view class="cards" v-for="(item,index) in  hotsiteslist" :key="index" @click="toAtt(item.id)">
-					<view class="cardsleft">
-						<image class="bigImg" :src="item.images[0]" mode=""></image>
-						<image class="rankImg " :src="`../../static/images/rank/top-${index+1}.svg`" mode=""></image>
-					</view>
-					<view class="cardsright">
-						<view class="title">
-							{{item.name}}
-						</view>
-						<view class="contentText">
-							{{item.description}}
-						</view>
-						<view class="rateBox">
-							<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
-							<!-- 评分图标 -->
-							<view class="rateStart" v-if="item.rate == 5">
-								<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-if="item.rate == 4">
-								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-if="item.rate == 3">
-								<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-if="item.rate == 2">
-								<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-if="item.rate == 1">
-								<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-if="item.rate == 4.5">
-								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1备份(3).svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-if="item.rate == 3.5">
-								<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1备份(2).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-if="item.rate == 2.5">
-								<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1备份(1).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-if="item.rate == 1.5">
-								<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-if="item.rate == 0.5">
-								<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							</view>
-							<!-- <u-rate :disabled="true" current="4"></u-rate> -->
-							<view class="rate">{{item.rate}} 星</view>
+		<!-- <mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit"  @up="upCallback"  :up="upOption"> -->
+		<swiper  :vertical="true" :duration="1000" class="rankContent">
+			<swiper-item>
+				<view >
+					<view class="city" @click="show = true" >
+						<view class="" @click="getCity">
+							<text class="cityname">{{name}}</text>
+							<image src="../../static/images/more-down.svg" mode=""></image>
 						</view>
 					</view>
+					<view class="cardList">
+						<view class="cards" v-for="(item,index) in  hotsiteslist" :key="index" @click="toAtt(item.id)">
+							<view class="cardsleft">
+								<image class="bigImg" :src="item.images[0]" mode=""></image>
+								<image class="rankImg " :src="`../../static/images/rank/top-${index+1}.svg`" mode=""></image>
+							</view>
+							<view class="cardsright">
+								<view class="title">
+									{{item.name}}
+								</view>
+								<view class="contentText">
+									{{item.description}}
+								</view>
+								<view class="rateBox">
+									<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
+									<!-- 评分图标 -->
+									<view class="rateStart" v-if="item.rate == 5">
+										<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+									</view>
+									<view class="rateStart" v-if="item.rate == 4">
+										<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+									</view>
+									<view class="rateStart" v-if="item.rate == 3">
+										<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+									</view>
+									<view class="rateStart" v-if="item.rate == 2">
+										<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+									</view>
+									<view class="rateStart" v-if="item.rate == 1">
+										<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+									</view>
+									<view class="rateStart" v-if="item.rate == 4.5">
+										<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1备份(3).svg" mode=""></image>
+									</view>
+									<view class="rateStart" v-if="item.rate == 3.5">
+										<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1备份(2).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+									</view>
+									<view class="rateStart" v-if="item.rate == 2.5">
+										<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1备份(1).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+									</view>
+									<view class="rateStart" v-if="item.rate == 1.5">
+										<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+									</view>
+									<view class="rateStart" v-if="item.rate == 0.5">
+										<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+									</view>
+									<!-- <u-rate :disabled="true" current="4"></u-rate> -->
+									<view class="rate">{{item.rate}} 星</view>
+								</view>
+							</view>
+						</view>
+						
+					</view>
 				</view>
+				<view class="shareBox">
+					<image src="../../static/images/shareImg.svg" mode="" @click="share"></image>
+				</view>
+			</swiper-item>
+		</swiper>
 				
-			</view>
-		</view>
-		<view class="shareBox">
-			<image src="../../static/images/shareImg.svg" mode="" @click="share"></image>
-		</view>
+		<!-- </mescroll-body> -->
 		<!-- 城市选择弹窗 -->
 		<u-popup v-model="show" mode="top" height="383px">
 			<u-navbar :is-back="false">
@@ -170,12 +181,15 @@
 
 <script>
 	// import classifyData from '@/components/common/classify.data.js';
+	// 引入mescroll-mixins.js
+	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 	export default {
+		mixins: [MescrollMixin],
 		data() {
 			
 			return {
 				show: false,
-				// tabbar: classifyData,
+				banner: '',
 				scrollTop: 0, //tab标题的滚动条位置
 				current: 0, // 预设当前项的值
 				menuHeight: 0, // 左边菜单的高度
@@ -185,11 +199,6 @@
 				day: new Date().getDate(),
 				item: null,
 				area: null,
-				background: {
-					// backgroundColor: '#001f3f',
-					background: 'url(https://devcache.lingtuyang.cn/areas/7245d209576a32ae1c31394e3b26d3d5.png) ',
-					backgroundSize:'cover',
-				},
 				hotsiteslist:null,
 				cityList:null
 			}
@@ -224,7 +233,7 @@
 						this.name = this.area.name
 						console.log(this.imageUrl)
 						console.log(this.background)
-						this.background.background = 'url( ' + res.data.data.image + ') no-repeat'
+						this.banner = res.data.data.image
 					}
 				})
 			},
@@ -266,6 +275,7 @@
 						this.hotsiteslist = null
 						this.hotsiteslist = res.data.data.list
 						this.name = item1.name
+						this.banner = res.data.data.banner
 					}
 				})
 			},
@@ -282,6 +292,7 @@
 						this.hotsiteslist = null
 						this.hotsiteslist = res.data.data.list
 						this.name = item.name
+						this.banner = res.data.data.banner
 					}
 				})
 			},
@@ -323,7 +334,131 @@
 				})
 			},
 
-
+			/*上拉加载的回调*/
+			upCallback(page) {
+				// mescroll.setPageSize(6)
+				// var city = uni.getStorageSync('city_id');
+				// console.log('上拉刷新数据', city)
+				let pageNum = page.num; // 页码, 默认从1开始
+				console.log('pagem=num----', pageNum);
+				let pageSize = page.size; // 页长, 默认每页6条
+				var that = this;
+				if(that.item == null ){
+					uni.request({
+						url: this.globalUrl + '/site/hotsiteslist?page=' + pageNum + '&count=' + pageSize,
+						header: {
+							Authorization: uni.getStorageSync('Authorization')
+						},
+						success: data => {
+							console.log('data', data);
+							// 接口返回的当前页数据列表 (数组)
+							let curPageData = data.data.data.list;
+						
+							console.log('curPageData', curPageData);
+							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+							let curPageLen = curPageData.length;
+							console.log('curPageLen', curPageLen);
+							// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+							let totalPage = data.data.data.total / pageSize;
+							// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+							let totalSize = data.data.data.total;
+							console.log('totalSize', totalSize);
+							// 接口返回的是否有下一页 (true/false)
+							// let hasNext = data.data.data.list;
+						
+							//设置列表数据
+							if (page.num == 1) this.hotsiteslist = []; //如果是第一页需手动置空列表
+							this.hotsiteslist = this.hotsiteslist.concat(curPageData); //追加新数据
+							console.log('hotsiteslist', this.hotsiteslist);
+							// 请求成功,隐藏加载状态
+							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+							this.mescroll.endByPage(curPageLen, totalPage);
+						
+							//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+							// this.mescroll.endBySize(curPageLen, totalSize);
+						
+							//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+							//this.mescroll.endSuccess(curPageLen, hasNext);
+						
+							//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+							//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+							//如果传了hasNext,则翻到第二页即可显示无更多数据.
+							//this.mescroll.endSuccess(curPageLen);
+						
+							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+							// setTimeout(() => {
+							// 	this.mescroll.endSuccess(curPageLen)
+							// }, 20)
+						},
+						fail: () => {
+							//  请求失败,隐藏加载状态
+							this.mescroll.endErr();
+						}
+					});
+				}else{
+					uni.request({
+						url: this.globalUrl + '/site/hotsiteslist?page=' + pageNum + '&count=' + pageSize,
+						data:{
+							state_id: that.item.state_id,
+							city_id: that.item.city_id,
+						},
+						header: {
+							Authorization: uni.getStorageSync('Authorization')
+						},
+						success: data => {
+							console.log('data', data);
+							// 接口返回的当前页数据列表 (数组)
+							let curPageData = data.data.data.list;
+						
+							console.log('curPageData', curPageData);
+							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+							let curPageLen = curPageData.length;
+							console.log('curPageLen', curPageLen);
+							// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+							let totalPage = data.data.data.total / pageSize;
+							// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+							let totalSize = data.data.data.total;
+							console.log('totalSize', totalSize);
+							// 接口返回的是否有下一页 (true/false)
+							// let hasNext = data.data.data.list;
+						
+							//设置列表数据
+							if (page.num == 1) this.hotsiteslist = []; //如果是第一页需手动置空列表
+							this.hotsiteslist = this.hotsiteslist.concat(curPageData); //追加新数据
+							console.log('hotsiteslist', this.hotsiteslist);
+							// 请求成功,隐藏加载状态
+							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+							this.mescroll.endByPage(curPageLen, totalPage);
+						
+							//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+							// this.mescroll.endBySize(curPageLen, totalSize);
+						
+							//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+							//this.mescroll.endSuccess(curPageLen, hasNext);
+						
+							//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+							//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+							//如果传了hasNext,则翻到第二页即可显示无更多数据.
+							//this.mescroll.endSuccess(curPageLen);
+						
+							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+							// setTimeout(() => {
+							// 	this.mescroll.endSuccess(curPageLen)
+							// }, 20)
+						},
+						fail: () => {
+							//  请求失败,隐藏加载状态
+							this.mescroll.endErr();
+						}
+					});
+				}
+					
+				
+				// 此处仍可以继续写其他接口请求...
+				// 调用其他方法...
+			},
 			back() {
 				uni.navigateBack({
 					delta: 1
@@ -346,18 +481,12 @@
 
 <style lang="scss" scoped>
 	// 自定义导航栏样式
-	.example-body {
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
-		padding: 0;
-		font-size: 14px;
-	}
-
 	.navBar {
 		// background-size:100% 100%;
 	}
-
+	.slot-wrap{
+		
+	}
 	.slotleft {
 		display: flex;
 		align-items: center;
@@ -388,10 +517,20 @@
 		background-color: #2f2f2f;
 		margin: 0 8px;
 	}
-
+	.bgBox{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 750rpx;
+		height: 440rpx;
+	}
+	.bannerImg{
+		width: 100%;
+		height: 100%;
+	}
 	.content {
 		position: absolute;
-		top: 82rpx;
+		top: 170rpx;
 		left: 82rpx;
 		width: 582rpx;
 		height: 140rpx;
@@ -422,7 +561,7 @@
 		color: rgba(255, 255, 255, 0.45);
 		line-height: 28rpx;
 		position: absolute;
-		top: 210rpx;
+		top: 304rpx;
 		left: 234rpx;
 	}
 
@@ -435,14 +574,22 @@
 		bottom: 0;
 		left: 0;
 	}
-
+	.mescroll{
+		// height: 1604rpx;
+		margin-left: 10rpx;
+		background: rgba(255, 255, 255, 1);
+		border-radius: 8px 8px 0px 0px;
+		z-index: 11;
+		position: absolute;
+		top: 420rpx;
+	}
 	.rankContent {
-		// width: 730rpx;
+		width: 730rpx;
 		height: 1604rpx;
 		margin-left: 10rpx;
 		background: rgba(255, 255, 255, 1);
 		border-radius: 8px 8px 0px 0px;
-		z-index: 1111;
+		z-index: 11;
 		position: absolute;
 		top: 420rpx;
 	}

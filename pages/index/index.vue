@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<u-navbar :is-back="false" class="navbar"  >
+		<u-navbar :is-back="false" :class="navbar"  :is-fixed="true" >
 			<view class="search-box" @click="confirm">
 				<view class="search-wrap" >
 					<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
@@ -18,8 +18,8 @@
 			</view>
 		</u-navbar>
 		<!-- 头部轮播图 -->
-		<view class="page-section ">
-			<view class="page-section-spacing">
+		<view class="page-section " v-if="bannerList.length != 0">
+			<view class="page-section-spacing" >
 				<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14" >
 					<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item"  >
 						<navigator :url="'/components/web-view/web-view?website='+item.url"  class="itemUrl">
@@ -48,6 +48,7 @@
 		<!-- 内容 -->
 		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="cus-sty ">
+				
 				<!-- 热门目的地 -->
 				<view class="hot">
 					<view class="hot-top">
@@ -243,10 +244,7 @@ export default {
 			errCode: 0,
 			isLike: false,
 			likeNum: 0,
-			bannerList: [],
-			navbg: {
-				background: ''
-			},
+			bannerList: null,
 			indicatorDots:true,
 			areaList: null,
 			url:''
@@ -272,7 +270,12 @@ export default {
 			uni.hideLoading();
 		}, 1000);
 	},
-
+	// onPageScroll: function (res) {
+	// 	console.log('滚动距离',res)
+	// 	if(res.scrollTop >= 100){
+	// 		this.navbar.background = '#ffffff'
+	// 	}
+	// },
 	methods: {
 		// 接收切换城市信息，请求数据
 		getItem() {
@@ -1190,7 +1193,9 @@ view {
 	margin-right: 4rpx;
 }
 
-
+.hot{
+	/* margin-top: 176rpx; */
+}
 .hotCity{
 	width: 216rpx;
 	height: 180rpx;
