@@ -84,14 +84,12 @@
 			onSelect(item) {
 
 				this.city = item.name
-				// this.city_id = item.city_id
-				// this.state_id = item.state_id
-				// uni.setStorageSync('item',item)
-				// console.log('item--',item)
+				
 				getApp().globalData.item = item
 				console.log('item',item)
-				uni.switchTab({
-					url:'../index/index?item='+item,
+				var e = JSON.stringify(item)
+				uni.navigateTo({
+					url:'../provinces/provinces?id='+e
 				})
 				
 			},
