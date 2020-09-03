@@ -2,10 +2,8 @@
 	<view class="content">
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
-				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-				</view>
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+				<view slot="left" class="slotleft"><image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" /></view>
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
@@ -22,14 +20,15 @@
 				@confirm="Toresults()"
 				v-model="keyValue"
 			></mSearch>
-			
 		</view>
 		<view class="search-keyword">
 			<scroll-view class="keyword-list-box" scroll-y scroll-x="false" v-if="isShowKeywordList">
 				<block v-for="(row, index) in keywordList" :key="index">
 					<view class="keyword-entry" hover-class="keyword-entry-tap">
-						<view class="liIcon"></view>
-						<view class="keyword-text" @tap.stop="doSearch(keywordList[index].keyword)" ><rich-text :nodes="row.htmlStr"></rich-text></view>
+						<view class="liIcon" v-if="!row.keyword.type"></view>
+						<veiw v-if="row.keyword.type" class="otherIcon"><u-icon size="32" :name="row.keyword.type == 'site' ? 'photo' : row.keyword.type ? 'map-fill' : ''"></u-icon></veiw>
+						<view class="keyword-text" @tap.stop="goSearch(row.keyword)"><rich-text :nodes="row.htmlStr"></rich-text></view>
+						<view class="otherText" v-if="row.keyword.type">{{ row.keyword.type == 'site' ? '景点' : '目的地' }}</view>
 					</view>
 				</block>
 				<view class="search-bottom" @click="Toresults(keyword)">
@@ -57,8 +56,8 @@
 						<view class="hotItem" v-for="(keyword, index) in hotKeywordList" @tap="doSearch(keyword)" :key="index">
 							<!-- <image class="hotImg " :src="`../../static/images/icon-${index+1>=3?3:index+1}.png`" mode=""></image> -->
 							<view class="hotImg">
-								<image class=" " :src="`../../static/images/icon-${index+1}.svg`" mode="aspectFit"></image>
-								<text class="rankNum">{{index+1}}</text>
+								<image class=" " :src="`../../static/images/icon-${index + 1}.svg`" mode="aspectFit"></image>
+								<text class="rankNum">{{ index + 1 }}</text>
 							</view>
 							<view class="hotContent">{{ keyword }}</view>
 						</view>
@@ -76,32 +75,22 @@
 			<view class="touring">
 				<view class="wrap">
 					<view class="left">
-						<view class="demo-warter" v-for="(item,index) in list" :key="index" v-if="index%2==0">
-							<view class="" @click="onPageJump" :id="item.article_id" >
+						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
+							<view class="" @click="onPageJump" :id="item.article_id">
 								<view class="demo-top">
 									<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
 									<view class="adress">
-										<view class="adreessIcon">
-											<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
-										</view>
-						
-										<view class="adressText">
-											{{item.location}}
-										</view>
+										<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
+
+										<view class="adressText">{{ item.location }}</view>
 									</view>
 								</view>
 								<view class="titleTip">
 									<view class="demo-tag">
-										<view class="demo-tag-owner" v-if="item.type==1">
-											游记
-										</view>
-										<view class="demo-tag-owner" v-if="item.type==2">
-											攻略
-										</view>
+										<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+										<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
 									</view>
-									<view class="demo-title">
-										{{item.title}}
-									</view>
+									<view class="demo-title">{{ item.title }}</view>
 								</view>
 							</view>
 							<view class="demo-user">
@@ -109,41 +98,31 @@
 									<image class="userHeard" :src="item.avatar"></image>
 									<view class="userNikename">{{ item.author_name }}</view>
 								</view>
-								<view class="count" @click="clickLike(item,index)">
-									<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
-									<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
+								<view class="count" @click="clickLike(item, index)">
+									<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+									<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 									{{ item.like_count || 0 }}
 								</view>
 							</view>
-						</view>  
-					</view>  
-					<view class="right">  
-						<view class="demo-warter" v-for="(item,index) in list" :key="index" v-if="index%2==1">
-							<view class="" @click="onPageJump" :id="item.article_id" >
+						</view>
+					</view>
+					<view class="right">
+						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
+							<view class="" @click="onPageJump" :id="item.article_id">
 								<view class="demo-top">
 									<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
 									<view class="adress">
-										<view class="adreessIcon">
-											<image class="" src="../../static/images/Icon／Map3.svg" mode=""></image>
-										</view>
-						
-										<view class="adressText">
-											{{item.location}}
-										</view>
+										<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
+
+										<view class="adressText">{{ item.location }}</view>
 									</view>
 								</view>
 								<view class="titleTip">
 									<view class="demo-tag">
-										<view class="demo-tag-owner" v-if="item.type==1">
-											游记
-										</view>
-										<view class="demo-tag-owner" v-if="item.type==2">
-											攻略
-										</view>
+										<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+										<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
 									</view>
-									<view class="demo-title">
-										{{item.title}}
-									</view>
+									<view class="demo-title">{{ item.title }}</view>
 								</view>
 							</view>
 							<view class="demo-user">
@@ -151,14 +130,14 @@
 									<image class="userHeard" :src="item.avatar"></image>
 									<view class="userNikename">{{ item.author_name }}</view>
 								</view>
-								<view class="count" @click="clickLike(item,index)">
-									<image src="../../static/images/heart.svg" v-if="item.liked==0"></image>
-									<image src="../../static/images/heart-actived.svg" v-if="item.liked==1"></image>
+								<view class="count" @click="clickLike(item, index)">
+									<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+									<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 									{{ item.like_count || 0 }}
 								</view>
 							</view>
-						</view> 
-					</view> 
+						</view>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -171,7 +150,8 @@ import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-rev
 import touring from '@/components/content/touring.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import httpType from '../../httpType.js';
-import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
+
+import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 export default {
 	data() {
 		return {
@@ -183,17 +163,16 @@ export default {
 			forbid: '',
 			noResult: null,
 			isShowKeywordList: false,
-			isShowHt:true,
-			list:[],
-			leftList:[],
-			rightList:[],
-			token:'',
-			liked:''
+			isShowHt: true,
+			list: [],
+			leftList: [],
+			rightList: [],
+			token: '',
+			liked: ''
 		};
 	},
 	onLoad() {
-		this.init(),
-		this.getResults()
+		this.init(), this.getResults();
 	},
 	components: {
 		//引用mSearch组件，如不需要删除即可
@@ -203,46 +182,46 @@ export default {
 	},
 	mixins: [MescrollMixin],
 	methods: {
-		getResults(){
-			var that = this
+		getResults() {
+			var that = this;
 			uni.getStorage({
-				key:'article_id',
-				success:function(res){
-					console.log('取数据',res)
-					that.list = res.data.data.list
-					console.log('list----',that.list)
+				key: 'article_id',
+				success: function(res) {
+					console.log('取数据', res);
+					that.list = res.data.data.list;
+					console.log('list----', that.list);
 				}
-			})
+			});
 		},
-		
+
 		// 跳转文章详情
 		onPageJump(e) {
-			console.log(e)
-			let id = e.currentTarget.id
+			console.log(e);
+			let id = e.currentTarget.id;
 			// debugger
 			// return
 			uni.navigateTo({
-				url: "/pages/contentdetail/contentdetail?article_id="+id
-			})
+				url: '/pages/contentdetail/contentdetail?article_id=' + id
+			});
 		},
 		// 点赞
-		clickLike(e,index) {
-			console.log('qaz',e,index)
+		clickLike(e, index) {
+			console.log('qaz', e, index);
 			// debugger
-			let article = e.article_id
-			var that = this
+			let article = e.article_id;
+			var that = this;
 			uni.request({
-				url: this.globalUrl+ '/user/liked',
+				url: this.globalUrl + '/user/liked',
 				data: {
 					article_id: article,
 					liked: e.liked == 0 ? 1 : 0
 				},
 				method: 'POST',
 				header: {
-					'Authorization': uni.getStorageSync('Authorization')
+					Authorization: uni.getStorageSync('Authorization')
 				},
 				success: function(res) {
-					console.log('点赞', res)
+					console.log('点赞', res);
 					if (res.data.code != 0) {
 						// debugger
 						uni.showModal({
@@ -253,19 +232,17 @@ export default {
 								if (res.confirm) {
 									uni.redirectTo({
 										url: '../login/login'
-									})
+									});
 								}
 							}
-						})
-						return
+						});
+						return;
 					}
-					
-					that.list[index].liked = (e.liked == 1 ? 0 : 1)
-					that.list[index].like_count = (e.liked == 1 ? e.like_count + 1 : e.like_count  - 1)
-					
+
+					that.list[index].liked = e.liked == 1 ? 0 : 1;
+					that.list[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
 				}
-		
-			})
+			});
 		},
 		init() {
 			this.loadDefaultKeyword();
@@ -275,7 +252,7 @@ export default {
 		back() {
 			uni.navigateBack({
 				delta: 1
-			})
+			});
 		},
 		blur() {
 			uni.hideKeyboard();
@@ -290,13 +267,13 @@ export default {
 		loadHotKeyword() {
 			//定义热门搜索关键字，可以自己实现ajax请求数据再赋值
 			uni.request({
-				url:this.globalUrl+ "/search/hot",
-				method:"get",
-				success:(res)=>{
-					console.log(res)
-					this.hotKeywordList = res.data.data
+				url: this.globalUrl + '/search/hot',
+				method: 'get',
+				success: res => {
+					console.log(res);
+					this.hotKeywordList = res.data.data;
 				}
-			})
+			});
 		},
 		//监听输入
 		inputChange(event) {
@@ -306,30 +283,47 @@ export default {
 				this.keywordList = [];
 				this.noResult = '无数据';
 				this.isShowKeywordList = false;
-				this.isShowHt = true
+				this.isShowHt = true;
 				return;
 			}
 			this.isShowKeywordList = true;
 			uni.request({
-				url:this.globalUrl+ '/search/suggest',
-				data:{
-					'query':keyword,
-					'hit':8
+				url: this.globalUrl + '/search/suggest',
+				data: {
+					query: keyword,
+					hit: 8
 				},
 				// type:"GET",
-				success: (res)=> {
-					console.log('请求',res)
-					if (res.data.data && res.data.data.length) {
-						this.keywordList = [];
-						this.noResult = '有结果';
-						this.keywordList = this.drawCorrelativeKeyword(res.data.data, keyword);
-						this.isShowKeywordList = true;
-						this.isShowHt = false
+				success: res => {
+					console.log('请求', res);
+					if (res.data.code == 0) {
+						if ((res.data.data.list && res.data.data.list.length) || res.data.data.special) {
+							this.keywordList = [];
+							let arr = [];
+							if (res.data.data.special) {
+								arr.push({ ...res.data.data.special });
+							}
+							if (res.data.data.list && res.data.data.list.length) {
+								res.data.data.list.forEach(item => {
+									arr.push({ ...item });
+								});
+							}
+
+							this.noResult = '有结果';
+							this.keywordList = this.drawCorrelativeKeyword(arr, keyword);
+							this.isShowKeywordList = true;
+							this.isShowHt = false;
+						} else {
+							this.keywordList = [];
+							this.noResult = '暂无结果';
+							this.isShowKeywordList = false;
+							this.isShowHt = false;
+						}
 					} else {
-						this.keywordList = [];
-						this.noResult = '暂无结果';
-						this.isShowKeywordList = false;
-						this.isShowHt = false
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
 					}
 				}
 			});
@@ -337,19 +331,20 @@ export default {
 		//高亮关键字
 		drawCorrelativeKeyword(keywords, keyword) {
 			var len = keywords.length;
-			var	keywordArr = [];
+			var keywordArr = [];
 			for (var i = 0; i < len; i++) {
-				var row = keywords[i];
-				console.log(row,1)
+				var row = keywords[i].name;
+				console.log(row, 1);
 				//定义高亮#9f9f9f
-				var html = row.replace(keyword, "<span style='color: #303133;font-weight:bold'>" + keyword + "</span>");
+				var html = row.replace(keyword, "<span style='color: #303133;font-weight:bold'>" + keyword + '</span>');
 				html = '<div>' + html + '</div>';
 				var tmpObj = {
-					keyword: row,
+					keyword: keywords[i],
 					htmlStr: html
 				};
 				keywordArr.push(tmpObj);
 			}
+
 			return keywordArr;
 		},
 		Toresults() {
@@ -363,21 +358,20 @@ export default {
 				duration: 2000
 			});
 			uni.request({
-				url:this.globalUrl+ "/search",
-				data:{
-					'query':keyword,
-					'hit':8
+				url: this.globalUrl + '/search',
+				data: {
+					query: keyword,
+					hit: 8
 				},
-				success:(res)=> {
-					console.log('搜素数据',res)
-					uni.setStorageSync('article_id',res.data)
-					console.log('存储数据',res.data)
+				success: res => {
+					console.log('搜素数据', res);
+					uni.setStorageSync('article_id', res.data);
+					console.log('存储数据', res.data);
 					uni.navigateTo({
 						url: '../searchResults/searchResults'
 					});
 				}
-			})
-			
+			});
 		},
 		//顶置关键字
 		setKeyword(index) {
@@ -416,20 +410,74 @@ export default {
 				duration: 2000
 			});
 			uni.request({
-				url:this.globalUrl+ "/search",
-				data:{
-					'query':keyword,
-					'hit':8
+				url: this.globalUrl + '/search',
+				data: {
+					query: keyword,
+					hit: 8
 				},
-				success:(res)=> {
-					console.log('搜素数据',res)
-					uni.setStorageSync('article_id',res.data)
-					console.log('存储数据',res.data)
+				success: res => {
+					console.log('搜素数据', res);
+					uni.setStorageSync('article_id', res.data);
+					console.log('存储数据', res.data);
 					uni.navigateTo({
 						url: '../searchResults/searchResults'
 					});
 				}
-			})
+			});
+			//以下是示例跳转淘宝搜索，可自己实现搜索逻辑
+			/*
+				//#ifdef APP-PLUS
+				plus.runtime.openURL(encodeURI('taobao://s.taobao.com/search?q=' + keyword));
+				//#endif
+				//#ifdef H5
+				window.location.href = 'taobao://s.taobao.com/search?q=' + keyword
+				//#endif
+				*/
+		},
+		goSearch(keyword) {
+			console.log(keyword);
+
+			if (keyword.type) {
+				if (keyword.type == 'area') {
+					let obj = {
+						state_id: keyword.state_id,
+						name: keyword.name,
+						image: keyword.image,
+						city_id: keyword.city_id
+					}
+					uni.navigateTo({
+						url: '/pages/provinces/provinces?id=' + JSON.stringify(obj)
+					});
+				}
+				if (keyword.type == 'site') {
+					uni.navigateTo({
+						url: '/pages/positionContent/positionContent?id=' + keyword.id
+					});
+				}
+			} else {
+				this.defaultKeyword = keyword.name;
+				this.saveKeyword(keyword.name); //保存为历史
+				uni.showToast({
+					title: keyword.name,
+					icon: 'none',
+					duration: 2000
+				});
+				uni.request({
+					url: this.globalUrl + '/search',
+					data: {
+						query: keyword.name,
+						hit: 8
+					},
+					success: res => {
+						console.log('搜素数据', res);
+						uni.setStorageSync('article_id', res.data);
+						console.log('存储数据', res.data);
+						uni.navigateTo({
+							url: '../searchResults/searchResults'
+						});
+					}
+				});
+			}
 			//以下是示例跳转淘宝搜索，可自己实现搜索逻辑
 			/*
 				//#ifdef APP-PLUS
@@ -508,10 +556,9 @@ export default {
 			// mescroll.setPageSize(6)
 			// console.log('上拉刷新数据', city)
 			let pageNum = page.num; // 页码, 默认从1开始
-			console.log('pagem=num----',pageNum)
+			console.log('pagem=num----', pageNum);
 			let pageSize = 8; // 页长, 默认每页10条
-			var that = this
-					
+			var that = this;
 		}
 	}
 };
@@ -520,16 +567,17 @@ export default {
 view {
 	display: block;
 }
-.content{
+.content {
 	width: 100%;
 	overflow-x: hidden;
 }
-.left,.right{  
-	  display: inline-block;  
-	  margin-left: 10rpx;
-	  vertical-align: top;  
-	  width: 48%;  
-	}
+.left,
+.right {
+	display: inline-block;
+	margin-left: 10rpx;
+	vertical-align: top;
+	width: 48%;
+}
 .search-box {
 	width: 100%;
 	box-sizing: border-box;
@@ -584,7 +632,6 @@ view {
 	background-color: rgb(242, 242, 242);
 }
 .keyword-list-box {
-	
 	height: calc(100vh - 110upx);
 	padding-top: 10upx;
 	// border-radius: 20upx 20upx 0 0;
@@ -594,6 +641,7 @@ view {
 	background-color: #eee;
 }
 .keyword-entry {
+	position: relative;
 	width: 94%;
 	height: 96rpx;
 	margin: 0 3%;
@@ -605,11 +653,23 @@ view {
 }
 .keyword-entry .liIcon {
 	margin-left: 40rpx;
+	margin-right: 30rpx;
+
 	width: 16rpx;
 	height: 16rpx;
-	background:rgba(255,255,255,1);
-	border:4rpx solid rgba(255,182,77,1);
+	background: rgba(255, 255, 255, 1);
+	border: 4rpx solid rgba(255, 182, 77, 1);
 	border-radius: 50%;
+}
+.keyword-entry .otherIcon {
+	margin-left: 35rpx;
+	margin-right: 25rpx;
+}
+.keyword-entry .otherText {
+	font-size: 16rpx;
+	width: 60rpx;
+	position: absolute;
+	right: 30rpx;
 }
 .keyword-entry .keyword-text {
 	height: 96rpx;
@@ -618,7 +678,7 @@ view {
 }
 .keyword-entry .keyword-text {
 	width: 90%;
-	border-bottom: solid 0.5rpx #EDEFF2;
+	border-bottom: solid 0.5rpx #edeff2;
 }
 
 .search-bottom {
@@ -691,26 +751,26 @@ view {
 		line-height: 32rpx;
 		align-self: center;
 		position: relative;
-		image{
+		image {
 			width: 100%;
 			height: 100%;
 		}
-		.rankNum{
+		.rankNum {
 			position: absolute;
 			left: 50%;
 			top: 50%;
-			transform:translate(-50%,-50%);
-			font-size:20rpx;
-			font-family:HelveticaNeue-Bold,HelveticaNeue;
-			font-weight:bold;
-			color:rgba(255,255,255,1);
-			line-height:20rpx;
+			transform: translate(-50%, -50%);
+			font-size: 20rpx;
+			font-family: HelveticaNeue-Bold, HelveticaNeue;
+			font-weight: bold;
+			color: rgba(255, 255, 255, 1);
+			line-height: 20rpx;
 		}
 	}
-	
+
 	.hotContent {
 		margin-left: 8rpx;
-		color:rgba(48,49,51,1);
+		color: rgba(48, 49, 51, 1);
 		font-size: 28rpx;
 		// line-height: 28rpx;
 		font-weight: 500;
@@ -750,223 +810,219 @@ view {
 	align-items: center;
 }
 /*  自定义导航栏样式 */
-	.example-body {
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
-		padding: 0;
-		font-size: 14px;
-		background-color: #aa557f;
-	}
-	.example-body {
-		flex-direction: column;
-		padding: 15px;
-		background-color: #ffffff;
-	}
-	.example-body {
-		padding: 0;
-	}
-	.navBar{
-		display: flex;
-	}
-	.slotleft{
-		display: flex;
-		align-items: center;
-	}
-	.fanhui{
-		width: 40rpx;
-		height: 40rpx;
-		margin-left: 40rpx;
-		/* margin-right: 20rpx; */
-	}
-	.fhsy{
-		width: 40rpx;
-		height: 40rpx;
-	}
-	.slottitle{
-		margin-left: 220rpx;
-		font-size: 38rpx;
-		font-family:PingFangSC-Medium,PingFang SC;
-		font-weight:600;
-		color:rgba(0,0,0,1);
-	}
-	.button-v-line{
-		width: 1px;
-		height: 18px;
-		background-color: #2f2f2f;
-		margin: 0 8px;
-	}
-	// 瀑布流
-	/* 正在旅行 */
-	.touring {
-		margin-top: 24rpx;
-	}
-	
-	.touring .tourtext {
-		width: 160rpx;
-		height: 104rpx;
-		line-height: 104rpx;
-		font-size: 40rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		margin-left: 32rpx;
-	
-	}
-	
-	.wrap{
-		width:750rpx;
-		display: flex;
-		flex-flow: row;
-		flex-wrap: wrap;
-	}
-	.demo-warter-l {
-		margin-left: 10rpx;
-	}
-	
-	.demo-warter {
-		width: 360rpx;
-		margin-top: 0;
-		margin-right: 10rpx;
-		margin-bottom: 16rpx;
-		padding-bottom: 16rpx;
-		/* position: relative; */
-		background-color: #FFFFFF;
-	}
-	
-	.demo-top {
-		position: relative;
-		
-	}
-	
-	.demo-image {
-		min-height: 300rpx !important;
-		max-height: 460rpx;
-		width: 100%;
-		border-radius: 8rpx 8rpx 0 0;
-		position: relative;
-	}
-	
-	.adress {
-		position: absolute;
-		left: 0;
-		bottom: 8rpx;
-		display: flex;
-		align-items: center;
-		max-width: 240rpx;
-		height: 40rpx;
-		padding-right: 16rpx;
-		background: rgba(0, 0, 0, 0.6);
-		border-radius: 0px 14rpx 0px 0px;
-	}
-	
-	.adreessIcon {
-		width: 24rpx;
-		height: 24rpx;
-		margin: 0 4rpx;
-		display: flex;
-	}
-	
-	.adreessIcon image {
-		width: 100%;
-		height: 100%;
-	}
-	
-	.adressText {
-		max-width: 192rpx;
-		font-size: 24rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: rgba(255, 255, 255, 1);
-		/* line-height:24px; */
-		/* margin-right: 16rpx; */
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-	
-	.titleTip {
-		display: flex;
-		margin-top: 10rpx;
-		margin-left: 8rpx;
-	}
-	
-	.demo-title {
-		width: 278rpx;
-		/* max-height: 70rpx; */
-		font-size: 28rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: rgba(48, 49, 51, 1);
-		margin-left: 8rpx;
-		line-height: 46rpx;
-	}
-	
-	.demo-tag {
-		margin-top: 9rpx;
-	}
-	
-	.demo-tag-owner {
-		width: 52rpx;
-		height: 28rpx;
-		text-align: center;
-		align-items: center;
-		color: #0091FF;
-		border: 2rpx solid rgba(0, 145, 255, 1);
-		border-radius: 14rpx;
-		font-size: 16rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: rgba(0, 145, 255, 1);
-		/* margin-top: 6rpx; */
-	}
-	
-	.demo-user {
-		font-size: 10rpx;
-		margin-top: 24rpx;
-		/* margin-bottom: 16rpx; */
-		display: flex;
-		justify-content: space-between;
-	}
-	
-	.userMessage {
-		font-size: 10px;
-		font-weight: 900;
-		color: #464646;
-		display: flex;
-		align-items: center;
-	}
-	
-	.userHeard {
-		width: 40rpx;
-		height: 40rpx;
-		border-radius: 50%;
-		margin-left: 14rpx;
-	}
-	
-	.userNikename {
-		font-size: 24rpx;
-		margin-left: 16rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: rgba(96, 98, 102, 1);
-	}
-	
-	
-	.count {
-		display: flex;
-		font-size: 22rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: rgba(96, 98, 102, 1);
-		align-items: center;
-		margin-right: 20rpx;
-	}
-	
-	.count image {
-		width: 26rpx;
-		height: 26rpx;
-		margin-right: 8rpx;
-	}
-	
+.example-body {
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	padding: 0;
+	font-size: 14px;
+	background-color: #aa557f;
+}
+.example-body {
+	flex-direction: column;
+	padding: 15px;
+	background-color: #ffffff;
+}
+.example-body {
+	padding: 0;
+}
+.navBar {
+	display: flex;
+}
+.slotleft {
+	display: flex;
+	align-items: center;
+}
+.fanhui {
+	width: 40rpx;
+	height: 40rpx;
+	margin-left: 40rpx;
+	/* margin-right: 20rpx; */
+}
+.fhsy {
+	width: 40rpx;
+	height: 40rpx;
+}
+.slottitle {
+	margin-left: 220rpx;
+	font-size: 38rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 600;
+	color: rgba(0, 0, 0, 1);
+}
+.button-v-line {
+	width: 1px;
+	height: 18px;
+	background-color: #2f2f2f;
+	margin: 0 8px;
+}
+// 瀑布流
+/* 正在旅行 */
+.touring {
+	margin-top: 24rpx;
+}
+
+.touring .tourtext {
+	width: 160rpx;
+	height: 104rpx;
+	line-height: 104rpx;
+	font-size: 40rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #303133;
+	margin-left: 32rpx;
+}
+
+.wrap {
+	width: 750rpx;
+	display: flex;
+	flex-flow: row;
+	flex-wrap: wrap;
+}
+.demo-warter-l {
+	margin-left: 10rpx;
+}
+
+.demo-warter {
+	width: 360rpx;
+	margin-top: 0;
+	margin-right: 10rpx;
+	margin-bottom: 16rpx;
+	padding-bottom: 16rpx;
+	/* position: relative; */
+	background-color: #ffffff;
+}
+
+.demo-top {
+	position: relative;
+}
+
+.demo-image {
+	min-height: 300rpx !important;
+	max-height: 460rpx;
+	width: 100%;
+	border-radius: 8rpx 8rpx 0 0;
+	position: relative;
+}
+
+.adress {
+	position: absolute;
+	left: 0;
+	bottom: 8rpx;
+	display: flex;
+	align-items: center;
+	max-width: 240rpx;
+	height: 40rpx;
+	padding-right: 16rpx;
+	background: rgba(0, 0, 0, 0.6);
+	border-radius: 0px 14rpx 0px 0px;
+}
+
+.adreessIcon {
+	width: 24rpx;
+	height: 24rpx;
+	margin: 0 4rpx;
+	display: flex;
+}
+
+.adreessIcon image {
+	width: 100%;
+	height: 100%;
+}
+
+.adressText {
+	max-width: 192rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: rgba(255, 255, 255, 1);
+	/* line-height:24px; */
+	/* margin-right: 16rpx; */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.titleTip {
+	display: flex;
+	margin-top: 10rpx;
+	margin-left: 8rpx;
+}
+
+.demo-title {
+	width: 278rpx;
+	/* max-height: 70rpx; */
+	font-size: 28rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: rgba(48, 49, 51, 1);
+	margin-left: 8rpx;
+	line-height: 46rpx;
+}
+
+.demo-tag {
+	margin-top: 9rpx;
+}
+
+.demo-tag-owner {
+	width: 52rpx;
+	height: 28rpx;
+	text-align: center;
+	align-items: center;
+	color: #0091ff;
+	border: 2rpx solid rgba(0, 145, 255, 1);
+	border-radius: 14rpx;
+	font-size: 16rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: rgba(0, 145, 255, 1);
+	/* margin-top: 6rpx; */
+}
+
+.demo-user {
+	font-size: 10rpx;
+	margin-top: 24rpx;
+	/* margin-bottom: 16rpx; */
+	display: flex;
+	justify-content: space-between;
+}
+
+.userMessage {
+	font-size: 10px;
+	font-weight: 900;
+	color: #464646;
+	display: flex;
+	align-items: center;
+}
+
+.userHeard {
+	width: 40rpx;
+	height: 40rpx;
+	border-radius: 50%;
+	margin-left: 14rpx;
+}
+
+.userNikename {
+	font-size: 24rpx;
+	margin-left: 16rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: rgba(96, 98, 102, 1);
+}
+
+.count {
+	display: flex;
+	font-size: 22rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: rgba(96, 98, 102, 1);
+	align-items: center;
+	margin-right: 20rpx;
+}
+
+.count image {
+	width: 26rpx;
+	height: 26rpx;
+	margin-right: 8rpx;
+}
 </style>

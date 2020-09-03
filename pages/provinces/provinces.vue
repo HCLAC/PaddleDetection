@@ -327,6 +327,7 @@
 			uniNavBar
 		},
 		onLoad(options) {
+			
 			let item = JSON.parse(options.id)
 			console.log("参数",item)
 			this.item = item,
