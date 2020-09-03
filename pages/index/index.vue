@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<u-navbar :is-back="false" :class="navbar"  :is-fixed="true" >
+		<u-navbar :is-back="false"  :background="background" :is-fixed="true" >
 			<view class="search-box" @click="confirm">
 				<view class="search-wrap" >
 					<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
@@ -17,6 +17,7 @@
 				</view>
 			</view>
 		</u-navbar>
+		
 		<!-- 头部轮播图 -->
 		<view class="page-section " v-if="bannerList.length != 0">
 			<view class="page-section-spacing" >
@@ -216,6 +217,7 @@ import uniSection from '@/components/uni-section/uni-section.vue';
 import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 // import httpType from '../../httpType.js';
 export default {
+	
 	components: {
 		uniIcons,
 		uniNavBar,
@@ -226,6 +228,9 @@ export default {
 	mixins: [MescrollMixin],
 	data() {
 		return {
+			background: {
+				backgroundColor: '',
+			},
 			cityName: '',
 			dqdwText:'当前位置',
 			province: '',
@@ -270,12 +275,14 @@ export default {
 			uni.hideLoading();
 		}, 1000);
 	},
-	// onPageScroll: function (res) {
-	// 	console.log('滚动距离',res)
-	// 	if(res.scrollTop >= 100){
-	// 		this.navbar.background = '#ffffff'
-	// 	}
-	// },
+	
+	onPageScroll(e) {
+		if(e.scrollTop >= 100){
+			this.background.backgroundColor = '#ffffff'
+		}else{
+			this.background.backgroundColor = ''
+		}
+	},
 	methods: {
 		// 接收切换城市信息，请求数据
 		getItem() {
@@ -857,7 +864,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .left,
 .right {
 	display: inline-block;
@@ -892,6 +899,9 @@ view {
 }
 
 /* 自定义导航栏 */
+#navbarbox{
+	background-color: #007AFF !important;
+}
 .search-box {
 	width: 486rpx;
 	height: 72rpx;
