@@ -32,7 +32,7 @@
 				<text class="price">{{ lineContent.money }}</text>
 				<text>起</text>
 			</view>
-			<view class="lineTitle">{{ lineContent.description }}</view>
+			<view class="lineTitle">{{ lineContent.title }}</view>
 		</view>
 		<view class="lineDriver"></view>
 		<view :class="isFixed ? 'fixTabs' : 'noFix'">
