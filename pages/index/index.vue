@@ -28,21 +28,6 @@
 						</navigator>
 					</swiper-item>
 				</swiper>
-				<text class="bannerText">T r a v e l</text>
-				<view class="diaryBox">
-					<text class="texth">旅</text>
-					<u-line direction="col" color="#ffffff" length="16rpx" margin=" 0 8rpx"></u-line>
-					<text class="textb">游</text>
-					<u-line direction="col" color="#ffffff" length="16rpx" margin=" 0 8rpx"></u-line>
-					<text class="texth">日</text>
-					<u-line direction="col" color="#ffffff" length="16rpx" margin=" 0 8rpx"></u-line>
-					<text class="textb">记</text>
-				</view>
-				<!-- <view class="dots">
-					<block v-for="(item, index) in bannerList." :key="index">
-						<view :class="[index == current ? 'activieDot' : 'dot']"></view>
-					</block>
-				</view> -->
 			</view>
 		</view>
 
@@ -1080,39 +1065,8 @@ view {
 	width: 100%;
 	height: 100%;
 }
-.bannerText{
-	position: absolute;
-	top: 222rpx;
-	left: 240rpx;
-	width: 306rpx;
-	height: 64rpx;
-	font-size: 64rpx;
-	font-family: Roboto-Black, Roboto;
-	font-weight: 900;
-	color: #FFFFFF;
-	line-height: 64rpx;
-}
-.diaryBox{
-	display: flex;
-	align-items: center;
-	position: absolute;
-	top: 300rpx;
-	left: 280rpx;
-}
-.texth{
-	font-size: 28rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: rgba(255, 255, 255, 0.65);
-	line-height: 28rpx;
-}
-.textb{
-	font-size: 28rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: #FFFFFF;
-	line-height: 28rpx;
-}
+
+
 .example {
 	padding: 0 15px 15px;
 }
@@ -1364,28 +1318,34 @@ view {
 	border-radius: 16rpx;
 }
 .hotCityText{
+	width: 140rpx;
+	height: 32rpx;
 	font-size: 32rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #FFFFFF;
 	line-height: 32rpx;
-	margin: auto;
+	text-align: center;
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	margin-left:-70rpx;
+	margin-top:-16rpx;
 }
 .hotCityText1{
+	width: 140rpx;
+	height: 32rpx;
 	font-size: 32rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #FFFFFF;
 	line-height: 32rpx;
-	margin: auto;
+	text-align: center;
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	margin-left:-70rpx;
+	margin-top:-16rpx;
 }
 .cityRank{
 	margin-top: 28rpx;

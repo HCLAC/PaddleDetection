@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<u-navbar :is-back="false"  class="navbar" :is-fixed="true" >
+		<u-navbar :is-back="false"  class="navbar"  :is-fixed="true" >
 			<view class="slot-wrap">
 				<image class="fanhui" src="../../static/images/icon-fanhui-white.svg" @click="back" />
 				<image class="fhsy" src="../../static/images/icon-fhsy-white.svg" @click="home" />
@@ -23,15 +23,15 @@
 		
 		<!-- 排行 -->
 		<!-- <mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit"  @up="upCallback"  :up="upOption"> -->
-		<swiper  :vertical="true" :duration="1000" class="rankContent">
-			<swiper-item>
-				<view >
-					<view class="city" @click="show = true" >
-						<view class="" @click="getCity">
-							<text class="cityname">{{name}}</text>
-							<image src="../../static/images/more-down.svg" mode=""></image>
-						</view>
+		
+			<view class="rankContent">
+				<view class="city" @click="show = true" >
+					<view class="" @click="getCity">
+						<text class="cityname">{{name}}</text>
+						<image src="../../static/images/more-down.svg" mode=""></image>
 					</view>
+				</view>
+				<scroll-view scroll-y="true" >
 					<view class="cardList">
 						<view class="cards" v-for="(item,index) in  hotsiteslist" :key="index" @click="toAtt(item.id)">
 							<view class="cardsleft">
@@ -123,14 +123,12 @@
 								</view>
 							</view>
 						</view>
-						
 					</view>
-				</view>
-				<view class="shareBox">
-					<image src="../../static/images/shareImg.svg" mode="" @click="share"></image>
-				</view>
-			</swiper-item>
-		</swiper>
+				</scroll-view>
+			</view>
+			<view class="shareBox">
+				<image src="../../static/images/shareImg.svg" mode="" @click="share"></image>
+			</view>
 				
 		<!-- </mescroll-body> -->
 		<!-- 城市选择弹窗 -->
@@ -186,8 +184,10 @@
 	export default {
 		mixins: [MescrollMixin],
 		data() {
-			
 			return {
+				background: {
+					backgroundColor: '',
+				},
 				show: false,
 				banner: '',
 				scrollTop: 0, //tab标题的滚动条位置
@@ -306,6 +306,13 @@
 					url: '/pages/positionContent/positionContent?id=' + e
 				});
 			},
+			// onPageScroll(e) {
+			// 	if(e.scrollTop >= 100){
+			// 		this.background.backgroundColor = '#ffffff'
+			// 	}else{
+			// 		this.background.backgroundColor = ''
+			// 	}
+			// },
 			// 点击左边的栏目切换
 			async swichMenu(index) {
 				if (index == this.current) return;
@@ -591,7 +598,7 @@
 	}
 	.rankContent {
 		width: 730rpx;
-		height: 1604rpx;
+		height: 1424rpx;
 		margin-left: 10rpx;
 		background: rgba(255, 255, 255, 1);
 		border-radius: 8px 8px 0px 0px;
