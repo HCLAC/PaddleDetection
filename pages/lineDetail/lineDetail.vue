@@ -204,7 +204,7 @@
 				<view class="line"></view>
 				<!-- 登录 -->
 				<view class="contentBottom savepadding">
-					<view class="like">
+					<!-- <view class="like">
 						<image v-show="!lineContent.fav" class="likeBtn" src="../../static/images/attheart.svg"></image>
 						<image v-show="lineContent.fav" class="likeBtn" src="../../static/images/heart-actived.svg"></image>
 						<view class="likeNum">{{ lineContent.like_count }}</view>
@@ -213,7 +213,7 @@
 						<image v-show="!lineContent.fav" class="favBtn" src="../../static/images/shouchang.svg"></image>
 						<image v-show="lineContent.fav" class="favBtn" src="../../static/images/fav-actived.svg"></image>
 						<view class="favNum">{{ lineContent.fav_count }}</view>
-					</view>
+					</view> -->
 					<view class="share"><image src="../../static/images/fenxiang.svg"></image></view>
 					<view class=""><view class="loginButton" v-if="!hasLogin" @click="login">登录</view></view>
 				</view>
@@ -698,7 +698,7 @@ export default {
 	line-height: 68rpx;
 	border: none;
 	text-align: center;
-	margin-left: 190rpx;
+	margin-left: 456rpx;
 }
 
 .like {
