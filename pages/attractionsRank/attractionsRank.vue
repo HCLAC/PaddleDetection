@@ -525,10 +525,12 @@
 		left: 0;
 		width: 750rpx;
 		height: 440rpx;
+		
 	}
 	.bannerImg{
 		width: 100%;
 		height: 100%;
+		opacity: 0.7;
 	}
 	.content {
 		position: absolute;
@@ -570,7 +572,7 @@
 	.boxshow {
 		width: 750rpx;
 		height: 92rpx;
-		background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #13C2C2 100%);
+		background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
 		position: absolute;
 		bottom: 0;
 		left: 0;
