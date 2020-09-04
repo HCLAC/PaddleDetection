@@ -165,80 +165,6 @@
 					</view>
 				</view>
 
-				<!-- 正在旅行 -->
-				<view class="touring" id="touring">
-					<text class="tourtext">正在旅行</text>
-					<view class="wrap">
-						<view class="left">
-							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
-								<view class="" @click="onPageJump" :id="item.article_id">
-									<view class="demo-top">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-										<view class="adress">
-											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
-
-											<view class="adressText">{{ item.location }}</view>
-										</view>
-									</view>
-									<view class="titleTip">
-										<view class="demo-tag">
-											<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-											<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-										</view>
-										<view class="demo-title">{{ item.title }}</view>
-									</view>
-								</view>
-								<view class="demo-user">
-									<view class="userMessage">
-										<image class="userHeard" :src="item.avatar"></image>
-										<view class="userNikename">{{ item.author_name }}</view>
-									</view>
-									<view class="count" @click="clickLike(item, index)">
-										<view class="countImg">
-											<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-											<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
-										</view>
-										<view class="likeCount">{{ item.like_count || 0 }}</view>
-									</view>
-								</view>
-							</view>
-						</view>
-						<view class="right">
-							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
-								<view class="" @click="onPageJump" :id="item.article_id">
-									<view class="demo-top">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-										<view class="adress">
-											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
-
-											<view class="adressText">{{ item.location }}</view>
-										</view>
-									</view>
-									<view class="titleTip">
-										<view class="demo-tag">
-											<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-											<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-										</view>
-										<view class="demo-title">{{ item.title }}</view>
-									</view>
-								</view>
-								<view class="demo-user">
-									<view class="userMessage">
-										<image class="userHeard" :src="item.avatar"></image>
-										<view class="userNikename">{{ item.author_name }}</view>
-									</view>
-									<view class="count" @click="clickLike(item, index)">
-										<view class="countImg">
-											<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-											<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
-										</view>
-										<view class="likeCount">{{ item.like_count || 0 }}</view>
-									</view>
-								</view>
-							</view>
-						</view>
-					</view>
-				</view>
 			</view>
 		</mescroll-body>
 		<!-- 无banner时 -->
@@ -538,7 +464,7 @@ export default {
 						this.cityName = res.city.substr(0, res.city.length - 1);
 						this.city = res.city;
 						this.province = res.province;
-						console.log('哈哈哈哈哈哈哈哈哈');
+						// console.log('哈哈哈哈哈哈哈哈哈');
 
 						console.log(this.city, this.province);
 						uni.request({
@@ -610,7 +536,7 @@ export default {
 								}
 							}
 						});
-						console.log('哈哈哈哈哈哈哈哈哈');
+						// console.log('哈哈哈哈哈哈哈哈哈');
 					} else {
 						let arr = [];
 						arr.push(res.latitude);
@@ -629,7 +555,7 @@ export default {
 									this.cityName = result.data.result.addressComponent.city.substr(0, result.data.result.addressComponent.city.length - 1);
 									this.city = result.data.result.addressComponent.city;
 									this.province = result.data.result.addressComponent.province;
-									console.log('哈哈哈哈哈哈哈哈哈');
+									// console.log('哈哈哈哈哈哈哈哈哈');
 									
 									console.log(this.city, this.province);
 									uni.request({
@@ -726,7 +652,7 @@ export default {
 						icon: 'none',
 						duration: 2000
 					});
-					(this.dqdwText = '正在定位...'), console.log('哈哈哈哈哈哈哈哈哈');
+					(this.dqdwText = '正在定位...');
 
 					uni.request({
 						url: this.globalUrl + '/area/hot',
@@ -761,7 +687,7 @@ export default {
 							// console.log('list=====',this.list)
 						}
 					});
-					console.log('哈哈哈哈哈哈哈哈哈');
+					// console.log('哈哈哈哈哈哈哈哈哈');
 					// 获取热门目的地
 				}
 			});
@@ -775,6 +701,7 @@ export default {
 				success: res => {
 					console.log('banner--', res);
 					this.bannerList = res.data.data;
+					console.log('------------',this.bannerList.length)
 					if(this.bannerList.length == 0){
 						this.background.backgroundColor = '#ffffff'
 					}
