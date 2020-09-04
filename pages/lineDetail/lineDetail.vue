@@ -255,6 +255,9 @@ export default {
 		}
 	},
 	methods: {
+		showShare(){
+			uni.showShareMenu({});
+		},
 		tabChange(index) {
 			this.tabCurrent = index;
 		},

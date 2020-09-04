@@ -1,31 +1,21 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<u-navbar :is-back="false"  :background="background" :is-fixed="true" >
+		<u-navbar :is-back="false" :background="background" :is-fixed="true">
 			<view class="search-box" @click="confirm">
-				<view class="search-wrap" >
+				<view class="search-wrap">
 					<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
-					<u-search
-						
-						placeholderColor="#C9CAD1"
-						search-icon-color="#C9CAD1"
-						placeholder="搜索热门目的地"
-						:show-action="false"
-						height="72"
-						bg-color="#F8F8F8"
-					></u-search>
+					<u-search placeholderColor="#C9CAD1" search-icon-color="#C9CAD1" placeholder="搜索热门目的地" :show-action="false" height="72" bg-color="#F8F8F8"></u-search>
 				</view>
 			</view>
 		</u-navbar>
-		
+
 		<!-- 头部轮播图 -->
 		<view class="page-section " v-if="bannerList.length != 0">
-			<view class="page-section-spacing" >
-				<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14" >
-					<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item"  >
-						<navigator :url="'/components/web-view/web-view?website='+item.url"  class="itemUrl">
-							<image :src="item.image" mode="scaleToFill" class="swiperImg" ></image>
-						</navigator>
+			<view class="page-section-spacing">
+				<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">
+					<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
+						<navigator :url="'/components/web-view/web-view?website=' + item.url" class="itemUrl"><image :src="item.image" mode="scaleToFill" class="swiperImg"></image></navigator>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -34,7 +24,6 @@
 		<!-- 内容 -->
 		<mescroll-body v-if="bannerList.length != 0" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="cus-sty ">
-				
 				<!-- 热门目的地 -->
 				<view class="hot">
 					<view class="hot-top">
@@ -44,52 +33,131 @@
 							<image src="../../static/images/more-right.svg" class="moreIcon" mode=""></image>
 						</view>
 					</view>
-					<view class="hot-bot" v-if="areaList != null">
-						<view class="hotAdress" >
+					<view class="hot-bot" v-if="areaList && areaList.length">
+						<view class="hotAdress">
 							<!-- 当前位置 -->
 							<view class="dqwz" @click="toProvinces(areaList[0])">
 								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
 								<image class="dqwzImg" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
-								<text class="dqwzText">{{cityName}}</text>
+								<text class="dqwzText">{{ cityName }}</text>
 								<view class="adressBox">
 									<image class="zhishi" src="../../static/images/Icon／Mapt.svg" mode=""></image>
-									<text class="dqwzText1">{{dqdwText}}</text>
+									<text class="dqwzText1">{{ dqdwText }}</text>
 								</view>
-								
 							</view>
-							<view class="hotCity" @click="toProvinces(areaList[1])" >
+							<view class="hotCity" @click="toProvinces(areaList[1])">
 								<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
-								<text class="hotCityText">{{areaList[1].name}}</text>
+								<text class="hotCityText">{{ areaList[1].name }}</text>
 							</view>
 							<view class="hotCity" @click="toProvinces(areaList[2])">
 								<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
-								<text class="hotCityText1">{{areaList[2].name}}</text>
+								<text class="hotCityText1">{{ areaList[2].name }}</text>
 							</view>
 						</view>
 						<view class="cityRank">
-							<view class="rankText" @click="toProvinces(areaList[3])">
-								{{areaList[3].name}}
-							</view>
+							<view class="rankText" @click="toProvinces(areaList[3])">{{ areaList[3].name }}</view>
 							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[4])">
-								{{areaList[4].name}}
-							</view>
+							<view class="rankText" @click="toProvinces(areaList[4])">{{ areaList[4].name }}</view>
 							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[5])">
-								{{areaList[5].name}}
-							</view>
+							<view class="rankText" @click="toProvinces(areaList[5])">{{ areaList[5].name }}</view>
 						</view>
 						<view class="cityRank">
-							<view class="rankText" @click="toProvinces(areaList[6])">
-								{{areaList[6].name}}
-							</view>
+							<view class="rankText" @click="toProvinces(areaList[6])">{{ areaList[6].name }}</view>
 							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[7])">
-								{{areaList[7].name}}
-							</view>
+							<view class="rankText" @click="toProvinces(areaList[7])">{{ areaList[7].name }}</view>
 							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[8])">
-								{{areaList[8].name}}
+							<view class="rankText" @click="toProvinces(areaList[8])">{{ areaList[8].name }}</view>
+						</view>
+						<!-- <view class="hb-l" @click="toAtt(hotAtt[0].id)">
+							<image mode="aspectFill" :src="hotAtt[0].image"></image>
+							<view class="imgMask"></view>
+							<text>{{ hotAtt[0].name }}</text>
+						</view>
+						<view class="hb-r">
+							<view class="hb-r1" @click="toAtt(hotAtt[1].id)">
+								<image mode="aspectFill" :src="hotAtt[1].image"></image>
+								<view class="imgMask"></view>
+								<text>{{ hotAtt[1].name }}</text>
+							</view>
+							<view class="hb-r2" @click="toAtt(hotAtt[2].id)">
+								<image mode="aspectFill" :src="hotAtt[2].image"></image>
+								<view class="imgMask"></view>
+								<text>{{ hotAtt[2].name }}</text>
+							</view>
+						</view> -->
+					</view>
+				</view>
+
+				<!-- 正在旅行 -->
+				<view class="touring" id="touring">
+					<text class="tourtext">正在旅行</text>
+					<view class="wrap">
+						<view class="left">
+							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
+								<view class="" @click="onPageJump" :id="item.article_id">
+									<view class="demo-top">
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<view class="adress">
+											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
+
+											<view class="adressText">{{ item.location }}</view>
+										</view>
+									</view>
+									<view class="titleTip">
+										<view class="demo-tag">
+											<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+											<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+										</view>
+										<view class="demo-title">{{ item.title }}</view>
+									</view>
+								</view>
+								<view class="demo-user">
+									<view class="userMessage">
+										<image class="userHeard" :src="item.avatar"></image>
+										<view class="userNikename">{{ item.author_name }}</view>
+									</view>
+									<view class="count" @click="clickLike(item, index)">
+										<view class="countImg">
+											<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+											<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+										</view>
+										<view class="likeCount">{{ item.like_count || 0 }}</view>
+									</view>
+								</view>
+							</view>
+						</view>
+						<view class="right">
+							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
+								<view class="" @click="onPageJump" :id="item.article_id">
+									<view class="demo-top">
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<view class="adress">
+											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
+
+											<view class="adressText">{{ item.location }}</view>
+										</view>
+									</view>
+									<view class="titleTip">
+										<view class="demo-tag">
+											<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+											<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+										</view>
+										<view class="demo-title">{{ item.title }}</view>
+									</view>
+								</view>
+								<view class="demo-user">
+									<view class="userMessage">
+										<image class="userHeard" :src="item.avatar"></image>
+										<view class="userNikename">{{ item.author_name }}</view>
+									</view>
+									<view class="count" @click="clickLike(item, index)">
+										<view class="countImg">
+											<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+											<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+										</view>
+										<view class="likeCount">{{ item.like_count || 0 }}</view>
+									</view>
+								</view>
 							</view>
 						</view>
 					</view>
@@ -338,7 +406,6 @@ import uniSection from '@/components/uni-section/uni-section.vue';
 // 引入mescroll-mixins.js
 import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 export default {
-	
 	components: {
 		uniIcons,
 		uniNavBar,
@@ -350,10 +417,10 @@ export default {
 	data() {
 		return {
 			background: {
-				backgroundColor: '',
+				backgroundColor: ''
 			},
 			cityName: '',
-			dqdwText:'当前位置',
+			dqdwText: '当前位置',
 			province: '',
 			state_id: '',
 			city_id: '',
@@ -371,9 +438,9 @@ export default {
 			isLike: false,
 			likeNum: 0,
 			bannerList: null,
-			indicatorDots:true,
-			areaList: null,
-			url:''
+			indicatorDots: true,
+			areaList: [],
+			url: ''
 		};
 	},
 
@@ -392,16 +459,16 @@ export default {
 			}
 		});
 		this.getBanner(),
-		setTimeout(function() {
-			uni.hideLoading();
-		}, 1000);
+			setTimeout(function() {
+				uni.hideLoading();
+			}, 1000);
 	},
-	
+
 	onPageScroll(e) {
-		if(e.scrollTop >= 100){
-			this.background.backgroundColor = '#ffffff'
-		}else{
-			this.background.backgroundColor = ''
+		if (e.scrollTop >= 100) {
+			this.background.backgroundColor = '#ffffff';
+		} else {
+			this.background.backgroundColor = '';
 		}
 	},
 	methods: {
@@ -465,83 +532,187 @@ export default {
 			uni.getLocation({
 				type: 'wgs84',
 				success: res => {
-					console.log('地址---', res);
-					// if(this.item == undefined){
-					this.cityName = res.city.substr(0, res.city.length - 1);
-					this.city = res.city;
-					this.province = res.province;
-					console.log(this.city, this.province);
-					uni.request({
-						// url:'http://192.168.43.156:8199/user/location',
-						// url:'user/location',
-						url:this.globalUrl + '/user/location',
-						data: {
-							state: this.province,
-							city: this.city
-						},
-						method: 'POST',
-						// header: {
-						// 	'content-type': 'application/x-www-form-urlencoded',
-						// },
-						success: res => {
-							console.log('获取地址id', res);
-							// 地址未定义
-							if (res.data.code != 0) {
-								
-								uni.request({
-									url: this.globalUrl + '/article/list',
-									data: {
-										count: 6,
-										page: 1
-									},
-									header: {
-										'Authorization': uni.getStorageSync('Authorization')
-									},
-									success: res => {
-										console.log('未定位时获取的文章列表', res);
-										uni.setStorageSync('article_id', res.data);
-										// console.log('存储文章列表==',res.data)
-										this.list = res.data.data.list;
-										// console.log('list=====',this.list)
-									}
-								});
-								
-							} else {
-								uni.setStorageSync('city_id', res.data);
-								console.log('存储本地', res.data);
-								var city = uni.getStorageSync('city_id');
-								console.log('取数据', city);
-								uni.request({
-									url: this.globalUrl + '/article/list',
-									data: {
-										count: 6,
-										page: 1
-									},
-									header: {
-										Authorization: uni.getStorageSync('Authorization')
-									},
-									success: res => {
-										console.log('文章列表', res);
-										uni.setStorageSync('article_id', res.data);
-										this.list = res.data.data.list;
-									}
+					if (res.city) {
+						this.cityName = res.city.substr(0, res.city.length - 1);
+						this.city = res.city;
+						this.province = res.province;
+						console.log('哈哈哈哈哈哈哈哈哈');
+
+						console.log(this.city, this.province);
+						uni.request({
+							url: this.globalUrl + '/area/hot',
+							data: {
+								state: this.province ? this.province : null,
+								city: this.city ? this.city : null
+							},
+							success: res => {
+								console.log(this.areaList);
+								this.areaList = res.data.data;
+
+								console.log('areaList--', this.areaList);
+							}
+						});
+						uni.request({
+							// url:'http://192.168.43.156:8199/user/location',
+							// url:'user/location',
+							url: this.globalUrl + '/user/location',
+							data: {
+								state: this.province,
+								city: this.city
+							},
+							method: 'POST',
+							// header: {
+							// 	'content-type': 'application/x-www-form-urlencoded',
+							// },
+							success: res => {
+								console.log('获取地址id', res);
+								// 地址未定义
+								if (res.data.code != 0) {
+									uni.request({
+										url: this.globalUrl + '/article/list',
+										data: {
+											count: 6,
+											page: 1
+										},
+										header: {
+											Authorization: uni.getStorageSync('Authorization')
+										},
+										success: res => {
+											console.log('未定位时获取的文章列表', res);
+											uni.setStorageSync('article_id', res.data);
+											// console.log('存储文章列表==',res.data)
+											this.list = res.data.data.list;
+											// console.log('list=====',this.list)
+										}
+									});
+								} else {
+									uni.setStorageSync('city_id', res.data);
+									console.log('存储本地', res.data);
+									var city = uni.getStorageSync('city_id');
+									console.log('取数据', city);
+									uni.request({
+										url: this.globalUrl + '/article/list',
+										data: {
+											count: 6,
+											page: 1
+										},
+										header: {
+											Authorization: uni.getStorageSync('Authorization')
+										},
+										success: res => {
+											console.log('文章列表', res);
+											uni.setStorageSync('article_id', res.data);
+											this.list = res.data.data.list;
+										}
+									});
+								}
+							}
+						});
+						console.log('哈哈哈哈哈哈哈哈哈');
+					} else {
+						let arr = [];
+						arr.push(res.latitude);
+						arr.push(res.longitude);
+						console.log(arr);
+						arr = arr.join(',');
+						uni.request({
+							url: 'http://api.map.baidu.com/reverse_geocoding/v3/?ak=NKyWaSnsW6FFEseeCEX18Fpvgzs3jcmd&output=json&coordtype=wgs84ll',
+							data: {
+								location: arr
+							},
+							success: result => {
+								console.log(result)
+								debugger
+								if (result.data.status == 0) {
+									this.cityName = result.data.result.addressComponent.city.substr(0, result.data.result.addressComponent.city.length - 1);
+									this.city = result.data.result.addressComponent.city;
+									this.province = result.data.result.addressComponent.province;
+									console.log('哈哈哈哈哈哈哈哈哈');
+									
+									console.log(this.city, this.province);
+									uni.request({
+										url: this.globalUrl + '/area/hot',
+										data: {
+											state: this.province ? this.province : null,
+											city: this.city ? this.city : null
+										},
+										success: res => {
+											console.log(this.areaList);
+											this.areaList = res.data.data;
+									
+											console.log('areaList--', this.areaList);
+										}
+									});
+									uni.request({
+										// url:'http://192.168.43.156:8199/user/location',
+										// url:'user/location',
+										url: this.globalUrl + '/user/location',
+										data: {
+											state: this.province,
+											city: this.city
+										},
+										method: 'POST',
+										// header: {
+										// 	'content-type': 'application/x-www-form-urlencoded',
+										// },
+										success: res => {
+											console.log('获取地址id', res);
+											// 地址未定义
+											if (res.data.code != 0) {
+												uni.request({
+													url: this.globalUrl + '/article/list',
+													data: {
+														count: 6,
+														page: 1
+													},
+													header: {
+														Authorization: uni.getStorageSync('Authorization')
+													},
+													success: res => {
+														console.log('未定位时获取的文章列表', res);
+														uni.setStorageSync('article_id', res.data);
+														// console.log('存储文章列表==',res.data)
+														this.list = res.data.data.list;
+														// console.log('list=====',this.list)
+													}
+												});
+											} else {
+												uni.setStorageSync('city_id', res.data);
+												console.log('存储本地', res.data);
+												var city = uni.getStorageSync('city_id');
+												console.log('取数据', city);
+												uni.request({
+													url: this.globalUrl + '/article/list',
+													data: {
+														count: 6,
+														page: 1
+													},
+													header: {
+														Authorization: uni.getStorageSync('Authorization')
+													},
+													success: res => {
+														console.log('文章列表', res);
+														uni.setStorageSync('article_id', res.data);
+														this.list = res.data.data.list;
+													}
+												});
+											}
+										}
+									});
+								} else {
+									uni.showToast({
+										title: result.errMsg
+									})
+								}
+							},
+							fail: () => {
+								un.uni.showToast({
+									title: '网络不给力~,请稍后再试',
+									icon: 'none'
 								});
 							}
-						}
-					});
-					// 获取热门目的地
-					uni.request({
-						url:this.globalUrl + '/area/hot',
-						data:{
-							state: this.province,
-							city: this.city
-						},
-						success: (res) => {
-							console.log('热门目的地==',res)
-							this.areaList = res.data.data
-							console.log('areaList--',this.areaList)
-						}
-					})
+						});
+					}
 				},
 				// 未开启定位
 				fail: res => {
@@ -553,7 +724,24 @@ export default {
 						icon: 'none',
 						duration: 2000
 					});
-					this.dqdwText = '正在定位...',
+					(this.dqdwText = '正在定位...'), console.log('哈哈哈哈哈哈哈哈哈');
+
+					uni.request({
+						url: this.globalUrl + '/area/hot',
+						data: {
+							state: this.province ? this.province : null,
+							city: this.city ? this.city : null
+						},
+						success: res => {
+							console.log(this.areaList);
+							this.areaList = res.data.data;
+
+							console.log('areaList--', this.areaList);
+						},
+						fail: error => {
+							console.log(error);
+						}
+					});
 					uni.request({
 						url: this.globalUrl + '/article/list',
 						data: {
@@ -561,7 +749,7 @@ export default {
 							page: 1
 						},
 						header: {
-							'Authorization': uni.getStorageSync('Authorization')
+							Authorization: uni.getStorageSync('Authorization')
 						},
 						success: res => {
 							console.log('未定位时获取的文章列表', res);
@@ -571,19 +759,8 @@ export default {
 							// console.log('list=====',this.list)
 						}
 					});
+					console.log('哈哈哈哈哈哈哈哈哈');
 					// 获取热门目的地
-					uni.request({
-						url:this.globalUrl + '/area/hot',
-						data:{
-							state: this.province,
-							city: this.city
-						},
-						success: (res) => {
-							console.log('热门目的地==',res)
-							this.areaList = res.data.data
-							console.log('areaList--',this.areaList)
-						}
-					})
 				}
 			});
 			
@@ -603,8 +780,8 @@ export default {
 			});
 		},
 		// 点击banner
-		toUrl(item){
-			console.log(111111)
+		toUrl(item) {
+			console.log(111111);
 			var url = item.url;
 		},
 		// 跳转文章详情
@@ -624,37 +801,36 @@ export default {
 			let article = e.article_id;
 			var that = this;
 			uni.request({
-					url: this.globalUrl + '/user/liked',
-					data: {
-						article_id: article,
-						liked: e.liked == 0 ? 1 : 0
-					},
-					method: 'POST',
-					header: {
-						'Authorization': uni.getStorageSync('Authorization')
-					},
-					success: (res)=> {
-							
-							if (res.data.code != 0) {
-									// debugger
-									uni.showModal({
-										title: '提示',
-										content: '您好，请先登录',
-										showCancel: false,
-										success: (res)=> {
-											if (res.confirm) {
-												uni.redirectTo({
-													url: '../login/login'
-												})
-											}
-										}
-								});
-								return;
+				url: this.globalUrl + '/user/liked',
+				data: {
+					article_id: article,
+					liked: e.liked == 0 ? 1 : 0
+				},
+				method: 'POST',
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: res => {
+					if (res.data.code != 0) {
+						// debugger
+						uni.showModal({
+							title: '提示',
+							content: '您好，请先登录',
+							showCancel: false,
+							success: res => {
+								if (res.confirm) {
+									uni.redirectTo({
+										url: '../login/login'
+									});
+								}
 							}
-									
-							that.list[index].liked = e.liked == 1 ? 0 : 1;
-							that.list[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
+						});
+						return;
 					}
+
+					that.list[index].liked = e.liked == 1 ? 0 : 1;
+					that.list[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
+				}
 			});
 		},
 		// 设备信息
@@ -665,7 +841,7 @@ export default {
 		// 		}
 		// 	})
 		// },
-		
+
 		lookAll() {
 			if (this.item == undefined || null) {
 				var city = uni.getStorageSync('city_id');
@@ -713,22 +889,20 @@ export default {
 				url: '../city/city'
 			});
 		},
-		toProvinces(e){
-			console.log('--',e)
-			if(e.state_id == 0){
+		toProvinces(e) {
+			console.log('--', e);
+			if (e.state_id == 0) {
 				uni.showToast({
 					title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
 					icon: 'none',
 					duration: 3000
 				});
-			}else{
-				var e = JSON.stringify(e)
+			} else {
+				var e = JSON.stringify(e);
 				uni.navigateTo({
-					url:'/pages/provinces/provinces?id=' + e
-				})
+					url: '/pages/provinces/provinces?id=' + e
+				});
 			}
-			
-			
 		},
 		confirm() {
 			// uni.showToast({
@@ -1023,8 +1197,8 @@ view {
 }
 
 /* 自定义导航栏 */
-#navbarbox{
-	background-color: #007AFF !important;
+#navbarbox {
+	background-color: #007aff !important;
 }
 .search-box {
 	width: 486rpx;
@@ -1037,7 +1211,7 @@ view {
 	height: 72rpx;
 }
 /* 导航栏轮播图 */
-.page-section{
+.page-section {
 	position: relative;
 	top: -184rpx;
 	left: 0;
@@ -1045,23 +1219,10 @@ view {
 	height: 440rpx;
 }
 .page-section-spacing {
-	
 	width: 100%;
 	height: 440rpx;
 }
 .swiper {
-	width: 100%;
-	height: 100%;
-}
-.swiper-item {
-	width: 100%;
-	height: 100%;
-}
-.itemUrl{
-	width: 100%;
-	height: 100%;
-}
-.swiperImg {
 	width: 100%;
 	height: 100%;
 }
@@ -1201,8 +1362,7 @@ view {
 .hot {
 	display: flex;
 	flex-direction: column;
-	background-color: #FFFFFF;
-	
+	background-color: #ffffff;
 }
 
 .hot .hot-top {
@@ -1225,7 +1385,7 @@ view {
 .hot-top .ht-r {
 	width: 94rpx;
 	height: 42rpx;
-	background: #EDEFF2;
+	background: #edeff2;
 	border-radius: 24rpx;
 	font-size: 22rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
@@ -1249,41 +1409,40 @@ view {
 	/* display: flex; */
 	margin-top: 32rpx;
 }
-.hotAdress{
+.hotAdress {
 	display: flex;
 	/* align-items: center; */
 	margin-left: 32rpx;
 }
-.dqwz{
+.dqwz {
 	width: 216rpx;
 	height: 180rpx;
 	border-radius: 16rpx;
-	border: 1px solid #FAAD14;
+	border: 1px solid #faad14;
 	position: relative;
 }
-.dqwzImg{
+.dqwzImg {
 	width: 100%;
 	height: 100%;
 	border-radius: 16rpx;
-	
 }
-.dqwzText{
+.dqwzText {
 	position: absolute;
 	top: 50rpx;
 	left: 78rpx;
 	font-size: 32rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
-	color: #FFFFFF;
+	color: #ffffff;
 	line-height: 32rpx;
 }
-.adressBox{
+.adressBox {
 	display: flex;
 	align-items: center;
 	position: absolute;
 	top: 100rpx;
 	left: 40rpx;
-	color: #FFFFFF;
+	color: #ffffff;
 	padding: 8rpx 16rpx;
 	font-size: 16rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
@@ -1292,27 +1451,26 @@ view {
 	line-height: 16rpx;
 	width: 140rpx;
 	height: 40rpx;
-	background: #FFE512;
+	background: #ffe512;
 	border-radius: 11px;
 }
-.zhishi{
+.zhishi {
 	width: 24rpx;
 	height: 24rpx;
 	margin-right: 4rpx;
 }
 
-.hot{
+.hot {
 	/* margin-top: 176rpx; */
 }
-.hotCity{
+.hotCity {
 	width: 216rpx;
 	height: 180rpx;
 	border-radius: 16rpx;
 	margin-left: 24rpx;
 	position: relative;
-	
 }
-.hotCityImg{
+.hotCityImg {
 	width: 100%;
 	height: 100%;
 	border-radius: 16rpx;
@@ -1323,7 +1481,7 @@ view {
 	font-size: 32rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
-	color: #FFFFFF;
+	color: #ffffff;
 	line-height: 32rpx;
 	text-align: center;
 	position: absolute;
@@ -1338,7 +1496,7 @@ view {
 	font-size: 32rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
-	color: #FFFFFF;
+	color: #ffffff;
 	line-height: 32rpx;
 	text-align: center;
 	position: absolute;
@@ -1347,14 +1505,14 @@ view {
 	margin-left:-70rpx;
 	margin-top:-16rpx;
 }
-.cityRank{
+.cityRank {
 	margin-top: 28rpx;
 	margin-left: 32rpx;
 	margin-bottom: 28rpx;
 	display: flex;
 	align-items: center;
 }
-.rankText{
+.rankText {
 	width: 200rpx;
 	font-size: 28rpx;
 	text-align: center;
