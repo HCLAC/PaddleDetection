@@ -130,7 +130,6 @@
 				<!-- 正在旅行 -->
 				<view class="touring" id="touring">
 					<text class="tourtext">正在旅行</text>
-					<!-- <touring class="touringList" ></touring> -->
 					<view class="wrap">
 						<view class="left">
 							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
@@ -211,11 +210,8 @@
 import uniIcons from '@/components/uni-icons/uni-icons.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import uniSection from '@/components/uni-section/uni-section.vue';
-// import tcontent from '@/components/content/tcontent.vue'
-// import touring from '@/components/content/touring.vue'
 // 引入mescroll-mixins.js
 import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
-// import httpType from '../../httpType.js';
 export default {
 	
 	components: {

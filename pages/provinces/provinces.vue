@@ -44,7 +44,6 @@
 				<image class="weatherImg" src="../../static/images/weather/tedabaoyu.svg" mode="" v-if="weather.icon1 == 'day/tedabaoyu' "></image>
 				<image class="weatherImg" src="../../static/images/weather/wu.svg" mode="" v-if="weather.icon1 == 'day/wu' "></image>
 				<image class="weatherImg" src="../../static/images/weather/xiaoxue.svg" mode="" v-if="weather.icon1 == 'day/xiaoxue' "></image>
-				<image class="weatherImg" src="../../static/images/weather/xiaoyu.svg" mode="" v-if="weather.icon1 == 'day/xiaoyu' "></image>
 				<image class="weatherImg" src="../../static/images/weather/yangsha.svg" mode="" v-if="weather.icon1 == 'day/yangsha' "></image>
 				<image class="weatherImg" src="../../static/images/weather/yin.svg" mode="" v-if="weather.icon1 == 'day/yin' "></image>
 				<image class="weatherImg" src="../../static/images/weather/yujiaxue.svg" mode="" v-if="weather.icon1 == 'day/yujiaxue' "></image>
@@ -156,7 +155,7 @@
 			</view>
 		</view>
 		<!-- 行程推荐 -->
-		<view class="trip">
+		<view class="trip" v-if="routeHot">
 			<view class="tripHeader">
 				<view class="tripTitle">
 					行程路线
@@ -386,7 +385,7 @@
 					},
 					success: (res) => {
 						console.log('天气--',res)
-						if(res.data.data == null){
+						if(res.data == null){
 							uni.request({
 								url:'https://api.asilu.com/weather/',
 								data:{
@@ -394,10 +393,12 @@
 								},
 								success:(res)=>{
 									this.weather = res.data.weather[0]
+									console.log('当地天气',this.weather)
 								},
 							})
 						}else{
 							this.weather = res.data.weather[0]
+							console.log('当地天气',this.weather)
 						}
 					}
 				})
@@ -930,6 +931,7 @@
 		width: 750rpx;
 		height: 244rpx;
 		background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #13C2C2 100%);
+		opacity: 0.4;
 		position: absolute;
 		bottom: 0;
 		left: 0;

@@ -38,27 +38,55 @@
             },
             "ios" : {},
             "sdkConfigs" : {}
+        },
+        "uniStatistics" : {
+            "enable" : true
         }
     },
     "quickapp" : {},
     "mp-weixin" : {
         "appid" : "wx83611669053cfcbf",
         "setting" : {
-            "urlCheck" : false,
-            "postcss" : true,
-            "minified" : true,
-            "es6" : true
+            "urlCheck" : true
         },
-        "permission" : {
-            "scope.userLocation" : {
-                "desc" : "获取定位，加载相关城市数据"
-            }
+        "uniStatistics" : {
+            "enable" : true
         }
     },
     "mp-baidu" : {
         "appid" : "21554227",
         "setting" : {
             "urlCheck" : false
+        },
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "mp-toutiao" : {
+        "setting" : {
+            "postcss" : true
+        },
+        "uniStatistics" : {
+            "enable" : true
+        },
+        "appid" : "tt74ea0257ebd1c647"
+    },
+    "uniStatistics" : {
+        "enable" : true
+    },
+    "h5" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "mp-alipay" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "mp-qq" : {
+        "uniStatistics" : {
+            "enable" : true
         }
     },
     "mp-toutiao" : {

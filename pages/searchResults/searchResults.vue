@@ -243,7 +243,6 @@
 //引用mSearch组件，如不需要删除即可
 import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
-// import touring from '@/components/content/touring.vue'
 export default {
 	data() {
 		return {
@@ -260,7 +259,6 @@ export default {
 	components: {
 		mSearch,
 		uniNavBar
-		// touring
 	},
 	onLoad() {
 		this.getResults();
