@@ -930,6 +930,7 @@
 		width: 750rpx;
 		height: 244rpx;
 		background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #13C2C2 100%);
+		opacity: 0.4;
 		position: absolute;
 		bottom: 0;
 		left: 0;

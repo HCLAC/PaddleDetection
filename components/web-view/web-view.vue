@@ -1,6 +1,6 @@
 <template>
 	<view>
-		
+		<web-view src="">web</web-view>
 	</view>
 </template>
 

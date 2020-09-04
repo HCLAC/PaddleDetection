@@ -85,7 +85,7 @@
 
 				this.city = item.name
 				
-				getApp().globalData.item = item
+				// getApp().globalData.item = item
 				console.log('item',item)
 				var e = JSON.stringify(item)
 				uni.navigateTo({

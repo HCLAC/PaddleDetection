@@ -38,12 +38,6 @@
 							<view class="contentHeader">
 								<view class="title">{{attDetail.data.name}}</view>
 							</view>
-							<view class="contentRank" @click="toRank()">
-								<view class="rankText">
-									{{attDetail.data.city}}市景点榜单·第{{attDetail.data.rank}}名
-								</view>
-								<image src="../../static/images/icon-next.svg" mode=""></image>
-							</view>
 						</view>
 						<view class="tips">
 							<view class="tipHot" v-for="(item,index) in attDetail.data.tags" :key="index" >{{item}}</view>
@@ -53,6 +47,12 @@
 					<view class="shareBox">
 						<image src="../../static/images/icon／share.svg" mode="" @click="share"></image>
 					</view>
+				</view>
+				<view class="contentRank" @click="toRank()">
+					<view class="rankText">
+						{{attDetail.data.city}}市景点榜单·第{{attDetail.data.rank}}名
+					</view>
+					<image src="../../static/images/icon-next.svg" mode=""></image>
 				</view>
 				<view class="rateBox" >
 					<!-- <uni-rate  :readonly="true" allow-half :value="attDetail.data.rate" /> -->
@@ -370,7 +370,6 @@ export default {
 	}
 	.slotleft{
 		display: flex;
-		align-items: center;
 	}
 	.fanhui{
 		width: 40rpx;
@@ -473,12 +472,10 @@ export default {
 	}
 	.contentTitle{
 		display: flex;
-		align-items: center;
 	}
 	.contentHeader {
 		height: 52rpx;
 		display: flex;
-		align-items: center;
 		justify-content: space-between;
 		.title {
 			font-size: 48rpx;
@@ -489,13 +486,14 @@ export default {
 	}
 	.contentRank{
 		height:36rpx;
-		background:linear-gradient(180deg,rgba(228,203,162,1) 0%,rgba(252,239,225,1) 0%,rgba(225,192,144,1) 100%);
+		background: linear-gradient(180deg, #E4CBA2 0%, #FCEFE1 0%, #E1C090 100%);
 		border-radius:4rpx;
-		margin-left: 18rpx;
-		display: flex;
-		align-items: center;
+		margin-top: 16rpx;
+		display: inline-block;
 		padding: 0 8rpx 0 12rpx;
 		image{
+			margin-top: 12rpx;
+			float: right;
 			width: 16rpx;
 			height: 16rpx;
 		}
@@ -506,6 +504,8 @@ export default {
 		font-weight:400;
 		color:rgba(116,68,13,1);
 		line-height:20rpx;
+		float: left;
+		margin-top: 8rpx;
 	}
 	.shareBox{
 		width:78rpx;
@@ -514,8 +514,8 @@ export default {
 		box-shadow:0px 2px 4px 0px rgba(255,229,18,0.5);
 		border-radius: 50%;
 		display: flex;
-		align-items: center;
 		justify-content: center;
+		align-items: center;
 	}
 	.shareBox image {
 		height: 34rpx;
@@ -550,7 +550,6 @@ export default {
 	.rateBox {
 		margin-top: 28rpx;
 		display: flex;
-		align-items: center;
 		.rateStart{
 			display: flex;
 		}
@@ -609,7 +608,6 @@ export default {
 			bottom: 0;
 			display: flex;
 			justify-content: flex-end;
-			// align-items: center;
 			z-index: 111;
 			.mask{
 				width: 50rpx;
@@ -652,7 +650,6 @@ export default {
 		justify-content: space-between;
 		.left {
 			display: flex;
-			// align-items: center;
 			width: 50%;
 			.adreessIcon {
 				height: 34rpx;
@@ -700,7 +697,6 @@ export default {
 				z-index: 99;
 				display: flex;
 				justify-content: center;
-				align-items: center;
 				image {
 					width: 46rpx;
 					height: 46rpx;
@@ -718,7 +714,6 @@ export default {
 		// margin-top: 10rpx;
 		height: 36rpx;
 		display: flex;
-		align-items: center;
 		image {
 			width: 34rpx;
 			height: 34rpx;
@@ -777,7 +772,6 @@ export default {
 				margin-top: 6rpx;
 				display: flex;
 				justify-content: flex-end;
-				align-items: center;
 				image{
 					height: 32rpx;
 					width: 32rpx;

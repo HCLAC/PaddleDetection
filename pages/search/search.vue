@@ -72,7 +72,6 @@
 				<veiw>{{ keyValue }}</veiw>
 				”相关结果
 			</view>
-			<view class="touring">
 				<view class="wrap">
 					<view class="left">
 						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
@@ -147,7 +146,6 @@
 <script>
 //引用mSearch组件，如不需要删除即可
 import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision.vue';
-import touring from '@/components/content/touring.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import httpType from '../../httpType.js';
 
@@ -177,7 +175,6 @@ export default {
 	components: {
 		//引用mSearch组件，如不需要删除即可
 		mSearch,
-		touring,
 		uniNavBar
 	},
 	mixins: [MescrollMixin],
@@ -858,11 +855,17 @@ view {
 }
 // 瀑布流
 /* 正在旅行 */
+.left,
+.right {
+	display: inline-block;
+	margin-left: 20rpx;
+	vertical-align: top;
+	width: 46%;
+}
 .touring {
 	margin-top: 24rpx;
 }
-
-.touring .tourtext {
+.touring .tourtext{
 	width: 160rpx;
 	height: 104rpx;
 	line-height: 104rpx;
