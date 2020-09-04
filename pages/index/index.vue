@@ -107,23 +107,6 @@
 								{{areaList[8].name}}
 							</view>
 						</view>
-						<!-- <view class="hb-l" @click="toAtt(hotAtt[0].id)">
-							<image mode="aspectFill" :src="hotAtt[0].image"></image>
-							<view class="imgMask"></view>
-							<text>{{ hotAtt[0].name }}</text>
-						</view>
-						<view class="hb-r">
-							<view class="hb-r1" @click="toAtt(hotAtt[1].id)">
-								<image mode="aspectFill" :src="hotAtt[1].image"></image>
-								<view class="imgMask"></view>
-								<text>{{ hotAtt[1].name }}</text>
-							</view>
-							<view class="hb-r2" @click="toAtt(hotAtt[2].id)">
-								<image mode="aspectFill" :src="hotAtt[2].image"></image>
-								<view class="imgMask"></view>
-								<text>{{ hotAtt[2].name }}</text>
-							</view>
-						</view> -->
 					</view>
 				</view>
 
@@ -628,6 +611,9 @@ export default {
 				success: res => {
 					console.log('banner--', res);
 					this.bannerList = res.data.data;
+					if(this.bannerList.length == 0){
+						this.background.backgroundColor = '#ffffff'
+					}
 				}
 			});
 		},

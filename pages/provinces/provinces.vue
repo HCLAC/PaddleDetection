@@ -477,7 +477,9 @@
 					url:this.globalUrl + '/area/guide',
 					success: (res) => {
 						console.log('获取全国城市',res)
-						this.cityList = res.data.data.areas
+						var cityList = res.data.data.areas
+						this.cityList = cityList.slice(1)
+						console.log('shift--',this.cityList)
 					}
 				})
 			},
