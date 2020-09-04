@@ -6,7 +6,7 @@
 				<view class="search-wrap" >
 					<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
 					<u-search
-						v-model="keyword"
+						
 						placeholderColor="#C9CAD1"
 						search-icon-color="#C9CAD1"
 						placeholder="搜索热门目的地"

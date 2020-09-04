@@ -536,7 +536,8 @@
 									console.log('热门线路',res)
 									this.routeHot = res.data.data
 								}
-							})
+							}),
+							this.show = false
 						}
 					})
 					}else{
@@ -553,7 +554,8 @@
 								this.getTour(),
 								this.getWeather(),
 								this.getSiteHot(),
-								this.getRouteHot()
+								this.getRouteHot(),
+								this.show = false
 							}
 						})
 					}
@@ -628,7 +630,8 @@
 									console.log('热门线路',res)
 									this.routeHot = res.data.data
 								}
-							})
+							}),
+							this.show = false
 						}
 					})
 				}else{
@@ -645,7 +648,8 @@
 							this.getTour(),
 							this.getWeather(),
 							this.getSiteHot(),
-							this.getRouteHot()
+							this.getRouteHot(),
+							this.show = false
 						}
 					})
 				}
@@ -1383,33 +1387,34 @@
 	}
 	
 	.u-tab-item {
-		height: 110rpx;
-		background: #f6f6f6;
+		height: 80rpx;
+		background: #ffffff;
 		box-sizing: border-box;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		font-size: 26rpx;
-		color: #444;
+		color: #303133;
 		font-weight: 400;
 		line-height: 1;
 	}
 	
 	.u-tab-item-active {
 		position: relative;
-		color: #000;
-		font-size: 30rpx;
-		font-weight: 600;
-		background: #fff;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #FA8C16;
+		font-size: 28rpx;
+		background: #F8F8F8;
 	}
 	
 	.u-tab-item-active::before {
 		content: "";
 		position: absolute;
-		border-left: 4px solid $u-type-primary;
-		height: 32rpx;
+		border-left: 4px solid #FA8C16;
+		height: 80rpx;
 		left: 0;
-		top: 39rpx;
+		top: 0;
 	}
 	
 	.u-tab-view {
