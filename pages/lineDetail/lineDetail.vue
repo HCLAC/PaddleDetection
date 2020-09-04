@@ -214,7 +214,7 @@
 						<image v-show="lineContent.fav" class="favBtn" src="../../static/images/fav-actived.svg"></image>
 						<view class="favNum">{{ lineContent.fav_count }}</view>
 					</view> -->
-					<view class="share"><image src="../../static/images/fenxiang.svg"></image></view>
+					<view class="share" @click="share"><image src="../../static/images/fenxiang.svg"></image></view>
 					<view class=""><view class="loginButton" v-if="!hasLogin" @click="login">登录</view></view>
 				</view>
 			</view>
@@ -353,6 +353,9 @@ export default {
 			uni.switchTab({
 				url: '/pages/index/index'
 			});
+		},
+		share() {
+			uni.showShareMenu({});
 		}
 	}
 };

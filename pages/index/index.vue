@@ -47,7 +47,7 @@
 		</view>
 
 		<!-- 内容 -->
-		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-body v-if="bannerList.length != 0" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="cus-sty ">
 				
 				<!-- 热门目的地 -->
@@ -173,6 +173,163 @@
 										<view class="adress">
 											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
 
+											<view class="adressText">{{ item.location }}</view>
+										</view>
+									</view>
+									<view class="titleTip">
+										<view class="demo-tag">
+											<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+											<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+										</view>
+										<view class="demo-title">{{ item.title }}</view>
+									</view>
+								</view>
+								<view class="demo-user">
+									<view class="userMessage">
+										<image class="userHeard" :src="item.avatar"></image>
+										<view class="userNikename">{{ item.author_name }}</view>
+									</view>
+									<view class="count" @click="clickLike(item, index)">
+										<view class="countImg">
+											<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+											<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+										</view>
+										<view class="likeCount">{{ item.like_count || 0 }}</view>
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</mescroll-body>
+		<!-- 无banner时 -->
+		<mescroll-body v-if="bannerList.length == 0" class="mescroll1" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+			<view class="cus-sty ">
+				
+				<!-- 热门目的地 -->
+				<view class="hot">
+					<view class="hot-top">
+						<text class="ht-l">热门目的地</text>
+						<view class="ht-r" @click="showCity">
+							更多
+							<image src="../../static/images/more-right.svg" class="moreIcon" mode=""></image>
+						</view>
+					</view>
+					<view class="hot-bot" v-if="areaList != null">
+						<view class="hotAdress" >
+							<!-- 当前位置 -->
+							<view class="dqwz" @click="toProvinces(areaList[0])">
+								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
+								<image class="dqwzImg" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
+								<text class="dqwzText">{{cityName}}</text>
+								<view class="adressBox">
+									<image class="zhishi" src="../../static/images/Icon／Mapt.svg" mode=""></image>
+									<text class="dqwzText1">{{dqdwText}}</text>
+								</view>
+								
+							</view>
+							<view class="hotCity" @click="toProvinces(areaList[1])" >
+								<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
+								<text class="hotCityText">{{areaList[1].name}}</text>
+							</view>
+							<view class="hotCity" @click="toProvinces(areaList[2])">
+								<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
+								<text class="hotCityText1">{{areaList[2].name}}</text>
+							</view>
+						</view>
+						<view class="cityRank">
+							<view class="rankText" @click="toProvinces(areaList[3])">
+								{{areaList[3].name}}
+							</view>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[4])">
+								{{areaList[4].name}}
+							</view>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[5])">
+								{{areaList[5].name}}
+							</view>
+						</view>
+						<view class="cityRank">
+							<view class="rankText" @click="toProvinces(areaList[6])">
+								{{areaList[6].name}}
+							</view>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[7])">
+								{{areaList[7].name}}
+							</view>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[8])">
+								{{areaList[8].name}}
+							</view>
+						</view>
+						<!-- <view class="hb-l" @click="toAtt(hotAtt[0].id)">
+							<image mode="aspectFill" :src="hotAtt[0].image"></image>
+							<view class="imgMask"></view>
+							<text>{{ hotAtt[0].name }}</text>
+						</view>
+						<view class="hb-r">
+							<view class="hb-r1" @click="toAtt(hotAtt[1].id)">
+								<image mode="aspectFill" :src="hotAtt[1].image"></image>
+								<view class="imgMask"></view>
+								<text>{{ hotAtt[1].name }}</text>
+							</view>
+							<view class="hb-r2" @click="toAtt(hotAtt[2].id)">
+								<image mode="aspectFill" :src="hotAtt[2].image"></image>
+								<view class="imgMask"></view>
+								<text>{{ hotAtt[2].name }}</text>
+							</view>
+						</view> -->
+					</view>
+				</view>
+		
+				<!-- 正在旅行 -->
+				<view class="touring" id="touring">
+					<text class="tourtext">正在旅行</text>
+					<view class="wrap">
+						<view class="left">
+							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
+								<view class="" @click="onPageJump" :id="item.article_id">
+									<view class="demo-top">
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<view class="adress">
+											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
+		
+											<view class="adressText">{{ item.location }}</view>
+										</view>
+									</view>
+									<view class="titleTip">
+										<view class="demo-tag">
+											<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+											<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+										</view>
+										<view class="demo-title">{{ item.title }}</view>
+									</view>
+								</view>
+								<view class="demo-user">
+									<view class="userMessage">
+										<image class="userHeard" :src="item.avatar"></image>
+										<view class="userNikename">{{ item.author_name }}</view>
+									</view>
+									<view class="count" @click="clickLike(item, index)">
+										<view class="countImg">
+											<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+											<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+										</view>
+										<view class="likeCount">{{ item.like_count || 0 }}</view>
+									</view>
+								</view>
+							</view>
+						</view>
+						<view class="right">
+							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
+								<view class="" @click="onPageJump" :id="item.article_id">
+									<view class="demo-top">
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<view class="adress">
+											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
+		
 											<view class="adressText">{{ item.location }}</view>
 										</view>
 									</view>
@@ -993,6 +1150,11 @@ view {
 	top: -184rpx;
 	left: 0;
 }
+.mescroll1{
+	position: relative;
+	top: 0;
+	left: 0;
+}
 /* #endif */
 .example {
 	padding: 0 15px;
@@ -1221,11 +1383,11 @@ view {
 	font-weight: 500;
 	color: #FFFFFF;
 	line-height: 32rpx;
+	margin: auto;
 	position: absolute;
-	left: 50%; 
 	top: 50%;
-	margin-top: -16rpx;
-	margin-left: -32rpx;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 .hotCityText1{
 	font-size: 32rpx;
@@ -1233,11 +1395,11 @@ view {
 	font-weight: 500;
 	color: #FFFFFF;
 	line-height: 32rpx;
+	margin: auto;
 	position: absolute;
-	left: 50%; 
 	top: 50%;
-	margin-top: -16rpx;
-	margin-left: -32rpx;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 .cityRank{
 	margin-top: 28rpx;

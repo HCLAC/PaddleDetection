@@ -838,7 +838,7 @@
 
 	.class-item {
 		margin-bottom: 30rpx;
-		background-color: #fff;
+		background-color: #F8F8F8;
 		padding: 16rpx;
 		border-radius: 8rpx;
 	}
@@ -850,9 +850,10 @@
 	}
 
 	.item-menu-name {
-		font-weight: normal;
-		font-size: 24rpx;
-		color: $u-main-color;
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #303133;
 		margin-top: 52rpx;
 	}
 
