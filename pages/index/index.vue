@@ -15,7 +15,9 @@
 			<view class="page-section-spacing">
 				<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">
 					<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
-						<navigator :url="'/components/web-view/web-view?website=' + item.url" class="itemUrl"><image :src="item.image" mode="scaleToFill" class="swiperImg"></image></navigator>
+						<navigator :url="'/components/web-view/web-view?website=' + item.url" class="itemUrl">
+							<image :src="item.image" mode="scaleToFill" class="swiperImg"></image>
+						</navigator>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -1226,7 +1228,14 @@ view {
 	width: 100%;
 	height: 100%;
 }
-
+.itemUrl{
+	width: 100%;
+	height: 100%;
+}
+.swiperImg{
+	width: 100%;
+	height: 100%;
+}
 
 .example {
 	padding: 0 15px 15px;
