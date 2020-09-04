@@ -147,7 +147,6 @@
 <script>
 //引用mSearch组件，如不需要删除即可
 import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision.vue';
-import touring from '@/components/content/touring.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import httpType from '../../httpType.js';
 
@@ -177,7 +176,6 @@ export default {
 	components: {
 		//引用mSearch组件，如不需要删除即可
 		mSearch,
-		touring,
 		uniNavBar
 	},
 	mixins: [MescrollMixin],
