@@ -212,7 +212,7 @@ export default {
 		},
 		getPhone(res) {
 			console.log(res)
-			debugger
+			
 			if (res.detail.errMsg != 'getPhoneNumber:ok') {
 				uni.showToast({
 					title: '用户拒绝授权',

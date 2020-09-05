@@ -1052,6 +1052,7 @@
 	.contentImg{
 		width: 218rpx;
 		margin-right: 20rpx;
+		background-color: #FFFFFF;
 	}
 	.attImg{
 		width: 100%;
@@ -1095,7 +1096,7 @@
 		display: flex;
 		align-items: center;
 		margin-top: 32rpx;
-		background: #ffffff;
+		background: #F8F8F8;
 	}
 	.tripTitle{
 		// width: 144rpx;

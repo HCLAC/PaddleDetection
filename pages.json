@@ -25,7 +25,8 @@
 		{
 		    "path" : "pages/provinces/provinces",
 		    "style" : {
-				"navigationStyle":"custom"
+				"navigationStyle":"custom",
+				"backgroundColor":"#F8F8F8"
 			}
 		},
 		
