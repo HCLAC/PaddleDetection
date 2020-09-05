@@ -549,8 +549,7 @@ export default {
 								location: arr
 							},
 							success: result => {
-								console.log(result)
-								debugger
+								
 								if (result.data.status == 0) {
 									this.cityName = result.data.result.addressComponent.city.substr(0, result.data.result.addressComponent.city.length - 1);
 									this.city = result.data.result.addressComponent.city;
@@ -1226,30 +1225,30 @@ view {
 
 .word-btn {
 	/* #ifndef APP-NVUE */
-	page {
+	/* page {
 		display: flex;
 		flex-direction: column;
 		box-sizing: border-box;
 		background-color: #efeff4;
 		min-height: 100%;
 		height: auto;
-	}
+	} */
 
-	view {
+	/* view {
 		font-size: 14px;
 		line-height: inherit;
-	}
+	} */
 
 	
 
 	/* #endif */
-	flex-direction: row;
+	/* flex-direction: row;
 	align-items: center;
-	justify-content: flex-start;
+	justify-content: flex-start; */
 	/* width: 160rpx;
  */
-	margin-left: 28rpx;
-}
+/* 	margin-left: 28rpx;
+ */}
 
 .input-view {
 	/* #ifndef APP-PLUS-NVUE */

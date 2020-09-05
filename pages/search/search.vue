@@ -347,6 +347,7 @@ export default {
 		Toresults() {
 			var keyword = this.keyValue;
 			this.keyword = keyword;
+			if(!keyword) return false
 			this.defaultKeyword = keyword;
 			this.saveKeyword(keyword); //保存为历史
 			uni.showToast({
@@ -397,6 +398,8 @@ export default {
 		},
 		//执行搜索
 		doSearch(keyword) {
+			if(!keyword) return false
+			
 			keyword = keyword === false ? this.keyword : keyword;
 			this.keyword = keyword;
 			this.defaultKeyword = keyword;
@@ -433,7 +436,7 @@ export default {
 		},
 		goSearch(keyword) {
 			console.log(keyword);
-
+			
 			if (keyword.type) {
 				if (keyword.type == 'area') {
 					let obj = {

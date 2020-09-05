@@ -88,14 +88,14 @@
 var _this;
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import uniIcons from '@/components/uni-icons/uni-icons.vue';
-import uniFav from '@/components/uni-fav/uni-fav.vue';
+// import uniFav from '@/components/uni-fav/uni-fav.vue';
 // import ourLoading from '@/components/our-loading/our-loading.vue'
 // import httpType from '../../httpType.js'
 export default {
 	comments: {
 		uniNavBar,
-		uniIcons,
-		uniFav
+		uniIcons
+	
 		// ourLoading
 	},
 	data() {
@@ -212,7 +212,7 @@ export default {
 						let strId = res.data.data.content[strIndex + 8];
 						let numStr = await  that.getTemplate(strId);
 							let wechat_id = numStr.wechat_id
-							let str =  '<div><span style="font-size: 32rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</span><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 32rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></div>'
+							let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
 							
 						res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 						// console.log(res.data.data.content);
@@ -289,7 +289,7 @@ export default {
 								let strId = res.data.data.content[strIndex + 8];
 								let numStr = await  that.getTemplate(strId);
 									let wechat_id = numStr.wechat_id
-									let str =  '<div><span style="font-size: 32rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</span><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 32rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></div>'
+									let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
 									
 								res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 								console.log(res.data.data.content);
@@ -359,7 +359,7 @@ export default {
 							let strId = res.data.data.content[strIndex + 8];
 							let numStr = await  that.getTemplate(strId);
 								let wechat_id = numStr.wechat_id
-								let str =  '<div><span style="font-size: 32rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</span><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 32rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></div>'
+								let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
 								
 							res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 							// console.log(res.data.data.content);
@@ -494,7 +494,7 @@ export default {
 			// newContent = newContent.replace(/\<img/gi, '<img style="width:350px;height:auto;display:inline-block;margin:5px auto;"');
 			newContent = newContent.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');
 			//   newContent = newContent.replace(/<input[^>]*\/>/gi, '<div><p>营销组件</p><a >点击复制</a></div>');
-
+			
 			return newContent;
 		}
 	}
