@@ -15,11 +15,11 @@
 		<!-- 内容详情轮播图 -->
 		<view class="" v-show="attDetail != null">
 			<view class="uni-padding-wrap">
-				<view class="page-section swiper">
-					<view class="page-section-spacing">
-						<swiper @change="change" :autoplay="true" class="swiper" :indicator-dots="false">
-							<swiper-item v-for="item in attDetail.data.images" :key="item.id" class="swiper-item">
-								<image :src="item" mode="scaleToFill" ></image>
+				<view class="page-section" :style="swiperHeight">
+					<view class="page-section-spacing" :style="swiperHeight">
+						<swiper @change="change" :autoplay="true" class="swiper"  :indicator-dots="false">
+							<swiper-item v-for="item in attDetail.data.images" :key="item.id" class="swiper-item" > 
+								<image :src="item" id="itemImg" class="itemImg" mode="heightFix" ></image>
 							</swiper-item>
 						</swiper>
 						<view class="imageCount">{{ current + 1 }}/{{ attDetail.data.images.length }}</view>
@@ -228,7 +228,11 @@ export default {
 			current: 0,
 			list: [],
 			isShow: true,
-			attDetail:null
+			attDetail:null,
+			swiperHeight:{
+				height: '',
+				width:'100%'
+			}
 		};
 	},
 	created() {
@@ -257,6 +261,14 @@ export default {
 					uni.setStorageSync('id',res.data)
 					that.attDetail = res.data
 					console.log('attDetail--',that.attDetail)
+					uni.getImageInfo({
+						src: that.attDetail.data.images[0],
+						success: function (image) {
+							console.log('图片高度--',image.height);
+							that.swiperHeight.height = image.height / 2+  'px'
+							console.log('设置图片高度',that.swiperHeight.height)
+						}
+					});
 				}
 			})
 			
@@ -400,31 +412,22 @@ export default {
 /* 轮播图 */
 .page-section-spacing {
 	position: relative;
-	width: 100%;
+	// width: 100%;
 }
 
 .swiper-item {
 	width: 100%;
-	
+	height: 100%;
 	image {
 		height: 100%;
 		width: 100%;
 	}
 }
 .swiper{
-	// min-height: 580rpx;
-	height: 400rpx;
+	height: 100%;
 	width: 100%;
 }
-.uni-bg-red {
-	background-color: #ea552d;
-}
-.uni-bg-green {
-	background-color: #4cd964;
-}
-.uni-bg-blue {
-	background-color: #007aff;
-}
+
 .imageCount {
 	height: 40rpx;
 	background:rgba(0,0,0,0.6);
@@ -696,6 +699,7 @@ export default {
 				left: 26rpx;
 				z-index: 99;
 				display: flex;
+				align-items: center;
 				justify-content: center;
 				image {
 					width: 46rpx;

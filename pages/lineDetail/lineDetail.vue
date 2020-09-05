@@ -12,10 +12,12 @@
 		<view class="" v-show="lineContent">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap">
-				<view class="page-section swiper">
-					<view class="page-section-spacing">
+				<view class="page-section" :style="swiperHeight">
+					<view class="page-section-spacing" :style="swiperHeight">
 						<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
-							<swiper-item v-for="(item, index) in lineContent.images" :key="index"><image class="itemImg" mode="aspectFit" :src="item"></image></swiper-item>
+							<swiper-item v-for="(item, index) in lineContent.images" :key="index">
+								<image class="itemImg" mode="heightFix" :src="item"></image>
+							</swiper-item>
 						</swiper>
 						<view class="imageCount">{{ current + 1 }}/{{ lineContent.images.length }}</view>
 						<view class="dots">
@@ -239,7 +241,11 @@ export default {
 			tablist: ['参考行程', '服务说明'],
 			tabCurrent: 0,
 			hasLogin: uni.getStorageSync('Authorization'),
-			isFixed: false
+			isFixed: false,
+			swiperHeight:{
+				height: '',
+				width:'100%'
+			}
 		};
 	},
 	onLoad(option) {
@@ -314,6 +320,7 @@ export default {
 			}
 		},
 		getDetail(id) {
+			var that = this
 			uni.request({
 				url: this.globalUrl + '/route',
 				method: 'GET',
@@ -327,6 +334,14 @@ export default {
 						res.data.data.content = res.data.data.content && res.data.data.content.length ? JSON.parse(res.data.data.content) : [];
 						console.log(res.data.data.content);
 						this.lineContent = res.data.data;
+						uni.getImageInfo({
+							src: that.lineContent.images[0],
+							success: function (image) {
+								console.log('图片高度--',image.height);
+								that.swiperHeight.height = image.height / 2+  'px'
+								console.log('设置图片高度',that.swiperHeight.height)
+							}
+						});
 					} else {
 						uni.showToast({
 							title: res.data.msg,
@@ -414,19 +429,16 @@ export default {
 //导航栏样式end
 .page-section-spacing {
 	position: relative;
-	min-height: 500rpx;
-	max-height: 850rpx;
-	width: 100%;
+	
 }
 .swiper {
-	min-height: 500rpx;
-	max-height: 850rpx;
+	width: 100%;
+	height: 100%;
 }
 
 .itemImg {
-	min-height: 500rpx;
-	max-height: 850rpx;
 	width: 100%;
+	height: 100%;
 }
 
 .imageCount {

@@ -155,7 +155,7 @@
 			</view>
 		</view>
 		<!-- 行程推荐 -->
-		<view class="trip" v-if="routeHot">
+		<view class="trip" v-if="routeHot.length">
 			<view class="tripHeader">
 				<view class="tripTitle">
 					行程路线
@@ -282,7 +282,7 @@
 						<view class="page-view">
 							<view class="class-item">
 								<view class="item-title" @click="gethotsiteslist2(item)">
-									<text>{{item.name}}</text>
+									<!-- <text>全省</text> -->
 								</view>
 								<view class="item-container">
 									<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
@@ -1151,6 +1151,9 @@
 		font-weight: 500;
 		color: #303133;
 		line-height: 28rpx;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 	
 	/* 正在旅行 */

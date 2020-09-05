@@ -347,7 +347,7 @@ export default {
 		Toresults() {
 			var keyword = this.keyValue;
 			this.keyword = keyword;
-			this.defaultKeyword = keyword;
+			// this.defaultKeyword = keyword;
 			this.saveKeyword(keyword); //保存为历史
 			uni.showToast({
 				title: keyword,
@@ -399,7 +399,7 @@ export default {
 		doSearch(keyword) {
 			keyword = keyword === false ? this.keyword : keyword;
 			this.keyword = keyword;
-			this.defaultKeyword = keyword;
+			// this.defaultKeyword = keyword;
 			this.saveKeyword(keyword); //保存为历史
 			uni.showToast({
 				title: keyword,
