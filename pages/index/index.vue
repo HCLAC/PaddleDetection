@@ -15,9 +15,11 @@
 			<view class="page-section-spacing">
 				<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">
 					<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
-						<navigator :url="'/components/web-view/web-view?website=' + item.url" class="itemUrl">
-							<image :src="item.image" mode="scaleToFill" class="swiperImg"></image>
-						</navigator>
+						<!-- <navigator :url="'/components/web-view/web-view?website=' + item.url" class="itemUrl"> -->
+							<image :src="item.image" mode="scaleToFill" class="swiperImg" @click="towebview(item)">
+								<!-- <web-view :src="item.url"></web-view> -->
+							</image>
+						<!-- </navigator> -->
 					</swiper-item>
 				</swiper>
 			</view>
@@ -387,16 +389,20 @@ export default {
 			}
 		});
 		this.getBanner(),
-			setTimeout(function() {
-				uni.hideLoading();
-			}, 1000);
+		setTimeout(function() {
+			uni.hideLoading();
+		}, 1000);
 	},
 
 	onPageScroll(e) {
 		if (e.scrollTop >= 100) {
 			this.background.backgroundColor = '#ffffff';
 		} else {
-			this.background.backgroundColor = '';
+			if(this.bannerList.length == 0){
+				this.background.backgroundColor = '#ffffff'
+			}else{
+				this.background.backgroundColor = '';
+			}
 		}
 	},
 	methods: {
@@ -709,10 +715,15 @@ export default {
 			});
 		},
 		// 点击banner
-		toUrl(item) {
-			console.log(111111);
-			var url = item.url;
+		towebview(item){
+			uni.navigateTo({
+				url: `/pages/webview/webview?url=${item.url}`
+			})
 		},
+		// toUrl(item) {
+		// 	console.log(111111);
+		// 	var url = item.url;
+		// },
 		// 跳转文章详情
 		onPageJump(e) {
 			console.log(e);

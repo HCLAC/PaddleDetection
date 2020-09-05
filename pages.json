@@ -109,6 +109,10 @@
 							"backgroundColor":"#fff"
 						}
         }
+        ,{
+            "path" : "pages/webview/webview",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",
