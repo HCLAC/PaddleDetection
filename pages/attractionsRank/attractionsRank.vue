@@ -7,18 +7,23 @@
 				<image class="fhsy" src="../../static/images/icon-fhsy-white.svg" @click="home" />
 			</view>
 		</u-navbar>
+		
+		
 		<view class="bgBox">
 			<image :src="banner" mode="" class="bannerImg"></image>
-			<view class="content">
-				<image src="../../static/images/leftleaves.svg" mode=""></image>
-				<text>{{name}}热门景点</text>
-				<image src="../../static/images/rightleaves.svg" mode=""></image>
+			<view class="mask">
+				<view class="content">
+					<image src="../../static/images/leftleaves.svg" mode=""></image>
+					<text>{{name}}热门景点</text>
+					<image src="../../static/images/rightleaves.svg" mode=""></image>
+				</view>
+				<view class="rankTime">
+					领途羊景点榜单 · {{month}}月{{day}}日更新
+				</view>
+				<view class="boxshow">
+				</view>
 			</view>
-			<view class="rankTime">
-				领途羊景点榜单 · {{month}}月{{day}}日更新
-			</view>
-			<view class="boxshow">
-			</view>
+			
 		</view>
 		
 		<!-- 排行 -->
@@ -127,7 +132,7 @@
 				</mescroll-body>
 			</view>
 			<view class="shareBox">
-				<image src="../../static/images/shareImg.svg" mode="" @click="share"></image>
+				<image src="../../static/images/icon-share.svg" mode="" @click="share"></image>
 			</view>
 				
 		
@@ -624,16 +629,23 @@
 		height: 440rpx;
 		
 	}
+	.mask{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 748rpx;
+		height: 440rpx;
+		background: rgba(0, 0, 0, 0.35);
+	}
 	.bannerImg{
 		width: 100%;
 		height: 100%;
-		opacity: 0.7;
 	}
 	.content {
 		position: absolute;
 		top: 170rpx;
 		left: 82rpx;
-		width: 582rpx;
+		min-width: 582rpx;
 		height: 140rpx;
 		display: flex;
 		align-items: center;
@@ -646,6 +658,14 @@
 		background: url(../../static/images/TRAVEL.png) no-repeat 4rpx 4rpx;
 
 		text {
+			min-width: 402rpx;
+			height: 64rpx;
+			font-size: 64rpx;
+			font-family: AlibabaPuHuiTiM;
+			color: #FFFFFF;
+			line-height: 64rpx;
+			letter-spacing: 2rpx;
+
 			margin: 0 6rpx;
 		}
 
@@ -776,12 +796,15 @@
 
 	.contentText {
 		width: 392rpx;
-		height: 70rpx;
 		font-size: 28rpx;
+		line-height: 42rpx;
+		// width: 196px;
+		// height: 70rpx;
+		// font-size: 14px;
+		// line-height: 14px;
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: #909399;
-		line-height: 28rpx;
 		margin-bottom: 20rpx;
 		display: -webkit-box;
 		overflow: hidden;
@@ -818,15 +841,20 @@
 
 	.shareBox {
 		position: fixed;
-		right: 18rpx;
+		right: 24rpx;
 		bottom: 232rpx;
 		z-index: 1112;
-		width: 124rpx;
-		height: 124rpx;
-
+		width: 92rpx;
+		height: 92rpx;
+		background: #FFE512;
+		box-shadow: 0px 0px 12rpx 4rpx rgba(255, 229, 18, 0.35);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
 		image {
-			width: 100%;
-			height: 100%;
+			width: 38rpx;
+			height: 38rpx;
 		}
 	}
 

@@ -24,6 +24,7 @@
 						切换
 					</view>
 					<image class="changeIcon" src="../../static/images/more-down.svg" mode=""></image>
+					
 				</view>
 			</view>
 			<view class="weather" v-if="weather != null">
@@ -56,203 +57,202 @@
 				</view>
 			</view>
 		</view>
-		<!-- 景点推荐 -->
-		<view class="content">
-			<view class="contentHeader">
-				<view class="contentTitle">
-					景点推荐
-				</view>
-				<view class="contentMore" @click="toMore()">
-					<view class="moreText">
-						更多
+		<view class="contentBox">
+			<!-- 景点推荐 -->
+			<view class="content">
+				<view class="contentHeader">
+					<view class="contentTitle">
+						景点推荐
 					</view>
-					<image class="moreIcon" src="../../static/images/more-right.svg" mode=""></image>
+					<view class="contentMore" @click="toMore()">
+							更多
+						<image class="moreIcon" src="../../static/images/more-right.svg" mode="widthFix"></image>
+					</view>
+				</view>
+				<view class="contentImgBox" >
+					<view class="contentImg" v-for="(item,index) in siteHot " :key="index" @click="toAtt(item.id)">
+						<image  class="attImg" :src="item.image" mode=""></image>
+						<view class="attText">
+							{{item.name}}
+						</view>
+						<view class="rateBox" >
+							<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
+							<!-- 评分图标 -->
+							<view class="rateStart" v-if="item.rate == 5">
+								<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+							</view>
+							<view class="rateStart" v-if="item.rate == 4">
+								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+							</view>
+							<view class="rateStart" v-if="item.rate == 3">
+								<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+							</view>
+							<view class="rateStart" v-if="item.rate == 2">
+								<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+							</view>
+							<view class="rateStart" v-if="item.rate == 1">
+								<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+							</view>
+							<view class="rateStart" v-if="item.rate == 4.5">
+								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1备份(3).svg" mode=""></image>
+							</view>
+							<view class="rateStart" v-if="item.rate == 3.5">
+								<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1备份(2).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+							</view>
+							<view class="rateStart" v-if="item.rate == 2.5">
+								<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1备份(1).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+							</view>
+							<view class="rateStart" v-if="item.rate == 1.5">
+								<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+							</view>
+							<view class="rateStart" v-if="item.rate == 0.5">
+								<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+							</view>
+							<!-- <u-rate :disabled="true" current="4"></u-rate> -->
+							<view class="rate">{{item.rate}} 星</view>
+						</view>
+					</view>
 				</view>
 			</view>
-			<view class="contentImgBox" >
-				<view class="contentImg" v-for="(item,index) in siteHot " :key="index" @click="toAtt(item.id)">
-					<image  class="attImg" :src="item.image" mode=""></image>
-					<view class="attText">
-						{{item.name}}
+			<!-- 行程推荐 -->
+			<view class="trip" v-if="routeHot.length">
+				<view class="tripHeader">
+					<view class="tripTitle">
+						行程路线
 					</view>
-					<view class="rateBox" >
-						<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
-						<!-- 评分图标 -->
-						<view class="rateStart" v-if="item.rate == 5">
-							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="item.rate == 4">
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="item.rate == 3">
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="item.rate == 2">
-							<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="item.rate == 1">
-							<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="item.rate == 4.5">
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1备份(3).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="item.rate == 3.5">
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1备份(2).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="item.rate == 2.5">
-							<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1备份(1).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="item.rate == 1.5">
-							<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<view class="rateStart" v-if="item.rate == 0.5">
-							<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-							<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-						</view>
-						<!-- <u-rate :disabled="true" current="4"></u-rate> -->
-						<view class="rate">{{item.rate}} 星</view>
+					<view class="tripMore" @click="toLineMore()">
+							更多
+						<image class="moreIcon" src="../../static/images/more-right.svg" mode="widthFix"></image>
 					</view>
 				</view>
+				<view class="tripBox">
+					<view class="tripContent" v-for="(item,index) in routeHot" :key="index" @click="getLineDetail(item)" >
+						<image class="tripImg" :src="item.image" mode=""></image>
+						<view class="tripText">
+							{{item.title}}
+						</view>
+					</view>
+				</view>
+				
 			</view>
+			<!-- 正在旅行 -->
+			<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+				<view class="touring" id="touring">
+					<text class="tourtext">正在旅行</text>
+					<view class="wrap">
+						<view class="left">
+							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
+								<view class="" @click="onPageJump" :id="item.article_id">
+									<view class="demo-top">
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<view class="adress">
+											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
+				
+											<view class="adressText">{{ item.location }}</view>
+										</view>
+									</view>
+									<view class="titleTip">
+										<view class="demo-tag">
+											<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+											<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+										</view>
+										<view class="demo-title">{{ item.title }}</view>
+									</view>
+								</view>
+								<view class="demo-user">
+									<view class="userMessage">
+										<image class="userHeard" :src="item.avatar"></image>
+										<view class="userNikename">{{ item.author_name }}</view>
+									</view>
+									<view class="count" @click="clickLike(item, index)">
+										<view class="countImg">
+											<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+											<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+										</view>
+										<view class="likeCount">{{ item.like_count || 0 }}</view>
+									</view>
+								</view>
+							</view>
+						</view>
+						<view class="right">
+							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
+								<view class="" @click="onPageJump" :id="item.article_id">
+									<view class="demo-top">
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<view class="adress">
+											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
+				
+											<view class="adressText">{{ item.location }}</view>
+										</view>
+									</view>
+									<view class="titleTip">
+										<view class="demo-tag">
+											<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+											<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+										</view>
+										<view class="demo-title">{{ item.title }}</view>
+									</view>
+								</view>
+								<view class="demo-user">
+									<view class="userMessage">
+										<image class="userHeard" :src="item.avatar"></image>
+										<view class="userNikename">{{ item.author_name }}</view>
+									</view>
+									<view class="count" @click="clickLike(item, index)">
+										<view class="countImg">
+											<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+											<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+										</view>
+										<view class="likeCount">{{ item.like_count || 0 }}</view>
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</mescroll-body>
 		</view>
-		<!-- 行程推荐 -->
-		<view class="trip" v-if="routeHot.length">
-			<view class="tripHeader">
-				<view class="tripTitle">
-					行程路线
-				</view>
-				<view class="tripMore" @click="toLineMore()">
-					<view class="moreText">
-						更多
-					</view>
-					<image class="moreIcon" src="../../static/images/more-right.svg" mode=""></image>
-				</view>
-			</view>
-			<view class="tripBox">
-				<view class="tripContent" v-for="(item,index) in routeHot" :key="index" @click="getLineDetail(item)" >
-					<image class="tripImg" :src="item.image" mode=""></image>
-					<view class="tripText">
-						{{item.title}}
-					</view>
-				</view>
-			</view>
-			
-		</view>
-		<!-- 正在旅行 -->
-		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			<view class="touring" id="touring">
-				<text class="tourtext">正在旅行</text>
-				<view class="wrap">
-					<view class="left">
-						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
-							<view class="" @click="onPageJump" :id="item.article_id">
-								<view class="demo-top">
-									<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-									<view class="adress">
-										<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
-			
-										<view class="adressText">{{ item.location }}</view>
-									</view>
-								</view>
-								<view class="titleTip">
-									<view class="demo-tag">
-										<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-										<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-									</view>
-									<view class="demo-title">{{ item.title }}</view>
-								</view>
-							</view>
-							<view class="demo-user">
-								<view class="userMessage">
-									<image class="userHeard" :src="item.avatar"></image>
-									<view class="userNikename">{{ item.author_name }}</view>
-								</view>
-								<view class="count" @click="clickLike(item, index)">
-									<view class="countImg">
-										<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-										<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
-									</view>
-									<view class="likeCount">{{ item.like_count || 0 }}</view>
-								</view>
-							</view>
-						</view>
-					</view>
-					<view class="right">
-						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
-							<view class="" @click="onPageJump" :id="item.article_id">
-								<view class="demo-top">
-									<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-									<view class="adress">
-										<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
-			
-										<view class="adressText">{{ item.location }}</view>
-									</view>
-								</view>
-								<view class="titleTip">
-									<view class="demo-tag">
-										<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-										<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-									</view>
-									<view class="demo-title">{{ item.title }}</view>
-								</view>
-							</view>
-							<view class="demo-user">
-								<view class="userMessage">
-									<image class="userHeard" :src="item.avatar"></image>
-									<view class="userNikename">{{ item.author_name }}</view>
-								</view>
-								<view class="count" @click="clickLike(item, index)">
-									<view class="countImg">
-										<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-										<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
-									</view>
-									<view class="likeCount">{{ item.like_count || 0 }}</view>
-								</view>
-							</view>
-						</view>
-					</view>
-				</view>
-			</view>
-		</mescroll-body>
+		
 		<!-- 城市选择弹窗 -->
 		<u-popup v-model="show" mode="top" height="383px">
 			<u-navbar :is-back="false">
@@ -971,12 +971,11 @@
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: #606266;
-		line-height: 20rpx;
 	}
 	.changeIcon{
-		width: 8rpx;
-		height: 8rpx;
-		margin-left: 8rpx;
+		width: 14rpx;
+		height: 14rpx;
+		margin-left: 6rpx;
 	}
 	.weather{
 		display: flex;
@@ -999,11 +998,20 @@
 		line-height: 40rpx;
 		margin-left: 14rpx;
 	}
+	.contentBox{
+		width: 750rpx;
+		height: 2014rpx;
+		background: #F8F8F8;
+		border-radius: 16rpx 16rpx 0px 0px;
+		position: relative;
+		top: -30rpx;
+		left: 0;
+	}
 	// 景点推荐
 	.content{
 		width: 750rpx;
-		background: #F8F8F8;
-		border-radius: 8px 8px 0px 0px;
+		
+		
 	}
 	.contentHeader{
 		display: flex;
@@ -1029,10 +1037,6 @@
 		height: 42rpx;
 		background: #EDEFF2;
 		border-radius: 24rpx;
-	}
-	.moreText{
-		width: 44rpx;
-		height: 42rpx;
 		font-size: 22rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
@@ -1071,6 +1075,7 @@
 	.rateBox {
 		display: flex;
 		align-items: center;
+		margin-left: 6rpx;
 		.rateStart{
 			display: flex;
 		}
@@ -1110,22 +1115,18 @@
 		margin-right: 456rpx;
 	}
 	.tripMore{
-		display: flex;
-		align-items: center;
-		justify-content: center;
 		width: 94rpx;
 		height: 42rpx;
 		background: #EDEFF2;
 		border-radius: 24rpx;
-	}
-	.moreText{
-		width: 44rpx;
-		height: 42rpx;
 		font-size: 22rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
 		color: #606266;
 		line-height: 42rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 	.moreIcon{
 		width: 14rpx;
