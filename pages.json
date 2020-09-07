@@ -1,9 +1,10 @@
 {
 	"easycom": {
-			"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
-    "pages": [
-		{
+
+	
+	"pages": [{
 			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom",
@@ -15,14 +16,25 @@
 			"path": "pages/attractionsRank/attractionsRank",
 			"style": {
 				"navigationStyle": "custom",
-				"backgroundColor":"#000000",
-				"disableScroll": true, 
-				"app-plus" : {
-					"bounce" : "none" 
+				"backgroundColor": "#000000",
+				"disableScroll": true,
+				"app-plus": {
+					"bounce": "none"
 				},
-				"mp-alipay":{"allowsBounceVertical":"NO"} 
+				"mp-alipay": {
+					"allowsBounceVertical": "NO"
+				}
 			}
 		},
+		{
+			"path": "pages/provinces/provinces",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+
+
+
 		{
 		    "path" : "pages/provinces/provinces",
 		    "style" : {
@@ -136,7 +148,7 @@
 		"backgroundColor": "#ffffff",
 		"color": "#C9CAD1",
 		"selectedColor": "#303133",
-		"borderStyle":"black"
+		"borderStyle": "black"
 	},
 	"dynamicLib": {
 		"smartUI": {

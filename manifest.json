@@ -47,10 +47,18 @@
     "mp-weixin" : {
         "appid" : "wx83611669053cfcbf",
         "setting" : {
-            "urlCheck" : true
+            "urlCheck" : false,
+            "es6" : true,
+            "postcss" : true,
+            "minified" : true
         },
         "uniStatistics" : {
             "enable" : true
+        },
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "用于小程序页面展示"
+            }
         }
     },
     "mp-baidu" : {
@@ -64,10 +72,10 @@
     },
     "mp-toutiao" : {
         "setting" : {
-            "postcss" : true
-        },
-        "uniStatistics" : {
-            "enable" : true
+            "es6" : false,
+            "minified" : false,
+            "urlCheck" : false,
+            "postcss" : false
         },
         "appid" : "tt74ea0257ebd1c647"
     },
@@ -88,14 +96,5 @@
         "uniStatistics" : {
             "enable" : true
         }
-    },
-    "mp-toutiao" : {
-        "setting" : {
-            "es6" : false,
-            "minified" : false,
-            "urlCheck" : false,
-            "postcss" : false
-        },
-        "appid" : "tt74ea0257ebd1c647"
     }
 }

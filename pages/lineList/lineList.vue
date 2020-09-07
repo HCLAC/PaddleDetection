@@ -10,7 +10,7 @@
 			</uni-nav-bar>
 		</view>
 		<view class="container">
-			<mescroll-body ref="mescrollRef" @down="downCallback" @up="upCallback">
+			<mescroll-body   ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 				<view class="lineItem" @click="getDetail(item.uuid)" v-for="(item, index) in lineList" :key="index">
 					<image :src="item.image" mode=""></image>
 					<text>{{ item.title }}</text>
@@ -42,6 +42,7 @@ export default {
 	},
 	methods: {
 		downCallback() {
+			
 			this.mescroll.resetUpScroll();
 		},
 		upCallback(page) {
