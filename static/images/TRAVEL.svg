@@ -9,7 +9,7 @@
             <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
         </linearGradient>
     </defs>
-    <g id="热门景点更新" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="AlibabaPuHuiTiB, Alibaba PuHuiTi" font-size="70" font-weight="bold" letter-spacing="6" line-spacing="70">
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="AlibabaPuHuiTiB, Alibaba PuHuiTi" font-size="70" font-weight="bold" letter-spacing="6" line-spacing="70">
         <g id="省景点排名" transform="translate(-43.000000, -96.000000)" fill="url(#linearGradient-1)">
             <text id="TRAVEL">
                 <tspan x="42" y="159">TRAVEL</tspan>

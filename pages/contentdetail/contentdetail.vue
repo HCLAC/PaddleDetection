@@ -17,7 +17,7 @@
 				<view class="page-section-spacing" :style="swiperHeight">
 					<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
 						<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
-							<image class="itemImg" mode="heightFix" :src="item"></image>
+							<image class="itemImg" mode="aspectFit" :src="item"></image>
 						</swiper-item>
 					</swiper>
 					<view class="imageCount">{{ current + 1 }}/{{ articleList.data.images.length }}</view>
@@ -224,7 +224,7 @@ export default {
 							src: that.articleList.data.images[0],
 							success: function (image) {
 								console.log('图片高度--',image.height);
-								that.swiperHeight.height = image.height / 2+  'px'
+								that.swiperHeight.height = image.height / 2+  'rpx'
 								console.log('设置图片高度',that.swiperHeight.height)
 							}
 						});
@@ -235,7 +235,7 @@ export default {
 							src: that.articleList.data.images[0],
 							success: function (image) {
 								console.log('图片高度--',image.height);
-								that.swiperHeight.height = image.height / 2+  'px'
+								that.swiperHeight.height = image.height / 2+  'rpx'
 								console.log('设置图片高度',that.swiperHeight.height)
 							}
 						});
