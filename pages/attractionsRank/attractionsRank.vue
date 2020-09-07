@@ -22,7 +22,7 @@
 		</view>
 		
 		<!-- 排行 -->
-		<!-- <mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit"  @up="upCallback"  :up="upOption"> -->
+		
 		
 			<view class="rankContent">
 				<view class="city" @click="show = true" >
@@ -31,7 +31,7 @@
 						<image src="../../static/images/more-down.svg" mode=""></image>
 					</view>
 				</view>
-				<scroll-view scroll-y="true" >
+				<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" >
 					<view class="cardList">
 						<view class="cards" v-for="(item,index) in  hotsiteslist" :key="index" @click="toAtt(item.id)">
 							<view class="cardsleft">
@@ -124,13 +124,13 @@
 							</view>
 						</view>
 					</view>
-				</scroll-view>
+				</mescroll-body>
 			</view>
 			<view class="shareBox">
 				<image src="../../static/images/shareImg.svg" mode="" @click="share"></image>
 			</view>
 				
-		<!-- </mescroll-body> -->
+		
 		<!-- 城市选择弹窗 -->
 		<u-popup v-model="show" mode="top" height="383px">
 			<u-navbar :is-back="false">
@@ -159,9 +159,9 @@
 					<scroll-view scroll-y class="right-box" v-if="current==index">
 						<view class="page-view">
 							<view class="class-item">
-								<view class="item-title" @click="gethotsiteslist2(item)">
-									<text>{{item.name}}</text>
-								</view>
+								<!-- <view class="item-title" @click="gethotsiteslist2(item)"> -->
+									<!-- <text>{{item.name}}</text> -->
+								<!-- </view> -->
 								<view class="item-container">
 									<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
 										<!-- <image class="item-menu-image" :src="item1.icon" mode=""></image> -->
@@ -343,7 +343,16 @@
 					}).exec();
 				})
 			},
-
+			/*下拉刷新的回调, 有三种处理方式:*/
+			downCallback() {
+				// 第1种: 请求具体接口
+				// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
+				// this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+				// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
+				this.mescroll.endSuccess()
+				// 此处仍可以继续写其他接口请求...
+				// 调用其他方法...
+			},
 			/*上拉加载的回调*/
 			upCallback(page) {
 				// mescroll.setPageSize(6)
@@ -589,16 +598,16 @@
 	}
 	.mescroll{
 		// height: 1604rpx;
-		margin-left: 10rpx;
-		background: rgba(255, 255, 255, 1);
-		border-radius: 8px 8px 0px 0px;
-		z-index: 11;
-		position: absolute;
-		top: 420rpx;
+		// margin-left: 10rpx;
+		// background: rgba(255, 255, 255, 1);
+		// border-radius: 8px 8px 0px 0px;
+		// z-index: 11;
+		// position: absolute;
+		// top: 420rpx;
 	}
 	.rankContent {
 		width: 730rpx;
-		height: 1424rpx;
+		// height: 1424rpx;
 		margin-left: 10rpx;
 		background: rgba(255, 255, 255, 1);
 		border-radius: 8px 8px 0px 0px;
@@ -693,7 +702,7 @@
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: #909399;
-		line-height: 36rpx;
+		line-height: 28rpx;
 		margin-bottom: 20rpx;
 		display: -webkit-box;
 		overflow: hidden;
@@ -861,7 +870,7 @@
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: #303133;
-		margin-top: 52rpx;
+		margin-bottom: 52rpx;
 	}
 
 	.item-container {

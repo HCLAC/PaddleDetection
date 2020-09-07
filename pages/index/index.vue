@@ -10,23 +10,24 @@
 			</view>
 		</u-navbar>
 
-		<!-- 头部轮播图 -->
-		<view class="page-section " v-if="bannerList.length != 0">
-			<view class="page-section-spacing">
-				<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">
-					<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
-						<!-- <navigator :url="'/components/web-view/web-view?website=' + item.url" class="itemUrl"> -->
-							<image :src="item.image" mode="scaleToFill" class="swiperImg" @click="towebview(item)">
-								<!-- <web-view :src="item.url"></web-view> -->
-							</image>
-						<!-- </navigator> -->
-					</swiper-item>
-				</swiper>
-			</view>
-		</view>
+		
 
 		<!-- 内容 -->
 		<mescroll-body v-if="bannerList.length != 0" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+			<!-- 头部轮播图 -->
+			<view class="page-section " v-if="bannerList.length != 0">
+				<view class="page-section-spacing">
+					<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">
+						<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
+							<!-- <navigator :url="'/components/web-view/web-view?website=' + item.url" class="itemUrl"> -->
+								<image :src="item.image" mode="scaleToFill" class="swiperImg" @click="towebview(item)">
+									<!-- <web-view :src="item.url"></web-view> -->
+								</image>
+							<!-- </navigator> -->
+						</swiper-item>
+					</swiper>
+				</view>
+			</view>
 			<view class="cus-sty ">
 				<!-- 热门目的地 -->
 				<view class="hot">
@@ -100,7 +101,7 @@
 							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="scaleToFill"></image>
 										<view class="adress">
 											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
 
@@ -134,7 +135,7 @@
 							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="scaleToFill"></image>
 										<view class="adress">
 											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
 
@@ -171,8 +172,21 @@
 		</mescroll-body>
 		<!-- 无banner时 -->
 		<mescroll-body v-if="bannerList.length == 0" class="mescroll1" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+			<!-- 头部轮播图 -->
+			<view class="page-section " v-if="bannerList.length != 0">
+				<view class="page-section-spacing">
+					<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">
+						<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
+							<!-- <navigator :url="'/components/web-view/web-view?website=' + item.url" class="itemUrl"> -->
+								<image :src="item.image" mode="scaleToFill" class="swiperImg" @click="towebview(item)">
+									<!-- <web-view :src="item.url"></web-view> -->
+								</image>
+							<!-- </navigator> -->
+						</swiper-item>
+					</swiper>
+				</view>
+			</view>
 			<view class="cus-sty ">
-				
 				<!-- 热门目的地 -->
 				<view class="hot">
 					<view class="hot-top">
@@ -258,7 +272,7 @@
 							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="scaleToFill"></image>
 										<view class="adress">
 											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
 		
@@ -292,7 +306,7 @@
 							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="scaleToFill"></image>
 										<view class="adress">
 											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
 		
@@ -384,22 +398,23 @@ export default {
 			mask: true,
 			success: () => {
 				if (this.item == undefined || null) {
+					this.getBanner(),
 					this.getAdress();
 				}
 			}
 		});
-		this.getBanner(),
+		
 		setTimeout(function() {
 			uni.hideLoading();
 		}, 1000);
 	},
 
 	onPageScroll(e) {
-		if (e.scrollTop >= 100) {
-			this.background.backgroundColor = '#ffffff';
-		} else {
-			if(this.bannerList.length == 0){
-				this.background.backgroundColor = '#ffffff'
+		if(this.bannerList.length == 0){
+			this.background.backgroundColor = '#ffffff'
+		}else{
+			if (e.scrollTop >= 100) {
+				this.background.backgroundColor = '#ffffff';
 			}else{
 				this.background.backgroundColor = '';
 			}
@@ -710,6 +725,8 @@ export default {
 					console.log('------------',this.bannerList.length)
 					if(this.bannerList.length == 0){
 						this.background.backgroundColor = '#ffffff'
+					}else{
+						this.background.backgroundColor = ''
 					}
 				}
 			});
@@ -1152,9 +1169,9 @@ view {
 }
 /* 导航栏轮播图 */
 .page-section {
-	position: relative;
+	/* position: relative;
 	top: -184rpx;
-	left: 0;
+	left: 0; */
 	width: 100%;
 	height: 440rpx;
 }
@@ -1302,7 +1319,7 @@ view {
 }
 
 .cus-sty {
-	background-color: #f8f8f8;
+	background-color: #FFFFFF;
 }
 
 /* 热门景点 */

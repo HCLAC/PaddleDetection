@@ -14,17 +14,15 @@
 		<view class="" v-show="articleList != null">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap">
-				<view class="page-section" :style="swiperHeight">
-					<view class="page-section-spacing" :style="swiperHeight">
-						<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
-							<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
-								<image class="itemImg" mode="heightFix" :src="item"></image>
-							</swiper-item>
-						</swiper>
-						<view class="imageCount">{{ current + 1 }}/{{ articleList.data.images.length }}</view>
-						<view class="dots">
-							<block v-for="(item, index) in articleList.data.images" :key="index"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
-						</view>
+				<view class="page-section-spacing" :style="swiperHeight">
+					<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
+						<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
+							<image class="itemImg" mode="scaleToFill" :src="item"></image>
+						</swiper-item>
+					</swiper>
+					<view class="imageCount">{{ current + 1 }}/{{ articleList.data.images.length }}</view>
+					<view class="dots">
+						<block v-for="(item, index) in articleList.data.images" :key="index"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
 					</view>
 				</view>
 			</view>
@@ -579,11 +577,12 @@ export default {
 }
 
 /* 轮播图 */
+
 .page-section-spacing {
 	position: relative;
-	// min-height: 580rpx;
-	// max-height: 996rpx;
-	// width: 100%;
+	min-height: 580rpx;
+	max-height: 996rpx;
+	width: 100%;
 }
 
 .swiper {

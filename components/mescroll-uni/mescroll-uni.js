@@ -55,7 +55,7 @@ MeScroll.prototype.extendDownScroll = function(optDown) {
 		textInOffset: '下拉刷新', // 下拉的距离在offset范围内的提示文本
 		textOutOffset: '释放更新', // 下拉的距离大于offset范围的提示文本
 		textLoading: '加载中 ...', // 加载中的提示文本
-		bgColor: "transparent", // 背景颜色 (建议在pages.json中再设置一下backgroundColorTop)
+		bgColor: "#ffffff", // 背景颜色 (建议在pages.json中再设置一下backgroundColorTop)
 		textColor: "gray", // 文本颜色 (当bgColor配置了颜色,而textColor未配置时,则textColor会默认为白色)
 		inited: null, // 下拉刷新初始化完毕的回调
 		inOffset: null, // 下拉的距离进入offset范围内那一刻的回调

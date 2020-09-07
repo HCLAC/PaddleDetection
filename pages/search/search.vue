@@ -19,6 +19,7 @@
 				confirm-type="search"
 				@confirm="Toresults()"
 				v-model="keyValue"
+				:focus="isFocus"
 			></mSearch>
 		</view>
 		<view class="search-keyword">
@@ -166,7 +167,8 @@ export default {
 			leftList: [],
 			rightList: [],
 			token: '',
-			liked: ''
+			liked: '',
+			isFocus:true
 		};
 	},
 	onLoad() {
@@ -251,6 +253,7 @@ export default {
 				delta: 1
 			});
 		},
+		
 		blur() {
 			uni.hideKeyboard();
 		},

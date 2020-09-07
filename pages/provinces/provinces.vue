@@ -281,9 +281,9 @@
 					<scroll-view scroll-y class="right-box" v-if="current==index">
 						<view class="page-view">
 							<view class="class-item">
-								<view class="item-title" @click="gethotsiteslist2(item)">
+								<!-- <view class="item-title" @click="gethotsiteslist2(item)"> -->
 									<!-- <text>全省</text> -->
-								</view>
+								<!-- </view> -->
 								<view class="item-container">
 									<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
 										<!-- <image class="item-menu-image" :src="item1.icon" mode=""></image> -->
@@ -1053,6 +1053,7 @@
 		width: 218rpx;
 		margin-right: 20rpx;
 		background-color: #FFFFFF;
+		padding-bottom: 24rpx;
 	}
 	.attImg{
 		width: 100%;
@@ -1145,12 +1146,13 @@
 		border-radius: 8px;
 	}
 	.tripText{
+		// height: 28rpx;
 		margin-top: 16rpx;
 		font-size: 28rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
 		color: #303133;
-		line-height: 28rpx;
+		// line-height: 28rpx;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -1453,7 +1455,7 @@
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: #303133;
-		margin-top: 52rpx;
+		margin-bottom: 52rpx;
 	}
 	
 	.item-container {

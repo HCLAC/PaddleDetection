@@ -12,8 +12,8 @@
 		<view class="" v-show="lineContent">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap">
-				<view class="page-section" :style="swiperHeight">
-					<view class="page-section-spacing" :style="swiperHeight">
+				<view class="page-section" >
+					<view class="page-section-spacing" >
 						<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
 							<swiper-item v-for="(item, index) in lineContent.images" :key="index">
 								<image class="itemImg" mode="heightFix" :src="item"></image>
@@ -429,6 +429,8 @@ export default {
 //导航栏样式end
 .page-section-spacing {
 	position: relative;
+	width: 100%;
+	height: 400rpx;
 	
 }
 .swiper {

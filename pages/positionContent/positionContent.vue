@@ -15,8 +15,8 @@
 		<!-- 内容详情轮播图 -->
 		<view class="" v-show="attDetail != null">
 			<view class="uni-padding-wrap">
-				<view class="page-section" :style="swiperHeight">
-					<view class="page-section-spacing" :style="swiperHeight">
+				<view class="page-section" >
+					<view class="page-section-spacing" >
 						<swiper @change="change" :autoplay="true" class="swiper"  :indicator-dots="false">
 							<swiper-item v-for="item in attDetail.data.images" :key="item.id" class="swiper-item" > 
 								<image :src="item" id="itemImg" class="itemImg" mode="heightFix" ></image>
@@ -228,11 +228,8 @@ export default {
 			current: 0,
 			list: [],
 			isShow: true,
-			attDetail:null,
-			swiperHeight:{
-				height: '',
-				width:'100%'
-			}
+			attDetail:null
+			
 		};
 	},
 	created() {
@@ -261,14 +258,6 @@ export default {
 					uni.setStorageSync('id',res.data)
 					that.attDetail = res.data
 					console.log('attDetail--',that.attDetail)
-					uni.getImageInfo({
-						src: that.attDetail.data.images[0],
-						success: function (image) {
-							console.log('图片高度--',image.height);
-							that.swiperHeight.height = image.height / 2+  'px'
-							console.log('设置图片高度',that.swiperHeight.height)
-						}
-					});
 				}
 			})
 			
@@ -412,7 +401,8 @@ export default {
 /* 轮播图 */
 .page-section-spacing {
 	position: relative;
-	// width: 100%;
+	height: 400rpx;
+	width: 100%;
 }
 
 .swiper-item {
