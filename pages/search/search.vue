@@ -19,7 +19,7 @@
 				confirm-type="search"
 				@confirm="Toresults()"
 				v-model="keyValue"
-				:focus="isFocus"
+				@blur="blur"
 			></mSearch>
 		</view>
 		<view class="search-keyword">
@@ -253,7 +253,13 @@ export default {
 				delta: 1
 			});
 		},
-		
+		focus() {
+			this.active = true;
+			//HM修改 增加获取焦点判断
+			if (this.inputVal) {
+				this.isDelShow = true;
+			}
+		},
 		blur() {
 			uni.hideKeyboard();
 		},
