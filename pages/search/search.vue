@@ -349,14 +349,8 @@ export default {
 		},
 		Toresults() {
 			var keyword = this.keyValue;
-<<<<<<< HEAD
 			this.keyword = keyword;
 			// this.defaultKeyword = keyword;
-=======
-			this.keyword = keyword;
-			if(!keyword) return false
-			this.defaultKeyword = keyword;
->>>>>>> feature/sz
 			this.saveKeyword(keyword); //保存为历史
 			uni.showToast({
 				title: keyword,
