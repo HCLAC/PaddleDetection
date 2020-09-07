@@ -18,7 +18,7 @@
 				<view class="siteView" @click="getCity(area)">
 					<image :src="area.image" mode="widthFix"></image>
 					<view class="title">{{ area.name }}</view>
-					<view class="content">点击查看城市主题页 &gt;</view>
+					<view class="content">点击查看城市主题页 <image src="../../static/images/more-right.svg" mode=""></image></view>
 				</view>
 			</block>
 			<block v-if="site">
@@ -100,7 +100,7 @@
 							</view>
 							<view class="rate">{{ site.rate }} 星</view>
 						</view>
-						<view class="rightIcon">&gt;</view>
+						<view class="rightIcon"><image src="../../static/images/more-right.svg" mode=""></image></view>
 					</view>
 					<view class="content">{{ site.description }}</view>
 					<view>
@@ -431,6 +431,12 @@ getRoute(id){
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			color: #606266;
+			display: flex;
+			align-items: center;
+			image{
+				width: 28rpx;
+				height: 28rpx;
+			}
 		}
 	}
 	.areaView {
@@ -471,8 +477,11 @@ getRoute(id){
 			}
 			.rightIcon {
 				color: #606266;
-				font-size: 36rpx;
-				font-weight: 800;
+				
+				image{
+					width: 28rpx;
+					height: 28rpx;
+				}
 			}
 		}
 		.content {

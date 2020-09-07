@@ -45,7 +45,7 @@
 						</view>
 					</view>
 					<view class="shareBox">
-						<image src="../../static/images/icon／share.svg" mode="" @click="share"></image>
+						<image src="../../static/images/iconShare.svg" mode="" @click="share"></image>
 					</view>
 				</view>
 				<view class="contentRank" @click="toRank()">
@@ -132,7 +132,7 @@
 					<view class="goTo">{{attDetail.data.visited}}人去过</view>
 				</view>
 				<view class="contentText">
-					<text :class="[isShow ? 'loseText' : 'moreText']">
+					<text :class="isShow ? 'loseText' : 'moreText'">
 						简介：{{attDetail.data.description}}
 					
 						<view class="btnBox" @click="showMore" v-if="!isShow">

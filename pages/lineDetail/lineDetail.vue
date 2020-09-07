@@ -261,9 +261,7 @@ export default {
 		}
 	},
 	methods: {
-		showShare(){
-			uni.showShareMenu({});
-		},
+		
 		tabChange(index) {
 			this.tabCurrent = index;
 		},
@@ -373,7 +371,19 @@ export default {
 			});
 		},
 		share() {
-			uni.showShareMenu({});
+			
+			uni.showShareMenu({
+				title: '分享',
+				success: (res)=>{
+					uni.showToast({
+						title: '已开启分享功能',
+						icon:"none"
+					})
+				},
+				fail: error=>{
+					console.log(error)
+				}
+			});
 		}
 	}
 };

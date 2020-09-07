@@ -34,9 +34,9 @@
 						</view>
 						<view class="right" @click="onPageJump" :id="item.article_id">
 							<view class="title">
-								<view class="tips" v-if="item.type == 1">游记</view>
-								<view class="tips" v-if="item.type == 2">攻略</view>
-								<view class="titleText">{{ item.title }}</view>
+								<text class="tips" v-if="item.type == 1">游记</text>
+								<text class="tips" v-if="item.type == 2">攻略</text>
+								<text class="titleText">{{ item.title }}</text>
 							</view>
 							<view class="content">
 								<rich-text class="richText" :nodes="item.content"></rich-text>
@@ -409,6 +409,7 @@ export default {
 		margin-right: 10rpx;
 	}
 	.titleText {
+		flex: 1;
 		margin-left: 10rpx;
 		overflow: hidden;
 		text-overflow: ellipsis;
