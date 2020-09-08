@@ -241,17 +241,19 @@
 		
 		<!-- 城市选择弹窗 -->
 		<u-popup v-model="show" mode="top" height="383px">
-			<u-navbar :is-back="false">
-				<view class="slot-wrap">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="navtitle">领途羊</view>
-			</u-navbar>
+				<view class="slottitle">领途羊</view>
+			</uni-nav-bar>
 			<!-- 城市 -->
 			<view class="nowcity">
 				<text>{{ name }}</text>
-				<image src="../../static/images/more-down.svg" mode=""></image>
+				<view class="">
+					<image src="../../static/images/more-down.svg" mode="aspectFit"></image>
+				</view>
 			</view>
 			<!-- 城市选择列表 -->
 			<view class="u-menu-wrap">
@@ -1232,13 +1234,14 @@ export default {
 .demo-top {
 	position: relative;
 }
-
+.imgBox{
+	position: relative;
+}
 .demo-image {
 	min-height: 300rpx !important;
 	max-height: 460rpx;
 	width: 100%;
 	border-radius: 8rpx 8rpx 0 0;
-	position: relative;
 }
 
 .adress {
@@ -1386,14 +1389,14 @@ export default {
 	display: flex;
 	align-items: center;
 	margin-left: 40rpx;
-
+	
 	text {
 		font-size: 28rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
 		color: #303133;
 		line-height: 28rpx;
-		margin: 16rpx 0 8rpx 6rpx;
+		margin: 16rpx 12rpx 8rpx 6rpx;
 	}
 	.rateBox {
 		display: flex;
@@ -1662,6 +1665,7 @@ export default {
 	flex: 1;
 	display: flex;
 	overflow: hidden;
+	border-top: 1rpx solid #EDEFF2;
 }
 
 .u-search-inner {
@@ -1708,7 +1712,7 @@ export default {
 .u-tab-item-active::before {
 	content: '';
 	position: absolute;
-	border-left: 4px solid #fa8c16;
+	border-left: 4rpx solid #fa8c16;
 	height: 80rpx;
 	left: 0;
 	top: 0;
@@ -1719,17 +1723,17 @@ export default {
 }
 
 .right-box {
-	background-color: rgb(250, 250, 250);
+	background-color:#f8f8f8;
 }
 
 .page-view {
-	padding: 16rpx;
+	// padding: 16rpx;
 }
 
 .class-item {
 	margin-bottom: 30rpx;
 	background-color: #f8f8f8;
-	padding: 16rpx;
+	// padding: 16rpx;
 	border-radius: 8rpx;
 }
 
@@ -1745,6 +1749,7 @@ export default {
 	font-weight: 400;
 	color: #303133;
 	margin-bottom: 52rpx;
+	margin-left: 28rpx;
 }
 
 .item-container {

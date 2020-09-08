@@ -138,15 +138,13 @@
 		
 		<!-- 城市选择弹窗 -->
 		<u-popup v-model="show" mode="top" height="383px">
-			<u-navbar :is-back="false">
-				<view class="slot-wrap">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="navtitle">
-					领途羊
-				</view>
-			</u-navbar>
+				<view class="slottitle">领途羊</view>
+			</uni-nav-bar>
 			<!-- 城市 -->
 			<view class="nowcity">
 				<text>{{name}}</text>
@@ -941,7 +939,7 @@
 	.u-tab-item-active::before {
 		content: "";
 		position: absolute;
-		border-left: 4px solid #FA8C16;
+		border-left: 4rpx solid #FA8C16;
 		height: 80rpx;
 		left: 0;
 		top: 0;
@@ -952,17 +950,17 @@
 	}
 
 	.right-box {
-		background-color: rgb(250, 250, 250);
+		background-color: #f8f8f8;
 	}
 
 	.page-view {
-		padding: 16rpx;
+		// padding: 16rpx;
 	}
 
 	.class-item {
 		margin-bottom: 30rpx;
 		background-color: #F8F8F8;
-		padding: 16rpx;
+		// padding: 16rpx;
 		border-radius: 8rpx;
 	}
 
@@ -978,6 +976,7 @@
 		font-weight: 400;
 		color: #303133;
 		margin-bottom: 52rpx;
+		margin-left: 28rpx;
 	}
 
 	.item-container {

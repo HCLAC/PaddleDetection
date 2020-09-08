@@ -14,10 +14,10 @@
 		<view class="" v-show="articleList != null">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap">
-				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }">
+				<view class="page-section-spacing" :style="swiperHeight">
 					<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
 						<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
-							<image class="itemImg" mode="heightFix" :src="item"></image>
+							<image class="itemImg" mode="aspectFit" :src="item"></image>
 						</swiper-item>
 					</swiper>
 					<view class="imageCount">{{ current + 1 }}/{{ articleList.data.images.length }}</view>
@@ -33,7 +33,7 @@
 					<view class="userMse-r">
 						<view class="userNikename">{{ articleList.data.author_name }}</view>
 						<view class="adress">
-							<image src="../../static/images/iconMap.svg" mode="widthFix" class="adreessIcon"></image>
+							<image src="../../static/images/Icon／Map.svg" mode="" class="adreessIcon"></image>
 							<view class="adressText" @click="map()">{{ articleList.data.location }}</view>
 						</view>
 					</view>
@@ -108,7 +108,10 @@ export default {
 			article_num: null,
 			flag: true,
 			wechat_id: null,
-			swiperHeight: ''
+			swiperHeight:{
+				height: '',
+				width:'100%'
+			}
 		};
 	},
 	onLoad(e) {
@@ -475,19 +478,7 @@ export default {
 			});
 		},
 		share() {
-			
-			uni.showShareMenu({
-				title: '分享',
-				success: (res)=>{
-					uni.showToast({
-						title: '已开启分享功能',
-						icon:"none"
-					})
-				},
-				fail: error=>{
-					console.log(error)
-				}
-			});
+			uni.showShareMenu({});
 		}
 		// favClick() {
 		// 	this.checked = !this.checked
@@ -696,7 +687,7 @@ export default {
 	// border: 2rpx solid rgba(0, 145, 255, 1);
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	text-align: center;
 	padding: 0 14rpx;
 }
 
