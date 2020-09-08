@@ -12,7 +12,7 @@
 			<scroll-view scroll-y="true" style="height:100%;" scroll-with-animation="true" enable-back-to-top="true">
 				<!-- 定位 -->
 				<view class="item">
-					<image src="/static/images/Icon／Mapt.svg" class="dd"></image>
+					<image src="/static/images/iconMapt.svg" class="dd"></image>
 					<view class="cityname">{{ city }}</view>
 					<text class="nowcity" @click="resetAd()">{{ showText }}</text>
 					<!-- <text class="getNowCity">获取当前位置</text> -->

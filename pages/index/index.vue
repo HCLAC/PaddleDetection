@@ -46,7 +46,7 @@
 								<image class="dqwzImg" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
 								<text class="dqwzText">{{ cityName }}</text>
 								<view class="adressBox">
-									<image class="zhishi" src="../../static/images/Icon／Mapt.svg" mode=""></image>
+									<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
 									<text class="dqwzText1">{{ dqdwText }}</text>
 								</view>
 							</view>
@@ -204,7 +204,7 @@
 								<image class="dqwzImg" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
 								<text class="dqwzText">{{cityName}}</text>
 								<view class="adressBox">
-									<image class="zhishi" src="../../static/images/Icon／Mapt.svg" mode=""></image>
+									<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
 									<text class="dqwzText1">{{dqdwText}}</text>
 								</view>
 								
