@@ -72,10 +72,10 @@
     },
     "mp-toutiao" : {
         "setting" : {
-            "es6" : false,
-            "minified" : false,
+            "es6" : true,
+            "minified" : true,
             "urlCheck" : false,
-            "postcss" : false
+            "postcss" : true
         },
         "appid" : "tt74ea0257ebd1c647"
     },

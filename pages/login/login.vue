@@ -46,7 +46,7 @@
 
 			<!-- 登录按钮 -->
 			<view class="loginButton"><button class="lb" :disabled="disabled" :style="styleBtn" @tap="doLogin">登录</button></view>
-			<view class="loginButton"><button class="badiduBtn" :style="styleBtn" open-type="getPhoneNumber" @getphonenumber="getPhone">百度账号一键登录</button></view>
+			<view v-if="serviceProvider=='baidu'" class="loginButton"><button class="badiduBtn" :style="styleBtn" open-type="getPhoneNumber" @getphonenumber="getPhone">百度账号一键登录</button></view>
 		</view>
 	</view>
 </template>

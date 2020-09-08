@@ -13,16 +13,20 @@
 		<view class="search-box" @click="back">
 			<mSearch class="mSearch-input-box" :mode="2" button="inside" :placeholder="defaultKeyword" v-model="keyword" :focus="isFocus"></mSearch>
 		</view>
+
 		<view class="container">
 			<block v-if="area">
 				<view class="siteView" @click="getCity(area)">
 					<image :src="area.image" mode="widthFix"></image>
 					<view class="title">{{ area.name }}</view>
-					<view class="content">点击查看城市主题页 <image src="../../static/images/more-right.svg" mode=""></image></view>
+					<view class="content">
+						点击查看城市主题页
+						<image src="../../static/images/more-right.svg" mode=""></image>
+					</view>
 				</view>
 			</block>
 			<block v-if="site">
-				<view class="areaView" @click="getSite(site.id)">
+				<view class="areaView" @click.stop="getSite(site.id)">
 					<view class="top">
 						<view class="title">{{ site.name }}</view>
 						<view class="rateBox">
@@ -68,31 +72,31 @@
 								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
 								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
 								<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1备份(3).svg" mode=""></image>
+								<image src="../../static/images/star_svg/starCopy1(3).svg" mode=""></image>
 							</view>
 							<view class="rateStart" v-if="site.rate == 3.5">
 								<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
 								<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
 								<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1备份(2).svg" mode=""></image>
+								<image src="../../static/images/star_svg/starCopy1(2).svg" mode=""></image>
 								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 							</view>
 							<view class="rateStart" v-if="site.rate == 2.5">
 								<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
 								<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1备份(1).svg" mode=""></image>
+								<image src="../../static/images/star_svg/starCopy1(1).svg" mode=""></image>
 								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 							</view>
 							<view class="rateStart" v-if="site.rate == 1.5">
 								<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
+								<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 							</view>
 							<view class="rateStart" v-if="site.rate == 0.5">
-								<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
+								<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 								<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
@@ -103,14 +107,11 @@
 						<view class="rightIcon"><image src="../../static/images/more-right.svg" mode=""></image></view>
 					</view>
 					<view class="content">{{ site.description }}</view>
-					<view>
-						<swiper class="smallSwiper" display-multiple-items="3" :indicator-dots="false" :autoplay="false">
-							<swiper-item v-for="(item, index) in site.image" :key="index">
-								<view class="swiperItem"><image :src="item" mode="widthFix"></image></view>
-							</swiper-item>
-							
-						</swiper>
-					</view>
+					
+						<view class="smallSwiper">
+							<view v-for="(item, index) in site.image" :key="index" class="swiperItem"><image :src="item"></image></view>
+						</view>
+					
 					<view class="areaTag">景点</view>
 				</view>
 			</block>
@@ -118,16 +119,12 @@
 				<veiw class="contentTitle">行程线路</veiw>
 				<view style="padding:20rpx 0 20rpx 20rpx; ">
 					<swiper class="swiper" display-multiple-items="2" :indicator-dots="false" :autoplay="false">
-						<swiper-item v-for="(item,index) in route_list" @click="getRoute(item.uuid)" :key="index">
+						<swiper-item v-for="(item, index) in route_list" @click="getRoute(item.uuid)" :key="index">
 							<view class="swiperItem">
-								<image
-									:src="item.image"
-									
-								></image>
-								<view class="title">{{item.title}}</view>
+								<image :src="item.image"></image>
+								<view class="title">{{ item.title }}</view>
 							</view>
 						</swiper-item>
-						
 					</swiper>
 				</view>
 			</block>
@@ -259,21 +256,21 @@ export default {
 				});
 			}
 		},
-getRoute(id){
-	if (id) {
-		uni.navigateTo({
-			url: '/pages/lineDetail/lineDetail?id=' + id
-		});
-	}
-},
+		getRoute(id) {
+			if (id) {
+				uni.navigateTo({
+					url: '/pages/lineDetail/lineDetail?id=' + id
+				});
+			}
+		},
 		getCity(area) {
-			if(area){
+			if (area) {
 				let obj = {
 					state_id: area.state_id,
 					name: area.name,
 					image: area.image,
 					city_id: area.city_id
-				}
+				};
 				uni.navigateTo({
 					url: '/pages/provinces/provinces?id=' + JSON.stringify(obj)
 				});
@@ -402,7 +399,7 @@ getRoute(id){
 			color: #606266;
 			display: flex;
 			align-items: center;
-			image{
+			image {
 				width: 28rpx;
 				height: 28rpx;
 			}
@@ -446,8 +443,8 @@ getRoute(id){
 			}
 			.rightIcon {
 				color: #606266;
-				
-				image{
+
+				image {
 					width: 28rpx;
 					height: 28rpx;
 				}
@@ -463,14 +460,22 @@ getRoute(id){
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
+			margin-bottom: 30rpx;
 		}
 		.smallSwiper {
-			margin-top: 30rpx;
 			width: 100%;
+			overflow-x: auto;
+			display: flex;
+			justify-content: space-between;
+			
 			.swiperItem {
-				margin-right: 20rpx;
+				width: 30%;
+				margin-right: calc(10% / 3);
+				flex: none;
+				
 				image {
 					width: 100%;
+					height: 100rpx;
 					border-radius: 16rpx;
 				}
 			}
@@ -494,7 +499,7 @@ getRoute(id){
 	.swiper {
 		width: 100%;
 		height: 240rpx;
-		
+
 		.swiperItem {
 			margin-right: 20rpx;
 			image {

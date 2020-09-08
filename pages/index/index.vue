@@ -137,7 +137,7 @@
 									<view class="demo-top">
 										<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
 										<view class="adress">
-											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
+											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 
 											<view class="adressText">{{ item.location }}</view>
 										</view>

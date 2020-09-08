@@ -73,68 +73,67 @@
 				<veiw>{{ keyValue }}</veiw>
 				”相关结果
 			</view>
-				<view class="wrap">
-					<view class="left">
-						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
-							<view class="" @click="onPageJump" :id="item.article_id">
-								<view class="demo-top">
-									<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-									<view class="adress">
-										<view class="adreessIcon"><image class="" src="../../static/imagesiconMap3.svg" mode=""></image></view>
+			<view class="wrap">
+				<view class="left">
+					<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
+						<view class="" @click="onPageJump" :id="item.article_id">
+							<view class="demo-top">
+								<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+								<view class="adress">
+									<view class="adreessIcon"><image class="" src="../../static/imagesiconMap3.svg" mode=""></image></view>
 
-										<view class="adressText">{{ item.location }}</view>
-									</view>
-								</view>
-								<view class="titleTip">
-									<view class="demo-tag">
-										<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-										<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-									</view>
-									<view class="demo-title">{{ item.title }}</view>
+									<view class="adressText">{{ item.location }}</view>
 								</view>
 							</view>
-							<view class="demo-user">
-								<view class="userMessage">
-									<image class="userHeard" :src="item.avatar"></image>
-									<view class="userNikename">{{ item.author_name }}</view>
+							<view class="titleTip">
+								<view class="demo-tag">
+									<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+									<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
 								</view>
-								<view class="count" @click="clickLike(item, index)">
-									<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-									<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
-									{{ item.like_count || 0 }}
-								</view>
+								<view class="demo-title">{{ item.title }}</view>
+							</view>
+						</view>
+						<view class="demo-user">
+							<view class="userMessage">
+								<image class="userHeard" :src="item.avatar"></image>
+								<view class="userNikename">{{ item.author_name }}</view>
+							</view>
+							<view class="count" @click="clickLike(item, index)">
+								<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+								<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+								{{ item.like_count || 0 }}
 							</view>
 						</view>
 					</view>
-					<view class="right">
-						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
-							<view class="" @click="onPageJump" :id="item.article_id">
-								<view class="demo-top">
-									<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-									<view class="adress">
-										<view class="adreessIcon"><image class="" src="../../static/imagesiconMap3.svg" mode=""></image></view>
+				</view>
+				<view class="right">
+					<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
+						<view class="" @click="onPageJump" :id="item.article_id">
+							<view class="demo-top">
+								<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+								<view class="adress">
+									<view class="adreessIcon"><image class="" src="../../static/imagesiconMap3.svg" mode=""></image></view>
 
-										<view class="adressText">{{ item.location }}</view>
-									</view>
-								</view>
-								<view class="titleTip">
-									<view class="demo-tag">
-										<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-										<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-									</view>
-									<view class="demo-title">{{ item.title }}</view>
+									<view class="adressText">{{ item.location }}</view>
 								</view>
 							</view>
-							<view class="demo-user">
-								<view class="userMessage">
-									<image class="userHeard" :src="item.avatar"></image>
-									<view class="userNikename">{{ item.author_name }}</view>
+							<view class="titleTip">
+								<view class="demo-tag">
+									<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+									<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
 								</view>
-								<view class="count" @click="clickLike(item, index)">
-									<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-									<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
-									{{ item.like_count || 0 }}
-								</view>
+								<view class="demo-title">{{ item.title }}</view>
+							</view>
+						</view>
+						<view class="demo-user">
+							<view class="userMessage">
+								<image class="userHeard" :src="item.avatar"></image>
+								<view class="userNikename">{{ item.author_name }}</view>
+							</view>
+							<view class="count" @click="clickLike(item, index)">
+								<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+								<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+								{{ item.like_count || 0 }}
 							</view>
 						</view>
 					</view>
@@ -168,7 +167,7 @@ export default {
 			rightList: [],
 			token: '',
 			liked: '',
-			isFocus:true
+			isFocus: true
 		};
 	},
 	onLoad() {
@@ -406,8 +405,8 @@ export default {
 		},
 		//执行搜索
 		doSearch(keyword) {
-			if(!keyword) return false
-			
+			if (!keyword) return false;
+
 			keyword = keyword === false ? this.keyword : keyword;
 			this.keyword = keyword;
 			// this.defaultKeyword = keyword;
@@ -444,7 +443,7 @@ export default {
 		},
 		goSearch(keyword) {
 			console.log(keyword);
-			
+
 			if (keyword.type) {
 				if (keyword.type == 'area') {
 					let obj = {
@@ -452,7 +451,7 @@ export default {
 						name: keyword.name,
 						image: keyword.image,
 						city_id: keyword.city_id
-					}
+					};
 					uni.navigateTo({
 						url: '/pages/provinces/provinces?id=' + JSON.stringify(obj)
 					});
@@ -498,56 +497,39 @@ export default {
 		},
 		//保存关键字到历史记录
 		saveKeyword(keyword) {
-			uni.getStorage({
-				key: 'OldKeys',
-				success: res => {
-					console.log(res);
-					if (!res.data) {
-						var OldKeys = [keyword];
-						uni.setStorage({
-							key: 'OldKeys',
-							data: JSON.stringify(OldKeys),
-							success: res => {
-								console.log(res);
-								this.oldKeywordList = OldKeys; //更新历史搜索
-							}
-						});
-					} else {
-						var OldKeys = JSON.parse(res.data);
-						// var OldKeys = res.data;
-						var findIndex = OldKeys.indexOf(keyword);
-						if (findIndex == -1) {
-							OldKeys.unshift(keyword);
-						} else {
-							OldKeys.splice(findIndex, 1);
-							OldKeys.unshift(keyword);
-						}
-						//最多10个纪录
-						OldKeys.length > 10 && OldKeys.pop();
-						uni.setStorage({
-							key: 'OldKeys',
-							data: JSON.stringify(OldKeys)
-						});
-						this.oldKeywordList = OldKeys; //更新历史搜索
-					}
-				},
-				fail: e => {
-					console.error(e);
+			
+			var hisKey = uni.getStorageSync('OldKeys');
+			if (!hisKey) {
+				var OldKeys = [keyword];
+				uni.setStorageSync('OldKeys',JSON.stringify(OldKeys));
+				this.oldKeywordList = OldKeys;
+
+			} else {
+				var OldKeys = JSON.parse(hisKey);
+				
+				// var OldKeys = res.data;
+				var findIndex = OldKeys.indexOf(keyword);
+				if (findIndex == -1) {
+					OldKeys.unshift(keyword);
+				} else {
+					OldKeys.splice(findIndex, 1);
+					OldKeys.unshift(keyword);
 				}
-			});
+				OldKeys.length > 10 && OldKeys.pop();
+				uni.setStorageSync('OldKeys',JSON.stringify(OldKeys));
+				this.oldKeywordList = OldKeys;
+			
+			}
 		},
 		//加载历史搜索,自动读取本地Storage
 		loadOldKeyword() {
-			uni.getStorage({
-				key: 'OldKeys',
-				success: res => {
-					console.log(res);
-					var OldKeys = JSON.parse(res.data);
-
-					// var OldKeys = res.data?res.data:[];
-					this.oldKeywordList = OldKeys;
-				}
-			});
+			let res = uni.getStorageSync('OldKeys')
+			if(res){
+				this.oldKeywordList = JSON.parse(res) ;
+			}else{
+				this.oldKeywordList = [] ;
+			}
+			
 		},
 		/*下拉刷新的回调, 有三种处理方式:*/
 		downCallback() {
@@ -876,7 +858,7 @@ view {
 .touring {
 	margin-top: 24rpx;
 }
-.touring .tourtext{
+.touring .tourtext {
 	width: 160rpx;
 	height: 104rpx;
 	line-height: 104rpx;
