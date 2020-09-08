@@ -108,38 +108,7 @@
 							<swiper-item v-for="(item, index) in site.image" :key="index">
 								<view class="swiperItem"><image :src="item" mode="widthFix"></image></view>
 							</swiper-item>
-							<swiper-item>
-								<view class="swiperItem">
-									<image
-										src="https://lingtuyang-dev.oss-cn-hangzhou.aliyuncs.com/article/61a75e84-dc41-11ea-a99b-00163e0a6010/6ea6544b108f0d661c35eb00f1bb7208"
-										mode="widthFix"
-									></image>
-								</view>
-							</swiper-item>
-							<swiper-item>
-								<view class="swiperItem">
-									<image
-										src="https://lingtuyang-dev.oss-cn-hangzhou.aliyuncs.com/article/61a75e84-dc41-11ea-a99b-00163e0a6010/6ea6544b108f0d661c35eb00f1bb7208"
-										mode="widthFix"
-									></image>
-								</view>
-							</swiper-item>
-							<swiper-item>
-								<view class="swiperItem">
-									<image
-										src="https://lingtuyang-dev.oss-cn-hangzhou.aliyuncs.com/article/61a75e84-dc41-11ea-a99b-00163e0a6010/6ea6544b108f0d661c35eb00f1bb7208"
-										mode="widthFix"
-									></image>
-								</view>
-							</swiper-item>
-							<swiper-item>
-								<view class="swiperItem">
-									<image
-										src="https://lingtuyang-dev.oss-cn-hangzhou.aliyuncs.com/article/61a75e84-dc41-11ea-a99b-00163e0a6010/6ea6544b108f0d661c35eb00f1bb7208"
-										mode="widthFix"
-									></image>
-								</view>
-							</swiper-item>
+							
 						</swiper>
 					</view>
 					<view class="areaTag">景点</view>
