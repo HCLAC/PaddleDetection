@@ -52,7 +52,7 @@
 					<view class="rankText">
 						{{attDetail.data.city}}市景点榜单·第{{attDetail.data.rank}}名
 					</view>
-					<image src="../../static/images/icon-next.svg" mode=""></image>
+					<image class="rankImg" src="../../static/images/icon-next.svg" mode=""></image>
 				</view>
 				<view class="rateBox" >
 					<!-- <uni-rate  :readonly="true" allow-half :value="attDetail.data.rate" /> -->
@@ -457,7 +457,7 @@ export default {
 }
 // 内容区
 .content {
-	padding: 70rpx 30rpx 0;
+	padding: 70rpx 40rpx 0;
 	.contentTop{
 		display: flex;
 		justify-content: space-between;
@@ -483,8 +483,9 @@ export default {
 		margin-top: 16rpx;
 		display: inline-block;
 		padding: 0 8rpx 0 12rpx;
-		image{
+		.rankImg{
 			margin-top: 12rpx;
+			margin-left: 4rpx;
 			float: right;
 			width: 16rpx;
 			height: 16rpx;
@@ -540,7 +541,7 @@ export default {
 		}
 	}
 	.rateBox {
-		margin-top: 28rpx;
+		margin-top: 24rpx;
 		display: flex;
 		.rateStart{
 			display: flex;
@@ -568,7 +569,7 @@ export default {
 	}
 
 	.contentText {
-		margin-top: 20rpx;
+		margin-top: 10rpx;
 		margin-bottom: 40rpx;
 		position: relative;
 		.moreText {
