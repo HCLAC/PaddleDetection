@@ -385,7 +385,7 @@
 					},
 					success: (res) => {
 						console.log('天气--',res)
-						if(res.data == null){
+						if(res.data.data == null){
 							uni.request({
 								url:'https://api.asilu.com/weather/',
 								data:{

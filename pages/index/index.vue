@@ -13,7 +13,7 @@
 		
 
 		<!-- 内容 -->
-		<mescroll-body v-if="bannerList.length != 0" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-body v-if="bannerList.length != 0" class="mescroll" ref="mescrollRef"  @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部轮播图 -->
 			<view class="page-section " v-if="bannerList.length != 0">
 				<view class="page-section-spacing">
@@ -171,7 +171,7 @@
 			</view>
 		</mescroll-body>
 		<!-- 无banner时 -->
-		<mescroll-body v-if="bannerList.length == 0" class="mescroll1" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-body v-if="bannerList.length == 0" class="mescroll1" ref="mescrollRef"  @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部轮播图 -->
 			<view class="page-section " v-if="bannerList.length != 0">
 				<view class="page-section-spacing">
@@ -354,8 +354,6 @@ export default {
 		uniIcons,
 		uniNavBar,
 		uniSection
-		// tcontent,
-		// touring
 	},
 	mixins: [MescrollMixin],
 	data() {
@@ -1142,7 +1140,7 @@ page {
 	display: flex;
 	flex-direction: column;
 	box-sizing: border-box;
-	background-color: #efeff4;
+	/* background-color: #efeff4; */
 	min-height: 100%;
 	height: auto;
 }
@@ -1318,7 +1316,7 @@ view {
 }
 
 .cus-sty {
-	background-color: #FFFFFF;
+	background-color: #F8F8F8;
 }
 
 /* 热门景点 */

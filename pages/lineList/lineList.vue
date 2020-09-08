@@ -177,7 +177,7 @@ export default {
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			border-radius: 0 0 16rpx 16rpx;
-			box-shadow: 0px 2px 4px 0px #edeff2;
+			box-shadow: 0px 4rpx 8rpx 0px #edeff2;
 		}
 	}
 }

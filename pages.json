@@ -26,20 +26,11 @@
 				}
 			}
 		},
-		{
-			"path": "pages/provinces/provinces",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
-
-
 
 		{
 		    "path" : "pages/provinces/provinces",
 		    "style" : {
-				"navigationStyle":"custom",
-				"backgroundColor":"#F8F8F8"
+				"navigationStyle":"custom"
 			}
 		},
 		
@@ -129,7 +120,8 @@
     ],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",
-		"navigationBarTextStyle": "black"
+		"navigationBarTextStyle": "black",
+		"backgroundColorTop":"#FFFFFF"
 	},
 	"tabBar": {
 		"list": [{
