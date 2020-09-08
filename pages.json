@@ -16,15 +16,8 @@
 			"path": "pages/attractionsRank/attractionsRank",
 			"style": {
 				"navigationStyle": "custom",
-				"backgroundColor": "#000000",
-				"disableScroll": true,
-				"app-plus": {
-					"bounce": "none"
-				},
-				"mp-alipay": {
-					"allowsBounceVertical": "NO"
+				"backgroundColor": "#000000"
 				}
-			}
 		},
 
 		{

@@ -73,23 +73,6 @@
 							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
 							<view class="rankText" @click="toProvinces(areaList[8])">{{ areaList[8].name }}</view>
 						</view>
-						<!-- <view class="hb-l" @click="toAtt(hotAtt[0].id)">
-							<image mode="aspectFill" :src="hotAtt[0].image"></image>
-							<view class="imgMask"></view>
-							<text>{{ hotAtt[0].name }}</text>
-						</view>
-						<view class="hb-r">
-							<view class="hb-r1" @click="toAtt(hotAtt[1].id)">
-								<image mode="aspectFill" :src="hotAtt[1].image"></image>
-								<view class="imgMask"></view>
-								<text>{{ hotAtt[1].name }}</text>
-							</view>
-							<view class="hb-r2" @click="toAtt(hotAtt[2].id)">
-								<image mode="aspectFill" :src="hotAtt[2].image"></image>
-								<view class="imgMask"></view>
-								<text>{{ hotAtt[2].name }}</text>
-							</view>
-						</view> -->
 					</view>
 				</view>
 
@@ -101,12 +84,14 @@
 							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
-										<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-										<view class="adress">
-											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-
-											<view class="adressText">{{ item.location }}</view>
+										<view class="imgBox">
+											<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+											<view class="adress">
+												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+												<view class="adressText">{{ item.location }}</view>
+											</view>
 										</view>
+										
 									</view>
 									<view class="titleTip">
 										<view class="demo-tag">
@@ -135,12 +120,14 @@
 							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
-										<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-										<view class="adress">
-											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
-
-											<view class="adressText">{{ item.location }}</view>
+										<view class="imgBox">
+											<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+											<view class="adress">
+												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+												<view class="adressText">{{ item.location }}</view>
+											</view>
 										</view>
+										
 									</view>
 									<view class="titleTip">
 										<view class="demo-tag">
@@ -199,15 +186,16 @@
 					<view class="hot-bot" v-if="areaList != null">
 						<view class="hotAdress" >
 							<!-- 当前位置 -->
-							<view class="dqwz" @click="toProvinces(areaList[0])">
-								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
-								<image class="dqwzImg" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
-								<text class="dqwzText">{{cityName}}</text>
-								<view class="adressBox">
-									<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
-									<text class="dqwzText1">{{dqdwText}}</text>
+							<view class="dqwznoba" @click="toProvinces(areaList[0])">
+								<image class="dqwzImgnoba" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
+								<image class="dqwzImgnoba" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
+								<view class="dqwzBoxnoba">
+									<text class="dqwzTextnoba">{{cityName}}</text>
+									<view class="adressBoxnoba">
+										<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
+										<text class="dqwzText1">{{dqdwText}}</text>
+									</view>
 								</view>
-								
 							</view>
 							<view class="hotCity" @click="toProvinces(areaList[1])" >
 								<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
@@ -272,11 +260,12 @@
 							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
-										<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-										<view class="adress">
-											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
-		
-											<view class="adressText">{{ item.location }}</view>
+										<view class="imgBox">
+											<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+											<view class="adress">
+												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+												<view class="adressText">{{ item.location }}</view>
+											</view>
 										</view>
 									</view>
 									<view class="titleTip">
@@ -306,12 +295,15 @@
 							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
-										<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-										<view class="adress">
-											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
-		
-											<view class="adressText">{{ item.location }}</view>
+										<view class="imgBox">
+											<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+											<view class="adress">
+												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+													
+												<view class="adressText">{{ item.location }}</view>
+											</view>
 										</view>
+										
 									</view>
 									<view class="titleTip">
 										<view class="demo-tag">
@@ -476,6 +468,7 @@ export default {
 		},
 		// 获取当前地理位置
 		getAdress() {
+			var that = this
 			uni.getLocation({
 				type: 'wgs84',
 				success: res => {
@@ -665,13 +658,35 @@ export default {
 					console.log('未开启定位', res);
 					// uni.setStorageSync('errCode',res.errCode)
 					this.errCode = 1;
-					uni.showToast({
-						title: '未获取定位权限，将为您展示最热门城市信息',
-						icon: 'none',
-						duration: 2000
-					});
+					// uni.showToast({
+					// 	title: '未获取定位权限，将为您展示最热门城市信息',
+					// 	icon: 'none',
+					// 	duration: 2000
+					// });
 					(this.dqdwText = '正在定位...');
-
+					setTimeout(()=>{
+						this.dqdwText = '未获取到定位'
+						uni.showModal({
+						    // title: '提示',
+						    content: '是否前往开启定位服务',
+						    success:  (res)=> {
+						        if (res.confirm) {
+						            console.log('用户点击确定');
+									
+									uni.openSetting({
+										success:(res)=> {
+											console.log(res.authSetting)
+											this.getAdress()
+											this.dqdwText = '当前位置'
+										}
+									})
+						        } else if (res.cancel) {
+						            console.log('用户点击取消');
+						        }
+						    }
+						});
+					},3000)
+					
 					uni.request({
 						url: this.globalUrl + '/area/hot',
 						data: {
@@ -1381,16 +1396,23 @@ view {
 	border-radius: 16rpx;
 	border: 1px solid #faad14;
 	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .dqwzImg {
 	width: 100%;
 	height: 100%;
 	border-radius: 16rpx;
 }
+.dqwzBox{
+	position: absolute;
+	text-align: center;
+}
 .dqwzText {
 	position: absolute;
 	top: 50rpx;
-	left: 78rpx;
+	/* left: 78rpx; */
 	font-size: 32rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
@@ -1401,8 +1423,8 @@ view {
 	display: flex;
 	align-items: center;
 	position: absolute;
-	top: 100rpx;
-	left: 40rpx;
+	top: 90rpx;
+	/* left: 40rpx; */
 	color: #ffffff;
 	padding: 8rpx 16rpx;
 	font-size: 16rpx;
@@ -1410,11 +1432,60 @@ view {
 	font-weight: 500;
 	color: #303133;
 	line-height: 16rpx;
-	width: 140rpx;
+	/* width: 140rpx; */
 	height: 40rpx;
 	background: #ffe512;
 	border-radius: 11px;
 }
+/* 无banner时 */
+.dqwznoba {
+	width: 216rpx;
+	height: 180rpx;
+	border-radius: 16rpx;
+	border: 1px solid #faad14;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.dqwzImgnoba {
+	width: 100%;
+	height: 100%;
+	border-radius: 16rpx;
+}
+.dqwzBoxnoba {
+	position: absolute;
+	text-align: center;
+}
+.dqwzTextnoba {
+	/* position: absolute; */
+	/* margin-top: 50rpx; */
+	/* left: 78rpx; */
+	font-size: 32rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #ffffff;
+	line-height: 32rpx;
+}
+.adressBoxnoba {
+	display: flex;
+	align-items: center;
+	/* position: absolute; */
+	/* margin-top: 90rpx; */
+	/* left: 40rpx; */
+	color: #ffffff;
+	padding: 8rpx 16rpx;
+	font-size: 16rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #303133;
+	line-height: 16rpx;
+	/* width: 140rpx; */
+	height: 40rpx;
+	background: #ffe512;
+	border-radius: 11px;
+}
+
 .zhishi {
 	width: 24rpx;
 	height: 24rpx;
@@ -1513,13 +1584,16 @@ view {
 	/* position: relative; */
 	background-color: #ffffff;
 }
-
+.imgBox{
+	position: relative;
+}
 .demo-top {
 	position: relative;
 }
 
 .demoImage {
-	
+	min-height: 300rpx;
+	max-height: 460rpx;
 	width: 100%;
 	border-radius: 8rpx 8rpx 0 0;
 	
@@ -1541,7 +1615,7 @@ view {
 .adreessIcon {
 	width: 24rpx;
 	height: 24rpx;
-	padding: 0 4rpx;
+	/* padding: 0 4rpx; */
 	display: flex;
 }
 

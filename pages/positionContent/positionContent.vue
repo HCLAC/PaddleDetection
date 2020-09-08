@@ -52,7 +52,10 @@
 					<view class="rankText">
 						{{attDetail.data.city}}市景点榜单·第{{attDetail.data.rank}}名
 					</view>
-					<image class="rankImg" src="../../static/images/icon-next.svg" mode=""></image>
+					<view class="rankimgbox">
+						<image class="rankImg" src="../../static/images/icon-next.svg" mode="aspectFit"></image>
+					</view>
+					
 				</view>
 				<view class="rateBox" >
 					<!-- <uni-rate  :readonly="true" allow-half :value="attDetail.data.rate" /> -->
@@ -426,9 +429,9 @@ export default {
 	text-align: center;
 	font-size: 22rpx;
 	position: absolute;
-	right: 22rpx;
+	right: 28rpx;
+	bottom: 28rpx;
 	padding: 0 12rpx;
-	bottom: 36rpx;
 }
 //标记点样式
 .dots {
@@ -482,14 +485,21 @@ export default {
 		border-radius:4rpx;
 		margin-top: 16rpx;
 		display: inline-block;
+		vertical-align: middle;
 		padding: 0 8rpx 0 12rpx;
-		.rankImg{
-			margin-top: 12rpx;
+		.rankimgbox{
+			// margin-top: 12rpx;
 			margin-left: 4rpx;
 			float: right;
 			width: 16rpx;
 			height: 16rpx;
+			.rankImg{
+				width: 100%;
+				height: 100%;
+			}
 		}
+		
+		
 	}
 	.rankText{
 		font-size:20rpx;
@@ -692,8 +702,8 @@ export default {
 				align-items: center;
 				justify-content: center;
 				image {
-					width: 46rpx;
-					height: 46rpx;
+					width: 40rpx;
+					height: 40rpx;
 				}
 				text {
 					font-size: 24rpx;

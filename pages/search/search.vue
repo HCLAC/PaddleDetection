@@ -78,12 +78,15 @@
 						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
 							<view class="" @click="onPageJump" :id="item.article_id">
 								<view class="demo-top">
-									<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-									<view class="adress">
-										<view class="adreessIcon"><image class="" src="../../static/imagesiconMap3.svg" mode=""></image></view>
-
-										<view class="adressText">{{ item.location }}</view>
+									<view class="imgBox">
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<view class="adress">
+											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+										
+											<view class="adressText">{{ item.location }}</view>
+										</view>
 									</view>
+									
 								</view>
 								<view class="titleTip">
 									<view class="demo-tag">
@@ -110,12 +113,15 @@
 						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
 							<view class="" @click="onPageJump" :id="item.article_id">
 								<view class="demo-top">
-									<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-									<view class="adress">
-										<view class="adreessIcon"><image class="" src="../../static/imagesiconMap3.svg" mode=""></image></view>
-
-										<view class="adressText">{{ item.location }}</view>
+									<view class="imgBox">
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<view class="adress">
+											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+										
+											<view class="adressText">{{ item.location }}</view>
+										</view>
 									</view>
+									
 								</view>
 								<view class="titleTip">
 									<view class="demo-tag">
@@ -906,7 +912,9 @@ view {
 	/* position: relative; */
 	background-color: #ffffff;
 }
-
+.imgBox{
+	position: relative;
+}
 .demo-top {
 	position: relative;
 }

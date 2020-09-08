@@ -95,7 +95,7 @@
 							<u-time-line-item nodeTop="2">
 								<!-- 此处自定义了左边内容，用一个图标替代 -->
 								<template v-slot:node>
-									<view class="u-node" style="background: #19be6b; border-radius: 50%;">
+									<view class="u-node" style="background: #B7EB8F; border-radius: 50%;">
 										<!-- 此处为uView的icon组件 -->
 										<view style="width: 10rpx; height: 10rpx;"></view>
 									</view>
@@ -518,6 +518,7 @@ export default {
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
 		color: #303133;
+		line-height: 48rpx;
 	}
 }
 .lineDriver {
@@ -529,7 +530,7 @@ export default {
 	padding: 10rpx 30rpx;
 	padding-bottom: 105rpx;
 	.planContent {
-		padding: 100rpx 30rpx 30rpx 20rpx;
+		padding: 50rpx 30rpx 30rpx 20rpx;
 	}
 }
 .tui-chatbox::before {
@@ -547,7 +548,7 @@ export default {
 	background: #ffe512;
 	text-align: center;
 	position: relative;
-
+	border-radius: 6rpx;
 	font-size: 24rpx;
 	font-weight: bold;
 	color: #000;
@@ -665,7 +666,7 @@ export default {
 		margin-top: 20rpx;
 		position: relative;
 		left: -14rpx;
-		border-bottom: 1px solid #dddddd;
+		border-bottom: 1rpx solid #dddddd;
 	}
 
 	.uTime {
