@@ -93,31 +93,31 @@
 										<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
 										<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
 										<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-										<image src="../../static/images/star_svg/star-1备份(3).svg" mode=""></image>
+										<image src="../../static/images/star_svg/starCopy1(3).svg" mode=""></image>
 									</view>
 									<view class="rateStart" v-if="item.rate == 3.5">
 										<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
 										<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
 										<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-										<image src="../../static/images/star_svg/star-1备份(2).svg" mode=""></image>
+										<image src="../../static/images/star_svg/starCopy1(2).svg" mode=""></image>
 										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 									</view>
 									<view class="rateStart" v-if="item.rate == 2.5">
 										<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
 										<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-										<image src="../../static/images/star_svg/star-1备份(1).svg" mode=""></image>
+										<image src="../../static/images/star_svg/starCopy1(1).svg" mode=""></image>
 										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 									</view>
 									<view class="rateStart" v-if="item.rate == 1.5">
 										<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
+										<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 									</view>
 									<view class="rateStart" v-if="item.rate == 0.5">
-										<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
+										<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 										<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>

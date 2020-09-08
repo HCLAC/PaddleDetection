@@ -412,8 +412,8 @@ export default {
 		},
 		//执行搜索
 		doSearch(keyword) {
-			if(!keyword) return false
-			
+			if (!keyword) return false;
+
 			keyword = keyword === false ? this.keyword : keyword;
 			this.keyword = keyword;
 			// this.defaultKeyword = keyword;
@@ -450,7 +450,7 @@ export default {
 		},
 		goSearch(keyword) {
 			console.log(keyword);
-			
+
 			if (keyword.type) {
 				if (keyword.type == 'area') {
 					let obj = {
@@ -458,7 +458,7 @@ export default {
 						name: keyword.name,
 						image: keyword.image,
 						city_id: keyword.city_id
-					}
+					};
 					uni.navigateTo({
 						url: '/pages/provinces/provinces?id=' + JSON.stringify(obj)
 					});
@@ -504,56 +504,39 @@ export default {
 		},
 		//保存关键字到历史记录
 		saveKeyword(keyword) {
-			uni.getStorage({
-				key: 'OldKeys',
-				success: res => {
-					console.log(res);
-					if (!res.data) {
-						var OldKeys = [keyword];
-						uni.setStorage({
-							key: 'OldKeys',
-							data: JSON.stringify(OldKeys),
-							success: res => {
-								console.log(res);
-								this.oldKeywordList = OldKeys; //更新历史搜索
-							}
-						});
-					} else {
-						var OldKeys = JSON.parse(res.data);
-						// var OldKeys = res.data;
-						var findIndex = OldKeys.indexOf(keyword);
-						if (findIndex == -1) {
-							OldKeys.unshift(keyword);
-						} else {
-							OldKeys.splice(findIndex, 1);
-							OldKeys.unshift(keyword);
-						}
-						//最多10个纪录
-						OldKeys.length > 10 && OldKeys.pop();
-						uni.setStorage({
-							key: 'OldKeys',
-							data: JSON.stringify(OldKeys)
-						});
-						this.oldKeywordList = OldKeys; //更新历史搜索
-					}
-				},
-				fail: e => {
-					console.error(e);
+			
+			var hisKey = uni.getStorageSync('OldKeys');
+			if (!hisKey) {
+				var OldKeys = [keyword];
+				uni.setStorageSync('OldKeys',JSON.stringify(OldKeys));
+				this.oldKeywordList = OldKeys;
+
+			} else {
+				var OldKeys = JSON.parse(hisKey);
+				
+				// var OldKeys = res.data;
+				var findIndex = OldKeys.indexOf(keyword);
+				if (findIndex == -1) {
+					OldKeys.unshift(keyword);
+				} else {
+					OldKeys.splice(findIndex, 1);
+					OldKeys.unshift(keyword);
 				}
-			});
+				OldKeys.length > 10 && OldKeys.pop();
+				uni.setStorageSync('OldKeys',JSON.stringify(OldKeys));
+				this.oldKeywordList = OldKeys;
+			
+			}
 		},
 		//加载历史搜索,自动读取本地Storage
 		loadOldKeyword() {
-			uni.getStorage({
-				key: 'OldKeys',
-				success: res => {
-					console.log(res);
-					var OldKeys = JSON.parse(res.data);
-
-					// var OldKeys = res.data?res.data:[];
-					this.oldKeywordList = OldKeys;
-				}
-			});
+			let res = uni.getStorageSync('OldKeys')
+			if(res){
+				this.oldKeywordList = JSON.parse(res) ;
+			}else{
+				this.oldKeywordList = [] ;
+			}
+			
 		},
 		/*下拉刷新的回调, 有三种处理方式:*/
 		downCallback() {
@@ -882,7 +865,7 @@ view {
 .touring {
 	margin-top: 24rpx;
 }
-.touring .tourtext{
+.touring .tourtext {
 	width: 160rpx;
 	height: 104rpx;
 	line-height: 104rpx;
@@ -912,9 +895,7 @@ view {
 	/* position: relative; */
 	background-color: #ffffff;
 }
-.imgBox{
-	position: relative;
-}
+
 .demo-top {
 	position: relative;
 }

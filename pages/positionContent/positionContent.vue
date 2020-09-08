@@ -100,31 +100,31 @@
 						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
 						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
 						<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-						<image src="../../static/images/star_svg/star-1备份(3).svg" mode=""></image>
+						<image src="../../static/images/star_svg/starCopy1(3).svg" mode=""></image>
 					</view>
 					<view class="rateStart" v-if="attDetail.data.rate == 3.5">
 						<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
 						<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
 						<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-						<image src="../../static/images/star_svg/star-1备份(2).svg" mode=""></image>
+						<image src="../../static/images/star_svg/starCopy1(2).svg" mode=""></image>
 						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 					</view>
 					<view class="rateStart" v-if="attDetail.data.rate == 2.5">
 						<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
 						<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-						<image src="../../static/images/star_svg/star-1备份(1).svg" mode=""></image>
+						<image src="../../static/images/star_svg/starCopy1(1).svg" mode=""></image>
 						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 					</view>
 					<view class="rateStart" v-if="attDetail.data.rate == 1.5">
 						<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
-						<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
+						<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 					</view>
 					<view class="rateStart" v-if="attDetail.data.rate == 0.5">
-						<image src="../../static/images/star_svg/star-1备份.svg" mode=""></image>
+						<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
 						<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
@@ -137,17 +137,16 @@
 				<view class="contentText">
 					<text :class="isShow ? 'loseText' : 'moreText'">
 						简介：{{attDetail.data.description}}
-					
-						<view class="btnBox" @click="showMore" v-if="!isShow">
-							<text>收起</text>
-							<image class="iconImg" src="../../static/images/zhankaiIcon.png" mode=""></image>
-						</view>
-						<view class="btnBox" @click="showMore" v-else>
-							<view class="mask"></view>
-							<text>展开</text>
-							<image class="iconImg" src="../../static/images/shouqiIcon.png" mode=""></image>
-						</view>
 					</text>
+					<view class="btnBox" @click="showMore" v-if="!isShow">
+						<text>收起</text>
+						<image class="iconImg" src="../../static/images/zhankaiIcon.png" mode=""></image>
+					</view>
+					<view class="btnBox" @click="showMore" v-else>
+						<view class="mask"></view>
+						<text>展开</text>
+						<image class="iconImg" src="../../static/images/shouqiIcon.png" mode=""></image>
+					</view>
 				</view>
 			</view>
 			<view class="magrinBck"></view>
@@ -607,8 +606,9 @@ export default {
 			// margin-right: 10rpx;
 			height: 42rpx;
 			position: absolute;
-			right: 0;
-			bottom: 0;
+			right: 10rpx;
+			background-color: #FFFFFF;
+			bottom: -6rpx;
 			display: flex;
 			justify-content: flex-end;
 			z-index: 111;
