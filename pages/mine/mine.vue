@@ -42,7 +42,7 @@
 								<rich-text class="richText" :nodes="item.content"></rich-text>
 							</view>
 							<view class="position">
-								<image src="../../static/images/Icon／Map.svg" mode="aspectFill"></image>
+								<image src="../../static/images/iconMap.svg" mode="aspectFill"></image>
 								<view>{{ item.location }}</view>
 							</view>
 						</view>
@@ -175,8 +175,9 @@ export default {
 		},
 		tell(){
 			uni.makePhoneCall({
-				phoneNumber:15020779433
+				phoneNumber:"15020779433"
 			})
+			
 		},
 		/*下拉刷新的回调, 有三种处理方式:*/
 		downCallback() {
