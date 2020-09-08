@@ -15,7 +15,7 @@
 						placeholder="请输入您的手机号"
 						placeholder-style="color:'#C9CAD1',font-size:30rpx"
 						class="is-input1"
-						:style="styleObj"
+						:style="{color: styleObj.color}"
 						@input="onInput"
 						v-model="phone"
 						@focus="isfocus"

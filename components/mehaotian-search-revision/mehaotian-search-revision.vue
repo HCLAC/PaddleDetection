@@ -64,7 +64,7 @@ export default {
 	},
 	data() {
 		return {
-			active: false,
+			active: true,
 			inputVal: '',
 			searchName: '取消',
 			isDelShow: false,
@@ -95,7 +95,7 @@ export default {
 			console.log('blur');
 			this.isFocus = false;
 			if (!this.inputVal) {
-				this.active = false;
+				this.active = true;
 			}
 		},
 		clear() {
@@ -103,7 +103,7 @@ export default {
 			uni.hideKeyboard();
 			this.isFocus = false;
 			this.inputVal = '';
-			this.active = false;
+			this.active = true;
 			//HM修改 清空内容时候触发组件input
 			this.$emit('input', '');
 			//this.$emit('search', '');//HM修改 清空内容时候不进行搜索
@@ -125,7 +125,7 @@ export default {
 				if (!this.show && this.searchName == '取消') {
 					uni.hideKeyboard();
 					this.isFocus = false;
-					this.active = false;
+					this.active = true;
 					return;
 				}
 			}
@@ -244,7 +244,7 @@ export default {
 		white-space: nowrap;
 		overflow: hidden;
 		&.active {
-			padding-left: 15upx;
+			padding-left: 15px;
 			width: 100upx;
 		}
 	}

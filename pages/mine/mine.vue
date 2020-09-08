@@ -34,15 +34,15 @@
 						</view>
 						<view class="right" @click="onPageJump" :id="item.article_id">
 							<view class="title">
-								<view class="tips" v-if="item.type == 1">游记</view>
-								<view class="tips" v-if="item.type == 2">攻略</view>
-								<view class="titleText">{{ item.title }}</view>
+								<text class="tips" v-if="item.type == 1">游记</text>
+								<text class="tips" v-if="item.type == 2">攻略</text>
+								<text class="titleText">{{ item.title }}</text>
 							</view>
 							<view class="content">
 								<rich-text class="richText" :nodes="item.content"></rich-text>
 							</view>
 							<view class="position">
-								<image src="../../static/images/Icon／Map.svg" mode="aspectFill"></image>
+								<image src="../../static/images/iconMap.svg" mode="aspectFill"></image>
 								<view>{{ item.location }}</view>
 							</view>
 						</view>
@@ -175,8 +175,9 @@ export default {
 		},
 		tell(){
 			uni.makePhoneCall({
-				phoneNumber:15020779433
+				phoneNumber:"15020779433"
 			})
+			
 		},
 		/*下拉刷新的回调, 有三种处理方式:*/
 		downCallback() {
@@ -409,6 +410,7 @@ export default {
 		margin-right: 10rpx;
 	}
 	.titleText {
+		flex: 1;
 		margin-left: 10rpx;
 		overflow: hidden;
 		text-overflow: ellipsis;

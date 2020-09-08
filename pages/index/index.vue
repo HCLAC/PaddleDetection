@@ -101,9 +101,9 @@
 							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
 										<view class="adress">
-											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
+											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 
 											<view class="adressText">{{ item.location }}</view>
 										</view>
@@ -135,7 +135,7 @@
 							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
 										<view class="adress">
 											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
 
@@ -272,7 +272,7 @@
 							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
 										<view class="adress">
 											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
 		
@@ -306,7 +306,7 @@
 							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
 										<view class="adress">
 											<view class="adreessIcon"><image class="" src="../../static/images/Icon／Map3.svg" mode=""></image></view>
 		
@@ -1116,7 +1116,7 @@ export default {
 };
 </script>
 
-<style>
+<style >
 .left,
 .right {
 	display: inline-block;
@@ -1518,18 +1518,17 @@ view {
 	position: relative;
 }
 
-.demo-image {
-	min-height: 300rpx !important;
-	max-height: 460rpx;
+.demoImage {
+	
 	width: 100%;
 	border-radius: 8rpx 8rpx 0 0;
-	position: relative;
+	
 }
 
 .adress {
 	position: absolute;
 	left: 0;
-	bottom: 8rpx;
+	bottom: 11rpx;
 	display: flex;
 	align-items: center;
 	max-width: 240rpx;
@@ -1542,7 +1541,7 @@ view {
 .adreessIcon {
 	width: 24rpx;
 	height: 24rpx;
-	margin: 0 4rpx;
+	padding: 0 4rpx;
 	display: flex;
 }
 
