@@ -14,10 +14,10 @@
 		<view class="" v-show="articleList != null">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap">
-				<view class="page-section-spacing" :style="swiperHeight">
+				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight}">
 					<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
 						<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
-							<image class="itemImg" mode="aspectFit" :src="item"></image>
+							<image  class="itemImg" :style="{width: index== 0 ?'100%' : '' }"  :mode="index == 0 ?'widthFix' : 'aspectFit'" :src="item"></image>
 						</swiper-item>
 					</swiper>
 					<view class="imageCount">{{ current + 1 }}/{{ articleList.data.images.length }}</view>
@@ -108,10 +108,7 @@ export default {
 			article_num: null,
 			flag: true,
 			wechat_id: null,
-			swiperHeight:{
-				height: '',
-				width:'100%'
-			}
+			swiperHeight: ''
 		};
 	},
 	onLoad(e) {
@@ -224,8 +221,9 @@ export default {
 							src: that.articleList.data.images[0],
 							success: function (image) {
 								console.log('图片高度--',image.height);
-								that.swiperHeight = image.height / 2+  'rpx'
-								console.log('设置图片高度',that.swiperHeight.height)
+								let  caseRes = image.width / image.height
+								that.swiperHeight =  100 / caseRes + 'vw'
+				
 							}
 						});
 
@@ -234,9 +232,8 @@ export default {
 						uni.getImageInfo({
 							src: that.articleList.data.images[0],
 							success: function (image) {
-								console.log('图片高度--',image.height);
-								that.swiperHeight = image.height / 2+  'rpx'
-								console.log('设置图片高度',that.swiperHeight.height)
+									let  caseRes = image.width / image.height
+								that.swiperHeight =  100 / caseRes + 'vw'
 							}
 						});
 					}
@@ -580,8 +577,7 @@ export default {
 
 .page-section-spacing {
 	position: relative;
-	min-height: 580rpx;
-	max-height: 996rpx;
+	
 	width: 100%;
 }
 
@@ -591,6 +587,7 @@ export default {
 }
 
 .itemImg {
+
 	width: 100%;
 	height: 100%;
 }
