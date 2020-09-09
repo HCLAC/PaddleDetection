@@ -13,9 +13,11 @@
 			<image :src="banner" mode="" class="bannerImg"></image>
 			<view class="mask">
 				<view class="content">
-					<image src="../../static/images/leftleaves.svg" mode=""></image>
-					<text>{{name}}热门景点</text>
-					<image src="../../static/images/rightleaves.svg" mode=""></image>
+					<view class="atthotbox">
+						<image src="../../static/images/leftleaves.svg" mode=""></image>
+						<text class="atthottext">{{name}}热门景点</text>
+						<image src="../../static/images/rightleaves.svg" mode=""></image>
+					</view>
 				</view>
 				<view class="rankTime">
 					领途羊景点榜单 · {{month}}月{{day}}日更新
@@ -631,7 +633,7 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: 748rpx;
+		width: 100%;
 		height: 440rpx;
 		background: rgba(0, 0, 0, 0.35);
 	}
@@ -641,36 +643,49 @@
 	}
 	.content {
 		position: absolute;
-		top: 170rpx;
-		left: 82rpx;
-		min-width: 582rpx;
+		top: 60%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		min-width: 564rpx;
+		max-width: 620rpx;
 		height: 140rpx;
 		display: flex;
 		align-items: center;
-		justify-content: center;
+		
 		font-size: 56rpx;
 		font-family: AlibabaPuHuiTiM;
 		color: rgba(255, 255, 255, 1);
 		line-height: 56rpx;
 		letter-spacing: 2rpx;
-		background: url(../../static/images/TRAVEL.png) no-repeat 4rpx 4rpx;
-
-		text {
-			min-width: 402rpx;
-			height: 64rpx;
-			font-size: 64rpx;
-			font-family: AlibabaPuHuiTiM;
-			color: #FFFFFF;
-			line-height: 64rpx;
-			letter-spacing: 2rpx;
-			font-weight: 500;
-			margin: 0 6rpx;
+		background: url(../../static/images/TRAVEL.png) no-repeat center 4rpx;
+		.atthotbox{
+			position: absolute;
+			top: 40%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-width: 640rpx;
+			.atthottext {
+				min-width: 402rpx;
+				max-width: 600rpx;
+				height: 64rpx;
+				font-size: 64rpx;
+				font-family: AlibabaPuHuiTiM;
+				color: #FFFFFF;
+				line-height: 64rpx;
+				letter-spacing: 2rpx;
+				font-weight: 500;
+				margin: 0 6rpx;
+			}
+			
+			image {
+				width: 40rpx;
+				height: 70rpx;
+			}
 		}
-
-		image {
-			width: 40rpx;
-			height: 70rpx;
-		}
+		
 	}
 
 	.rankTime {
