@@ -74,7 +74,7 @@
 						<image class="favBtn" src="../../static/images/fav-actived.svg" v-if="articleList.data.fav == 1"></image>
 						<view class="favNum">{{ articleList.data.fav_count }}</view>
 					</view>
-					<view class="share" @click="share"><image src="../../static/images/fenxiang.svg"></image></view>
+					<view class="share" v-show="serviceProvider !='toutiao'" @click="share"><image src="../../static/images/fenxiang.svg"></image></view>
 					<view class=""><view class="loginButton" @click="login" v-if="flag">登录</view></view>
 				</view>
 			</view>
@@ -108,7 +108,8 @@ export default {
 			article_num: null,
 			flag: true,
 			wechat_id: null,
-			swiperHeight: ''
+			swiperHeight: '',
+			serviceProvider: '',
 		};
 	},
 	onLoad(e) {
@@ -135,7 +136,27 @@ export default {
 		_this = this 
 		this.getOrder();
 	},
-
+mounted() {
+		uni.getProvider({
+			service: 'oauth',
+			success: res => {
+			
+				if(res.errMsg == 'getProvider:ok'){
+					this.serviceProvider = res.provider[0]
+					if(this.serviceProvider == 'toutiao'){
+						uni.showShareMenu({
+							
+						})
+					}
+				}else{
+					uni.showToast({
+						title: '获取提供商失败',
+						icon: 'none'
+					})
+				}
+			}
+		});
+	},
 	methods: {
 		getOrder() {},
 		templateAdd(e) {

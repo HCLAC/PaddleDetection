@@ -221,7 +221,7 @@
 						<image v-show="lineContent.fav" class="favBtn" src="../../static/images/fav-actived.svg"></image>
 						<view class="favNum">{{ lineContent.fav_count }}</view>
 					</view> -->
-					<view class="share" @click="share"><image src="../../static/images/fenxiang.svg"></image></view>
+					<view class="share" v-show="serviceProvider !='toutiao'" @click="share"><image src="../../static/images/fenxiang.svg"></image></view>
 					<view class=""><view class="loginButton" v-if="!hasLogin" @click="login">登录</view></view>
 				</view>
 			</view>
@@ -247,11 +247,8 @@ export default {
 			tabCurrent: 0,
 			hasLogin: uni.getStorageSync('Authorization'),
 			isFixed: false,
-			swiperHeight:{
-				height: '',
-				width:'100%'
-			},
-			butler_mobile:0
+			serviceProvider: '',
+			
 		};
 	},
 	onLoad(option) {
@@ -265,6 +262,27 @@ export default {
 		} else {
 			this.isFixed = false;
 		}
+	},
+	mounted() {
+		uni.getProvider({
+			service: 'oauth',
+			success: res => {
+			
+				if(res.errMsg == 'getProvider:ok'){
+					this.serviceProvider = res.provider[0]
+					if(this.serviceProvider == 'toutiao'){
+						uni.showShareMenu({
+							
+						})
+					}
+				}else{
+					uni.showToast({
+						title: '获取提供商失败',
+						icon: 'none'
+					})
+				}
+			}
+		});
 	},
 	methods: {
 		
@@ -339,7 +357,7 @@ export default {
 						console.log(res.data);
 						this.butler_mobile = res.data.data.butler_mobile;
 						this.lineContent = res.data.data;
-						
+					
 					} else {
 						uni.showToast({
 							title: res.data.msg,
@@ -377,18 +395,7 @@ export default {
 			});
 		},
 		share() {
-			
 			uni.showShareMenu({
-				title: '分享',
-				success: (res)=>{
-					uni.showToast({
-						title: '已开启分享功能',
-						icon:"none"
-					})
-				},
-				fail: error=>{
-					console.log(error)
-				}
 			});
 		}
 	}
