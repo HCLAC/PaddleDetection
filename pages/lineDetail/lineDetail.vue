@@ -195,10 +195,15 @@
 						</view>
 					</view>
 				</u-time-line>
+				<view class="serverInfo" v-show="tabCurrent != 1">
+					<view class="title">服务说明</view>
+					<view class="content">{{ lineContent.description }}</view>
+					<view class="phone" @click="tell" ><image src="../../static/images/serverCall.svg"></image></view>
+				</view>
 				<view class="serverInfo" v-show="tabCurrent == 1">
 					<view class="title">服务说明</view>
 					<view class="content">{{ lineContent.description }}</view>
-					<view class="phone"><image src="../../static/images/serverCall.svg"></image></view>
+					<view class="phone" @click="tell" ><image src="../../static/images/serverCall.svg"></image></view>
 				</view>
 			</view>
 			<view class="bottom">
@@ -245,7 +250,8 @@ export default {
 			swiperHeight:{
 				height: '',
 				width:'100%'
-			}
+			},
+			butler_mobile:0
 		};
 	},
 	onLoad(option) {
@@ -330,16 +336,10 @@ export default {
 					if (res.data.code == 0) {
 						
 						res.data.data.content = res.data.data.content && res.data.data.content.length ? JSON.parse(res.data.data.content) : [];
-						console.log(res.data.data.content);
+						console.log(res.data);
+						this.butler_mobile = res.data.data.butler_mobile;
 						this.lineContent = res.data.data;
-						uni.getImageInfo({
-							src: that.lineContent.images[0],
-							success: function (image) {
-								console.log('图片高度--',image.height);
-								that.swiperHeight.height = image.height / 2+  'px'
-								console.log('设置图片高度',that.swiperHeight.height)
-							}
-						});
+						
 					} else {
 						uni.showToast({
 							title: res.data.msg,
@@ -359,6 +359,12 @@ export default {
 			uni.reLaunch({
 				url: '/pages/login/login'
 			});
+		},
+		tell(){
+			uni.makePhoneCall({
+				phoneNumber:this.butler_mobile
+			})
+			
 		},
 		back() {
 			uni.navigateBack({
