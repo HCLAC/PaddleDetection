@@ -10,19 +10,15 @@
 			</view>
 		</u-navbar>
 
-		
-
 		<!-- 内容 -->
-		<mescroll-body v-if="bannerList.length != 0" class="mescroll" ref="mescrollRef"  @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-body v-if="bannerList.length != 0" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部轮播图 -->
 			<view class="page-section " v-if="bannerList.length != 0">
 				<view class="page-section-spacing">
 					<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">
 						<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
 							<!-- <navigator :url="'/components/web-view/web-view?website=' + item.url" class="itemUrl"> -->
-								<image :src="item.image" mode="scaleToFill" class="swiperImg" @click="towebview(item)">
-									<!-- <web-view :src="item.url"></web-view> -->
-								</image>
+							<image :src="item.image" mode="scaleToFill" class="swiperImg" @click="towebview(item)"><!-- <web-view :src="item.url"></web-view> --></image>
 							<!-- </navigator> -->
 						</swiper-item>
 					</swiper>
@@ -85,13 +81,12 @@
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<view class="imgBox">
-											<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+											<image class="demoImage" :src="item.image" :index="index" :lazy-load="true" mode="widthFix"></image>
 											<view class="adress">
 												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 												<view class="adressText">{{ item.location }}</view>
 											</view>
 										</view>
-										
 									</view>
 									<view class="titleTip">
 										<view class="demo-tag">
@@ -121,13 +116,12 @@
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<view class="imgBox">
-											<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+											<image class="demoImage" :src="item.image" :index="index" :lazy-load="true" mode="widthFix"></image>
 											<view class="adress">
 												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 												<view class="adressText">{{ item.location }}</view>
 											</view>
 										</view>
-										
 									</view>
 									<view class="titleTip">
 										<view class="demo-tag">
@@ -154,20 +148,17 @@
 						</view>
 					</view>
 				</view>
-
 			</view>
 		</mescroll-body>
 		<!-- 无banner时 -->
-		<mescroll-body v-if="bannerList.length == 0" class="mescroll1" ref="mescrollRef"  @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-body v-if="bannerList.length == 0" class="mescroll1" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部轮播图 -->
 			<view class="page-section " v-if="bannerList.length != 0">
 				<view class="page-section-spacing">
 					<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">
 						<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
 							<!-- <navigator :url="'/components/web-view/web-view?website=' + item.url" class="itemUrl"> -->
-								<image :src="item.image" mode="scaleToFill" class="swiperImg" @click="towebview(item)">
-									<!-- <web-view :src="item.url"></web-view> -->
-								</image>
+							<image :src="item.image" mode="scaleToFill" class="swiperImg" @click="towebview(item)"><!-- <web-view :src="item.url"></web-view> --></image>
 							<!-- </navigator> -->
 						</swiper-item>
 					</swiper>
@@ -184,53 +175,41 @@
 						</view>
 					</view>
 					<view class="hot-bot" v-if="areaList != null">
-						<view class="hotAdress" >
+						<view class="hotAdress">
 							<!-- 当前位置 -->
 							<view class="dqwznoba" @click="toProvinces(areaList[0])">
 								<image class="dqwzImgnoba" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
 								<image class="dqwzImgnoba" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
 								<view class="dqwzBoxnoba">
-									<text class="dqwzTextnoba">{{cityName}}</text>
+									<text class="dqwzTextnoba">{{ cityName }}</text>
 									<view class="adressBoxnoba">
 										<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
-										<text class="dqwzText1">{{dqdwText}}</text>
+										<text class="dqwzText1">{{ dqdwText }}</text>
 									</view>
 								</view>
 							</view>
-							<view class="hotCity" @click="toProvinces(areaList[1])" >
+							<view class="hotCity" @click="toProvinces(areaList[1])">
 								<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
-								<text class="hotCityText">{{areaList[1].name}}</text>
+								<text class="hotCityText">{{ areaList[1].name }}</text>
 							</view>
 							<view class="hotCity" @click="toProvinces(areaList[2])">
 								<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
-								<text class="hotCityText1">{{areaList[2].name}}</text>
+								<text class="hotCityText1">{{ areaList[2].name }}</text>
 							</view>
 						</view>
 						<view class="cityRank">
-							<view class="rankText" @click="toProvinces(areaList[3])">
-								{{areaList[3].name}}
-							</view>
+							<view class="rankText" @click="toProvinces(areaList[3])">{{ areaList[3].name }}</view>
 							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[4])">
-								{{areaList[4].name}}
-							</view>
+							<view class="rankText" @click="toProvinces(areaList[4])">{{ areaList[4].name }}</view>
 							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[5])">
-								{{areaList[5].name}}
-							</view>
+							<view class="rankText" @click="toProvinces(areaList[5])">{{ areaList[5].name }}</view>
 						</view>
 						<view class="cityRank">
-							<view class="rankText" @click="toProvinces(areaList[6])">
-								{{areaList[6].name}}
-							</view>
+							<view class="rankText" @click="toProvinces(areaList[6])">{{ areaList[6].name }}</view>
 							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[7])">
-								{{areaList[7].name}}
-							</view>
+							<view class="rankText" @click="toProvinces(areaList[7])">{{ areaList[7].name }}</view>
 							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[8])">
-								{{areaList[8].name}}
-							</view>
+							<view class="rankText" @click="toProvinces(areaList[8])">{{ areaList[8].name }}</view>
 						</view>
 						<!-- <view class="hb-l" @click="toAtt(hotAtt[0].id)">
 							<image mode="aspectFill" :src="hotAtt[0].image"></image>
@@ -251,7 +230,7 @@
 						</view> -->
 					</view>
 				</view>
-		
+
 				<!-- 正在旅行 -->
 				<view class="touring" id="touring">
 					<text class="tourtext">正在旅行</text>
@@ -261,7 +240,7 @@
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<view class="imgBox">
-											<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+											<image class="demoImage" :src="item.image" :index="index" :lazy-load="true" mode="widthFix"></image>
 											<view class="adress">
 												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 												<view class="adressText">{{ item.location }}</view>
@@ -296,14 +275,13 @@
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<view class="imgBox">
-											<image class="demoImage" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+											<image class="demoImage" :src="item.image" :index="index" :lazy-load="true" mode="widthFix"></image>
 											<view class="adress">
 												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-													
+
 												<view class="adressText">{{ item.location }}</view>
 											</view>
 										</view>
-										
 									</view>
 									<view class="titleTip">
 										<view class="demo-tag">
@@ -388,24 +366,23 @@ export default {
 			mask: true,
 			success: () => {
 				if (this.item == undefined || null) {
-					this.getBanner(),
-					this.getAdress();
+					this.getBanner(), this.getAdress();
 				}
 			}
 		});
-		
+
 		setTimeout(function() {
 			uni.hideLoading();
 		}, 1000);
 	},
 
 	onPageScroll(e) {
-		if(this.bannerList.length == 0){
-			this.background.backgroundColor = '#ffffff'
-		}else{
+		if (this.bannerList.length == 0) {
+			this.background.backgroundColor = '#ffffff';
+		} else {
 			if (e.scrollTop >= 100) {
 				this.background.backgroundColor = '#ffffff';
-			}else{
+			} else {
 				this.background.backgroundColor = '';
 			}
 		}
@@ -468,11 +445,11 @@ export default {
 		},
 		// 获取当前地理位置
 		getAdress() {
-			var that = this
+			var that = this;
 			uni.getLocation({
 				type: 'wgs84',
 				success: res => {
-					if (res.city) {
+					if (res.city && res.province) {
 						this.cityName = res.city.substr(0, res.city.length - 1);
 						this.city = res.city;
 						this.province = res.province;
@@ -492,63 +469,6 @@ export default {
 								console.log('areaList--', this.areaList);
 							}
 						});
-						uni.request({
-							// url:'http://192.168.43.156:8199/user/location',
-							// url:'user/location',
-							url: this.globalUrl + '/user/location',
-							data: {
-								state: this.province,
-								city: this.city
-							},
-							method: 'POST',
-							// header: {
-							// 	'content-type': 'application/x-www-form-urlencoded',
-							// },
-							success: res => {
-								console.log('获取地址id', res);
-								// 地址未定义
-								if (res.data.code != 0) {
-									uni.request({
-										url: this.globalUrl + '/article/list',
-										data: {
-											count: 6,
-											page: 1
-										},
-										header: {
-											Authorization: uni.getStorageSync('Authorization')
-										},
-										success: res => {
-											console.log('未定位时获取的文章列表', res);
-											uni.setStorageSync('article_id', res.data);
-											// console.log('存储文章列表==',res.data)
-											this.list = res.data.data.list;
-											// console.log('list=====',this.list)
-										}
-									});
-								} else {
-									uni.setStorageSync('city_id', res.data);
-									console.log('存储本地', res.data);
-									var city = uni.getStorageSync('city_id');
-									console.log('取数据', city);
-									uni.request({
-										url: this.globalUrl + '/article/list',
-										data: {
-											count: 6,
-											page: 1
-										},
-										header: {
-											Authorization: uni.getStorageSync('Authorization')
-										},
-										success: res => {
-											console.log('文章列表', res);
-											uni.setStorageSync('article_id', res.data);
-											this.list = res.data.data.list;
-										}
-									});
-								}
-							}
-						});
-						// console.log('哈哈哈哈哈哈哈哈哈');
 					} else {
 						let arr = [];
 						arr.push(res.latitude);
@@ -561,13 +481,12 @@ export default {
 								location: arr
 							},
 							success: result => {
-								
 								if (result.data.status == 0) {
 									this.cityName = result.data.result.addressComponent.city.substr(0, result.data.result.addressComponent.city.length - 1);
 									this.city = result.data.result.addressComponent.city;
 									this.province = result.data.result.addressComponent.province;
 									// console.log('哈哈哈哈哈哈哈哈哈');
-									
+
 									console.log(this.city, this.province);
 									uni.request({
 										url: this.globalUrl + '/area/hot',
@@ -578,70 +497,14 @@ export default {
 										success: res => {
 											console.log(this.areaList);
 											this.areaList = res.data.data;
-									
+
 											console.log('areaList--', this.areaList);
-										}
-									});
-									uni.request({
-										// url:'http://192.168.43.156:8199/user/location',
-										// url:'user/location',
-										url: this.globalUrl + '/user/location',
-										data: {
-											state: this.province,
-											city: this.city
-										},
-										method: 'POST',
-										// header: {
-										// 	'content-type': 'application/x-www-form-urlencoded',
-										// },
-										success: res => {
-											console.log('获取地址id', res);
-											// 地址未定义
-											if (res.data.code != 0) {
-												uni.request({
-													url: this.globalUrl + '/article/list',
-													data: {
-														count: 6,
-														page: 1
-													},
-													header: {
-														Authorization: uni.getStorageSync('Authorization')
-													},
-													success: res => {
-														console.log('未定位时获取的文章列表', res);
-														uni.setStorageSync('article_id', res.data);
-														// console.log('存储文章列表==',res.data)
-														this.list = res.data.data.list;
-														// console.log('list=====',this.list)
-													}
-												});
-											} else {
-												uni.setStorageSync('city_id', res.data);
-												console.log('存储本地', res.data);
-												var city = uni.getStorageSync('city_id');
-												console.log('取数据', city);
-												uni.request({
-													url: this.globalUrl + '/article/list',
-													data: {
-														count: 6,
-														page: 1
-													},
-													header: {
-														Authorization: uni.getStorageSync('Authorization')
-													},
-													success: res => {
-														console.log('文章列表', res);
-														uni.setStorageSync('article_id', res.data);
-														this.list = res.data.data.list;
-													}
-												});
-											}
 										}
 									});
 								} else {
 									uni.showToast({
 										title: result.errMsg
-									})
+									});
 								}
 							},
 							fail: () => {
@@ -663,30 +526,30 @@ export default {
 					// 	icon: 'none',
 					// 	duration: 2000
 					// });
-					(this.dqdwText = '正在定位...');
-					setTimeout(()=>{
-						this.dqdwText = '未获取到定位'
+					this.dqdwText = '正在定位...';
+					setTimeout(() => {
+						this.dqdwText = '未获取到定位';
 						uni.showModal({
-						    // title: '提示',
-						    content: '是否前往开启定位服务',
-						    success:  (res)=> {
-						        if (res.confirm) {
-						            console.log('用户点击确定');
-									
+							// title: '提示',
+							content: '是否前往开启定位服务',
+							success: res => {
+								if (res.confirm) {
+									console.log('用户点击确定');
+
 									uni.openSetting({
-										success:(res)=> {
-											console.log(res.authSetting)
-											this.getAdress()
-											this.dqdwText = '当前位置'
+										success: res => {
+											console.log(res.authSetting);
+											this.getAdress();
+											this.dqdwText = '当前位置';
 										}
-									})
-						        } else if (res.cancel) {
-						            console.log('用户点击取消');
-						        }
-						    }
+									});
+								} else if (res.cancel) {
+									console.log('用户点击取消');
+								}
+							}
 						});
-					},3000)
-					
+					}, 3000);
+
 					uni.request({
 						url: this.globalUrl + '/area/hot',
 						data: {
@@ -724,7 +587,6 @@ export default {
 					// 获取热门目的地
 				}
 			});
-			
 		},
 
 		// 获取banner
@@ -734,20 +596,20 @@ export default {
 				success: res => {
 					console.log('banner--', res);
 					this.bannerList = res.data.data;
-					console.log('------------',this.bannerList.length)
-					if(this.bannerList.length == 0){
-						this.background.backgroundColor = '#ffffff'
-					}else{
-						this.background.backgroundColor = ''
+					console.log('------------', this.bannerList.length);
+					if (this.bannerList.length == 0) {
+						this.background.backgroundColor = '#ffffff';
+					} else {
+						this.background.backgroundColor = '';
 					}
 				}
 			});
 		},
 		// 点击banner
-		towebview(item){
+		towebview(item) {
 			uni.navigateTo({
 				url: `/pages/webview/webview?url=${item.url}`
-			})
+			});
 		},
 		// toUrl(item) {
 		// 	console.log(111111);
@@ -883,260 +745,55 @@ export default {
 		},
 		/*下拉刷新的回调, 有三种处理方式:*/
 		downCallback() {
-			// 第1种: 请求具体接口
-			// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
 			this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
-			// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
-			// this.mescroll.endSuccess()
-			// 此处仍可以继续写其他接口请求...
-			// 调用其他方法...
 		},
-		/*上拉加载的回调*/
 		upCallback(page) {
-			// mescroll.setPageSize(6)
-			var city = uni.getStorageSync('city_id');
-			// console.log('上拉刷新数据', city)
-			let pageNum = page.num; // 页码, 默认从1开始
-			console.log('pagem=num----', pageNum);
-			let pageSize = page.size; // 页长, 默认每页10条
-			var that = this;
-			if (this.errCode == 1) {
-				// 获取热门景点第一位
-				uni.request({
-					url: this.globalUrl + '/city/hot',
-					method: 'GET',
-					success: res => {
-						uni.request({
-							url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
-							header: {
-								Authorization: uni.getStorageSync('Authorization')
-							},
-							success: data => {
-								console.log('data', data);
-								// 接口返回的当前页数据列表 (数组)
-								let curPageData = data.data.data.list;
+			let pageNum = page.num;
 
-								console.log('curPageData', curPageData);
-								// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-								let curPageLen = curPageData.length;
-								console.log('curPageLen', curPageLen);
-								// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-								let totalPage = data.data.data.total / pageSize;
-								// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-								let totalSize = data.data.data.total;
-								console.log('totalSize', totalSize);
-								// 接口返回的是否有下一页 (true/false)
-								// let hasNext = data.data.data.list;
-
-								//设置列表数据
-								if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
-								this.list = this.list.concat(curPageData); //追加新数据
-								console.log('list-', this.list);
-								// 请求成功,隐藏加载状态
-								//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-								this.mescroll.endByPage(curPageLen, totalPage);
-
-								//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-								// this.mescroll.endBySize(curPageLen, totalSize);
-
-								//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-								//this.mescroll.endSuccess(curPageLen, hasNext);
-
-								//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-								//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-								//如果传了hasNext,则翻到第二页即可显示无更多数据.
-								//this.mescroll.endSuccess(curPageLen);
-
-								// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-								// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-								// setTimeout(() => {
-								// 	this.mescroll.endSuccess(curPageLen)
-								// }, 20)
-							},
-							fail: () => {
-								//  请求失败,隐藏加载状态
-								this.mescroll.endErr();
-							}
-						});
+			let pageSize = page.size;
+			uni.request({
+				url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: data => {
+					if(data.data.code ==0 ){
+						let curPageData = data.data.data.list;
+									
+						console.log('curPageData', curPageData);
+						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+						let curPageLen = curPageData.length ? curPageData.length : 0;
+						console.log('curPageLen', curPageLen);
+						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+						let totalPage = data.data.data.total / pageSize;
+									
+						let totalSize = data.data.data.total;
+						console.log('totalSize', totalSize);
+									
+						if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
+						this.list = this.list.concat(curPageData); //追加新数据
+									
+						this.mescroll.endByPage(curPageLen, totalPage);
+					}else{
+						this.mescroll.endErr();
 					}
-				});
-			} else {
-				// 地址未定义
-				if (city.code != 0) {
-					uni.request({
-						url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
-						success: data => {
-							console.log('data', data);
-							// 接口返回的当前页数据列表 (数组)
-							let curPageData = data.data.data.list;
-							console.log('curPageData', curPageData);
-							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-							let curPageLen = curPageData.length;
-							console.log('curPageLen', curPageLen);
-							// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-							let totalPage = data.data.data.total / pageSize;
-							// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-							let totalSize = data.data.data.total;
-							console.log('totalSize', totalSize);
-							// 接口返回的是否有下一页 (true/false)
-							// let hasNext = data.data.data.list;
-
-							//设置列表数据
-							if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
-							this.list = this.list.concat(curPageData); //追加新数据
-							console.log('list-', this.list);
-							// 请求成功,隐藏加载状态
-							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-							this.mescroll.endByPage(curPageLen, totalPage);
-
-							//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-							// this.mescroll.endBySize(curPageLen, totalSize);
-
-							//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-							//this.mescroll.endSuccess(curPageLen, hasNext);
-
-							//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-							//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-							//如果传了hasNext,则翻到第二页即可显示无更多数据.
-							//this.mescroll.endSuccess(curPageLen);
-
-							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-							// setTimeout(() => {
-							// 	this.mescroll.endSuccess(curPageLen)
-							// }, 20)
-						},
-						fail: () => {
-							//  请求失败,隐藏加载状态
-							this.mescroll.endErr();
-						}
-					});
-				} else {
-					if (that.item == undefined || null) {
-						uni.request({
-							url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
-							header: {
-								Authorization: uni.getStorageSync('Authorization')
-							},
-							success: data => {
-								console.log('data', data);
-								// 接口返回的当前页数据列表 (数组)
-								let curPageData = data.data.data.list;
-
-								console.log('curPageData', curPageData);
-								// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-								let curPageLen = curPageData.length;
-								console.log('curPageLen', curPageLen);
-								// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-								let totalPage = data.data.data.total / pageSize;
-								// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-								let totalSize = data.data.data.total;
-								console.log('totalSize', totalSize);
-								// 接口返回的是否有下一页 (true/false)
-								// let hasNext = data.data.data.list;
-
-								//设置列表数据
-								if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
-								this.list = this.list.concat(curPageData); //追加新数据
-								console.log('list-', this.list);
-								// 请求成功,隐藏加载状态
-								//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-								this.mescroll.endByPage(curPageLen, totalPage);
-
-								//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-								// this.mescroll.endBySize(curPageLen, totalSize);
-
-								//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-								//this.mescroll.endSuccess(curPageLen, hasNext);
-
-								//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-								//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-								//如果传了hasNext,则翻到第二页即可显示无更多数据.
-								//this.mescroll.endSuccess(curPageLen);
-
-								// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-								// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-								// setTimeout(() => {
-								// 	this.mescroll.endSuccess(curPageLen)
-								// }, 20)
-							},
-							fail: () => {
-								//  请求失败,隐藏加载状态
-								this.mescroll.endErr();
-							}
-						});
-					} else {
-						uni.request({
-							url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
-							header: {
-								Authorization: uni.getStorageSync('Authorization')
-							},
-							success: data => {
-								console.log('data', data);
-								// 接口返回的当前页数据列表 (数组)
-								let curPageData = data.data.data.list;
-								console.log('curPageData', curPageData);
-								// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-								let curPageLen = curPageData.length;
-								console.log('curPageLen', curPageLen);
-								// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-								let totalPage = data.data.data.total / pageSize;
-								// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-								let totalSize = data.data.data.total;
-								console.log('totalSize', totalSize);
-								// 接口返回的是否有下一页 (true/false)
-								// let hasNext = data.data.data.list;
-
-								//设置列表数据
-								if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
-								this.list = this.list.concat(curPageData); //追加新数据
-								console.log('list-', this.list);
-								// 请求成功,隐藏加载状态
-								//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-								this.mescroll.endByPage(curPageLen, totalPage);
-
-								//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-								// this.mescroll.endBySize(curPageLen, totalSize);
-
-								//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-								//this.mescroll.endSuccess(curPageLen, hasNext);
-
-								//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-								//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-								//如果传了hasNext,则翻到第二页即可显示无更多数据.
-								//this.mescroll.endSuccess(curPageLen);
-
-								// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-								// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-								// setTimeout(() => {
-								// 	this.mescroll.endSuccess(curPageLen)
-								// }, 20)
-							},
-							fail: () => {
-								//  请求失败,隐藏加载状态
-								this.mescroll.endErr();
-							}
-						});
-					}
+					
+				},
+				fail: () => {
+					//  请求失败,隐藏加载状态
+					this.mescroll.endErr();
 				}
-			}
-			// 此处仍可以继续写其他接口请求...
-			// 调用其他方法...
+			});
 		}
 	}
-	//事件监听滚动条
+	
 };
 </script>
 
-<style >
+<style>
 .left,
 .right {
-	display: inline-block;
 	margin-left: 10rpx;
-	vertical-align: top;
 	width: 48%;
 }
 /* 头条小程序组件内不能引入字体 */
@@ -1195,11 +852,11 @@ view {
 	width: 100%;
 	height: 100%;
 }
-.itemUrl{
+.itemUrl {
 	width: 100%;
 	height: 100%;
 }
-.swiperImg{
+.swiperImg {
 	width: 100%;
 	height: 100%;
 }
@@ -1222,12 +879,12 @@ view {
 	font-size: 14px;
 	background-color: #aa557f;
 }
-.mescroll{
+.mescroll {
 	position: relative;
 	top: -184rpx;
 	left: 0;
 }
-.mescroll1{
+.mescroll1 {
 	position: relative;
 	top: 0;
 	left: 0;
@@ -1280,16 +937,15 @@ view {
 		line-height: inherit;
 	} */
 
-	
-
 	/* #endif */
 	/* flex-direction: row;
 	align-items: center;
 	justify-content: flex-start; */
 	/* width: 160rpx;
  */
-/* 	margin-left: 28rpx;
- */}
+	/* 	margin-left: 28rpx;
+ */
+}
 
 .input-view {
 	/* #ifndef APP-PLUS-NVUE */
@@ -1331,7 +987,7 @@ view {
 }
 
 .cus-sty {
-	background-color: #F8F8F8;
+	background-color: #f8f8f8;
 }
 
 /* 热门景点 */
@@ -1405,7 +1061,7 @@ view {
 	height: 100%;
 	border-radius: 16rpx;
 }
-.dqwzBox{
+.dqwzBox {
 	position: absolute;
 	text-align: center;
 }
@@ -1507,7 +1163,7 @@ view {
 	height: 100%;
 	border-radius: 16rpx;
 }
-.hotCityText{
+.hotCityText {
 	width: 140rpx;
 	height: 32rpx;
 	font-size: 32rpx;
@@ -1519,10 +1175,10 @@ view {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	margin-left:-70rpx;
-	margin-top:-16rpx;
+	margin-left: -70rpx;
+	margin-top: -16rpx;
 }
-.hotCityText1{
+.hotCityText1 {
 	width: 140rpx;
 	height: 32rpx;
 	font-size: 32rpx;
@@ -1534,8 +1190,8 @@ view {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	margin-left:-70rpx;
-	margin-top:-16rpx;
+	margin-left: -70rpx;
+	margin-top: -16rpx;
 }
 .cityRank {
 	margin-top: 28rpx;
@@ -1576,7 +1232,7 @@ view {
 }
 
 .demo-warter {
-	width: 360rpx;
+	width: 100%;
 	margin-top: 0;
 	margin-right: 10rpx;
 	margin-bottom: 16rpx;
@@ -1584,16 +1240,15 @@ view {
 	/* position: relative; */
 	background-color: #ffffff;
 }
-.imgBox{
+.imgBox {
+	position: relative;
+	
+}
+/* .demo-top {
 	position: relative;
 }
-.demo-top {
-	position: relative;
-}
-
+ */
 .demoImage {
-	min-height: 300rpx;
-	max-height: 460rpx;
 	width: 100%;
 	border-radius: 8rpx 8rpx 0 0;
 	
