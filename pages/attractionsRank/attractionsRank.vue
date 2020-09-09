@@ -663,7 +663,7 @@
 			color: #FFFFFF;
 			line-height: 64rpx;
 			letter-spacing: 2rpx;
-
+			font-weight: 500;
 			margin: 0 6rpx;
 		}
 

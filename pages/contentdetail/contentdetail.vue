@@ -14,10 +14,10 @@
 		<view class="" v-show="articleList != null">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap">
-				<view class="page-section-spacing" :style="swiperHeight">
+				<view class="page-section-spacing" >
 					<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
 						<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
-							<image class="itemImg" mode="aspectFit" :src="item"></image>
+							<image class="itemImg" mode="widthFix" :src="item"></image>
 						</swiper-item>
 					</swiper>
 					<view class="imageCount">{{ current + 1 }}/{{ articleList.data.images.length }}</view>
@@ -33,7 +33,7 @@
 					<view class="userMse-r">
 						<view class="userNikename">{{ articleList.data.author_name }}</view>
 						<view class="adress">
-							<image src="../../static/images/Icon／Map.svg" mode="" class="adreessIcon"></image>
+							<image src="../../static/images/iconMap.svg" mode="" class="adreessIcon"></image>
 							<view class="adressText" @click="map()">{{ articleList.data.location }}</view>
 						</view>
 					</view>
@@ -224,7 +224,7 @@ export default {
 							src: that.articleList.data.images[0],
 							success: function (image) {
 								console.log('图片高度--',image.height);
-								that.swiperHeight = image.height / 2+  'rpx'
+								that.swiperHeight.height = image.height / 2 +  'rpx'
 								console.log('设置图片高度',that.swiperHeight.height)
 							}
 						});
@@ -235,7 +235,7 @@ export default {
 							src: that.articleList.data.images[0],
 							success: function (image) {
 								console.log('图片高度--',image.height);
-								that.swiperHeight = image.height / 2+  'rpx'
+								that.swiperHeight.height = image.height / 2+  'rpx'
 								console.log('设置图片高度',that.swiperHeight.height)
 							}
 						});
