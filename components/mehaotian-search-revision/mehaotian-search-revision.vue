@@ -180,7 +180,7 @@ export default {
 			align-items: center;
 			line-height: 72rpx;
 			&.center {
-				justify-content: center;
+				justify-content: flex-start;
 			}
 			.input {
 				width: 380rpx;

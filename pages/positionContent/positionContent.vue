@@ -44,8 +44,8 @@
 							<view class="tip">{{attDetail.data.city}}</view>
 						</view>
 					</view>
-					<view class="shareBox">
-						<image src="../../static/images/iconShare.svg" mode="" @click="share"></image>
+					<view class="shareBox" @click="share" v-show="serviceProvider !='toutiao'">
+						<image src="../../static/images/iconShare.svg" mode="" ></image>
 					</view>
 				</view>
 				<view class="contentRank" @click="toRank()">
@@ -229,8 +229,8 @@ export default {
 			current: 0,
 			list: [],
 			isShow: true,
-			attDetail:null
-			
+			attDetail:null,
+			serviceProvider: ''
 		};
 	},
 	created() {
@@ -243,6 +243,27 @@ export default {
 		})
 		this.getAttDetail(e)
 		uni.hideLoading();
+	},
+	mounted() {
+		uni.getProvider({
+			service: 'oauth',
+			success: res => {
+			
+				if(res.errMsg == 'getProvider:ok'){
+					this.serviceProvider = res.provider[0]
+					if(this.serviceProvider == 'toutiao'){
+						uni.showShareMenu({
+							
+						})
+					}
+				}else{
+					uni.showToast({
+						title: '获取提供商失败',
+						icon: 'none'
+					})
+				}
+			}
+		});
 	},
 	methods: {
 		getAttDetail(e){
@@ -489,12 +510,13 @@ export default {
 		.rankimgbox{
 			// margin-top: 12rpx;
 			margin-left: 4rpx;
+			height: 100%;
 			float: right;
-			width: 16rpx;
-			height: 16rpx;
+			display: flex;
+			align-items: center;
 			.rankImg{
-				width: 100%;
-				height: 100%;
+				width: 16rpx;
+				height: 16rpx;
 			}
 		}
 		

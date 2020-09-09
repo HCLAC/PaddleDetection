@@ -719,11 +719,7 @@ export default {
 		},
 		/*上拉加载的回调*/
 		upCallback(page) {
-			// mescroll.setPageSize(6)
-			var city = uni.getStorageSync('city_id');
-			// console.log('上拉刷新数据', city)
-			let pageNum = page.num; // 页码, 默认从1开始
-			console.log('pagem=num----', pageNum);
+			
 			let pageSize = page.size; // 页长, 默认每页10条
 			var that = this;
 			if (that.item == null) {
