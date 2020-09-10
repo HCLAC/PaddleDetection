@@ -115,74 +115,74 @@
 												<view class="title">{{ pos.name }}</view>
 												<view class="rateBox">
 													<view class="rateStart" v-if="pos.rate == 5">
-														<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(4).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star4.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star4.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star4.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star4.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star4.svg" mode=""></image>
 													</view>
 													<view class="rateStart" v-if="pos.rate == 4">
-														<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
 													<view class="rateStart" v-if="pos.rate == 3">
-														<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
 													<view class="rateStart" v-if="pos.rate == 2">
-														<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star1.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star1.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
 													<view class="rateStart" v-if="pos.rate == 1">
-														<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star11.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
 													<view class="rateStart" v-if="pos.rate == 4.5">
-														<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(3).svg" mode=""></image>
-														<image src="../../static/images/star_svg/starCopy1(3).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+														<image src="../../static/images/star_svg/starCopy13.svg" mode=""></image>
 													</view>
 													<view class="rateStart" v-if="pos.rate == 3.5">
-														<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(2).svg" mode=""></image>
-														<image src="../../static/images/star_svg/starCopy1(2).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+														<image src="../../static/images/star_svg/starCopy12.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
 													<view class="rateStart" v-if="pos.rate == 2.5">
-														<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(1).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star1.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 														<image src="../../static/images/star_svg/starCopy1(1).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
 													<view class="rateStart" v-if="pos.rate == 1.5">
-														<image src="../../static/images/star_svg/star-1.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star11.svg" mode=""></image>
 														<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
 													<view class="rateStart" v-if="pos.rate == 0.5">
 														<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
-														<image src="../../static/images/star_svg/star-1(5).svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
 													<view class="rate">{{ pos.rate }} 星</view>
 												</view>
@@ -221,7 +221,7 @@
 						<image v-show="lineContent.fav" class="favBtn" src="../../static/images/fav-actived.svg"></image>
 						<view class="favNum">{{ lineContent.fav_count }}</view>
 					</view> -->
-					<view class="share" v-show="serviceProvider !='toutiao'" @click="share"><image src="../../static/images/fenxiang.svg"></image></view>
+					<view><view class="share" v-if="serviceProvider !='toutiao'"  @click="share"><image src="../../static/images/fenxiang.svg"></image></view></view>
 					<view class=""><view class="loginButton" v-if="!hasLogin" @click="login">登录</view></view>
 				</view>
 			</view>
@@ -723,6 +723,8 @@ export default {
 	display: flex;
 	align-items: center;
 	margin-top: 16rpx;
+	padding:0 56rpx;
+	justify-content: space-between;
 	font-size: 24rpx;
 	font-family: PingFangSC-Regular, PingFang SC;
 	font-weight: 400;
@@ -742,7 +744,7 @@ export default {
 	line-height: 68rpx;
 	border: none;
 	text-align: center;
-	margin-left: 456rpx;
+	
 }
 
 .like {
@@ -771,7 +773,7 @@ export default {
 
 .share {
 	display: flex;
-	margin-left: 56rpx;
+	
 	align-items: center;
 }
 
