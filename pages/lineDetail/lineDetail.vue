@@ -195,12 +195,8 @@
 						</view>
 					</view>
 				</u-time-line>
-				<view class="serverInfo" v-show="tabCurrent != 1">
-					<view class="title">服务说明</view>
-					<view class="content">{{ lineContent.description }}</view>
-					<view class="phone" @click="tell" ><image src="../../static/images/serverCall.svg"></image></view>
-				</view>
-				<view class="serverInfo" v-show="tabCurrent == 1">
+				
+				<view class="serverInfo" >
 					<view class="title">服务说明</view>
 					<view class="content">{{ lineContent.description }}</view>
 					<view class="phone" @click="tell" ><image src="../../static/images/serverCall.svg"></image></view>

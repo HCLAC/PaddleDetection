@@ -81,7 +81,7 @@
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<view class="imgBox">
-											<image class="demoImage" :src="item.image" :index="index" :lazy-load="true" mode="widthFix"></image>
+											<image class="demoImage" :src="item.image" :index="index"  mode="widthFix"></image>
 											<view class="adress">
 												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 												<view class="adressText">{{ item.location }}</view>
@@ -116,7 +116,7 @@
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<view class="imgBox">
-											<image class="demoImage" :src="item.image" :index="index" :lazy-load="true" mode="widthFix"></image>
+											<image class="demoImage" :src="item.image" :index="index"  mode="widthFix"></image>
 											<view class="adress">
 												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 												<view class="adressText">{{ item.location }}</view>
@@ -240,7 +240,7 @@
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<view class="imgBox">
-											<image class="demoImage" :src="item.image" :index="index" :lazy-load="true" mode="widthFix"></image>
+											<image class="demoImage" :src="item.image" :index="index"  mode="widthFix"></image>
 											<view class="adress">
 												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 												<view class="adressText">{{ item.location }}</view>
@@ -275,7 +275,7 @@
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<view class="imgBox">
-											<image class="demoImage" :src="item.image" :index="index" :lazy-load="true" mode="widthFix"></image>
+											<image class="demoImage" :src="item.image" :index="index" mode="widthFix"></image>
 											<view class="adress">
 												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 
@@ -352,12 +352,13 @@ export default {
 			bannerList: null,
 			indicatorDots: true,
 			areaList: [],
-			url: ''
+			url: '',
+			e:null
 		};
 	},
 
 	onShow() {
-		this.getItem();
+		// this.getItem();
 	},
 
 	onLoad() {
@@ -523,25 +524,6 @@ export default {
 					this.dqdwText = '正在定位...';
 					setTimeout(() => {
 						this.dqdwText = '未获取到定位';
-						uni.showModal({
-							// title: '提示',
-							content: '是否前往开启定位服务',
-							success: res => {
-								if (res.confirm) {
-									console.log('用户点击确定');
-
-									uni.openSetting({
-										success: res => {
-											console.log(res.authSetting);
-											this.getAdress();
-											this.dqdwText = '当前位置';
-										}
-									});
-								} else if (res.cancel) {
-									console.log('用户点击取消');
-								}
-							}
-						});
 					}, 3000);
 
 					uni.request({
@@ -715,21 +697,50 @@ export default {
 			});
 		},
 		toProvinces(e) {
+			var that = this
+			 this.e = e
 			console.log('--', e);
-			
-			if (e.state_id == 0) {
-				uni.showToast({
-					title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
-					icon: 'none',
-					duration: 3000
-				});
-			} else {
-				var e = JSON.stringify(e);
-				uni.navigateTo({
-					url: '/pages/provinces/provinces?id=' + e
-				});
-			}
-			
+			uni.getSetting({
+			   success(res) {
+			      console.log(res.authSetting)
+				  console.log(res.authSetting['scope.userLocation'])
+				  if(res.authSetting['scope.userLocation'] == false){
+				  	uni.showModal({
+				  		// title: '提示',
+				  		content: '是否前往开启定位服务',
+				  		success: res => {
+				  			if (res.confirm) {
+				  				console.log('用户点击确定');
+				  	
+				  				uni.openSetting({
+				  					success: res => {
+				  						console.log(res.authSetting);
+				  						that.getAdress();
+				  						that.dqdwText = '当前位置';
+				  					}
+				  				});
+				  			} else if (res.cancel) {
+				  				console.log('用户点击取消');
+				  			}
+				  		}
+				  	});
+				  }else{
+					 if (that.e.state_id == 0) {
+						uni.showToast({
+							title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
+							icon: 'none',
+							duration: 3000
+						});
+					 } else {
+						var e = JSON.stringify(that.e);
+						uni.navigateTo({
+							url: '/pages/provinces/provinces?id=' + e
+						});
+					 } 
+				  }
+				  
+			   }
+			})
 			
 		},
 		confirm() {
@@ -1237,17 +1248,19 @@ view {
 	/* position: relative; */
 	background-color: #ffffff;
 }
-.imgBox {
-	position: relative;
-	
-}
+
 /* .demo-top {
 	position: relative;
 }
  */
+.imgBox {
+	position: relative;
+	
+}
 .demoImage {
 	width: 100%;
-	height: 100%;
+	min-height: 300rpx;
+	max-height: 460rpx;
 	border-radius: 8rpx 8rpx 0 0;
 	
 }
