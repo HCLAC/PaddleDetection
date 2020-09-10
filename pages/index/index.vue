@@ -519,13 +519,7 @@ export default {
 				// 未开启定位
 				fail: res => {
 					console.log('未开启定位', res);
-					// uni.setStorageSync('errCode',res.errCode)
 					this.errCode = 1;
-					// uni.showToast({
-					// 	title: '未获取定位权限，将为您展示最热门城市信息',
-					// 	icon: 'none',
-					// 	duration: 2000
-					// });
 					this.dqdwText = '正在定位...';
 					setTimeout(() => {
 						this.dqdwText = '未获取到定位';
@@ -722,6 +716,7 @@ export default {
 		},
 		toProvinces(e) {
 			console.log('--', e);
+			
 			if (e.state_id == 0) {
 				uni.showToast({
 					title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
@@ -734,6 +729,8 @@ export default {
 					url: '/pages/provinces/provinces?id=' + e
 				});
 			}
+			
+			
 		},
 		confirm() {
 			// uni.showToast({
@@ -1250,6 +1247,7 @@ view {
  */
 .demoImage {
 	width: 100%;
+	height: 100%;
 	border-radius: 8rpx 8rpx 0 0;
 	
 }
@@ -1257,7 +1255,7 @@ view {
 .adress {
 	position: absolute;
 	left: 0;
-	bottom: 11rpx;
+	bottom: 8rpx;
 	display: flex;
 	align-items: center;
 	max-width: 240rpx;

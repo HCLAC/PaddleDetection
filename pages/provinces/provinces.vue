@@ -719,7 +719,7 @@ export default {
 		},
 		/*上拉加载的回调*/
 		upCallback(page) {
-			
+			let pageNum = page.num;
 			let pageSize = page.size; // 页长, 默认每页10条
 			var that = this;
 			if (that.item == null) {
