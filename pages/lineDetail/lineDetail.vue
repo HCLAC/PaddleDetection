@@ -196,7 +196,7 @@
 					</view>
 				</u-time-line>
 				
-				<view class="serverInfo" >
+				<view class="serverInfo" v-if="lineContent.content" >
 					<view class="title">服务说明</view>
 					<view class="content">{{ lineContent.description }}</view>
 					<view class="phone" @click="tell" ><image src="../../static/images/serverCall.svg"></image></view>

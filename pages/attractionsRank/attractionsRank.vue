@@ -802,6 +802,7 @@
 		width: 750rpx;
 		height: 92rpx;
 		background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+		opacity: 0.8;
 		position: absolute;
 		bottom: 0;
 		left: 0;
@@ -903,7 +904,7 @@
 		font-weight: 500;
 		color: #303133;
 		line-height: 32rpx;
-		margin-bottom: 20rpx;
+		margin-bottom: 12rpx;
 	}
 
 	.contentText {

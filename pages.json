@@ -77,10 +77,7 @@
 		{
          "path" : "pages/search/search",
             "style" : {
-				"navigationStyle":"custom",
-				"mp-baidu":{
-					"disableScroll":true
-				}
+				"navigationStyle":"custom"
 				
 			}
         }
