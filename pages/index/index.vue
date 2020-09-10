@@ -331,6 +331,7 @@ export default {
 			background: {
 				backgroundColor: ''
 			},
+			timer: '',
 			cityName: '',
 			dqdwText: '当前位置',
 			province: '',
@@ -366,8 +367,11 @@ export default {
 			title: '加载中',
 			mask: true,
 			success: () => {
+				
 				if (this.item == undefined || null) {
-					this.getBanner(), this.getAdress();
+				
+					this.getBanner();
+					 this.getAdress();
 				}
 			}
 		});
@@ -438,18 +442,16 @@ export default {
 					});
 			}
 		},
-		scrollTop(e) {
-			// console.log(e)
-			if (e.detail.scrollTop != 0) {
-				// console.log(e.detail.scrollTop,1111111111)
-			}
-		},
+		scrollTop(e) {},
 		// 获取当前地理位置
 		getAdress() {
+				
+			
 			var that = this;
 			uni.getLocation({
 				type: 'wgs84',
 				success: res => {
+					console.log(111)
 					if (res.city && res.province) {
 						this.cityName = res.city.substr(0, res.city.length - 1);
 						this.city = res.city;
@@ -517,9 +519,12 @@ export default {
 						});
 					}
 				},
+				
 				// 未开启定位
-				fail: res => {
-					console.log('未开启定位', res);
+				fail: error => {
+					console.log(111)
+					console.log('未开启定位', error);
+					// uni.setStorageSync('errCode',res.errCode)
 					this.errCode = 1;
 					this.dqdwText = '正在定位...';
 					setTimeout(() => {
@@ -755,9 +760,10 @@ export default {
 		downCallback() {
 			this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
 		},
-		upCallback(page) {
+		upCallback(page) {	
+			console.log(122132131213)
 			let pageNum = page.num;
-
+			
 			let pageSize = page.size;
 			uni.request({
 				url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
@@ -765,36 +771,34 @@ export default {
 					Authorization: uni.getStorageSync('Authorization')
 				},
 				success: data => {
-					if(data.data.code ==0 ){
+					if (data.data.code == 0) {
 						let curPageData = data.data.data.list;
-									
+			
 						console.log('curPageData', curPageData);
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 						let curPageLen = curPageData.length ? curPageData.length : 0;
 						console.log('curPageLen', curPageLen);
 						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
 						let totalPage = data.data.data.total / pageSize;
-									
+			
 						let totalSize = data.data.data.total;
 						console.log('totalSize', totalSize);
-									
+			
 						if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
 						this.list = this.list.concat(curPageData); //追加新数据
-									
+			
 						this.mescroll.endByPage(curPageLen, totalPage);
-					}else{
+					} else {
 						this.mescroll.endErr();
 					}
-					
 				},
 				fail: () => {
 					//  请求失败,隐藏加载状态
 					this.mescroll.endErr();
 				}
 			});
-		}
+		},
 	}
-	
 };
 </script>
 
@@ -1248,7 +1252,9 @@ view {
 	/* position: relative; */
 	background-color: #ffffff;
 }
-
+.imgBox {
+	position: relative;
+}
 /* .demo-top {
 	position: relative;
 }
@@ -1262,7 +1268,6 @@ view {
 	min-height: 300rpx;
 	max-height: 460rpx;
 	border-radius: 8rpx 8rpx 0 0;
-	
 }
 
 .adress {

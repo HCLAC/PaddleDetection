@@ -11,7 +11,7 @@
 			</uni-nav-bar>
 		</view>
 		
-		<view class="" v-show="articleList != null">
+		<view class="" v-if="swiperHeight">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap">
 				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight}">
@@ -64,17 +64,19 @@
 				<view class="line"></view>
 				<!-- 登录 -->
 				<view class="contentBottom savepadding">
-					<view class="like" @click="clickLike">
-						<image class="likeBtn" src="../../static/images/attheart.svg" v-if="articleList.data.liked == 0"></image>
-						<image class="likeBtn" src="../../static/images/heart-actived.svg" v-if="articleList.data.liked == 1"></image>
-						<view class="likeNum" v-model="likemessage">{{ articleList.data.like_count }}</view>
+					<view style="display: flex;">
+						<view class="like" @click="clickLike">
+							<image class="likeBtn" src="../../static/images/attheart.svg" v-if="articleList.data.liked == 0"></image>
+							<image class="likeBtn" src="../../static/images/heart-actived.svg" v-if="articleList.data.liked == 1"></image>
+							<view class="likeNum" v-model="likemessage">{{ articleList.data.like_count }}</view>
+						</view>
+						<view class="fav" @click="clickFav">
+							<image class="favBtn" src="../../static/images/shouchang.svg" v-if="articleList.data.fav == 0"></image>
+							<image class="favBtn" src="../../static/images/fav-actived.svg" v-if="articleList.data.fav == 1"></image>
+							<view class="favNum">{{ articleList.data.fav_count }}</view>
+						</view>
+						<view class="share" v-if="serviceProvider !='toutiao'" @click="share"><image src="../../static/images/fenxiang.svg"></image></view>
 					</view>
-					<view class="fav" @click="clickFav">
-						<image class="favBtn" src="../../static/images/shouchang.svg" v-if="articleList.data.fav == 0"></image>
-						<image class="favBtn" src="../../static/images/fav-actived.svg" v-if="articleList.data.fav == 1"></image>
-						<view class="favNum">{{ articleList.data.fav_count }}</view>
-					</view>
-					<view class="share" v-show="serviceProvider !='toutiao'" @click="share"><image src="../../static/images/fenxiang.svg"></image></view>
 					<view class=""><view class="loginButton" @click="login" v-if="flag">登录</view></view>
 				</view>
 			</view>
@@ -230,23 +232,37 @@ mounted() {
 						// let strId =  newContent.substring(strIndex,1)
 
 						let strId = res.data.data.content[strIndex + 8];
-						let numStr = await  that.getTemplate(strId);
-							let wechat_id = numStr.wechat_id
-							let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
+						let resCode = await  that.getTemplate(strId);
+						if(resCode.data.code== 0 ){
+							let wechat_id = resCode.data.data.wechat_id
+								let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
+								
+							res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
+							// console.log(res.data.data.content);
 							
-						res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
-						// console.log(res.data.data.content);
-						
-						that.articleList = res.data;
-						uni.getImageInfo({
-							src: that.articleList.data.images[0],
-							success: function (image) {
-								console.log('图片高度--',image.height);
-								let  caseRes = image.width / image.height
-								that.swiperHeight =  100 / caseRes + 'vw'
-				
-							}
-						});
+							that.articleList = res.data;
+							uni.getImageInfo({
+								src: that.articleList.data.images[0],
+								success: function (image) {
+									console.log('图片高度--',image.height);
+									let  caseRes = image.width / image.height
+									that.swiperHeight =  100 / caseRes + 'vw'
+											
+								}
+							});
+						}else{
+							that.articleList = res.data;
+							uni.getImageInfo({
+								src: that.articleList.data.images[0],
+								success: function (image) {
+									console.log('图片高度--',image.height);
+									let  caseRes = image.width / image.height
+									that.swiperHeight =  100 / caseRes + 'vw'
+											
+								}
+							});
+						}
+							
 
 					}else{
 						that.articleList = res.data;
@@ -323,14 +339,36 @@ mounted() {
 								// let strId =  newContent.substring(strIndex,1)
 							
 								let strId = res.data.data.content[strIndex + 8];
-								let numStr = await  that.getTemplate(strId);
-									let wechat_id = numStr.wechat_id
-									let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
+								let resCode = await  that.getTemplate(strId);
+								if(resCode.data.code== 0 ){
+									let wechat_id = resCode.data.data.wechat_id
+										let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
+										
+									res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
+									// console.log(res.data.data.content);
 									
-								res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
-								console.log(res.data.data.content);
-								
-								that.articleList = res.data;
+									that.articleList = res.data;
+									uni.getImageInfo({
+										src: that.articleList.data.images[0],
+										success: function (image) {
+											console.log('图片高度--',image.height);
+											let  caseRes = image.width / image.height
+											that.swiperHeight =  100 / caseRes + 'vw'
+													
+										}
+									});
+								}else{
+									that.articleList = res.data;
+									uni.getImageInfo({
+										src: that.articleList.data.images[0],
+										success: function (image) {
+											console.log('图片高度--',image.height);
+											let  caseRes = image.width / image.height
+											that.swiperHeight =  100 / caseRes + 'vw'
+													
+										}
+									});
+								}
 							
 							}else{
 								that.articleList = res.data;
@@ -393,18 +431,48 @@ mounted() {
 							if (strIndex != -1) {
 								// let strId =  newContent.substring(strIndex,1)
 							let strId = res.data.data.content[strIndex + 8];
-							let numStr = await  that.getTemplate(strId);
-								let wechat_id = numStr.wechat_id
-								let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
+							let resCode = await  that.getTemplate(strId);
+							if(resCode.data.code== 0 ){
+								let wechat_id = resCode.data.data.wechat_id
+									let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
+									
+								res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
+								// console.log(res.data.data.content);
 								
-							res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
-							// console.log(res.data.data.content);
-							
-							that.articleList = res.data;
+								that.articleList = res.data;
+								uni.getImageInfo({
+									src: that.articleList.data.images[0],
+									success: function (image) {
+										console.log('图片高度--',image.height);
+										let  caseRes = image.width / image.height
+										that.swiperHeight =  100 / caseRes + 'vw'
+												
+									}
+								});
+							}else{
+								that.articleList = res.data;
+								uni.getImageInfo({
+									src: that.articleList.data.images[0],
+									success: function (image) {
+										console.log('图片高度--',image.height);
+										let  caseRes = image.width / image.height
+										that.swiperHeight =  100 / caseRes + 'vw'
+												
+									}
+								});
+							}
 							
 							}else{
 								that.articleList = res.data;
-								// console.log('articleList', that.articleList);
+								uni.getImageInfo({
+									src: that.articleList.data.images[0],
+									success: function (image) {
+										console.log('图片高度--',image.height);
+										let  caseRes = image.width / image.height
+										that.swiperHeight =  100 / caseRes + 'vw'
+												
+									}
+								});
 							}
 
 						}
@@ -414,7 +482,7 @@ mounted() {
 		},
 		getTemplate(id) {
 			if (id) {
-				return new Promise((reslove,reject)=>{
+				return new Promise((resolve,reject)=>{
 					uni.request({
 						// url:'article',
 						url: this.globalUrl+ '/marketing/unit',
@@ -428,15 +496,7 @@ mounted() {
 						},
 					
 						success: res => {
-							if (res.data.code == 0) {
-								// this.wechat_id = res.data.data.wechat_id;
-								reslove(res.data.data)
-							} else {
-								uni.showToast({
-									title: res.data.msg,
-									icon: 'none'
-								});
-							}
+							resolve(res)
 						},
 						fail: (error)=>{
 							reject(error)
@@ -819,6 +879,7 @@ mounted() {
 
 .contentBottom {
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
 	margin-top: 16rpx;
 	font-size: 24rpx;
@@ -840,7 +901,7 @@ mounted() {
 	line-height: 68rpx;
 	border: none;
 	text-align: center;
-	margin-left: 190rpx;
+	margin-right: 56rpx;
 }
 
 .like {

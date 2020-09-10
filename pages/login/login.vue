@@ -441,6 +441,7 @@ export default {
 	line-height: 30rpx;
 	display: flex;
 	margin-top: 76rpx;
+	justify-content: space-between;
 	align-items: center;
 }
 .is-input1 {
@@ -462,7 +463,6 @@ export default {
 	font-weight: 400;
 	color: rgba(0, 145, 255, 1);
 	line-height: 30rpx;
-	margin-left: 20rpx;
 	margin-right: 32rpx;
 }
 .loginButton .lb {
