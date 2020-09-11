@@ -825,15 +825,15 @@ export default {
 }
 .fixTabs {
 	position: fixed;
-	top: 135rpx;
+	top: 156rpx;
 	padding-left: 10rpx;
 	padding-bottom: 15rpx;
 	left: 0;
 	z-index: 1000;
 	width: 100%;
 	background: #ffffff;
-	border-bottom: 2rpx solid #eeeeee;
-	box-shadow: 0px 0px 12rpx 0rpx #eeeeee;
+	// border-bottom: 2rpx solid #eeeeee;
+	// box-shadow: 0px 0px 12rpx 0rpx #eeeeee;
 }
 .noFix {
 	padding-left: 10rpx;
