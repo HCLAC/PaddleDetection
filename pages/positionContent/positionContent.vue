@@ -489,14 +489,16 @@ export default {
 		display: flex;
 	}
 	.contentHeader {
-		height: 52rpx;
+		
 		display: flex;
 		justify-content: space-between;
 		.title {
+			height: 48rpx;
 			font-size: 48rpx;
 			font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 500;
 			color: rgba(48, 49, 51, 1);
+			line-height: 48rpx;
 		}
 	}
 	.contentRank{
@@ -568,7 +570,8 @@ export default {
 			font-weight: 400;
 			color: #fff;
 			height: 36rpx;
-			line-height: 36rpx;
+			display: flex;
+			align-items: center;
 		}
 	}
 	.rateBox {
