@@ -13,7 +13,7 @@
         <g>
             <path d="M8,0 L44,0 L44,0 L44,14 C44,18.418278 40.418278,22 36,22 L0,22 L0,22 L0,8 C-5.41083001e-16,3.581722 3.581722,8.11624501e-16 8,0 Z" id="矩形" fill="url(#linearGradient-1)"></path>
             <text id="TOP5" font-family="HelveticaNeue-Bold, Helvetica Neue" font-size="12" font-weight="bold" line-spacing="12" fill="#FFFFFF">
-                <tspan x="6" y="17">TOP5</tspan>
+                <tspan x="6" y="15">TOP5</tspan>
             </text>
         </g>
     </g>

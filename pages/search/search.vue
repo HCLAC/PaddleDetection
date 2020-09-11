@@ -531,8 +531,10 @@ export default {
 		//加载历史搜索,自动读取本地Storage
 		loadOldKeyword() {
 			let res = uni.getStorageSync('OldKeys')
+			console.log('---',res)
 			if(res){
-				this.oldKeywordList = JSON.parse(res) ;
+				this.oldKeywordList = JSON.parse(res) || JSON.parse(res.value) ;
+				console.log('oldkeywordlist--',this.oldKeywordList)
 			}else{
 				this.oldKeywordList = [] ;
 			}
