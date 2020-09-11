@@ -479,7 +479,7 @@ export default {
 					success: res => {
 						console.log('城市信息==', res);
 						(this.item = res.data.data),
-							(this.name = item1.name),
+							(this.name = this.name = res.data.data.name),
 							// 正在旅行
 							uni.request({
 								url: this.globalUrl + '/article/list',
@@ -535,7 +535,7 @@ export default {
 					},
 					success: res => {
 						console.log('城市信息==', res);
-						(this.item = res.data.data), (this.name = item1.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), (this.show = false);
+						(this.item = res.data.data), (this.name = this.name = res.data.data.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), (this.show = false);
 					}
 				});
 			}
