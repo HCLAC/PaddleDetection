@@ -423,7 +423,7 @@ export default {
 /* 轮播图 */
 .page-section-spacing {
 	position: relative;
-	height: 400rpx;
+	height: 440rpx;
 	width: 100%;
 }
 

@@ -323,6 +323,7 @@ export default {
 		this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), this.getCity();
 	},
 	methods: {
+		
 		// 文章瀑布流接口
 		getTour() {
 			uni.request({
@@ -362,14 +363,16 @@ export default {
 		},
 		// 天气接口
 		getWeather() {
+			
 			uni.request({
 				url: 'https://api.asilu.com/weather/',
 				data: {
 					city: this.item.name
 				},
-				success: res => {
+				success: (res) => {
 					console.log('天气--', res);
-					if (res.data.data == null) {
+					debugger
+					if (res.data.date == null) {
 						uni.request({
 							url: 'https://api.asilu.com/weather/',
 							data: {
