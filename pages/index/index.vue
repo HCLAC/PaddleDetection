@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view >
 		<!-- 自定义导航栏 -->
 		<u-navbar :is-back="false" :background="background" :is-fixed="true">
 			<view class="search-box" @click="confirm">
@@ -11,7 +11,7 @@
 		</u-navbar>
 
 		<!-- 内容 -->
-		<mescroll-body v-if="bannerList.length != 0" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-uni v-if="bannerList.length != 0" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部轮播图 -->
 			<view class="page-section " v-if="bannerList.length != 0">
 				<view class="page-section-spacing">
@@ -149,9 +149,9 @@
 					</view>
 				</view>
 			</view>
-		</mescroll-body>
+		</mescroll-uni>
 		<!-- 无banner时 -->
-		<mescroll-body v-if="bannerList.length == 0" class="mescroll1" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-uni v-if="bannerList.length == 0" class="mescroll1" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部轮播图 -->
 			<view class="page-section " v-if="bannerList.length != 0">
 				<view class="page-section-spacing">
@@ -309,7 +309,7 @@
 					</view>
 				</view>
 			</view>
-		</mescroll-body>
+		</mescroll-uni>
 	</view>
 </template>
 
@@ -331,7 +331,7 @@ export default {
 			background: {
 				backgroundColor: ''
 			},
-			timer: '',
+			firstTime: new Date().getTime(),
 			cityName: '',
 			dqdwText: '当前位置',
 			province: '',
@@ -365,7 +365,7 @@ export default {
 	onLoad() {
 		uni.showLoading({
 			title: '加载中',
-			mask: true,
+			
 			success: () => {
 				
 				if (this.item == undefined || null) {
@@ -420,12 +420,12 @@ export default {
 					// this.$refs.uWaterfall.clear()
 					uni.request({
 						url: this.globalUrl + '/article/list',
-						// url:'http://192.168.43.60:8299/article/list',
 						data: {
 							state_id: this.item.state_id,
 							city_id: this.item.city_id,
 							count: 6,
-							page: 1
+							page: 1,
+							first_time: new Date().getTime()
 						},
 						header: {
 							Authorization: uni.getStorageSync('Authorization')
@@ -551,7 +551,8 @@ export default {
 						url: this.globalUrl + '/article/list',
 						data: {
 							count: 6,
-							page: 1
+							page: 1,
+							first_time: new Date().getTime()	
 						},
 						header: {
 							Authorization: uni.getStorageSync('Authorization')
@@ -765,10 +766,16 @@ export default {
 			let pageNum = page.num;
 			
 			let pageSize = page.size;
+			if(pageNum == 1){
+				this.firstTime = new Date().getTime()
+			}
 			uni.request({
 				url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
 				header: {
 					Authorization: uni.getStorageSync('Authorization')
+				},
+				data: {
+					first_time: this.firstTime
 				},
 				success: data => {
 					if (data.data.code == 0) {

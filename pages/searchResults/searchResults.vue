@@ -107,25 +107,23 @@
 						<view class="rightIcon"><image src="../../static/images/more-right.svg" mode=""></image></view>
 					</view>
 					<view class="content">{{ site.description }}</view>
-					
-						<view class="smallSwiper">
-							<view v-for="(item, index) in site.image" :key="index" class="swiperItem"><image :src="item"></image></view>
-						</view>
-					
+
+					<view class="smallSwiper">
+						<view v-for="(item, index) in site.image" :key="index" class="swiperItem"><image :src="item"></image></view>
+					</view>
+
 					<view class="areaTag">景点</view>
 				</view>
 			</block>
 			<block v-if="route_list && route_list.length">
 				<veiw class="contentTitle">行程线路</veiw>
 				<view style="padding:20rpx 0 20rpx 20rpx; ">
-					<swiper class="swiper" display-multiple-items="2" :indicator-dots="false" :autoplay="false">
-						<swiper-item v-for="(item, index) in route_list" @click="getRoute(item.uuid)" :key="index">
-							<view class="swiperItem">
-								<image :src="item.image"></image>
-								<view class="title">{{ item.title }}</view>
-							</view>
-						</swiper-item>
-					</swiper>
+					<scroll-view scroll-x class="swiper">
+						<view class="swiperItem" v-for="(item, index) in route_list" @click="getRoute(item.uuid)" :key="index">
+							<image :src="item.image"></image>
+							<view class="title">{{ item.title }}</view>
+						</view>
+					</scroll-view>
 				</view>
 			</block>
 
@@ -140,11 +138,10 @@
 										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
 										<view class="adress">
 											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-										
+
 											<view class="adressText">{{ item.location }}</view>
 										</view>
 									</view>
-									
 								</view>
 								<view class="titleTip">
 									<view class="demo-tag">
@@ -175,11 +172,10 @@
 										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
 										<view class="adress">
 											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-										
+
 											<view class="adressText">{{ item.location }}</view>
 										</view>
 									</view>
-									
 								</view>
 								<view class="titleTip">
 									<view class="demo-tag">
@@ -473,12 +469,12 @@ export default {
 			overflow-x: auto;
 			display: flex;
 			justify-content: space-between;
-			
+
 			.swiperItem {
 				width: 30%;
 				margin-right: calc(10% / 3);
 				flex: none;
-				
+
 				image {
 					width: 100%;
 					height: 100rpx;
@@ -505,9 +501,11 @@ export default {
 	.swiper {
 		width: 100%;
 		height: 240rpx;
-
+		display: flex;
+		justify-content: space-between;
 		.swiperItem {
-			margin-right: 20rpx;
+			flex: none;
+			width: calc(100% / 2 - 20rpx);
 			image {
 				width: 100%;
 				border-radius: 16rpx;
@@ -636,7 +634,7 @@ export default {
 	background-color: #ffffff;
 	box-shadow: 0px 10rpx 10rpx 10rpx #f8f8f8;
 }
-.imgBox{
+.imgBox {
 	position: relative;
 	display: flex;
 	align-items: flex-end;

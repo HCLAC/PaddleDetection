@@ -192,6 +192,7 @@ MeScroll.prototype.touchstartEvent = function(e) {
 
 /* 列表touchmove事件 */
 MeScroll.prototype.touchmoveEvent = function(e) {
+
 	// #ifdef H5
 	window.isPreventDefault = false // 标记不需要阻止window事件
 	// #endif
@@ -273,6 +274,7 @@ MeScroll.prototype.touchmoveEvent = function(e) {
 	}
 
 	me.lastPoint = curPoint; // 记录本次移动的点
+
 }
 
 /* 列表touchend事件 */

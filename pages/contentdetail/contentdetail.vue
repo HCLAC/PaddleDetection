@@ -118,7 +118,6 @@ export default {
 		console.log('文章id====', e);
 		uni.showLoading({
 			title: '加载中',
-			mask: true,
 			success: () => {
 				this.flag = uni.getStorageSync('Authorization') ? false : true;
 				console.log(this.flag);
@@ -128,10 +127,6 @@ export default {
 				this.getArticleDetail(e);
 			}
 		});
-		
-		setTimeout(function () {
-		    uni.hideLoading();
-		}, 1000);
 	},
 	created() {
 		
@@ -201,17 +196,8 @@ mounted() {
 		},
 		// 获取文章详情
 		getArticleDetail(e) {
+			
 			var that = this;
-
-			// var token = uni.getStorageSync('Authorization')
-			// // var that.token = token
-			// console.log("token===>", token)
-			// if(token == null ){
-			// 	that.flag = true
-			// }
-			// else{
-			// 	that.flag = false
-			// }
 			uni.request({
 				// url:'article',
 				url: this.globalUrl + '/article',
@@ -223,6 +209,7 @@ mounted() {
 				},
 				success: async function(res) {
 					
+					 uni.hideLoading();
 					uni.setStorageSync('id', res.data);
 
 					let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
@@ -240,40 +227,58 @@ mounted() {
 							// console.log(res.data.data.content);
 							
 							that.articleList = res.data;
-							uni.getImageInfo({
-								src: that.articleList.data.images[0],
-								success: function (image) {
-									console.log('图片高度--',image.height);
-									let  caseRes = image.width / image.height
-									that.swiperHeight =  100 / caseRes + 'vw'
-											
-								}
-							});
+							that.$nextTick(()=>{
+								uni.getImageInfo({
+									src: that.articleList.data.images[0],
+									success: function (image) {
+										console.log('图片高度--',image.height);
+										let  caseRes = image.width / image.height
+										that.swiperHeight =  100 / caseRes + 'vw'			
+									},
+									fail: error=>{
+										console.log(1111,error)
+									}
+								});
+							})
+							
 						}else{
 							that.articleList = res.data;
-							uni.getImageInfo({
-								src: that.articleList.data.images[0],
-								success: function (image) {
-									console.log('图片高度--',image.height);
-									let  caseRes = image.width / image.height
-									that.swiperHeight =  100 / caseRes + 'vw'
-											
-								}
-							});
+							that.$nextTick(()=>{
+								uni.getImageInfo({
+									src: that.articleList.data.images[0],
+									success: function (image) {
+										console.log('图片高度--',image.height);
+										let  caseRes = image.width / image.height
+										that.swiperHeight =  100 / caseRes + 'vw'			
+									},
+									fail: error=>{
+										console.log(1111,error)
+									}
+								});
+							})
 						}
 							
 
 					}else{
 						that.articleList = res.data;
-						uni.getImageInfo({
-							src: that.articleList.data.images[0],
-							success: function (image) {
+						that.$nextTick(()=>{
+							uni.getImageInfo({
+								src: that.articleList.data.images[0],
+								success: function (image) {
+									console.log('图片高度--',image.height);
 									let  caseRes = image.width / image.height
-								that.swiperHeight =  100 / caseRes + 'vw'
-							}
-						});
+									that.swiperHeight =  100 / caseRes + 'vw'			
+								},
+								fail: error=>{
+									console.log(1111,error)
+								}
+							});
+						})
 					}
 					
+				},
+				fail: error=> {
+					uni.hideLoading()
 				}
 			});
 		},
@@ -422,9 +427,7 @@ mounted() {
 							Authorization: uni.getStorageSync('Authorization')
 						},
 						success: async function(res) {
-							console.log(res.data.data.fav, res.data.data.fav_count, res.data.data.uuid, 333333);
-							console.log('eeeeeeeeeeeeeeee', res);
-							console.log('文章详情====', res.data);
+							
 							uni.setStorageSync('id', res.data);
 							
 							let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
@@ -438,7 +441,6 @@ mounted() {
 									let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
 									
 								res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
-								// console.log(res.data.data.content);
 								
 								that.articleList = res.data;
 								uni.getImageInfo({

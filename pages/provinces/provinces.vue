@@ -159,7 +159,7 @@
 				</view>
 			</view>
 			<!-- 正在旅行 -->
-			<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+			<mescroll-uni class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 				<view class="touring" id="touring">
 					<text class="tourtext">正在旅行</text>
 					<view class="wrap">
@@ -235,7 +235,7 @@
 						</view>
 					</view>
 				</view>
-			</mescroll-body>
+			</mescroll-uni>
 		</view>
 		
 		
@@ -310,7 +310,8 @@ export default {
 			routeHot: null,
 			show: false,
 			cityList: null,
-			name: null
+			name: null,
+			firstTime: new Date().getTime()
 		};
 	},
 	comments: {
@@ -331,7 +332,8 @@ export default {
 					state_id: this.item.state_id,
 					city_id: this.item.city_id,
 					count: 6,
-					page: 1
+					page: 1,
+					first_time: new Date().getTime()
 				},
 				header: {
 					Authorization: uni.getStorageSync('Authorization')
@@ -484,7 +486,8 @@ export default {
 								data: {
 									state_id: item1.state_id,
 									count: 6,
-									page: 1
+									page: 1,
+									first_time: new Date().getTime()
 								},
 								header: {
 									Authorization: uni.getStorageSync('Authorization')
@@ -561,7 +564,8 @@ export default {
 							url: this.globalUrl + '/article/list',
 							data: {
 								count: 6,
-								page: 1
+								page: 1,
+								first_time: new Date().getTime()
 							},
 							header: {
 								Authorization: uni.getStorageSync('Authorization')
@@ -721,12 +725,18 @@ export default {
 		upCallback(page) {
 			let pageNum = page.num
 			let pageSize = page.size; // 页长, 默认每页10条
+			if(pageNum == 1){
+				this.firstTime = new Date().getTime()
+			}
 			var that = this;
 			if (that.item == null) {
 				uni.request({
 					url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
+					},
+					data: {
+						first_time: this.firstTime
 					},
 					success: data => {
 						console.log('data', data);
@@ -781,6 +791,9 @@ export default {
 					data: {
 						state_id: that.item.state_id,
 						city_id: that.item.city_id
+					},
+					data: {
+						first_time: that.firstTime
 					},
 					header: {
 						Authorization: uni.getStorageSync('Authorization')

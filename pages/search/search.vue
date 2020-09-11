@@ -178,7 +178,8 @@ export default {
 		};
 	},
 	onLoad() {
-		this.init(), this.getResults();
+		this.init(); 
+		this.getResults();
 	},
 	components: {
 		//引用mSearch组件，如不需要删除即可
@@ -188,15 +189,24 @@ export default {
 	mixins: [MescrollMixin],
 	methods: {
 		getResults() {
-			var that = this;
-			uni.getStorage({
-				key: 'article_id',
-				success: function(res) {
-					console.log('取数据', res);
-					that.list = res.data.data.list;
-					console.log('list----', that.list);
-				}
-			});
+			uni.request({
+						url: this.globalUrl + '/article/list',
+						data: {
+							count: 6,
+							page: 1,
+							first_time: new Date().getTime()	
+						},
+						header: {
+							Authorization: uni.getStorageSync('Authorization')
+						},
+						success: res => {
+							console.log('未定位时获取的文章列表', res);
+							uni.setStorageSync('article_id', res.data);
+							// console.log('存储文章列表==',res.data)
+							this.list = res.data.data.list;
+							// console.log('list=====',this.list)
+						}
+					});
 		},
 
 		// 跳转文章详情
