@@ -371,7 +371,6 @@ export default {
 				},
 				success: (res) => {
 					console.log('天气--', res);
-					debugger
 					if (res.data.date == null) {
 						uni.request({
 							url: 'https://api.asilu.com/weather/',
