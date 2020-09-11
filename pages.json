@@ -3,13 +3,20 @@
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
 
-	
+
 	"pages": [{
 			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom",
-				"backgroundColorBottom":"#FFFFFF",
-				"backgroundColorTop":"#FFFFFF"
+				"backgroundColorBottom": "#FFFFFF",
+				"backgroundColorTop": "#FFFFFF",
+				"disableScroll": true,
+				"app-plus": {
+					"bounce": "none" 
+				},
+				"mp-alipay": {
+					"allowsBounceVertical": "NO"
+				} 
 			}
 		},
 		{
@@ -17,18 +24,25 @@
 			"style": {
 				"navigationStyle": "custom",
 				"backgroundColor": "#000000"
-				}
+			}
 		},
 
 		{
-		    "path" : "pages/provinces/provinces",
-		    "style" : {
-				"navigationStyle":"custom"
+			"path": "pages/provinces/provinces",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"app-plus": {
+					"bounce": "none" 
+				},
+				"mp-alipay": {
+					"allowsBounceVertical": "NO"
+				} 
 			}
 		},
-		
-		
-		
+
+
+
 		{
 		    "path" : "pages/login/login",
 		    "style" : {
@@ -37,37 +51,36 @@
 				"disableScroll":true
 			}
 		},
-		
+
 		{
-		    "path" : "pages/city/city",
-		    "style" : {
-				"navigationStyle":"custom"
+			"path": "pages/city/city",
+			"style": {
+				"navigationStyle": "custom"
 			}
 		},
 		{
-		    "path" : "pages/contentdetail/contentdetail",
-		    "style" : {
-				"navigationStyle":"custom"
+			"path": "pages/contentdetail/contentdetail",
+			"style": {
+				"navigationStyle": "custom"
 			}
 		},
-		
+
 		{
 			"path": "pages/attractionsList/attractionsList",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
-		
-		
+
+
 		{
-		    "path" : "pages/mine/mine",
-		    "style" : {
-				"navigationStyle":"custom"
-				
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationStyle": "custom"
+
 			}
-		}
-		,
-		
+		},
+
 		{
 			"path": "pages/searchResults/searchResults",
 			"style": {
@@ -76,43 +89,39 @@
 		},
 
 		{
-         "path" : "pages/search/search",
-            "style" : {
-				"navigationStyle":"custom"
-				
+			"path": "pages/search/search",
+			"style": {
+				"navigationStyle": "custom"
 			}
-        }
-        ,
+		},
 		{
-		 "path" : "pages/positionContent/positionContent",
-		    "style" : {
-				"navigationStyle":"custom"
+			"path": "pages/positionContent/positionContent",
+			"style": {
+				"navigationStyle": "custom"
 			}
 		}
-        
-        ,{
-            "path" : "pages/lineList/lineList",
-            "style" : {
-							"navigationStyle": "custom",
-							"backgroundColor":"#fff"
-						}
-        }
-        ,{
-            "path" : "pages/lineDetail/lineDetail",
-            "style" : {
-							"navigationStyle": "custom",
-							"backgroundColor":"#fff"
-						}
-        }
-        ,{
-            "path" : "pages/webview/webview",
-            "style" : {}
-        }
-    ],
+
+		, {
+			"path": "pages/lineList/lineList",
+			"style": {
+				"navigationStyle": "custom",
+				"backgroundColor": "#fff"
+			}
+		}, {
+			"path": "pages/lineDetail/lineDetail",
+			"style": {
+				"navigationStyle": "custom",
+				"backgroundColor": "#fff"
+			}
+		}, {
+			"path": "pages/webview/webview",
+			"style": {}
+		}
+	],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",
 		"navigationBarTextStyle": "black",
-		"backgroundColorTop":"#FFFFFF"
+		"backgroundColorTop": "#FFFFFF"
 	},
 	"tabBar": {
 		"list": [{
