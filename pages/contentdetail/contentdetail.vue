@@ -222,16 +222,15 @@ mounted() {
 					Authorization: uni.getStorageSync('Authorization')
 				},
 				success: async function(res) {
-					console.log(res.data.data.liked, res.data.data.like_count, res.data.data.uuid, 444444);
-					console.log('eeeeeeeeeeeeeeee', e);
-					console.log('文章详情====', res);
+					
 					uni.setStorageSync('id', res.data);
 
-					let strIndex = res.data.data.content.search('此处为营销组件');
-					if (strIndex != -1) {
+					let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
+					
+					if (strIndex&& strIndex.length) {
 						// let strId =  newContent.substring(strIndex,1)
-
-						let strId = res.data.data.content[strIndex + 8];
+						
+						let strId = strIndex[0].slice(36,-4)
 						let resCode = await  that.getTemplate(strId);
 						if(resCode.data.code== 0 ){
 							let wechat_id = resCode.data.data.wechat_id
@@ -334,11 +333,12 @@ mounted() {
 							console.log('文章详情====', res);
 							uni.setStorageSync('id', res.data);
 							
-							let strIndex = res.data.data.content.search('此处为营销组件');
-							if (strIndex != -1) {
-								// let strId =  newContent.substring(strIndex,1)
+							let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
 							
-								let strId = res.data.data.content[strIndex + 8];
+							if (strIndex&& strIndex.length) {
+								// let strId =  newContent.substring(strIndex,1)
+								
+								let strId = strIndex[0].slice(36,-4)
 								let resCode = await  that.getTemplate(strId);
 								if(resCode.data.code== 0 ){
 									let wechat_id = resCode.data.data.wechat_id
@@ -427,11 +427,12 @@ mounted() {
 							console.log('文章详情====', res.data);
 							uni.setStorageSync('id', res.data);
 							
-							let strIndex = res.data.data.content.search('此处为营销组件');
-							if (strIndex != -1) {
+							let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
+							
+							if (strIndex&& strIndex.length) {
 								// let strId =  newContent.substring(strIndex,1)
-							let strId = res.data.data.content[strIndex + 8];
-							let resCode = await  that.getTemplate(strId);
+								
+								let strId = strIndex[0].slice(36,-4)
 							if(resCode.data.code== 0 ){
 								let wechat_id = resCode.data.data.wechat_id
 									let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
