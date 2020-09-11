@@ -57,7 +57,7 @@
 		</view>
 		<view class="linePlan">
 			<view class="planContent">
-				<u-time-line v-show="tabCurrent == 0">
+				<u-time-line >
 					<view v-for="(item, index) in lineContent.content" :key="index">
 						<u-time-line-item nodeTop="2">
 							<!-- 此处自定义了左边内容，用一个图标替代 -->
@@ -284,6 +284,15 @@ export default {
 		
 		tabChange(index) {
 			this.tabCurrent = index;
+			if(this.tabCurrent == 1){
+				uni.pageScrollTo({
+				    scrollTop: 99999999999
+				})
+			}else{
+				uni.pageScrollTo({
+				    scrollTop: 288
+				})
+			}
 		},
 		change(e) {
 			this.current = e.detail.current;
