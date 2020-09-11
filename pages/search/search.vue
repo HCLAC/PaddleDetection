@@ -907,13 +907,17 @@ view {
 	max-height: 460rpx;
 	width: 100%;
 	border-radius: 8rpx 8rpx 0 0;
-	position: relative;
+	
 }
-
+.imgBox{
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+}
 .adress {
 	position: absolute;
 	left: 0;
-	bottom: 8rpx;
+	bottom: 0;
 	display: flex;
 	align-items: center;
 	max-width: 240rpx;

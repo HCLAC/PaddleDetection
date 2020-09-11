@@ -638,6 +638,8 @@ export default {
 }
 .imgBox{
 	position: relative;
+	display: flex;
+	align-items: flex-end;
 }
 .demo-top {
 	position: relative;
@@ -654,7 +656,7 @@ export default {
 .adress {
 	position: absolute;
 	left: 0;
-	bottom: 8rpx;
+	bottom: 0;
 	display: flex;
 	align-items: center;
 	max-width: 240rpx;
