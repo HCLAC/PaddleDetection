@@ -767,7 +767,7 @@
 			justify-content: center;
 			min-width: 640rpx;
 			.atthottext {
-				min-width: 402rpx;
+				// min-width: 402rpx;
 				max-width: 600rpx;
 				height: 64rpx;
 				font-size: 64rpx;
