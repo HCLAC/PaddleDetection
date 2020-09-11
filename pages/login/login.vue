@@ -31,7 +31,7 @@
 						placeholder="请输入您的验证码"
 						placeholder-style="color:'#C9CAD1',font-size:30rpx"
 						class="is-input1 "
-						:style="styleCode"
+						:style="{color: styleCode.color}"
 						@input="onCode"
 						v-model="code"
 						@focus="isfocus1"
@@ -39,7 +39,7 @@
 					/>
 					<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-if="code && isShowcode" @click="clearcode()"></image>
 					<view class="code-sx"></view>
-					<view class="codeimg" @click.stop="getCode()" :style="{color: codeColor}">{{ getCodeText }}</view>
+					<view class="codeimg" @click.stop="getCode()" :style="codeColor">{{ getCodeText }}</view>
 				</view>
 				<u-line color="rgba(237, 239, 242, 1)" margin="40rpx 0rpx"></u-line>
 			</view>

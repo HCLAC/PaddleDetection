@@ -33,7 +33,8 @@
 		    "path" : "pages/login/login",
 		    "style" : {
 				"navigationBarBackgroundColor":"#FFFFFF",
-				"backgroundColor":"#fff"
+				"backgroundColor":"#fff",
+				"disableScroll":true
 			}
 		},
 		

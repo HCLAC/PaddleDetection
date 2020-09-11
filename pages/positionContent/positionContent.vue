@@ -158,7 +158,7 @@
 							<image class="" src="../../static/images/attmap.svg" mode=""></image>
 						</view>
 						
-						<text class="adressText">{{attDetail.data.pos}}</text>
+						<view class="adressText">{{attDetail.data.pos}}</view>
 					</view>
 					<view class="right" @click="map()">
 						<image src="../../static/images/mapBack.png" mode=""></image>
