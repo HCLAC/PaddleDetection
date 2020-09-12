@@ -435,7 +435,8 @@ mounted() {
 							if (strIndex&& strIndex.length) {
 								// let strId =  newContent.substring(strIndex,1)
 								
-								let strId = strIndex[0].slice(36,-4)
+							let strId = strIndex[0].slice(36,-4)
+							let resCode = await  that.getTemplate(strId);
 							if(resCode.data.code== 0 ){
 								let wechat_id = resCode.data.data.wechat_id
 									let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
