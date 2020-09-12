@@ -10,44 +10,91 @@
 					<image src="../../static/images/userImg.svg" class="userAva" v-if="nickName" mode=""></image>
 					<view class="userR">
 						<view class="userName">{{ nickName }}</view>
+						<view class="fllow">
+							<text>关注</text>
+							<view class="fllowNum">{{fllowNum}}</view>
+						</view>
 						<!-- <view class="logout">退出登录</view> -->
 					</view>
 				</view>
 			</view>
-			
+			<!-- 客服 -->
+			<view class="phone" @click="tell"><image class="phoneImg" src="../../static/images/minephone.svg" mode=""></image></view>
 			<!-- 我的收藏 -->
 			<view class="myCollection">
-				<view class="phone" @click="tell"><image class="phoneImg" src="../../static/images/phone.png" mode=""></image></view>
-				<view>我的收藏</view>
+				<!-- <view>收藏</view> -->
+				<v-tabs
+					inactive-color="#909399"
+					lineHeight="8rpx"
+					lineColor="#FFE512"
+					activeFontSize="32rpx"
+					activeColor="#303133"
+					fontSize="28rpx"
+					v-model="tabCurrent"
+					bold
+					:tabs="tablist"
+					:is-scroll="false"
+					:current="tabCurrent"
+					@change="tabChange"
+				></v-tabs>
+				
 			</view>
 		</view>
-		<view style="margin-top: 68%; padding: 0 24rpx;">
-				<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-					<view class="contentItem" v-for="(item, index) in tipList" :key="index">
-						<view class="left">
-							<image :src="item.main_image" mode="">
-								<view class="imgTip">
-									<view v-if="item.type == 1">游记</view>
-									<view v-if="item.type == 2">攻略</view>
-								</view>
-							</image>
+		<view style="margin-top: 68%; padding: 0 24rpx;" v-if="tabCurrent == 0">
+			<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+				<view class="contentItem" v-for="(item, index) in tipList" :key="index">
+					<view class="left">
+						<image :src="item.main_image" mode="">
+							<view class="imgTip">
+								<view v-if="item.type == 1">游记</view>
+								<view v-if="item.type == 2">攻略</view>
+							</view>
+						</image>
+					</view>
+					<view class="right" @click="onPageJump" :id="item.article_id">
+						<view class="title">
+							<text class="tips" v-if="item.type == 1">游记</text>
+							<text class="tips" v-if="item.type == 2">攻略</text>
+							<text class="titleText">{{ item.title }}</text>
 						</view>
-						<view class="right" @click="onPageJump" :id="item.article_id">
-							<view class="title">
-								<text class="tips" v-if="item.type == 1">游记</text>
-								<text class="tips" v-if="item.type == 2">攻略</text>
-								<text class="titleText">{{ item.title }}</text>
-							</view>
-							<view class="content">
-								<rich-text class="richText" :nodes="item.content"></rich-text>
-							</view>
-							<view class="position">
-								<image src="../../static/images/iconMap.svg" mode="aspectFill"></image>
-								<view>{{ item.location }}</view>
-							</view>
+						<view class="content">
+							<rich-text class="richText" :nodes="item.content"></rich-text>
+						</view>
+						<view class="position">
+							<image src="../../static/images/iconMap.svg" mode="aspectFill"></image>
+							<view>{{ item.location }}</view>
 						</view>
 					</view>
-				</mescroll-body>
+				</view>
+			</mescroll-body>
+		</view>
+		<view style="margin-top: 68%; padding: 0 24rpx;" v-if="tabCurrent == 1">
+			<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+				<view class="contentItem" v-for="(item, index) in tipList" :key="index">
+					<view class="left">
+						<image :src="item.main_image" mode="">
+							<view class="imgTip">
+								<view v-if="item.type == 1">游记</view>
+								<view v-if="item.type == 2">攻略</view>
+							</view>
+						</image>
+					</view>
+					<view class="right" @click="onPageJump" :id="item.article_id">
+						<view class="title">
+							<text class="tips" v-if="item.type == 1">游记</text>
+							<text class="tips" v-if="item.type == 2">攻略</text>
+							<text class="titleText">{{ item.title }}</text>
+						</view>
+						<view class="content">
+							<rich-text class="richText" :nodes="item.content"></rich-text>
+						</view>
+						<view class="position">
+							<image src="../../static/images/iconMap.svg" mode="aspectFill"></image>
+							<view>{{ item.location }}</view>
+						</view>
+					</view>
+				</view>
+			</mescroll-body>
 		</view>
 	</view>
 </template>
@@ -64,7 +111,11 @@ export default {
 			tipList: [],
 			upOption:{
 				bgColor:'#ffffff'
-			}
+			},
+			fllowNum:24,
+			current: 0,
+			tablist: ['收藏', '点赞'],
+			tabCurrent: 0,
 		};
 	},
 	mixins: [MescrollMixin],
@@ -162,7 +213,9 @@ export default {
 					}
 				});
 		},
-
+		tabChange(index) {
+			this.tabCurrent = index;
+		},
 		// 跳转文章详情
 		onPageJump(e) {
 			console.log(e);
@@ -286,6 +339,22 @@ export default {
 	font-weight: 500;
 	color: #303133;
 }
+.fllow{
+	margin-top: 20rpx;
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #606266;
+	line-height: 24rpx;
+	display: flex;
+	align-items: center;
+	text{
+	}
+}
+.fllowNum{
+	margin-left: 8rpx;
+}
 .logout {
 	margin-top: 4px;
 	width: 80px;
@@ -298,7 +367,18 @@ export default {
 	text-align: center;
 }
 /* 我的收藏卡片 */
-
+.phone {
+	height: 124rpx;
+	width: 124rpx;
+	border-radius: 50%;
+	position: fixed;
+	bottom: 62rpx;
+	right: 18rpx;
+}
+.phone .phoneImg {
+	width: 124rpx;
+	height: 124rpx;
+}
 .myCollection {
 	border-radius: 40rpx 40rpx 0rpx 0rpx;
 	background-color: #fff;
@@ -310,19 +390,8 @@ export default {
 	padding-top: 50rpx;
 	position: absolute;
 	// top: 190rpx;
-	.phone {
-		height: 120rpx;
-		width: 120rpx;
-		border-radius: 50%;
-		position: absolute;
-		top: -60rpx;
-		right: 32rpx;
-	}
-	.phone .phoneImg {
-		width: 120rpx;
-		height: 120rpx;
-	}
 }
+
 
 .noContentItem {
 	// height: 600rpx;

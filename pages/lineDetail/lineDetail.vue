@@ -48,6 +48,7 @@
 					fontSize="28rpx"
 					v-model="tabCurrent"
 					bold
+					height="68rpx"
 					:tabs="tablist"
 					:is-scroll="false"
 					:current="tabCurrent"
@@ -834,7 +835,7 @@ export default {
 }
 .fixTabs {
 	position: fixed;
-	top: 156rpx;
+	top: 150rpx;
 	padding-left: 10rpx;
 	padding-bottom: 15rpx;
 	left: 0;

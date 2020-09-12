@@ -14,7 +14,7 @@ const GlobalOption = {
 	up: {
 		// 其他up的配置参数也可以写,这里只展示了常用的配置:
 		textLoading: '加载中 ...', // 加载中的提示文本
-		textNoMore: '~我也是有底线的~', // 没有更多数据的提示文本
+		textNoMore: '~已经到底啦~', // 没有更多数据的提示文本
 		textErr: "加载失败",
 		bgColor:'#ffffff',
 		textColor:'rgba(201,202,209,1)',
