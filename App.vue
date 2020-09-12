@@ -17,11 +17,5 @@ export default {
 <style lang="scss">
 @import 'uview-ui/index.scss';
 uni-rich-text img{ max-width: 100% !important;}
-::-webkit-scrollbar {  
-    display: none;  
-    width: 0 !important;  
-    height: 0 !important;  
-    -webkit-appearance: none;  
-    background: transparent;  
-}
+
 </style>

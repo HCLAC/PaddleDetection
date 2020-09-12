@@ -79,7 +79,7 @@
 							<view class="" @click="onPageJump" :id="item.article_id">
 								<view class="demo-top">
 									<view class="imgBox">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="scaleToFill"></image>
 										<view class="adress">
 											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 										
@@ -114,7 +114,7 @@
 							<view class="" @click="onPageJump" :id="item.article_id">
 								<view class="demo-top">
 									<view class="imgBox">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="scaleToFill"></image>
 										<view class="adress">
 											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 										

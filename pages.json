@@ -140,7 +140,7 @@
 		"backgroundColor": "#ffffff",
 		"color": "#C9CAD1",
 		"selectedColor": "#303133",
-		"borderStyle": "black"
+		"borderStyle": "white"
 	},
 	"dynamicLib": {
 		"smartUI": {
