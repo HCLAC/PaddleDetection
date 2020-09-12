@@ -124,7 +124,7 @@ MeScroll.prototype.extendUpScroll = function(optUp) {
 			top: "100rpx", // fixed定位的top值 (完整的单位值,如 "10%"; "100rpx")
 			zIndex: 99 // fixed定位z-index值
 		},
-		onScroll: false // 是否监听滚动事件
+		onScroll: true // 是否监听滚动事件
 	})
 }
 

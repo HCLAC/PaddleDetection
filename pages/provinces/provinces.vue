@@ -159,83 +159,85 @@
 				</view>
 			</view>
 			<!-- 正在旅行 -->
-			<mescroll-uni class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-				<view class="touring" id="touring">
-					<text class="tourtext">正在旅行</text>
-					<view class="wrap">
-						<view class="left">
-							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
-								<view class="" @click="onPageJump" :id="item.article_id">
-									<view class="demo-top">
-										<view class="imgBox" >
-											<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-											<view class="adress">
-												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-												<view class="adressText">{{ item.location }}</view>
-											</view>
-										</view>
-										<view class="titleTip">
-											<view class="demo-tag">
-												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-											</view>
-											<view class="demo-title">{{ item.title }}</view>
+			
+			<view class="touring" id="touring">
+				<text class="tourtext">正在旅行</text>
+				<mescroll-uni class="mescroll" ref="mescrollRef" :fixed="false" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+				<view class="wrap">
+					<view class="left">
+						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
+							<view class="" @click="onPageJump" :id="item.article_id">
+								<view class="demo-top">
+									<view class="imgBox" >
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<view class="adress">
+											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+											<view class="adressText">{{ item.location }}</view>
 										</view>
 									</view>
-									<view class="demo-user">
-										<view class="userMessage">
-											<image class="userHeard" :src="item.avatar"></image>
-											<view class="userNikename">{{ item.author_name }}</view>
+									<view class="titleTip">
+										<view class="demo-tag">
+											<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+											<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
 										</view>
-										<view class="count" @click="clickLike(item, index)">
-											<view class="countImg">
-												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
-											</view>
-											<view class="likeCount">{{ item.like_count || 0 }}</view>
+										<view class="demo-title">{{ item.title }}</view>
+									</view>
+								</view>
+								<view class="demo-user">
+									<view class="userMessage">
+										<image class="userHeard" :src="item.avatar"></image>
+										<view class="userNikename">{{ item.author_name }}</view>
+									</view>
+									<view class="count" @click="clickLike(item, index)">
+										<view class="countImg">
+											<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+											<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 										</view>
+										<view class="likeCount">{{ item.like_count || 0 }}</view>
 									</view>
 								</view>
 							</view>
 						</view>
-						<view class="right">
-							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
-								<view class="" @click="onPageJump" :id="item.article_id">
-									<view class="demo-top">
-										<view class="imgBox">
-											<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-											<view class="adress">
-												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-												<view class="adressText">{{ item.location }}</view>
-											</view>
-										</view>
-										<view class="titleTip">
-											<view class="demo-tag">
-												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-											</view>
-											<view class="demo-title">{{ item.title }}</view>
+					</view>
+					<view class="right">
+						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
+							<view class="" @click="onPageJump" :id="item.article_id">
+								<view class="demo-top">
+									<view class="imgBox">
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+										<view class="adress">
+											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+											<view class="adressText">{{ item.location }}</view>
 										</view>
 									</view>
-									<view class="demo-user">
-										<view class="userMessage">
-											<image class="userHeard" :src="item.avatar"></image>
-											<view class="userNikename">{{ item.author_name }}</view>
+									<view class="titleTip">
+										<view class="demo-tag">
+											<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+											<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
 										</view>
-										<view class="count" @click="clickLike(item, index)">
-											<view class="countImg">
-												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
-											</view>
-											<view class="likeCount">{{ item.like_count || 0 }}</view>
+										<view class="demo-title">{{ item.title }}</view>
+									</view>
+								</view>
+								<view class="demo-user">
+									<view class="userMessage">
+										<image class="userHeard" :src="item.avatar"></image>
+										<view class="userNikename">{{ item.author_name }}</view>
+									</view>
+									<view class="count" @click="clickLike(item, index)">
+										<view class="countImg">
+											<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+											<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 										</view>
+										<view class="likeCount">{{ item.like_count || 0 }}</view>
 									</view>
 								</view>
 							</view>
 						</view>
 					</view>
 				</view>
-			</mescroll-uni>
+				</mescroll-uni>
+			</view>
+			
 		</view>
 		
 		

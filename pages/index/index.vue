@@ -11,7 +11,7 @@
 		</u-navbar>
 
 		<!-- 内容 -->
-		<mescroll-uni v-if="bannerList.length != 0" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-uni v-if="bannerList.length != 0" @scroll="uniScroll" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部轮播图 -->
 			<view class="page-section " v-if="bannerList.length != 0">
 				<view class="page-section-spacing">
@@ -151,7 +151,7 @@
 			</view>
 		</mescroll-uni>
 		<!-- 无banner时 -->
-		<mescroll-uni v-if="bannerList.length == 0" class="mescroll1" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-uni v-if="bannerList.length == 0" @scroll="uniScroll" class="mescroll1" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部轮播图 -->
 			<view class="page-section " v-if="bannerList.length != 0">
 				<view class="page-section-spacing">
@@ -380,18 +380,7 @@ export default {
 			uni.hideLoading();
 		}, 1000);
 	},
-
-	onPageScroll(e) {
-		if (this.bannerList.length == 0) {
-			this.background.backgroundColor = '#ffffff';
-		} else {
-			if (e.scrollTop >= 100) {
-				this.background.backgroundColor = '#ffffff';
-			} else {
-				this.background.backgroundColor = '';
-			}
-		}
-	},
+	
 	methods: {
 		// 接收切换城市信息，请求数据
 		getItem() {
@@ -442,7 +431,7 @@ export default {
 					});
 			}
 		},
-		scrollTop(e) {},
+		
 		// 获取当前地理位置
 		getAdress() {
 				
@@ -570,7 +559,18 @@ export default {
 				}
 			});
 		},
-
+		uniScroll(e) {
+			if (this.bannerList.length == 0) {
+				this.background.backgroundColor = '#ffffff';
+			} else{
+				if (e.scrollTop >= 100) {
+					this.background.backgroundColor = '#ffffff';
+				} else {
+					this.background.backgroundColor = '';
+				}
+			}
+			
+		},
 		// 获取banner
 		getBanner() {
 			uni.request({
@@ -646,14 +646,7 @@ export default {
 				}
 			});
 		},
-		// 设备信息
-		// getSystem(){
-		// 	uni.getSystemInfo({
-		// 		success:function(res){
-		// 			console.log('设备信息',res)
-		// 		}
-		// 	})
-		// },
+		
 
 		lookAll() {
 			if (this.item == undefined || null) {
