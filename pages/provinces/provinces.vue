@@ -1051,6 +1051,9 @@ export default {
 	color: #303133;
 	line-height: 28rpx;
 	margin: 16rpx 0 8rpx 6rpx;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow:ellipsis;
 }
 .rateBox {
 	display: flex;
