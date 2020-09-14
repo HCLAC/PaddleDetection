@@ -220,8 +220,8 @@ mounted() {
 						let strId = strIndex[0].slice(36,-4)
 						let resCode = await  that.getTemplate(strId);
 						if(resCode.data.code== 0 ){
-							let wechat_id = resCode.data.data.wechat_id
-								let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
+							let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g,"")
+								let str =  '<view><text style=" font-size: 28rpx; font-weight: 500; letter-space:normal">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
 								
 							res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 							// console.log(res.data.data.content);
@@ -346,7 +346,7 @@ mounted() {
 								let strId = strIndex[0].slice(36,-4)
 								let resCode = await  that.getTemplate(strId);
 								if(resCode.data.code== 0 ){
-									let wechat_id = resCode.data.data.wechat_id
+									let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g,"")
 										let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
 										
 									res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
@@ -438,8 +438,8 @@ mounted() {
 							let strId = strIndex[0].slice(36,-4)
 							let resCode = await  that.getTemplate(strId);
 							if(resCode.data.code== 0 ){
-								let wechat_id = resCode.data.data.wechat_id
-									let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
+								let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g,"")
+								let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
 									
 								res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 								

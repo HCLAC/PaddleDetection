@@ -5,7 +5,7 @@
 			<view class="search-box" @click="confirm">
 				<view class="search-wrap">
 					<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
-					<u-search placeholderColor="#C9CAD1" search-icon-color="#C9CAD1" placeholder="搜索热门目的地" :show-action="false" height="72" bg-color="#F8F8F8"></u-search>
+					<u-search placeholderColor="#C9CAD1" search-icon-color="#C9CAD1" placeholder="搜索热门目的地" :show-action="false" height="64" bg-color="#F8F8F8"></u-search>
 				</view>
 			</view>
 		</u-navbar>
@@ -840,13 +840,13 @@ view {
 }
 .search-box {
 	width: 486rpx;
-	height: 72rpx;
+	height: 64rpx;
 	padding-left: 28rpx;
 	z-index: 111;
 }
 .search-wrap {
 	width: 486rpx;
-	height: 72rpx;
+	height: 64rpx;
 }
 /* 导航栏轮播图 */
 .page-section {

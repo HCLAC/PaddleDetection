@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+		<view class="example-body" >
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" style="z-index: 99999 !important;">
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
@@ -41,14 +41,14 @@
 			<view style="width: 60%;">
 				<v-tabs
 					inactive-color="#909399"
-					lineHeight="8rpx"
+					lineHeight="12rpx"
 					lineColor="#FFE512"
 					activeFontSize="32rpx"
 					activeColor="#303133"
 					fontSize="28rpx"
 					v-model="tabCurrent"
 					bold
-					height="68rpx"
+					height="108rpx"
 					:tabs="tablist"
 					:is-scroll="false"
 					:current="tabCurrent"
@@ -260,6 +260,9 @@ export default {
 			this.isFixed = false;
 		}
 	},
+	onReachBottom() {
+		this.tabCurrent = 1
+	},
 	mounted() {
 		uni.getProvider({
 			service: 'oauth',
@@ -287,7 +290,7 @@ export default {
 			this.tabCurrent = index;
 			if(this.tabCurrent == 1){
 				uni.pageScrollTo({
-				    scrollTop: 99999999999
+				    scrollTop: 99999999999,
 				})
 			}else{
 				uni.pageScrollTo({
@@ -298,7 +301,6 @@ export default {
 		change(e) {
 			this.current = e.detail.current;
 		},
-
 		lineFav(id) {
 			if (!this.hasLogin) {
 				uni.showToast({
@@ -416,6 +418,7 @@ export default {
 	padding: 0;
 	font-size: 14px;
 	background-color: #aa557f;
+	
 }
 .example-body {
 	flex-direction: column;
@@ -822,9 +825,9 @@ export default {
 		border-radius: 50%;
 		display: flex;
 		align-items: center;
-		position: absolute;
-		bottom: 20rpx;
-		right: -20rpx;
+		position: fixed;
+		bottom: 178rpx;
+		right: 34rpx;
 		justify-content: center;
 		box-shadow: 0px 0px 12rpx 4rpx rgba(255, 229, 18, 0.35);
 		image {
@@ -835,11 +838,11 @@ export default {
 }
 .fixTabs {
 	position: fixed;
-	top: 150rpx;
+	top: 140rpx;
 	padding-left: 10rpx;
 	padding-bottom: 15rpx;
 	left: 0;
-	z-index: 1000;
+	z-index: 2;
 	width: 100%;
 	background: #ffffff;
 	// border-bottom: 2rpx solid #eeeeee;

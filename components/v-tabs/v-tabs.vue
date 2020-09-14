@@ -280,7 +280,7 @@ export default {
 
     &-line {
       position: absolute;
-      bottom: 0;
+      bottom: 8rpx;
       transition: all 0.3s linear;
     }
 
