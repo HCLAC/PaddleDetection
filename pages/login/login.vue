@@ -332,7 +332,7 @@ export default {
 					// 'key': _this.key,
 					code: _this.code,
 					mobile: _this.phone,
-					source: this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null
+					source: this.serviceProvider == 'baidu' ? 1 : this.serviceProvider == 'weixin' ? 7 : this.serviceProvider == 'toutiao' ? 3 : null
 				},
 				method: 'POST',
 				// header: {

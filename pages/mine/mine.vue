@@ -10,7 +10,7 @@
 					<image src="../../static/images/userImg.svg" class="userAva" v-if="nickName" mode=""></image>
 					<view class="userR">
 						<view class="userName">{{ nickName }}</view>
-						<view class="fllow">
+						<view class="fllow" @click="toConcern()">
 							<text>关注</text>
 							<view class="fllowNum">{{fllowNum}}</view>
 						</view>
@@ -41,7 +41,7 @@
 			</view>
 		</view>
 		<view style="margin-top: 68%; padding: 0 24rpx;" v-if="tabCurrent == 0">
-			<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+			<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"  >
 				<view class="contentItem" v-for="(item, index) in tipList" :key="index">
 					<view class="left">
 						<image :src="item.main_image" mode="">
@@ -224,6 +224,12 @@ export default {
 			// return
 			uni.navigateTo({
 				url: '/pages/contentdetail/contentdetail?article_id=' + id
+			});
+		},
+		// 跳转关注页
+		toConcern(){
+			uni.navigateTo({
+				url:'/pages/mineConcern/mineConcern'
 			});
 		},
 		tell(){

@@ -662,7 +662,8 @@ mounted() {
 
 .page-section-spacing {
 	position: relative;
-	
+	// min-height: 580rpx;
+	// max-height: 978rpx;
 	width: 100%;
 }
 
@@ -767,15 +768,17 @@ mounted() {
 	background: rgba(0, 145, 255, 0.1);
 	border-radius: 20rpx;
 	// border: 2rpx solid rgba(0, 145, 255, 1);
-	display: flex;
+	display: inline-block;
 	align-items: center;
-	text-align: center;
+	line-height: 40rpx;
 	padding: 0 14rpx;
 }
 
 .adreessIcon {
 	width: 24rpx;
 	height: 24rpx;
+	margin-top: 8rpx;
+	float: left;
 }
 
 .adressText {
@@ -783,6 +786,7 @@ mounted() {
 	font-family: PingFangSC-Regular, PingFang SC;
 	font-weight: 400;
 	color: rgba(0, 145, 255, 1);
+	float: right;
 }
 
 // 内容

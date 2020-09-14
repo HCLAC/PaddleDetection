@@ -117,7 +117,14 @@
 			"path": "pages/webview/webview",
 			"style": {}
 		}
-	],
+	    ,{
+            "path" : "pages/mineConcern/mineConcern",
+            "style" : {
+				"navigationStyle": "custom",
+				"backgroundColor": "#fff"
+			}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",
 		"navigationBarTextStyle": "black",
