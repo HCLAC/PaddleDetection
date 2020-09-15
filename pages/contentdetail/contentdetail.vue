@@ -29,7 +29,9 @@
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<view class="userMse">
-					<image class="userHeard" :src="articleList.data.avatar"></image>
+					<image class="userHeard" :src="articleList.data.avatar">
+						<image class="followImg" src="../../static/images/follow.svg" mode="" @click="follow()" v-if="following == 0"></image>
+					</image>
 					<view class="userMse-r">
 						<view class="userNikename">{{ articleList.data.author_name }}</view>
 						<view class="adress">
@@ -112,6 +114,7 @@ export default {
 			wechat_id: null,
 			swiperHeight: '',
 			serviceProvider: '',
+			following:0
 		};
 	},
 	onLoad(e) {
@@ -227,6 +230,7 @@ mounted() {
 							// console.log(res.data.data.content);
 							
 							that.articleList = res.data;
+							that.following = that.articleList.data.follow
 							that.$nextTick(()=>{
 								uni.getImageInfo({
 									src: that.articleList.data.images[0],
@@ -243,6 +247,8 @@ mounted() {
 							
 						}else{
 							that.articleList = res.data;
+							console.log(that.articleList);
+							that.following = that.articleList.data.follow
 							that.$nextTick(()=>{
 								uni.getImageInfo({
 									src: that.articleList.data.images[0],
@@ -288,6 +294,45 @@ mounted() {
 			return false
 		},
 	
+		// 关注
+		follow(){
+			uni.request({
+				url:this.globalUrl + '/user/follow',
+				data:{
+					author_id:this.articleList.data.author_id,
+					follow:1
+				},
+				method:'POST',
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: (res) => {
+					console.log('关注',res)
+					if (res.data.code != 0) {
+						// debugger
+						uni.showModal({
+							title: '提示',
+							content: '您好，请先登录',
+							showCancel: false,
+							success: function(res) {
+								if (res.confirm) {
+									uni.redirectTo({
+										url: '../login/login'
+									});
+								}
+							}
+						});
+						return;
+					}else{
+						uni.showToast({
+							title: '关注成功',
+							duration: 2000
+						})
+						this.following = 1
+					}
+				}
+			})
+		},
 		// 点赞
 		clickLike() {
 			var that = this;
@@ -364,6 +409,7 @@ mounted() {
 									});
 								}else{
 									that.articleList = res.data;
+									that.following = that.articleList.data.follow
 									uni.getImageInfo({
 										src: that.articleList.data.images[0],
 										success: function (image) {
@@ -377,6 +423,7 @@ mounted() {
 							
 							}else{
 								that.articleList = res.data;
+								that.following = that.articleList.data.follow
 								console.log('articleList', that.articleList);
 							}
 						}
@@ -444,6 +491,7 @@ mounted() {
 								res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 								
 								that.articleList = res.data;
+								that.following = that.articleList.data.follow
 								uni.getImageInfo({
 									src: that.articleList.data.images[0],
 									success: function (image) {
@@ -455,6 +503,7 @@ mounted() {
 								});
 							}else{
 								that.articleList = res.data;
+								that.following = that.articleList.data.follow
 								uni.getImageInfo({
 									src: that.articleList.data.images[0],
 									success: function (image) {
@@ -741,14 +790,22 @@ mounted() {
 	display: flex;
 	margin-left: 28rpx;
 	margin-top: 50rpx;
+	position: relative;
 }
 
 .userHeard {
 	width: 80rpx;
 	height: 80rpx;
 	border-radius: 50%;
+	
 }
-
+.followImg{
+	width: 42rpx;
+	height: 42rpx;
+	position: absolute;
+	top: 61rpx;
+	left: 21rpx;
+}
 .userMse-r {
 	margin-left: 20rpx;
 }
