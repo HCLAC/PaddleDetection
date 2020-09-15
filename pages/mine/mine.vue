@@ -128,9 +128,11 @@ export default {
 	},
 	mixins: [MescrollMixin],
 	computed: mapState(['forcedLogin', 'hasLogin', 'phone']),
-
-	onLoad() {
+	onShow() {
 		this.getUserMsg();
+	},
+	onLoad() {
+		this.getlist()
 	},
 
 	methods: {
@@ -204,41 +206,44 @@ export default {
 						that.fllowNum = res.data.data.following
 						console.log('存储信息', res.data);
 					}
-				}),
-				uni.request({
-					url: this.globalUrl+ '/user/favorite/list',
-					data: {
-						count: 5,
-						page: 1
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					method: 'get',
-					success: function(res) {
-						console.log('收藏列表', res.data);
-						that.tipList = res.data.data.list;
-						that.favNum = res.data.data.total
-						console.log('1111111', that.tipList);
-					}
-				});
-				uni.request({
-					url: this.globalUrl+ '/v2/user/liked/list',
-					data: {
-						count: 5,
-						page: 1
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					method: 'get',
-					success: function(res) {
-						console.log('点赞列表', res.data);
-						that.likeList = res.data.data.list;
-						that.likeNum = res.data.data.total
-						console.log('likelist', that.likeList);
-					}
-				});
+				})
+				
+		},
+		getlist(){
+			uni.request({
+				url: this.globalUrl+ '/user/favorite/list',
+				data: {
+					count: 5,
+					page: 1
+				},
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				method: 'get',
+				success: (res)=> {
+					console.log('收藏列表', res.data);
+					this.tipList = res.data.data.list;
+					this.favNum = res.data.data.total
+					console.log('1111111', this.tipList);
+				}
+			});
+			uni.request({
+				url: this.globalUrl+ '/v2/user/liked/list',
+				data: {
+					count: 5,
+					page: 1
+				},
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				method: 'get',
+				success: (res)=> {
+					console.log('点赞列表', res.data);
+					this.likeList = res.data.data.list;
+					this.likeNum = res.data.data.total
+					console.log('likelist', this.likeList);
+				}
+			});
 		},
 		tabChange(index) {
 			this.tabCurrent = index;
