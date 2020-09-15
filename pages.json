@@ -124,6 +124,12 @@
 				"backgroundColor": "#fff"
 			}
         }
+        ,{
+            "path" : "pages/bloggers/bloggers",
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",

@@ -29,7 +29,7 @@
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<view class="userMse">
-					<image class="userHeard" :src="articleList.data.avatar">
+					<image class="userHeard" :src="articleList.data.avatar" @click="tobloggers(articleList.data.author_id)">
 						<image class="followImg" src="../../static/images/follow.svg" mode="" @click="follow()" v-if="following == 0"></image>
 					</image>
 					<view class="userMse-r">
@@ -293,7 +293,13 @@ mounted() {
 		
 			return false
 		},
-	
+		// 跳转博主详情页
+		tobloggers(e){
+			console.log(e)
+			uni.navigateTo({
+				url:'../bloggers/bloggers?author_id=' + e
+			})
+		},
 		// 关注
 		follow(){
 			uni.request({

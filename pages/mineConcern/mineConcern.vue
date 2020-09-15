@@ -15,7 +15,7 @@
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 				<view class="card" v-for=" (item,index) in followList" :key="index">
 					<!-- 头像 -->
-					<view class="avatar">
+					<view class="avatar" @click="tobloggers(item.author_id)">
 						<image :src="item.avatar" mode=""></image>
 					</view>
 					<!-- 信息 -->
@@ -86,17 +86,14 @@
 					success: (res) => {
 						console.log('关注列表=', res.data);
 						this.followList = res.data.data.list
-						// if (res.data.data.list && res.data.data.list.length) {
-						// 	res.data.data.list.forEach(item => {
-						// 		item.isFollow = false	
-						// 	})
-						// 	this.followList = res.data.data.list
-						// }else{
-						// 	this.followList  = []
-						// }
-						
-						
 					}
+				})
+			},
+			// 跳转博主详情页
+			tobloggers(e){
+				console.log(e)
+				uni.navigateTo({
+					url:'../bloggers/bloggers?author_id=' + e
 				})
 			},
 			// 关注
