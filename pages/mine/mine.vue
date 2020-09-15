@@ -37,7 +37,12 @@
 					:current="tabCurrent"
 					@change="tabChange"
 				></v-tabs>
-				
+				<view class="favNum">
+					{{favNum}}
+				</view>
+				<view class="likeNum">
+					{{likeNum}}
+				</view>
 			</view>
 		</view>
 		<view style="margin-top: 68%; padding: 0 24rpx;" v-if="tabCurrent == 0">
@@ -70,7 +75,7 @@
 		</view>
 		<view style="margin-top: 68%; padding: 0 24rpx;" v-if="tabCurrent == 1">
 			<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-				<view class="contentItem" v-for="(item, index) in tipList" :key="index">
+				<view class="contentItem" v-for="(item, index) in likeList" :key="index">
 					<view class="left">
 						<image :src="item.main_image" mode="">
 							<view class="imgTip">
@@ -109,10 +114,13 @@ export default {
 			nickName: uni.getStorageSync('nickName'),
 			avatarUrl: '',
 			tipList: [],
+			likeList:[],
 			upOption:{
 				bgColor:'#ffffff'
 			},
-			fllowNum:24,
+			fllowNum:0,
+			favNum:0,
+			likeNum:0,
 			current: 0,
 			tablist: ['收藏', '点赞'],
 			tabCurrent: 0,
@@ -193,6 +201,7 @@ export default {
 						}
 						uni.setStorageSync('mobile', res.data);
 						that.nickName = res.data.data.mobile
+						that.fllowNum = res.data.data.following
 						console.log('存储信息', res.data);
 					}
 				}),
@@ -209,7 +218,25 @@ export default {
 					success: function(res) {
 						console.log('收藏列表', res.data);
 						that.tipList = res.data.data.list;
+						that.favNum = res.data.data.total
 						console.log('1111111', that.tipList);
+					}
+				});
+				uni.request({
+					url: this.globalUrl+ '/v2/user/liked/list',
+					data: {
+						count: 5,
+						page: 1
+					},
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					method: 'get',
+					success: function(res) {
+						console.log('点赞列表', res.data);
+						that.likeList = res.data.data.list;
+						that.likeNum = res.data.data.total
+						console.log('likelist', that.likeList);
 					}
 				});
 		},
@@ -250,58 +277,114 @@ export default {
 		},
 		/*上拉加载的回调*/
 		upCallback(page) {
+			var that = this
 			// mescroll.setPageSize(6)
 			let pageNum = page.num; // 页码, 默认从1开始
 			let pageSize = page.size; // 页长, 默认每页10条
-			uni.request({
-				url: this.globalUrl+ '/user/favorite/list?page=' + pageNum + '&count=' + pageSize,
-				header: {
-					Authorization: uni.getStorageSync('Authorization')
-				},
-				success: data => {
-					console.log('data', data);
-					// 接口返回的当前页数据列表 (数组)
-					let curPageData = data.data.data.list;
-					console.log('curPageData', curPageData);
-					// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-					let curPageLen = curPageData.length;
-					console.log('curPageLen', curPageLen);
-					// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-					// let totalPage = data.data.data.list;
-					// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-					let totalSize = data.data.data.total;
-					console.log('totalSize', totalSize);
-					// 接口返回的是否有下一页 (true/false)
-					// let hasNext = data.data.data.list;
+			if(this.tabCurrent == 0){
+				uni.request({
+					url: this.globalUrl+ '/user/favorite/list?page=' + pageNum + '&count=' + pageSize,
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: data => {
+						console.log('data', data);
+						// 接口返回的当前页数据列表 (数组)
+						let curPageData = data.data.data.list;
+						console.log('curPageData', curPageData);
+						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+						let curPageLen = curPageData.length;
+						console.log('curPageLen', curPageLen);
+						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+						// let totalPage = data.data.data.list;
+						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+						let totalSize = data.data.data.total;
+						console.log('totalSize', totalSize);
+						that.favNum = totalSize;
+						// 接口返回的是否有下一页 (true/false)
+						// let hasNext = data.data.data.list;
+				
+						//设置列表数据
+						if (page.num == 1) this.tipList = []; //如果是第一页需手动置空列表
+						this.tipList = this.tipList.concat(curPageData); //追加新数据
+						console.log('tipList', this.tipList);
+						// 请求成功,隐藏加载状态
+						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+						// this.mescroll.endByPage(curPageLen, totalPage);
+				
+						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+						this.mescroll.endBySize(curPageLen, totalSize);
+				
+						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+						//this.mescroll.endSuccess(curPageLen, hasNext);
+				
+						//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+						//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+						//如果传了hasNext,则翻到第二页即可显示无更多数据.
+						//this.mescroll.endSuccess(curPageLen);
+				
+						// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+						// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+					},
+					fail: () => {
+						//  请求失败,隐藏加载状态
+						this.mescroll.endErr();
+					}
+				});
+			}else{
+				uni.request({
+					url: this.globalUrl+ '/v2/user/liked/list?page=' + pageNum + '&count=' + pageSize,
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: data => {
+						console.log('data', data);
+						// 接口返回的当前页数据列表 (数组)
+						let curPageData = data.data.data.list;
+						console.log('curPageData', curPageData);
+						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+						let curPageLen = curPageData.length;
+						console.log('curPageLen', curPageLen);
+						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+						// let totalPage = data.data.data.list;
+						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+						let totalSize = data.data.data.total;
+						console.log('totalSize', totalSize);
+						that.likeNum = totalSize;
+						// 接口返回的是否有下一页 (true/false)
+						// let hasNext = data.data.data.list;
+				
+						//设置列表数据
+						if (page.num == 1) this.likeList = []; //如果是第一页需手动置空列表
+						this.likeList = this.likeList.concat(curPageData); //追加新数据
+						console.log('likeList', this.likeList);
+						// 请求成功,隐藏加载状态
+						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+						// this.mescroll.endByPage(curPageLen, totalPage);
+				
+						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+						this.mescroll.endBySize(curPageLen, totalSize);
+				
+						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+						//this.mescroll.endSuccess(curPageLen, hasNext);
+				
+						//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+						//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+						//如果传了hasNext,则翻到第二页即可显示无更多数据.
+						//this.mescroll.endSuccess(curPageLen);
+				
+						// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+						// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+					},
+					fail: () => {
+						//  请求失败,隐藏加载状态
+						this.mescroll.endErr();
+					}
+				});
+			}
+			
 
-					//设置列表数据
-					if (page.num == 1) this.tipList = []; //如果是第一页需手动置空列表
-					this.tipList = this.tipList.concat(curPageData); //追加新数据
-					console.log('tipList', this.tipList);
-					// 请求成功,隐藏加载状态
-					//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-					// this.mescroll.endByPage(curPageLen, totalPage);
-
-					//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-					this.mescroll.endBySize(curPageLen, totalSize);
-
-					//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-					//this.mescroll.endSuccess(curPageLen, hasNext);
-
-					//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-					//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-					//如果传了hasNext,则翻到第二页即可显示无更多数据.
-					//this.mescroll.endSuccess(curPageLen);
-
-					// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-					// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-				},
-				fail: () => {
-					//  请求失败,隐藏加载状态
-					this.mescroll.endErr();
-				}
-			});
-
+			
 			// 此处仍可以继续写其他接口请求...
 			// 调用其他方法...
 		},
@@ -397,7 +480,28 @@ export default {
 	position: absolute;
 	// top: 190rpx;
 }
-
+.favNum{
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #303133;
+	line-height: 24rpx;
+	position: absolute;
+	top: 76rpx;
+	left: 130rpx;
+}
+.likeNum{
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #303133;
+	line-height: 24rpx;
+	position: absolute;
+	top: 76rpx;
+	left: 258rpx;
+}
 
 .noContentItem {
 	// height: 600rpx;

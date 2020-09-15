@@ -29,7 +29,7 @@ const GlobalOption = {
 			width: 72 // 回到顶部图标的宽度, 默认72 (支持"20rpx", "20px", "20%"格式的值, 纯数字则默认单位rpx)
 		},
 		empty: {
-			use: true, // 是否显示空布局
+			use: false, // 是否显示空布局
 			icon: "/static/images/wenjianjia.png", // 图标路径 (建议放入static目录, 如 /static/img/mescroll-empty.png )
 			tip: '您的收藏夹空空如也~' // 提示
 		}

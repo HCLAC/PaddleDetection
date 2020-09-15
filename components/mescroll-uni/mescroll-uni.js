@@ -114,7 +114,7 @@ MeScroll.prototype.extendUpScroll = function(optUp) {
 			radius: "50%" // 圆角, 默认"50%" (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
 		},
 		empty: {
-			use: true, // 是否显示空布局
+			use: false, // 是否显示空布局
 			icon: null, // 图标路径
 			tip: '您的收藏夹空空如也~', // 提示
 			btnText: '', // 按钮

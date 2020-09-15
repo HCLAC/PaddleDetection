@@ -273,7 +273,7 @@ export default {
       position: relative;
       z-index: 10;
       flex: 1;
-      padding: 0 11px;
+      padding: 0 18px;
       transition: all 0.3s;
       white-space: nowrap;
     }
