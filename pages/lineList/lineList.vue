@@ -159,25 +159,28 @@ export default {
 		width: 100%;
 		display: flex;
 		flex-flow: column;
-		margin-bottom: 40rpx;
+		margin-bottom: 20rpx;
+		box-shadow: 0px 2px 4px 0px #EDEFF2;
+		border-radius: 0px 0px 16rpx 16rpx;
 		image {
 			width: 100%;
+			height: 370rpx;
 			border-radius: 16rpx 16rpx 0 0;
-			box-shadow: 0px 2px 4px 0px #edeff2;
+			box-shadow: 0px 2px 4px 0px #EDEFF2;
 		}
 		text {
-			height: 92rpx;
+			height: 32rpx;
 			background: #ffffff;
 			color: #303133;
 			font-weight: 500;
 			font-size: 32rpx;
-			line-height: 92rpx;
+			line-height: 32rpx;
 			padding: 0 20rpx;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
-			box-shadow: 0px 4rpx 8rpx 0px #edeff2;
-			border-radius: 0 0 16rpx 16rpx;
+			margin-top: 20rpx;
+			margin-bottom: 40rpx;
 		}
 	}
 }
