@@ -160,7 +160,7 @@ mounted() {
 	methods: {
 		getOrder() {},
 		templateAdd(e) {
-			console.log(e)
+			console.log('e',e)
 			
 			if(e.group && e.groupid){
 				uni.request({
@@ -230,6 +230,7 @@ mounted() {
 							// console.log(res.data.data.content);
 							
 							that.articleList = res.data;
+							console.log('文章详情--',that.articleList);
 							that.following = that.articleList.data.follow
 							that.$nextTick(()=>{
 								uni.getImageInfo({
@@ -247,7 +248,7 @@ mounted() {
 							
 						}else{
 							that.articleList = res.data;
-							console.log(that.articleList);
+							console.log('文章详情',that.articleList);
 							that.following = that.articleList.data.follow
 							that.$nextTick(()=>{
 								uni.getImageInfo({
@@ -267,6 +268,8 @@ mounted() {
 
 					}else{
 						that.articleList = res.data;
+						console.log('文章详情=',that.articleList);
+						that.following = that.articleList.data.follow
 						that.$nextTick(()=>{
 							uni.getImageInfo({
 								src: that.articleList.data.images[0],

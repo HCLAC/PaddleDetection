@@ -45,7 +45,8 @@
 				</view>
 			</view>
 		</view>
-		<view style="margin-top: 68%; padding: 0 24rpx;" v-if="tabCurrent == 0">
+		<!-- 收藏 -->
+		<view style="margin-top: 68%; padding: 0 24rpx;" v-if="tabCurrent == 0 ">
 			<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"  >
 				<view class="contentItem" v-for="(item, index) in tipList" :key="index">
 					<view class="left">
@@ -80,9 +81,20 @@
 					</view>
 				</view>
 			</mescroll-body>
+			<!-- 收藏列表为空时 -->
+			<view class="empty" v-if="!tipList || !tipList.length">
+				<view class="emptyImg">
+					<image src="../../static/images/emptyfav.svg" mode=""></image>
+				</view>
+				<view class="emptyText">
+					您的收藏夹空空如也～
+				</view>
+			</view>
 		</view>
+		
+		<!-- 点赞 -->
 		<view style="margin-top: 68%; padding: 0 24rpx;" v-if="tabCurrent == 1">
-			<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+			<mescroll-body   ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 				<view class="contentItem" v-for="(item, index) in likeList" :key="index">
 					<view class="left">
 						<image :src="item.main_image" mode="">
@@ -116,6 +128,15 @@
 					</view>
 				</view>
 			</mescroll-body>
+			<!-- 点赞列表为空时 -->
+			<view class="empty" v-if="!likeList || !likeList.length">
+				<view class="emptyImg">
+					<image src="../../static/images/emptylike.svg" mode=""></image>
+				</view>
+				<view class="emptyText">
+					您还没有赞过任何文章哦～
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -581,8 +602,8 @@ export default {
 		}
 		image {
 			// margin: 8rpx;
-			width: 208rpx;
-			height: 246rpx;
+			width: 192rpx;
+			height: 232rpx;
 			margin-right: 20rpx;
 			box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.08);
 			border-radius: 16rpx 0 0 16rpx;
@@ -668,4 +689,37 @@ export default {
 		}
 	}
 }
+// 列表为空时
+	.empty {
+		position: absolute;
+		left: 50%; 
+		top: 50%;
+		transform: translate(-50%, -50%); 
+		-webkit-transform: translate(-50%, -50%);
+		text-align: center;
+		// margin-top: 350rpx;
+		// margin-left: 138rpx;
+	}
+
+	.emptyImg {
+		width: 148rpx;
+		height: 148rpx;
+		margin-left: 164rpx;
+		margin-bottom: 40rpx;
+
+		image {
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	.emptyText {
+		width: 476rpx;
+		height: 30rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #909399;
+		line-height: 30rpx;
+	}
 </style>

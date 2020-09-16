@@ -57,6 +57,14 @@
 						<view class="content">
 							<rich-text class="richText" :nodes="item.content"></rich-text>
 						</view>
+						<view class="favandlikebox">
+							<view class="fav">
+								{{item.fav_count}}收藏
+							</view>
+							<view class="like">
+								{{item.like_count}}点赞
+							</view>
+						</view>
 						<view class="position">
 							<image src="../../static/images/iconMap.svg" mode="aspectFill"></image>
 							<view>{{ item.location }}</view>
@@ -149,7 +157,24 @@ export default {
 								Authorization: uni.getStorageSync('Authorization')
 							},
 							success: (res) => {
-								that.authorMsg.is_follow = status == 1 ? true : false
+								if (res.data.code != 0) {
+									// debugger
+									uni.showModal({
+										title: '提示',
+										content: '您好，请先登录',
+										showCancel: false,
+										success: function(res) {
+											if (res.confirm) {
+												uni.redirectTo({
+													url: '../login/login'
+												});
+											}
+										}
+									});
+									return;
+								}else{
+									that.authorMsg.is_follow = status == 1 ? true : false
+								}
 							}
 						})
 					} else if (res.cancel) {
@@ -457,7 +482,7 @@ export default {
 
 .contentItem {
 	width: 694rpx;
-	height: 230rpx;
+	height: 232rpx;
 	margin: 28rpx;
 	margin-left: 0;
 	border-radius: 8px;
@@ -484,8 +509,8 @@ export default {
 		}
 		image {
 			// margin: 8rpx;
-			width: 208rpx;
-			height: 246rpx;
+			width: 192rpx;
+			height: 232rpx;
 			margin-right: 20rpx;
 			box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.08);
 			border-radius: 16rpx 0 0 16rpx;
@@ -493,7 +518,7 @@ export default {
 	}
 
 	.right {
-		margin-top: 40rpx;
+		margin-top: 12rpx;
 		height: 230rpx;
 		// overflow: hidden;
 		// text-overflow:ellipsis;
@@ -534,6 +559,19 @@ export default {
 		white-space: normal !important;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
+	}
+	.favandlikebox{
+		display: flex;
+		align-items: center;
+		margin-top: 20rpx;
+		font-size: 22rpx;
+		font-family: Roboto-Regular, Roboto;
+		font-weight: 400;
+		color: #606266;
+		line-height: 22rpx;
+	}
+	.like{
+		margin-left: 20rpx;
 	}
 	.right .position {
 		display: flex;
