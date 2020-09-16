@@ -1,14 +1,14 @@
 <template>
 	<view >
 		<!-- 自定义导航栏 -->
-		<u-navbar :is-back="false" :background="background" :is-fixed="true">
-			<view class="search-box" @click="confirm">
-				<view class="search-wrap">
-					<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
-					<u-search placeholderColor="#C9CAD1" search-icon-color="#C9CAD1" placeholder="搜索热门目的地" :show-action="false" height="64" bg-color="#F8F8F8"></u-search>
+		<view class="example-body">
+			<uni-nav-bar fixed="true" :status-bar="true" color="#333333" background-color="transparent" @clickLeft="showCity">
+				<view class="input-view" @click="confirm">
+					<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
+					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地">
 				</view>
-			</view>
-		</u-navbar>
+			</uni-nav-bar>
+		</view>
 
 		<!-- 内容 -->
 		<mescroll-uni v-if="bannerList.length != 0" @scroll="uniScroll" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
@@ -965,8 +965,8 @@ view {
 	/* #endif */
 	flex-direction: row;
 	/* min-width: 350rpx; */
-	/* width: 396rpx; */
-	height: 72rpx;
+	width: 486rpx;
+	height: 64rpx;
 	align-items: center;
 	flex: 1;
 	background: rgba(248, 248, 248, 1);
@@ -982,10 +982,10 @@ view {
 }
 
 .nav-bar-input {
-	height: 72rpx;
+	height: 64rpx;
 	/* min-width: 350rpx; */
-	width: 300rpx;
-	line-height: 72rpx;
+	width: 486rpx;
+	line-height: 64rpx;
 	/* #ifdef APP-PLUS-NVUE */
 	/* #endif */
 	font-size: 28rpx;

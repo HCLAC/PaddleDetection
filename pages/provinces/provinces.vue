@@ -203,8 +203,8 @@
 						</view>
 						<view class="right">
 							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
-								<view class="" @click="onPageJump" :id="item.article_id">
-									<view class="demo-top">
+								<view class="">
+									<view class="demo-top"  @click="onPageJump" :id="item.article_id">
 										<view class="imgBox">
 											<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
 											<view class="adress">

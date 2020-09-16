@@ -19,7 +19,7 @@
 						<image :src="item.avatar" mode=""></image>
 					</view>
 					<!-- 信息 -->
-					<view class="info">
+					<view class="info" @click="tobloggers(item.author_id)">
 						<view class="nickname">
 							{{item.user_name}}
 						</view>
@@ -42,6 +42,8 @@
 				</view>
 			</mescroll-body>
 		</view>
+		<!-- 弹窗 -->
+		<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 		<!-- 关注列表为空时 -->
 		<view class="empty" v-if="!followList || !followList.length">
 			<view class="emptyImg">
@@ -63,7 +65,11 @@
 				artNum: 230,
 				followList: 1,
 				isfllow: 1,
-				followList: []
+				followList: [],
+				item:[],
+				index:0,
+				show: false,
+				content: ''
 			};
 		},
 		mixins: [MescrollMixin],
@@ -77,7 +83,7 @@
 					url: this.globalUrl + '/user/follow/list',
 					data: {
 						page: 1,
-						count: 6
+						count: 10
 					},
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
@@ -98,35 +104,42 @@
 			},
 			// 关注
 			Fllow(item, index) {
-				console.log(item, index)
+				// console.log('--',item)
+				// console.log('==',index)
+				this.item = item
+				this.index = index
 				var that = this;
 				let msg = item.is_follow ? '确认取消关注?' : '确认关注?'
 				let status = item.is_follow ? 0 : 1
-				uni.showModal({
-					title: msg,
-					success: function(res) {
-						if (res.confirm) {
-							uni.request({
-								url: that.globalUrl + '/user/follow',
-								data: {
-									author_id: item.author_id,
-									follow: status
-								},
-								method: 'POST',
-								header: {
-									Authorization: uni.getStorageSync('Authorization')
-								},
-								success: (res) => {
-									that.followList[index].is_follow = status == 1 ? true : false
-								}
-							})
-						} else if (res.cancel) {
-							console.log('用户点击取消');
-						}
+				if(status == 1){
+					that.show = true
+					that.content = '确认关注?'
+					
+				}else{
+					that.show = true
+					that.content = '确认取消关注?'
+				}
+			},
+			// 点击确定
+			confirm(){
+				var that = this
+				let status = this.item.is_follow ? 0 : 1
+				uni.request({
+					url: that.globalUrl + '/user/follow',
+					data: {
+						author_id: this.item.author_id,
+						follow: status
+					},
+					method: 'POST',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: (res) => {
+						that.followList[that.index].is_follow = status == 1 ? true : false
 					}
 				})
-
 			},
+			
 			back() {
 				uni.navigateBack({
 					delta: 1
@@ -152,7 +165,7 @@
 				var that = this
 				// mescroll.setPageSize(6)
 				let pageNum = page.num; // 页码, 默认从1开始
-				let pageSize = page.size; // 页长, 默认每页10条
+				let pageSize = 10; // 页长, 默认每页10条
 
 				uni.request({
 					url: this.globalUrl + '/user/follow/list?page=' + pageNum + '&count=' + pageSize,
@@ -271,7 +284,7 @@
 	.card {
 		margin: 28rpx 0 0 28rpx;
 		padding-bottom: 30rpx;
-		border-bottom: 1rpx solid rgba(237, 239, 242, 1);
+		border-bottom: 0.5px solid rgba(237, 239, 242, 1);
 		display: flex;
 		align-items: center;
 	}
@@ -358,8 +371,9 @@
 		height: 52rpx;
 		background: #FFE512;
 		border-radius: 26rpx;
-		text-align: center;
-		line-height: 52rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		margin-right: 28rpx;
 		color: #303133;
 
@@ -380,8 +394,9 @@
 		background: #fff;
 		border-radius: 26rpx;
 		border: 1px solid #DDDDDD;
-		text-align: center;
-		line-height: 52rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		margin-right: 28rpx;
 		color: rgba(201, 202, 209, 1);
 

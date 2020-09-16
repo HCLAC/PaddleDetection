@@ -1,13 +1,13 @@
 <template>
 	<view class="content">
-		<view  style="position: fixed; width: 100%; top: 0; z-index: 400;" v-if="authorMsg">
+		<view  style="position: fixed; width: 100%; top: 0; z-index: 400;" >
 			<view class="contentTop">
 				<image src="../../static/images/mineBack.png" class="backImg"></image>
 				<!-- 博主信息 -->
-				<view class="usermes">
+				<view class="usermes" v-if="authorMsg">
 					<image class="userAva" :src="authorMsg.avatar" ></image>
 
-					<image src="../../static/images/userImg.svg" class="userAva" v-if="nickName" mode="aspectFit"></image>
+					<image src="../../static/images/userImg.svg" class="userAva" v-if="nickName" mode=""></image>
 					<view class="userR">
 						<view class="userName">{{ authorMsg.user_name }}</view>
 						<view class="likeandfans" >
@@ -28,49 +28,57 @@
 					</view>
 				</view>
 			</view>
+			<!-- 弹窗 -->
+			<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 			<!-- 作品 -->
 			<view class="myCollection">
-				<view class="tip">作品</view>
-				<view class="articleNum">
-					{{authorMsg.article_count}}
+				<view class="tip">作品
+					<view class="line"></view>
 				</view>
-				<view class="line"></view>
+				<view class="articleNum">
+					{{article_count}}
+				</view>
+				
 			</view>
 		</view>
 		<view style="margin-top: 68%; padding: 0 24rpx;" v-if="workslist">
 			<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"  >
-				<view class="contentItem" v-for="(item, index) in workslist" :key="index">
-					<view class="left">
-						<image :src="item.image" mode="">
-							<view class="imgTip">
-								<view v-if="item.type == 1">游记</view>
-								<view v-if="item.type == 2">攻略</view>
+				<view class="" v-for="(item, index) in workslist" :key="index">
+					<view class="contentItem" >
+						<view class="left">
+							<image :src="item.image" mode="">
+								<view class="imgTip">
+									<view v-if="item.type == 1">游记</view>
+									<view v-if="item.type == 2">攻略</view>
+								</view>
+							</image>
+						</view>
+						<view class="right" @click="onPageJump" :id="item.article_id">
+							<view class="title">
+								<text class="tips" v-if="item.type == 1">游记</text>
+								<text class="tips" v-if="item.type == 2">攻略</text>
+								<text class="titleText">{{ item.title }}</text>
 							</view>
-						</image>
+							<view class="content">
+								<rich-text class="richText" :nodes="item.content"></rich-text>
+							</view>
+							<view class="favandlikebox">
+								<view class="fav">
+									{{item.fav_count}}收藏
+								</view>
+								<view class="like">
+									{{item.like_count}}点赞
+								</view>
+							</view>
+							<view class="position">
+								<image src="../../static/images/iconMap.svg" mode="aspectFill"></image>
+								<view>{{ item.location }}</view>
+							</view>
+						</view>
 					</view>
-					<view class="right" @click="onPageJump" :id="item.article_id">
-						<view class="title">
-							<text class="tips" v-if="item.type == 1">游记</text>
-							<text class="tips" v-if="item.type == 2">攻略</text>
-							<text class="titleText">{{ item.title }}</text>
-						</view>
-						<view class="content">
-							<rich-text class="richText" :nodes="item.content"></rich-text>
-						</view>
-						<view class="favandlikebox">
-							<view class="fav">
-								{{item.fav_count}}收藏
-							</view>
-							<view class="like">
-								{{item.like_count}}点赞
-							</view>
-						</view>
-						<view class="position">
-							<image src="../../static/images/iconMap.svg" mode="aspectFill"></image>
-							<view>{{ item.location }}</view>
-						</view>
-					</view>
+					<view class="contentline"></view>
 				</view>
+				
 			</mescroll-body>
 		</view>
 	</view>
@@ -84,7 +92,10 @@ export default {
 		return {
 			author_id:'',
 			authorMsg:[],
-			workslist:[]
+			workslist:[],
+			article_count:0,
+			show: false,
+			content: ''
 		};
 	},
 	mixins: [MescrollMixin],
@@ -133,6 +144,7 @@ export default {
 				success: (res) => {
 					console.log('作品列表=', res.data);
 					this.workslist = res.data.data.list
+					this.article_count = res.data.data.total
 				}
 			})
 		},
@@ -142,47 +154,52 @@ export default {
 			var that = this;
 			let msg = this.authorMsg.is_follow ? '确认取消关注?' : '确认关注?'
 			let status = this.authorMsg.is_follow ? 0 : 1
-			uni.showModal({
-				title: msg,
-				success: function(res) {
-					if (res.confirm) {
-						uni.request({
-							url: that.globalUrl + '/user/follow',
-							data: {
-								author_id: that.authorMsg.author_id,
-								follow: status
-							},
-							method: 'POST',
-							header: {
-								Authorization: uni.getStorageSync('Authorization')
-							},
-							success: (res) => {
-								if (res.data.code != 0) {
-									// debugger
-									uni.showModal({
-										title: '提示',
-										content: '您好，请先登录',
-										showCancel: false,
-										success: function(res) {
-											if (res.confirm) {
-												uni.redirectTo({
-													url: '../login/login'
-												});
-											}
-										}
+			
+			if(status == 1){
+				that.show = true
+				that.content = '确认关注?'
+				
+			}else{
+				that.show = true
+				that.content = '确认取消关注?'
+			}
+		},
+		// 点击确认
+		confirm(){
+			var that = this;
+			let msg = this.authorMsg.is_follow ? '确认取消关注?' : '确认关注?'
+			let status = this.authorMsg.is_follow ? 0 : 1
+			uni.request({
+				url: that.globalUrl + '/user/follow',
+				data: {
+					author_id: that.authorMsg.author_id,
+					follow: status
+				},
+				method: 'POST',
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: (res) => {
+					if (res.data.code != 0) {
+						// debugger
+						uni.showModal({
+							title: '提示',
+							content: '您好，请先登录',
+							showCancel: false,
+							success: function(res) {
+								if (res.confirm) {
+									uni.redirectTo({
+										url: '../login/login'
 									});
-									return;
-								}else{
-									that.authorMsg.is_follow = status == 1 ? true : false
 								}
 							}
-						})
-					} else if (res.cancel) {
-						console.log('用户点击取消');
+						});
+						return;
+					}else{
+						that.authorMsg.is_follow = status == 1 ? true : false
 					}
 				}
 			})
-		
 		},
 		// 跳转文章详情
 		onPageJump(e) {
@@ -338,12 +355,17 @@ export default {
 	background: rgba(251, 204, 12, 0.45);
 	border-radius: 26rpx;
 	margin-left: 132rpx;
-	font-size: 28rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: #FFA940;
-	line-height: 42rpx;
 	text-align: center;
+	line-height: 52rpx;
+	text{
+		width: 84rpx;
+		height: 28rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #FFA940;
+		line-height: 28rpx;
+	}
 }
 .unfollow{
 	width: 136rpx;
@@ -400,13 +422,14 @@ export default {
 	// top: 190rpx;
 }
 .tip{
-	width: 72rpx;
-	height: 36rpx;
+	// width: 72rpx;
+	// height: 36rpx;
 	font-size: 36rpx;
 	font-family: PingFangSC-Semibold, PingFang SC;
 	font-weight: 600;
 	color: #303133;
 	line-height: 36rpx;
+	// position: relative;
 }
 .articleNum{
 	position: absolute;
@@ -420,8 +443,8 @@ export default {
 	line-height: 24rpx;
 }
 .line{
-	position: absolute;
-	top: 84rpx;
+	// position: absolute;
+	// top: 40rpx;
 	width: 72rpx;
 	height: 24rpx;
 	background: #FFE512;
@@ -486,7 +509,6 @@ export default {
 	margin: 28rpx;
 	margin-left: 0;
 	border-radius: 8px;
-	box-shadow: 4rpx 4rpx 20rpx 0rpx rgba(0, 0, 0, 0.08);
 	display: flex;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -505,15 +527,14 @@ export default {
 			height: 44rpx;
 			text-align: center;
 			background-color: rgba(0, 0, 0, 0.6);
-			border-radius: 16rpx 0 16rpx 0;
+			border-radius: 16rpx 0px 16rpx 0px;
 		}
 		image {
 			// margin: 8rpx;
 			width: 192rpx;
 			height: 232rpx;
 			margin-right: 20rpx;
-			box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.08);
-			border-radius: 16rpx 0 0 16rpx;
+			border-radius: 16rpx;
 		}
 	}
 
@@ -595,5 +616,11 @@ export default {
 			white-space: nowrap;
 		}
 	}
+	
 }
+.contentline{
+		width: 722rpx;
+		height: 1rpx;
+		background: #EDEFF2;
+	}
 </style>

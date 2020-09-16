@@ -48,38 +48,43 @@
 		<!-- 收藏 -->
 		<view style="margin-top: 68%; padding: 0 24rpx;" v-if="tabCurrent == 0 ">
 			<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"  >
-				<view class="contentItem" v-for="(item, index) in tipList" :key="index">
-					<view class="left">
-						<image :src="item.main_image" mode="">
-							<view class="imgTip">
-								<view v-if="item.type == 1">游记</view>
-								<view v-if="item.type == 2">攻略</view>
+				<view class="" v-for="(item, index) in tipList" :key="index">
+					<view class="contentItem" >
+						<view class="left">
+							<image :src="item.main_image" mode="">
+								<view class="imgTip">
+									<view v-if="item.type == 1">游记</view>
+									<view v-if="item.type == 2">攻略</view>
+								</view>
+							</image>
+						</view>
+						<view class="right" @click="onPageJump" :id="item.article_id">
+							<view class="title">
+								<text class="tips" v-if="item.type == 1">游记</text>
+								<text class="tips" v-if="item.type == 2">攻略</text>
+								<text class="titleText">{{ item.title }}</text>
 							</view>
-						</image>
+							<view class="content">
+								<rich-text class="richText" :nodes="item.content"></rich-text>
+							</view>
+							<view class="favandlikebox">
+								<view class="fav">
+									{{item.fav_count}}收藏
+								</view>
+								<view class="like">
+									{{item.like_count}}点赞
+								</view>
+							</view>
+							<view class="position">
+								<image src="../../static/images/iconMap.svg" mode="aspectFill"></image>
+								<view>{{ item.location }}</view>
+							</view>
+						</view>
 					</view>
-					<view class="right" @click="onPageJump" :id="item.article_id">
-						<view class="title">
-							<text class="tips" v-if="item.type == 1">游记</text>
-							<text class="tips" v-if="item.type == 2">攻略</text>
-							<text class="titleText">{{ item.title }}</text>
-						</view>
-						<view class="content">
-							<rich-text class="richText" :nodes="item.content"></rich-text>
-						</view>
-						<view class="favandlikebox">
-							<view class="fav">
-								{{item.fav_count}}收藏
-							</view>
-							<view class="like">
-								{{item.like_count}}点赞
-							</view>
-						</view>
-						<view class="position">
-							<image src="../../static/images/iconMap.svg" mode="aspectFill"></image>
-							<view>{{ item.location }}</view>
-						</view>
-					</view>
+					<view class="line"></view>
 				</view>
+				
+				
 			</mescroll-body>
 			<!-- 收藏列表为空时 -->
 			<view class="empty" v-if="!tipList || !tipList.length">
@@ -95,38 +100,43 @@
 		<!-- 点赞 -->
 		<view style="margin-top: 68%; padding: 0 24rpx;" v-if="tabCurrent == 1">
 			<mescroll-body   ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-				<view class="contentItem" v-for="(item, index) in likeList" :key="index">
-					<view class="left">
-						<image :src="item.main_image" mode="">
-							<view class="imgTip">
-								<view v-if="item.type == 1">游记</view>
-								<view v-if="item.type == 2">攻略</view>
+				<view class="" v-for="(item, index) in likeList" :key="index">
+					<view class="contentItem" >
+						<view class="left">
+							<image :src="item.main_image" mode="">
+								<view class="imgTip">
+									<view v-if="item.type == 1">游记</view>
+									<view v-if="item.type == 2">攻略</view>
+								</view>
+							</image>
+						</view>
+						<view class="right" @click="onPageJump" :id="item.article_id">
+							<view class="title">
+								<text class="tips" v-if="item.type == 1">游记</text>
+								<text class="tips" v-if="item.type == 2">攻略</text>
+								<text class="titleText">{{ item.title }}</text>
 							</view>
-						</image>
+							<view class="content">
+								<rich-text class="richText" :nodes="item.content"></rich-text>
+							</view>
+							<view class="favandlikebox">
+								<view class="fav">
+									{{item.fav_count}}收藏
+								</view>
+								<view class="like">
+									{{item.like_count}}点赞
+								</view>
+							</view>
+							<view class="position">
+								<image src="../../static/images/iconMap.svg" mode="aspectFill"></image>
+								<view>{{ item.location }}</view>
+							</view>
+						</view>
 					</view>
-					<view class="right" @click="onPageJump" :id="item.article_id">
-						<view class="title">
-							<text class="tips" v-if="item.type == 1">游记</text>
-							<text class="tips" v-if="item.type == 2">攻略</text>
-							<text class="titleText">{{ item.title }}</text>
-						</view>
-						<view class="content">
-							<rich-text class="richText" :nodes="item.content"></rich-text>
-						</view>
-						<view class="favandlikebox">
-							<view class="fav">
-								{{item.fav_count}}收藏
-							</view>
-							<view class="like">
-								{{item.like_count}}点赞
-							</view>
-						</view>
-						<view class="position">
-							<image src="../../static/images/iconMap.svg" mode="aspectFill"></image>
-							<view>{{ item.location }}</view>
-						</view>
-					</view>
+					<view class="line"></view>
 				</view>
+				
+				
 			</mescroll-body>
 			<!-- 点赞列表为空时 -->
 			<view class="empty" v-if="!likeList || !likeList.length">
@@ -159,7 +169,7 @@ export default {
 			favNum:0,
 			likeNum:0,
 			current: 0,
-			tablist: ['收藏', '点赞'],
+			tablist: ['收藏', '已赞'],
 			tabCurrent: 0,
 		};
 	},
@@ -265,7 +275,7 @@ export default {
 				}
 			});
 			uni.request({
-				url: this.globalUrl+ '/v2/user/liked/list',
+				url: this.globalUrl+ '/user/liked/list',
 				data: {
 					count: 5,
 					page: 1
@@ -375,7 +385,7 @@ export default {
 				});
 			}else{
 				uni.request({
-					url: this.globalUrl+ '/v2/user/liked/list?page=' + pageNum + '&count=' + pageSize,
+					url: this.globalUrl+ '/user/liked/list?page=' + pageNum + '&count=' + pageSize,
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
@@ -579,7 +589,6 @@ export default {
 	margin: 28rpx;
 	margin-left: 0;
 	border-radius: 8px;
-	box-shadow: 4rpx 4rpx 20rpx 0rpx rgba(0, 0, 0, 0.08);
 	display: flex;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -598,15 +607,14 @@ export default {
 			height: 44rpx;
 			text-align: center;
 			background-color: rgba(0, 0, 0, 0.6);
-			border-radius: 16rpx 0 16rpx 0;
+			border-radius: 16rpx 0px 16rpx 0px;
 		}
 		image {
 			// margin: 8rpx;
 			width: 192rpx;
 			height: 232rpx;
 			margin-right: 20rpx;
-			box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.08);
-			border-radius: 16rpx 0 0 16rpx;
+			border-radius: 16rpx;
 		}
 	}
 
@@ -688,6 +696,11 @@ export default {
 			white-space: nowrap;
 		}
 	}
+}
+.line{
+	width: 722rpx;
+	height: 1rpx;
+	background: #EDEFF2;
 }
 // 列表为空时
 	.empty {

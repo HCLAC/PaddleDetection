@@ -127,6 +127,8 @@ export default {
 			if (this.code) {
 				this.code = '';
 				this.styleCode.color = '#C9CAD1';
+				this.disabled = true;
+				this.styleBtn.background = 'rgba(237,239,242,1)';
 			}
 		},
 		isfocus() {
