@@ -20,7 +20,10 @@
 						</view>
 						<!-- <view class="logout">退出登录</view> -->
 					</view>
-					<view class="follow" >
+					<view class="follow" v-if="authorMsg.is_follow" @click="Fllow()">
+						<text>已关注</text>
+					</view>
+					<view class="unfollow" v-if="!authorMsg.is_follow" @click="Fllow()">
 						<text>关注</text>
 					</view>
 				</view>
@@ -124,6 +127,37 @@ export default {
 					this.workslist = res.data.data.list
 				}
 			})
+		},
+		// 关注
+		Fllow() {
+			// console.log(item, index)
+			var that = this;
+			let msg = this.authorMsg.is_follow ? '确认取消关注?' : '确认关注?'
+			let status = this.authorMsg.is_follow ? 0 : 1
+			uni.showModal({
+				title: msg,
+				success: function(res) {
+					if (res.confirm) {
+						uni.request({
+							url: that.globalUrl + '/user/follow',
+							data: {
+								author_id: that.authorMsg.author_id,
+								follow: status
+							},
+							method: 'POST',
+							header: {
+								Authorization: uni.getStorageSync('Authorization')
+							},
+							success: (res) => {
+								that.authorMsg.is_follow = status == 1 ? true : false
+							}
+						})
+					} else if (res.cancel) {
+						console.log('用户点击取消');
+					}
+				}
+			})
+		
 		},
 		// 跳转文章详情
 		onPageJump(e) {
@@ -274,6 +308,19 @@ export default {
 	margin-left: 8rpx;
 }
 .follow{
+	width: 136rpx;
+	height: 52rpx;
+	background: rgba(251, 204, 12, 0.45);
+	border-radius: 26rpx;
+	margin-left: 132rpx;
+	font-size: 28rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #FFA940;
+	line-height: 42rpx;
+	text-align: center;
+}
+.unfollow{
 	width: 136rpx;
 	height: 52rpx;
 	border-radius: 26rpx;

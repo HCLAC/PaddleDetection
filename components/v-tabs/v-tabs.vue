@@ -274,6 +274,7 @@ export default {
       z-index: 10;
       flex: 1;
       padding: 0 18px;
+	  // margin-right: 18px;
       transition: all 0.3s;
       white-space: nowrap;
     }
