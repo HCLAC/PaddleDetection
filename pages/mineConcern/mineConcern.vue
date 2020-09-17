@@ -111,14 +111,26 @@
 				var that = this;
 				let msg = item.is_follow ? '确认取消关注?' : '确认关注?'
 				let status = item.is_follow ? 0 : 1
-				if(status == 1){
-					that.show = true
-					that.content = '确认关注?'
-					
-				}else{
+				if(status == 0){
 					that.show = true
 					that.content = '确认取消关注?'
+				}else{
+					uni.request({
+						url: that.globalUrl + '/user/follow',
+						data: {
+							author_id: this.item.author_id,
+							follow: status
+						},
+						method: 'POST',
+						header: {
+							Authorization: uni.getStorageSync('Authorization')
+						},
+						success: (res) => {
+							that.followList[that.index].is_follow = status == 1 ? true : false
+						}
+					})
 				}
+				
 			},
 			// 点击确定
 			confirm(){

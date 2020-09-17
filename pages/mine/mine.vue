@@ -269,9 +269,12 @@ export default {
 				method: 'get',
 				success: (res)=> {
 					console.log('收藏列表', res.data);
-					this.tipList = res.data.data.list;
-					this.favNum = res.data.data.total
-					console.log('1111111', this.tipList);
+					if(res.data.data != null){
+						this.tipList = res.data.data.list;
+						this.favNum = res.data.data.total
+						console.log('1111111', this.tipList);
+					}
+					
 				}
 			});
 			uni.request({
@@ -286,9 +289,12 @@ export default {
 				method: 'get',
 				success: (res)=> {
 					console.log('点赞列表', res.data);
-					this.likeList = res.data.data.list;
-					this.likeNum = res.data.data.total
-					console.log('likelist', this.likeList);
+					if(res.data.data != null ){
+						this.likeList = res.data.data.list;
+						this.likeNum = res.data.data.total
+						console.log('likelist', this.likeList);
+					}
+					
 				}
 			});
 		},
@@ -342,41 +348,44 @@ export default {
 					success: data => {
 						console.log('data', data);
 						// 接口返回的当前页数据列表 (数组)
-						let curPageData = data.data.data.list;
-						console.log('curPageData', curPageData);
-						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-						let curPageLen = curPageData.length;
-						console.log('curPageLen', curPageLen);
-						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-						// let totalPage = data.data.data.list;
-						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-						let totalSize = data.data.data.total;
-						console.log('totalSize', totalSize);
-						that.favNum = totalSize;
-						// 接口返回的是否有下一页 (true/false)
-						// let hasNext = data.data.data.list;
-				
-						//设置列表数据
-						if (page.num == 1) this.tipList = []; //如果是第一页需手动置空列表
-						this.tipList = this.tipList.concat(curPageData); //追加新数据
-						console.log('tipList', this.tipList);
-						// 请求成功,隐藏加载状态
-						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-						// this.mescroll.endByPage(curPageLen, totalPage);
-				
-						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-						this.mescroll.endBySize(curPageLen, totalSize);
-				
-						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-						//this.mescroll.endSuccess(curPageLen, hasNext);
-				
-						//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-						//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-						//如果传了hasNext,则翻到第二页即可显示无更多数据.
-						//this.mescroll.endSuccess(curPageLen);
-				
-						// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-						// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+						if(data.data.data != null){
+							let curPageData = data.data.data.list;
+							console.log('curPageData', curPageData);
+							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+							let curPageLen = curPageData.length;
+							console.log('curPageLen', curPageLen);
+							// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+							// let totalPage = data.data.data.list;
+							// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+							let totalSize = data.data.data.total;
+							console.log('totalSize', totalSize);
+							that.favNum = totalSize;
+							// 接口返回的是否有下一页 (true/false)
+							// let hasNext = data.data.data.list;
+											
+							//设置列表数据
+							if (page.num == 1) this.tipList = []; //如果是第一页需手动置空列表
+							this.tipList = this.tipList.concat(curPageData); //追加新数据
+							console.log('tipList', this.tipList);
+							// 请求成功,隐藏加载状态
+							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+							// this.mescroll.endByPage(curPageLen, totalPage);
+											
+							//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+							this.mescroll.endBySize(curPageLen, totalSize);
+											
+							//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+							//this.mescroll.endSuccess(curPageLen, hasNext);
+											
+							//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+							//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+							//如果传了hasNext,则翻到第二页即可显示无更多数据.
+							//this.mescroll.endSuccess(curPageLen);
+											
+							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+						}
+						
 					},
 					fail: () => {
 						//  请求失败,隐藏加载状态

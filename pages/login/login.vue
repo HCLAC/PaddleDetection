@@ -39,14 +39,14 @@
 					/>
 					<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-if="code && isShowcode" @click="clearcode()"></image>
 					<view class="code-sx"></view>
-					<view class="codeimg" @click.stop="getCode()" :style="codeColor">{{ getCodeText }}</view>
+					<view class="codeimg" @click.stop="getCode()" :style="{color:codeColor}">{{ getCodeText }}</view>
 				</view>
 				<u-line color="rgba(237, 239, 242, 1)" margin="40rpx 0rpx"></u-line>
 			</view>
 
 			<!-- 登录按钮 -->
-			<view class="loginButton"><button class="lb" :disabled="disabled" :style="styleBtn" @tap="doLogin">登录</button></view>
-			<view v-if="serviceProvider=='baidu'" class="loginButton"><button class="badiduBtn" :style="styleBtn" open-type="getPhoneNumber" @getphonenumber="getPhone">百度账号一键登录</button></view>
+			<view class="loginButton"><button class="lb" :disabled="disabled" :style="{background: styleBtn.background}" @tap="doLogin">登录</button></view>
+			<view v-if="serviceProvider=='baidu'" class="loginButton"><button class="badiduBtn" :style="{background: styleBtn.background}" open-type="getPhoneNumber" @getphonenumber="getPhone">百度账号一键登录</button></view>
 		</view>
 	</view>
 </template>
@@ -100,6 +100,7 @@ export default {
 	},
 	methods: {
 		onInput(e) {
+			console.log(e)
 			if (e.detail.value.length == 11) {
 				this.styleObj.color = '#303133';
 			} else {

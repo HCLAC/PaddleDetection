@@ -520,7 +520,7 @@ export default {
 }
 // swipper样式 end
 .container {
-	padding: 40rpx 30rpx;
+	padding: 40rpx 30rpx 32rpx;
 
 	.linePrice {
 		font-size: 24rpx;
@@ -535,7 +535,7 @@ export default {
 		}
 	}
 	.lineTitle {
-		padding: 20rpx 0 0rpx 0;
+		padding-top: 14rpx;
 		font-size: 32rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
@@ -676,10 +676,13 @@ export default {
 		font-weight: 500;
 		color: #303133;
 		margin-left: 20rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
 	}
 	.u-order-desc {
 		font-size: 24rpx;
 		color: #303133;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
 		position: relative;
 		left: -14rpx;
 		line-height: 36rpx;
@@ -688,7 +691,7 @@ export default {
 		margin-top: 20rpx;
 		position: relative;
 		left: -14rpx;
-		border-bottom: 1rpx solid #dddddd;
+		border-bottom: 0.5px solid #dddddd;
 	}
 
 	.uTime {
