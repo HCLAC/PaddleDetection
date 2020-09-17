@@ -258,6 +258,16 @@ export default {
 				url: '/pages/contentdetail/contentdetail?article_id=' + id
 			});
 		},
+		back() {
+			uni.navigateBack({
+				delta: 1
+			});
+		},
+		home() {
+			uni.switchTab({
+				url: '/pages/index/index'
+			});
+		},
 		
 		/*下拉刷新的回调, 有三种处理方式:*/
 		downCallback() {

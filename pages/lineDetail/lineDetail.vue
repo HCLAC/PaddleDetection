@@ -37,7 +37,7 @@
 			<view class="lineTitle">{{ lineContent.title }}</view>
 		</view>
 		<view class="lineDriver"></view>
-		<view :class="isFixed ? 'fixTabs' : 'noFix'">
+		<view :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard">
 			<view style="width: 60%;">
 				<v-tabs
 					inactive-color="#909399"
@@ -47,8 +47,6 @@
 					activeColor="#303133"
 					fontSize="28rpx"
 					v-model="tabCurrent"
-					bold
-					height="108rpx"
 					:tabs="tablist"
 					:is-scroll="false"
 					:current="tabCurrent"
@@ -245,7 +243,7 @@ export default {
 			hasLogin: uni.getStorageSync('Authorization'),
 			isFixed: false,
 			serviceProvider: '',
-			
+			cardheight:0
 		};
 	},
 	onLoad(option) {
@@ -253,13 +251,7 @@ export default {
 			this.getDetail(option.id);
 		}
 	},
-	onPageScroll(e) {
-		if (e.scrollTop > 346.5) {
-			this.isFixed = true;
-		} else {
-			this.isFixed = false;
-		}
-	},
+	
 	onReachBottom() {
 		this.tabCurrent = 1
 	},
@@ -283,7 +275,22 @@ export default {
 				}
 			}
 		});
+		const query = uni.createSelectorQuery().in(this);
+		query.select('#selectcard').boundingClientRect(data => {
+		  console.log("得到布局位置信息" + JSON.stringify(data));
+		  console.log("节点离页面顶部的距离为" + data.top);
+		  this.cardheight = data.top
+		}).exec();
 	},
+	onPageScroll(e) {
+		if (e.scrollTop >  this.cardheight) {
+			this.isFixed = true;
+		} else {
+			this.isFixed = false;
+			this.tabCurrent = 0
+		}
+	},
+	
 	methods: {
 		
 		tabChange(index) {
@@ -294,7 +301,7 @@ export default {
 				})
 			}else{
 				uni.pageScrollTo({
-				    scrollTop: 288
+				    scrollTop: this.cardheight,
 				})
 			}
 		},
@@ -407,6 +414,8 @@ export default {
 			});
 		}
 	}
+
+	
 };
 </script>
 
@@ -552,7 +561,7 @@ export default {
 	padding: 10rpx 30rpx;
 	padding-bottom: 105rpx;
 	.planContent {
-		padding: 50rpx 30rpx 30rpx 20rpx;
+		padding: 20rpx 30rpx 30rpx 20rpx;
 	}
 }
 .tui-chatbox::before {
@@ -843,10 +852,11 @@ export default {
 	position: fixed;
 	top: 140rpx;
 	padding-left: 10rpx;
-	padding-bottom: 15rpx;
+	padding-top: 15rpx;
 	left: 0;
 	z-index: 2;
 	width: 100%;
+	height:110rpx;
 	background: #ffffff;
 	// border-bottom: 2rpx solid #eeeeee;
 	// box-shadow: 0px 0px 12rpx 0rpx #eeeeee;
@@ -856,6 +866,8 @@ export default {
 	left: 0;
 	z-index: 1000;
 	width: 100%;
+	height: 110rpx;
+	padding-top: 15rpx;
 	background: #ffffff;
 }
 </style>

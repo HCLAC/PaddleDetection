@@ -1,149 +1,163 @@
 <template>
-	<view class="content">
-		<view  style="position: fixed; width: 100%; top: 0; z-index: 400;">
-			<view class="contentTop">
-				<image src="../../static/images/mineBack.png" class="backImg"></image>
-				<!-- 用户信息 -->
-				<view class="usermes">
-					<image class="userAva" :src="avatarUrl" v-if="avatarUrl"></image>
+	<view>
+		<!-- 自定义导航栏 -->
+		<view class="example-body" v-if="isFixed">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
+				<view slot="left" class="slotleft">
+					<image class="fanhui" src=""  />
+					<image class="fhsy" src=""  />
+				</view>
+				<view class="slottitle">个人中心</view>
+			</uni-nav-bar>
+		</view>
+		<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"  >
+			<view class="content" style="height: 100%;">
+				<view  style="position: absolute; width: 100%; top: 0; z-index: 400;">
+					<view class="contentTop">
+						<image src="../../static/images/mineBack.png" class="backImg"></image>
+						<!-- 用户信息 -->
+						<view class="usermes">
+							<image class="userAva" :src="avatarUrl" v-if="avatarUrl"></image>
 
-					<image src="../../static/images/userImg.svg" class="userAva" v-if="nickName" mode=""></image>
-					<view class="userR">
-						<view class="userName">{{ nickName }}</view>
-						<view class="fllow" @click="toConcern()">
-							<text>关注</text>
-							<view class="fllowNum">{{fllowNum>10000?((fllowNum-(fllowNum%1000))/10000+'w'):fllowNum}}</view>
-						</view>
-						<!-- <view class="logout">退出登录</view> -->
-					</view>
-				</view>
-			</view>
-			<!-- 客服 -->
-			<view class="phone" @click="tell"><image class="phoneImg" src="../../static/images/minephone.svg" mode=""></image></view>
-			<!-- 我的收藏 -->
-			<view class="myCollection">
-				<!-- <view>收藏</view> -->
-				<v-tabs
-					inactive-color="#909399"
-					lineHeight="24rpx"
-					lineColor="#FFE512"
-					activeFontSize="36rpx"
-					activeColor="#303133"
-					fontSize="28rpx"
-					v-model="tabCurrent"
-					color="#909399;"
-					:tabs="tablist"
-					:is-scroll="false"
-					:current="tabCurrent"
-					@change="tabChange"
-				></v-tabs>
-				<view class="favNum" :style="{color: favnumcolor.color}" v-if="favNum != 0">
-					{{favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum}}
-				</view>
-				<view class="likeNum" :style="{color: likenumcolor.color}" v-if="likeNum != 0">
-					{{likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum}}
-				</view>
-			</view>
-		</view>
-		<!-- 收藏 -->
-		<view style="margin-top: 64%; padding: 0 24rpx;" v-if="tabCurrent == 0 ">
-			<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"  >
-				<view class="" v-for="(item, index) in tipList" :key="index">
-					<view class="contentItem" >
-						<view class="left">
-							<image :src="item.main_image" mode="">
-								<view class="imgTip">
-									<view v-if="item.type == 1">游记</view>
-									<view v-if="item.type == 2">攻略</view>
+							<image src="../../static/images/userImg.svg" class="userAva" v-if="nickName" mode=""></image>
+							<view class="userR">
+								<view class="userName">{{ nickName }}</view>
+								<view class="fllow" @click="toConcern()">
+									<text>关注</text>
+									<view class="fllowNum">{{fllowNum>10000?((fllowNum-(fllowNum%1000))/10000+'w'):fllowNum}}</view>
 								</view>
-							</image>
-						</view>
-						<view class="right" @click="onPageJump" :id="item.article_id">
-							<view class="title">
-								<text class="titleText">{{ item.title }}</text>
-							</view>
-							<view class="content">
-								<rich-text class="richText" :nodes="item.content"></rich-text>
-							</view>
-							<view class="favandlikebox">
-								<view class="fav">
-									{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}收藏
-								</view>
-								<view class="like">
-									{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}点赞
-								</view>
-							</view>
-							<view class="position">
-								<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
-								<view>{{ item.location }}</view>
+								<!-- <view class="logout">退出登录</view> -->
 							</view>
 						</view>
 					</view>
-					<view class="line"></view>
-				</view>
-				
-				
-			</mescroll-body>
-			<!-- 收藏列表为空时 -->
-			<view class="empty" v-if="!tipList || !tipList.length">
-				<view class="emptyImg">
-					<image src="../../static/images/emptyfav.svg" mode=""></image>
-				</view>
-				<view class="emptyText">
-					您的收藏夹空空如也～
-				</view>
-			</view>
-		</view>
-		
-		<!-- 点赞 -->
-		<view style="margin-top: 64%; padding: 0 24rpx;" v-if="tabCurrent == 1 ">
-			<mescroll-body   ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-				<view class="" v-for="(item, index) in likeList" :key="index">
-					<view class="contentItem" >
-						<view class="left">
-							<image :src="item.main_image" mode="">
-								<view class="imgTip">
-									<view v-if="item.type == 1">游记</view>
-									<view v-if="item.type == 2">攻略</view>
-								</view>
-							</image>
+					<!-- 客服 -->
+					<view class="phone" @click="tell"><image class="phoneImg" src="../../static/images/minephone.svg" mode=""></image></view>
+					<!-- 我的收藏 -->
+					<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
+						<!-- <view :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard"> -->
+						<!-- <view>收藏</view> -->
+							<v-tabs 
+								inactive-color="#909399"
+								lineHeight="24rpx"
+								lineColor="#FFE512"
+								activeFontSize="36rpx"
+								activeColor="#303133"
+								fontSize="28rpx"
+								v-model="tabCurrent"
+								color="#909399;"
+								:tabs="tablist"
+								:is-scroll="false"
+								:current="tabCurrent"
+								@change="tabChange"
+							></v-tabs>
+						<!-- </view> -->
+						<view class="favNum" :style="{color: favnumcolor.color}" v-if="favNum != 0">
+							{{favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum}}
 						</view>
-						<view class="right" @click="onPageJump" :id="item.article_id">
-							<view class="title">
-								<text class="titleText">{{ item.title }}</text>
-							</view>
-							<view class="content">
-								<rich-text class="richText" :nodes="item.content"></rich-text>
-							</view>
-							<view class="favandlikebox">
-								<view class="fav">
-									{{item.fav_count}}收藏
-								</view>
-								<view class="like">
-									{{item.like_count}}点赞
-								</view>
-							</view>
-							<view class="position">
-								<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
-								<view>{{ item.location }}</view>
-							</view>
+						<view class="likeNum" :style="{color: likenumcolor.color}" v-if="likeNum != 0">
+							{{likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum}}
 						</view>
 					</view>
-					<view class="line"></view>
+				</view>
+				<!-- 收藏 -->
+				<view style="margin-top: 64%; padding: 0 24rpx;" v-if="tabCurrent == 0 ">
+					
+						<view class="" v-for="(item, index) in tipList" :key="index">
+							<view class="contentItem" >
+								<view class="left">
+									<image :src="item.main_image" mode="">
+										<view class="imgTip">
+											<view v-if="item.type == 1">游记</view>
+											<view v-if="item.type == 2">攻略</view>
+										</view>
+									</image>
+								</view>
+								<view class="right" @click="onPageJump" :id="item.article_id">
+									<view class="title">
+										<text class="titleText">{{ item.title }}</text>
+									</view>
+									<view class="content">
+										<rich-text class="richText" :nodes="item.content"></rich-text>
+									</view>
+									<view class="favandlikebox">
+										<view class="fav">
+											{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}收藏
+										</view>
+										<view class="like">
+											{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}点赞
+										</view>
+									</view>
+									<view class="position">
+										<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
+										<view>{{ item.location }}</view>
+									</view>
+								</view>
+							</view>
+							<view class="line"></view>
+						</view>
+						
+						
+					
+					<!-- 收藏列表为空时 -->
+					<view class="empty" v-if="!tipList || !tipList.length">
+						<view class="emptyImg">
+							<image src="../../static/images/emptyfav.svg" mode=""></image>
+						</view>
+						<view class="emptyText">
+							您的收藏夹空空如也～
+						</view>
+					</view>
 				</view>
 				
-				
-			</mescroll-body>
-			<!-- 点赞列表为空时 -->
-			<view class="empty" v-if="!likeList || !likeList.length">
-				<view class="emptyImg">
-					<image src="../../static/images/emptylike.svg" mode=""></image>
-				</view>
-				<view class="emptyText">
-					您还没有赞过任何文章哦～
+				<!-- 点赞 -->
+				<view style="margin-top: 64%; padding: 0 24rpx;" v-if="tabCurrent == 1 ">
+						<view class="" v-for="(item, index) in likeList" :key="index">
+							<view class="contentItem" >
+								<view class="left">
+									<image :src="item.main_image" mode="">
+										<view class="imgTip">
+											<view v-if="item.type == 1">游记</view>
+											<view v-if="item.type == 2">攻略</view>
+										</view>
+									</image>
+								</view>
+								<view class="right" @click="onPageJump" :id="item.article_id">
+									<view class="title">
+										<text class="titleText">{{ item.title }}</text>
+									</view>
+									<view class="content">
+										<rich-text class="richText" :nodes="item.content"></rich-text>
+									</view>
+									<view class="favandlikebox">
+										<view class="fav">
+											{{item.fav_count}}收藏
+										</view>
+										<view class="like">
+											{{item.like_count}}点赞
+										</view>
+									</view>
+									<view class="position">
+										<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
+										<view>{{ item.location }}</view>
+									</view>
+								</view>
+							</view>
+							<view class="line"></view>
+						</view>
+						
+						
+					<!-- 点赞列表为空时 -->
+					<view class="empty" v-if="!likeList || !likeList.length">
+						<view class="emptyImg">
+							<image src="../../static/images/emptylike.svg" mode=""></image>
+						</view>
+						<view class="emptyText">
+							您还没有赞过任何文章哦～
+						</view>
+					</view>
 				</view>
 			</view>
-		</view>
+		</mescroll-body>
 	</view>
 </template>
 
@@ -172,7 +186,9 @@ export default {
 			},
 			likenumcolor:{
 				color: '#909399'
-			}
+			},
+			cardheight:0,
+			isFixed:false
 		};
 	},
 	mixins: [MescrollMixin],
@@ -183,7 +199,21 @@ export default {
 	onLoad() {
 		this.getlist()
 	},
-
+	mounted(){
+		const query = uni.createSelectorQuery().in(this);
+		query.select('#selectcard').boundingClientRect(data => {
+		  console.log("得到布局位置信息" + JSON.stringify(data));
+		  console.log("节点离页面顶部的距离为" + data.top);
+		  this.cardheight = data.top
+		}).exec();
+	},
+	onPageScroll(e) {
+		if (e.scrollTop >  this.cardheight) {
+			this.isFixed = true;
+		} else {
+			this.isFixed = false;
+		}
+	},
 	methods: {
 		getUserMsg() {
 			var that = this;
@@ -454,6 +484,53 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+	.example-body {
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 0;
+		font-size: 14px;
+		background-color: #aa557f;
+		
+	}
+	.example-body {
+		flex-direction: column;
+		padding: 15px;
+		background-color: #ffffff;
+	}
+	.example-body {
+		padding: 0;
+	}
+	.navBar {
+		display: flex;
+	}
+	.slotleft {
+		display: flex;
+		align-items: center;
+	}
+	.fanhui {
+		width: 40rpx;
+		height: 40rpx;
+		margin-left: 40rpx;
+		margin-right: 20rpx;
+	}
+	.fhsy {
+		width: 40rpx;
+		height: 40rpx;
+	}
+	.slottitle {
+		margin-left: 162rpx;
+		font-size: 38rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 600;
+		color: rgba(0, 0, 0, 1);
+	}
+	.button-v-line {
+		width: 1px;
+		height: 18px;
+		background-color: #2f2f2f;
+		margin: 0 8px;
+	}
 .backImg {
 	position: absolute;
 	height: 440rpx;
@@ -538,6 +615,28 @@ export default {
 	padding-top: 30rpx;
 	position: absolute;
 	top: 360rpx;
+}
+.fixTabs {
+	position: fixed;
+	top: 146rpx;
+	// padding-left: 10rpx;
+	// padding-top: 15rpx;
+	// left: 0;
+	// z-index: 2;
+	// width: 100%;
+	// height:110rpx;
+	// background: #ffffff;
+	// border-bottom: 2rpx solid #eeeeee;
+	// box-shadow: 0px 0px 12rpx 0rpx #eeeeee;
+}
+.noFix {
+	// padding-left: 10rpx;
+	// left: 0;
+	// z-index: 1000;
+	// width: 100%;
+	// height: 110rpx;
+	// padding-top: 15rpx;
+	// background: #ffffff;
 }
 .favNum{
 	height: 24rpx;

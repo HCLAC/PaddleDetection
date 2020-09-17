@@ -2,7 +2,7 @@
 	<view >
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" color="#333333" background-color="transparent" @clickLeft="showCity">
+			<uni-nav-bar fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor" @clickLeft="showCity">
 				<view class="input-view" @click="confirm">
 					<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
 					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地">
@@ -328,9 +328,7 @@ export default {
 	mixins: [MescrollMixin],
 	data() {
 		return {
-			background: {
-				backgroundColor: ''
-			},
+			backgroundColor: 'transparent',
 			firstTime: new Date().getTime(),
 			cityName: '',
 			dqdwText: '当前位置',
@@ -560,13 +558,15 @@ export default {
 			});
 		},
 		uniScroll(e) {
+			
 			if (this.bannerList.length == 0) {
-				this.background.backgroundColor = '#ffffff';
+				this.backgroundColor = '#ffffff';
 			} else{
+				// console.log(e.scrollTop)
 				if (e.scrollTop >= 100) {
-					this.background.backgroundColor = '#ffffff';
+					this.backgroundColor = '#ffffff';
 				} else {
-					this.background.backgroundColor = '';
+					this.backgroundColor = 'transparent';
 				}
 			}
 			
@@ -580,9 +580,9 @@ export default {
 					this.bannerList = res.data.data;
 					console.log('------------', this.bannerList.length);
 					if (this.bannerList.length == 0) {
-						this.background.backgroundColor = '#ffffff';
+						this.backgroundColor = '#ffffff';
 					} else {
-						this.background.backgroundColor = '';
+						this.backgroundColor = 'transparent';
 					}
 				}
 			});
