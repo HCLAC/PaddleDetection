@@ -25,22 +25,22 @@
 				<!-- <view>收藏</view> -->
 				<v-tabs
 					inactive-color="#909399"
-					lineHeight="8rpx"
+					lineHeight="24rpx"
 					lineColor="#FFE512"
-					activeFontSize="32rpx"
+					activeFontSize="36rpx"
 					activeColor="#303133"
 					fontSize="28rpx"
 					v-model="tabCurrent"
-					bold
+					color="#909399;"
 					:tabs="tablist"
 					:is-scroll="false"
 					:current="tabCurrent"
 					@change="tabChange"
 				></v-tabs>
-				<view class="favNum">
+				<view class="favNum" :style="{color: favnumcolor.color}" v-if="favNum != 0">
 					{{favNum}}
 				</view>
-				<view class="likeNum">
+				<view class="likeNum" :style="{color: likenumcolor.color}" v-if="likeNum != 0">
 					{{likeNum}}
 				</view>
 			</view>
@@ -98,7 +98,7 @@
 		</view>
 		
 		<!-- 点赞 -->
-		<view style="margin-top: 68%; padding: 0 24rpx;" v-if="tabCurrent == 1">
+		<view style="margin-top: 68%; padding: 0 24rpx;" v-if="tabCurrent == 1 ">
 			<mescroll-body   ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 				<view class="" v-for="(item, index) in likeList" :key="index">
 					<view class="contentItem" >
@@ -171,6 +171,12 @@ export default {
 			current: 0,
 			tablist: ['收藏', '已赞'],
 			tabCurrent: 0,
+			favnumcolor:{
+				color: '#303133'
+			},
+			likenumcolor:{
+				color: '#909399'
+			}
 		};
 	},
 	mixins: [MescrollMixin],
@@ -300,6 +306,13 @@ export default {
 		},
 		tabChange(index) {
 			this.tabCurrent = index;
+			if(index == 1 ){
+				this.favnumcolor.color = '#909399'
+				this.likenumcolor.color = '#303133'
+			}else{
+				this.favnumcolor.color = '#303133'
+				this.likenumcolor.color = '#909399'
+			}
 		},
 		// 跳转文章详情
 		onPageJump(e) {
@@ -475,10 +488,9 @@ export default {
 	margin-left: 15px;
 	width: 130rpx;
 	height: 130rpx;
-	
-	// border: 1px #333333 solid;
+	box-shadow: 0px 0px 14px 0px #F7B500;
+	border: 3px solid #FFFFFF;
 	border-radius: 50%;
-	// margin-top: 24rpx;
 }
 .userR {
 	margin-left: 32rpx;
@@ -530,13 +542,13 @@ export default {
 	height: 124rpx;
 }
 .myCollection {
-	border-radius: 40rpx 40rpx 0rpx 0rpx;
+	border-radius: 24rpx 24rpx 0rpx 0rpx;
 	background-color: #fff;
 	color: #303133;
 	width: 100%;
 	font-size: 40rpx;
 	font-weight: 500;
-	padding-left: 32rpx;
+	// padding-left: 32rpx;
 	padding-top: 50rpx;
 	position: absolute;
 	// top: 190rpx;
@@ -550,7 +562,7 @@ export default {
 	line-height: 24rpx;
 	position: absolute;
 	top: 76rpx;
-	left: 130rpx;
+	left: 98rpx;
 }
 .likeNum{
 	height: 24rpx;
@@ -561,7 +573,7 @@ export default {
 	line-height: 24rpx;
 	position: absolute;
 	top: 76rpx;
-	left: 258rpx;
+	left: 226rpx;
 }
 
 .noContentItem {
@@ -715,7 +727,7 @@ export default {
 	.empty {
 		position: absolute;
 		left: 50%; 
-		top: 50%;
+		top: 810rpx;
 		transform: translate(-50%, -50%); 
 		-webkit-transform: translate(-50%, -50%);
 		text-align: center;

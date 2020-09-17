@@ -129,7 +129,7 @@ export default {
     },
     lineRadius: {
       type: String,
-      default: '10rpx'
+      default: '1px 6px 1px 1px'
     },
     pills: {
       type: Boolean,
@@ -281,7 +281,7 @@ export default {
 
     &-line {
       position: absolute;
-      bottom: 8rpx;
+      bottom: 10rpx;
       transition: all 0.3s linear;
     }
 
