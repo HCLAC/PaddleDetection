@@ -46,7 +46,7 @@
 			</view>
 		</view>
 		<!-- 收藏 -->
-		<view style="margin-top: 68%; padding: 0 24rpx;" v-if="tabCurrent == 0 ">
+		<view style="margin-top: 64%; padding: 0 24rpx;" v-if="tabCurrent == 0 ">
 			<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"  >
 				<view class="" v-for="(item, index) in tipList" :key="index">
 					<view class="contentItem" >
@@ -60,8 +60,6 @@
 						</view>
 						<view class="right" @click="onPageJump" :id="item.article_id">
 							<view class="title">
-								<text class="tips" v-if="item.type == 1">游记</text>
-								<text class="tips" v-if="item.type == 2">攻略</text>
 								<text class="titleText">{{ item.title }}</text>
 							</view>
 							<view class="content">
@@ -76,7 +74,7 @@
 								</view>
 							</view>
 							<view class="position">
-								<image src="../../static/images/iconMap.svg" mode="aspectFill"></image>
+								<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
 								<view>{{ item.location }}</view>
 							</view>
 						</view>
@@ -98,7 +96,7 @@
 		</view>
 		
 		<!-- 点赞 -->
-		<view style="margin-top: 68%; padding: 0 24rpx;" v-if="tabCurrent == 1 ">
+		<view style="margin-top: 64%; padding: 0 24rpx;" v-if="tabCurrent == 1 ">
 			<mescroll-body   ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 				<view class="" v-for="(item, index) in likeList" :key="index">
 					<view class="contentItem" >
@@ -112,8 +110,6 @@
 						</view>
 						<view class="right" @click="onPageJump" :id="item.article_id">
 							<view class="title">
-								<text class="tips" v-if="item.type == 1">游记</text>
-								<text class="tips" v-if="item.type == 2">攻略</text>
 								<text class="titleText">{{ item.title }}</text>
 							</view>
 							<view class="content">
@@ -128,7 +124,7 @@
 								</view>
 							</view>
 							<view class="position">
-								<image src="../../static/images/iconMap.svg" mode="aspectFill"></image>
+								<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
 								<view>{{ item.location }}</view>
 							</view>
 						</view>
@@ -240,19 +236,9 @@ export default {
 						
 						if (res.data.code != 0) {
 							// debugger
-							uni.showModal({
-								title: '提示',
-								content: '您好，请先登录',
-								showCancel: false,
-								success: function(res) {
-									if (res.confirm) {
-										uni.redirectTo({
-											url: '../login/login'
-										});
-									}
-								}
+							uni.redirectTo({
+								url: '../login/login'
 							});
-							return;
 						}
 						uni.setStorageSync('mobile', res.data);
 						that.nickName = res.data.data.mobile
@@ -477,7 +463,7 @@ export default {
 
 // /* 用户信息 */
 .usermes {
-	padding-top: 174rpx;
+	padding-top: 154rpx;
 	height: 130rpx;
 	display: flex;
 	height:340rpx ;
@@ -551,7 +537,7 @@ export default {
 	// padding-left: 32rpx;
 	padding-top: 30rpx;
 	position: absolute;
-	// top: 190rpx;
+	top: 360rpx;
 }
 .favNum{
 	height: 24rpx;
@@ -648,7 +634,7 @@ export default {
 		// white-space: nowrap;
 	}
 	.right .title {
-		width: 444rpx;
+		width: 480rpx;
 		height: 32rpx;
 		font-size: 32rpx;
 		font-weight: 500;
@@ -662,13 +648,13 @@ export default {
 	}
 	.titleText {
 		flex: 1;
-		margin-left: 10rpx;
+		// margin-left: 10rpx;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
 	.richText {
-		width: 448rpx;
+		width: 480rpx;
 		height: 70rpx;
 		font-size: 28rpx;
 		font-weight: 400;
@@ -699,15 +685,16 @@ export default {
 	.right .position {
 		display: flex;
 		margin-top: 20rpx;
+		// height: 30rpx;
 		// line-height: 40rpx;
 		align-items: center;
 		image {
-			height: 20rpx;
-			width: 20rpx;
+			height: 30rpx;
+			width: 26rpx;
 			margin-right: 4rpx;
 		}
 		view {
-			width: 176rpx;
+			width: 452rpx;
 			font-size: 22rpx;
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
