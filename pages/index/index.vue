@@ -887,9 +887,9 @@ view {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
+	align-items: center;
 	padding: 0;
 	font-size: 14px;
-	background-color: #aa557f;
 }
 .mescroll {
 	position: relative;

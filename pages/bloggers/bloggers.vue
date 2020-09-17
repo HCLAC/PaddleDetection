@@ -12,10 +12,10 @@
 						<view class="userName">{{ authorMsg.user_name }}</view>
 						<view class="likeandfans" >
 							<text>获赞数</text>
-							<view class="likenum">{{authorMsg.like}}</view>
+							<view class="likenum">{{authorMsg.like>10000?((authorMsg.like-(authorMsg.like%1000))/10000+'w'):authorMsg.like}}</view>
 							<text>粉丝</text>
 							<view class="fansnum">
-								{{authorMsg.fans}}
+								{{authorMsg.fans>10000?((authorMsg.fans-(authorMsg.fans%1000))/10000+'w'):authorMsg.fans}}
 							</view>
 						</view>
 						<!-- <view class="logout">退出登录</view> -->
@@ -32,11 +32,16 @@
 			<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 			<!-- 作品 -->
 			<view class="myCollection">
-				<view class="tip">作品
-					<view class="line"></view>
-				</view>
+				<v-tabs
+					lineHeight="24rpx"
+					lineColor="#FFE512"
+					fontSize="36rpx"
+					activeColor="#303133"
+					:tabs="tablist"
+					:is-scroll="false"
+				></v-tabs>
 				<view class="articleNum">
-					{{article_count}}
+					{{article_count>10000?((article_count-(article_count%1000))/10000+'w'):article_count}}
 				</view>
 				
 			</view>
@@ -64,10 +69,10 @@
 							</view>
 							<view class="favandlikebox">
 								<view class="fav">
-									{{item.fav_count}}收藏
+									{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}收藏
 								</view>
 								<view class="like">
-									{{item.like_count}}点赞
+									{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}点赞
 								</view>
 							</view>
 							<view class="position">
@@ -95,7 +100,8 @@ export default {
 			workslist:[],
 			article_count:0,
 			show: false,
-			content: ''
+			content: '',
+			tablist:['作品']
 		};
 	},
 	mixins: [MescrollMixin],
@@ -155,13 +161,42 @@ export default {
 			let msg = this.authorMsg.is_follow ? '确认取消关注?' : '确认关注?'
 			let status = this.authorMsg.is_follow ? 0 : 1
 			
-			if(status == 1){
-				that.show = true
-				that.content = '确认关注?'
+			if(status == 0){
 				
-			}else{
 				that.show = true
 				that.content = '确认取消关注?'
+			}else{
+				uni.request({
+					url: that.globalUrl + '/user/follow',
+					data: {
+						author_id: that.authorMsg.author_id,
+						follow: status
+					},
+					method: 'POST',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: (res) => {
+						if (res.data.code != 0) {
+							// debugger
+							uni.showModal({
+								title: '提示',
+								content: '您好，请先登录',
+								showCancel: false,
+								success: function(res) {
+									if (res.confirm) {
+										uni.redirectTo({
+											url: '../login/login'
+										});
+									}
+								}
+							});
+							return;
+						}else{
+							that.authorMsg.is_follow = status == 1 ? true : false
+						}
+					}
+				})
 			}
 		},
 		// 点击确认
@@ -416,7 +451,6 @@ export default {
 	width: 100%;
 	font-size: 40rpx;
 	font-weight: 500;
-	padding-left: 32rpx;
 	padding-top: 50rpx;
 	position: absolute;
 	// top: 190rpx;
@@ -433,7 +467,7 @@ export default {
 }
 .articleNum{
 	position: absolute;
-	top: 60rpx;
+	top: 80rpx;
 	left: 108rpx;
 	height: 24rpx;
 	font-size: 24rpx;

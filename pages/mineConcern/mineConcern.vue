@@ -28,7 +28,7 @@
 								粉丝<view class="fansNum">{{item.fans>10000?((item.fans-(item.fans%1000))/10000+'w'):item.fans}}</view>
 							</view>
 							<view class="art">
-								文章<view class="artNum">{{item.article_count}}</view>
+								文章<view class="artNum">{{item.article_count>10000?((item.article_count-(item.article_count%1000))/10000+'w'):item.article_count}}</view>
 							</view>
 						</view>
 					</view>
@@ -349,7 +349,7 @@
 
 		height: 24rpx;
 		font-size: 24rpx;
-		font-family: Roboto-Regular, Roboto;
+		// font-family: Roboto-Regular, Roboto;
 		font-weight: 400;
 		color: #606266;
 		line-height: 24rpx;
@@ -371,7 +371,7 @@
 	.artNum {
 		height: 24rpx;
 		font-size: 24rpx;
-		font-family: Roboto-Regular, Roboto;
+		// font-family: Roboto-Regular, Roboto;
 		font-weight: 400;
 		color: #606266;
 		line-height: 24rpx;
@@ -392,7 +392,7 @@
 		text {
 			height: 14px;
 			font-size: 14px;
-			font-family: PingFangSC-Medium, PingFang SC;
+			// font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 500;
 
 			line-height: 14px;
@@ -415,9 +415,9 @@
 		text {
 			height: 14px;
 			font-size: 14px;
-			font-family: PingFangSC-Medium, PingFang SC;
-			font-weight: 500;
-
+			// font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 400;
+			color: #C9CAD1;
 			line-height: 14px;
 		}
 	}

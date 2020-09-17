@@ -12,7 +12,7 @@
 						<view class="userName">{{ nickName }}</view>
 						<view class="fllow" @click="toConcern()">
 							<text>关注</text>
-							<view class="fllowNum">{{fllowNum}}</view>
+							<view class="fllowNum">{{fllowNum>10000?((fllowNum-(fllowNum%1000))/10000+'w'):fllowNum}}</view>
 						</view>
 						<!-- <view class="logout">退出登录</view> -->
 					</view>
@@ -38,10 +38,10 @@
 					@change="tabChange"
 				></v-tabs>
 				<view class="favNum" :style="{color: favnumcolor.color}" v-if="favNum != 0">
-					{{favNum}}
+					{{favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum}}
 				</view>
 				<view class="likeNum" :style="{color: likenumcolor.color}" v-if="likeNum != 0">
-					{{likeNum}}
+					{{likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum}}
 				</view>
 			</view>
 		</view>
@@ -69,10 +69,10 @@
 							</view>
 							<view class="favandlikebox">
 								<view class="fav">
-									{{item.fav_count}}收藏
+									{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}收藏
 								</view>
 								<view class="like">
-									{{item.like_count}}点赞
+									{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}点赞
 								</view>
 							</view>
 							<view class="position">
@@ -542,14 +542,14 @@ export default {
 	height: 124rpx;
 }
 .myCollection {
-	border-radius: 24rpx 24rpx 0rpx 0rpx;
+	border-radius: 12px 12px 0rpx 0rpx;
 	background-color: #fff;
 	color: #303133;
 	width: 100%;
 	font-size: 40rpx;
 	font-weight: 500;
 	// padding-left: 32rpx;
-	padding-top: 50rpx;
+	padding-top: 30rpx;
 	position: absolute;
 	// top: 190rpx;
 }
@@ -561,7 +561,7 @@ export default {
 	color: #303133;
 	line-height: 24rpx;
 	position: absolute;
-	top: 76rpx;
+	top: 56rpx;
 	left: 98rpx;
 }
 .likeNum{
@@ -572,7 +572,7 @@ export default {
 	color: #303133;
 	line-height: 24rpx;
 	position: absolute;
-	top: 76rpx;
+	top: 56rpx;
 	left: 226rpx;
 }
 
@@ -609,6 +609,7 @@ export default {
 	height: 232rpx;
 	margin: 28rpx;
 	margin-left: 0;
+	margin-top: 0;
 	border-radius: 8px;
 	display: flex;
 	overflow: hidden;
@@ -687,7 +688,7 @@ export default {
 		align-items: center;
 		margin-top: 20rpx;
 		font-size: 22rpx;
-		font-family: Roboto-Regular, Roboto;
+		// font-family: Roboto-Regular, Roboto;
 		font-weight: 400;
 		color: #606266;
 		line-height: 22rpx;
@@ -722,6 +723,7 @@ export default {
 	width: 722rpx;
 	height: 1rpx;
 	background: #EDEFF2;
+	margin-bottom: 20rpx;
 }
 // 列表为空时
 	.empty {

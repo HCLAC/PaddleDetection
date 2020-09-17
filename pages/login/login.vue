@@ -105,6 +105,7 @@ export default {
 				this.styleObj.color = '#303133';
 			} else {
 				this.styleObj.color = '#C9CAD1';
+				
 			}
 		},
 		onCode(e) {
