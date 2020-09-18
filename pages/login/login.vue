@@ -1,54 +1,66 @@
 <template>
-	<view class="register">
-		<view class="content">
-			<!-- 头部标题 -->
-			<view class="header">
-				<view class="headerTitle">欢迎来到领途羊</view>
-				<view class="titleTip">未注册过的手机号将自动创建账号</view>
-			</view>
-			<!-- 短信验证登录 -->
-			<view class="loginBox">
-				<view class="login-phone">
-					<input
-						type="number"
-						maxlength="11"
-						placeholder="请输入您的手机号"
-						placeholder-style="color:'#C9CAD1',font-size:30rpx"
-						class="is-input1"
-						:style="{color: styleObj.color}"
-						@input="onInput"
-						v-model="phone"
-						@focus="isfocus"
-						@blur="isblur"
-					/>
-					<image src="../../static/images/ic_search_sel@2x.png" mode="" @click="clearphone()" class="searchSel" v-if="phone && isShowphone"></image>
+	<view >
+		<!-- 自定义导航栏 -->
+		<view class="example-body">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+				<view slot="left" class="slotleft">
+					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<u-line color="rgba(237, 239, 242, 1)" margin="40rpx 0rpx"></u-line>
-				<view class="login-code">
-					<input
-						type="number"
-						maxlength="6"
-						placeholder="请输入您的验证码"
-						placeholder-style="color:'#C9CAD1',font-size:30rpx"
-						class="is-input1 "
-						:style="{color: styleCode.color}"
-						@input="onCode"
-						v-model="code"
-						@focus="isfocus1"
-						@blur="isblur1"
-					/>
-					<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-if="code && isShowcode" @click="clearcode()"></image>
-					<view class="code-sx"></view>
-					<view class="codeimg" @click.stop="getCode()" :style="{color:codeColor}">{{ getCodeText }}</view>
+			</uni-nav-bar>
+		</view>
+		<view class="register">
+			<view class="content">
+				<!-- 头部标题 -->
+				<view class="header">
+					<view class="headerTitle">欢迎来到领途羊</view>
+					<view class="titleTip">未注册过的手机号将自动创建账号</view>
 				</view>
-				<u-line color="rgba(237, 239, 242, 1)" margin="40rpx 0rpx"></u-line>
+				<!-- 短信验证登录 -->
+				<view class="loginBox">
+					<view class="login-phone">
+						<input
+							type="number"
+							maxlength="11"
+							placeholder="请输入您的手机号"
+							placeholder-style="color:'#C9CAD1',font-size:30rpx"
+							class="is-input1"
+							:style="{color: styleObj.color}"
+							@input="onInput"
+							v-model="phone"
+							@focus="isfocus"
+							@blur="isblur"
+						/>
+						<image src="../../static/images/ic_search_sel@2x.png" mode="" @click="clearphone()" class="searchSel" v-if="phone && isShowphone"></image>
+					</view>
+					<u-line color="rgba(237, 239, 242, 1)" margin="40rpx 0rpx"></u-line>
+					<view class="login-code">
+						<input
+							type="number"
+							maxlength="6"
+							placeholder="请输入您的验证码"
+							placeholder-style="color:'#C9CAD1',font-size:30rpx"
+							class="is-input1 "
+							:style="{color: styleCode.color}"
+							@input="onCode"
+							v-model="code"
+							@focus="isfocus1"
+							@blur="isblur1"
+						/>
+						<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-if="code && isShowcode" @click="clearcode()"></image>
+						<view class="code-sx"></view>
+						<view class="codeimg" @click.stop="getCode()" :style="{color:codeColor}">{{ getCodeText }}</view>
+					</view>
+					<u-line color="rgba(237, 239, 242, 1)" margin="40rpx 0rpx"></u-line>
+				</view>
+		
+				<!-- 登录按钮 -->
+				<view class="loginButton"><button class="lb" :disabled="disabled" :style="{background: styleBtn.background}" @tap="doLogin">登录</button></view>
+				<view v-if="serviceProvider=='baidu'" class="loginButton"><button class="badiduBtn" :style="{background: styleBtn.background}" open-type="getPhoneNumber" @getphonenumber="getPhone">百度账号一键登录</button></view>
 			</view>
-
-			<!-- 登录按钮 -->
-			<view class="loginButton"><button class="lb" :disabled="disabled" :style="{background: styleBtn.background}" @tap="doLogin">登录</button></view>
-			<view v-if="serviceProvider=='baidu'" class="loginButton"><button class="badiduBtn" :style="{background: styleBtn.background}" open-type="getPhoneNumber" @getphonenumber="getPhone">百度账号一键登录</button></view>
 		</view>
 	</view>
+	
 </template>
 
 <script>
@@ -380,12 +392,73 @@ export default {
 					}
 				}
 			});
-		}
+		},
+		// 返回上一页
+		back() {
+			uni.navigateBack({
+				delta: 1
+			});
+		},
+		// 返回首页
+		home() {
+			uni.switchTab({
+				url: '/pages/index/index'
+			});
+		},
 	}
 };
 </script>
 
 <style lang="scss" scoped>
+	/* 自定义导航栏样式 */
+	.example-body {
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 0;
+		font-size: 14px;
+		background-color: #aa557f;
+	}
+	
+	.example-body {
+		flex-direction: column;
+		padding: 15px;
+		background-color: #ffffff;
+		border-bottom: 1rpx solid rgba(237, 239, 242, 1);
+	}
+	
+	.example-body {
+		padding: 0;
+	}
+	
+	.navBar {
+		display: flex;
+	}
+	
+	.slotleft {
+		display: flex;
+		align-items: center;
+	}
+	
+	.fanhui {
+		width: 40rpx;
+		height: 40rpx;
+		margin-left: 40rpx;
+		margin-right: 20rpx;
+	}
+	
+	.fhsy {
+		width: 40rpx;
+		height: 40rpx;
+	}
+	
+	
+	.button-v-line {
+		width: 1px;
+		height: 18px;
+		background-color: #2f2f2f;
+		margin: 0 8px;
+	}
 .null-input .el-input__inner {
 	color: #525661;
 }

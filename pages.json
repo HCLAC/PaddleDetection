@@ -24,6 +24,7 @@
 			"style": {
 				"navigationStyle": "custom",
 				"backgroundColor": "#000000"
+				
 			}
 		},
 
@@ -48,6 +49,7 @@
 		    "style" : {
 				"navigationBarBackgroundColor":"#FFFFFF",
 				"backgroundColor":"#fff",
+				"navigationStyle": "custom",
 				"disableScroll":true
 			}
 		},

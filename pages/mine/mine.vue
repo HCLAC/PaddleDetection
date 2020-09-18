@@ -162,6 +162,7 @@
 </template>
 
 <script>
+	console.log(Page)
 import { mapState, mapMutations } from 'vuex';
 import httpType from '../../httpType.js';
 import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
@@ -266,14 +267,16 @@ export default {
 						
 						if (res.data.code != 0) {
 							// debugger
-							uni.redirectTo({
+							uni.navigateTo({
 								url: '../login/login'
 							});
+						}else{
+							uni.setStorageSync('mobile', res.data);
+							that.nickName = res.data.data.mobile
+							that.fllowNum = res.data.data.following
+							console.log('存储信息', res.data);
 						}
-						uni.setStorageSync('mobile', res.data);
-						that.nickName = res.data.data.mobile
-						that.fllowNum = res.data.data.following
-						console.log('存储信息', res.data);
+						
 					}
 				})
 				
@@ -282,7 +285,7 @@ export default {
 			uni.request({
 				url: this.globalUrl+ '/user/favorite/list',
 				data: {
-					count: 5,
+					count: 6,
 					page: 1
 				},
 				header: {
@@ -302,7 +305,7 @@ export default {
 			uni.request({
 				url: this.globalUrl+ '/user/liked/list',
 				data: {
-					count: 5,
+					count: 6,
 					page: 1
 				},
 				header: {
@@ -325,9 +328,11 @@ export default {
 			if(index == 1 ){
 				this.favnumcolor.color = '#909399'
 				this.likenumcolor.color = '#303133'
+				this.downCallback()
 			}else{
 				this.favnumcolor.color = '#303133'
 				this.likenumcolor.color = '#909399'
+				this.downCallback()
 			}
 		},
 		// 跳转文章详情
@@ -618,7 +623,7 @@ export default {
 }
 .fixTabs {
 	position: fixed;
-	top: 146rpx;
+	top: 136rpx;
 	// padding-left: 10rpx;
 	// padding-top: 15rpx;
 	// left: 0;
