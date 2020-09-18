@@ -310,9 +310,9 @@ export default {
 							title: '登录成功',
 							icon: 'none'
 						}),
-							uni.reLaunch({
-								url: '../mine/mine'
-							}),
+							uni.navigateBack({
+							    delta: 1
+							});
 							uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
 
 						uni.setStorageSync('nickName', res.data.data.mobile);
@@ -374,10 +374,11 @@ export default {
 							title: '登录成功',
 							icon: 'none'
 						}),
-							uni.reLaunch({
-								url: '../mine/mine'
-							}),
+							uni.navigateBack({
+							    delta: 1
+							});
 							uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
+							
 
 						// uni.setStorage({
 						// 	// phone:data.phone

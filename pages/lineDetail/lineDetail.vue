@@ -246,9 +246,15 @@ export default {
 			cardheight:0
 		};
 	},
-	onLoad(option) {
-		if (option.id) {
-			this.getDetail(option.id);
+	onShow() {
+		// 获取当前小程序的页面栈
+		let pages = getCurrentPages();
+		// 数组中索引最大的页面--当前页面
+		let currentPage = pages[pages.length - 1];
+		// 打印出当前页面中的 options
+		console.log('onshow--',currentPage.options)
+		if (currentPage.options.option.id) {
+			this.getDetail(currentPage.options.option.id);
 		}
 	},
 	

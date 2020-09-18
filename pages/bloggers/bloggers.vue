@@ -53,7 +53,7 @@
 						:is-scroll="false"
 					></v-tabs>
 					<view class="articleNum">
-						{{article_count>10000?((article_count-(article_count%1000))/10000+'w'):article_count}}
+						{{authorMsg.article_count>10000?((authorMsg.article_count-(authorMsg.article_count%1000))/10000+'w'):authorMsg.article_count}}
 					</view>
 					
 				</view>
@@ -110,7 +110,6 @@ export default {
 			author_id:'',
 			authorMsg:[],
 			workslist:[],
-			article_count:0,
 			show: false,
 			content: '',
 			tablist:['作品']
@@ -118,13 +117,21 @@ export default {
 	},
 	mixins: [MescrollMixin],
 	onShow() {
-
+		// 获取当前小程序的页面栈
+		let pages = getCurrentPages();
+		// 数组中索引最大的页面--当前页面
+		let currentPage = pages[pages.length - 1];
+		// 打印出当前页面中的 options
+		console.log('onshow--',currentPage.options)
+		this.author_id = currentPage.options.author_id
+		console.log(this.author_id,'....')
+		this.getBloggerMsg()
 	},
 	onLoad(e) {
-		console.log('博主id',e)
-		this.author_id = e.author_id
-		console.log(this.author_id,'....')
-		this.getBloggerMsg(),
+		// console.log('博主id',e)
+		// this.author_id = e.author_id
+		// console.log(this.author_id,'....')
+		// this.getBloggerMsg(),
 		this.getlist()
 		// this.getlist()
 	},
@@ -162,7 +169,6 @@ export default {
 				success: (res) => {
 					console.log('作品列表=', res.data);
 					this.workslist = res.data.data.list
-					this.article_count = res.data.data.total
 				}
 			})
 		},
@@ -191,19 +197,9 @@ export default {
 					success: (res) => {
 						if (res.data.code != 0) {
 							// debugger
-							uni.showModal({
-								title: '提示',
-								content: '您好，请先登录',
-								showCancel: false,
-								success: function(res) {
-									if (res.confirm) {
-										uni.redirectTo({
-											url: '../login/login'
-										});
-									}
-								}
+							uni.navigateTo({
+								url: '../login/login'
 							});
-							return;
 						}else{
 							that.authorMsg.is_follow = status == 1 ? true : false
 						}
@@ -229,19 +225,9 @@ export default {
 				success: (res) => {
 					if (res.data.code != 0) {
 						// debugger
-						uni.showModal({
-							title: '提示',
-							content: '您好，请先登录',
-							showCancel: false,
-							success: function(res) {
-								if (res.confirm) {
-									uni.redirectTo({
-										url: '../login/login'
-									});
-								}
-							}
+						uni.navigateTo({
+							url: '../login/login'
 						});
-						return;
 					}else{
 						that.authorMsg.is_follow = status == 1 ? true : false
 					}

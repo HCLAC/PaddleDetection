@@ -316,19 +316,9 @@
 						console.log('点赞', res);
 						if (res.data.code != 0) {
 							// debugger
-							uni.showModal({
-								title: '提示',
-								content: '您好，请先登录',
-								showCancel: false,
-								success: function(res) {
-									if (res.confirm) {
-										uni.redirectTo({
-											url: '../login/login'
-										});
-									}
-								}
+							uni.navigateTo({
+								url: '../login/login'
 							});
-							return;
 						}
 
 						that.list[index].liked = e.liked == 1 ? 0 : 1;

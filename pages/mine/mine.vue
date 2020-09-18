@@ -7,7 +7,7 @@
 					<image class="fanhui" src=""  />
 					<image class="fhsy" src=""  />
 				</view>
-				<view class="slottitle">个人中心</view>
+				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
 		<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"  >
@@ -274,6 +274,8 @@ export default {
 							uni.setStorageSync('mobile', res.data);
 							that.nickName = res.data.data.mobile
 							that.fllowNum = res.data.data.following
+							that.favNum = res.data.data.fav_count
+							that.likeNum = res.data.data.like_count
 							console.log('存储信息', res.data);
 						}
 						
@@ -296,7 +298,7 @@ export default {
 					console.log('收藏列表', res.data);
 					if(res.data.data != null){
 						this.tipList = res.data.data.list;
-						this.favNum = res.data.data.total
+						// this.favNum = res.data.data.total
 						console.log('1111111', this.tipList);
 					}
 					
@@ -316,7 +318,7 @@ export default {
 					console.log('点赞列表', res.data);
 					if(res.data.data != null ){
 						this.likeList = res.data.data.list;
-						this.likeNum = res.data.data.total
+						// this.likeNum = res.data.data.total
 						console.log('likelist', this.likeList);
 					}
 					
