@@ -38,8 +38,9 @@
 						<view class="hotAdress">
 							<!-- 当前位置 -->
 							<view class="dqwz" @click="toProvinces(areaList[0])">
-								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
 								<image class="dqwzImg" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
+								<view class="mask" v-if="areaList[0].image"></view>
+								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
 								<text class="dqwzText">{{ cityName }}</text>
 								<view class="adressBox">
 									<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
@@ -47,10 +48,12 @@
 								</view>
 							</view>
 							<view class="hotCity" @click="toProvinces(areaList[1])">
+								<view class="mask"></view>
 								<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
 								<text class="hotCityText">{{ areaList[1].name }}</text>
 							</view>
 							<view class="hotCity" @click="toProvinces(areaList[2])">
+								<view class="mask"></view>
 								<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
 								<text class="hotCityText1">{{ areaList[2].name }}</text>
 							</view>
@@ -178,8 +181,9 @@
 						<view class="hotAdress">
 							<!-- 当前位置 -->
 							<view class="dqwznoba" @click="toProvinces(areaList[0])">
-								<image class="dqwzImgnoba" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
 								<image class="dqwzImgnoba" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
+								<view class="mask" v-if="areaList[0].image"></view>
+								<image class="dqwzImgnoba" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
 								<view class="dqwzBoxnoba">
 									<text class="dqwzTextnoba">{{ cityName }}</text>
 									<view class="adressBoxnoba">
@@ -189,10 +193,12 @@
 								</view>
 							</view>
 							<view class="hotCity" @click="toProvinces(areaList[1])">
+								<view class="mask"></view>
 								<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
 								<text class="hotCityText">{{ areaList[1].name }}</text>
 							</view>
 							<view class="hotCity" @click="toProvinces(areaList[2])">
+								<view class="mask"></view>
 								<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
 								<text class="hotCityText1">{{ areaList[2].name }}</text>
 							</view>
@@ -1108,6 +1114,13 @@ view {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+.mask{
+	width: 216rpx;
+	height: 180rpx;
+	background: rgba(0, 0, 0, 0.25);
+	border-radius: 16rpx;
+	position: absolute;
 }
 .dqwzImgnoba {
 	width: 100%;
