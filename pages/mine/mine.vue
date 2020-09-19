@@ -10,7 +10,7 @@
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
-		<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"  >
+		<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption"  >
 			<view class="content" style="height: 100%;">
 				<view  style="position: absolute; width: 100%; top: 0; z-index: 400;">
 					<view class="contentTop">
@@ -191,7 +191,10 @@ export default {
 				color: '#909399'
 			},
 			cardheight:0,
-			isFixed:false
+			isFixed:false,
+			downOption:{
+				use:false
+			}
 		};
 	},
 	mixins: [MescrollMixin],
@@ -271,7 +274,7 @@ export default {
 						if (res.data.code != 0) {
 							// debugger
 							uni.navigateTo({
-								url: '../login/login'
+								url: '../login/login?ismine=' + false
 							});
 						}else{
 							uni.setStorageSync('mobile', res.data);
@@ -521,11 +524,12 @@ export default {
 		width: 40rpx;
 		height: 40rpx;
 		margin-left: 40rpx;
-		margin-right: 20rpx;
+		
 	}
 	.fhsy {
 		width: 40rpx;
 		height: 40rpx;
+		margin-left: 20rpx;
 	}
 	.slottitle {
 		margin-left: 162rpx;

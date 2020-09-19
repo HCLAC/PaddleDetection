@@ -58,7 +58,7 @@
 					
 				</view>
 			</view>
-			<view style="margin-top: 40%; padding: 0 24rpx;" v-if="workslist">
+			<view style="margin-top: 318rpx; padding: 0 24rpx;" v-if="workslist">
 				<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"  >
 					<view class="" v-for="(item, index) in workslist" :key="index">
 						<view class="contentItem" >
@@ -112,7 +112,10 @@ export default {
 			workslist:[],
 			show: false,
 			content: '',
-			tablist:['作品']
+			tablist:['作品'],
+			downOption:{
+				use:false
+			}
 		};
 	},
 	mixins: [MescrollMixin],

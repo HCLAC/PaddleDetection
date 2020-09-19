@@ -325,7 +325,7 @@ export default {
 					title: '请先登录',
 					icon: 'none'
 				});
-				uni.reLaunch({
+				uni.navigateTo({
 					url: '/pages/login/login'
 				});
 			} else {
@@ -400,7 +400,7 @@ export default {
 			});
 		},
 		login() {
-			uni.reLaunch({
+			uni.navigateTo({
 				url: '/pages/login/login'
 			});
 		},

@@ -4,7 +4,7 @@
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
 				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<image v-if="ismine == true" class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
@@ -89,10 +89,23 @@ export default {
 			},
 			isShowphone: false,
 			isShowcode: false,
-			serviceProvider: null
+			serviceProvider: null,
+			ismine:true
 		};
 	},
-
+	onLoad(ismine) {
+		console.log('ismine--',ismine)
+		console.log(ismine.ismine)
+		this.ismine = ismine.ismine
+		console.log(this.ismine)
+		// if(ismine.ismine == false){
+		// 	this.ismine = false
+		// 	console.log(this.ismine)
+		// }else{
+		// 	this.ismine = true
+		// }
+		
+	},
 	components: {},
 	mounted() {
 		uni.getProvider({
@@ -445,12 +458,13 @@ export default {
 		width: 40rpx;
 		height: 40rpx;
 		margin-left: 40rpx;
-		margin-right: 20rpx;
+		
 	}
 	
 	.fhsy {
 		width: 40rpx;
 		height: 40rpx;
+		margin-left: 20rpx;
 	}
 	
 	
@@ -546,7 +560,7 @@ export default {
 .loginButton .lb {
 	width: 692rpx;
 	height: 100rpx;
-	background: rgba(237, 239, 242, 1);
+	background: #EDEFF2;
 	border-radius: 58rpx;
 	margin-top: 150rpx;
 	font-size: 36rpx;
@@ -562,7 +576,7 @@ export default {
 	height: 100rpx;
 	background-color: #fff !important;
 	border-radius: 58rpx;
-	border: 2rpx solid rgba(237, 239, 242, 1);
+	border: 2rpx solid #EDEFF2;
 	margin-top: 30rpx;
 	font-size: 36rpx;
 	color: #303133;
@@ -570,5 +584,8 @@ export default {
 }
 button::after {
 	border: none;
+}
+button[disabled]{
+	background: rgba(237, 239, 242, 1)!important;
 }
 </style>
