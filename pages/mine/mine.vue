@@ -40,13 +40,13 @@
 								inactive-color="#909399"
 								lineHeight="24rpx"
 								lineColor="#FFE512"
-								activeFontSize="36rpx"
 								activeColor="#303133"
+								activeFontSize="36rpx"
 								fontSize="28rpx"
 								v-model="tabCurrent"
 								color="#909399;"
 								:tabs="tablist"
-								:is-scroll="false"
+								:is-scroll="true"
 								:current="tabCurrent"
 								@change="tabChange"
 							></v-tabs>
@@ -62,7 +62,7 @@
 				<!-- 收藏 -->
 				<view style="margin-top: 64%; padding: 0 24rpx;" v-if="tabCurrent == 0 ">
 					
-						<view class="" v-for="(item, index) in tipList" :key="index">
+						<view class="" v-for="(item, index) in tipList" :key="index" v-if="favNum != 0">
 							<view class="contentItem" >
 								<view class="left">
 									<image :src="item.main_image" mode="">
@@ -98,71 +98,73 @@
 						
 						
 					
-					<!-- 收藏列表为空时 -->
-					<view class="empty" v-if="!tipList || !tipList.length">
-						<view class="emptyImg">
-							<image src="../../static/images/emptyfav.svg" mode=""></image>
-						</view>
-						<view class="emptyText">
-							您的收藏夹空空如也～
-						</view>
-					</view>
+					
 				</view>
 				
 				<!-- 点赞 -->
 				<view style="margin-top: 64%; padding: 0 24rpx;" v-if="tabCurrent == 1 ">
-						<view class="" v-for="(item, index) in likeList" :key="index">
-							<view class="contentItem" >
-								<view class="left">
-									<image :src="item.main_image" mode="">
-										<view class="imgTip">
-											<view v-if="item.type == 1">游记</view>
-											<view v-if="item.type == 2">攻略</view>
-										</view>
-									</image>
+					<view class="" v-for="(item, index) in likeList" :key="index" >
+						<view class="contentItem" >
+							<view class="left">
+								<image :src="item.main_image" mode="">
+									<view class="imgTip">
+										<view v-if="item.type == 1">游记</view>
+										<view v-if="item.type == 2">攻略</view>
+									</view>
+								</image>
+							</view>
+							<view class="right" @click="onPageJump" :id="item.article_id">
+								<view class="title">
+									<text class="titleText">{{ item.title }}</text>
 								</view>
-								<view class="right" @click="onPageJump" :id="item.article_id">
-									<view class="title">
-										<text class="titleText">{{ item.title }}</text>
+								<view class="content">
+									<rich-text class="richText" :nodes="item.content"></rich-text>
+								</view>
+								<view class="favandlikebox">
+									<view class="fav">
+										{{item.fav_count}}收藏
 									</view>
-									<view class="content">
-										<rich-text class="richText" :nodes="item.content"></rich-text>
+									<view class="like">
+										{{item.like_count}}点赞
 									</view>
-									<view class="favandlikebox">
-										<view class="fav">
-											{{item.fav_count}}收藏
-										</view>
-										<view class="like">
-											{{item.like_count}}点赞
-										</view>
-									</view>
-									<view class="position">
-										<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
-										<view>{{ item.location }}</view>
-									</view>
+								</view>
+								<view class="position">
+									<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
+									<view>{{ item.location }}</view>
 								</view>
 							</view>
-							<view class="line"></view>
 						</view>
-						
-						
-					<!-- 点赞列表为空时 -->
-					<view class="empty" v-if="!likeList || !likeList.length">
-						<view class="emptyImg">
-							<image src="../../static/images/emptylike.svg" mode=""></image>
-						</view>
-						<view class="emptyText">
-							您还没有赞过任何文章哦～
-						</view>
+						<view class="line"></view>
 					</view>
+					
+					
+					
 				</view>
+				
 			</view>
 		</mescroll-body>
+		<!-- 收藏列表为空时 -->
+		<view class="empty" v-if="!tipList &&tabCurrent == 0 ">
+			<view class="emptyImg">
+				<image src="../../static/images/emptyfav.svg" mode=""></image>
+			</view>
+			<view class="emptyText">
+				您的收藏夹空空如也～
+			</view>
+		</view>
+		<!-- 点赞列表为空时 -->
+		<view class="empty" v-if="!likeList || !likeList.length && tabCurrent == 1">
+			<view class="emptyImg">
+				<image src="../../static/images/emptylike.svg" mode=""></image>
+			</view>
+			<view class="emptyText">
+				您还没有赞过任何文章哦～
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
-	console.log(Page)
 import { mapState, mapMutations } from 'vuex';
 import httpType from '../../httpType.js';
 import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
@@ -177,8 +179,8 @@ export default {
 				bgColor:'#ffffff'
 			},
 			fllowNum:0,
-			favNum:0,
-			likeNum:0,
+			favNum:'',
+			likeNum:'',
 			current: 0,
 			tablist: ['收藏', '已赞'],
 			tabCurrent: 0,
@@ -196,6 +198,7 @@ export default {
 	computed: mapState(['forcedLogin', 'hasLogin', 'phone']),
 	onShow() {
 		this.getUserMsg();
+		this.downCallback()
 	},
 	onLoad() {
 		this.getlist()
@@ -276,6 +279,7 @@ export default {
 							that.fllowNum = res.data.data.following
 							that.favNum = res.data.data.fav_count
 							that.likeNum = res.data.data.like_count
+							console.log(that.favNum,'收藏数')
 							console.log('存储信息', res.data);
 						}
 						
@@ -395,7 +399,6 @@ export default {
 							// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
 							let totalSize = data.data.data.total;
 							console.log('totalSize', totalSize);
-							that.favNum = totalSize;
 							// 接口返回的是否有下一页 (true/false)
 							// let hasNext = data.data.data.list;
 											
@@ -447,7 +450,6 @@ export default {
 						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
 						let totalSize = data.data.data.total;
 						console.log('totalSize', totalSize);
-						that.likeNum = totalSize;
 						// 接口返回的是否有下一页 (true/false)
 						// let hasNext = data.data.data.list;
 				
@@ -616,7 +618,7 @@ export default {
 	background-color: #fff;
 	color: #303133;
 	width: 100%;
-	font-size: 40rpx;
+	// font-size: 40rpx;
 	font-weight: 500;
 	// padding-left: 32rpx;
 	padding-top: 30rpx;
@@ -654,7 +656,7 @@ export default {
 	line-height: 24rpx;
 	position: absolute;
 	top: 56rpx;
-	left: 98rpx;
+	left: 102rpx;
 }
 .likeNum{
 	height: 24rpx;
@@ -665,7 +667,7 @@ export default {
 	line-height: 24rpx;
 	position: absolute;
 	top: 56rpx;
-	left: 226rpx;
+	left: 230rpx;
 }
 
 .noContentItem {

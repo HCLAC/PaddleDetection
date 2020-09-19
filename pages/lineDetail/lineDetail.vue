@@ -37,7 +37,7 @@
 			<view class="lineTitle">{{ lineContent.title }}</view>
 		</view>
 		<view class="lineDriver"></view>
-		<view :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard">
+		<view :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" :style="{top: styleFix.top}">
 			<view style="width: 60%;">
 				<v-tabs
 					inactive-color="#909399"
@@ -243,7 +243,10 @@ export default {
 			hasLogin: uni.getStorageSync('Authorization'),
 			isFixed: false,
 			serviceProvider: '',
-			cardheight:0
+			cardheight:0,
+			styleFix:{
+				top:0
+			}
 		};
 	},
 	onShow() {
@@ -253,8 +256,9 @@ export default {
 		let currentPage = pages[pages.length - 1];
 		// 打印出当前页面中的 options
 		console.log('onshow--',currentPage.options)
-		if (currentPage.options.option.id) {
-			this.getDetail(currentPage.options.option.id);
+		 let id = currentPage.options.id
+		if (id) {
+			this.getDetail(id);
 		}
 	},
 	
@@ -286,6 +290,7 @@ export default {
 		  console.log("得到布局位置信息" + JSON.stringify(data));
 		  console.log("节点离页面顶部的距离为" + data.top);
 		  this.cardheight = data.top
+		  this.styleFix.top = data.top + 'rpx'
 		}).exec();
 	},
 	onPageScroll(e) {
@@ -695,7 +700,7 @@ export default {
 	}
 	.u-order-desc {
 		font-size: 24rpx;
-		color: #303133;
+		color: #606266;
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		position: relative;
@@ -844,7 +849,7 @@ export default {
 		display: flex;
 		align-items: center;
 		position: fixed;
-		bottom: 178rpx;
+		bottom: 246rpx;
 		right: 34rpx;
 		justify-content: center;
 		box-shadow: 0px 0px 12rpx 4rpx rgba(255, 229, 18, 0.35);
@@ -856,7 +861,7 @@ export default {
 }
 .fixTabs {
 	position: fixed;
-	top: 140rpx;
+	// top: 140rpx;
 	padding-left: 10rpx;
 	padding-top: 15rpx;
 	left: 0;

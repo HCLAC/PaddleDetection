@@ -101,7 +101,7 @@ export default {
     },
     activeFontSize: {
       type: String,
-      default: '32rpx'
+      default: '28rpx'
     },
     bold: {
       type: Boolean,
@@ -281,7 +281,7 @@ export default {
 
     &-line {
       position: absolute;
-      bottom: 10rpx;
+      bottom: 14rpx;
       transition: all 0.3s linear;
     }
 
