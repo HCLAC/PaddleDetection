@@ -254,9 +254,7 @@
 			<!-- 城市 -->
 			<view class="nowcity">
 				<text>{{ name }}</text>
-				<view class="">
-					<image src="../../static/images/more-down.svg" mode="aspectFit"></image>
-				</view>
+				<image class="nowcityImg" src="../../static/images/moreDown.svg" mode=""></image>
 			</view>
 			<!-- 城市选择列表 -->
 			<view class="u-menu-wrap">
@@ -1028,6 +1026,7 @@ export default {
 	margin-right: 20rpx;
 	background-color: #ffffff;
 	padding-bottom: 24rpx;
+	border-radius: 8px 8px 0px 0px;
 }
 .attImg {
 	width: 100%;
@@ -1041,7 +1040,7 @@ export default {
 	font-weight: 500;
 	color: #303133;
 	// line-height: 28rpx;
-	margin: 16rpx 0 8rpx 6rpx;
+	margin: 4rpx 0 2rpx 6rpx;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow:ellipsis;
@@ -1204,9 +1203,6 @@ export default {
 }
 
 /* 正在旅行 */
-.touring {
-	margin-top: 24rpx;
-}
 
 .touring .tourtext {
 	width: 160rpx;
@@ -1394,11 +1390,10 @@ export default {
 }
 
 .nowcity {
-	margin: 40rpx;
+	margin: 40rpx 40rpx 32rpx 40rpx;
 	display: flex;
 	align-items: center;
-	margin-left: 40rpx;
-	
+	// height: 28rpx;
 	text {
 		font-size: 28rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
@@ -1407,6 +1402,12 @@ export default {
 		line-height: 28rpx;
 		margin: 16rpx 12rpx 8rpx 6rpx;
 	}
+	.nowcityImg {
+		width: 16rpx;
+		height: 16rpx;
+		margin-top: 6rpx;
+	}
+
 	.rateBox {
 		display: flex;
 		align-items: center;
@@ -1483,7 +1484,7 @@ export default {
 	}
 	.tripText{
 		// height: 28rpx;
-		margin-top: 16rpx;
+		margin-top: 4rpx;
 		font-size: 28rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
@@ -1496,7 +1497,7 @@ export default {
 	
 	/* 正在旅行 */
 	.touring {
-		margin-top: 24rpx;
+		// margin-top: 24rpx;
 	}
 	
 	.touring .tourtext {
@@ -1757,7 +1758,7 @@ export default {
 	font-family: PingFangSC-Regular, PingFang SC;
 	font-weight: 400;
 	color: #303133;
-	margin-bottom: 52rpx;
+	margin-bottom: 40rpx;
 	margin-left: 28rpx;
 }
 

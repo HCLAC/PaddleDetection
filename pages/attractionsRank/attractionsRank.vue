@@ -21,7 +21,7 @@
 			<!-- 城市 -->
 			<view class="nowcity">
 				<text>{{name}}</text>
-				<image src="../../static/images/more-down.svg" mode=""></image>
+				<image src="../../static/images/moreDown.svg" mode=""></image>
 			</view>
 			<!-- 城市选择列表 -->
 			<view class="u-menu-wrap">
@@ -1021,10 +1021,9 @@
 	}
 
 	.nowcity {
-		margin: 40rpx;
+		margin: 40rpx 40rpx 32rpx 40rpx;
 		display: flex;
 		align-items: center;
-		margin-left: 40rpx;
 
 		text {
 			font-size: 28rpx;
@@ -1032,12 +1031,13 @@
 			font-weight: 500;
 			color: #303133;
 			line-height: 28rpx;
-			margin-right: 8rpx;
+			margin: 16rpx 12rpx 8rpx 6rpx;
 		}
 
 		image {
-			width: 11.4rpx;
-			height: 11.4rpx;
+			width: 16rpx;
+			height: 16rpx;
+			margin-top: 6rpx;
 		}
 	}
 
@@ -1129,7 +1129,7 @@
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: #303133;
-		margin-bottom: 52rpx;
+		margin-bottom: 40rpx;
 		margin-left: 28rpx;
 	}
 
