@@ -144,7 +144,7 @@
 			</view>
 		</mescroll-body>
 		<!-- 收藏列表为空时 -->
-		<view class="empty" v-if="!tipList &&tabCurrent == 0 ">
+		<view class="empty" v-if="!tipList || !tipList.length && tabCurrent == 0 ">
 			<view class="emptyImg">
 				<image src="../../static/images/emptyfav.svg" mode=""></image>
 			</view>

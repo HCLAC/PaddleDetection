@@ -2,7 +2,7 @@
 	<view >
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor" @clickLeft="showCity">
+			<uni-nav-bar fixed="true" :status-bar="true" color="#333333"  :backgroundColor="backgroundColor" @clickLeft="showCity">
 				<view class="input-view" @click="confirm">
 					<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
 					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地">
@@ -205,16 +205,16 @@
 						</view>
 						<view class="cityRank">
 							<view class="rankText" @click="toProvinces(areaList[3])">{{ areaList[3].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" ></u-line>
 							<view class="rankText" @click="toProvinces(areaList[4])">{{ areaList[4].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" ></u-line>
 							<view class="rankText" @click="toProvinces(areaList[5])">{{ areaList[5].name }}</view>
 						</view>
 						<view class="cityRank">
 							<view class="rankText" @click="toProvinces(areaList[6])">{{ areaList[6].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" ></u-line>
 							<view class="rankText" @click="toProvinces(areaList[7])">{{ areaList[7].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" ></u-line>
 							<view class="rankText" @click="toProvinces(areaList[8])">{{ areaList[8].name }}</view>
 						</view>
 						<!-- <view class="hb-l" @click="toAtt(hotAtt[0].id)">
@@ -886,8 +886,8 @@ view {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
-	align-items: center;
-	padding: 0;
+	/* align-items: center; */
+	/* padding-top: 12rpx; */
 	font-size: 14px;
 }
 .mescroll {
@@ -993,9 +993,6 @@ view {
 	font-size: 28rpx;
 }
 
-.example-body {
-	padding: 0;
-}
 
 .cus-sty {
 	background-color: #f8f8f8;
@@ -1219,7 +1216,7 @@ view {
 	align-items: center;
 }
 .rankText {
-	width: 200rpx;
+	width: 212rpx;
 	font-size: 28rpx;
 	text-align: center;
 }

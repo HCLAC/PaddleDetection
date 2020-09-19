@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" :border="true">
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
@@ -249,7 +249,7 @@
 		flex-direction: column;
 		padding: 15px;
 		background-color: #ffffff;
-		border-bottom: 1rpx solid rgba(237, 239, 242, 1);
+		
 	}
 
 	.example-body {
@@ -258,6 +258,7 @@
 
 	.navBar {
 		display: flex;
+		// border-bottom: 1rpx solid rgba(237, 239, 242, 1);
 	}
 
 	.slotleft {

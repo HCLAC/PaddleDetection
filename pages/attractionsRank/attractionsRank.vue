@@ -57,6 +57,7 @@
 			<image :src="banner" mode="" class="bannerImg"></image>
 			<view class="mask">
 				<view class="content">
+					<image class="travel" src="../../static/images/TRAVEL.png" mode=""></image>
 					<view class="atthotbox">
 						<image src="../../static/images/leftleaves.svg" mode=""></image>
 						<text class="atthottext">{{name}}热门景点</text>
@@ -782,7 +783,15 @@
 		color: rgba(255, 255, 255, 1);
 		line-height: 56rpx;
 		letter-spacing: 2rpx;
-		background: url(../../static/images/TRAVEL.png) no-repeat center 4rpx;
+		// background: url(../../static/images/TRAVEL.png) no-repeat center 4rpx;
+		.travel{
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 40%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
 		.atthotbox{
 			position: absolute;
 			top: 40%;
@@ -801,7 +810,7 @@
 				color: #FFFFFF;
 				line-height: 64rpx;
 				letter-spacing: 2rpx;
-				font-weight: 500;
+				font-weight: 600;
 				margin: 0 6rpx;
 			}
 			
@@ -910,13 +919,13 @@
 	.cardsleft {
 		width: 262rpx;
 		height: 198rpx;
-		border-radius: 16rpx;
+		border-radius: 8px;
 		position: relative;
 
 		.bigImg {
 			width: 100%;
 			height: 100%;
-			border-radius: 16rpx;
+			border-radius: 8px;
 
 		}
 
@@ -957,7 +966,7 @@
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: #909399;
-		margin-bottom: 20rpx;
+		margin-bottom: 14rpx;
 		display: -webkit-box;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -994,7 +1003,7 @@
 	.shareBox {
 		position: fixed;
 		right: 24rpx;
-		bottom: 232rpx;
+		bottom: 174rpx;
 		z-index: 1112;
 		width: 92rpx;
 		height: 92rpx;
