@@ -214,7 +214,10 @@
 				area: null,
 				hotsiteslist:null,
 				cityList:null,
-				serviceProvider: ''
+				serviceProvider: '',
+				downOption:{
+					use:false
+				}
 			}
 		},
 		onLoad: function(option) {
@@ -860,7 +863,7 @@
 		border-radius: 8px 8px 0px 0px;
 		z-index: 11;
 		position: absolute;
-		top: 420rpx;
+		top: 430rpx;
 	}
 	.cityBox{
 		width: 730rpx;

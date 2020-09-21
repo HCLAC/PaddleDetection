@@ -38,7 +38,7 @@
 						<!-- <view>收藏</view> -->
 							<v-tabs 
 								inactive-color="#909399"
-								lineHeight="24rpx"
+								lineHeight="22rpx"
 								lineColor="#FFE512"
 								activeColor="#303133"
 								activeFontSize="36rpx"
@@ -209,9 +209,14 @@ export default {
 	mounted(){
 		const query = uni.createSelectorQuery().in(this);
 		query.select('#selectcard').boundingClientRect(data => {
-		  console.log("得到布局位置信息" + JSON.stringify(data));
-		  console.log("节点离页面顶部的距离为" + data.top);
-		  this.cardheight = data.top
+		console.log("得到布局位置信息" + JSON.stringify(data));
+		console.log("节点离页面顶部的距离为" + data.top);
+		 
+		if(data.top == 0 ){
+			this.cardheight = 200
+		}else{
+			this.cardheight = data.top
+		}
 		}).exec();
 	},
 	onPageScroll(e) {
@@ -635,7 +640,7 @@ export default {
 	// padding-left: 10rpx;
 	// padding-top: 15rpx;
 	// left: 0;
-	// z-index: 2;
+	z-index: 2;
 	// width: 100%;
 	// height:110rpx;
 	// background: #ffffff;
@@ -645,7 +650,7 @@ export default {
 .noFix {
 	// padding-left: 10rpx;
 	// left: 0;
-	// z-index: 1000;
+	z-index: 1000;
 	// width: 100%;
 	// height: 110rpx;
 	// padding-top: 15rpx;
@@ -658,9 +663,10 @@ export default {
 	font-weight: 400;
 	color: #303133;
 	line-height: 24rpx;
+	z-index: 11111;
 	position: absolute;
 	top: 56rpx;
-	left: 102rpx;
+	left: 110rpx;
 }
 .likeNum{
 	height: 24rpx;
@@ -669,9 +675,10 @@ export default {
 	font-weight: 400;
 	color: #303133;
 	line-height: 24rpx;
+	z-index: 11111;
 	position: absolute;
 	top: 56rpx;
-	left: 230rpx;
+	left: 240rpx;
 }
 
 .noContentItem {

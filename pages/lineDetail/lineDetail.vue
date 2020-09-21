@@ -37,7 +37,7 @@
 			<view class="lineTitle">{{ lineContent.title }}</view>
 		</view>
 		<view class="lineDriver"></view>
-		<view :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" :style="{top: styleFix.top}">
+		<view  :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" :style="{top: styleFix.top}">
 			<view style="width: 60%;">
 				<v-tabs
 					inactive-color="#909399"
@@ -295,11 +295,11 @@ export default {
 				}
 			}
 		})
-		
 	},
 		
 	
 	onPageScroll(e) {
+		// console.log(e)
 		if (e.scrollTop >  this.cardheight) {
 			this.isFixed = true;
 		} else {
@@ -314,8 +314,14 @@ export default {
 			query.select('#selectcard').boundingClientRect(data => {
 			  console.log("得到布局位置信息" + JSON.stringify(data));
 			  console.log("节点离页面顶部的距离为" + data.top);
-			  this.cardheight = data.top
-			  this.styleFix.top = (data.top)-20 + 'rpx'
+			  if(data.top == 0 ){
+				  this.cardheight = 220
+				  this.styleFix.top =  125 +'rpx'
+			  }else{
+				  this.cardheight = data.top
+				  this.styleFix.top = (data.top)-20 + 'rpx'
+			  }
+			  
 			}).exec();
 		},
 		tabChange(index) {

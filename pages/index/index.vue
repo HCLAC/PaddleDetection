@@ -5,7 +5,7 @@
 			<uni-nav-bar fixed="true" :status-bar="true" color="#333333"  :backgroundColor="backgroundColor" @clickLeft="showCity">
 				<view class="input-view" @click="confirm">
 					<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
-					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地">
+					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true">
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -459,7 +459,7 @@ export default {
 								city: this.city ? this.city : null
 							},
 							success: res => {
-								console.log(this.areaList);
+								// console.log(this.areaList);
 								this.areaList = res.data.data;
 
 								console.log('areaList--', this.areaList);
@@ -540,26 +540,29 @@ export default {
 							console.log(error);
 						}
 					});
-					uni.request({
-						url: this.globalUrl + '/article/list',
-						data: {
-							count: 6,
-							page: 1,
-							first_time: new Date().getTime()	
-						},
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
-						success: res => {
-							console.log('未定位时获取的文章列表', res);
-							uni.setStorageSync('article_id', res.data);
-							// console.log('存储文章列表==',res.data)
-							this.list = res.data.data.list;
-							// console.log('list=====',this.list)
-						}
-					});
+					
 					// console.log('哈哈哈哈哈哈哈哈哈');
 					// 获取热门目的地
+				}
+			});
+			// 获取文章列表
+			console.log('token',uni.getStorageSync('Authorization'))
+			uni.request({
+				url: this.globalUrl + '/article/list',
+				data: {
+					count: 6,
+					page: 1,
+					first_time: new Date().getTime()	
+				},
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: res => {
+					console.log('文章列表', res);
+					uni.setStorageSync('article_id', res.data);
+					// console.log('存储文章列表==',res.data)
+					this.list = res.data.data.list;
+					// console.log('list=====',this.list)
 				}
 			});
 		},
@@ -686,6 +689,7 @@ export default {
 				title: '搜索'
 			});
 		},
+		
 		showCity() {
 			// uni.showToast({
 			// 	title: '选择城市'

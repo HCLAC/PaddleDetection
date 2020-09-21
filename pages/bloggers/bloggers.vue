@@ -45,7 +45,7 @@
 				<!-- 作品 -->
 				<view class="myCollection">
 					<v-tabs
-						lineHeight="24rpx"
+						lineHeight="22rpx"
 						lineColor="#FFE512"
 						fontSize="36rpx"
 						activeColor="#303133"
@@ -352,7 +352,6 @@ export default {
 		flex-direction: column;
 		padding: 15px;
 		background-color: #ffffff;
-		border-bottom: 1rpx solid rgba(237, 239, 242, 1);
 	}
 	
 	.example-body {
@@ -538,13 +537,14 @@ export default {
 .articleNum{
 	position: absolute;
 	top: 60rpx;
-	left: 110rpx;
+	left: 118rpx;
 	height: 24rpx;
 	font-size: 24rpx;
 	font-family: PingFangSC-Regular, PingFang SC;
 	font-weight: 400;
 	color: #303133;
 	line-height: 24rpx;
+	z-index: 11111;
 }
 .line{
 	// position: absolute;
