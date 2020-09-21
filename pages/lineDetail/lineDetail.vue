@@ -217,7 +217,7 @@
 						<view class="favNum">{{ lineContent.fav_count }}</view>
 					</view> -->
 					<view><view class="share" v-if="serviceProvider !='toutiao'"  @click="share"><image src="../../static/images/fenxiang.svg"></image></view></view>
-					<view class=""><view class="loginButton" v-if="!hasLogin" @click="login">登录</view></view>
+					<view class=""><view class="loginButton" v-if="hasLogin" @click="login">登录</view></view>
 				</view>
 			</view>
 		</view>
@@ -240,7 +240,7 @@ export default {
 			current: 0,
 			tablist: ['参考行程', '服务说明'],
 			tabCurrent: 0,
-			hasLogin: uni.getStorageSync('Authorization'),
+			hasLogin: true,
 			isFixed: false,
 			serviceProvider: '',
 			cardheight:0,
@@ -256,10 +256,20 @@ export default {
 		let currentPage = pages[pages.length - 1];
 		// 打印出当前页面中的 options
 		console.log('onshow--',currentPage.options)
-		 let id = currentPage.options.id
-		if (id) {
-			this.getDetail(id);
-		}
+		let id = currentPage.options.id
+		uni.showLoading({
+			title:'加载中',
+			success:()=> {
+				this.hasLogin = uni.getStorageSync('Authorization') ? false : true;
+				this.tabHeight()
+				if (id) {
+					this.getDetail(id);
+				}
+			}
+		})
+		setTimeout(function() {
+			uni.hideLoading();
+		}, 1000);
 	},
 	
 	onReachBottom() {
@@ -284,15 +294,11 @@ export default {
 					})
 				}
 			}
-		});
-		const query = uni.createSelectorQuery().in(this);
-		query.select('#selectcard').boundingClientRect(data => {
-		  console.log("得到布局位置信息" + JSON.stringify(data));
-		  console.log("节点离页面顶部的距离为" + data.top);
-		  this.cardheight = data.top
-		  this.styleFix.top = data.top + 'rpx'
-		}).exec();
+		})
+		
 	},
+		
+	
 	onPageScroll(e) {
 		if (e.scrollTop >  this.cardheight) {
 			this.isFixed = true;
@@ -303,7 +309,15 @@ export default {
 	},
 	
 	methods: {
-		
+		tabHeight(){
+			const query = uni.createSelectorQuery().in(this);
+			query.select('#selectcard').boundingClientRect(data => {
+			  console.log("得到布局位置信息" + JSON.stringify(data));
+			  console.log("节点离页面顶部的距离为" + data.top);
+			  this.cardheight = data.top
+			  this.styleFix.top = (data.top)-20 + 'rpx'
+			}).exec();
+		},
 		tabChange(index) {
 			this.tabCurrent = index;
 			if(this.tabCurrent == 1){
