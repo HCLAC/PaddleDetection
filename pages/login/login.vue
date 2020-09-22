@@ -17,7 +17,7 @@
 						class="is-input1"
 						:style="{color: styleObj.color}"
 						@input="onInput"
-						v-model="phone"
+						v-model.number="phone"
 						@focus="isfocus"
 						@blur="isblur"
 					/>
