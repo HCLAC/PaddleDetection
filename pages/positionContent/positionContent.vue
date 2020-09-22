@@ -231,7 +231,8 @@ export default {
 			isShow: true,
 			attDetail:null,
 			serviceProvider: '',
-			more:true
+			more:true,
+			rate:0
 		};
 	},
 	created() {
@@ -284,6 +285,8 @@ export default {
 					console.log('景点详情====',res.data)
 					uni.setStorageSync('id',res.data)
 					that.attDetail = res.data
+					// that.rate =  (res.data.data.rate ).toFixed(1);
+					// console.log('评分',that.rate)
 					var length = that.attDetail.data.description.length
 					console.log('attDetail--',length)
 					if(length < 50){

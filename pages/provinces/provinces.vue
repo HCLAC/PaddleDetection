@@ -514,6 +514,7 @@ export default {
 								success: res => {
 									console.log('景点推荐', res);
 									this.siteHot = res.data.data;
+									this.rate = (this.siteHot.rate).toFixed(1)
 								}
 							});
 						// 线路
@@ -600,6 +601,7 @@ export default {
 								success: res => {
 									console.log('景点推荐', res);
 									this.siteHot = res.data.data;
+									this.rate = (this.siteHot.rate).toFixed(1)
 								}
 							});
 						// 线路

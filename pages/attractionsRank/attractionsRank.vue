@@ -216,7 +216,7 @@
 				cityList:null,
 				serviceProvider: '',
 				downOption:{
-					use:false
+					offset:40
 				}
 			}
 		},
@@ -757,6 +757,7 @@
 		width: 750rpx;
 		height: 440rpx;
 		z-index: 111;
+		background-color: #000000;
 	}
 	.mask{
 		position: absolute;
@@ -859,15 +860,16 @@
 		width: 730rpx;
 		// height: 1424rpx;
 		margin-left: 10rpx;
+		padding-top: 380rpx;
 		background: rgba(255, 255, 255, 1);
 		border-radius: 8px 8px 0px 0px;
 		z-index: 11;
 		position: absolute;
-		top: 430rpx;
+		top: 70rpx;
 	}
 	.cityBox{
 		width: 730rpx;
-		height: 124rpx;
+		height: 104rpx;
 		position: fixed;
 		margin-left: 10rpx;
 		top: 420rpx;

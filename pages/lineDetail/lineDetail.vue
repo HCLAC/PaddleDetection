@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view id="bigBox">
 		<view class="example-body" >
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" style="z-index: 99999 !important;">
 				<view slot="left" class="slotleft">
@@ -183,7 +183,7 @@
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
-													<view class="rate">{{ pos.rate }} 星</view>
+													<view class="rate" >{{ pos.rate }} 星</view>
 												</view>
 												<text class="content">{{ pos.description }}</text>
 											</view>
@@ -246,7 +246,8 @@ export default {
 			cardheight:0,
 			styleFix:{
 				top:0
-			}
+			},
+			boxHeight:0
 		};
 	},
 	onShow() {
@@ -261,21 +262,37 @@ export default {
 			title:'加载中',
 			success:()=> {
 				this.hasLogin = uni.getStorageSync('Authorization') ? false : true;
-				this.tabHeight()
 				if (id) {
 					this.getDetail(id);
 				}
 			}
-		})
+		}),
+		uni.getSystemInfo({
+		    success:  (res)=> {
+		        console.log(res.windowHeight);
+				this.boxHeight = res.windowHeight
+		    }
+		});
 		setTimeout(function() {
 			uni.hideLoading();
 		}, 1000);
 	},
 	
-	onReachBottom() {
-		this.tabCurrent = 1
-	},
+	
 	mounted() {
+		const query = uni.createSelectorQuery().in(this);
+		query.select('#selectcard').boundingClientRect(data => {
+		  console.log("得到布局位置信息" + JSON.stringify(data));
+		  console.log("节点离页面顶部的距离为" + data.top);
+		  if(data.top == 0 ){
+			  this.cardheight = 220
+			  this.styleFix.top =  125 +'rpx'
+		  }else{
+			  this.cardheight = data.top
+			  this.styleFix.top = (data.top)-20 + 'rpx'
+		  }
+		  
+		}).exec();
 		uni.getProvider({
 			service: 'oauth',
 			success: res => {
@@ -295,6 +312,7 @@ export default {
 				}
 			}
 		})
+		
 	},
 		
 	
@@ -302,37 +320,30 @@ export default {
 		// console.log(e)
 		if (e.scrollTop >  this.cardheight) {
 			this.isFixed = true;
+			if(e.scrollTop > (this.boxHeight - 50)){
+				this.tabCurrent = 1
+			}
 		} else {
 			this.isFixed = false;
 			this.tabCurrent = 0
 		}
+		
 	},
-	
+	// onReachBottom() {
+	// 	this.tabCurrent = 1
+		
+	// },
 	methods: {
-		tabHeight(){
-			const query = uni.createSelectorQuery().in(this);
-			query.select('#selectcard').boundingClientRect(data => {
-			  console.log("得到布局位置信息" + JSON.stringify(data));
-			  console.log("节点离页面顶部的距离为" + data.top);
-			  if(data.top == 0 ){
-				  this.cardheight = 220
-				  this.styleFix.top =  125 +'rpx'
-			  }else{
-				  this.cardheight = data.top
-				  this.styleFix.top = (data.top)-20 + 'rpx'
-			  }
-			  
-			}).exec();
-		},
 		tabChange(index) {
+			console.log(index,'---index')
 			this.tabCurrent = index;
-			if(this.tabCurrent == 1){
+			if(this.tabCurrent ===1){
 				uni.pageScrollTo({
-				    scrollTop: 99999999999,
+				    scrollTop: 999999,
 				})
 			}else{
 				uni.pageScrollTo({
-				    scrollTop: this.cardheight,
+				    scrollTop: 0,
 				})
 			}
 		},

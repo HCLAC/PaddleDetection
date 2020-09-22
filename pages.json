@@ -24,9 +24,7 @@
 			"style": {
 				"navigationStyle": "custom",
 				"backgroundColor": "#000000",
-				"mp-baidu" : {
-					"bounce" : "none" 
-				}
+				"backgroundColorTop":"#FFFFFF"
 				
 			}
 		},

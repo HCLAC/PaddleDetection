@@ -30,15 +30,25 @@
 			<view class="detailContent savebottom">
 				<view class="userMse">
 					<image class="userHeard" :src="articleList.data.avatar" @click="tobloggers(articleList.data.author_id)">
-						<image class="followImg" src="../../static/images/follow.svg" mode="" @click="follow()" v-if="following == 0"></image>
+						
 					</image>
 					<view class="userMse-r">
 						<view class="userNikename">{{ articleList.data.author_name }}</view>
-						<view class="adress">
-							<image src="../../static/images/iconMap.svg" mode="" class="adreessIcon"></image>
-							<view class="adressText" @click="map()">{{ articleList.data.location }}</view>
-						</view>
+						
 					</view>
+					<view class="followBox" @click="follow()" v-if="!articleList.data.is_follow">
+						<image class="followImg" src="../../static/images/followIcon.svg" mode="" ></image>关注
+					</view>
+					<view class="isfollowBox" @click="follow()" v-if="articleList.data.is_follow">
+						已关注
+					</view>
+				</view>
+				<!-- 弹窗 -->
+				<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
+				<!-- 地址 -->
+				<view class="adress">
+					<image src="../../static/images/iconMap.svg" mode="" class="adreessIcon"></image>
+					<view class="adressText" @click="map()">{{ articleList.data.location }}</view>
 				</view>
 				<!-- 标题 -->
 				<view class="contentTitle">{{ articleList.data.title }}</view>
@@ -114,7 +124,9 @@ export default {
 			wechat_id: null,
 			swiperHeight: '',
 			serviceProvider: '',
-			following:0
+			following:0,
+			content: '',
+			show: false
 		};
 	},
 	onShow() {
@@ -142,7 +154,7 @@ export default {
 		_this = this 
 		this.getOrder();
 	},
-mounted() {
+	mounted() {
 		uni.getProvider({
 			service: 'oauth',
 			success: res => {
@@ -310,30 +322,63 @@ mounted() {
 			})
 		},
 		// 关注
-		follow(){
+		follow() {
+			// console.log(item, index)
+			var that = this;
+			let msg = this.articleList.data.is_follow ? '确认取消关注?' : '确认关注?'
+			let status = this.articleList.data.is_follow ? 0 : 1
+			
+			if(status == 0){
+				
+				that.show = true
+				that.content = '确认取消关注?'
+			}else{
+				uni.request({
+					url: that.globalUrl + '/user/follow',
+					data: {
+						author_id: that.articleList.data.author_id,
+						follow: status
+					},
+					method: 'POST',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: (res) => {
+						if (res.data.code != 0) {
+							// debugger
+							uni.navigateTo({
+								url: '../login/login'
+							});
+						}else{
+							that.articleList.data.is_follow = status == 1 ? true : false
+						}
+					}
+				})
+			}
+		},
+		// 点击确认
+		confirm(){
+			var that = this;
+			let msg = this.articleList.data.is_follow ? '确认取消关注?' : '确认关注?'
+			let status = this.articleList.data.is_follow ? 0 : 1
 			uni.request({
-				url:this.globalUrl + '/user/follow',
-				data:{
-					author_id:this.articleList.data.author_id,
-					follow:1
+				url: that.globalUrl + '/user/follow',
+				data: {
+					author_id: that.articleList.data.author_id,
+					follow: status
 				},
-				method:'POST',
+				method: 'POST',
 				header: {
 					Authorization: uni.getStorageSync('Authorization')
 				},
 				success: (res) => {
-					console.log('关注',res)
 					if (res.data.code != 0) {
 						// debugger
 						uni.navigateTo({
 							url: '../login/login'
 						});
 					}else{
-						uni.showToast({
-							title: '关注成功',
-							duration: 2000
-						})
-						this.following = 1
+						that.articleList.data.is_follow = status == 1 ? true : false
 					}
 				}
 			})
@@ -773,9 +818,9 @@ mounted() {
 // 用户信息
 .userMse {
 	display: flex;
+	align-items: center;
 	margin-left: 28rpx;
 	margin-top: 50rpx;
-	position: relative;
 }
 
 .userHeard {
@@ -784,15 +829,10 @@ mounted() {
 	border-radius: 50%;
 	
 }
-.followImg{
-	width: 42rpx;
-	height: 42rpx;
-	position: absolute;
-	top: 61rpx;
-	left: 21rpx;
-}
+
 .userMse-r {
 	margin-left: 20rpx;
+	flex: 1;
 }
 
 .userNikename {
@@ -801,12 +841,47 @@ mounted() {
 	font-weight: 500;
 	color: rgba(48, 49, 51, 1);
 	line-height: 28rpx;
+	
 }
-
+.isfollowBox{
+	width: 124rpx;
+	height: 48rpx;
+	background: #F8F8F8;
+	border-radius: 12px;
+	margin-right: 28rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 24rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 400;
+	color: #C9CAD1;
+}
+.followBox{
+	width: 124rpx;
+	height: 48rpx;
+	background: #FFE512;
+	border-radius: 12px;
+	margin-right: 28rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 24rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #303133;
+}
+.followImg{
+	width: 16rpx;
+	height: 16rpx;
+	margin-right: 4rpx;
+	margin-top: 4rpx;
+}
 .adress {
 	// width: 100rpx;
 	height: 40rpx;
-	margin-top: 12rpx;
+	margin-top: 32rpx;
+	margin-left: 28rpx;
 	background: rgba(0, 145, 255, 0.1);
 	border-radius: 20rpx;
 	// border: 2rpx solid rgba(0, 145, 255, 1);
@@ -839,7 +914,7 @@ mounted() {
 	color: rgba(48, 49, 51, 1);
 	line-height: 32rpx;
 	margin-left: 28rpx;
-	margin-top: 40rpx;
+	margin-top: 20rpx;
 }
 
 .contentText {

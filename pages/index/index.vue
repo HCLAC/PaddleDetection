@@ -1117,8 +1117,8 @@ view {
 	justify-content: center;
 }
 .mask{
-	width: 216rpx;
-	height: 180rpx;
+	width: 214rpx;
+	height: 178rpx;
 	background: rgba(0, 0, 0, 0.25);
 	border-radius: 16rpx;
 	position: absolute;
