@@ -56,7 +56,11 @@
 		
 				<!-- 登录按钮 -->
 				<view class="loginButton"><button class="lb" :disabled="disabled" :style="{background: styleBtn.background}" @tap="doLogin">登录</button></view>
+<<<<<<< HEAD
 				<view v-if="serviceProvider!='toutiao'" class="loginButton"><button class="badiduBtn" :style="{background: styleBtn.background}" open-type="getPhoneNumber" @getphonenumber="getPhone">百度账号一键登录</button></view>
+=======
+				<view v-if="serviceProvider!='toutiao'" class="loginButton"><button class="badiduBtn" :style="{background: styleBtn.background}" open-type="getPhoneNumber" @getphonenumber="getPhone">{{ serviceProvider=='baidu'? '百度': serviceProvider== 'weixin' ? '微信' : serviceProvider == 'toutiao' ? '头条' : ''}}账号一键登录</button></view>
+>>>>>>> 651c1278cfbc2d1dec8bdbbc6ee948ddbafee2cc
 			</view>
 		</view>
 	</view>
