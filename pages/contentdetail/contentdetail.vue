@@ -117,17 +117,23 @@ export default {
 			following:0
 		};
 	},
-	onLoad(e) {
-		console.log('文章id====', e);
+	onShow() {
+		// 获取当前小程序的页面栈
+		let pages = getCurrentPages();
+		// 数组中索引最大的页面--当前页面
+		let currentPage = pages[pages.length - 1];
+		// 打印出当前页面中的 options
+		console.log('onshow--',currentPage.options)
+		// console.log('文章id====', e);
 		uni.showLoading({
 			title: '加载中',
 			success: () => {
 				this.flag = uni.getStorageSync('Authorization') ? false : true;
 				console.log(this.flag);
 				// debugger
-				this.article_num = e.article_id;
+				this.article_num = currentPage.options.article_id;
 				
-				this.getArticleDetail(e);
+				this.getArticleDetail(currentPage.options);
 			}
 		});
 	},
@@ -319,19 +325,9 @@ mounted() {
 					console.log('关注',res)
 					if (res.data.code != 0) {
 						// debugger
-						uni.showModal({
-							title: '提示',
-							content: '您好，请先登录',
-							showCancel: false,
-							success: function(res) {
-								if (res.confirm) {
-									uni.redirectTo({
-										url: '../login/login'
-									});
-								}
-							}
+						uni.navigateTo({
+							url: '../login/login'
 						});
-						return;
 					}else{
 						uni.showToast({
 							title: '关注成功',
@@ -363,19 +359,9 @@ mounted() {
 					console.log('点赞', res);
 					if (res.data.code != 0) {
 						// debugger
-						uni.showModal({
-							title: '提示',
-							content: '您好，请先登录',
-							showCancel: false,
-							success: function(res) {
-								if (res.confirm) {
-									uni.redirectTo({
-										url: '../login/login'
-									});
-								}
-							}
+						uni.navigateTo({
+							url: '../login/login'
 						});
-						return;
 					}
 					uni.request({
 						// url:'article',
@@ -459,19 +445,9 @@ mounted() {
 					console.log('收藏', res);
 					if (res.data.code != 0) {
 						// debugger
-						uni.showModal({
-							title: '提示',
-							content: '您好，请先登录',
-							showCancel: false,
-							success: function(res) {
-								if (res.confirm) {
-									uni.redirectTo({
-										url: '../login/login'
-									});
-								}
-							}
+						uni.navigateTo({
+							url: '../login/login'
 						});
-						return;
 					}
 					uni.request({
 						// url:'article',
@@ -569,7 +545,7 @@ mounted() {
 		},
 		// 登录
 		login() {
-			uni.redirectTo({
+			uni.navigateTo({
 				url: '../login/login'
 			});
 		},

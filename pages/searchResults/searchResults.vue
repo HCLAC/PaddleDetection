@@ -139,7 +139,7 @@
 							<view class="" @click="onPageJump" :id="item.article_id">
 								<view class="demo-top">
 									<view class="imgBox">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="scaleToFill"></image>
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
 										<view class="adress">
 											<view class="adreessIcon">
 												<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
@@ -175,7 +175,7 @@
 							<view class="" @click="onPageJump" :id="item.article_id">
 								<view class="demo-top">
 									<view class="imgBox">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="scaleToFill"></image>
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
 										<view class="adress">
 											<view class="adreessIcon">
 												<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
@@ -316,19 +316,9 @@
 						console.log('点赞', res);
 						if (res.data.code != 0) {
 							// debugger
-							uni.showModal({
-								title: '提示',
-								content: '您好，请先登录',
-								showCancel: false,
-								success: function(res) {
-									if (res.confirm) {
-										uni.redirectTo({
-											url: '../login/login'
-										});
-									}
-								}
+							uni.navigateTo({
+								url: '../login/login'
 							});
-							return;
 						}
 
 						that.list[index].liked = e.liked == 1 ? 0 : 1;

@@ -94,6 +94,7 @@ export default {
 		blur() {
 			console.log('blur');
 			this.isFocus = false;
+			uni.hideKeyboard()
 			if (!this.inputVal) {
 				this.active = true;
 			}

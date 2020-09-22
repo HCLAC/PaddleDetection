@@ -23,7 +23,11 @@
 			"path": "pages/attractionsRank/attractionsRank",
 			"style": {
 				"navigationStyle": "custom",
-				"backgroundColor": "#000000"
+				"backgroundColor": "#000000",
+				"mp-baidu" : {
+					"bounce" : "none" 
+				}
+				
 			}
 		},
 
@@ -48,6 +52,7 @@
 		    "style" : {
 				"navigationBarBackgroundColor":"#FFFFFF",
 				"backgroundColor":"#fff",
+				"navigationStyle": "custom",
 				"disableScroll":true
 			}
 		},

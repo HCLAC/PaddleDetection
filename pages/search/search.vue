@@ -14,12 +14,12 @@
 				:mode="2"
 				button="inside"
 				:placeholder="defaultKeyword"
+				
 				@search="doSearch(keyword)"
 				@input="inputChange"
 				confirm-type="search"
 				@confirm="Toresults()"
 				v-model="keyValue"
-				@blur="blur"
 			></mSearch>
 		</view>
 		<view class="search-keyword">
@@ -79,7 +79,7 @@
 							<view class="" @click="onPageJump" :id="item.article_id">
 								<view class="demo-top">
 									<view class="imgBox">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="scaleToFill"></image>
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
 										<view class="adress">
 											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 										
@@ -114,7 +114,7 @@
 							<view class="" @click="onPageJump" :id="item.article_id">
 								<view class="demo-top">
 									<view class="imgBox">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="scaleToFill"></image>
+										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
 										<view class="adress">
 											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 										
@@ -239,19 +239,9 @@ export default {
 					console.log('点赞', res);
 					if (res.data.code != 0) {
 						// debugger
-						uni.showModal({
-							title: '提示',
-							content: '您好，请先登录',
-							showCancel: false,
-							success: function(res) {
-								if (res.confirm) {
-									uni.redirectTo({
-										url: '../login/login'
-									});
-								}
-							}
+						uni.navigateTo({
+							url: '../login/login'
 						});
-						return;
 					}
 
 					that.list[index].liked = e.liked == 1 ? 0 : 1;
@@ -389,9 +379,11 @@ export default {
 					console.log('搜素数据', res);
 					uni.setStorageSync('article_id', res.data);
 					console.log('存储数据', res.data);
-					uni.navigateTo({
-						url: '../searchResults/searchResults'
-					});
+					if(res.data.code == 0){
+						uni.navigateTo({
+							url: '../searchResults/searchResults'
+						});
+					}
 				}
 			});
 		},
@@ -442,12 +434,15 @@ export default {
 				success: res => {
 					console.log('搜素数据', res);
 					uni.setStorageSync('article_id', res.data);
-					console.log('存储数据', res.data);
-					uni.navigateTo({
-						url: '../searchResults/searchResults'
-					});
+					if(res.data.code == 0){
+						uni.navigateTo({
+							url: '../searchResults/searchResults'
+						});
+					}
+					
 				}
-			});
+			})
+			
 			//以下是示例跳转淘宝搜索，可自己实现搜索逻辑
 			/*
 				//#ifdef APP-PLUS
@@ -495,10 +490,11 @@ export default {
 					success: res => {
 						console.log('搜素数据', res);
 						uni.setStorageSync('article_id', res.data);
-						console.log('存储数据', res.data);
-						uni.navigateTo({
-							url: '../searchResults/searchResults'
-						});
+						if(res.data.code == 0){
+							uni.navigateTo({
+								url: '../searchResults/searchResults'
+							});
+						}
 					}
 				});
 			}

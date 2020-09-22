@@ -2,10 +2,10 @@
 	<view >
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" color="#333333" background-color="transparent" @clickLeft="showCity">
+			<uni-nav-bar fixed="true" :status-bar="true" color="#333333"  :backgroundColor="backgroundColor" @clickLeft="showCity">
 				<view class="input-view" @click="confirm">
 					<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
-					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地">
+					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true">
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -38,8 +38,9 @@
 						<view class="hotAdress">
 							<!-- 当前位置 -->
 							<view class="dqwz" @click="toProvinces(areaList[0])">
-								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
 								<image class="dqwzImg" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
+								<view class="mask" v-if="areaList[0].image"></view>
+								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
 								<text class="dqwzText">{{ cityName }}</text>
 								<view class="adressBox">
 									<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
@@ -47,10 +48,12 @@
 								</view>
 							</view>
 							<view class="hotCity" @click="toProvinces(areaList[1])">
+								<view class="mask"></view>
 								<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
 								<text class="hotCityText">{{ areaList[1].name }}</text>
 							</view>
 							<view class="hotCity" @click="toProvinces(areaList[2])">
+								<view class="mask"></view>
 								<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
 								<text class="hotCityText1">{{ areaList[2].name }}</text>
 							</view>
@@ -178,8 +181,9 @@
 						<view class="hotAdress">
 							<!-- 当前位置 -->
 							<view class="dqwznoba" @click="toProvinces(areaList[0])">
-								<image class="dqwzImgnoba" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
 								<image class="dqwzImgnoba" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
+								<view class="mask" v-if="areaList[0].image"></view>
+								<image class="dqwzImgnoba" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
 								<view class="dqwzBoxnoba">
 									<text class="dqwzTextnoba">{{ cityName }}</text>
 									<view class="adressBoxnoba">
@@ -189,26 +193,28 @@
 								</view>
 							</view>
 							<view class="hotCity" @click="toProvinces(areaList[1])">
+								<view class="mask"></view>
 								<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
 								<text class="hotCityText">{{ areaList[1].name }}</text>
 							</view>
 							<view class="hotCity" @click="toProvinces(areaList[2])">
+								<view class="mask"></view>
 								<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
 								<text class="hotCityText1">{{ areaList[2].name }}</text>
 							</view>
 						</view>
 						<view class="cityRank">
 							<view class="rankText" @click="toProvinces(areaList[3])">{{ areaList[3].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" ></u-line>
 							<view class="rankText" @click="toProvinces(areaList[4])">{{ areaList[4].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" ></u-line>
 							<view class="rankText" @click="toProvinces(areaList[5])">{{ areaList[5].name }}</view>
 						</view>
 						<view class="cityRank">
 							<view class="rankText" @click="toProvinces(areaList[6])">{{ areaList[6].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" ></u-line>
 							<view class="rankText" @click="toProvinces(areaList[7])">{{ areaList[7].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" ></u-line>
 							<view class="rankText" @click="toProvinces(areaList[8])">{{ areaList[8].name }}</view>
 						</view>
 						<!-- <view class="hb-l" @click="toAtt(hotAtt[0].id)">
@@ -328,9 +334,7 @@ export default {
 	mixins: [MescrollMixin],
 	data() {
 		return {
-			background: {
-				backgroundColor: ''
-			},
+			backgroundColor: 'transparent',
 			firstTime: new Date().getTime(),
 			cityName: '',
 			dqdwText: '当前位置',
@@ -455,7 +459,7 @@ export default {
 								city: this.city ? this.city : null
 							},
 							success: res => {
-								console.log(this.areaList);
+								// console.log(this.areaList);
 								this.areaList = res.data.data;
 
 								console.log('areaList--', this.areaList);
@@ -536,37 +540,42 @@ export default {
 							console.log(error);
 						}
 					});
-					uni.request({
-						url: this.globalUrl + '/article/list',
-						data: {
-							count: 6,
-							page: 1,
-							first_time: new Date().getTime()	
-						},
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
-						success: res => {
-							console.log('未定位时获取的文章列表', res);
-							uni.setStorageSync('article_id', res.data);
-							// console.log('存储文章列表==',res.data)
-							this.list = res.data.data.list;
-							// console.log('list=====',this.list)
-						}
-					});
+					
 					// console.log('哈哈哈哈哈哈哈哈哈');
 					// 获取热门目的地
 				}
 			});
+			// 获取文章列表
+			console.log('token',uni.getStorageSync('Authorization'))
+			uni.request({
+				url: this.globalUrl + '/article/list',
+				data: {
+					count: 6,
+					page: 1,
+					first_time: new Date().getTime()	
+				},
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: res => {
+					console.log('文章列表', res);
+					uni.setStorageSync('article_id', res.data);
+					// console.log('存储文章列表==',res.data)
+					this.list = res.data.data.list;
+					// console.log('list=====',this.list)
+				}
+			});
 		},
 		uniScroll(e) {
+			
 			if (this.bannerList.length == 0) {
-				this.background.backgroundColor = '#ffffff';
+				this.backgroundColor = '#ffffff';
 			} else{
+				// console.log(e.scrollTop)
 				if (e.scrollTop >= 100) {
-					this.background.backgroundColor = '#ffffff';
+					this.backgroundColor = '#ffffff';
 				} else {
-					this.background.backgroundColor = '';
+					this.backgroundColor = 'transparent';
 				}
 			}
 			
@@ -580,9 +589,9 @@ export default {
 					this.bannerList = res.data.data;
 					console.log('------------', this.bannerList.length);
 					if (this.bannerList.length == 0) {
-						this.background.backgroundColor = '#ffffff';
+						this.backgroundColor = '#ffffff';
 					} else {
-						this.background.backgroundColor = '';
+						this.backgroundColor = 'transparent';
 					}
 				}
 			});
@@ -626,23 +635,16 @@ export default {
 				success: res => {
 					if (res.data.code != 0) {
 						// debugger
-						uni.showModal({
-							title: '提示',
-							content: '您好，请先登录',
-							showCancel: false,
-							success: res => {
-								if (res.confirm) {
-									uni.redirectTo({
-										url: '../login/login'
-									});
-								}
-							}
+						
+						uni.navigateTo({
+							url: '../login/login'
 						});
-						return;
+					}else{
+						that.list[index].liked = e.liked == 1 ? 0 : 1;
+						that.list[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
 					}
 
-					that.list[index].liked = e.liked == 1 ? 0 : 1;
-					that.list[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
+					
 				}
 			});
 		},
@@ -687,6 +689,7 @@ export default {
 				title: '搜索'
 			});
 		},
+		
 		showCity() {
 			// uni.showToast({
 			// 	title: '选择城市'
@@ -887,8 +890,8 @@ view {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
-	align-items: center;
-	padding: 0;
+	/* align-items: center; */
+	/* padding-top: 12rpx; */
 	font-size: 14px;
 }
 .mescroll {
@@ -994,9 +997,6 @@ view {
 	font-size: 28rpx;
 }
 
-.example-body {
-	padding: 0;
-}
 
 .cus-sty {
 	background-color: #f8f8f8;
@@ -1116,6 +1116,13 @@ view {
 	align-items: center;
 	justify-content: center;
 }
+.mask{
+	width: 216rpx;
+	height: 180rpx;
+	background: rgba(0, 0, 0, 0.25);
+	border-radius: 16rpx;
+	position: absolute;
+}
 .dqwzImgnoba {
 	width: 100%;
 	height: 100%;
@@ -1213,7 +1220,7 @@ view {
 	align-items: center;
 }
 .rankText {
-	width: 200rpx;
+	width: 212rpx;
 	font-size: 28rpx;
 	text-align: center;
 }

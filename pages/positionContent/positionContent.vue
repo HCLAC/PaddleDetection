@@ -135,14 +135,14 @@
 					<view class="goTo">{{attDetail.data.visited}}人去过</view>
 				</view>
 				<view class="contentText">
-					<text :class="isShow ? 'loseText' : 'moreText'">
+					<text :class="isShow ? 'loseText' : 'moreText'" id="moreText">
 						简介：{{attDetail.data.description}}
 					</text>
-					<view class="btnBox" @click="showMore" v-if="!isShow">
+					<view class="btnBox" @click="showMore" v-if="!isShow && more">
 						<text>收起</text>
 						<image class="iconImg" src="../../static/images/zhankaiIcon.png" mode=""></image>
 					</view>
-					<view class="btnBox" @click="showMore" v-else>
+					<view class="btnBox" @click="showMore" v-if="isShow && more">
 						<view class="mask"></view>
 						<text>展开</text>
 						<image class="iconImg" src="../../static/images/shouqiIcon.png" mode=""></image>
@@ -230,7 +230,8 @@ export default {
 			list: [],
 			isShow: true,
 			attDetail:null,
-			serviceProvider: ''
+			serviceProvider: '',
+			more:true
 		};
 	},
 	created() {
@@ -264,6 +265,10 @@ export default {
 				}
 			}
 		});
+		// let info = uni.createSelectorQuery().select(".loseText");
+		// 	info.boundingClientRect(function(data) {
+		// 	console.log('节点信息',data);  // 获取元素信息
+		// }).exec()
 	},
 	methods: {
 		getAttDetail(e){
@@ -279,7 +284,11 @@ export default {
 					console.log('景点详情====',res.data)
 					uni.setStorageSync('id',res.data)
 					that.attDetail = res.data
-					console.log('attDetail--',that.attDetail)
+					var length = that.attDetail.data.description.length
+					console.log('attDetail--',length)
+					if(length < 50){
+						that.more = false
+					}
 				}
 			})
 			
@@ -695,7 +704,7 @@ export default {
 				color: rgba(96, 98, 102, 1);
 				line-height: 36rpx;
 				width:308rpx;
-				// max-height:70rpx;
+				max-height:70rpx;
 				display: -webkit-box;
 				-webkit-box-orient: vertical;
 				text-overflow: ellipsis;

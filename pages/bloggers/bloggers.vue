@@ -1,90 +1,102 @@
 <template>
-	<view class="content">
-		<view  style="position: fixed; width: 100%; top: 0; z-index: 400;" >
-			<view class="contentTop">
-				<image src="../../static/images/mineBack.png" class="backImg"></image>
-				<!-- 博主信息 -->
-				<view class="usermes" v-if="authorMsg">
-					<image class="userAva" :src="authorMsg.avatar" ></image>
-
-					<image src="../../static/images/userImg.svg" class="userAva" v-if="nickName" mode=""></image>
-					<view class="userR">
-						<view class="userName">{{ authorMsg.user_name }}</view>
-						<view class="likeandfans" >
-							<text>获赞数</text>
-							<view class="likenum">{{authorMsg.like>10000?((authorMsg.like-(authorMsg.like%1000))/10000+'w'):authorMsg.like}}</view>
-							<text>粉丝</text>
-							<view class="fansnum">
-								{{authorMsg.fans>10000?((authorMsg.fans-(authorMsg.fans%1000))/10000+'w'):authorMsg.fans}}
-							</view>
-						</view>
-						<!-- <view class="logout">退出登录</view> -->
-					</view>
-					<view class="follow" v-if="authorMsg.is_follow" @click="Fllow()">
-						<text>已关注</text>
-					</view>
-					<view class="unfollow" v-if="!authorMsg.is_follow" @click="Fllow()">
-						<text>关注</text>
-					</view>
+	<view>
+		<!-- 自定义导航栏 -->
+		<view class="example-body">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" background-color="transparent">
+				<view slot="left" class="slotleft">
+					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-			</view>
-			<!-- 弹窗 -->
-			<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
-			<!-- 作品 -->
-			<view class="myCollection">
-				<v-tabs
-					lineHeight="24rpx"
-					lineColor="#FFE512"
-					fontSize="36rpx"
-					activeColor="#303133"
-					:tabs="tablist"
-					:is-scroll="false"
-				></v-tabs>
-				<view class="articleNum">
-					{{article_count>10000?((article_count-(article_count%1000))/10000+'w'):article_count}}
-				</view>
-				
-			</view>
+				<view class="slottitle">我的关注</view>
+			</uni-nav-bar>
 		</view>
-		<view style="margin-top: 68%; padding: 0 24rpx;" v-if="workslist">
-			<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"  >
-				<view class="" v-for="(item, index) in workslist" :key="index">
-					<view class="contentItem" >
-						<view class="left">
-							<image :src="item.image" mode="">
-								<view class="imgTip">
-									<view v-if="item.type == 1">游记</view>
-									<view v-if="item.type == 2">攻略</view>
+		<!-- 博主信息 -->
+		<view class="content">
+			<view  style="position: fixed; width: 100%; top: 0; z-index: 400;" >
+				<view class="contentTop">
+					<image src="../../static/images/mineBack.png" class="backImg"></image>
+					<!-- 博主信息 -->
+					<view class="usermes" v-if="authorMsg">
+						<image class="userAva" :src="authorMsg.avatar" ></image>
+		
+						<image src="../../static/images/userImg.svg" class="userAva" v-if="nickName" mode=""></image>
+						<view class="userR">
+							<view class="userName">{{ authorMsg.user_name }}</view>
+							<view class="likeandfans" >
+								<text>获赞数</text>
+								<view class="likenum">{{authorMsg.like>10000?((authorMsg.like-(authorMsg.like%1000))/10000+'w'):authorMsg.like}}</view>
+								<text>粉丝</text>
+								<view class="fansnum">
+									{{authorMsg.fans>10000?((authorMsg.fans-(authorMsg.fans%1000))/10000+'w'):authorMsg.fans}}
 								</view>
-							</image>
+							</view>
+							<!-- <view class="logout">退出登录</view> -->
 						</view>
-						<view class="right" @click="onPageJump" :id="item.article_id">
-							<view class="title">
-								<text class="tips" v-if="item.type == 1">游记</text>
-								<text class="tips" v-if="item.type == 2">攻略</text>
-								<text class="titleText">{{ item.title }}</text>
-							</view>
-							<view class="content">
-								<rich-text class="richText" :nodes="item.content"></rich-text>
-							</view>
-							<view class="favandlikebox">
-								<view class="fav">
-									{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}收藏
-								</view>
-								<view class="like">
-									{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}点赞
-								</view>
-							</view>
-							<view class="position">
-								<image src="../../static/images/iconMap.svg" mode="aspectFill"></image>
-								<view>{{ item.location }}</view>
-							</view>
+						<view class="follow" v-if="authorMsg.is_follow" @click="Fllow()">
+							<text>已关注</text>
+						</view>
+						<view class="unfollow" v-if="!authorMsg.is_follow" @click="Fllow()">
+							<text>关注</text>
 						</view>
 					</view>
-					<view class="contentline"></view>
 				</view>
-				
-			</mescroll-body>
+				<!-- 弹窗 -->
+				<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
+				<!-- 作品 -->
+				<view class="myCollection">
+					<v-tabs
+						lineHeight="22rpx"
+						lineColor="#FFE512"
+						fontSize="36rpx"
+						activeColor="#303133"
+						:tabs="tablist"
+						:is-scroll="false"
+					></v-tabs>
+					<view class="articleNum">
+						{{authorMsg.article_count>10000?((authorMsg.article_count-(authorMsg.article_count%1000))/10000+'w'):authorMsg.article_count}}
+					</view>
+					
+				</view>
+			</view>
+			<view style="margin-top: 318rpx; padding: 0 24rpx;" v-if="workslist">
+				<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"  >
+					<view class="" v-for="(item, index) in workslist" :key="index">
+						<view class="contentItem" >
+							<view class="left">
+								<image :src="item.image" mode="">
+									<view class="imgTip">
+										<view v-if="item.type == 1">游记</view>
+										<view v-if="item.type == 2">攻略</view>
+									</view>
+								</image>
+							</view>
+							<view class="right" @click="onPageJump" :id="item.article_id">
+								<view class="title">
+									
+									<text class="titleText">{{ item.title }}</text>
+								</view>
+								<view class="content">
+									<rich-text class="richText" :nodes="item.content"></rich-text>
+								</view>
+								<view class="favandlikebox">
+									<view class="fav">
+										{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}收藏
+									</view>
+									<view class="like">
+										{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}点赞
+									</view>
+								</view>
+								<view class="position">
+									<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
+									<view>{{ item.location }}</view>
+								</view>
+							</view>
+						</view>
+						<view class="contentline"></view>
+					</view>
+					
+				</mescroll-body>
+			</view>
 		</view>
 	</view>
 </template>
@@ -98,21 +110,31 @@ export default {
 			author_id:'',
 			authorMsg:[],
 			workslist:[],
-			article_count:0,
 			show: false,
 			content: '',
-			tablist:['作品']
+			tablist:['作品'],
+			downOption:{
+				use:false
+			}
 		};
 	},
 	mixins: [MescrollMixin],
 	onShow() {
-
+		// 获取当前小程序的页面栈
+		let pages = getCurrentPages();
+		// 数组中索引最大的页面--当前页面
+		let currentPage = pages[pages.length - 1];
+		// 打印出当前页面中的 options
+		console.log('onshow--',currentPage.options)
+		this.author_id = currentPage.options.author_id
+		console.log(this.author_id,'....')
+		this.getBloggerMsg()
 	},
 	onLoad(e) {
-		console.log('博主id',e)
-		this.author_id = e.author_id
-		console.log(this.author_id,'....')
-		this.getBloggerMsg(),
+		// console.log('博主id',e)
+		// this.author_id = e.author_id
+		// console.log(this.author_id,'....')
+		// this.getBloggerMsg(),
 		this.getlist()
 		// this.getlist()
 	},
@@ -150,7 +172,6 @@ export default {
 				success: (res) => {
 					console.log('作品列表=', res.data);
 					this.workslist = res.data.data.list
-					this.article_count = res.data.data.total
 				}
 			})
 		},
@@ -179,19 +200,9 @@ export default {
 					success: (res) => {
 						if (res.data.code != 0) {
 							// debugger
-							uni.showModal({
-								title: '提示',
-								content: '您好，请先登录',
-								showCancel: false,
-								success: function(res) {
-									if (res.confirm) {
-										uni.redirectTo({
-											url: '../login/login'
-										});
-									}
-								}
+							uni.navigateTo({
+								url: '../login/login'
 							});
-							return;
 						}else{
 							that.authorMsg.is_follow = status == 1 ? true : false
 						}
@@ -217,19 +228,9 @@ export default {
 				success: (res) => {
 					if (res.data.code != 0) {
 						// debugger
-						uni.showModal({
-							title: '提示',
-							content: '您好，请先登录',
-							showCancel: false,
-							success: function(res) {
-								if (res.confirm) {
-									uni.redirectTo({
-										url: '../login/login'
-									});
-								}
-							}
+						uni.navigateTo({
+							url: '../login/login'
 						});
-						return;
 					}else{
 						that.authorMsg.is_follow = status == 1 ? true : false
 					}
@@ -244,6 +245,16 @@ export default {
 			// return
 			uni.navigateTo({
 				url: '/pages/contentdetail/contentdetail?article_id=' + id
+			});
+		},
+		back() {
+			uni.navigateBack({
+				delta: 1
+			});
+		},
+		home() {
+			uni.switchTab({
+				url: '/pages/index/index'
 			});
 		},
 		
@@ -328,6 +339,60 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+	/* 自定义导航栏样式 */
+	.example-body {
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 0;
+		font-size: 14px;
+	}
+	
+	.example-body {
+		flex-direction: column;
+		padding: 15px;
+		background-color: #ffffff;
+	}
+	
+	.example-body {
+		padding: 0;
+	}
+	
+	.navBar {
+		display: flex;
+	}
+	
+	.slotleft {
+		display: flex;
+		align-items: center;
+	}
+	
+	.fanhui {
+		width: 40rpx;
+		height: 40rpx;
+		margin-left: 40rpx;
+		margin-right: 20rpx;
+	}
+	
+	.fhsy {
+		width: 40rpx;
+		height: 40rpx;
+	}
+	
+	.slottitle {
+		margin-left: 162rpx;
+		font-size: 38rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 600;
+		color: rgba(0, 0, 0, 1);
+	}
+	
+	.button-v-line {
+		width: 1px;
+		height: 18px;
+		background-color: #2f2f2f;
+		margin: 0 8px;
+	}
 .backImg {
 	position: absolute;
 	height: 440rpx;
@@ -337,7 +402,7 @@ export default {
 
 // /* 用户信息 */
 .usermes {
-	padding-top: 174rpx;
+	padding-top: 154rpx;
 	height: 130rpx;
 	display: flex;
 	height:340rpx ;
@@ -348,8 +413,8 @@ export default {
 	margin-left: 15px;
 	width: 130rpx;
 	height: 130rpx;
-	
-	// border: 1px #333333 solid;
+	box-shadow: 0px 0px 14px 0px #F7B500;
+	border: 3px solid #FFFFFF;
 	border-radius: 50%;
 	// margin-top: 24rpx;
 }
@@ -358,12 +423,16 @@ export default {
 	// margin-top: 24rpx;
 }
 .userName {
+	width: 366rpx;
 	height: 36rpx;
 	font-size: 36rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #303133;
 	line-height: 36rpx;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
 }
 .likeandfans{
 	margin-top: 20rpx;
@@ -389,7 +458,7 @@ export default {
 	height: 52rpx;
 	background: rgba(251, 204, 12, 0.45);
 	border-radius: 26rpx;
-	margin-left: 132rpx;
+	// margin-left: 30rpx;
 	text-align: center;
 	line-height: 52rpx;
 	text{
@@ -407,7 +476,7 @@ export default {
 	height: 52rpx;
 	border-radius: 26rpx;
 	border: 2rpx solid #303133;
-	margin-left: 132rpx;
+	// margin-left: 30rpx;
 	line-height: 52rpx;
 	text-align: center;
 	text{
@@ -451,9 +520,9 @@ export default {
 	width: 100%;
 	font-size: 40rpx;
 	font-weight: 500;
-	padding-top: 50rpx;
+	padding-top: 30rpx;
 	position: absolute;
-	// top: 190rpx;
+	top: 360rpx;
 }
 .tip{
 	// width: 72rpx;
@@ -467,14 +536,15 @@ export default {
 }
 .articleNum{
 	position: absolute;
-	top: 80rpx;
-	left: 108rpx;
+	top: 60rpx;
+	left: 118rpx;
 	height: 24rpx;
 	font-size: 24rpx;
 	font-family: PingFangSC-Regular, PingFang SC;
 	font-weight: 400;
 	color: #303133;
 	line-height: 24rpx;
+	z-index: 11111;
 }
 .line{
 	// position: absolute;
@@ -542,6 +612,7 @@ export default {
 	height: 232rpx;
 	margin: 28rpx;
 	margin-left: 0;
+	margin-top: 0;
 	border-radius: 8px;
 	display: flex;
 	overflow: hidden;
@@ -574,13 +645,13 @@ export default {
 
 	.right {
 		margin-top: 12rpx;
-		height: 230rpx;
+		height: 232rpx;
 		// overflow: hidden;
 		// text-overflow:ellipsis;
 		// white-space: nowrap;
 	}
 	.right .title {
-		width: 444rpx;
+		width: 480rpx;
 		height: 32rpx;
 		font-size: 32rpx;
 		font-weight: 500;
@@ -594,13 +665,13 @@ export default {
 	}
 	.titleText {
 		flex: 1;
-		margin-left: 10rpx;
+		// margin-left: 10rpx;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
 	.richText {
-		width: 448rpx;
+		width: 480rpx;
 		height: 70rpx;
 		font-size: 28rpx;
 		font-weight: 400;
@@ -620,7 +691,7 @@ export default {
 		align-items: center;
 		margin-top: 20rpx;
 		font-size: 22rpx;
-		font-family: Roboto-Regular, Roboto;
+		// font-family: Roboto-Regular, Roboto;
 		font-weight: 400;
 		color: #606266;
 		line-height: 22rpx;
@@ -634,12 +705,12 @@ export default {
 		// line-height: 40rpx;
 		align-items: center;
 		image {
-			height: 20rpx;
-			width: 20rpx;
+			height: 30rpx;
+			width: 26rpx;
 			margin-right: 4rpx;
 		}
 		view {
-			width: 176rpx;
+			width: 452rpx;
 			font-size: 22rpx;
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
@@ -653,8 +724,9 @@ export default {
 	
 }
 .contentline{
-		width: 722rpx;
-		height: 1rpx;
-		background: #EDEFF2;
-	}
+	width: 722rpx;
+	height: 1rpx;
+	background: #EDEFF2;
+	margin-bottom: 20rpx;
+}
 </style>

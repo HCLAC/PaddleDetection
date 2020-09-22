@@ -58,7 +58,7 @@ function request(obj) {
 					showCancel: false,
 					success: function(res) {
 						if (res.confirm) {
-							uni.redirectTo({
+							uni.navigateTo({
 								url: '../login/login'
 							})
 						}

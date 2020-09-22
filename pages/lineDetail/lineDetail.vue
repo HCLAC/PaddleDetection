@@ -37,7 +37,7 @@
 			<view class="lineTitle">{{ lineContent.title }}</view>
 		</view>
 		<view class="lineDriver"></view>
-		<view :class="isFixed ? 'fixTabs' : 'noFix'">
+		<view  :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" :style="{top: styleFix.top}">
 			<view style="width: 60%;">
 				<v-tabs
 					inactive-color="#909399"
@@ -47,8 +47,6 @@
 					activeColor="#303133"
 					fontSize="28rpx"
 					v-model="tabCurrent"
-					bold
-					height="108rpx"
 					:tabs="tablist"
 					:is-scroll="false"
 					:current="tabCurrent"
@@ -219,7 +217,7 @@
 						<view class="favNum">{{ lineContent.fav_count }}</view>
 					</view> -->
 					<view><view class="share" v-if="serviceProvider !='toutiao'"  @click="share"><image src="../../static/images/fenxiang.svg"></image></view></view>
-					<view class=""><view class="loginButton" v-if="!hasLogin" @click="login">登录</view></view>
+					<view class=""><view class="loginButton" v-if="hasLogin" @click="login">登录</view></view>
 				</view>
 			</view>
 		</view>
@@ -242,24 +240,38 @@ export default {
 			current: 0,
 			tablist: ['参考行程', '服务说明'],
 			tabCurrent: 0,
-			hasLogin: uni.getStorageSync('Authorization'),
+			hasLogin: true,
 			isFixed: false,
 			serviceProvider: '',
-			
+			cardheight:0,
+			styleFix:{
+				top:0
+			}
 		};
 	},
-	onLoad(option) {
-		if (option.id) {
-			this.getDetail(option.id);
-		}
+	onShow() {
+		// 获取当前小程序的页面栈
+		let pages = getCurrentPages();
+		// 数组中索引最大的页面--当前页面
+		let currentPage = pages[pages.length - 1];
+		// 打印出当前页面中的 options
+		console.log('onshow--',currentPage.options)
+		let id = currentPage.options.id
+		uni.showLoading({
+			title:'加载中',
+			success:()=> {
+				this.hasLogin = uni.getStorageSync('Authorization') ? false : true;
+				this.tabHeight()
+				if (id) {
+					this.getDetail(id);
+				}
+			}
+		})
+		setTimeout(function() {
+			uni.hideLoading();
+		}, 1000);
 	},
-	onPageScroll(e) {
-		if (e.scrollTop > 346.5) {
-			this.isFixed = true;
-		} else {
-			this.isFixed = false;
-		}
-	},
+	
 	onReachBottom() {
 		this.tabCurrent = 1
 	},
@@ -282,10 +294,36 @@ export default {
 					})
 				}
 			}
-		});
+		})
 	},
-	methods: {
 		
+	
+	onPageScroll(e) {
+		// console.log(e)
+		if (e.scrollTop >  this.cardheight) {
+			this.isFixed = true;
+		} else {
+			this.isFixed = false;
+			this.tabCurrent = 0
+		}
+	},
+	
+	methods: {
+		tabHeight(){
+			const query = uni.createSelectorQuery().in(this);
+			query.select('#selectcard').boundingClientRect(data => {
+			  console.log("得到布局位置信息" + JSON.stringify(data));
+			  console.log("节点离页面顶部的距离为" + data.top);
+			  if(data.top == 0 ){
+				  this.cardheight = 220
+				  this.styleFix.top =  125 +'rpx'
+			  }else{
+				  this.cardheight = data.top
+				  this.styleFix.top = (data.top)-20 + 'rpx'
+			  }
+			  
+			}).exec();
+		},
 		tabChange(index) {
 			this.tabCurrent = index;
 			if(this.tabCurrent == 1){
@@ -294,7 +332,7 @@ export default {
 				})
 			}else{
 				uni.pageScrollTo({
-				    scrollTop: 288
+				    scrollTop: this.cardheight,
 				})
 			}
 		},
@@ -307,7 +345,7 @@ export default {
 					title: '请先登录',
 					icon: 'none'
 				});
-				uni.reLaunch({
+				uni.navigateTo({
 					url: '/pages/login/login'
 				});
 			} else {
@@ -382,7 +420,7 @@ export default {
 			});
 		},
 		login() {
-			uni.reLaunch({
+			uni.navigateTo({
 				url: '/pages/login/login'
 			});
 		},
@@ -407,6 +445,8 @@ export default {
 			});
 		}
 	}
+
+	
 };
 </script>
 
@@ -552,7 +592,7 @@ export default {
 	padding: 10rpx 30rpx;
 	padding-bottom: 105rpx;
 	.planContent {
-		padding: 50rpx 30rpx 30rpx 20rpx;
+		padding: 20rpx 30rpx 30rpx 20rpx;
 	}
 }
 .tui-chatbox::before {
@@ -680,7 +720,7 @@ export default {
 	}
 	.u-order-desc {
 		font-size: 24rpx;
-		color: #303133;
+		color: #606266;
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		position: relative;
@@ -829,7 +869,7 @@ export default {
 		display: flex;
 		align-items: center;
 		position: fixed;
-		bottom: 178rpx;
+		bottom: 246rpx;
 		right: 34rpx;
 		justify-content: center;
 		box-shadow: 0px 0px 12rpx 4rpx rgba(255, 229, 18, 0.35);
@@ -841,12 +881,13 @@ export default {
 }
 .fixTabs {
 	position: fixed;
-	top: 140rpx;
+	// top: 140rpx;
 	padding-left: 10rpx;
-	padding-bottom: 15rpx;
+	padding-top: 15rpx;
 	left: 0;
 	z-index: 2;
 	width: 100%;
+	height:110rpx;
 	background: #ffffff;
 	// border-bottom: 2rpx solid #eeeeee;
 	// box-shadow: 0px 0px 12rpx 0rpx #eeeeee;
@@ -856,6 +897,8 @@ export default {
 	left: 0;
 	z-index: 1000;
 	width: 100%;
+	height: 110rpx;
+	padding-top: 15rpx;
 	background: #ffffff;
 }
 </style>

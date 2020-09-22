@@ -1,18 +1,63 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<u-navbar :is-back="false"  class="navbar" >
-			<view class="slot-wrap">
-				<image class="fanhui" src="../../static/images/icon-fanhui-white.svg" @click="back" />
-				<image class="fhsy" src="../../static/images/icon-fhsy-white.svg" @click="home" />
+		<view class="example-body">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" background-color="transparent" style="z-index: 999999;">
+				<view slot="left" class="slotleft">
+					<image class="fanhui" src="../../static/images/icon-fanhui-white.svg" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy-white.svg" @click="home" />
+				</view>
+			</uni-nav-bar>
+		</view>
+		<!-- 城市选择弹窗 -->
+		<u-popup v-model="show" mode="top" height="383px" style="z-index: 9999999;">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+				<view slot="left" class="slotleft">
+					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+				</view>
+				<view class="slottitle">领途羊</view>
+			</uni-nav-bar>
+			<!-- 城市 -->
+			<view class="nowcity">
+				<text>{{name}}</text>
+				<image src="../../static/images/moreDown.svg" mode=""></image>
 			</view>
-		</u-navbar>
-		
+			<!-- 城市选择列表 -->
+			<view class="u-menu-wrap">
+				<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
+					<view v-for="(item,index) in cityList" :key="index" class="u-tab-item" :class="[current==index ? 'u-tab-item-active' : '']"
+					 :data-current="index" @tap.stop="swichMenu(index)">
+						<text class="u-line-1">{{item.name}}</text>
+					</view>
+				</scroll-view>
+				<block v-for="(item,index) in cityList" :key="index">
+					<scroll-view scroll-y class="right-box" v-if="current==index">
+						<view class="page-view">
+							<view class="class-item">
+								<!-- <view class="item-title" @click="gethotsiteslist2(item)"> -->
+									<!-- <text>{{item.name}}</text> -->
+								<!-- </view> -->
+								<view class="item-container">
+									<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
+										<view class="item-menu-name" @click="gethotsiteslist1(item1)">{{item1.name}}</view>
+									</view>
+									<view class="thumb-box" v-if="item.city_list == null">
+										<view class="item-menu-name" @click="gethotsiteslist1()">全国</view>
+									</view>
+								</view>
+							</view>
+						</view>
+					</scroll-view>
+				</block>
+			</view>
+		</u-popup>
 		
 		<view class="bgBox">
 			<image :src="banner" mode="" class="bannerImg"></image>
 			<view class="mask">
 				<view class="content">
+					<image class="travel" src="../../static/images/TRAVEL.png" mode=""></image>
 					<view class="atthotbox">
 						<image src="../../static/images/leftleaves.svg" mode=""></image>
 						<text class="atthottext">{{name}}热门景点</text>
@@ -30,15 +75,19 @@
 		
 		<!-- 排行 -->
 		
-		
-			<view class="rankContent">
-				<view class="city" @click="show = true" >
-					<view class="" @click="getCity">
-						<text class="cityname">{{name}}</text>
-						<image src="../../static/images/more-down.svg" mode=""></image>
-					</view>
+		<view class="cityBox">
+			<view class="city" @click="show = true" >
+				<view class="" @click="getCity">
+					<text class="cityname">{{name}}</text>
+					<image src="../../static/images/more-down.svg" mode=""></image>
 				</view>
-				<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" >
+			</view>
+		</view>
+		<view class="rankContent">
+			
+			
+			<!-- <view class="mescroll" > -->
+				<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption">
 					<view class="cardList">
 						<view class="cards" v-for="(item,index) in  hotsiteslist" :key="index" @click="toAtt(item.id)">
 							<view class="cardsleft">
@@ -132,55 +181,12 @@
 						</view>
 					</view>
 				</mescroll-body>
-			</view>
-			<view class="shareBox" v-show="serviceProvider !='toutiao' " @click="share">
-				<image src="../../static/images/icon-share.svg" mode="" ></image>
-			</view>
-				
-		
-		<!-- 城市选择弹窗 -->
-		<u-popup v-model="show" mode="top" height="383px">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
-				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
-				</view>
-				<view class="slottitle">领途羊</view>
-			</uni-nav-bar>
-			<!-- 城市 -->
-			<view class="nowcity">
-				<text>{{name}}</text>
-				<image src="../../static/images/more-down.svg" mode=""></image>
-			</view>
-			<!-- 城市选择列表 -->
-			<view class="u-menu-wrap">
-				<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
-					<view v-for="(item,index) in cityList" :key="index" class="u-tab-item" :class="[current==index ? 'u-tab-item-active' : '']"
-					 :data-current="index" @tap.stop="swichMenu(index)">
-						<text class="u-line-1">{{item.name}}</text>
-					</view>
-				</scroll-view>
-				<block v-for="(item,index) in cityList" :key="index">
-					<scroll-view scroll-y class="right-box" v-if="current==index">
-						<view class="page-view">
-							<view class="class-item">
-								<!-- <view class="item-title" @click="gethotsiteslist2(item)"> -->
-									<!-- <text>{{item.name}}</text> -->
-								<!-- </view> -->
-								<view class="item-container">
-									<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
-										<view class="item-menu-name" @click="gethotsiteslist1(item1)">{{item1.name}}</view>
-									</view>
-									<view class="thumb-box" v-if="item.city_list == null">
-										<view class="item-menu-name" @click="gethotsiteslist1()">全国</view>
-									</view>
-								</view>
-							</view>
-						</view>
-					</scroll-view>
-				</block>
-			</view>
-		</u-popup>
+			<!-- </view> -->
+			
+		</view>
+		<view class="shareBox" v-show="serviceProvider !='toutiao' " @click="share">
+			<image src="../../static/images/icon-share.svg" mode="" ></image>
+		</view>
 	</view>
 </template>
 
@@ -208,7 +214,10 @@
 				area: null,
 				hotsiteslist:null,
 				cityList:null,
-				serviceProvider: ''
+				serviceProvider: '',
+				downOption:{
+					use:false
+				}
 			}
 		},
 		onLoad: function(option) {
@@ -682,51 +691,72 @@
 </script>
 
 <style lang="scss" scoped>
-	// 自定义导航栏样式
+	/* 自定义导航栏样式 */
+	.example-body {
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 0;
+		font-size: 14px;
+		z-index: 999999;
+	}
+	
+	.example-body {
+		flex-direction: column;
+		padding: 15px;
+		background-color: #ffffff;
+		border-bottom: 1rpx solid rgba(237, 239, 242, 1);
+	}
+	
+	.example-body {
+		padding: 0;
+	}
+	
 	.navBar {
-		// background-color: #ff5500 !important;
-		// background-size:100% 100%;
+		display: flex;
+		z-index: 999999;
 	}
-	.slot-wrap{
-		
-	}
+	
 	.slotleft {
 		display: flex;
 		align-items: center;
 	}
-
+	
 	.fanhui {
 		width: 40rpx;
 		height: 40rpx;
 		margin-left: 40rpx;
 		margin-right: 20rpx;
 	}
-
+	
 	.fhsy {
 		width: 40rpx;
 		height: 40rpx;
 	}
-
+	
 	.slottitle {
 		margin-left: 162rpx;
 		font-size: 38rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 600;
+		color: rgba(0, 0, 0, 1);
 	}
-
+	
 	.button-v-line {
 		width: 1px;
 		height: 18px;
 		background-color: #2f2f2f;
 		margin: 0 8px;
 	}
+
+	
 	.bgBox{
-		position: absolute;
+		position: fixed;
 		top: 0;
 		left: 0;
 		width: 750rpx;
 		height: 440rpx;
-		
+		z-index: 111;
 	}
 	.mask{
 		position: absolute;
@@ -756,7 +786,15 @@
 		color: rgba(255, 255, 255, 1);
 		line-height: 56rpx;
 		letter-spacing: 2rpx;
-		background: url(../../static/images/TRAVEL.png) no-repeat center 4rpx;
+		// background: url(../../static/images/TRAVEL.png) no-repeat center 4rpx;
+		.travel{
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 40%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
 		.atthotbox{
 			position: absolute;
 			top: 40%;
@@ -775,7 +813,7 @@
 				color: #FFFFFF;
 				line-height: 64rpx;
 				letter-spacing: 2rpx;
-				font-weight: 500;
+				font-weight: 600;
 				margin: 0 6rpx;
 			}
 			
@@ -825,9 +863,18 @@
 		border-radius: 8px 8px 0px 0px;
 		z-index: 11;
 		position: absolute;
-		top: 420rpx;
+		top: 430rpx;
 	}
-
+	.cityBox{
+		width: 730rpx;
+		height: 124rpx;
+		position: fixed;
+		margin-left: 10rpx;
+		top: 420rpx;
+		z-index: 111;
+		background-color: #FFFFFF;
+		border-radius: 8px 8px 0px 0px;
+	}
 	.city {
 		display: inline-block;
 		min-width: 124rpx;
@@ -835,10 +882,13 @@
 		height: 60rpx;
 		background: #FFE512;
 		border-radius: 30rpx;
+		
 		// align-items: center;
 		// justify-content: center;
 		margin: 28rpx;
 		padding: 14rpx 16rpx 14rpx 20rpx;
+		// position: fixed;
+		// top: 480rpx;
 		.cityname {
 			height: 32rpx;
 			font-size: 32rpx;
@@ -854,10 +904,11 @@
 			height: 18rpx;
 		}
 	}
-
+	
 	.cardList {
 		width: 702rpx;
 		margin-left: 28rpx;
+		margin-top: 120rpx;
 	}
 
 	.cards {
@@ -871,13 +922,13 @@
 	.cardsleft {
 		width: 262rpx;
 		height: 198rpx;
-		border-radius: 16rpx;
+		border-radius: 8px;
 		position: relative;
 
 		.bigImg {
 			width: 100%;
 			height: 100%;
-			border-radius: 16rpx;
+			border-radius: 8px;
 
 		}
 
@@ -918,7 +969,7 @@
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: #909399;
-		margin-bottom: 20rpx;
+		margin-bottom: 14rpx;
 		display: -webkit-box;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -955,7 +1006,7 @@
 	.shareBox {
 		position: fixed;
 		right: 24rpx;
-		bottom: 232rpx;
+		bottom: 174rpx;
 		z-index: 1112;
 		width: 92rpx;
 		height: 92rpx;
@@ -982,10 +1033,9 @@
 	}
 
 	.nowcity {
-		margin: 40rpx;
+		margin: 40rpx 40rpx 32rpx 40rpx;
 		display: flex;
 		align-items: center;
-		margin-left: 40rpx;
 
 		text {
 			font-size: 28rpx;
@@ -993,12 +1043,13 @@
 			font-weight: 500;
 			color: #303133;
 			line-height: 28rpx;
-			margin-right: 8rpx;
+			margin: 16rpx 12rpx 8rpx 6rpx;
 		}
 
 		image {
-			width: 11.4rpx;
-			height: 11.4rpx;
+			width: 16rpx;
+			height: 16rpx;
+			margin-top: 6rpx;
 		}
 	}
 
@@ -1090,7 +1141,7 @@
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: #303133;
-		margin-bottom: 52rpx;
+		margin-bottom: 40rpx;
 		margin-left: 28rpx;
 	}
 
