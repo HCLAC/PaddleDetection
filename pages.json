@@ -23,8 +23,7 @@
 			"path": "pages/attractionsRank/attractionsRank",
 			"style": {
 				"navigationStyle": "custom",
-				"backgroundColor": "#000000",
-				"backgroundColorTop":"#FFFFFF"
+				"backgroundColor": "#000000"
 				
 			}
 		},

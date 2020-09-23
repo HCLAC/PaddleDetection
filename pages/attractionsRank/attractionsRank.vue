@@ -689,8 +689,13 @@
 		}
 	}
 </script>
-
+<style lang="scss">
+	page{
+		background-color: #000000!important;
+	}
+</style>
 <style lang="scss" scoped>
+	
 	/* 自定义导航栏样式 */
 	.example-body {
 		flex-direction: row;
