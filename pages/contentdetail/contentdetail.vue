@@ -886,17 +886,24 @@ export default {
 	border-radius: 20rpx;
 	// border: 2rpx solid rgba(0, 145, 255, 1);
 	display: inline-block;
-	align-items: center;
 	line-height: 40rpx;
 	padding: 0 14rpx;
 }
-
 .adreessIcon {
 	width: 24rpx;
 	height: 24rpx;
 	margin-top: 8rpx;
 	float: left;
 }
+/*  #ifdef  MP-TOUTIAO  */
+.adreessIcon {
+	width: 24rpx;
+	height: 24rpx;
+	margin-top: 12rpx;
+	float: left;
+}
+/*  #endif  */
+
 
 .adressText {
 	font-size: 22rpx;
