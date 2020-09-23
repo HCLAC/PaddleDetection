@@ -28,9 +28,13 @@ export default {
 		uniNavBar
 	},
 	onLoad(option){
-		this.state_id = option.state_id ? option.state_id : null
-		this.city_id = option.city_id ? option.city_id : null
 		
+		if(option.state_id == 0){
+			this.state_id = option.city_id ? option.city_id : null
+		}else{
+			this.state_id = option.state_id ? option.state_id : null
+			this.city_id = option.city_id ? option.city_id : null
+		}
 	},
 	mixins: [MescrollMixin],
 	data() {

@@ -447,6 +447,7 @@ export default {
 		},
 		// 线路列表
 		toLineMore() {
+			console.log(this.item,'item--')
 			if (this.item == null) {
 				uni.navigateTo({
 					url: '/pages/lineList/lineList'
@@ -514,7 +515,6 @@ export default {
 								success: res => {
 									console.log('景点推荐', res);
 									this.siteHot = res.data.data;
-									this.rate = (this.siteHot.rate).toFixed(1)
 								}
 							});
 						// 线路
@@ -601,7 +601,6 @@ export default {
 								success: res => {
 									console.log('景点推荐', res);
 									this.siteHot = res.data.data;
-									this.rate = (this.siteHot.rate).toFixed(1)
 								}
 							});
 						// 线路
