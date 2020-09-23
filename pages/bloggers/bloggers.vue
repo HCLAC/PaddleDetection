@@ -58,7 +58,7 @@
 					
 				</view>
 			</view>
-			<view style="margin-top: 318rpx; padding: 0 24rpx;" v-if="workslist">
+			<view style="margin-top: 45%; padding: 0 24rpx;" v-if="workslist">
 				<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"  >
 					<view class="" v-for="(item, index) in workslist" :key="index">
 						<view class="contentItem" >

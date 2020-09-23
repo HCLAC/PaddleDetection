@@ -39,7 +39,7 @@
 							<!-- 当前位置 -->
 							<view class="dqwz" @click="toProvinces(areaList[0])">
 								<image class="dqwzImg" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
-								<view class="mask" v-if="areaList[0].image"></view>
+								<view class="mask1" v-if="areaList[0].image"></view>
 								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
 								<text class="dqwzText">{{ cityName }}</text>
 								<view class="adressBox">
@@ -182,7 +182,7 @@
 							<!-- 当前位置 -->
 							<view class="dqwznoba" @click="toProvinces(areaList[0])">
 								<image class="dqwzImgnoba" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
-								<view class="mask" v-if="areaList[0].image"></view>
+								<view class="mask1" v-if="areaList[0].image"></view>
 								<image class="dqwzImgnoba" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
 								<view class="dqwzBoxnoba">
 									<text class="dqwzTextnoba">{{ cityName }}</text>
@@ -1060,8 +1060,8 @@ view {
 .dqwz {
 	width: 216rpx;
 	height: 180rpx;
-	border-radius: 16rpx;
-	border: 1px solid #faad14;
+	border-radius: 8px;
+	border: 2px solid #FFE512;
 	position: relative;
 	display: flex;
 	align-items: center;
@@ -1070,7 +1070,7 @@ view {
 .dqwzImg {
 	width: 100%;
 	height: 100%;
-	border-radius: 16rpx;
+	border-radius: 8px;
 }
 .dqwzBox {
 	position: absolute;
@@ -1108,18 +1108,25 @@ view {
 .dqwznoba {
 	width: 216rpx;
 	height: 180rpx;
-	border-radius: 16rpx;
-	border: 1px solid #faad14;
+	border-radius: 8px;
+	border: 2px solid #FFE512;
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 .mask{
-	width: 214rpx;
-	height: 178rpx;
+	width: 216rpx;
+	height: 180rpx;
 	background: rgba(0, 0, 0, 0.25);
-	border-radius: 16rpx;
+	border-radius: 8px;
+	position: absolute;
+}
+.mask1{
+	width: 208rpx;
+	height: 172rpx;
+	background: rgba(0, 0, 0, 0.25);
+	border-radius: 8px;
 	position: absolute;
 }
 .dqwzImgnoba {

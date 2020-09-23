@@ -44,7 +44,7 @@
 							<view class="tip">{{attDetail.data.city}}</view>
 						</view>
 					</view>
-					<view class="shareBox" @click="share" v-show="serviceProvider !='toutiao'">
+					<view class="shareBox" @click="share" v-if="serviceProvider =='baidu' ">
 						<image src="../../static/images/iconShare.svg" mode="" ></image>
 					</view>
 				</view>
@@ -250,10 +250,10 @@ export default {
 		uni.getProvider({
 			service: 'oauth',
 			success: res => {
-			
+				console.log(res,123)
 				if(res.errMsg == 'getProvider:ok'){
 					this.serviceProvider = res.provider[0]
-					if(this.serviceProvider == 'toutiao'){
+					if(this.serviceProvider != 'baidu' ){
 						uni.showShareMenu({
 							
 						})
@@ -315,7 +315,12 @@ export default {
 		// 分享
 		share(){
 			uni.showShareMenu({
-				
+				success: (res) => {
+					
+				},
+				fail: (res) => {
+					console.log('分享报错',res)
+				}
 			})
 		},
 		change(e) {
