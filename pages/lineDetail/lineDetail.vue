@@ -16,7 +16,7 @@
 					<view class="page-section-spacing" >
 						<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
 							<swiper-item v-for="(item, index) in lineContent.images" :key="index">
-								<image class="itemImg" mode="heightFix" :src="item"></image>
+								<image class="itemImg" mode="scaleToFill" :src="item"></image>
 							</swiper-item>
 						</swiper>
 						<view class="imageCount">{{ current + 1 }}/{{ lineContent.images.length }}</view>

@@ -444,7 +444,7 @@ export default {
 			uni.getLocation({
 				type: 'wgs84',
 				success: res => {
-					console.log(111)
+					console.log(111,res)
 					if (res.city && res.province) {
 						this.cityName = res.city.substr(0, res.city.length - 1);
 						this.city = res.city;
@@ -472,7 +472,7 @@ export default {
 						console.log(arr);
 						arr = arr.join(',');
 						uni.request({
-							url: 'http://api.map.baidu.com/reverse_geocoding/v3/?ak=NKyWaSnsW6FFEseeCEX18Fpvgzs3jcmd&output=json&coordtype=wgs84ll',
+							url: 'https://api.map.baidu.com/reverse_geocoding/v3/?ak=NKyWaSnsW6FFEseeCEX18Fpvgzs3jcmd&output=json&coordtype=wgs84ll',
 							data: {
 								location: arr
 							},
@@ -483,7 +483,7 @@ export default {
 									this.province = result.data.result.addressComponent.province;
 									// console.log('哈哈哈哈哈哈哈哈哈');
 
-									console.log(this.city, this.province);
+									console.log('当前定位',this.city, this.province);
 									uni.request({
 										url: this.globalUrl + '/area/hot',
 										data: {
@@ -491,7 +491,6 @@ export default {
 											city: this.city ? this.city : null
 										},
 										success: res => {
-											console.log(this.areaList);
 											this.areaList = res.data.data;
 
 											console.log('areaList--', this.areaList);
