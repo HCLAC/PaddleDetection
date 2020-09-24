@@ -160,20 +160,21 @@ export default {
 
 	font-family: PingFangSC-Medium, PingFang SC;
 	.lineItem {
-		width: 100%;
+		width: 694rpx;
 		display: flex;
+		justify-content: center;
 		flex-flow: column;
 		margin-bottom: 20rpx;
-		box-shadow: 0px 2px 4px 0px #EDEFF2;
+		
 		border-radius: 0px 0px 16rpx 16rpx;
 		image {
 			width: 100%;
 			height: 370rpx;
 			border-radius: 16rpx 16rpx 0 0;
-			box-shadow: 0px 2px 4px 0px #EDEFF2;
 		}
 		text {
-			height: 32rpx;
+			width: 685rpx;
+			// height: 32rpx;
 			background: #ffffff;
 			color: #303133;
 			font-weight: 500;
@@ -183,8 +184,11 @@ export default {
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
-			margin-top: 20rpx;
-			margin-bottom: 40rpx;
+			padding-top: 20rpx;
+			padding-bottom: 40rpx;
+			margin-left: 1rpx;
+			box-shadow: 0px 2px 4px 0px #EDEFF2;
+			border-radius: 0px 0px 16rpx 16rpx;
 		}
 	}
 }
