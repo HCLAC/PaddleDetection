@@ -2,102 +2,109 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" background-color="transparent">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" :backgroundColor="background" >
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="slottitle">我的关注</view>
+				<view class="slottitle"></view>
 			</uni-nav-bar>
 		</view>
 		<!-- 博主信息 -->
-		<view class="content">
-			<view  style="position: fixed; width: 100%; top: 0; z-index: 400;" >
-				<view class="contentTop">
-					<image src="../../static/images/mineBack.png" class="backImg"></image>
-					<!-- 博主信息 -->
-					<view class="usermes" v-if="authorMsg">
-						<image class="userAva" :src="authorMsg.avatar" ></image>
 		
-						<image src="../../static/images/userImg.svg" class="userAva" v-if="nickName" mode=""></image>
-						<view class="userR">
-							<view class="userName">{{ authorMsg.user_name }}</view>
-							<view class="likeandfans" >
-								<text>获赞数</text>
-								<view class="likenum">{{authorMsg.like>10000?((authorMsg.like-(authorMsg.like%1000))/10000+'w'):authorMsg.like}}</view>
-								<text>粉丝</text>
-								<view class="fansnum">
-									{{authorMsg.fans>10000?((authorMsg.fans-(authorMsg.fans%1000))/10000+'w'):authorMsg.fans}}
+			<view class="contentBox" style="height: 100%;"> 
+				<view  style="position: absolute; width: 100%; top: 0; z-index: 400;" >
+					<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"  >
+					<view class="contentTop">
+						<image src="../../static/images/mineBack.png" class="backImg"></image>
+						<!-- 博主信息 -->
+						<view class="usermes" v-if="authorMsg">
+							<image class="userAva" :src="authorMsg.avatar" ></image>
+			
+							<image src="../../static/images/userImg.svg" class="userAva" v-if="nickName" mode=""></image>
+							<view class="userR">
+								<view class="userName">{{ authorMsg.user_name }}</view>
+								<view class="likeandfans" >
+									<text>获赞数</text>
+									<view class="likenum">{{authorMsg.like>10000?((authorMsg.like-(authorMsg.like%1000))/10000+'w'):authorMsg.like}}</view>
+									<text>粉丝</text>
+									<view class="fansnum">
+										{{authorMsg.fans>10000?((authorMsg.fans-(authorMsg.fans%1000))/10000+'w'):authorMsg.fans}}
+									</view>
 								</view>
+								<!-- <view class="logout">退出登录</view> -->
 							</view>
-							<!-- <view class="logout">退出登录</view> -->
-						</view>
-						<view class="follow" v-if="authorMsg.is_follow" @click="Fllow()">
-							<text>已关注</text>
-						</view>
-						<view class="unfollow" v-if="!authorMsg.is_follow" @click="Fllow()">
-							<text>关注</text>
+							<view class="follow" v-if="authorMsg.is_follow" @click="Fllow()">
+								<text>已关注</text>
+							</view>
+							<view class="unfollow" v-if="!authorMsg.is_follow" @click="Fllow()">
+								<text>关注</text>
+							</view>
 						</view>
 					</view>
+					<!-- 弹窗 -->
+					<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
+					<!-- 作品 -->
+					<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard">
+						<v-tabs
+							lineHeight="22rpx"
+							lineColor="#FFE512"
+							fontSize="36rpx"
+							activeColor="#303133"
+							:lineScale="0.55"
+							paddingItem="0 32rpx"
+							:tabs="tablist"
+							:is-scroll="false"
+						></v-tabs>
+						<view class="articleNum">
+							{{authorMsg.article_count>10000?((authorMsg.article_count-(authorMsg.article_count%1000))/10000+'w'):authorMsg.article_count}}
+						</view>
+						
+					</view>
+					<view style="margin-top: 24%; padding-left:24rpx;" v-if="workslist">
+						
+							<view class="" v-for="(item, index) in workslist" :key="index">
+								<view class="contentItem" >
+									<view class="left">
+										<image :src="item.image" mode="">
+											<view class="imgTip">
+												<view v-if="item.type == 1">游记</view>
+												<view v-if="item.type == 2">攻略</view>
+											</view>
+										</image>
+									</view>
+									<view class="right" @click="onPageJump" :id="item.article_id">
+										<view class="title">
+											
+											<text class="titleText">{{ item.title }}</text>
+										</view>
+										<view class="content">
+											<rich-text class="richText" :nodes="item.content"></rich-text>
+										</view>
+										<view class="favandlikebox">
+											<view class="fav">
+												{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}收藏
+											</view>
+											<view class="like">
+												{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}点赞
+											</view>
+										</view>
+										<view class="position">
+											<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
+											<view class="positionText">{{ item.location }}</view>
+										</view>
+									</view>
+								</view>
+								<view class="contentline"></view>
+							</view>
+							
+						
+					</view>
+					</mescroll-body>
 				</view>
-				<!-- 弹窗 -->
-				<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
-				<!-- 作品 -->
-				<view class="myCollection">
-					<v-tabs
-						lineHeight="22rpx"
-						lineColor="#FFE512"
-						fontSize="36rpx"
-						activeColor="#303133"
-						:tabs="tablist"
-						:is-scroll="false"
-					></v-tabs>
-					<view class="articleNum">
-						{{authorMsg.article_count>10000?((authorMsg.article_count-(authorMsg.article_count%1000))/10000+'w'):authorMsg.article_count}}
-					</view>
-					
-				</view>
+				
 			</view>
-			<view style="margin-top: 45%; padding: 0 24rpx;" v-if="workslist">
-				<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"  >
-					<view class="" v-for="(item, index) in workslist" :key="index">
-						<view class="contentItem" >
-							<view class="left">
-								<image :src="item.image" mode="">
-									<view class="imgTip">
-										<view v-if="item.type == 1">游记</view>
-										<view v-if="item.type == 2">攻略</view>
-									</view>
-								</image>
-							</view>
-							<view class="right" @click="onPageJump" :id="item.article_id">
-								<view class="title">
-									
-									<text class="titleText">{{ item.title }}</text>
-								</view>
-								<view class="content">
-									<rich-text class="richText" :nodes="item.content"></rich-text>
-								</view>
-								<view class="favandlikebox">
-									<view class="fav">
-										{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}收藏
-									</view>
-									<view class="like">
-										{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}点赞
-									</view>
-								</view>
-								<view class="position">
-									<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
-									<view>{{ item.location }}</view>
-								</view>
-							</view>
-						</view>
-						<view class="contentline"></view>
-					</view>
-					
-				</mescroll-body>
-			</view>
-		</view>
+		
 	</view>
 </template>
 
@@ -115,7 +122,10 @@ export default {
 			tablist:['作品'],
 			downOption:{
 				use:false
-			}
+			},
+			cardheight:0,
+			isFixed:false,
+			background:'transparent'
 		};
 	},
 	mixins: [MescrollMixin],
@@ -138,7 +148,27 @@ export default {
 		this.getlist()
 		// this.getlist()
 	},
-
+	mounted() {
+		const query = uni.createSelectorQuery().in(this);
+		query.select('#selectcard').boundingClientRect(data => {
+		console.log("得到布局位置信息" + JSON.stringify(data));
+		console.log("节点离页面顶部的距离为" + data.top);
+		if(data.top == 0 ){
+			this.cardheight = 200
+		}else{
+			this.cardheight = data.top
+		}
+		}).exec();
+	},
+	onPageScroll(e) {
+		if (e.scrollTop >  this.cardheight) {
+			this.isFixed = true;
+			this.background ='#FFFFFF'
+		} else {
+			this.isFixed = false;
+			this.background = 'transparent'
+		}
+	},
 	methods: {
 		getBloggerMsg() {
 			uni.request({
@@ -400,6 +430,14 @@ export default {
 	z-index: -11;
 }
 
+.contentBox{
+	// width: 100%;
+	// height: 100%;
+	// position: absolute;
+	// top: -88rpx;
+	// z-index: 40000;
+}
+
 // /* 用户信息 */
 .usermes {
 	padding-top: 154rpx;
@@ -420,6 +458,7 @@ export default {
 }
 .userR {
 	margin-left: 32rpx;
+	margin-right: 16rpx;
 	// margin-top: 24rpx;
 }
 .userName {
@@ -520,9 +559,19 @@ export default {
 	width: 100%;
 	font-size: 40rpx;
 	font-weight: 500;
-	padding-top: 30rpx;
+	padding-top: 22rpx;
+	display: flex;
 	position: absolute;
 	top: 360rpx;
+}
+.fixTabs {
+	position: fixed;
+	top: 126rpx;
+	// height: 100rpx;
+	padding-top: 28rpx;
+	z-index: 2;
+}
+.noFix {
 }
 .tip{
 	// width: 72rpx;
@@ -535,9 +584,11 @@ export default {
 	// position: relative;
 }
 .articleNum{
-	position: absolute;
-	top: 60rpx;
-	left: 118rpx;
+	// position: absolute;
+	// top: 50rpx;
+	// left: 114rpx;
+	margin-top: 30rpx;
+	margin-left: -14rpx;
 	height: 24rpx;
 	font-size: 24rpx;
 	font-family: PingFangSC-Regular, PingFang SC;
@@ -613,6 +664,7 @@ export default {
 	margin: 28rpx;
 	margin-left: 0;
 	margin-top: 0;
+	margin-bottom: 20rpx;
 	border-radius: 8px;
 	display: flex;
 	overflow: hidden;
@@ -672,12 +724,12 @@ export default {
 	}
 	.richText {
 		width: 480rpx;
-		height: 70rpx;
+		height: 84rpx;
 		font-size: 28rpx;
 		font-weight: 400;
 		color: rgba(96, 98, 102, 1);
-		line-height: 38rpx;
-		margin-top: 20rpx;
+		line-height:42rpx;
+		margin-top: 12rpx;
 		display: -webkit-box;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -689,7 +741,7 @@ export default {
 	.favandlikebox{
 		display: flex;
 		align-items: center;
-		margin-top: 20rpx;
+		margin-top: 14rpx;
 		font-size: 22rpx;
 		// font-family: Roboto-Regular, Roboto;
 		font-weight: 400;
@@ -709,7 +761,7 @@ export default {
 			width: 26rpx;
 			margin-right: 4rpx;
 		}
-		view {
+		.positionText {
 			width: 452rpx;
 			font-size: 22rpx;
 			font-family: PingFangSC-Regular, PingFang SC;

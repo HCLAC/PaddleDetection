@@ -774,12 +774,12 @@ export default {
 	}
 	.richText {
 		width: 480rpx;
-		height: 70rpx;
+		height: 84rpx;
 		font-size: 28rpx;
 		font-weight: 400;
 		color: rgba(96, 98, 102, 1);
-		line-height: 38rpx;
-		margin-top: 20rpx;
+		line-height: 42rpx;
+		margin-top: 12rpx;
 		display: -webkit-box;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -791,7 +791,7 @@ export default {
 	.favandlikebox{
 		display: flex;
 		align-items: center;
-		margin-top: 20rpx;
+		margin-top: 14rpx;
 		font-size: 22rpx;
 		// font-family: Roboto-Regular, Roboto;
 		font-weight: 400;
