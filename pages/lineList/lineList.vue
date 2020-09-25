@@ -41,7 +41,10 @@ export default {
 		return {
 			lineList: [],
 			state_id: null,
-			city_id: null
+			city_id: null,
+			upOption:{
+				textNoMore:'我也是有底线的～'
+			}
 		};
 	},
 	methods: {
@@ -156,16 +159,17 @@ export default {
 }
 //导航栏样式end
 .container {
-	padding: 30rpx;
-
+	// margin: 30rpx;
+	text-align: center;
 	font-family: PingFangSC-Medium, PingFang SC;
 	.lineItem {
 		width: 694rpx;
+		margin: 0 auto;
 		display: flex;
 		justify-content: center;
 		flex-flow: column;
 		margin-bottom: 20rpx;
-		
+		box-shadow: 0px 8px 28px 0px #EDEFF2;
 		border-radius: 0px 0px 16rpx 16rpx;
 		image {
 			width: 100%;
@@ -173,7 +177,7 @@ export default {
 			border-radius: 16rpx 16rpx 0 0;
 		}
 		text {
-			width: 685rpx;
+			// width: 684rpx;
 			// height: 32rpx;
 			background: #ffffff;
 			color: #303133;
@@ -186,8 +190,9 @@ export default {
 			white-space: nowrap;
 			padding-top: 20rpx;
 			padding-bottom: 40rpx;
-			margin-left: 1rpx;
-			box-shadow: 0px 2px 4px 0px #EDEFF2;
+			margin-left: 2rpx;
+			// box-shadow: 0px 8rpx 28rpx 0px #EDEFF2;
+			// box-shadow: 0px 2px 4px 0px #EDEFF2;
 			border-radius: 0px 0px 16rpx 16rpx;
 		}
 	}

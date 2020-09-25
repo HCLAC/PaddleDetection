@@ -55,7 +55,7 @@
 				<!-- 内容文章 -->
 				<view class="contentText">
 					<!-- <rich-text :nodes="articleList.data.content | formatRichText"></rich-text> -->
-					<u-parse v-if='articleList' lazy-load use-cache @imgtap="imgTap" @linkpress="templateAdd" :html="articleList.data.content | formatRichText"></u-parse>
+					<u-parse v-if='articleList' lazy-load :autosetTitle="false" :autoscroll="false"  @imgtap="imgTap" @linkpress="templateAdd" :html="articleList.data.content | formatRichText"></u-parse>
 				</view>
 				<view class="tips">
 					<view v-for="item in articleList.data.tags" :key="item.id">

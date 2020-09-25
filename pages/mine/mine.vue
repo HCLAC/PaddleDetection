@@ -44,6 +44,7 @@
 								activeFontSize="36rpx"
 								fontSize="28rpx"
 								v-model="tabCurrent"
+								:bold="true"
 								color="#909399;"
 								:tabs="tablist"
 								:is-scroll="true"
@@ -631,6 +632,7 @@ export default {
 	font-weight: 500;
 	// padding-left: 32rpx;
 	padding-top: 30rpx;
+	display: flex;
 	position: absolute;
 	top: 360rpx;
 }
@@ -664,9 +666,11 @@ export default {
 	color: #303133;
 	line-height: 24rpx;
 	z-index: 11111;
-	position: absolute;
-	top: 56rpx;
-	left: 110rpx;
+	margin-top: 26rpx;
+	margin-left: -166rpx;
+	// position: absolute;
+	// top: 56rpx;
+	// left: 110rpx;
 }
 .likeNum{
 	height: 24rpx;
@@ -676,9 +680,11 @@ export default {
 	color: #303133;
 	line-height: 24rpx;
 	z-index: 11111;
-	position: absolute;
-	top: 56rpx;
-	left: 240rpx;
+	margin-top: 26rpx;
+	margin-left: 126rpx;
+	// position: absolute;
+	// top: 56rpx;
+	// left: 240rpx;
 }
 
 .noContentItem {

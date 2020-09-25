@@ -1192,7 +1192,7 @@ export default {
 }
 .tripText {
 	// height: 28rpx;
-	margin-top: 16rpx;
+	margin-top: 8rpx;
 	font-size: 28rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
@@ -1204,16 +1204,19 @@ export default {
 }
 
 /* 正在旅行 */
-
+.touring{
+	margin-top: 36rpx;
+}
 .touring .tourtext {
 	width: 160rpx;
 	height: 104rpx;
-	line-height: 104rpx;
+	// line-height: 104rpx;
 	font-size: 40rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #303133;
 	margin-left: 32rpx;
+	
 }
 
 .wrap {
@@ -1221,6 +1224,7 @@ export default {
 	display: flex;
 	flex-flow: row;
 	flex-wrap: wrap;
+	margin-top: 24rpx;
 }
 .left {
 	margin-left: 10rpx;
