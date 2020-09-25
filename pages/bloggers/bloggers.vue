@@ -61,7 +61,7 @@
 						</view>
 						
 					</view>
-					<view style="margin-top: 24%; padding-left:24rpx;" v-if="workslist">
+					<view style="margin-top: 18%; padding-left:24rpx;" v-if="workslist">
 						
 							<view class="" v-for="(item, index) in workslist" :key="index">
 								<view class="contentItem" >
@@ -559,6 +559,7 @@ export default {
 	width: 100%;
 	font-size: 40rpx;
 	font-weight: 500;
+	padding-left: 10rpx;
 	padding-top: 22rpx;
 	display: flex;
 	position: absolute;
@@ -568,7 +569,7 @@ export default {
 	position: fixed;
 	top: 126rpx;
 	// height: 100rpx;
-	padding-top: 28rpx;
+	padding-top: 30rpx;
 	z-index: 2;
 }
 .noFix {

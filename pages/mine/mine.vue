@@ -38,24 +38,24 @@
 						<!-- <view>收藏</view> -->
 							<v-tabs 
 								inactive-color="#909399"
-								lineHeight="22rpx"
+								lineHeight="24rpx"
 								lineColor="#FFE512"
 								activeColor="#303133"
 								activeFontSize="36rpx"
 								fontSize="28rpx"
 								v-model="tabCurrent"
 								:bold="true"
-								color="#909399;"
+								color="#909399"
 								:tabs="tablist"
-								:is-scroll="true"
+								:is-scroll="false"
 								:current="tabCurrent"
 								@change="tabChange"
 							></v-tabs>
 						<!-- </view> -->
-						<view class="favNum" :style="{color: favnumcolor.color}" v-if="favNum != 0">
+						<view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" v-if="favNum != 0">
 							{{favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum}}
 						</view>
-						<view class="likeNum" :style="{color: likenumcolor.color}" v-if="likeNum != 0">
+						<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" v-if="likeNum != 0">
 							{{likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum}}
 						</view>
 					</view>
@@ -629,7 +629,7 @@ export default {
 	color: #303133;
 	width: 100%;
 	// font-size: 40rpx;
-	font-weight: 500;
+	// font-weight: 500;
 	// padding-left: 32rpx;
 	padding-top: 30rpx;
 	display: flex;
@@ -638,7 +638,7 @@ export default {
 }
 .fixTabs {
 	position: fixed;
-	top: 136rpx;
+	top: 126rpx;
 	// padding-left: 10rpx;
 	// padding-top: 15rpx;
 	// left: 0;
@@ -668,9 +668,17 @@ export default {
 	z-index: 11111;
 	margin-top: 26rpx;
 	margin-left: -166rpx;
-	// position: absolute;
-	// top: 56rpx;
-	// left: 110rpx;
+}
+.favNum1{
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #303133;
+	line-height: 24rpx;
+	z-index: 11111;
+	margin-top: 26rpx;
+	margin-left: -178rpx;
 }
 .likeNum{
 	height: 24rpx;
@@ -681,10 +689,18 @@ export default {
 	line-height: 24rpx;
 	z-index: 11111;
 	margin-top: 26rpx;
-	margin-left: 126rpx;
-	// position: absolute;
-	// top: 56rpx;
-	// left: 240rpx;
+	margin-left: 134rpx;
+}
+.likeNum1{
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #303133;
+	line-height: 24rpx;
+	z-index: 11111;
+	margin-top: 26rpx;
+	margin-left: 124rpx;
 }
 
 .noContentItem {

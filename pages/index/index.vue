@@ -986,7 +986,7 @@ view {
 .nav-bar-input {
 	height: 64rpx;
 	/* min-width: 350rpx; */
-	width: 486rpx;
+	width: 410rpx;
 	line-height: 64rpx;
 	/* #ifdef APP-PLUS-NVUE */
 	/* #endif */
@@ -1020,7 +1020,7 @@ view {
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: rgba(48, 49, 51, 1);
-	line-height: 40rpx;
+	/* line-height: 40rpx; */
 	margin-top: 48rpx;
 	margin-left: 32rpx;
 }

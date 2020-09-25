@@ -22,7 +22,7 @@
           :key="i"
           :style="{
             color: current == i ? activeColor : color,
-            fontSize: current == i ? '32rpx' : fontSize,
+            fontSize: current == i ? '36rpx' : fontSize,
             fontWeight: bold && current == i ? 'bold' : '',
             justifyContent: !scroll ? 'center' : '',
             flex: scroll ? '' : 1,
@@ -32,6 +32,7 @@
         >
           {{ field ? v[field] : v }}
         </view>
+		
         <view
           v-if="!pills"
           class="v-tabs__container-line"
@@ -320,7 +321,7 @@ export default {
 
     &-line {
       position: absolute;
-      bottom: 8px;
+      bottom: 6px;
       transition: all 0.3s linear;
 		
     }

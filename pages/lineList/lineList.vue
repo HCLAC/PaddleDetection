@@ -169,7 +169,7 @@ export default {
 		justify-content: center;
 		flex-flow: column;
 		margin-bottom: 20rpx;
-		box-shadow: 0px 8px 28px 0px #EDEFF2;
+		box-shadow: 0px 2px 4px 0px #EDEFF2;
 		border-radius: 0px 0px 16rpx 16rpx;
 		image {
 			width: 100%;

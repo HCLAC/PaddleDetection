@@ -43,7 +43,7 @@
 					inactive-color="#909399"
 					lineHeight="12rpx"
 					lineColor="#FFE512"
-					activeFontSize="32rpx"
+					activeFontSize="36rpx"
 					activeColor="#303133"
 					fontSize="28rpx"
 					v-model="tabCurrent"
