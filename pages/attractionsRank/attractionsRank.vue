@@ -184,7 +184,7 @@
 			<!-- </view> -->
 			
 		</view>
-		<view class="shareBox" v-show="serviceProvider !='toutiao' " @click="share">
+		<view class="shareBox" v-show="serviceProvider =='baidu' " @click="share">
 			<image src="../../static/images/icon-share.svg" mode="" ></image>
 		</view>
 	</view>
@@ -239,7 +239,7 @@
 				
 					if(res.errMsg == 'getProvider:ok'){
 						this.serviceProvider = res.provider[0]
-						if(this.serviceProvider == 'toutiao'){
+						if(this.serviceProvider != 'baidu'){
 							uni.showShareMenu({
 								
 							})
@@ -915,7 +915,7 @@
 	.cardList {
 		width: 702rpx;
 		margin-left: 28rpx;
-		margin-top: 120rpx;
+		margin-top: 100rpx;
 	}
 
 	.cards {

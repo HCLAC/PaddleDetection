@@ -115,7 +115,7 @@ export default {
 	data() {
 		return {
 			author_id:'',
-			authorMsg:[],
+			authorMsg:null,
 			workslist:[],
 			show: false,
 			content: '',
@@ -139,6 +139,16 @@ export default {
 		this.author_id = currentPage.options.author_id
 		console.log(this.author_id,'....')
 		this.getBloggerMsg()
+		uni.showLoading({
+			title:'加载中',
+			success: () => {
+				
+			}
+		})
+		setTimeout(function() {
+			uni.hideLoading()
+		},1000)
+		
 	},
 	onLoad(e) {
 		// console.log('博主id',e)
