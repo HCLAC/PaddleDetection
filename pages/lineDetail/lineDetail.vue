@@ -289,7 +289,7 @@ export default {
 			  this.styleFix.top =  125 +'rpx'
 		  }else{
 			  this.cardheight = data.top
-			  this.styleFix.top = (data.top)-20 + 'rpx'
+			  this.styleFix.top = (data.top)-30 + 'rpx'
 		  }
 		  
 		}).exec();
@@ -894,7 +894,7 @@ export default {
 	position: fixed;
 	// top: 140rpx;
 	padding-left: 10rpx;
-	padding-top: 15rpx;
+	padding-top: 20rpx;
 	left: 0;
 	z-index: 2;
 	width: 100%;
