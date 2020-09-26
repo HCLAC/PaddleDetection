@@ -184,7 +184,7 @@
 			<!-- </view> -->
 			
 		</view>
-		<view class="shareBox" v-show="serviceProvider =='baidu' " @click="share">
+		<view class="shareBox" v-if="serviceProvider =='baidu' " @click="share">
 			<image src="../../static/images/icon-share.svg" mode="" ></image>
 		</view>
 	</view>
@@ -1013,7 +1013,7 @@
 	.shareBox {
 		position: fixed;
 		right: 24rpx;
-		bottom: 174rpx;
+		bottom: 204rpx;
 		z-index: 1112;
 		width: 92rpx;
 		height: 92rpx;

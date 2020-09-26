@@ -563,7 +563,7 @@ export default {
 	height: 124rpx;
 }
 .myCollection {
-	border-radius: 40rpx 40rpx 0rpx 0rpx;
+	border-radius: 24rpx 24rpx 0rpx 0rpx;
 	background-color: #fff;
 	color: #303133;
 	width: 100%;

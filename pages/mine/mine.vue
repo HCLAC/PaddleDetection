@@ -41,7 +41,7 @@
 								lineHeight="24rpx"
 								lineColor="#FFE512"
 								activeColor="#303133"
-								activeFontSize="36rpx"
+								activeFontSize="32rpx"
 								fontSize="28rpx"
 								v-model="tabCurrent"
 								:bold="true"
@@ -50,7 +50,9 @@
 								:is-scroll="false"
 								:current="tabCurrent"
 								@change="tabChange"
+								paddingItem="0 40rpx"
 							></v-tabs>
+							
 						<!-- </view> -->
 						<view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" v-if="favNum != 0">
 							{{favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum}}
@@ -183,7 +185,7 @@ export default {
 			favNum:'',
 			likeNum:'',
 			current: 0,
-			tablist: ['收藏', '已赞'],
+			tablist: ['收藏','已赞'],
 			tabCurrent: 0,
 			favnumcolor:{
 				color: '#303133'
@@ -667,7 +669,7 @@ export default {
 	line-height: 24rpx;
 	z-index: 11111;
 	margin-top: 26rpx;
-	margin-left: -166rpx;
+	margin-left: -170rpx;
 }
 .favNum1{
 	height: 24rpx;
@@ -700,7 +702,7 @@ export default {
 	line-height: 24rpx;
 	z-index: 11111;
 	margin-top: 26rpx;
-	margin-left: 124rpx;
+	margin-left: 120rpx;
 }
 
 .noContentItem {
@@ -799,7 +801,7 @@ export default {
 		height: 84rpx;
 		font-size: 28rpx;
 		font-weight: 400;
-		color: rgba(96, 98, 102, 1);
+		color: #909399;
 		line-height: 42rpx;
 		margin-top: 12rpx;
 		display: -webkit-box;

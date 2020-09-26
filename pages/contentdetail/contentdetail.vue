@@ -669,7 +669,7 @@ export default {
 				match = match.replace(/width:[^;]+;/gi, 'max-width:100%;').replace(/width:[^;]+;/gi, 'max-width:100%;');
 				return match;
 			});
-			newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+			// newContent = newContent.replace(/<br[^>]*\/>/gi, '');
 			// newContent = newContent.replace(/\<img/gi, '<img style="width:350px;height:auto;display:inline-block;margin:5px auto;"');
 			newContent = newContent.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');
 			//   newContent = newContent.replace(/<input[^>]*\/>/gi, '<div><p>营销组件</p><a >点击复制</a></div>');

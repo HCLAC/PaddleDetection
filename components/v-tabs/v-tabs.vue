@@ -22,7 +22,7 @@
           :key="i"
           :style="{
             color: current == i ? activeColor : color,
-            fontSize: current == i ? '36rpx' : fontSize,
+            fontSize: current == i ? activeFontSize : fontSize,
             fontWeight: bold && current == i ? 'bold' : '',
             justifyContent: !scroll ? 'center' : '',
             flex: scroll ? '' : 1,
@@ -128,7 +128,7 @@ export default {
     },
     activeFontSize: {
       type: String,
-      default: '36rpx'
+      default: '28rpx'
     },
     bold: {
       type: Boolean,
@@ -180,7 +180,7 @@ export default {
     },
     paddingItem: {
       type: String,
-      default: '0 40rpx'
+      default: '0 22rpx'
     }
   },
   data() {
@@ -273,12 +273,12 @@ export default {
           // 缩放后的滑块宽度
           this.lineWidth = currentWidth * this.lineScale * 1
           // 滑块作移动的位置
-          this.lineLeft = lineLeft + currentWidth / 2
+          this.lineLeft = lineLeft   + currentWidth / 2
           // 胶囊距离左侧的位置
-          this.pillsLeft = lineLeft
+          this.pillsLeft = lineLeft 
           // 计算滚动的距离左侧的位置
           if (this.scroll) {
-            this.scrollLeft = this.lineLeft - this.containerWidth / 2
+            this.scrollLeft = this.lineLeft   - this.containerWidth / 2 
           }
         })
         .exec()
@@ -314,6 +314,7 @@ export default {
       height: 100%;
       position: relative;
       z-index: 10;
+	  justify-content: center;
       // padding: 0 11px;
       transition: all 0.3s;
       white-space: nowrap;
