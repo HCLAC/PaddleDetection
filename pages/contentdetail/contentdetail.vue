@@ -665,10 +665,19 @@ export default {
 				match = match.replace(/height="[^"]+"/gi, '').replace(/height='[^']+'/gi, '');
 				return match;
 			});
+			
 			newContent = newContent.replace(/style="[^"]+"/gi, function(match, capture) {
 				match = match.replace(/width:[^;]+;/gi, 'max-width:100%;').replace(/width:[^;]+;/gi, 'max-width:100%;');
+				
 				return match;
 			});
+			// 适配字体
+			newContent = newContent.replace(/(\d+)px/g, function(s, t) {
+
+			s = s.replace('px', ''); 
+			var value = parseInt(s) * 2;//   此处 1rem =120px 
+			return value + "rpx"; 
+			}); 
 			// newContent = newContent.replace(/<br[^>]*\/>/gi, '');
 			// newContent = newContent.replace(/\<img/gi, '<img style="width:350px;height:auto;display:inline-block;margin:5px auto;"');
 			newContent = newContent.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');
@@ -920,7 +929,7 @@ export default {
 	font-weight: 600;
 	color: rgba(48, 49, 51, 1);
 	line-height: 32rpx;
-	margin-left: 28rpx;
+	margin-left: 20rpx;
 	margin-top: 20rpx;
 }
 

@@ -915,7 +915,7 @@
 	.cardList {
 		width: 702rpx;
 		margin-left: 28rpx;
-		margin-top: 100rpx;
+		margin-top: 90rpx;
 	}
 
 	.cards {

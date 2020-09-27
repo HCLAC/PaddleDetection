@@ -46,6 +46,8 @@
 					activeFontSize="36rpx"
 					activeColor="#303133"
 					fontSize="28rpx"
+					:lineScale="0.7"
+					lineRadius="6px"
 					v-model="tabCurrent"
 					:tabs="tablist"
 					:is-scroll="false"
@@ -74,7 +76,7 @@
 										</text>
 										<text class="planTitle">{{ item.title }}</text>
 									</view>
-									<view class="u-order-desc">{{ item.description }}</view>
+									<view class="u-order-desc1">{{ item.description }}</view>
 									<view class="u-order-time"></view>
 								</view>
 							</template>
@@ -102,7 +104,7 @@
 								<template v-slot:content>
 									<view>
 										<view class="u-order-title">
-											<text>{{ eve.title }}</text>
+											<text class="stitle">{{ eve.title }}</text>
 										</view>
 										<view class="u-order-desc">{{ eve.description }}</view>
 										<view class="position" v-for="(pos, posIndex) in eve.position" :key="posIndex" @click="getPosition(pos)">
@@ -722,6 +724,7 @@ export default {
 		top: -18rpx;
 		left: -18rpx;
 	}
+	
 	.planTitle {
 		font-size: 28rpx;
 		font-weight: 500;
@@ -729,9 +732,25 @@ export default {
 		margin-left: 20rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
 	}
+	.stitle{
+		
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-size: 28rpx;
+		font-weight: 400;
+		color: #303133;
+	}
 	.u-order-desc {
 		font-size: 24rpx;
 		color: #606266;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		position: relative;
+		left: -14rpx;
+		line-height: 36rpx;
+	}
+	.u-order-desc1 {
+		font-size: 24rpx;
+		color: #303133;
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		position: relative;

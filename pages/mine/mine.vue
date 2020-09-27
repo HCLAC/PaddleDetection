@@ -41,7 +41,7 @@
 								lineHeight="24rpx"
 								lineColor="#FFE512"
 								activeColor="#303133"
-								activeFontSize="32rpx"
+								activeFontSize="36rpx"
 								fontSize="28rpx"
 								v-model="tabCurrent"
 								:bold="true"

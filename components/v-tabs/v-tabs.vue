@@ -128,7 +128,7 @@ export default {
     },
     activeFontSize: {
       type: String,
-      default: '28rpx'
+      default: '36rpx'
     },
     bold: {
       type: Boolean,
