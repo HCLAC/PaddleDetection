@@ -650,7 +650,7 @@ export default {
 			position: absolute;
 			right: 10rpx;
 			background-color: #FFFFFF;
-			bottom: -6rpx;
+			bottom: -2rpx;
 			display: flex;
 			justify-content: flex-end;
 			z-index: 111;
