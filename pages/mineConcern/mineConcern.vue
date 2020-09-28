@@ -11,7 +11,7 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 关注列表 -->
-		<view class="concernBox" v-if="followList&& followList.length">
+		<view class="concernBox" v-if="followList || followList.length">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 				<view class="card" v-for=" (item,index) in followList" :key="index">
 					<!-- 头像 -->
@@ -63,7 +63,6 @@
 			return {
 				fansNum: 36300,
 				artNum: 230,
-				followList: 1,
 				isfllow: 1,
 				followList: [],
 				item:[],

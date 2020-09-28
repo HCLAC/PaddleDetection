@@ -651,7 +651,7 @@ export default {
 		border-radius: 16rpx;
 		border: 2rpx solid #edeff2;
 		padding: 14rpx 16rpx;
-		margin-top: 20rpx;
+		margin-top: 14rpx;
 		display: flex;
 		.right {
 			margin-left: 10rpx;
@@ -758,7 +758,7 @@ export default {
 		line-height: 36rpx;
 	}
 	.u-order-time {
-		margin-top: 20rpx;
+		margin-top: 14rpx;
 		position: relative;
 		left: -14rpx;
 		border-bottom: 0.5px solid #dddddd;
