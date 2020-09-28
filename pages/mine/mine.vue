@@ -568,7 +568,7 @@ export default {
 	margin-bottom: 38rpx;
 }
 .userAva {
-	margin-left: 15px;
+	margin-left: 28rpx;
 	width: 130rpx;
 	height: 130rpx;
 	box-shadow: 0px 0px 14px 0px #F7B500;

@@ -57,7 +57,7 @@
 			</view>
 		</view>
 		<view class="linePlan">
-			<view class="planContent">
+			<view class="planContent" id="planContent">
 				<u-time-line >
 					<view v-for="(item, index) in lineContent.content" :key="index">
 						<u-time-line-item nodeTop="2">
@@ -269,12 +269,12 @@ export default {
 				}
 			}
 		}),
-		uni.getSystemInfo({
-		    success:  (res)=> {
-		        console.log(res.windowHeight);
-				this.boxHeight = res.windowHeight
-		    }
-		});
+		// uni.getSystemInfo({
+		//     success:  (res)=> {
+		//         console.log(res.windowHeight);
+		// 		this.boxHeight = res.windowHeight
+		//     }
+		// });
 		setTimeout(function() {
 			uni.hideLoading();
 		}, 1000);
@@ -295,6 +295,16 @@ export default {
 		  }
 		  
 		}).exec();
+		setTimeout(() => {
+			let view = uni.createSelectorQuery().select("#planContent");
+			view.fields({
+				size: true,
+			}, data => {
+				console.log("得到节点信息" + JSON.stringify(data));
+				console.log("节点的高为" + data.height);
+				this.boxHeight = data.height
+			}).exec();
+		}, 1000);
 		uni.getProvider({
 			service: 'oauth',
 			success: res => {
@@ -319,10 +329,11 @@ export default {
 		
 	
 	onPageScroll(e) {
-		// console.log(e)
+		console.log(e)
+		console.log(this.boxHeight)
 		if (e.scrollTop >  this.cardheight) {
 			this.isFixed = true;
-			if(e.scrollTop > (this.boxHeight - 50)){
+			if(e.scrollTop > (this.boxHeight - 432)){
 				this.tabCurrent = 1
 			}
 		} else {

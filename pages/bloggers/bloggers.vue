@@ -52,7 +52,7 @@
 							fontSize="36rpx"
 							activeColor="#303133"
 							:lineScale="0.55"
-							paddingItem="0 32rpx"
+							paddingItem="0  18rpx"
 							:tabs="tablist"
 							:is-scroll="false"
 						></v-tabs>
@@ -61,7 +61,7 @@
 						</view>
 						
 					</view>
-					<view style="margin-top: 18%; padding-left:24rpx;" v-if="workslist">
+					<view style="margin-top: 18%; padding-left:28rpx;" v-if="workslist">
 						
 							<view class="" v-for="(item, index) in workslist" :key="index">
 								<view class="contentItem" >
@@ -458,7 +458,7 @@ export default {
 	margin-bottom: 38rpx;
 }
 .userAva {
-	margin-left: 15px;
+	margin-left: 28rpx;
 	width: 130rpx;
 	height: 130rpx;
 	box-shadow: 0px 0px 14px 0px #F7B500;
