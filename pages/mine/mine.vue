@@ -41,8 +41,7 @@
 								lineHeight="24rpx"
 								lineColor="#FFE512"
 								activeColor="#303133"
-								activeFontSize="36rpx"
-								fontSize="28rpx"
+								fontSize="36rpx"
 								v-model="tabCurrent"
 								:bold="true"
 								color="#909399"
@@ -50,7 +49,7 @@
 								:is-scroll="false"
 								:current="tabCurrent"
 								@change="tabChange"
-								paddingItem="0 40rpx"
+								paddingItem="0 32rpx"
 							></v-tabs>
 							
 						<!-- </view> -->
@@ -63,7 +62,7 @@
 					</view>
 				</view>
 				<!-- 收藏 -->
-				<view style="margin-top: 64%; padding: 0 24rpx;" v-if="tabCurrent == 0 ">
+				<view style="margin-top: 64%; padding: 0 28rpx;" v-if="tabCurrent == 0 ">
 					
 						<view class="" v-for="(item, index) in tipList" :key="index" v-if="favNum != 0">
 							<view class="contentItem" >
@@ -669,7 +668,7 @@ export default {
 	line-height: 24rpx;
 	z-index: 11111;
 	margin-top: 26rpx;
-	margin-left: -170rpx;
+	margin-left: -158rpx;
 }
 .favNum1{
 	height: 24rpx;
@@ -680,7 +679,7 @@ export default {
 	line-height: 24rpx;
 	z-index: 11111;
 	margin-top: 26rpx;
-	margin-left: -178rpx;
+	margin-left: -158rpx;
 }
 .likeNum{
 	height: 24rpx;
@@ -691,7 +690,7 @@ export default {
 	line-height: 24rpx;
 	z-index: 11111;
 	margin-top: 26rpx;
-	margin-left: 134rpx;
+	margin-left: 118rpx;
 }
 .likeNum1{
 	height: 24rpx;
@@ -702,7 +701,7 @@ export default {
 	line-height: 24rpx;
 	z-index: 11111;
 	margin-top: 26rpx;
-	margin-left: 120rpx;
+	margin-left: 118rpx;
 }
 
 .noContentItem {
@@ -739,6 +738,7 @@ export default {
 	margin: 28rpx;
 	margin-left: 0;
 	margin-top: 0;
+	margin-bottom: 20rpx;
 	border-radius: 8px;
 	display: flex;
 	overflow: hidden;

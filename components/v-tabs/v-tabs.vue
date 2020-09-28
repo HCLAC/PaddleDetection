@@ -22,7 +22,7 @@
           :key="i"
           :style="{
             color: current == i ? activeColor : color,
-            fontSize: current == i ? activeFontSize : fontSize,
+            fontSize: current == i ? fontSize : fontSize,
             fontWeight: bold && current == i ? 'bold' : '',
             justifyContent: !scroll ? 'center' : '',
             flex: scroll ? '' : 1,
