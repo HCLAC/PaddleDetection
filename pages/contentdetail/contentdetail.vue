@@ -26,6 +26,7 @@
 					</view>
 				</view>
 			</view>
+			<!-- <video src="" controls></video> -->
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<view class="userMse">
@@ -62,7 +63,7 @@
 						#
 						<text>{{ item }}</text>
 					</view>
-					<view v-for="item in articleList.data.topics" :key="item.id">
+					<view v-for="item in articleList.data.topics" :key="item.id" @click="toTopic">
 						#
 						<text>{{ item }}</text>
 					</view>
@@ -319,6 +320,12 @@ export default {
 			console.log(e)
 			uni.navigateTo({
 				url:'../bloggers/bloggers?author_id=' + e
+			})
+		},
+		// 跳转话题页
+		toTopic() {
+			uni.navigateTo({
+				url:'../topic/topic'
 			})
 		},
 		// 关注

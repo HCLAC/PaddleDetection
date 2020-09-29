@@ -132,6 +132,18 @@
 				"navigationStyle": "custom"
 			}
         }
+        ,{
+            "path" : "pages/topic/topic",
+            "style" : {
+            	"navigationStyle": "custom"
+            }
+        }
+        ,{
+            "path" : "pages/topicList/topicList",
+            "style" : {
+            	"navigationStyle": "custom"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",

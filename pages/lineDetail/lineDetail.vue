@@ -384,7 +384,6 @@ export default {
 					success: res => {
 						if (res.data.code == 0) {
 							console.log(res.data.data);
-							debugger;
 							res.data.data.content = res.data.data.content && res.data.data.content.length ? JSON.parse(res.data.data.content) : [];
 							console.log(res.data.data.content);
 							this.lineContent = res.data.data;
@@ -663,6 +662,7 @@ export default {
 		border: 2rpx solid #edeff2;
 		padding: 14rpx 16rpx;
 		margin-top: 14rpx;
+		margin-bottom: 20rpx;
 		display: flex;
 		.right {
 			margin-left: 10rpx;

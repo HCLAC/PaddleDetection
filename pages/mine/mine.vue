@@ -510,12 +510,13 @@ export default {
 		padding: 0;
 		font-size: 14px;
 		background-color: #aa557f;
-		
+		// transition: background-color 2s;
 	}
 	.example-body {
 		flex-direction: column;
 		padding: 15px;
 		background-color: #ffffff;
+		
 	}
 	.example-body {
 		padding: 0;

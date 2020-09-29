@@ -316,20 +316,20 @@ export default {
       z-index: 10;
 	  justify-content: center;
       // padding: 0 11px;
-      transition: all 0.3s;
+      transition: all 0.2s;
       white-space: nowrap;
     }
 
     &-line {
       position: absolute;
       bottom: 6px;
-      transition: all 0.3s linear;
+      transition: all 0.2s linear;
 		
     }
 
     &-pills {
       position: absolute;
-      transition: all 0.3s linear;
+      transition: all 0.2s linear;
       z-index: 9;
     }
   }

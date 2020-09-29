@@ -738,7 +738,7 @@ export default {
 		height: 84rpx;
 		font-size: 28rpx;
 		font-weight: 400;
-		color: rgba(96, 98, 102, 1);
+		color: #909399;
 		line-height:42rpx;
 		margin-top: 12rpx;
 		display: -webkit-box;
