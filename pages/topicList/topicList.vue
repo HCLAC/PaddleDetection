@@ -15,17 +15,44 @@
 				<view class="headImgBox">
 					<image class="headImg" :src="item.image" mode="scaleToFill"></image>
 					<view class="mask"></view>
-					<view class="cityBox">
-						<!-- <view class="city">{{ item.name || '全国' }}</view> -->
+					<view class="topicBox">
+						<view class="bigTitle">
+							#2020夏日露营
+						</view>
+						<view class="number">
+							2.8w篇文章
+						</view>
+						<view class="topicSquare">
+							<view class="squareText">
+								话题广场
+							</view>
+							<image class="more" src="../../static/images/more1.svg" mode=""></image>
+						</view>
 					</view>
+					
+					
+					
 				</view>
 				<view class="contentBox" >
 					<!-- 景点推荐 -->
 					<view class="content">
 						<view class="contentHeader">
-							<!-- <view class="contentTitle">景点推荐</view> -->
-							<view class="contentMore" @click="toMore()">
-								更多
+							<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
+								<v-tabs
+									inactive-color="#909399"
+									lineHeight="24rpx"
+									lineColor="#FFE512"
+									activeFontSize="36rpx"
+									activeColor="#303133"
+									fontSize="36rpx"
+									:lineScale="0.7"
+									lineRadius="6px"
+									v-model="tabCurrent"
+									:tabs="tablist"
+									:is-scroll="false"
+									:current="tabCurrent"
+									@change="tabChange"
+								></v-tabs>
 							</view>
 						</view>
 					</view>
@@ -113,15 +140,21 @@
 </template>
 <script>
 import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
-
+import vTabs from '@/components/v-tabs/v-tabs';
 	export default {
 		mixins: [MescrollMixin],
+		components: {
+			vTabs
+		},
 		data() {
 			return {
 				scrollTop: 0, //tab标题的滚动条位置
 				current: 0, // 预设当前项的值
 				list: [],
+				tablist:['推荐','最新'],
 				item: null,
+				current: 0,
+				tabCurrent: 0,
 				firstTime: new Date().getTime()
 			};
 		},
@@ -157,6 +190,10 @@ import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 				uni.navigateTo({
 					url: '/pages/contentdetail/contentdetail?article_id=' + id
 				});
+			},
+			// 选项卡切换
+			tabChange(index) {
+				this.tabCurrent = index;
 			},
 			// 点赞
 			clickLike(e, index) {
@@ -278,6 +315,56 @@ import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 	bottom: 0;
 	left: 0;
 }
+.topicBox{
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin-top: 136rpx;
+	margin-left: 28rpx;
+}
+.bigTitle{
+	
+	height: 56rpx;
+	font-size: 56rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #000000;
+	line-height: 56rpx;
+}
+.number{
+	margin-top: 16rpx;
+	height: 22rpx;
+	font-size: 22rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #C9CAD1;
+	line-height: 22rpx;
+}
+.topicSquare{
+	width: 138rpx;
+	height: 36rpx;
+	background: rgba(0, 0, 0, 0.3);
+	border-radius: 9px;
+	margin-top: 40rpx;
+	display: flex;
+	align-items: center;
+	padding-left: 20rpx;
+	padding-right: 12rpx;
+}
+.squareText{
+	width: 88rpx;
+	height: 36rpx;
+	font-size: 22rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #FFFFFF;
+	line-height: 36rpx;
+}
+.more{
+	margin-left: 4rpx;
+	width: 14rpx;
+	height: 14rpx;
+}
 // 
 .contentBox {
 	width: 750rpx;
@@ -287,8 +374,32 @@ import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 	top: -30rpx;
 	left: 0;
 }
+.myCollection {
+	border-radius: 12px 12px 0rpx 0rpx;
+	background-color: #fff;
+	color: #303133;
+	width: 100%;
+	// font-size: 40rpx;
+	// font-weight: 500;
+	// padding-left: 32rpx;
+	padding-top: 30rpx;
+	display: flex;
+	// position: absolute;
+	// top: 360rpx;
+}
+.fixTabs {
+	position: fixed;
+	top: 126rpx;
+	
+	z-index: 2;
+	
+}
+.noFix {
+	
+	z-index: 1000;
+	
+}
 // 瀑布流
-/* 正在旅行 */
 .touring{
 	margin-top: 36rpx;
 }
