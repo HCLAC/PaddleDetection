@@ -13,16 +13,16 @@
 		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 		<!-- 头图 -->
 			<view class="headImgBox">
-				<image class="headImg" :src="item.image" mode="scaleToFill"></image>
+				<image class="headImg" :src="info.image" mode="scaleToFill"></image>
 				<view class="mask"></view>
-				<view class="topicBox">
+				<view class="topicBox" >
 					<view class="bigTitle">
-						#2020夏日露营
+						#{{info.name}}
 					</view>
 					<view class="number">
-						2.8w篇文章
+						{{info.article_count}}篇文章
 					</view>
-					<view class="topicSquare">
+					<view class="topicSquare" @click="toTopic">
 						<view class="squareText">
 							话题广场
 						</view>
@@ -152,13 +152,18 @@ export default {
 				tabCurrent: 0,
 				firstTime: new Date().getTime(),
 				isFixed: false,
-				cardheight:0
+				cardheight:0,
+				id:'',
+				info:''
 				
 			};
 		},
 		mixins: [MescrollMixin],
-		onLoad() {
+		onLoad(e) {
+			console.log('---',e)
+			this.id = e.id
 			this.getTour()
+			this.getTopic()
 		},
 		mounted() {
 			const query = uni.createSelectorQuery().in(this);
@@ -202,6 +207,18 @@ export default {
 					}
 				});
 			},
+			getTopic(){
+				uni.request({
+					url: this.globalUrl + '/topics',
+					data: {
+						topic_id: this.id
+					},
+					success: res => {
+						this.info = res.data.data;
+						console.log('info=====', this.info);
+					}
+				})
+			},
 			// 跳转文章详情
 			onPageJump(e) {
 				console.log(e);
@@ -211,6 +228,12 @@ export default {
 				uni.navigateTo({
 					url: '/pages/contentdetail/contentdetail?article_id=' + id
 				});
+			},
+			// 跳转话题广场
+			toTopic(){
+				uni.navigateTo({
+					url:'/pages/topic/topic'
+				})
 			},
 			// 选项卡切换
 			tabChange(index) {

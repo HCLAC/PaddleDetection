@@ -28,42 +28,44 @@
 				@change="tabChange"
 			></v-tabs>
 			<view class="topicRankBox">
-				<view class="topicTips">
-					<image class="rankImg" src="../../static/images/topicIcon.svg" mode=""></image>
+				<view class="topicTips" @click="toTopicList" v-for="(item,index) in hotTopic " :key="index" >
+					<!-- <image class="rankImg" src="../../static/images/topic-1.png" mode=""></image> -->
+					<image class="rankImg" :src="`../../static/images/topic-${index+1}.png`" mode=""></image>
+					
+					<view class="tipsText">
+						{{item.name}}
+					</view>
+				</view>
+				<!-- <view class="topicTips">
+					<image class="rankImg" src="../../static/images/topic-2.png" mode=""></image>
 					<view class="tipsText">
 						性价比超高的小区性价比超高的小区
 					</view>
 				</view>
 				<view class="topicTips">
-					<image class="rankImg" src="../../static/images/topicIcon.svg" mode=""></image>
+					<image class="rankImg" src="../../static/images/topic-3.png" mode=""></image>
 					<view class="tipsText">
 						性价比超高的小区性价比超高的小区
 					</view>
 				</view>
 				<view class="topicTips">
-					<image class="rankImg" src="../../static/images/topicIcon.svg" mode=""></image>
+					<image class="rankImg" src="../../static/images/topic-4.png" mode=""></image>
 					<view class="tipsText">
 						性价比超高的小区性价比超高的小区
 					</view>
 				</view>
 				<view class="topicTips">
-					<image class="rankImg" src="../../static/images/topicIcon.svg" mode=""></image>
+					<image class="rankImg" src="../../static/images/topic-5.png" mode=""></image>
 					<view class="tipsText">
 						性价比超高的小区性价比超高的小区
 					</view>
 				</view>
 				<view class="topicTips">
-					<image class="rankImg" src="../../static/images/topicIcon.svg" mode=""></image>
+					<image class="rankImg" src="../../static/images/topic-6.png" mode=""></image>
 					<view class="tipsText">
 						性价比超高的小区性价比超高的小区
 					</view>
-				</view>
-				<view class="topicTips">
-					<image class="rankImg" src="../../static/images/topicIcon.svg" mode=""></image>
-					<view class="tipsText">
-						性价比超高的小区性价比超高的小区
-					</view>
-				</view>
+				</view> -->
 			</view>
 		</view>
 		<!-- 推荐 -->
@@ -84,17 +86,17 @@
 				:current="tabCurrent"
 				@change="tabChange"
 			></v-tabs>
-			<view class="topicList">
+			<view class="topicList" v-for="(item,index) in recommList" :key="index"  >
 				<view class="topicTitle">
 					<view class="titleLeft">
 						<image class="titleImg" src="../../static/images/topicIcon.svg" mode=""></image>
 						<view class="titleText">
-							夏季清凉避暑胜地
+							{{item.name}}
 						</view>
 					</view>
 					<view class="titleRight" @click="toTopicList">
 						<view class="number">
-							2.8w
+							{{item.total}}
 						</view>
 						<view class="rightText">
 							篇文章
@@ -102,19 +104,20 @@
 						<image class="moreRight" src="../../static/images/more-right.svg" mode=""></image>
 					</view>
 				</view>
-			</view>
-			<view class="conttentBox">
-				<view class="contentImgBox">
-					<view class="contentImg" v-for="(item, index) in siteHot" :key="index" @click="toAtt(item.id)">
-						<image class="attImg" :src="item.image" mode=""></image>
-						<view class="attText">{{ item.name }}</view>
+				<view class="conttentBox">
+					<view class="contentImgBox">
+						<view class="contentImg" v-for="(item1,index) in item.list" :key="index" @click="onPageJump" :id="item1.article_id">
+							<image class="attImg" :src="item1.image" mode=""></image>
+							<view class="attText">{{ item1.title }}</view>
+						</view>
+						
 					</view>
-					
-				</view>
-				<view class="line">
-					
+					<view class="line">
+						
+					</view>
 				</view>
 			</view>
+			
 			
 		</view>
 	</view>
@@ -132,31 +135,43 @@
 				tablist: ['热门话题'],
 				tablist1:['推荐'],
 				tabCurrent: 0,
-				siteHot:''
+				siteHot:'',
+				hotTopic:'',
+				recommList:''
 			};
 		},
 		onLoad() {
-			this.getSiteHot()
+			this.getSquare()
 		},
 		methods:{
-			getSiteHot() {
+			
+			// 热门话题
+			getSquare() {
 				uni.request({
-					url: this.globalUrl + '/site/hot',
-					data: {
-						count: 3,
-						sort_by: 3
-					},
+					url: this.globalUrl + '/topics/square',
 					success: res => {
-						console.log('景点推荐', res);
-						this.siteHot = res.data.data;
+						console.log('话题广场', res);
+						this.hotTopic = res.data.data.hot_topics;
+						this.recommList = res.data.data.recomm_list
+						// this.siteHot = res.data.data.recomm_list[index].list 
 					}
-				});
+				})
 			},
 			// 跳转话题列表页
 			toTopicList(){
 				uni.navigateTo({
 					url:'../topicList/topicList'
 				})
+			},
+			// 跳转文章详情
+			onPageJump(e) {
+				console.log(e);
+				let id = e.currentTarget.id;
+				// debugger
+				// return
+				uni.navigateTo({
+					url: '/pages/contentdetail/contentdetail?article_id=' + id
+				});
 			},
 			// 返回上一页
 			back() {
@@ -246,13 +261,13 @@
 .topicTips{
 	display: flex;
 	align-items: center;
-	margin-bottom: 22rpx;
+	margin-bottom: 32rpx;
 	margin-left: 28rpx;
 	
 }
 .rankImg{
 	width: 48rpx;
-	height: 48rpx;
+	height: 38rpx;
 	margin-right: 14rpx;
 }
 .tipsText{
@@ -269,7 +284,7 @@
 }
 // 推荐
 .recommended{
-	margin: 32rpx 28rpx 0 28rpx;
+	margin: 26rpx 28rpx 0 28rpx;
 }
 .topicList{
 	margin-top: 32rpx;

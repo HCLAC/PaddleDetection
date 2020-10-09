@@ -63,9 +63,9 @@
 						#
 						<text>{{ item }}</text>
 					</view>
-					<view v-for="item in articleList.data.topics" :key="item.id" @click="toTopic">
+					<view v-for="item in articleList.data.topics" :key="item.id" @click="toTopic(item.id)">
 						#
-						<text>{{ item }}</text>
+						<text>{{ item.name }}</text>
 					</view>
 					<!-- <view>#<text></text></view> -->
 				</view>
@@ -323,9 +323,10 @@ export default {
 			})
 		},
 		// 跳转话题页
-		toTopic() {
+		toTopic(e) {
+			console.log(e)
 			uni.navigateTo({
-				url:'../topic/topic'
+				url:'../topicList/topicList?id='  + e
 			})
 		},
 		// 关注
