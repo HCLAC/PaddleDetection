@@ -208,7 +208,7 @@ export default {
 	onLoad() {
 		this.getlist()
 	},
-	mounted(){
+	mounted() {
 		const query = uni.createSelectorQuery().in(this);
 		query.select('#selectcard').boundingClientRect(data => {
 		console.log("得到布局位置信息" + JSON.stringify(data));

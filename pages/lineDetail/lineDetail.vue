@@ -329,8 +329,8 @@ export default {
 		
 	
 	onPageScroll(e) {
-		console.log(e)
-		console.log(this.boxHeight)
+		// console.log(e)
+		// console.log(this.boxHeight)
 		if (e.scrollTop >  this.cardheight) {
 			this.isFixed = true;
 			if(e.scrollTop > (this.boxHeight - 432)){

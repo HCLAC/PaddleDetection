@@ -1,151 +1,146 @@
 <template>
-	<mescroll-uni class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-		<view >
-			<!-- 自定义导航栏 -->
-			<view class="example-body">
-				<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
-					<view slot="left" class="slotleft">
-						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-						<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
-					</view>
-					<view class="slottitle">领途羊</view>
-				</uni-nav-bar>
-			</view>
-			<!-- 头图 -->
-				<view class="headImgBox">
-					<image class="headImg" :src="item.image" mode="scaleToFill"></image>
-					<view class="mask"></view>
-					<view class="topicBox">
-						<view class="bigTitle">
-							#2020夏日露营
-						</view>
-						<view class="number">
-							2.8w篇文章
-						</view>
-						<view class="topicSquare">
-							<view class="squareText">
-								话题广场
-							</view>
-							<image class="more" src="../../static/images/more1.svg" mode=""></image>
-						</view>
-					</view>
-					
-					
-					
+	<view >
+		<!-- 自定义导航栏 -->
+		<view class="example-body">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+				<view slot="left" class="slotleft">
+					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="contentBox" >
-					<!-- 景点推荐 -->
-					<view class="content">
-						<view class="contentHeader">
-							<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
-								<v-tabs
-									inactive-color="#909399"
-									lineHeight="24rpx"
-									lineColor="#FFE512"
-									activeFontSize="36rpx"
-									activeColor="#303133"
-									fontSize="36rpx"
-									:lineScale="0.7"
-									lineRadius="6px"
-									v-model="tabCurrent"
-									:tabs="tablist"
-									:is-scroll="false"
-									:current="tabCurrent"
-									@change="tabChange"
-								></v-tabs>
-							</view>
+				<view class="slottitle">话题</view>
+			</uni-nav-bar>
+		</view>
+		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<!-- 头图 -->
+			<view class="headImgBox">
+				<image class="headImg" :src="item.image" mode="scaleToFill"></image>
+				<view class="mask"></view>
+				<view class="topicBox">
+					<view class="bigTitle">
+						#2020夏日露营
+					</view>
+					<view class="number">
+						2.8w篇文章
+					</view>
+					<view class="topicSquare">
+						<view class="squareText">
+							话题广场
+						</view>
+						<image class="more" src="../../static/images/more1.svg" mode=""></image>
+					</view>
+				</view>
+				
+				
+				
+			</view>
+			<view class="contentBox" >
+				<!-- 景点推荐 -->
+				<view class="content">
+					<view class="contentHeader">
+						<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
+							<v-tabs
+								inactive-color="#909399"
+								lineHeight="24rpx"
+								lineColor="#FFE512"
+								activeFontSize="36rpx"
+								activeColor="#303133"
+								fontSize="36rpx"
+								:lineScale="0.7"
+								lineRadius="6px"
+								v-model="tabCurrent"
+								:tabs="tablist"
+								:is-scroll="false"
+								:current="tabCurrent"
+								@change="tabChange"
+							></v-tabs>
 						</view>
 					</view>
-					<!-- 正在旅行 -->
-					<view class="touring" id="touring">
-						<view class="wrap">
-							<view class="left">
-								<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
-									<view class="" >
-										<view class="demo-top" @click="onPageJump" :id="item.article_id">
-											<view class="imgBox" >
-												<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-												<view class="adress">
-													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-													<view class="adressText">{{ item.location }}</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
+				</view>
+				<!-- 正在旅行 -->
+				<view class="touring" id="touring">
+					<view class="wrap">
+						<view class="left">
+							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
+								<view class="" >
+									<view class="demo-top" @click="onPageJump" :id="item.article_id">
+										<view class="imgBox" >
+											<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+											<view class="adress">
+												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+												<view class="adressText">{{ item.location }}</view>
 											</view>
 										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
+										<view class="titleTip">
+											<view class="demo-tag">
+												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
 											</view>
-											<view class="count" @click="clickLike(item, index)">
-												<view class="countImg">
-													<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount">{{ item.like_count || 0 }}</view>
-											</view>
+											<view class="demo-title">{{ item.title }}</view>
 										</view>
 									</view>
-								</view>
-							</view>
-							<view class="right">
-								<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
-									<view class="">
-										<view class="demo-top"  @click="onPageJump" :id="item.article_id">
-											<view class="imgBox">
-												<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
-												<view class="adress">
-													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-													<view class="adressText">{{ item.location }}</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
+									<view class="demo-user">
+										<view class="userMessage">
+											<image class="userHeard" :src="item.avatar"></image>
+											<view class="userNikename">{{ item.author_name }}</view>
 										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
+										<view class="count" @click="clickLike(item, index)">
+											<view class="countImg">
+												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
-											<view class="count" @click="clickLike(item, index)">
-												<view class="countImg">
-													<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount">{{ item.like_count || 0 }}</view>
-											</view>
+											<view class="likeCount">{{ item.like_count || 0 }}</view>
 										</view>
 									</view>
 								</view>
 							</view>
 						</view>
-						
+						<view class="right">
+							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
+								<view class="">
+									<view class="demo-top"  @click="onPageJump" :id="item.article_id">
+										<view class="imgBox">
+											<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+											<view class="adress">
+												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+												<view class="adressText">{{ item.location }}</view>
+											</view>
+										</view>
+										<view class="titleTip">
+											<view class="demo-tag">
+												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+											</view>
+											<view class="demo-title">{{ item.title }}</view>
+										</view>
+									</view>
+									<view class="demo-user">
+										<view class="userMessage">
+											<image class="userHeard" :src="item.avatar"></image>
+											<view class="userNikename">{{ item.author_name }}</view>
+										</view>
+										<view class="count" @click="clickLike(item, index)">
+											<view class="countImg">
+												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+											</view>
+											<view class="likeCount">{{ item.like_count || 0 }}</view>
+										</view>
+									</view>
+								</view>
+							</view>
+						</view>
 					</view>
-			
+					
 				</view>
 		
-		</view>
-	</mescroll-uni>	
+			</view>
+		</mescroll-body>	
+	</view>
 </template>
 <script>
 import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
-import vTabs from '@/components/v-tabs/v-tabs';
-	export default {
-		mixins: [MescrollMixin],
-		components: {
-			vTabs
-		},
+export default {
+		
 		data() {
 			return {
 				scrollTop: 0, //tab标题的滚动条位置
@@ -155,13 +150,39 @@ import vTabs from '@/components/v-tabs/v-tabs';
 				item: null,
 				current: 0,
 				tabCurrent: 0,
-				firstTime: new Date().getTime()
+				firstTime: new Date().getTime(),
+				isFixed: false,
+				cardheight:0
+				
 			};
 		},
+		mixins: [MescrollMixin],
 		onLoad() {
 			this.getTour()
 		},
-		methods:{
+		mounted() {
+			const query = uni.createSelectorQuery().in(this);
+			query.select('#selectcard').boundingClientRect(data => {
+			  console.log("得到布局位置信息" + JSON.stringify(data));
+			  console.log("节点离页面顶部的距离为" + data.top);
+			  if(data.top == 0 ){
+				  this.cardheight = 220
+			  }else{
+				  this.cardheight = data.top
+			  }
+			}).exec();
+		},
+		
+		onPageScroll(e) {
+			// console.log(e)
+			if (e.scrollTop >  this.cardheight) {
+				this.isFixed = true;
+			} else {
+				this.isFixed = false;
+			}
+		},
+		
+		methods: {
 			// 文章瀑布流接口
 			getTour() {
 				uni.request({
@@ -235,6 +256,136 @@ import vTabs from '@/components/v-tabs/v-tabs';
 				uni.switchTab({
 					url: '/pages/index/index'
 				});
+			},
+			/*下拉刷新的回调, 有三种处理方式:*/
+			downCallback() {
+				// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
+				this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+				// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
+				// this.mescroll.endSuccess()
+			
+				// 此处仍可以继续写其他接口请求...
+				// 调用其他方法...
+			},
+			/*上拉加载的回调*/
+			upCallback(page) {
+				var that = this
+				// mescroll.setPageSize(6)
+				let pageNum = page.num; // 页码, 默认从1开始
+				let pageSize = page.size; // 页长, 默认每页10条
+				if(this.tabCurrent == 0){
+					uni.request({
+						url: this.globalUrl+ '/article/list?page=' + pageNum + '&count=' + pageSize,
+						data: {
+							first_time: new Date().getTime()
+						},
+						header: {
+							Authorization: uni.getStorageSync('Authorization')
+						},
+						success: data => {
+							console.log('data', data);
+							// 接口返回的当前页数据列表 (数组)
+							if(data.data.data != null){
+								let curPageData = data.data.data.list;
+								console.log('curPageData', curPageData);
+								// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+								let curPageLen = curPageData.length;
+								console.log('curPageLen', curPageLen);
+								// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+								// let totalPage = data.data.data.list;
+								// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+								let totalSize = data.data.data.total;
+								console.log('totalSize', totalSize);
+								// 接口返回的是否有下一页 (true/false)
+								// let hasNext = data.data.data.list;
+												
+								//设置列表数据
+								if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
+								this.list = this.list.concat(curPageData); //追加新数据
+								console.log('list', this.list);
+								// 请求成功,隐藏加载状态
+								//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+								// this.mescroll.endByPage(curPageLen, totalPage);
+												
+								//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+								this.mescroll.endBySize(curPageLen, totalSize);
+												
+								//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+								//this.mescroll.endSuccess(curPageLen, hasNext);
+												
+								//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+								//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+								//如果传了hasNext,则翻到第二页即可显示无更多数据.
+								//this.mescroll.endSuccess(curPageLen);
+												
+								// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+								// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+							}
+							
+						},
+						fail: () => {
+							//  请求失败,隐藏加载状态
+							this.mescroll.endErr();
+						}
+					});
+				}else{
+					uni.request({
+						url: this.globalUrl+ '/article/list?page=' + pageNum + '&count=' + pageSize,
+						data: {
+							first_time: new Date().getTime()
+						},
+						header: {
+							Authorization: uni.getStorageSync('Authorization')
+						},
+						success: data => {
+							console.log('data', data);
+							// 接口返回的当前页数据列表 (数组)
+							let curPageData = data.data.data.list;
+							console.log('curPageData', curPageData);
+							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+							let curPageLen = curPageData.length;
+							console.log('curPageLen', curPageLen);
+							// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+							// let totalPage = data.data.data.list;
+							// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+							let totalSize = data.data.data.total;
+							console.log('totalSize', totalSize);
+							// 接口返回的是否有下一页 (true/false)
+							// let hasNext = data.data.data.list;
+					
+							//设置列表数据
+							if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
+							this.list = this.list.concat(curPageData); //追加新数据
+							console.log('list', this.list);
+							// 请求成功,隐藏加载状态
+							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+							// this.mescroll.endByPage(curPageLen, totalPage);
+					
+							//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+							this.mescroll.endBySize(curPageLen, totalSize);
+					
+							//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+							//this.mescroll.endSuccess(curPageLen, hasNext);
+					
+							//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+							//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+							//如果传了hasNext,则翻到第二页即可显示无更多数据.
+							//this.mescroll.endSuccess(curPageLen);
+					
+							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+						},
+						fail: () => {
+							//  请求失败,隐藏加载状态
+							this.mescroll.endErr();
+						}
+					});
+				}
+				
+			
+				
+				// 此处仍可以继续写其他接口请求...
+				// 调用其他方法...
 			},
 		}
 	}
@@ -328,7 +479,7 @@ import vTabs from '@/components/v-tabs/v-tabs';
 	font-size: 56rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
-	color: #000000;
+	color: #FFFFFF;
 	line-height: 56rpx;
 }
 .number{
