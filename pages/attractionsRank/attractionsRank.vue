@@ -332,6 +332,7 @@
 							this.banner = res.data.data.banner
 							this.show = false
 							this.downCallback()
+							this.mescroll.scrollTo(0)
 						}
 					})
 				}else{
@@ -350,6 +351,7 @@
 							this.banner = res.data.data.banner
 							this.show = false
 							this.downCallback()
+							this.mescroll.scrollTo(0)
 						}
 					})
 				}
@@ -863,7 +865,7 @@
 	}
 	.rankContent {
 		width: 730rpx;
-		// height: 1424rpx;
+		height: 100%;
 		margin-left: 10rpx;
 		padding-top: 380rpx;
 		background: rgba(255, 255, 255, 1);
