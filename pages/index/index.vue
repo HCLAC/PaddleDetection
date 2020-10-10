@@ -218,18 +218,18 @@
 							<view class="rankText" @click="toProvinces(areaList[8])">{{ areaList[8].name }}</view>
 						</view>
 						<!-- <view class="hb-l" @click="toAtt(hotAtt[0].id)">
-							<image mode="aspectFill" :src="hotAtt[0].image"></image>
+							<image mode="widthFix" :src="hotAtt[0].image"></image>
 							<view class="imgMask"></view>
 							<text>{{ hotAtt[0].name }}</text>
 						</view>
 						<view class="hb-r">
 							<view class="hb-r1" @click="toAtt(hotAtt[1].id)">
-								<image mode="aspectFill" :src="hotAtt[1].image"></image>
+								<image mode="widthFix" :src="hotAtt[1].image"></image>
 								<view class="imgMask"></view>
 								<text>{{ hotAtt[1].name }}</text>
 							</view>
 							<view class="hb-r2" @click="toAtt(hotAtt[2].id)">
-								<image mode="aspectFill" :src="hotAtt[2].image"></image>
+								<image mode="widthFix" :src="hotAtt[2].image"></image>
 								<view class="imgMask"></view>
 								<text>{{ hotAtt[2].name }}</text>
 							</view>
@@ -246,8 +246,7 @@
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<view class="imgBox">
-											<image class="demoImage" v-if="item.type=1" :src="item.image" :index="index"  mode="widthFix"></image>
-											<video class="demoImage" v-if="item.type=4" :src="item.image" :index="index"  ></video>
+											<image class="demoImage"  :src="item.image" :index="index"  mode="widthFix"></image>
 											<view class="adress">
 												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 												<view class="adressText">{{ item.location }}</view>
@@ -559,12 +558,32 @@ export default {
 				},
 				success: res => {
 					console.log('文章列表', res);
-					uni.setStorageSync('article_id', res.data);
-					// console.log('存储文章列表==',res.data)
-					this.list = res.data.data.list;
-					// console.log('list=====',this.list)
+					if(res.data.data == null){
+						uni.request({
+							url: this.globalUrl + '/article/list',
+							data: {
+								count: 6,
+								page: 1,
+								first_time: new Date().getTime()	
+							},
+							success: res => {
+								uni.setStorageSync('article_id', res.data);
+								// console.log('存储文章列表==',res.data)
+								this.list = res.data.data.list;
+								// console.log('list=====',this.list)
+							}
+						})
+					}else{
+						uni.setStorageSync('article_id', res.data);
+						// console.log('存储文章列表==',res.data)
+						this.list = res.data.data.list;
+						// console.log('list=====',this.list)
+					}
+					
 				}
 			});
+			
+			
 		},
 		uniScroll(e) {
 			

@@ -14,7 +14,7 @@
 		<view class="" v-if="swiperHeight">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap">
-				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight}">
+				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight}" v-if="articleList.data.type != 4">
 					<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
 						<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
 							<image  class="itemImg" :style="{width: index== 0 ?'100%' : '' }"  :mode="index == 0 ?'widthFix' : 'aspectFit'" :src="item"></image>
@@ -24,6 +24,9 @@
 					<view class="dots">
 						<block v-for="(item, index) in articleList.data.images" :key="index"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
 					</view>
+				</view>
+				<view class="page-section-spacing" width="100%"  v-if="articleList.data.type == 4">
+					<video class="videobox" :src="articleList.data.images[1]" object-fit="contain" :poster="articleList.data.images[0]" controls></video>
 				</view>
 			</view>
 			<!-- <video src="" controls></video> -->
@@ -767,7 +770,12 @@ export default {
 	width: 100%;
 	height: 100%;
 }
-
+.videobox{
+	width: 100%;
+	// height: auto;
+	min-height: 580rpx;
+	max-height: 978rpx;
+}
 .itemImg {
 
 	width: 100%;

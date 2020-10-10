@@ -101,44 +101,45 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
-		}
-
-		, {
+		}, 
+		{
 			"path": "pages/lineList/lineList",
 			"style": {
 				"navigationStyle": "custom",
 				"backgroundColor": "#fff"
 			}
-		}, {
+		}, 
+		{
 			"path": "pages/lineDetail/lineDetail",
 			"style": {
 				"navigationStyle": "custom",
 				"backgroundColor": "#fff"
 			}
-		}, {
+		}, 
+		{
 			"path": "pages/webview/webview",
 			"style": {}
-		}
-	    ,{
+		},
+		{
             "path" : "pages/mineConcern/mineConcern",
             "style" : {
 				"navigationStyle": "custom",
 				"backgroundColor": "#fff"
 			}
-        }
-        ,{
+        },
+		{
             "path" : "pages/bloggers/bloggers",
             "style" : {
 				"navigationStyle": "custom"
 			}
-        }
-        ,{
+        },
+		{
             "path" : "pages/topic/topic",
             "style" : {
             	"navigationStyle": "custom"
             }
-        }
-        ,{
+        },
+		{
             "path" : "pages/topicList/topicList",
             "style" : {
             	"navigationStyle": "custom"
