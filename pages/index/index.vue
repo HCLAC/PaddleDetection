@@ -246,7 +246,8 @@
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<view class="imgBox">
-											<image class="demoImage" :src="item.image" :index="index"  mode="widthFix"></image>
+											<image class="demoImage" v-if="item.type=1" :src="item.image" :index="index"  mode="widthFix"></image>
+											<video class="demoImage" v-if="item.type=4" :src="item.image" :index="index"  ></video>
 											<view class="adress">
 												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 												<view class="adressText">{{ item.location }}</view>

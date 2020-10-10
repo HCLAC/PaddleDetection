@@ -58,9 +58,10 @@
 				</view>
 				<!-- 正在旅行 -->
 				<view class="touring" id="touring">
-					<view class="wrap">
+					<!-- 推荐 -->
+					<view class="wrap" v-if="tabCurrent == 0 ">
 						<view class="left">
-							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
+							<view class="demo-warter" v-for="(item, index) in recommendList" :key="index" v-if="index % 2 == 0">
 								<view class="" >
 									<view class="demo-top" @click="onPageJump" :id="item.article_id">
 										<view class="imgBox" >
@@ -95,7 +96,7 @@
 							</view>
 						</view>
 						<view class="right">
-							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
+							<view class="demo-warter" v-for="(item, index) in recommendList" :key="index" v-if="index % 2 == 1">
 								<view class="">
 									<view class="demo-top"  @click="onPageJump" :id="item.article_id">
 										<view class="imgBox">
@@ -130,7 +131,79 @@
 							</view>
 						</view>
 					</view>
-					
+					<!-- 最新 -->
+					<view class="wrap" v-if="tabCurrent == 1 ">
+						<view class="left">
+							<view class="demo-warter" v-for="(item, index) in latestList" :key="index" v-if="index % 2 == 0">
+								<view class="" >
+									<view class="demo-top" @click="onPageJump" :id="item.article_id">
+										<view class="imgBox" >
+											<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+											<view class="adress">
+												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+												<view class="adressText">{{ item.location }}</view>
+											</view>
+										</view>
+										<view class="titleTip">
+											<view class="demo-tag">
+												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+											</view>
+											<view class="demo-title">{{ item.title }}</view>
+										</view>
+									</view>
+									<view class="demo-user">
+										<view class="userMessage">
+											<image class="userHeard" :src="item.avatar"></image>
+											<view class="userNikename">{{ item.author_name }}</view>
+										</view>
+										<view class="count" @click="clickLike(item, index)">
+											<view class="countImg">
+												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+											</view>
+											<view class="likeCount">{{ item.like_count || 0 }}</view>
+										</view>
+									</view>
+								</view>
+							</view>
+						</view>
+						<view class="right">
+							<view class="demo-warter" v-for="(item, index) in latestList" :key="index" v-if="index % 2 == 1">
+								<view class="">
+									<view class="demo-top"  @click="onPageJump" :id="item.article_id">
+										<view class="imgBox">
+											<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+											<view class="adress">
+												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+												<view class="adressText">{{ item.location }}</view>
+											</view>
+										</view>
+										<view class="titleTip">
+											<view class="demo-tag">
+												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+											</view>
+											<view class="demo-title">{{ item.title }}</view>
+										</view>
+									</view>
+									<view class="demo-user">
+										<view class="userMessage">
+											<image class="userHeard" :src="item.avatar"></image>
+											<view class="userNikename">{{ item.author_name }}</view>
+										</view>
+										<view class="count" @click="clickLike(item, index)">
+											<view class="countImg">
+												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+											</view>
+											<view class="likeCount">{{ item.like_count || 0 }}</view>
+										</view>
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
 				</view>
 		
 			</view>
@@ -145,7 +218,8 @@ export default {
 			return {
 				scrollTop: 0, //tab标题的滚动条位置
 				current: 0, // 预设当前项的值
-				list: [],
+				recommendList: [],
+				latestList:[],
 				tablist:['推荐','最新'],
 				item: null,
 				current: 0,
@@ -162,7 +236,7 @@ export default {
 		onLoad(e) {
 			console.log('---',e)
 			this.id = e.id
-			this.getTour()
+			this.getRecommend()
 			this.getTopic()
 		},
 		mounted() {
@@ -188,22 +262,44 @@ export default {
 		},
 		
 		methods: {
-			// 文章瀑布流接口
-			getTour() {
+			
+			// 推荐列表
+			getRecommend(){
 				uni.request({
-					url: this.globalUrl + '/article/list',
+					url: this.globalUrl + '/topics/articles/recommend',
 					data: {
+						topic_id:this.id,
 						count: 6,
-						page: 1,
-						first_time: new Date().getTime()
+						page: 1
 					},
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
 						uni.setStorageSync('article_id', res.data);
-						this.list = res.data.data.list;
-						console.log('list=====', this.list);
+						console.log('推荐',res)
+						this.recommendList = res.data.data.list;
+						console.log('recommendList=====', this.recommendList);
+					}
+				});
+			},
+			// 最新列表
+			getRecommend(){
+				uni.request({
+					url: this.globalUrl + '/topics/articles/latest',
+					data: {
+						topic_id:this.id,
+						count: 6,
+						page: 1
+					},
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res => {
+						uni.setStorageSync('article_id', res.data);
+						console.log('最新',res)
+						this.latestList = res.data.data.list;
+						console.log('latestList=====', this.latestList);
 					}
 				});
 			},
@@ -238,6 +334,8 @@ export default {
 			// 选项卡切换
 			tabChange(index) {
 				this.tabCurrent = index;
+				this.downCallback()
+				this.mescroll.scrollTo(0)
 			},
 			// 点赞
 			clickLike(e, index) {
@@ -298,9 +396,9 @@ export default {
 				let pageSize = page.size; // 页长, 默认每页10条
 				if(this.tabCurrent == 0){
 					uni.request({
-						url: this.globalUrl+ '/article/list?page=' + pageNum + '&count=' + pageSize,
+						url: this.globalUrl+ '/topics/articles/recommend?page=' + pageNum + '&count=' + pageSize,
 						data: {
-							first_time: new Date().getTime()
+							topic_id:this.id,
 						},
 						header: {
 							Authorization: uni.getStorageSync('Authorization')
@@ -323,9 +421,9 @@ export default {
 								// let hasNext = data.data.data.list;
 												
 								//设置列表数据
-								if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
-								this.list = this.list.concat(curPageData); //追加新数据
-								console.log('list', this.list);
+								if (page.num == 1) this.recommendList = []; //如果是第一页需手动置空列表
+								this.recommendList = this.recommendList.concat(curPageData); //追加新数据
+								console.log('recommendList', this.recommendList);
 								// 请求成功,隐藏加载状态
 								//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 								// this.mescroll.endByPage(curPageLen, totalPage);
@@ -353,9 +451,9 @@ export default {
 					});
 				}else{
 					uni.request({
-						url: this.globalUrl+ '/article/list?page=' + pageNum + '&count=' + pageSize,
+						url: this.globalUrl+ '/topics/articles/latest?page=' + pageNum + '&count=' + pageSize,
 						data: {
-							first_time: new Date().getTime()
+							topic_id:this.id,
 						},
 						header: {
 							Authorization: uni.getStorageSync('Authorization')
@@ -377,9 +475,9 @@ export default {
 							// let hasNext = data.data.data.list;
 					
 							//设置列表数据
-							if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
-							this.list = this.list.concat(curPageData); //追加新数据
-							console.log('list', this.list);
+							if (page.num == 1) this.latestList = []; //如果是第一页需手动置空列表
+							this.latestList = this.latestList.concat(curPageData); //追加新数据
+							console.log('latestList', this.latestList);
 							// 请求成功,隐藏加载状态
 							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 							// this.mescroll.endByPage(curPageLen, totalPage);
