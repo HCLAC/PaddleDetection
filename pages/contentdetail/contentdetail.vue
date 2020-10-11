@@ -26,7 +26,7 @@
 					</view>
 				</view>
 				<view class="page-section-spacing" width="100%"  v-if="articleList.data.type == 4">
-					<video class="videobox" :src="articleList.data.images[1]" object-fit="contain" :poster="articleList.data.images[0]" controls></video>
+					<video class="videobox" :style="{ height: swiperHeight}" :src="articleList.data.images[1]" object-fit="contain" :poster="articleList.data.images[0]" controls></video>
 				</view>
 			</view>
 			<!-- <video src="" controls></video> -->
@@ -773,8 +773,8 @@ export default {
 .videobox{
 	width: 100%;
 	// height: auto;
-	min-height: 580rpx;
-	max-height: 978rpx;
+	min-height: 420rpx;
+	max-height: 1000rpx;
 }
 .itemImg {
 
