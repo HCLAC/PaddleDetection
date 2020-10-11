@@ -83,11 +83,11 @@
 				</view>
 			</view>
 		</view>
-		<view class="rankContent">
+		<view class="rankContent" :style="{'height': (hotsiteslist.length < 6 ? '1604rpx' : '')}">
 			
 			
 			<!-- <view class="mescroll" > -->
-				<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption">
+				<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption">
 					<view class="cardList">
 						<view class="cards" v-for="(item,index) in  hotsiteslist" :key="index" @click="toAtt(item.id)">
 							<view class="cardsleft">
@@ -865,7 +865,7 @@
 	}
 	.rankContent {
 		width: 730rpx;
-		height: 100%;
+		// height: 1604rpx;
 		margin-left: 10rpx;
 		padding-top: 380rpx;
 		background: rgba(255, 255, 255, 1);

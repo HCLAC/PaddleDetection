@@ -29,7 +29,6 @@
 					<video class="videobox" :style="{ height: swiperHeight}" :src="articleList.data.images[1]" object-fit="contain" :poster="articleList.data.images[0]" controls></video>
 				</view>
 			</view>
-			<!-- <video src="" controls></video> -->
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<view class="userMse">
