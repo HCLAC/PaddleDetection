@@ -319,7 +319,6 @@ export default {
 				success: res => {
 					if (res.data.code == 0) {
 						console.log(res);
-						debugger
 						uni.showToast({
 							title: '登录成功',
 							icon: 'none'
