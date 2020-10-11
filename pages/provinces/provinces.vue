@@ -171,7 +171,11 @@
 								<view class="" >
 									<view class="demo-top" @click="onPageJump" :id="item.article_id">
 										<view class="imgBox" >
-											<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+											<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
+												<view class="videoIcon" v-if="item.type == 4">
+													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+												</view>
+											</image>
 											<view class="adress">
 												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 												<view class="adressText">{{ item.location }}</view>
@@ -181,6 +185,7 @@
 											<view class="demo-tag">
 												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
 												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+												<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
 											</view>
 											<view class="demo-title">{{ item.title }}</view>
 										</view>
@@ -206,7 +211,11 @@
 								<view class="">
 									<view class="demo-top"  @click="onPageJump" :id="item.article_id">
 										<view class="imgBox">
-											<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix"></image>
+											<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
+												<view class="videoIcon" v-if="item.type == 4">
+													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+												</view>
+											</image>
 											<view class="adress">
 												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 												<view class="adressText">{{ item.location }}</view>
@@ -216,6 +225,7 @@
 											<view class="demo-tag">
 												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
 												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+												<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
 											</view>
 											<view class="demo-title">{{ item.title }}</view>
 										</view>
@@ -1253,7 +1263,19 @@ export default {
 	width: 100%;
 	border-radius: 8rpx 8rpx 0 0;
 }
-
+.videoIcon{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -30rpx;
+	margin-left: -30rpx;
+	width: 60rpx;
+	height: 60rpx;
+}
+.playIcon{
+	width: 100%;
+	height: 100%;
+}
 .adress {
 	position: absolute;
 	left: 0;
