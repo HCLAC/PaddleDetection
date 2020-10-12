@@ -21,7 +21,9 @@
 
 							<image src="../../static/images/userImg.svg" class="userAva" v-if="nickName" mode=""></image>
 							<view class="userR">
-								<view class="userName">{{ nickName }}</view>
+								<view class="userName" @click="toMineInfo">{{ nickName }}
+									<image src="../../static/images/iconExit.svg" mode=""></image>
+								</view>
 								<view class="fllow" @click="toConcern()">
 									<text>关注</text>
 									<view class="fllowNum">{{fllowNum>10000?((fllowNum-(fllowNum%1000))/10000+'w'):fllowNum}}</view>
@@ -375,6 +377,12 @@ export default {
 				url:'/pages/mineConcern/mineConcern'
 			});
 		},
+		// 跳转信息修改页
+		toMineInfo(){
+			uni.navigateTo({
+				url:'../mineInfo/mineInfo'
+			})
+		},
 		tell(){
 			uni.makePhoneCall({
 				phoneNumber:"15020779433"
@@ -592,6 +600,13 @@ export default {
 	font-size: 36rpx;
 	font-weight: 500;
 	color: #303133;
+	display: flex;
+	align-items: center;
+	image{
+		width: 32rpx;
+		height: 32rpx;
+		margin-left: 16rpx;
+	}
 }
 .fllow{
 	margin-top: 20rpx;

@@ -211,10 +211,26 @@ export default {
 						},
 						success: res => {
 							console.log('未定位时获取的文章列表', res);
-							uni.setStorageSync('article_id', res.data);
-							// console.log('存储文章列表==',res.data)
-							this.list = res.data.data.list;
-							// console.log('list=====',this.list)
+							if(res.data.data == null ){
+								uni.request({
+									url: this.globalUrl + '/article/list',
+									data: {
+										count: 6,
+										page: 1,
+										first_time: new Date().getTime()	
+									},success: (res) => {
+										uni.setStorageSync('article_id', res.data);
+										// console.log('存储文章列表==',res.data)
+										this.list = res.data.data.list;
+										// console.log('list=====',this.list)
+									}
+								})
+							}else{
+								uni.setStorageSync('article_id', res.data);
+								// console.log('存储文章列表==',res.data)
+								this.list = res.data.data.list;
+								// console.log('list=====',this.list)
+							}
 						}
 					});
 		},

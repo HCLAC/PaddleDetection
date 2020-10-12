@@ -38,7 +38,7 @@
 						<view class="hotAdress">
 							<!-- 当前位置 -->
 							<view class="dqwz" @click="toProvinces(areaList[0])">
-								<image class="dqwzImg" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
+								<image class="dqwzBg" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
 								<view class="mask1" v-if="areaList[0].image"></view>
 								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
 								<text class="dqwzText">{{ cityName }}</text>
@@ -1085,15 +1085,20 @@ view {
 	width: 216rpx;
 	height: 180rpx;
 	border-radius: 8px;
-	border: 2px solid #FFE512;
+	border: 4rpx solid #FFE512;
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	overflow: hidden;
+}
+.dqwzBg {
+	width: 216rpx;
+	height: 180rpx;
 }
 .dqwzImg {
-	width: 100%;
-	height: 100%;
+	width: 216rpx;
+	height: 180rpx;
 	border-radius: 8px;
 }
 .dqwzBox {

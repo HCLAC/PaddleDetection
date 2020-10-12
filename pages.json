@@ -145,6 +145,19 @@
             	"navigationStyle": "custom"
             }
         }
+        ,{
+            "path" : "pages/mineInfo/mineInfo",
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        },
+		{
+			"path": "uview-ui/components/u-avatar-cropper/u-avatar-cropper",
+			"style": {
+				"navigationBarTitleText": "头像裁剪",
+				"navigationBarBackgroundColor": "#000000"
+			}
+		}
     ],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",

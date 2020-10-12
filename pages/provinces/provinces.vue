@@ -352,9 +352,29 @@ export default {
 					Authorization: uni.getStorageSync('Authorization')
 				},
 				success: res => {
-					uni.setStorageSync('article_id', res.data);
-					this.list = res.data.data.list;
-					console.log('list=====', this.list);
+					console.log('文章列表',res)
+					if(res.data.data == null){
+						uni.request({
+							url: this.globalUrl + '/article/list',
+							data: {
+								state_id: this.item.state_id,
+								city_id: this.item.city_id,
+								count: 6,
+								page: 1,
+								first_time: new Date().getTime()
+							},
+							success: (res) => {
+								uni.setStorageSync('article_id', res.data);
+								this.list = res.data.data.list;
+								console.log('token失效list=====', this.list);
+							}
+						})
+					}else{
+						uni.setStorageSync('article_id', res.data);
+						this.list = res.data.data.list;
+						console.log('list=====', this.list);
+					}
+					
 				}
 			});
 		},
