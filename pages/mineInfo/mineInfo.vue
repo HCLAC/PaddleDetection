@@ -23,11 +23,11 @@
 				</u-form-item>
 				<!-- 性别 -->
 				<u-form-item :label-position="labelPosition" label="性别" prop="sex">
-					<u-input :border="border" type="select" :select-open="actionSheetShow" v-model="model.sex" placeholder="保密" @click="actionSheetShow = true"></u-input>
+					<u-input :border="border" type="select" :select-open="actionSheetShow" v-model="model.sex" :placeholder="sex" @click="actionSheetShow = true"></u-input>
 				</u-form-item>
 				<!-- 常住地 -->
 				<u-form-item :label-position="labelPosition" label="常住地" prop="region" label-width="150">
-					<u-input :border="border" type="select" :select-open="pickerShow" v-model="model.region" placeholder="青岛" @click="pickerShow = true"></u-input>
+					<u-input :border="border" type="select" :select-open="pickerShow" v-model="model.region" :placeholder="region" @click="pickerShow = true"></u-input>
 				</u-form-item>
 			</u-form>
 			<u-button @click="submit">保存</u-button>
@@ -51,7 +51,7 @@
 				rules: {
 					name : [
 						{
-							required: true,
+							required: false,
 							message: '请输入姓名',
 							trigger: 'blur' ,
 						},
@@ -64,14 +64,14 @@
 					],
 					sex: [
 						{
-							required: true,
+							required: false,
 							message: '请选择性别',
 							trigger: 'change'
 						},
 					],
 					region: [
 						{
-							required: true,
+							required: false,
 							message: '请选择地区',
 							trigger: 'change',
 						}
@@ -104,6 +104,8 @@
 				],
 				avatar:'',
 				nickName:'',
+				sex:'',
+				region:'',
 				actionSheetShow: false,
 				pickerShow: false,
 				selectShow: false,
@@ -154,6 +156,14 @@
 						}else{
 							this.nickName = res.data.data.mobile
 						}
+						// 获取性别
+						this.sex = res.data.data.gender == 0 ? '保密' : res.data.data.gender == 1 ? '女' : res.data.data.gender == 2 ? '男' : '保密'
+						// 获取地区
+						if(res.data.data.location){
+							this.region = res.data.data.location
+						}else{
+							this.region = '北京'
+						}
 						
 					}
 				})
@@ -183,6 +193,24 @@
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
 						console.log('验证通过');
+						uni.request({
+							url: this.globalUrl + '/user/info',
+							data: {
+								nick_name: this.model.name  ? this.model.name : this.nickName ,
+								avatar: this.avatar,
+								gender: this.model.sex == '男' ? 2 : this.model.sex == '女' ? 1 : this.model.sex == '保密' ? 0:this.sex,
+								location: this.model.region ? this.model.region : this.region
+								
+							},
+							method: 'POST',
+							header: {
+								Authorization: uni.getStorageSync('Authorization')
+							},
+							success: res => {
+								console.log('修改信息',res)
+									
+							}
+						});
 					} else {
 						console.log('验证失败');
 					}

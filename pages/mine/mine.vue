@@ -19,7 +19,8 @@
 						<view class="usermes">
 							<image class="userAva" :src="avatarUrl" v-if="avatarUrl"></image>
 
-							<image src="../../static/images/userImg.svg" class="userAva" v-if="nickName" mode=""></image>
+							<image src="../../static/images/userImg.svg" class="userAva" v-if="!userInfo.avatar" mode=""></image>
+							<image :src="userInfo.avatar" class="userAva" v-if="userInfo.avatar" mode=""></image>
 							<view class="userR">
 								<view class="userName" @click="toMineInfo">{{ nickName }}
 									<image src="../../static/images/iconExit.svg" mode=""></image>
@@ -183,6 +184,7 @@ import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 export default {
 	data() {
 		return {
+			userInfo:[],
 			nickName: uni.getStorageSync('nickName'),
 			avatarUrl: '',
 			tipList: [],
@@ -287,7 +289,7 @@ export default {
 					method: 'get',
 					success: function(res) {
 						console.log('个人信息=', res.data);
-						
+						that.userInfo = res.data.data
 						if (res.data.code != 0) {
 							// debugger
 							uni.navigateTo({
@@ -295,7 +297,11 @@ export default {
 							});
 						}else{
 							uni.setStorageSync('mobile', res.data);
-							that.nickName = res.data.data.mobile
+							if(res.data.data.nick_name){
+								that.nickName = res.data.data.nick_name
+							}else{
+								that.nickName = res.data.data.mobile
+							}
 							that.fllowNum = res.data.data.following
 							that.favNum = res.data.data.fav_count
 							that.likeNum = res.data.data.like_count
