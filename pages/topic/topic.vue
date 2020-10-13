@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" :border="true">
+		<view class="example-body"  >
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" :border="true" >
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
@@ -13,7 +13,13 @@
 		
 		<!-- 热门话题 -->
 		<view class="hotTopic">
-			<v-tabs
+			<view class="hotTopicTop">
+				<view class="topTitle">
+					热门话题
+				</view>
+				<view class="topLine"></view>
+			</view>
+			<!-- <v-tabs
 				inactive-color="#909399"
 				lineHeight="24rpx"
 				lineColor="#FFE512"
@@ -27,7 +33,8 @@
 				:is-scroll="false"
 				:current="tabCurrent"
 				@change="tabChange"
-			></v-tabs>
+				
+			></v-tabs> -->
 			<view class="topicRankBox">
 				<view class="topicTips" @click="toTopicList(item.topic_id)" v-for="(item,index) in hotTopic " :key="index" >
 					<!-- <image class="rankImg" src="../../static/images/topic-1.png" mode=""></image> -->
@@ -44,22 +51,12 @@
 		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 		<!-- 推荐 -->
 		<view class="recommended">
-			<v-tabs
-				inactive-color="#909399"
-				lineHeight="24rpx"
-				lineColor="#FFE512"
-				activeFontSize="36rpx"
-				activeColor="#303133"
-				fontSize="36rpx"
-				:lineScale="0.7"
-				lineRadius="6px"
-				v-model="tabCurrent"
-				:tabs="tablist1"
-				:is-scroll="false"
-				paddingItem="0rpx"
-				:current="tabCurrent"
-				@change="tabChange"
-			></v-tabs>
+			<view class="recommendedTop">
+				<view class="recommendedTitle">
+					推荐
+				</view>
+				<view class="recommendedTopLine"></view>
+			</view>
 			<view class="topicList" v-for="(item,index) in recommList" :key="index"  >
 				<view class="topicTitle">
 					<view class="titleLeft">
@@ -259,6 +256,7 @@
 	padding: 0;
 	font-size: 14px;
 	background-color: #aa557f;
+	z-index: 9999;
 }
 
 .example-body {
@@ -273,6 +271,7 @@
 
 .navBar {
 	display: flex;
+	z-index: 9999;
 }
 
 .slotleft {
@@ -310,6 +309,25 @@
 .hotTopic{
 	margin-top: 30rpx ;
 }
+.hotTopicTop{
+	margin-left: 28rpx;
+}
+.topTitle{
+	width: 144rpx;
+	height: 36rpx;
+	font-size: 36rpx;
+	font-family: PingFangSC-Semibold, PingFang SC;
+	font-weight: 600;
+	color: #303133;
+	line-height: 36rpx;
+}
+.topLine{
+	width: 144rpx;
+	height: 24rpx;
+	background: #FFE512;
+	border-radius: 1px 6px 1px 1px;
+	margin-top: -18rpx;
+}
 .topicRankBox{
 	margin-top: 28rpx;
 	margin-right: 52rpx;
@@ -322,7 +340,7 @@
 .topicTips{
 	display: flex;
 	align-items: center;
-	margin-bottom: 32rpx;
+	margin-bottom: 30rpx;
 	margin-left: 28rpx;
 	
 }
@@ -346,6 +364,24 @@
 // 推荐
 .recommended{
 	margin: 26rpx 28rpx 0 28rpx;
+}
+.recommendedTop{
+}
+.recommendedTitle{
+	width: 72rpx;
+	height: 36rpx;
+	font-size: 36rpx;
+	font-family: PingFangSC-Semibold, PingFang SC;
+	font-weight: 600;
+	color: #303133;
+	line-height: 36rpx;
+}
+.recommendedTopLine{
+	width: 72rpx;
+	height: 24rpx;
+	background: #FFE512;
+	border-radius: 1px 6px 1px 1px;
+	margin-top: -18rpx;
 }
 .topicList{
 	margin-top: 32rpx;

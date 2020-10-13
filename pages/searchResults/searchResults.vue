@@ -329,10 +329,12 @@
 							uni.navigateTo({
 								url: '../login/login'
 							});
+						}else{
+							that.list[index].liked = e.liked == 1 ? 0 : 1;
+							that.list[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
 						}
 
-						that.list[index].liked = e.liked == 1 ? 0 : 1;
-						that.list[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
+						
 					}
 				});
 			},

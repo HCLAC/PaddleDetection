@@ -23,16 +23,16 @@
 					<image class="moreRight" src="../../static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 				<!-- 昵称 -->
-				<u-form-item   label-width="120" :label-position="labelPosition" label="昵称" prop="name">
-					<u-input :border="border" :placeholder="nickName" v-model="model.name" type="text"></u-input>
+				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}"  label-width="120" :label-position="labelPosition" label="昵称" prop="name">
+					<u-input :border="border" :placeholder="nickName" placeholder-style="color:#303133" v-model="model.name" type="text"></u-input>
 				</u-form-item>
 				<!-- 性别 -->
-				<u-form-item :label-position="labelPosition" label="性别" prop="sex">
-					<u-input :border="border" type="select" :select-open="actionSheetShow" v-model="model.sex" :placeholder="sex" @click="actionSheetShow = true"></u-input>
+				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" :label-position="labelPosition" label="性别" prop="sex">
+					<u-input :border="border" type="select" :select-open="actionSheetShow" v-model="model.sex" :placeholder="sex" placeholder-style="color:#303133" @click="actionSheetShow = true"></u-input>
 				</u-form-item>
 				<!-- 常住地 -->
-				<u-form-item :label-position="labelPosition" label="常住地" prop="region" label-width="150">
-					<u-input :border="border" type="select" :select-open="pickerShow" v-model="model.region" :placeholder="region" @click="pickerShow = true"></u-input>
+				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" :label-position="labelPosition" label="常住地" prop="region" label-width="150">
+					<u-input :border="border" type="select" :select-open="pickerShow" v-model="model.region" :placeholder="region" placeholder-style="color:#303133" @click="pickerShow = true"></u-input>
 				</u-form-item>
 			</u-form>
 			<u-button @click="submit" :custom-style="customStyle" >保存</u-button>
@@ -133,15 +133,28 @@
 			// 监听从裁剪页发布的事件，获得裁剪结果
 			uni.$on('uAvatarCropper', path => {
 				this.avatar = path;
+				var f = uni.getFileSystemManager()
+				let base64 = f.readFileSync(path,'base64')
+				// debugger
+				console.log(this.avatar)
+				uni.getFileInfo({
+					filePath: path,
+					success: res=>{
+						console.log(res)
+						// debugger
+					}
+				})
 				// 可以在此上传到服务端
-				// uni.uploadFile({
-				// 	url: this.globalUrl+ '/usr/avatar',
-				// 	filePath: path,
-				// 	name: 'file',
-				// 	complete: (res) => {
-				// 		console.log('头像上传',res);
-				// 	}
-				// });
+				uni.uploadFile({
+					url: this.globalUrl+ '/usr/avatar',
+					filePath: path,
+					name: 'file',
+					formData: this.sendDate,
+					header:{"Content-Type": "multipart/form-data"},
+					complete: (res) => {
+						console.log('头像上传',res);
+					}
+				});
 			})
 		},
 		onLoad() {
@@ -171,7 +184,7 @@
 							this.nickName = res.data.data.mobile
 						}
 						// 获取性别
-						this.sex = res.data.data.gender == 0 ? '保密' : res.data.data.gender == 1 ? '女' : res.data.data.gender == 2 ? '男' : '保密'
+						this.sex = res.data.data.gender == 0 ? '保密' : res.data.data.gender == 2 ? '女' : res.data.data.gender == 1 ? '男' : '保密'
 						// 获取地区
 						if(res.data.data.location){
 							this.region = res.data.data.location
@@ -211,8 +224,7 @@
 							url: this.globalUrl + '/user/info',
 							data: {
 								nick_name: this.model.name  ? this.model.name : this.nickName ,
-								avatar: this.avatar,
-								gender: this.model.sex == '男' ? 2 : this.model.sex == '女' ? 1 : this.model.sex == '保密' ? 0:this.sex,
+								gender: this.model.sex == '男' ? 1 : this.model.sex == '女' ? 2 : this.model.sex == '保密' ? 0:this.sex,
 								location: this.model.region ? this.model.region : this.region
 								
 							},
