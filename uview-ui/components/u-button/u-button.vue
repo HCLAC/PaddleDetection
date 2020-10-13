@@ -85,7 +85,7 @@ export default {
 		// 是否细边框
 		hairLine: {
 			type: Boolean,
-			default: true
+			default: false
 		},
 		// 按钮的预置样式，default，primary，error，warning，success
 		type: {
@@ -351,7 +351,7 @@ export default {
 	transition: all 0.15s;
 	
 	&--bold-border {
-		border: 1px solid #ffffff;
+		// border: 1px solid #ffffff;
 	}
 	
 	&--default {

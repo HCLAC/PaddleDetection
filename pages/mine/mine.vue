@@ -17,7 +17,7 @@
 						<image src="../../static/images/mineBack.png" class="backImg"></image>
 						<!-- 用户信息 -->
 						<view class="usermes">
-							<image class="userAva" :src="avatarUrl" v-if="avatarUrl"></image>
+							<!-- <image class="userAva" :src="avatarUrl" v-if="avatarUrl"></image> -->
 
 							<image src="../../static/images/userImg.svg" class="userAva" v-if="!userInfo.avatar" mode=""></image>
 							<image :src="userInfo.avatar" class="userAva" v-if="userInfo.avatar" mode=""></image>

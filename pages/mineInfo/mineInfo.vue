@@ -11,11 +11,16 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 信息表单 -->
-		<view class="" style="margin-left: 28rpx;" >
+		<view class="" style="margin:0 28rpx;" >
 			<u-form :model="model" :rules="rules" ref="uForm" :errorType="errorType" >
 				<!-- 头像 -->
-				<u-form-item :label-position="labelPosition"  prop="photo" label-width="150" @tap="chooseAvatar">
-					<u-avatar :src="avatar" ></u-avatar>
+				<u-form-item class="avatarBox"   prop="photo"  @tap="chooseAvatar">
+					<u-avatar :src="avatar" slot="right" size="130" >
+					</u-avatar>
+					<view class="avatarText" slot="right">
+						修改头像
+					</view>
+					<image class="moreRight" src="../../static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 				<!-- 昵称 -->
 				<u-form-item   label-width="120" :label-position="labelPosition" label="昵称" prop="name">
@@ -30,7 +35,7 @@
 					<u-input :border="border" type="select" :select-open="pickerShow" v-model="model.region" :placeholder="region" @click="pickerShow = true"></u-input>
 				</u-form-item>
 			</u-form>
-			<u-button @click="submit">保存</u-button>
+			<u-button @click="submit" :custom-style="customStyle" >保存</u-button>
 			<u-action-sheet :list="actionSheetList"   v-model="actionSheetShow" @click="actionSheetCallback"></u-action-sheet>
 			<u-select mode="single-column" :list="selectList" v-model="selectShow" @confirm="selectConfirm"></u-select>
 			<u-picker mode="region" v-model="pickerShow" @confirm="regionConfirm"></u-picker>
@@ -110,6 +115,15 @@
 				pickerShow: false,
 				selectShow: false,
 				errorType: ['message'],
+				customStyle:{
+					background: '#FFE512',
+					fontSize: '32rpx',
+					fontFamily: 'PingFangSC-Medium, PingFang SC',
+					fontWeight: '500',
+					color: '#303133',
+					borderRadius: '26px'
+					
+				}
 			};
 		},
 		onReady() {
@@ -125,7 +139,7 @@
 				// 	filePath: path,
 				// 	name: 'file',
 				// 	complete: (res) => {
-				// 		console.log(res);
+				// 		console.log('头像上传',res);
 				// 	}
 				// });
 			})
@@ -208,7 +222,9 @@
 							},
 							success: res => {
 								console.log('修改信息',res)
-									
+								uni.navigateBack({
+									delta: 1
+								});
 							}
 						});
 					} else {
@@ -292,4 +308,24 @@
 	background-color: #2f2f2f;
 	margin: 0 8px;
 }
+.avatarBox{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.avatarText{
+	height: 28rpx;
+	font-size: 28rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #909399;
+	line-height: 28rpx;
+	margin-left: 28rpx;
+	margin-right:390rpx ;
+}
+.moreRight{
+	width: 20rpx;
+	height: 20rpx;
+}
+
 </style>

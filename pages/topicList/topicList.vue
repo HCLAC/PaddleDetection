@@ -29,9 +29,6 @@
 						<image class="more" src="../../static/images/more1.svg" mode=""></image>
 					</view>
 				</view>
-				
-				
-				
 			</view>
 			<view class="contentBox" >
 				<!-- 景点推荐 -->
@@ -292,10 +289,28 @@ export default {
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						uni.setStorageSync('article_id', res.data);
-						console.log('推荐',res)
-						this.recommendList = res.data.data.list;
-						console.log('recommendList=====', this.recommendList);
+						if(res.data.data == null){
+							uni.request({
+								url: this.globalUrl + '/topics/articles/recommend',
+								data: {
+									topic_id:this.id,
+									count: 6,
+									page: 1
+								},
+								success: (res) => {
+									uni.setStorageSync('article_id', res.data);
+									console.log('无token推荐',res)
+									this.recommendList = res.data.data.list;
+									console.log('recommendList=====', this.recommendList);
+								}
+							})
+						}else{
+							uni.setStorageSync('article_id', res.data);
+							console.log('推荐',res)
+							this.recommendList = res.data.data.list;
+							console.log('recommendList=====', this.recommendList);
+						}
+						
 					}
 				});
 			},
@@ -312,10 +327,28 @@ export default {
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						uni.setStorageSync('article_id', res.data);
-						console.log('最新',res)
-						this.latestList = res.data.data.list;
-						console.log('latestList=====', this.latestList);
+						if(res.data.data == null){
+							uni.request({
+								url: this.globalUrl + '/topics/articles/latest',
+								data: {
+									topic_id:this.id,
+									count: 6,
+									page: 1
+								},
+								success: (res) => {
+									uni.setStorageSync('article_id', res.data);
+									console.log('无token最新',res)
+									this.latestList = res.data.data.list;
+									console.log('latestList=====', this.latestList);
+								}
+							})
+						}else{
+							uni.setStorageSync('article_id', res.data);
+							console.log('最新',res)
+							this.latestList = res.data.data.list;
+							console.log('latestList=====', this.latestList);
+						}
+						
 					}
 				});
 			},
@@ -370,15 +403,22 @@ export default {
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
+						console.log(res)
 						if (res.data.code != 0) {
 							// debugger
 							uni.navigateTo({
 								url: '../login/login'
 							});
 						}
-			
-						that.list[index].liked = e.liked == 1 ? 0 : 1;
-						that.list[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
+						if(this.tabCurrent == 0){
+							that.recommendList[index].liked = e.liked == 1 ? 0 : 1;
+							that.recommendList[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
+						}else{
+							that.latestList[index].liked = e.liked == 1 ? 0 : 1;
+							that.latestList[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
+						}
+						
+						
 					}
 				});
 			},
