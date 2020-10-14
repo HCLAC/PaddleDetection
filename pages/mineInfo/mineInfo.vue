@@ -24,7 +24,7 @@
 				</u-form-item>
 				<!-- 昵称 -->
 				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}"   :label-position="labelPosition" label="昵　称:" label-width="120" prop="name">
-					<u-input :border="border" :placeholder="nickName" placeholder-style="color:#303133" v-model="model.name" type="text"></u-input>
+					<u-input :border="border"  v-model="model.name" type="text"></u-input>
 				</u-form-item>
 				<!-- 性别 -->
 				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" :label-position="labelPosition" label="性　别:" label-width="120" prop="sex">
@@ -182,9 +182,9 @@
 						}
 						// 获取昵称
 						if(res.data.data.nick_name){
-							this.nickName = res.data.data.nick_name
+							this.model.name = res.data.data.nick_name
 						}else{
-							this.nickName = res.data.data.mobile
+							this.model.name = res.data.data.mobile
 						}
 						// 获取性别
 						this.sex = res.data.data.gender == 0 ? '保密' : res.data.data.gender == 2 ? '女' : res.data.data.gender == 1 ? '男' : '保密'
