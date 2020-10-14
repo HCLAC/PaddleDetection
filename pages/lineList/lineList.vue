@@ -13,7 +13,7 @@
 			<mescroll-body   ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 				<view class="lineItem" @click="getDetail(item.uuid)" v-for="(item, index) in lineList" :key="index">
 					<image :src="item.image" mode=""></image>
-					<text>{{ item.title }}</text>
+					<view class="lineText" >{{ item.title }}</view>
 				</view>
 			</mescroll-body>
 		</view>
@@ -176,9 +176,10 @@ export default {
 			height: 370rpx;
 			border-radius: 16rpx 16rpx 0 0;
 		}
-		text {
+		.lineText {
 			// width: 684rpx;
 			// height: 32rpx;
+			text-align: left;
 			background: #ffffff;
 			color: #303133;
 			font-weight: 500;

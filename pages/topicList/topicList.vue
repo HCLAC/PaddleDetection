@@ -76,6 +76,7 @@
 											<view class="demo-tag">
 												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
 												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+												<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
 											</view>
 											<view class="demo-title">{{ item.title }}</view>
 										</view>
@@ -115,6 +116,7 @@
 											<view class="demo-tag">
 												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
 												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+												<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
 											</view>
 											<view class="demo-title">{{ item.title }}</view>
 										</view>
@@ -157,6 +159,7 @@
 											<view class="demo-tag">
 												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
 												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+												<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
 											</view>
 											<view class="demo-title">{{ item.title }}</view>
 										</view>
@@ -196,6 +199,7 @@
 											<view class="demo-tag">
 												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
 												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+												<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
 											</view>
 											<view class="demo-title">{{ item.title }}</view>
 										</view>
@@ -409,14 +413,16 @@ export default {
 							uni.navigateTo({
 								url: '../login/login'
 							});
-						}
-						if(this.tabCurrent == 0){
-							that.recommendList[index].liked = e.liked == 1 ? 0 : 1;
-							that.recommendList[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
 						}else{
-							that.latestList[index].liked = e.liked == 1 ? 0 : 1;
-							that.latestList[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
+							if(this.tabCurrent == 0){
+								that.recommendList[index].liked = e.liked == 1 ? 0 : 1;
+								that.recommendList[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
+							}else{
+								that.latestList[index].liked = e.liked == 1 ? 0 : 1;
+								that.latestList[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
+							}
 						}
+						
 						
 						
 					}

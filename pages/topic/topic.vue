@@ -410,7 +410,7 @@
 	line-height: 36rpx;
 }
 .titleRight{
-	width: 166rpx;
+	// width: 166rpx;
 	height: 36rpx;
 	background: #EDEFF2;
 	display: flex;

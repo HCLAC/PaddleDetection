@@ -1,5 +1,5 @@
-<template>
-	<view class="content">
+<template >
+	<view class="content" >
 		<view class="cropper-wrapper" :style="{ height: cropperOpt.height + 'px' }">
 			<canvas
 				class="cropper"
@@ -123,6 +123,16 @@ export default {
 		};
 	},
 	onLoad(option) {
+		uni.chooseImage({
+			count: 1, // 默认9
+			sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+			sourceType: ['album'], // 可以指定来源是相册还是相机，默认二者都有
+			success: res => {
+				this.src = res.tempFilePaths[0];
+				//  获取裁剪图片资源后，给data添加src属性及其值
+				this.cropper.pushOrign(this.src);
+			}
+		});
 		let rectInfo = uni.getSystemInfoSync();
 		this.width = rectInfo.windowWidth;
 		this.height = rectInfo.windowHeight - this.bottomNavHeight;
@@ -161,16 +171,7 @@ export default {
 			frontColor: '#ffffff',
 			backgroundColor: '#000000'
 		});
-		uni.chooseImage({
-			count: 1, // 默认9
-			sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
-			sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-			success: res => {
-				this.src = res.tempFilePaths[0];
-				//  获取裁剪图片资源后，给data添加src属性及其值
-				this.cropper.pushOrign(this.src);
-			}
-		});
+		
 	},
 	methods: {
 		touchStart(e) {
@@ -216,7 +217,7 @@ export default {
 			uni.chooseImage({
 				count: 1, // 默认9
 				sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-				sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+				sourceType: ['album'], // 可以指定来源是相册还是相机，默认二者都有
 				success: (res) => {
 					self.src = res.tempFilePaths[0];
 					//  获取裁剪图片资源后，给data添加src属性及其值

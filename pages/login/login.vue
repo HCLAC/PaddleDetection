@@ -387,9 +387,9 @@ export default {
 							title: '登录成功',
 							icon: 'none'
 						}),
-							uni.navigateBack({
-							    delta: 1
-							});
+							uni.reLaunch({
+								url:'../mine/mine'
+							})
 							uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
 							
 

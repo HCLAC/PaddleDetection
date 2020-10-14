@@ -214,11 +214,13 @@ export default {
 	mixins: [MescrollMixin],
 	computed: mapState(['forcedLogin', 'hasLogin', 'phone']),
 	onShow() {
+	
 		this.getUserMsg();
 		this.downCallback()
 	},
 	onLoad() {
 		this.getlist()
+		this.getUserMsg();
 	},
 	mounted() {
 		const query = uni.createSelectorQuery().in(this);
@@ -305,8 +307,6 @@ export default {
 							that.fllowNum = res.data.data.following
 							that.favNum = res.data.data.fav_count
 							that.likeNum = res.data.data.like_count
-							console.log(that.favNum,'收藏数')
-							console.log('存储信息', res.data);
 						}
 						
 					}
