@@ -2,7 +2,7 @@
 	<view >
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" color="#333333"  :backgroundColor="backgroundColor" @clickLeft="showCity">
+			<uni-nav-bar fixed="true" :status-bar="true" color="#333333"  :backgroundColor="backgroundColor" >
 				<view class="input-view" @click="confirm">
 					<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
 					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true">

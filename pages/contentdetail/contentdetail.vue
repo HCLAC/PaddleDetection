@@ -10,14 +10,14 @@
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
-		
+
 		<view class="" v-if="swiperHeight">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap">
-				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight}" v-if="articleList.data.type != 4">
+				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="articleList.data.type != 4">
 					<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
 						<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
-							<image  class="itemImg" :style="{width: index== 0 ?'100%' : '' }"  :mode="index == 0 ?'widthFix' : 'aspectFit'" :src="item"></image>
+							<image class="itemImg" :style="{ width: index == 0 ? '100%' : '' }" :mode="index == 0 ? 'widthFix' : 'aspectFit'" :src="item"></image>
 						</swiper-item>
 					</swiper>
 					<view class="imageCount">{{ current + 1 }}/{{ articleList.data.images.length }}</view>
@@ -25,26 +25,29 @@
 						<block v-for="(item, index) in articleList.data.images" :key="index"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
 					</view>
 				</view>
-				<view class="page-section-spacing" width="100%"  v-if="articleList.data.type == 4">
-					<video class="videobox" :style="{ height: swiperHeight}" :src="articleList.data.images[1]" object-fit="contain" :poster="articleList.data.images[0]" controls></video>
+				<view class="page-section-spacing" width="100%" v-if="articleList.data.type == 4">
+					<video
+						class="videobox"
+						:style="{ height: swiperHeight }"
+						:src="articleList.data.images[1]"
+						object-fit="contain"
+						:poster="articleList.data.images[0]"
+						controls
+					></video>
 				</view>
 			</view>
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<view class="userMse">
-					<image class="userHeard" :src="articleList.data.avatar" @click="tobloggers(articleList.data.author_id)">
-						
-					</image>
+					<image class="userHeard" :src="articleList.data.avatar" @click="tobloggers(articleList.data.author_id)"></image>
 					<view class="userMse-r">
 						<view class="userNikename">{{ articleList.data.author_name }}</view>
-						
 					</view>
 					<view class="followBox" @click="follow()" v-if="!articleList.data.is_follow">
-						<image class="followImg" src="../../static/images/followIcon.svg" mode="" ></image>关注
+						<image class="followImg" src="../../static/images/followIcon.svg" mode=""></image>
+						关注
 					</view>
-					<view class="isfollowBox" @click="follow()" v-if="articleList.data.is_follow">
-						已关注
-					</view>
+					<view class="isfollowBox" @click="follow()" v-if="articleList.data.is_follow">已关注</view>
 				</view>
 				<!-- 弹窗 -->
 				<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
@@ -58,7 +61,14 @@
 				<!-- 内容文章 -->
 				<view class="contentText">
 					<!-- <rich-text :nodes="articleList.data.content | formatRichText"></rich-text> -->
-					<u-parse v-if='articleList' style="overflow: hidden;" lazy-load :autosetTitle="false" :autoscroll="false"  @imgtap="imgTap" @linkpress="templateAdd" :html="articleList.data.content | formatRichText"></u-parse>
+					<u-parse
+						v-if="articleList"
+						style="overflow: hidden;"
+						lazy-load
+						@imgtap="imgTap"
+						@linkpress="templateAdd"
+						:html="articleList.data.content | formatRichText"
+					></u-parse>
 				</view>
 				<view class="tips">
 					<view v-for="item in articleList.data.tags" :key="item.id">
@@ -90,7 +100,7 @@
 							<image class="favBtn" src="../../static/images/fav-actived.svg" v-if="articleList.data.fav == 1"></image>
 							<view class="favNum">{{ articleList.data.fav_count }}</view>
 						</view>
-						<view class="share" v-if="serviceProvider =='baidu'" @click="share"><image src="../../static/images/fenxiang.svg"></image></view>
+						<view class="share" v-if="serviceProvider == 'baidu'" @click="share"><image src="../../static/images/fenxiang.svg"></image></view>
 					</view>
 					<view class=""><view class="loginButton" @click="login" v-if="flag">登录</view></view>
 				</view>
@@ -103,14 +113,16 @@
 var _this;
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import uniIcons from '@/components/uni-icons/uni-icons.vue';
+import uniParse from '@/components/uni-parse/jyf-parser.vue';
 // import uniFav from '@/components/uni-fav/uni-fav.vue';
 // import ourLoading from '@/components/our-loading/our-loading.vue'
 // import httpType from '../../httpType.js'
 export default {
 	comments: {
 		uniNavBar,
-		uniIcons
-	
+		uniIcons,
+		uniParse
+
 		// ourLoading
 	},
 	data() {
@@ -127,7 +139,7 @@ export default {
 			wechat_id: null,
 			swiperHeight: '',
 			serviceProvider: '',
-			following:0,
+			following: 0,
 			content: '',
 			show: false
 		};
@@ -138,7 +150,7 @@ export default {
 		// 数组中索引最大的页面--当前页面
 		let currentPage = pages[pages.length - 1];
 		// 打印出当前页面中的 options
-		console.log('onshow--',currentPage.options)
+		console.log('onshow--', currentPage.options);
 		// console.log('文章id====', e);
 		uni.showLoading({
 			title: '加载中',
@@ -147,33 +159,29 @@ export default {
 				console.log(this.flag);
 				// debugger
 				this.article_num = currentPage.options.article_id;
-				
+
 				this.getArticleDetail(currentPage.options);
 			}
 		});
 	},
 	created() {
-		
-		_this = this 
+		_this = this;
 		this.getOrder();
 	},
 	mounted() {
 		uni.getProvider({
 			service: 'oauth',
 			success: res => {
-			
-				if(res.errMsg == 'getProvider:ok'){
-					this.serviceProvider = res.provider[0]
-					if(this.serviceProvider != 'baidu'){
-						uni.showShareMenu({
-							
-						})
+				if (res.errMsg == 'getProvider:ok') {
+					this.serviceProvider = res.provider[0];
+					if (this.serviceProvider != 'baidu') {
+						uni.showShareMenu({});
 					}
-				}else{
+				} else {
 					uni.showToast({
 						title: '获取提供商失败',
 						icon: 'none'
-					})
+					});
 				}
 			}
 		});
@@ -181,11 +189,11 @@ export default {
 	methods: {
 		getOrder() {},
 		templateAdd(e) {
-			console.log('e',e)
-			
-			if(e.group && e.groupid){
+			console.log('e', e);
+
+			if (e.group && e.groupid) {
 				uni.request({
-					url: this.globalUrl+ '/marketing/copy',
+					url: this.globalUrl + '/marketing/copy',
 					data: {
 						id: e.groupid
 					},
@@ -193,34 +201,33 @@ export default {
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
-					success: (res)=>{
-						if(res.data.code == 0){
+					success: res => {
+						if (res.data.code == 0) {
 							uni.setClipboardData({
 								data: e.group,
-								success: ()=>{
+								success: () => {
 									uni.showToast({
-										title: "复制成功",
-										icon: "success"
-									})
+										title: '复制成功',
+										icon: 'success'
+									});
 								}
-							})
-						}else{
+							});
+						} else {
 							uni.showToast({
 								title: res.data.msg,
 								icon: 'none'
-							})
+							});
 						}
 					}
-				})
-			}else{
-				console.log(e)
-			e.ignore()
-				return false
+				});
+			} else {
+				console.log(e);
+				e.ignore();
+				return false;
 			}
 		},
 		// 获取文章详情
 		getArticleDetail(e) {
-			
 			var that = this;
 			uni.request({
 				// url:'article',
@@ -232,117 +239,120 @@ export default {
 					Authorization: uni.getStorageSync('Authorization')
 				},
 				success: async function(res) {
-					
-					 uni.hideLoading();
+					uni.hideLoading();
 					uni.setStorageSync('id', res.data);
-
+		
+					res.data.data.content = JSON.parse(JSON.stringify(res.data.data.content))
+					debugger
 					let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
-					
-					if (strIndex&& strIndex.length) {
+
+					if (strIndex && strIndex.length) {
 						// let strId =  newContent.substring(strIndex,1)
-						
-						let strId = strIndex[0].slice(36,-4)
-						let resCode = await  that.getTemplate(strId);
-						if(resCode.data.code== 0 ){
-							let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g,"")
-								let str =  '<view><text style=" font-size: 28rpx; font-weight: 500; letter-space:normal">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
-								
+
+						let strId = strIndex[0].slice(36, -4);
+						let resCode = await that.getTemplate(strId);
+						if (resCode.data.code == 0) {
+							let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
+							let str =
+								'<view><text style=" font-size: 28rpx; font-weight: 500; letter-space:normal">详情请+VX：' +
+								wechat_id +
+								'</text><a group="' +
+								wechat_id +
+								'" groupId="' +
+								strId +
+								'" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>';
+
 							res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 							// console.log(res.data.data.content);
-							
-							that.articleList = res.data;
-							console.log('文章详情--',that.articleList);
-							that.following = that.articleList.data.follow
-							that.$nextTick(()=>{
-								uni.getImageInfo({
-									src: that.articleList.data.images[0],
-									success: function (image) {
-										console.log('图片高度--',image.height);
-										let  caseRes = image.width / image.height
-										that.swiperHeight =  100 / caseRes + 'vw'			
-									},
-									fail: error=>{
-										console.log(1111,error)
-									}
-								});
-							})
-							
-						}else{
-							that.articleList = res.data;
-							console.log('文章详情',that.articleList);
-							that.following = that.articleList.data.follow
-							that.$nextTick(()=>{
-								uni.getImageInfo({
-									src: that.articleList.data.images[0],
-									success: function (image) {
-										console.log('图片高度--',image.height);
-										let  caseRes = image.width / image.height
-										that.swiperHeight =  100 / caseRes + 'vw'			
-									},
-									fail: error=>{
-										console.log(1111,error)
-									}
-								});
-							})
-						}
-							
 
-					}else{
+							that.articleList = res.data;
+							console.log('文章详情--', that.articleList);
+							that.following = that.articleList.data.follow;
+							that.$nextTick(() => {
+								uni.getImageInfo({
+									src: that.articleList.data.images[0],
+									success: function(image) {
+										console.log('图片高度--', image.height);
+										let caseRes = image.width / image.height;
+										that.swiperHeight = 100 / caseRes + 'vw';
+									},
+									fail: error => {
+										console.log(1111, error);
+									}
+								});
+							});
+						} else {
+							that.articleList = res.data;
+							console.log('文章详情', that.articleList);
+							that.following = that.articleList.data.follow;
+							that.$nextTick(() => {
+								uni.getImageInfo({
+									src: that.articleList.data.images[0],
+									success: function(image) {
+										console.log('图片高度--', image.height);
+										let caseRes = image.width / image.height;
+										that.swiperHeight = 100 / caseRes + 'vw';
+									},
+									fail: error => {
+										console.log(1111, error);
+									}
+								});
+							});
+						}
+					} else {
 						that.articleList = res.data;
-						console.log('文章详情=',that.articleList);
-						that.following = that.articleList.data.follow
-						that.$nextTick(()=>{
+						console.log('文章详情=', that.articleList);
+						that.following = that.articleList.data.follow;
+						that.$nextTick(() => {
 							uni.getImageInfo({
 								src: that.articleList.data.images[0],
-								success: function (image) {
-									console.log('图片高度--',image.height);
-									let  caseRes = image.width / image.height
-									that.swiperHeight =  100 / caseRes + 'vw'			
+								success: function(image) {
+									console.log('图片高度--', image.height);
+									let caseRes = image.width / image.height;
+									that.swiperHeight = 100 / caseRes + 'vw';
 								},
-								fail: error=>{
-									console.log(1111,error)
+								fail: error => {
+									console.log(1111, error);
 								}
 							});
-						})
+						});
 					}
-					
 				},
-				fail: error=> {
-					uni.hideLoading()
+				fail: error => {
+					uni.hideLoading();
 				}
 			});
 		},
-		imgTap(e){
-			console.log(e)
-		
-			return false
+		imgTap(e) {
+			console.log(e);
+
+			return false;
 		},
 		// 跳转博主详情页
-		tobloggers(e){
-			console.log(e)
+		tobloggers(e) {
+			console.log(e);
 			uni.navigateTo({
-				url:'../bloggers/bloggers?author_id=' + e
-			})
+				url: '../bloggers/bloggers?author_id=' + e
+			});
 		},
 		// 跳转话题页
 		toTopic(e) {
-			console.log(e)
+			console.log(e);
 			uni.navigateTo({
-				url:'../topicList/topicList?id='  + e
-			})
+				url: '../topicList/topicList?id=' + e
+			});
 		},
 		// 关注
 		follow() {
 			// console.log(item, index)
 			var that = this;
-			let msg = this.articleList.data.is_follow ? '确认取消关注?' : '确认关注?'
-			let status = this.articleList.data.is_follow ? 0 : 1
-			
-			if(status == 0){
-				
-				that.show = true
-				that.content = '确认取消关注?'
-			}else{
+			let msg = this.articleList.data.is_follow ? '确认取消关注?' : '确认关注?';
+			let status = this.articleList.data.is_follow ? 0 : 1;
+
+			if (status == 0) {
+				that.show = true;
+				that.content = '确认取消关注?';
+			} else {
 				uni.request({
 					url: that.globalUrl + '/user/follow',
 					data: {
@@ -353,24 +363,24 @@ export default {
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
-					success: (res) => {
+					success: res => {
 						if (res.data.code != 0) {
 							// debugger
 							uni.navigateTo({
 								url: '../login/login'
 							});
-						}else{
-							that.articleList.data.is_follow = status == 1 ? true : false
+						} else {
+							that.articleList.data.is_follow = status == 1 ? true : false;
 						}
 					}
-				})
+				});
 			}
 		},
 		// 点击确认
-		confirm(){
+		confirm() {
 			var that = this;
-			let msg = this.articleList.data.is_follow ? '确认取消关注?' : '确认关注?'
-			let status = this.articleList.data.is_follow ? 0 : 1
+			let msg = this.articleList.data.is_follow ? '确认取消关注?' : '确认关注?';
+			let status = this.articleList.data.is_follow ? 0 : 1;
 			uni.request({
 				url: that.globalUrl + '/user/follow',
 				data: {
@@ -381,17 +391,17 @@ export default {
 				header: {
 					Authorization: uni.getStorageSync('Authorization')
 				},
-				success: (res) => {
+				success: res => {
 					if (res.data.code != 0) {
 						// debugger
 						uni.navigateTo({
 							url: '../login/login'
 						});
-					}else{
-						that.articleList.data.is_follow = status == 1 ? true : false
+					} else {
+						that.articleList.data.is_follow = status == 1 ? true : false;
 					}
 				}
-			})
+			});
 		},
 		// 点赞
 		clickLike() {
@@ -401,7 +411,7 @@ export default {
 			console.log('art', article_id);
 
 			uni.request({
-				url: this.globalUrl+ '/user/liked',
+				url: this.globalUrl + '/user/liked',
 				data: {
 					article_id: article_id.data.uuid,
 					liked: article_id.data.liked == 0 ? 1 : 0
@@ -410,7 +420,7 @@ export default {
 				header: {
 					Authorization: uni.getStorageSync('Authorization')
 				},
-				success: (res)=> {
+				success: res => {
 					console.log('点赞', res);
 					if (res.data.code != 0) {
 						// debugger
@@ -420,7 +430,7 @@ export default {
 					}
 					uni.request({
 						// url:'article',
-						url: this.globalUrl+ '/article',
+						url: this.globalUrl + '/article',
 						data: {
 							article_id: article_id.data.uuid
 						},
@@ -432,48 +442,52 @@ export default {
 							console.log('eeeeeeeeeeeeeeee', res);
 							console.log('文章详情====', res);
 							uni.setStorageSync('id', res.data);
-							
+
 							let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
-							
-							if (strIndex&& strIndex.length) {
+
+							if (strIndex && strIndex.length) {
 								// let strId =  newContent.substring(strIndex,1)
-								
-								let strId = strIndex[0].slice(36,-4)
-								let resCode = await  that.getTemplate(strId);
-								if(resCode.data.code== 0 ){
-									let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g,"")
-										let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
-										
+
+								let strId = strIndex[0].slice(36, -4);
+								let resCode = await that.getTemplate(strId);
+								if (resCode.data.code == 0) {
+									let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
+									let str =
+										'<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' +
+										wechat_id +
+										'</text><a group="' +
+										wechat_id +
+										'" groupId="' +
+										strId +
+										'" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>';
+
 									res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 									// console.log(res.data.data.content);
-									
+
 									that.articleList = res.data;
 									uni.getImageInfo({
 										src: that.articleList.data.images[0],
-										success: function (image) {
-											console.log('图片高度--',image.height);
-											let  caseRes = image.width / image.height
-											that.swiperHeight =  100 / caseRes + 'vw'
-													
+										success: function(image) {
+											console.log('图片高度--', image.height);
+											let caseRes = image.width / image.height;
+											that.swiperHeight = 100 / caseRes + 'vw';
 										}
 									});
-								}else{
+								} else {
 									that.articleList = res.data;
-									that.following = that.articleList.data.follow
+									that.following = that.articleList.data.follow;
 									uni.getImageInfo({
 										src: that.articleList.data.images[0],
-										success: function (image) {
-											console.log('图片高度--',image.height);
-											let  caseRes = image.width / image.height
-											that.swiperHeight =  100 / caseRes + 'vw'
-													
+										success: function(image) {
+											console.log('图片高度--', image.height);
+											let caseRes = image.width / image.height;
+											that.swiperHeight = 100 / caseRes + 'vw';
 										}
 									});
 								}
-							
-							}else{
+							} else {
 								that.articleList = res.data;
-								that.following = that.articleList.data.follow
+								that.following = that.articleList.data.follow;
 								console.log('articleList', that.articleList);
 							}
 						}
@@ -487,7 +501,7 @@ export default {
 
 			var article_id = uni.getStorageSync('id');
 			uni.request({
-				url: this.globalUrl+ '/user/favorite',
+				url: this.globalUrl + '/user/favorite',
 				data: {
 					article_id: article_id.data.uuid,
 					favorite: article_id.data.fav == 1 ? 0 : 1
@@ -496,7 +510,7 @@ export default {
 				header: {
 					Authorization: uni.getStorageSync('Authorization')
 				},
-				success: (res)=> {
+				success: res => {
 					console.log('收藏', res);
 					if (res.data.code != 0) {
 						// debugger
@@ -506,7 +520,7 @@ export default {
 					}
 					uni.request({
 						// url:'article',
-						url: this.globalUrl+ '/article',
+						url: this.globalUrl + '/article',
 						data: {
 							article_id: article_id.data.uuid
 						},
@@ -514,60 +528,61 @@ export default {
 							Authorization: uni.getStorageSync('Authorization')
 						},
 						success: async function(res) {
-							
 							uni.setStorageSync('id', res.data);
-							
-							let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
-							
-							if (strIndex&& strIndex.length) {
-								// let strId =  newContent.substring(strIndex,1)
-								
-							let strId = strIndex[0].slice(36,-4)
-							let resCode = await  that.getTemplate(strId);
-							if(resCode.data.code== 0 ){
-								let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g,"")
-								let str =  '<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' + wechat_id + '</text><a group="'+ wechat_id + '" groupId="'+ strId + '" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>'
-									
-								res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
-								
-								that.articleList = res.data;
-								that.following = that.articleList.data.follow
-								uni.getImageInfo({
-									src: that.articleList.data.images[0],
-									success: function (image) {
-										console.log('图片高度--',image.height);
-										let  caseRes = image.width / image.height
-										that.swiperHeight =  100 / caseRes + 'vw'
-												
-									}
-								});
-							}else{
-								that.articleList = res.data;
-								that.following = that.articleList.data.follow
-								uni.getImageInfo({
-									src: that.articleList.data.images[0],
-									success: function (image) {
-										console.log('图片高度--',image.height);
-										let  caseRes = image.width / image.height
-										that.swiperHeight =  100 / caseRes + 'vw'
-												
-									}
-								});
-							}
-							
-							}else{
-								that.articleList = res.data;
-								uni.getImageInfo({
-									src: that.articleList.data.images[0],
-									success: function (image) {
-										console.log('图片高度--',image.height);
-										let  caseRes = image.width / image.height
-										that.swiperHeight =  100 / caseRes + 'vw'
-												
-									}
-								});
-							}
 
+							let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
+
+							if (strIndex && strIndex.length) {
+								// let strId =  newContent.substring(strIndex,1)
+
+								let strId = strIndex[0].slice(36, -4);
+								let resCode = await that.getTemplate(strId);
+								if (resCode.data.code == 0) {
+									let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
+									let str =
+										'<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' +
+										wechat_id +
+										'</text><a group="' +
+										wechat_id +
+										'" groupId="' +
+										strId +
+										'" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>';
+
+									res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
+
+									that.articleList = res.data;
+									that.following = that.articleList.data.follow;
+									uni.getImageInfo({
+										src: that.articleList.data.images[0],
+										success: function(image) {
+											console.log('图片高度--', image.height);
+											let caseRes = image.width / image.height;
+											that.swiperHeight = 100 / caseRes + 'vw';
+										}
+									});
+								} else {
+									that.articleList = res.data;
+									that.following = that.articleList.data.follow;
+									uni.getImageInfo({
+										src: that.articleList.data.images[0],
+										success: function(image) {
+											console.log('图片高度--', image.height);
+											let caseRes = image.width / image.height;
+											that.swiperHeight = 100 / caseRes + 'vw';
+										}
+									});
+								}
+							} else {
+								that.articleList = res.data;
+								uni.getImageInfo({
+									src: that.articleList.data.images[0],
+									success: function(image) {
+										console.log('图片高度--', image.height);
+										let caseRes = image.width / image.height;
+										that.swiperHeight = 100 / caseRes + 'vw';
+									}
+								});
+							}
 						}
 					});
 				}
@@ -575,10 +590,10 @@ export default {
 		},
 		getTemplate(id) {
 			if (id) {
-				return new Promise((resolve,reject)=>{
+				return new Promise((resolve, reject) => {
 					uni.request({
 						// url:'article',
-						url: this.globalUrl+ '/marketing/unit',
+						url: this.globalUrl + '/marketing/unit',
 						method: 'get',
 						data: {
 							group_id: id,
@@ -587,15 +602,15 @@ export default {
 						header: {
 							Authorization: uni.getStorageSync('Authorization')
 						},
-					
+
 						success: res => {
-							resolve(res)
+							resolve(res);
 						},
-						fail: (error)=>{
-							reject(error)
+						fail: error => {
+							reject(error);
 						}
 					});
-				})
+				});
 			}
 		},
 		// 登录
@@ -619,8 +634,8 @@ export default {
 		},
 
 		map() {
-			var that = this
-			
+			var that = this;
+
 			const latitude = that.articleList.data.latitude;
 			const longitude = that.articleList.data.longitude;
 			uni.openLocation({
@@ -675,24 +690,23 @@ export default {
 				match = match.replace(/height="[^"]+"/gi, '').replace(/height='[^']+'/gi, '');
 				return match;
 			});
-			
+
 			newContent = newContent.replace(/style="[^"]+"/gi, function(match, capture) {
 				match = match.replace(/width:[^;]+;/gi, 'max-width:100%;').replace(/width:[^;]+;/gi, 'max-width:100%;');
-				
+
 				return match;
 			});
 			// 适配字体
 			newContent = newContent.replace(/(\d+)px/g, function(s, t) {
-
-			s = s.replace('px', ''); 
-			var value = parseInt(s) * 2;//   此处 1rem =120px 
-			return value + "rpx"; 
-			}); 
+				s = s.replace('px', '');
+				var value = parseInt(s) * 2; //   此处 1rem =120px
+				return value + 'rpx';
+			});
 			// newContent = newContent.replace(/<br[^>]*\/>/gi, '');
 			// newContent = newContent.replace(/\<img/gi, '<img style="width:350px;height:auto;display:inline-block;margin:5px auto;"');
 			newContent = newContent.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');
 			//   newContent = newContent.replace(/<input[^>]*\/>/gi, '<div><p>营销组件</p><a >点击复制</a></div>');
-			
+
 			return newContent;
 		}
 	}
@@ -769,14 +783,13 @@ export default {
 	width: 100%;
 	height: 100%;
 }
-.videobox{
+.videobox {
 	width: 100%;
 	// height: auto;
 	min-height: 420rpx;
 	max-height: 1000rpx;
 }
 .itemImg {
-
 	width: 100%;
 	height: 100%;
 }
@@ -851,7 +864,6 @@ export default {
 	width: 80rpx;
 	height: 80rpx;
 	border-radius: 50%;
-	
 }
 
 .userMse-r {
@@ -865,12 +877,11 @@ export default {
 	font-weight: 500;
 	color: rgba(48, 49, 51, 1);
 	line-height: 28rpx;
-	
 }
-.isfollowBox{
+.isfollowBox {
 	width: 124rpx;
 	height: 48rpx;
-	background: #F8F8F8;
+	background: #f8f8f8;
 	border-radius: 12px;
 	margin-right: 28rpx;
 	display: flex;
@@ -879,12 +890,12 @@ export default {
 	font-size: 24rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 400;
-	color: #C9CAD1;
+	color: #c9cad1;
 }
-.followBox{
+.followBox {
 	width: 124rpx;
 	height: 48rpx;
-	background: #FFE512;
+	background: #ffe512;
 	border-radius: 12px;
 	margin-right: 28rpx;
 	display: flex;
@@ -895,7 +906,7 @@ export default {
 	font-weight: 500;
 	color: #303133;
 }
-.followImg{
+.followImg {
 	width: 16rpx;
 	height: 16rpx;
 	margin-right: 4rpx;
@@ -927,7 +938,6 @@ export default {
 	float: left;
 }
 /*  #endif  */
-
 
 .adressText {
 	font-size: 22rpx;
