@@ -84,7 +84,7 @@
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<view class="imgBox">
-											<image class="demoImage" :src="item.image" :index="index"  mode="widthFix">
+											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index"  mode="widthFix">
 												<view class="videoIcon" v-if="item.type == 4">
 													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
 												</view>
@@ -124,7 +124,7 @@
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<view class="imgBox">
-											<image class="demoImage" :src="item.image" :index="index"  mode="widthFix">
+											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index"  mode="widthFix">
 												<view class="videoIcon" v-if="item.type == 4">
 													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
 												</view>
@@ -240,7 +240,7 @@
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<view class="imgBox">
-											<image class="demoImage"  :src="item.image" :index="index"  mode="widthFix">
+											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'"  :src="item.image" :index="index"  mode="widthFix">
 												<view class="videoIcon" v-if="item.type == 4">
 													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
 												</view>
@@ -280,7 +280,7 @@
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<view class="imgBox">
-											<image class="demoImage" :src="item.image" :index="index" mode="widthFix">
+											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" mode="widthFix">
 												<view class="videoIcon" v-if="item.type == 4">
 													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
 												</view>
@@ -828,7 +828,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .left,
 .right {
 	margin-left: 10rpx;
@@ -1298,21 +1298,31 @@ view {
 	position: relative;
 	display: flex;
 	align-items: flex-end;
+	
 }
+// .imgBox4{
+// 	position: relative;
+// 	display: flex;
+// 	align-items: flex-end;
+	
+// }
 /* .demo-top {
 	position: relative;
 }
  */
-.imgBox {
-	position: relative;
-	
-}
+
 .demoImage {
 	width: 100%;
 	min-height: 300rpx;
 	max-height: 460rpx;
 	border-radius: 8rpx 8rpx 0 0;
 	
+}
+.demoImage4 {
+	width: 100%;
+	min-height: 272rpx;
+	max-height: 480rpx;
+	border-radius: 8rpx 8rpx 0 0;
 }
 .videoIcon{
 	position: absolute;

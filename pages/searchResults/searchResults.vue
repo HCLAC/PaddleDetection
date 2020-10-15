@@ -139,7 +139,7 @@
 							<view class="" @click="onPageJump" :id="item.article_id">
 								<view class="demo-top">
 									<view class="imgBox">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
+										<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
 											<view class="videoIcon" v-if="item.type == 4">
 												<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
 											</view>
@@ -180,7 +180,7 @@
 							<view class="" @click="onPageJump" :id="item.article_id">
 								<view class="demo-top">
 									<view class="imgBox">
-										<image class="demo-image" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
+										<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
 											<view class="videoIcon" v-if="item.type == 4">
 												<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
 											</view>
@@ -691,14 +691,19 @@
 		position: relative;
 	}
 
-	.demo-image {
+	.demoImage {
 		min-height: 300rpx !important;
 		max-height: 460rpx;
 		width: 100%;
 		border-radius: 8rpx 8rpx 0 0;
 		position: relative;
 	}
-
+	.demoImage4 {
+		width: 100%;
+		min-height: 272rpx;
+		max-height: 480rpx;
+		border-radius: 8rpx 8rpx 0 0;
+	}
 	.videoIcon{
 		position: absolute;
 		top: 50%;

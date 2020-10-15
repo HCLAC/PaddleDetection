@@ -110,7 +110,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .example-body {
 	flex-direction: row;
 	flex-wrap: wrap;
