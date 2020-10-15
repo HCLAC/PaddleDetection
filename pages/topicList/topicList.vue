@@ -12,7 +12,7 @@
 		</view>
 		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 		<!-- 头图 -->
-			<view class="headImgBox">
+			<view class="headImgBox" v-if="info">
 				<image class="headImg" :src="info.image" mode="scaleToFill"></image>
 				<view class="mask"></view>
 				<view class="topicBox" >
@@ -20,7 +20,7 @@
 						#{{info.name}}
 					</view>
 					<view class="number">
-						{{info.article_count}}篇文章
+						{{info.article_count>10000?((info.article_count-(info.article_count%1000))/10000+'w'):info.article_count}}篇文章
 					</view>
 					<view class="topicSquare" @click="toTopic">
 						<view class="squareText">
@@ -32,26 +32,21 @@
 			</view>
 			<view class="contentBox" >
 				<!-- 景点推荐 -->
-				<view class="content">
-					<view class="contentHeader">
-						<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
-							<v-tabs
-								inactive-color="#909399"
-								lineHeight="24rpx"
-								lineColor="#FFE512"
-								activeFontSize="36rpx"
-								activeColor="#303133"
-								fontSize="36rpx"
-								:lineScale="0.7"
-								lineRadius="6px"
-								v-model="tabCurrent"
-								:tabs="tablist"
-								:is-scroll="false"
-								:current="tabCurrent"
-								@change="tabChange"
-							></v-tabs>
-						</view>
-					</view>
+				<view  :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
+					<v-tabs
+						inactive-color="#909399"
+						lineHeight="24rpx"
+						lineColor="#FFE512"
+						activeFontSize="36rpx"
+						activeColor="#303133"
+						fontSize="36rpx"
+						:lineScale="0.7"
+						v-model="tabCurrent"
+						:tabs="tablist"
+						:is-scroll="false"
+						:current="tabCurrent"
+						@change="tabChange"
+					></v-tabs>
 				</view>
 				<!-- 正在旅行 -->
 				<view class="touring" id="touring">
@@ -91,7 +86,7 @@
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
-											<view class="likeCount">{{ item.like_count || 0 }}</view>
+											<view class="likeCount">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
 									</view>
 								</view>
@@ -131,7 +126,7 @@
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
-											<view class="likeCount">{{ item.like_count || 0 }}</view>
+											<view class="likeCount">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
 									</view>
 								</view>
@@ -174,7 +169,7 @@
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
-											<view class="likeCount">{{ item.like_count || 0 }}</view>
+											<view class="likeCount">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
 									</view>
 								</view>
@@ -214,7 +209,7 @@
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
-											<view class="likeCount">{{ item.like_count || 0 }}</view>
+											<view class="likeCount">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
 									</view>
 								</view>
@@ -271,7 +266,7 @@ export default {
 		
 		onPageScroll(e) {
 			// console.log(e)
-			if (e.scrollTop >  this.cardheight) {
+			if (e.scrollTop >  220) {
 				this.isFixed = true;
 			} else {
 				this.isFixed = false;
@@ -617,7 +612,7 @@ export default {
 }
 
 .slottitle {
-	margin-left: 162rpx;
+	margin-left: 186rpx;
 	font-size: 38rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 600;
@@ -703,39 +698,56 @@ export default {
 .contentBox {
 	width: 750rpx;
 	background: #f8f8f8;
-	border-radius: 16rpx 16rpx 0px 0px;
+	border-radius: 8px 8px 0px 0px;
 	position: relative;
-	top: -30rpx;
+	top: -10rpx;
 	left: 0;
 }
 .myCollection {
-	border-radius: 12px 12px 0rpx 0rpx;
+	height: 88rpx;
+	border-radius: 8px 8px 0rpx 0rpx;
 	background-color: #fff;
 	color: #303133;
 	width: 100%;
+	padding-left: 26rpx;
 	// font-size: 40rpx;
 	// font-weight: 500;
 	// padding-left: 32rpx;
-	padding-top: 30rpx;
+	// padding-top: 20rpx;
 	display: flex;
+	align-items: center;
 	// position: absolute;
 	// top: 360rpx;
 }
 .fixTabs {
+	height: 98rpx;
+	border-radius: 8px 8px 0rpx 0rpx;
+	background-color: #fff;
+	color: #303133;
+	width: 100%;
+	padding-left: 26rpx;
 	position: fixed;
-	top: 126rpx;
-	
+	top: 136rpx;
+	padding-top: 14rpx;
 	z-index: 2;
-	
+	display: flex;
+	align-items: center;
 }
 .noFix {
-	
+	height: 88rpx;
+	border-radius: 8px 8px 0rpx 0rpx;
+	background-color: #fff;
+	color: #303133;
+	width: 100%;
+	padding-left: 26rpx;
+	display: flex;
+	align-items: center;
 	z-index: 1000;
 	
 }
 // 瀑布流
 .touring{
-	margin-top: 36rpx;
+	margin-top: 20rpx;
 }
 .touring .tourtext {
 	width: 160rpx;

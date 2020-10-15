@@ -67,7 +67,7 @@
 					</view>
 					<view class="titleRight" @click="toTopicList(item.topics_id)">
 						<view class="number">
-							{{item.total}}
+							{{item.total>10000?((item.total-(item.total%1000))/10000+'w'):item.total}}
 						</view>
 						<view class="rightText">
 							篇文章
@@ -292,7 +292,7 @@
 }
 
 .slottitle {
-	margin-left: 162rpx;
+	margin-left: 186rpx;
 	font-size: 38rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 600;

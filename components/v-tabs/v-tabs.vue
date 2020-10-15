@@ -156,7 +156,7 @@ export default {
     },
     lineRadius: {
       type: String,
-      default: '1px 6px 1px 1px;'
+      default: '1px 5px 1px 1px;'
     },
     pills: {
       type: Boolean,
