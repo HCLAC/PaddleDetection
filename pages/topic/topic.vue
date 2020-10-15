@@ -7,7 +7,7 @@
 					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="slottitle">话题</view>
+				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
 		
