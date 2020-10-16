@@ -18,7 +18,7 @@
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
-		<mescroll-uni @scroll="uniScroll"  ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-uni @scroll="uniScroll" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部背景 -->
 			<view class="bgBox">
 				<image src="../../static/images/rankBanner.png" mode="" class="bannerImg"></image>
@@ -46,7 +46,10 @@
 			return {
 				hotKeywordList:'',
 				isFixed:false,
-				keyword:''
+				keyword:'',
+				upOption:{
+					offset:10
+				}
 			};
 		},
 		mixins: [MescrollMixin],
@@ -232,7 +235,6 @@
 	.example-body {
 		flex-direction: column;
 		padding: 15px;
-		background-color: #ffffff;
 	}
 	
 	.example-body {
@@ -268,40 +270,45 @@
 		font-weight: 600;
 		color: rgba(0, 0, 0, 1);
 	}
+	.mescroll {
+		position: relative;
+		top: -184rpx;
+		left: 0;
+	}
 	// 头部背景
 	.bgBox{
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 750rpx;
+		
+		width: 100%;
 		height: 440rpx;
+		
 	}
 	.bannerImg{
 		width: 100%;
 		height: 100%;
+		
 	}
 	.bannerText{
+		width: 448rpx;
+		height: 114rpx;
 		position: absolute;
 		top: 200rpx;
 		left: 132rpx;
-		width: 448rpx;
-		height: 114rpx;
 	}
 	// 
 	.content{
-		width: 750rpx;
+		width: 100%;
 		background: #FFFFFF;
 		border-radius: 12px 12px 0px 0px;
-		position: absolute;
-		top: 420rpx;
-		left: 0;
+		// z-index: 999999;
+		position: relative;
+		margin-top: -20rpx;
+		padding-left: 28rpx;
 	}
 	.hotList{
 		width: 100%;
 		height: 94rpx;
 		display: flex;
 		align-items: center;
-		margin-left: 28rpx;
 		border-bottom:0.5px solid #EDEFF2;
 	}
 	.hotImg {

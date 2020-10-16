@@ -163,10 +163,13 @@
             "style" :                                                                                    
             {
 				"navigationStyle": "custom",
-				"disableScroll": true, 
-				"app-plus" : {
-					"bounce" : "none" 
-				}
+				"disableScroll": true,
+				"app-plus": {
+					"bounce": "none" 
+				},
+				"mp-alipay": {
+					"allowsBounceVertical": "NO"
+				} 
             }
             
         }
