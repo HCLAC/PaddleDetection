@@ -39,6 +39,7 @@
 						lineColor="#FFE512"
 						activeFontSize="36rpx"
 						activeColor="#303133"
+						color="#909399"
 						fontSize="36rpx"
 						:lineScale="0.7"
 						v-model="tabCurrent"

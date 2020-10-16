@@ -53,17 +53,20 @@
 						<view>热门搜索</view>
 						<!-- <view><image @tap="hotToggle" :src="'/static/images/attention' + forbid + '.png'"></image></view> -->
 					</view>
-					<view class="hotList" v-if="forbid == ''">
-						<view class="hotItem" v-for="(keyword, index) in hotKeywordList" @tap="doSearch(keyword)" :key="index">
+					<view class="hotList" >
+						<view class="hotItem" v-for="(keyword, index) in hotKeywordList" @tap="doSearch(keyword)" :key="index" v-if="index < 10" >
 							<!-- <image class="hotImg " :src="`../../static/images/icon-${index+1>=3?3:index+1}.png`" mode=""></image> -->
-							<view class="hotImg">
-								<image class=" " :src="`../../static/images/icon-${index + 1}.svg`" mode="aspectFit"></image>
-								<text class="rankNum">{{ index + 1 }}</text>
+							<view class="hotImg" >
+								<image class=" " :src="`../../static/images/icon-${index + 1}.svg`"  mode="aspectFit"></image>
+								<text class="rankNum" >{{ index + 1 }}</text>
 							</view>
-							<view class="hotContent">{{ keyword }}</view>
+							<view class="hotContent" >{{ keyword}}</view>
 						</view>
 					</view>
-					<view class="hide-hot-tis" v-else><view>当前搜热门搜索已隐藏</view></view>
+					<view class="hide-hot-tis" v-if="hotKeywordList.length >= 10" @click="toHotRank">
+						<view>点击查看更多热搜</view>
+						<image class="moreRight" src="../../static/images/moreR.svg" mode=""></image>
+					</view>
 				</view>
 			</scroll-view>
 		</view>
@@ -235,6 +238,12 @@ export default {
 					});
 		},
 
+		// 跳转热搜榜单
+		toHotRank(){
+			uni.navigateTo({
+				url:'../hotSearchRank/hotSearchRank'
+			})
+		},
 		// 跳转文章详情
 		onPageJump(e) {
 			console.log(e);
@@ -308,8 +317,8 @@ export default {
 				url: this.globalUrl + '/search/hot',
 				method: 'get',
 				success: res => {
-					console.log(res);
-					this.hotKeywordList = res.data.data;
+					console.log('hotres',res);
+					this.hotKeywordList = res.data.data.list;
 				}
 			});
 		},
@@ -435,9 +444,9 @@ export default {
 			});
 		},
 		//热门搜索开关
-		hotToggle() {
-			this.forbid = this.forbid ? '' : '_forbid';
-		},
+		// hotToggle() {
+		// 	this.forbid = this.forbid ? '' : '_forbid';
+		// },
 		//执行搜索
 		doSearch(keyword) {
 			if (!keyword) return false;
@@ -810,8 +819,19 @@ view {
 .keyword-box .keyword-block .hide-hot-tis {
 	display: flex;
 	justify-content: center;
-	font-size: 28rpx;
-	color: #6b6b6b;
+	align-items: center;
+	height: 34rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #909399;
+	line-height: 34rpx;
+	margin-top: 16rpx;
+}
+.moreRight{
+	width: 14rpx;
+	height: 14rpx;
+	margin-left: 4rpx;
 }
 .keyword-box .keyword-block .keyword > view {
 	display: flex;

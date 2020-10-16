@@ -158,6 +158,18 @@
 				"navigationBarBackgroundColor": "#000000"
 			}
 		}
+        ,{
+            "path" : "pages/hotSearchRank/hotSearchRank",
+            "style" :                                                                                    
+            {
+				"navigationStyle": "custom",
+				"disableScroll": true, 
+				"app-plus" : {
+					"bounce" : "none" 
+				}
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",
