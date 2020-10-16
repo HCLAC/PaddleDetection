@@ -62,6 +62,7 @@
 				<view class="contentText">
 					<!-- <rich-text :nodes="articleList.data.content | formatRichText"></rich-text> -->
 					<u-parse
+						ref="parse"
 						v-if="articleList"
 						style="overflow: hidden;"
 						lazy-load
@@ -113,16 +114,10 @@
 var _this;
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import uniIcons from '@/components/uni-icons/uni-icons.vue';
-import uniParse from '@/components/uni-parse/jyf-parser.vue';
-// import uniFav from '@/components/uni-fav/uni-fav.vue';
-// import ourLoading from '@/components/our-loading/our-loading.vue'
-// import httpType from '../../httpType.js'
 export default {
-	comments: {
+	components: {
 		uniNavBar,
-		uniIcons,
-		uniParse
-
+		uniIcons
 		// ourLoading
 	},
 	data() {
@@ -241,9 +236,7 @@ export default {
 				success: async function(res) {
 					uni.hideLoading();
 					uni.setStorageSync('id', res.data);
-		
-					res.data.data.content = JSON.parse(JSON.stringify(res.data.data.content))
-					debugger
+					
 					let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
 
 					if (strIndex && strIndex.length) {
@@ -253,18 +246,13 @@ export default {
 						let resCode = await that.getTemplate(strId);
 						if (resCode.data.code == 0) {
 							let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
-							let str =
-								'<view><text style=" font-size: 28rpx; font-weight: 500; letter-space:normal">详情请+VX：' +
-								wechat_id +
-								'</text><a group="' +
-								wechat_id +
-								'" groupId="' +
-								strId +
-								'" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>';
+							let str = `<div>
+      <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
+          详情请加VX：${wechat_id}
+      </span><a groupId="${strId}" group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
+    </div>`;
 
 							res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
-							// console.log(res.data.data.content);
-
 							that.articleList = res.data;
 							console.log('文章详情--', that.articleList);
 							that.following = that.articleList.data.follow;
@@ -452,14 +440,11 @@ export default {
 								let resCode = await that.getTemplate(strId);
 								if (resCode.data.code == 0) {
 									let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
-									let str =
-										'<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' +
-										wechat_id +
-										'</text><a group="' +
-										wechat_id +
-										'" groupId="' +
-										strId +
-										'" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>';
+									let str = `<div>
+									  <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
+									      详情请加VX：${wechat_id}
+									  </span><a groupId="${strId}" group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
+									</div>`;
 
 									res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 									// console.log(res.data.data.content);
@@ -539,14 +524,11 @@ export default {
 								let resCode = await that.getTemplate(strId);
 								if (resCode.data.code == 0) {
 									let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
-									let str =
-										'<view><text style=" font-size: 28rpx; font-weight: 500;">详情请+VX：' +
-										wechat_id +
-										'</text><a group="' +
-										wechat_id +
-										'" groupId="' +
-										strId +
-										'" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a></view>';
+									let str = `<div>
+									  <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
+									      详情请加VX：${wechat_id}
+									  </span><a groupId="${strId}" group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
+									</div>`;
 
 									res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 
@@ -705,8 +687,6 @@ export default {
 			// newContent = newContent.replace(/<br[^>]*\/>/gi, '');
 			// newContent = newContent.replace(/\<img/gi, '<img style="width:350px;height:auto;display:inline-block;margin:5px auto;"');
 			newContent = newContent.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');
-			//   newContent = newContent.replace(/<input[^>]*\/>/gi, '<div><p>营销组件</p><a >点击复制</a></div>');
-
 			return newContent;
 		}
 	}
