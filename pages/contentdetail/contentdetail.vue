@@ -61,12 +61,8 @@
 					<u-parse v-if='articleList' style="overflow: hidden;" lazy-load :autosetTitle="false" :autoscroll="false"  @imgtap="imgTap" @linkpress="templateAdd" :html="articleList.data.content | formatRichText"></u-parse>
 				</view>
 				<view class="tips">
-					<view v-for="item in articleList.data.tags" :key="item.id">
-						#
-						<text>{{ item }}</text>
-					</view>
 					<view v-for="item in articleList.data.topics" :key="item.id" @click="toTopic(item.id)">
-						#
+						<image class="tipsIcon" src="../../static/images/topicIcon.svg" mode=""></image>
 						<text>{{ item.name }}</text>
 					</view>
 					<!-- <view>#<text></text></view> -->
@@ -90,7 +86,7 @@
 							<image class="favBtn" src="../../static/images/fav-actived.svg" v-if="articleList.data.fav == 1"></image>
 							<view class="favNum">{{ articleList.data.fav_count }}</view>
 						</view>
-						<view class="share" v-if="serviceProvider =='baidu'" @click="share"><image src="../../static/images/fenxiang.svg"></image></view>
+						<view class="share" v-if="serviceProvider =='baidu'" @click="share"><image src="../../static/images/shareIcon.svg"></image></view>
 					</view>
 					<view class=""><view class="loginButton" @click="login" v-if="flag">登录</view></view>
 				</view>
@@ -971,22 +967,36 @@ export default {
 }
 
 .tips {
-	margin-top: 40rpx;
+	margin-top: 28rpx;
 	margin-left: 28rpx;
 	display: flex;
 	flex-wrap: wrap;
+	
 }
 
 .tips view {
-	font-size: 26rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 500;
-	color: rgba(0, 145, 255, 1);
+	height: 48rpx;
+	background: #F8F8F8;
+	border-radius: 12px;
 	margin-right: 38rpx;
+	display: flex;
+	align-items: center;
+	padding-left: 8rpx;
+	padding-right: 16rpx;
+	margin-bottom: 16rpx;
 }
-
+.tipsIcon{
+	width: 36rpx;
+	height: 36rpx;
+	margin-right: 8rpx;
+}
 .tip text {
-	margin-left: 6rpx;
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #303133;
+	line-height: 24rpx;
 }
 
 // .tipImg{
@@ -1001,7 +1011,7 @@ export default {
 	font-weight: 400;
 	color: rgba(201, 202, 209, 1);
 	line-height: 22rpx;
-	margin-top: 40rpx;
+	margin-top: 24rpx;
 	margin-left: 28rpx;
 	// margin-bottom: 480rpx;
 	padding-bottom: 0;
