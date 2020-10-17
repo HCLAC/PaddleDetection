@@ -3,10 +3,31 @@
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor">
-				<view class="input-view" @click="confirm">
-					<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
-					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true" />
-				</view>
+				<match-media :max-width="360"  >
+					<view class="input-view" @click="confirm" style="position:relative; top: -6rpx ; ">
+						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
+						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true" />
+					</view>
+				</match-media>
+				<match-media :max-width="375" :min-width="361">
+					<view class="input-view" @click="confirm">
+						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
+						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true" />
+					</view>
+				</match-media>
+				
+				<match-media :min-width="376" :max-width="414" >
+					<view class="input-view" @click="confirm" style="position:relative; top: -6rpx ; ">
+						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
+						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true" />
+					</view>
+				</match-media>
+				<match-media :min-width="415">
+					<view class="input-view" @click="confirm" >
+						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
+						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true" />
+					</view>
+				</match-media>
 			</uni-nav-bar>
 		</view>
 
@@ -24,6 +45,7 @@
 		>
 			<!-- 头部轮播图 -->
 			<view class="page-section " v-if="bannerList.length != 0">
+				
 				<view class="page-section-spacing">
 					<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">
 						<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
@@ -44,7 +66,7 @@
 							<image src="../../static/images/more-right.svg" class="moreIcon" mode=""></image>
 						</view>
 					</view>
-					
+
 					<view class="hot-bot" v-if="areaList && areaList.length">
 						<view class="hotAdress">
 							<!-- 当前位置 -->
@@ -381,7 +403,7 @@ export default {
 	onShow() {
 		// this.getItem();
 	},
-	
+
 	onLoad() {
 		uni.showLoading({
 			title: '加载中',
