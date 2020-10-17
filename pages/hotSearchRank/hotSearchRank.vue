@@ -46,7 +46,8 @@
 			return {
 				hotKeywordList:'',
 				isFixed:false,
-				keyword:''
+				keyword:'',
+				
 			};
 		},
 		mixins: [MescrollMixin],
@@ -63,7 +64,7 @@
 					method: 'get',
 					data:{
 						page:1,
-						count:10
+						count:30
 					},
 					success: res => {
 						console.log('-----hotres',res);
@@ -159,7 +160,7 @@
 			/*上拉加载的回调*/
 			upCallback(page) {
 				let pageNum = page.num
-				let pageSize = 10; // 页长, 默认每页10条
+				let pageSize = 30; // 页长, 默认每页10条
 				var that = this;
 					uni.request({
 						url: this.globalUrl + '/search/hot?page=' + pageNum + '&count=' + pageSize,
