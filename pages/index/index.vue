@@ -1,19 +1,51 @@
 <template>
-	<view >
+	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" color="#333333"  :backgroundColor="backgroundColor" @clickLeft="showCity">
-				<view class="input-view" @click="confirm">
-					<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
-					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true">
-				</view>
+			<uni-nav-bar fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor">
+				<match-media :max-width="360"  >
+					<view class="input-view" @click="confirm" style="position:relative; top: -6rpx ; ">
+						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
+						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true" />
+					</view>
+				</match-media>
+				<match-media :max-width="375" :min-width="361">
+					<view class="input-view" @click="confirm">
+						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
+						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true" />
+					</view>
+				</match-media>
+				
+				<match-media :min-width="376" :max-width="414" >
+					<view class="input-view" @click="confirm" style="position:relative; top: -6rpx ; ">
+						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
+						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true" />
+					</view>
+				</match-media>
+				<match-media :min-width="415">
+					<view class="input-view" @click="confirm" >
+						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
+						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true" />
+					</view>
+				</match-media>
 			</uni-nav-bar>
 		</view>
 
 		<!-- 内容 -->
-		<mescroll-uni v-if="bannerList.length != 0" @scroll="uniScroll" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-uni
+			v-if="bannerList.length != 0"
+			@scroll="uniScroll"
+			class="mescroll"
+			ref="mescrollRef"
+			@init="mescrollInit"
+			@down="downCallback"
+			@up="upCallback"
+			:down="downOption"
+			:up="upOption"
+		>
 			<!-- 头部轮播图 -->
 			<view class="page-section " v-if="bannerList.length != 0">
+				
 				<view class="page-section-spacing">
 					<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">
 						<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
@@ -34,6 +66,7 @@
 							<image src="../../static/images/more-right.svg" class="moreIcon" mode=""></image>
 						</view>
 					</view>
+
 					<view class="hot-bot" v-if="areaList && areaList.length">
 						<view class="hotAdress">
 							<!-- 当前位置 -->
@@ -164,7 +197,17 @@
 			</view>
 		</mescroll-uni>
 		<!-- 无banner时 -->
-		<mescroll-uni v-if="bannerList.length == 0" @scroll="uniScroll" class="mescroll1" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-uni
+			v-if="bannerList.length == 0"
+			@scroll="uniScroll"
+			class="mescroll1"
+			ref="mescrollRef"
+			@init="mescrollInit"
+			@down="downCallback"
+			@up="upCallback"
+			:down="downOption"
+			:up="upOption"
+		>
 			<!-- 头部轮播图 -->
 			<view class="page-section " v-if="bannerList.length != 0">
 				<view class="page-section-spacing">
@@ -215,19 +258,18 @@
 						</view>
 						<view class="cityRank">
 							<view class="rankText" @click="toProvinces(areaList[3])">{{ areaList[3].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" ></u-line>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx"></u-line>
 							<view class="rankText" @click="toProvinces(areaList[4])">{{ areaList[4].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" ></u-line>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx"></u-line>
 							<view class="rankText" @click="toProvinces(areaList[5])">{{ areaList[5].name }}</view>
 						</view>
 						<view class="cityRank">
 							<view class="rankText" @click="toProvinces(areaList[6])">{{ areaList[6].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" ></u-line>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx"></u-line>
 							<view class="rankText" @click="toProvinces(areaList[7])">{{ areaList[7].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" ></u-line>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx"></u-line>
 							<view class="rankText" @click="toProvinces(areaList[8])">{{ areaList[8].name }}</view>
 						</view>
-						
 					</view>
 				</view>
 
@@ -362,7 +404,7 @@ export default {
 			indicatorDots: true,
 			areaList: [],
 			url: '',
-			e:null
+			e: null
 		};
 	},
 
@@ -373,13 +415,11 @@ export default {
 	onLoad() {
 		uni.showLoading({
 			title: '加载中',
-			
+
 			success: () => {
-				
 				if (this.item == undefined || null) {
-				
 					this.getBanner();
-					 this.getAdress();
+					this.getAdress();
 				}
 			}
 		});
@@ -388,7 +428,7 @@ export default {
 			uni.hideLoading();
 		}, 1000);
 	},
-	
+
 	methods: {
 		// 接收切换城市信息，请求数据
 		getItem() {
@@ -439,16 +479,14 @@ export default {
 					});
 			}
 		},
-		
+
 		// 获取当前地理位置
 		getAdress() {
-				
-			
 			var that = this;
 			uni.getLocation({
 				type: 'wgs84',
 				success: res => {
-					console.log(111,res)
+					console.log(111, res);
 					if (res.city && res.province) {
 						this.cityName = res.city.substr(0, res.city.length - 1);
 						this.city = res.city;
@@ -487,7 +525,7 @@ export default {
 									this.province = result.data.result.addressComponent.province;
 									// console.log('哈哈哈哈哈哈哈哈哈');
 
-									console.log('当前定位',this.city, this.province);
+									console.log('当前定位', this.city, this.province);
 									uni.request({
 										url: this.globalUrl + '/area/hot',
 										data: {
@@ -515,10 +553,10 @@ export default {
 						});
 					}
 				},
-				
+
 				// 未开启定位
 				fail: error => {
-					console.log(111)
+					console.log(111);
 					console.log('未开启定位', error);
 					// uni.setStorageSync('errCode',res.errCode)
 					this.errCode = 1;
@@ -543,32 +581,32 @@ export default {
 							console.log(error);
 						}
 					});
-					
+
 					// console.log('哈哈哈哈哈哈哈哈哈');
 					// 获取热门目的地
 				}
 			});
 			// 获取文章列表
-			console.log('token',uni.getStorageSync('Authorization'))
+			console.log('token', uni.getStorageSync('Authorization'));
 			uni.request({
 				url: this.globalUrl + '/article/list',
 				data: {
 					count: 6,
 					page: 1,
-					first_time: new Date().getTime()	
+					first_time: new Date().getTime()
 				},
 				header: {
 					Authorization: uni.getStorageSync('Authorization')
 				},
 				success: res => {
 					console.log('文章列表', res);
-					if(res.data.data == null){
+					if (res.data.data == null) {
 						uni.request({
 							url: this.globalUrl + '/article/list',
 							data: {
 								count: 6,
 								page: 1,
-								first_time: new Date().getTime()	
+								first_time: new Date().getTime()
 							},
 							success: res => {
 								uni.setStorageSync('article_id', res.data);
@@ -576,24 +614,20 @@ export default {
 								this.list = res.data.data.list;
 								// console.log('list=====',this.list)
 							}
-						})
-					}else{
+						});
+					} else {
 						uni.setStorageSync('article_id', res.data);
 						// console.log('存储文章列表==',res.data)
 						this.list = res.data.data.list;
 						// console.log('list=====',this.list)
 					}
-					
 				}
 			});
-			
-			
 		},
 		uniScroll(e) {
-			
 			if (this.bannerList.length == 0) {
 				this.backgroundColor = '#ffffff';
-			} else{
+			} else {
 				// console.log(e.scrollTop)
 				if (e.scrollTop >= 100) {
 					this.backgroundColor = '#ffffff';
@@ -601,7 +635,6 @@ export default {
 					this.backgroundColor = 'transparent';
 				}
 			}
-			
 		},
 		// 获取banner
 		getBanner() {
@@ -658,20 +691,17 @@ export default {
 				success: res => {
 					if (res.data.code != 0) {
 						// debugger
-						
+
 						uni.navigateTo({
 							url: '../login/login'
 						});
-					}else{
+					} else {
 						that.list[index].liked = e.liked == 1 ? 0 : 1;
 						that.list[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
 					}
-
-					
 				}
 			});
 		},
-		
 
 		lookAll() {
 			if (this.item == undefined || null) {
@@ -712,7 +742,7 @@ export default {
 				title: '搜索'
 			});
 		},
-		
+
 		showCity() {
 			// uni.showToast({
 			// 	title: '选择城市'
@@ -722,51 +752,49 @@ export default {
 			});
 		},
 		toProvinces(e) {
-			var that = this
-			 this.e = e
+			var that = this;
+			this.e = e;
 			console.log('--', e);
 			uni.getSetting({
-			   success(res) {
-			      console.log(res.authSetting)
-				  console.log(res.authSetting['scope.userLocation'])
-				  if(res.authSetting['scope.userLocation'] == false){
-				  	uni.showModal({
-				  		// title: '提示',
-				  		content: '是否前往开启定位服务',
-				  		success: res => {
-				  			if (res.confirm) {
-				  				console.log('用户点击确定');
-				  	
-				  				uni.openSetting({
-				  					success: res => {
-				  						console.log(res.authSetting);
-				  						that.getAdress();
-				  						that.dqdwText = '当前位置';
-				  					}
-				  				});
-				  			} else if (res.cancel) {
-				  				console.log('用户点击取消');
-				  			}
-				  		}
-				  	});
-				  }else{
-					 if (that.e.state_id == 0) {
-						uni.showToast({
-							title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
-							icon: 'none',
-							duration: 3000
+				success(res) {
+					console.log(res.authSetting);
+					console.log(res.authSetting['scope.userLocation']);
+					if (res.authSetting['scope.userLocation'] == false) {
+						uni.showModal({
+							// title: '提示',
+							content: '是否前往开启定位服务',
+							success: res => {
+								if (res.confirm) {
+									console.log('用户点击确定');
+
+									uni.openSetting({
+										success: res => {
+											console.log(res.authSetting);
+											that.getAdress();
+											that.dqdwText = '当前位置';
+										}
+									});
+								} else if (res.cancel) {
+									console.log('用户点击取消');
+								}
+							}
 						});
-					 } else {
-						var e = JSON.stringify(that.e);
-						uni.navigateTo({
-							url: '/pages/provinces/provinces?id=' + e
-						});
-					 } 
-				  }
-				  
-			   }
-			})
-			
+					} else {
+						if (that.e.state_id == 0) {
+							uni.showToast({
+								title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
+								icon: 'none',
+								duration: 3000
+							});
+						} else {
+							var e = JSON.stringify(that.e);
+							uni.navigateTo({
+								url: '/pages/provinces/provinces?id=' + e
+							});
+						}
+					}
+				}
+			});
 		},
 		confirm() {
 			// uni.showToast({
@@ -780,13 +808,13 @@ export default {
 		downCallback() {
 			this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
 		},
-		upCallback(page) {	
-			console.log(122132131213)
+		upCallback(page) {
+			console.log(122132131213);
 			let pageNum = page.num;
-			
+
 			let pageSize = page.size;
-			if(pageNum == 1){
-				this.firstTime = new Date().getTime()
+			if (pageNum == 1) {
+				this.firstTime = new Date().getTime();
 			}
 			uni.request({
 				url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
@@ -799,20 +827,20 @@ export default {
 				success: data => {
 					if (data.data.code == 0) {
 						let curPageData = data.data.data.list;
-			
+
 						console.log('curPageData', curPageData);
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 						let curPageLen = curPageData.length ? curPageData.length : 0;
 						console.log('curPageLen', curPageLen);
 						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
 						let totalPage = data.data.data.total / pageSize;
-			
+
 						let totalSize = data.data.data.total;
 						console.log('totalSize', totalSize);
-			
+
 						if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
 						this.list = this.list.concat(curPageData); //追加新数据
-			
+
 						this.mescroll.endByPage(curPageLen, totalPage);
 					} else {
 						this.mescroll.endErr();
@@ -823,7 +851,7 @@ export default {
 					this.mescroll.endErr();
 				}
 			});
-		},
+		}
 	}
 };
 </script>
@@ -1020,7 +1048,6 @@ view {
 	font-size: 28rpx;
 }
 
-
 .cus-sty {
 	background-color: #f8f8f8;
 }
@@ -1085,7 +1112,7 @@ view {
 	width: 216rpx;
 	height: 180rpx;
 	border-radius: 8px;
-	border: 4rpx solid #FFE512;
+	border: 4rpx solid #ffe512;
 	position: relative;
 	display: flex;
 	align-items: center;
@@ -1138,20 +1165,20 @@ view {
 	width: 216rpx;
 	height: 180rpx;
 	border-radius: 8px;
-	border: 2px solid #FFE512;
+	border: 2px solid #ffe512;
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
-.mask{
+.mask {
 	width: 216rpx;
 	height: 180rpx;
 	background: rgba(0, 0, 0, 0.25);
 	border-radius: 8px;
 	position: absolute;
 }
-.mask1{
+.mask1 {
 	width: 208rpx;
 	height: 172rpx;
 	background: rgba(0, 0, 0, 0.25);
@@ -1316,7 +1343,6 @@ view {
 	min-height: 300rpx;
 	max-height: 460rpx;
 	border-radius: 8rpx 8rpx 0 0;
-	
 }
 .demoImage4 {
 	width: 100%;
@@ -1333,7 +1359,7 @@ view {
 	width: 60rpx;
 	height: 60rpx;
 }
-.playIcon{
+.playIcon {
 	width: 100%;
 	height: 100%;
 }
