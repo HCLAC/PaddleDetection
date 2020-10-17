@@ -46,10 +46,7 @@
 			return {
 				hotKeywordList:'',
 				isFixed:false,
-				keyword:'',
-				upOption:{
-					offset:10
-				}
+				keyword:''
 			};
 		},
 		mixins: [MescrollMixin],
