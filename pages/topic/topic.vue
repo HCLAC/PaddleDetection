@@ -313,7 +313,7 @@
 	margin-left: 28rpx;
 }
 .topTitle{
-	width: 144rpx;
+	// width: 144rpx;
 	height: 36rpx;
 	font-size: 36rpx;
 	font-family: PingFangSC-Semibold, PingFang SC;
@@ -368,7 +368,7 @@
 .recommendedTop{
 }
 .recommendedTitle{
-	width: 72rpx;
+	// width: 72rpx;
 	height: 36rpx;
 	font-size: 36rpx;
 	font-family: PingFangSC-Semibold, PingFang SC;

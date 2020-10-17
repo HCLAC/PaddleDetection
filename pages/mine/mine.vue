@@ -389,9 +389,10 @@ export default {
 				url:'../mineInfo/mineInfo'
 			})
 		},
+		// 客服电话
 		tell(){
 			uni.makePhoneCall({
-				phoneNumber:"15020779433"
+				phoneNumber:""
 			})
 			
 		},
