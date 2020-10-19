@@ -87,7 +87,7 @@
 			
 			
 			<!-- <view class="mescroll" > -->
-				<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption">
+				<mescroll-body  ref="mescrollRef" @init="mescrollInit"   @up="upCallback" :down="downOption"  :up="upOption">
 					<view class="cardList">
 						<view class="cards" v-for="(item,index) in  hotsiteslist" :key="index" @click="toAtt(item.id)">
 							<view class="cardsleft">
@@ -216,7 +216,7 @@
 				cityList:null,
 				serviceProvider: '',
 				downOption:{
-					offset:40
+					use: false
 				}
 			}
 		},
@@ -419,16 +419,16 @@
 				})
 			},
 			/*下拉刷新的回调, 有三种处理方式:*/
-			downCallback() {
+			// downCallback() {
 				// 第1种: 请求具体接口
 				// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
-				this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+				// this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
 				// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
 				// this.mescroll.endSuccess()
 				// 此处仍可以继续写其他接口请求...
 				// 调用其他方法...
-				console.log('下拉下拉')
-			},
+				// console.log('下拉下拉')
+			// },
 			/*上拉加载的回调*/
 			upCallback(page) {
 				// mescroll.setPageSize(6)
