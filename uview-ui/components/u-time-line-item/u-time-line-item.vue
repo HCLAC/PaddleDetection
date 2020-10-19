@@ -58,7 +58,7 @@
 		flex-direction: column;
 		width: 100%;
 		position: relative;
-		margin-bottom: 32rpx;
+		margin-bottom: 20rpx;
 	}
 
 	.u-time-axis-node {

@@ -1,5 +1,5 @@
 <template>
-	<view class="mescroll-body" :style="{'minHeight':minHeight, 'padding-top': padTop, 'padding-bottom': padBottom, 'padding-bottom': padBottomConstant, 'padding-bottom': padBottomEnv }" @touchstart="touchstartEvent" @touchmove="touchmoveEvent" @touchend="touchendEvent" @touchcancel="touchendEvent" >
+	<view class="mescroll-body" :style="{ 'padding-top': padTop, 'padding-bottom': padBottom, 'padding-bottom': padBottomConstant, 'padding-bottom': padBottomEnv }" @touchstart="touchstartEvent" @touchmove="touchmoveEvent" @touchend="touchendEvent" @touchcancel="touchendEvent" >
 		<view class="mescroll-body-content" :style="{ transform: translateY, transition: transition }">
 			<!-- 下拉加载区域 (支付宝小程序子组件传参给子子组件仍报单项数据流的异常,暂时不通过mescroll-down组件实现)-->
 			<!-- <mescroll-down :option="mescroll.optDown" :type="downLoadType" :rate="downRate"></mescroll-down> -->

@@ -1,4 +1,4 @@
-import baseurl from './config.js'
+
 
 // try{
 
@@ -31,8 +31,11 @@ import baseurl from './config.js'
 // const token = userInfo ? userInfo : null //获取token
 
 // 请求封装
+import globalUrl from './global.js'
+
 function request(obj) {
-	let url = baseurl + obj.url; //地址
+	
+	let url = globalUrl + obj.url; //地址
 	let data = obj.data || {};
 	let success = obj.success;
 	let method = obj.method || 'POST';
@@ -55,7 +58,7 @@ function request(obj) {
 					showCancel: false,
 					success: function(res) {
 						if (res.confirm) {
-							uni.redirectTo({
+							uni.navigateTo({
 								url: '../login/login'
 							})
 						}

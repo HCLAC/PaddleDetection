@@ -1,61 +1,88 @@
 {
 	"easycom": {
-			"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
-    "pages": [
-		
-		{
+
+
+	"pages": [{
 			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom",
-				"backgroundColorBottom":"#F8F8F8"
+				"backgroundColorBottom": "#FFFFFF",
+				"backgroundColorTop": "#FFFFFF",
+				"disableScroll": true,
+				"app-plus": {
+					"bounce": "none" 
+				},
+				"mp-alipay": {
+					"allowsBounceVertical": "NO"
+				} 
 			}
 		},
+		{
+			"path": "pages/attractionsRank/attractionsRank",
+			"style": {
+				"navigationStyle": "custom",
+				"backgroundColor": "#000000"
+				
+			}
+		},
+
+		{
+			"path": "pages/provinces/provinces",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"app-plus": {
+					"bounce": "none" 
+				},
+				"mp-alipay": {
+					"allowsBounceVertical": "NO"
+				} 
+			}
+		},
+
+
+
 		{
 		    "path" : "pages/login/login",
 		    "style" : {
 				"navigationBarBackgroundColor":"#FFFFFF",
-				"backgroundColor":"#fff"
+				"backgroundColor":"#fff",
+				"navigationStyle": "custom",
+				"disableScroll":true
 			}
 		},
-		
+
 		{
-		    "path" : "pages/city/city",
-		    "style" : {
-				"navigationStyle":"custom"
-			}
-		},
-		{
-		    "path" : "pages/contentdetail/contentdetail",
-		    "style" : {
-				"navigationStyle":"custom"
-			}
-		},
-		{
-			"path": "pages/attractionsDetails/attractionsDetails",
+			"path": "pages/city/city",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
-		
+		{
+			"path": "pages/contentdetail/contentdetail",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+
 		{
 			"path": "pages/attractionsList/attractionsList",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
-		
-		
+
+
 		{
-		    "path" : "pages/mine/mine",
-		    "style" : {
-				"navigationStyle":"custom",
-				"enablePullDownRefresh": true
-				
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationStyle": "custom"
+
 			}
-		}
-		,
-		
+		},
+
 		{
 			"path": "pages/searchResults/searchResults",
 			"style": {
@@ -64,33 +91,93 @@
 		},
 
 		{
-         "path" : "pages/search/search",
-            "style" : {
-				"navigationStyle":"custom"
-				
+			"path": "pages/search/search",
+			"style": {
+				"navigationStyle": "custom"
 			}
-        }
-        ,
+		},
 		{
-		 "path" : "pages/positionContent/positionContent",
-		    "style" : {
-				"navigationStyle":"custom"
+			"path": "pages/positionContent/positionContent",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		}, 
+		{
+			"path": "pages/lineList/lineList",
+			"style": {
+				"navigationStyle": "custom",
+				"backgroundColor": "#fff"
+			}
+		}, 
+		{
+			"path": "pages/lineDetail/lineDetail",
+			"style": {
+				"navigationStyle": "custom",
+				"backgroundColor": "#fff"
+			}
+		}, 
+		{
+			"path": "pages/webview/webview",
+			"style": {}
+		},
+		{
+            "path" : "pages/mineConcern/mineConcern",
+            "style" : {
+				"navigationStyle": "custom",
+				"backgroundColor": "#fff"
+			}
+        },
+		{
+            "path" : "pages/bloggers/bloggers",
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        },
+		{
+            "path" : "pages/topic/topic",
+            "style" : {
+            	"navigationStyle": "custom"
+            }
+        },
+		{
+            "path" : "pages/topicList/topicList",
+            "style" : {
+            	"navigationStyle": "custom"
+            }
+        }
+        ,{
+            "path" : "pages/mineInfo/mineInfo",
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        },
+		{
+			"path": "uview-ui/components/u-avatar-cropper/u-avatar-cropper",
+			"style": {
+				"navigationBarTitleText": "头像裁剪",
+				"navigationBarBackgroundColor": "#000000"
 			}
 		}
-        
+        ,{
+            "path" : "pages/hotSearchRank/hotSearchRank",
+            "style" :                                                                                    
+            {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"app-plus": {
+					"bounce": "none" 
+				},
+				"mp-alipay": {
+					"allowsBounceVertical": "NO"
+				} 
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",
 		"navigationBarTextStyle": "black",
-		// "navigationBarTitleText": "领途羊",
-		"backgroundColorBottom":"#F8F8F8"
-	},
-	"window": {
-		"navigationBarBackgroundColor": "#ccc",
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "智能小程序",
-		"backgroundTextStyle": "dark",
-		"enablePullDownRefresh": true
+		"backgroundColorTop": "#FFFFFF"
 	},
 	"tabBar": {
 		"list": [{
@@ -108,7 +195,8 @@
 		],
 		"backgroundColor": "#ffffff",
 		"color": "#C9CAD1",
-		"selectedColor": "#303133"
+		"selectedColor": "#303133",
+		"borderStyle": "black"
 	},
 	"dynamicLib": {
 		"smartUI": {

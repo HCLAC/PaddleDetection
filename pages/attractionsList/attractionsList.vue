@@ -61,7 +61,7 @@
 				var that = this
 				if(this.state_id == undefined || null){
 					uni.request({
-						url:'http://121.40.30.19/site/list',
+						url:this.globalUrl+ '/site/list',
 						data:{
 							count:20,
 							page:1,
@@ -76,7 +76,7 @@
 					})
 				}else{
 					uni.request({
-						url:'http://121.40.30.19/site/list',
+						url:this.globalUrl+ '/site/list',
 						data:{
 							state_id:that.state_id,
 							city_id:that.city_id,
@@ -103,7 +103,7 @@
 			// 			console.log('取本地存储城市id',res.data)
 			// 			if(res.data.code != 0){
 			// 				uni.request({
-			// 					url:'http://121.40.30.19/site/list',
+			// 					url:this.globalUrl+ '/site/list',
 			// 					data:{
 			// 						count:20,
 			// 						page:1,
@@ -123,7 +123,7 @@
 			// 			console.log('state_id',state_id)
 			// 			console.log('----===',city_id)
 			// 			uni.request({
-			// 				url:'http://121.40.30.19/site/list',
+			// 				url:this.globalUrl+ '/site/list',
 			// 				data:{
 			// 					state_id:city.data.state_id,
 			// 					city_id:city.data.city_id,
@@ -240,7 +240,7 @@
 	.cardContent{
 		width:642rpx;
 		height:28rpx;
-		font-size:13px;
+		font-size:28rpx;
 		line-height: 28rpx;
 		font-family:PingFangSC-Regular,PingFang SC;
 		font-weight:400;

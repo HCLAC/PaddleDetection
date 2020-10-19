@@ -1,128 +1,279 @@
 <template>
-	<view class="content">
-		<image src="../../static/images/mineBack.png" class="backImg"></image>
-		<!-- 用户信息 -->
-		<view class="usermes">
-			<image class="userAva" :src="avatarUrl"></image>
-			<view class="userR">
-				<view class="userName">{{ nickName }}</view>
-				<!-- <view class="logout">退出登录</view> -->
- 			</view>
-		</view>
-		<!-- 我的收藏 -->
-		<view class="myCollection">
-			<view class="phone"><image class="phoneImg" src="../../static/images/phone.png" mode=""></image></view>
-			
-			<view>我的收藏</view>
-				<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-				<view class="contentItem" v-for="(item, index) in tipList" :key="index">
-					<view class="left">
-						<image :src="item.main_image" mode="">
-							<view class="imgTip">
-								<view  v-if="item.type==1">
-									游记
-								</view>
-								<view  v-if="item.type==2">
-									攻略
-								</view>
-							</view>
-						</image>
-					</view>
-					<view class="right" @click="onPageJump" :id= "item.article_id">
-						<view class="title">
-							<view class="tips" v-if="item.type==1">
-								游记
-							</view>
-							<view class="tips" v-if="item.type==2">
-								攻略
-							</view>
-							| 
-							<view class="titleText">
-								{{item.title}}
-							</view>
-						</view>
-						<view class="content">
-							<rich-text class="richText" :nodes="item.content "></rich-text>
-							<!-- {{item.title}} -->
-						</view>
-						<view class="position">
-							<image src="../../static/images/Icon／Map.svg" mode="aspectFill"></image>
-							<view>{{item.location}}</view>
-						</view>
-					</view>
+	<view>
+		<!-- 自定义导航栏 -->
+		<view class="example-body" v-if="isFixed">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
+				<view slot="left" class="slotleft">
+					<image class="fanhui" src=""  />
+					<image class="fhsy" src=""  />
 				</view>
-				</mescroll-body>
-				<!-- <view class="noContent" v-show="tipList != null">~我也是有底线的~</view> -->
+				<view class="slottitle">领途羊</view>
+			</uni-nav-bar>
+		</view>
+		<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption"  >
+			<view class="content" style="height: 100%;">
+				<view  style="position: absolute; width: 100%; top: 0; z-index: 400;">
+					<view class="contentTop">
+						<image src="../../static/images/mineBack.png" class="backImg"></image>
+						<!-- 用户信息 -->
+						<view class="usermes">
+							<!-- <image class="userAva" :src="avatarUrl" v-if="avatarUrl"></image> -->
+
+							<image src="../../static/images/userImg.svg" class="userAva" v-if="!userInfo.avatar" mode=""></image>
+							<image :src="userInfo.avatar" class="userAva" v-if="userInfo.avatar" mode=""></image>
+							<view class="userR">
+								<view class="userName" @click="toMineInfo">{{ nickName }}
+									<image src="../../static/images/iconExit.svg" mode=""></image>
+								</view>
+								<view class="fllow" @click="toConcern()">
+									<text>关注</text>
+									<view class="fllowNum">{{fllowNum>10000?((fllowNum-(fllowNum%1000))/10000+'w'):fllowNum}}</view>
+								</view>
+								<!-- <view class="logout">退出登录</view> -->
+							</view>
+						</view>
+					</view>
+					<!-- 客服 -->
+					<view class="phone" @click="tell"><image class="phoneImg" src="../../static/images/minephone.svg" mode=""></image></view>
+					<!-- 我的收藏 -->
+					<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
+						<!-- <view :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard"> -->
+						<!-- <view>收藏</view> -->
+							<v-tabs 
+								inactive-color="#909399"
+								lineHeight="24rpx"
+								lineColor="#FFE512"
+								activeColor="#303133"
+								fontSize="36rpx"
+								v-model="tabCurrent"
+								:bold="true"
+								color="#909399"
+								:tabs="tablist"
+								:is-scroll="false"
+								:current="tabCurrent"
+								@change="tabChange"
+								paddingItem="0 32rpx"
+							></v-tabs>
 							
-				<view class="noContentItem" v-show="tipList == null">
-					<image src="../../static/images/wenjianjia.png" mode=""></image>
-					<view class="tipText">您的收藏夹空空如也~</view>
+						<!-- </view> -->
+						<view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" v-if="favNum != 0">
+							{{favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum}}
+						</view>
+						<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" v-if="likeNum != 0">
+							{{likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum}}
+						</view>
+					</view>
 				</view>
-			
+				<!-- 收藏 -->
+				<view style="margin-top: 64%; padding: 0 28rpx;" v-if="tabCurrent == 0 ">
+					
+						<view class="" v-for="(item, index) in tipList" :key="index" v-if="favNum != 0">
+							<view class="contentItem" >
+								<view class="left">
+									<image :src="item.main_image" mode="">
+										<view class="imgTip">
+											<view v-if="item.type == 1">游记</view>
+											<view v-if="item.type == 2">攻略</view>
+											<view v-if="item.type == 4">视频</view>
+										</view>
+										<view class="videoIcon" v-if="item.type == 4">
+											<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+										</view>
+									</image>
+								</view>
+								<view class="right" @click="onPageJump" :id="item.article_id">
+									<view class="title">
+										<text class="titleText">{{ item.title }}</text>
+									</view>
+									<view class="content">
+										<rich-text class="richText" :nodes="item.content"></rich-text>
+									</view>
+									<view class="favandlikebox">
+										<view class="fav">
+											{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}收藏
+										</view>
+										<view class="like">
+											{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}点赞
+										</view>
+									</view>
+									<view class="position">
+										<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
+										<view>{{ item.location }}</view>
+									</view>
+								</view>
+							</view>
+							<view class="line"></view>
+						</view>
+						
+						
+					
+					
+				</view>
+				
+				<!-- 点赞 -->
+				<view style="margin-top: 64%; padding: 0 24rpx;" v-if="tabCurrent == 1 ">
+					<view class="" v-for="(item, index) in likeList" :key="index" >
+						<view class="contentItem" >
+							<view class="left">
+								<image :src="item.main_image" mode="">
+									<view class="imgTip">
+										<view v-if="item.type == 1">游记</view>
+										<view v-if="item.type == 2">攻略</view>
+										<view v-if="item.type == 4">视频</view>
+									</view>
+									<view class="videoIcon" v-if="item.type == 4">
+										<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+									</view>
+								</image>
+							</view>
+							<view class="right" @click="onPageJump" :id="item.article_id">
+								<view class="title">
+									<text class="titleText">{{ item.title }}</text>
+								</view>
+								<view class="content">
+									<rich-text class="richText" :nodes="item.content"></rich-text>
+								</view>
+								<view class="favandlikebox">
+									<view class="fav">
+										{{item.fav_count}}收藏
+									</view>
+									<view class="like">
+										{{item.like_count}}点赞
+									</view>
+								</view>
+								<view class="position">
+									<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
+									<view>{{ item.location }}</view>
+								</view>
+							</view>
+						</view>
+						<view class="line"></view>
+					</view>
+					
+					
+					
+				</view>
+				
+			</view>
+		</mescroll-body>
+		<!-- 收藏列表为空时 -->
+		<view class="empty" v-if="!tipList || !tipList.length && tabCurrent == 0 ">
+			<view class="emptyImg">
+				<image src="../../static/images/emptyfav.svg" mode=""></image>
+			</view>
+			<view class="emptyText">
+				您的收藏夹空空如也～
+			</view>
 		</view>
-		
-		
-	
+		<!-- 点赞列表为空时 -->
+		<view class="empty" v-if="!likeList || !likeList.length && tabCurrent == 1">
+			<view class="emptyImg">
+				<image src="../../static/images/emptylike.svg" mode=""></image>
+			</view>
+			<view class="emptyText">
+				您还没有赞过任何文章哦～
+			</view>
+		</view>
 	</view>
-	
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex';
 import httpType from '../../httpType.js';
-import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
+import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 export default {
 	data() {
 		return {
-			nickName:"",
-			avatarUrl:"",
-			tipList:[]
+			userInfo:[],
+			nickName: uni.getStorageSync('nickName'),
+			avatarUrl: '',
+			tipList: [],
+			likeList:[],
+			upOption:{
+				bgColor:'#ffffff'
+			},
+			fllowNum:0,
+			favNum:'',
+			likeNum:'',
+			current: 0,
+			tablist: ['收藏','已赞'],
+			tabCurrent: 0,
+			favnumcolor:{
+				color: '#303133'
+			},
+			likenumcolor:{
+				color: '#909399'
+			},
+			cardheight:0,
+			isFixed:false,
+			downOption:{
+				use:false
+			}
 		};
 	},
 	mixins: [MescrollMixin],
 	computed: mapState(['forcedLogin', 'hasLogin', 'phone']),
-	
-	
 	onShow() {
-		this.getUserMsg()
+	
+		this.getUserMsg();
+		this.downCallback()
 	},
-	onPullDownRefresh() {
-		console.log('refresh');
-		setTimeout(function () {
-			uni.stopPullDownRefresh();
-		}, 1000);
+	onLoad() {
+		this.getlist()
+		this.getUserMsg();
+	},
+	mounted() {
+		const query = uni.createSelectorQuery().in(this);
+		query.select('#selectcard').boundingClientRect(data => {
+		console.log("得到布局位置信息" + JSON.stringify(data));
+		console.log("节点离页面顶部的距离为" + data.top);
+		 
+		if(data.top == 0 ){
+			this.cardheight = 200
+		}else{
+			this.cardheight = data.top
+		}
+		}).exec();
+	},
+	onPageScroll(e) {
+		if (e.scrollTop >  this.cardheight) {
+			this.isFixed = true;
+		} else {
+			this.isFixed = false;
+		}
 	},
 	methods: {
-		getUserMsg(){
-			var that = this
-			
-			uni.login({
-			  provider: 'baidu',
-			  success: function(loginRes) {
-			    console.log(loginRes.authResult);
-			    // 获取用户信息
-			    uni.getUserInfo({
-			      provider: 'baidu',
-			      success:  function(infoRes) {
-			        console.log('用户昵称为：' + infoRes.userInfo.nickName);
-					var infoRes = infoRes.userInfo
-					console.log(infoRes.nickName)
-					that.nickName = infoRes.nickName
-					that.avatarUrl = infoRes.avatarUrl
-					uni.setStorageSync('nickName',infoRes.nickName)
-					uni.setStorageSync('avatarUrl',infoRes.avatarUrl)
-			      }
-			    })
-				
-			  }
-			});
-			
+		getUserMsg() {
+			var that = this;
+
+			// uni.login({
+			// 	provider: 'baidu',
+			// 	success: function(loginRes) {
+			// 		console.log(loginRes.authResult);
+			// 		// 获取用户信息
+			// 		uni.getUserInfo({
+			// 			provider: 'baidu',
+			// 			success: function(infoRes) {
+			// 				console.log('用户昵称为：' + infoRes.userInfo.nickName);
+			// 				var infoRes = infoRes.userInfo;
+			// 				console.log(infoRes.nickName);
+			// 				that.nickName = infoRes.nickName;
+			// 				that.avatarUrl = infoRes.avatarUrl;
+			// 				// that.nickName = infoRes.nickName;
+			// 				// that.avatarUrl = infoRes.avatarUrl;
+			// 				uni.setStorageSync('nickName', infoRes.nickName);
+			// 				uni.setStorageSync('avatarUrl', infoRes.avatarUrl);
+			// 			}
+			// 		});
+			// 	}
+			// });
+
 			uni.getStorage({
-				key:'Authorization',
-				success:function(res){
-					console.log("token===>",res.data)
+				key: 'Authorization',
+				success: function(res) {
+					console.log('token===>', res.data);
 					// uni.request({
-					// 	url:'http://121.40.30.19/user/info',
+					// 	url:this.globalUrl+ '/user/info',
 					// 	header:{
 					// 		'Authorization':res.data
 					// 	},
@@ -132,249 +283,353 @@ export default {
 					// })
 				}
 			}),
-			
-			uni.request({
-				url:"http://121.40.30.19/user/info",
-				header:{
-					'Authorization':uni.getStorageSync('Authorization')
-				},
-				method:'get',
-				success:function(res){
-					console.log('个人信息=',res.data)
-					if (res.data.code != 0) {
-						// debugger
-						uni.showModal({
-							title: '提示',
-							content: '您好，请先登录',
-							showCancel: false,
-							success: function(res) {
-								if (res.confirm) {
-									uni.redirectTo({
-										url: '../login/login'
-									})
-								}
+				uni.request({
+					url: this.globalUrl+ '/user/info',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					method: 'get',
+					success: function(res) {
+						console.log('个人信息=', res.data);
+						that.userInfo = res.data.data
+						if (res.data.code != 0) {
+							// debugger
+							uni.navigateTo({
+								url: '../login/login?ismine=' + false
+							});
+						}else{
+							uni.setStorageSync('mobile', res.data);
+							if(res.data.data.nick_name){
+								that.nickName = res.data.data.nick_name
+							}else{
+								that.nickName = res.data.data.mobile
 							}
-						})
-						return
+							that.fllowNum = res.data.data.following
+							that.favNum = res.data.data.fav_count
+							that.likeNum = res.data.data.like_count
+						}
+						
 					}
-					uni.setStorageSync('mobile',res.data)
-					console.log('存储信息',res.data)
-					
-					
-				}
-			}),
+				})
+				
+		},
+		getlist(){
 			uni.request({
-				url:'http://121.40.30.19/user/favorite/list',
-				data:{
-					'count':5,
-					'page':1
+				url: this.globalUrl+ '/user/favorite/list',
+				data: {
+					count: 6,
+					page: 1
 				},
-				header:{
-					'Authorization':uni.getStorageSync('Authorization')
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
 				},
-				method:'get',
-				success:function(res){
-					console.log('收藏列表',res.data)
-					that.tipList = res.data.data.list
-					console.log('1111111',that.tipList)
+				method: 'get',
+				success: (res)=> {
+					console.log('收藏列表', res.data);
+					if(res.data.data != null){
+						this.tipList = res.data.data.list;
+						// this.favNum = res.data.data.total
+						console.log('1111111', this.tipList);
+					}
+					
 				}
-			})
-			
+			});
+			uni.request({
+				url: this.globalUrl+ '/user/liked/list',
+				data: {
+					count: 6,
+					page: 1
+				},
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				method: 'get',
+				success: (res)=> {
+					console.log('点赞列表', res.data);
+					if(res.data.data != null ){
+						this.likeList = res.data.data.list;
+						// this.likeNum = res.data.data.total
+						console.log('likelist', this.likeList);
+					}
+					
+				}
+			});
+		},
+		tabChange(index) {
+			this.tabCurrent = index;
+			if(index == 1 ){
+				this.favnumcolor.color = '#909399'
+				this.likenumcolor.color = '#303133'
+				this.downCallback()
+			}else{
+				this.favnumcolor.color = '#303133'
+				this.likenumcolor.color = '#909399'
+				this.downCallback()
+			}
 		},
 		// 跳转文章详情
 		onPageJump(e) {
-			console.log(e)
-			let id = e.currentTarget.id
+			console.log(e);
+			let id = e.currentTarget.id;
 			// debugger
 			// return
 			uni.navigateTo({
-				url: "/pages/contentdetail/contentdetail?article_id="+id
+				url: '/pages/contentdetail/contentdetail?article_id=' + id
+			});
+		},
+		// 跳转关注页
+		toConcern(){
+			uni.navigateTo({
+				url:'/pages/mineConcern/mineConcern'
+			});
+		},
+		// 跳转信息修改页
+		toMineInfo(){
+			uni.navigateTo({
+				url:'../mineInfo/mineInfo'
 			})
 		},
-		
-		/*下拉刷新的回调, 有三种处理方式:*/
-		downCallback(){
-			// 第1种: 请求具体接口
-			uni.request({
-				url: 'http://121.40.30.19/user/favorite/list',
-				header:{
-					'Authorization':uni.getStorageSync('Authorization')
-				},
-				success: (res) => {
-					// console.log('下拉刷新',res)
-					// 请求成功,隐藏加载状态
-					this.mescroll.endSuccess()
-				},
-				fail: () => {
-					// 请求失败,隐藏加载状态
-					this.mescroll.endErr()
-				}
+		// 客服电话
+		tell(){
+			uni.makePhoneCall({
+				phoneNumber:""
 			})
+			
+		},
+		/*下拉刷新的回调, 有三种处理方式:*/
+		downCallback() {
 			// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
-			// this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+			this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
 			// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
 			// this.mescroll.endSuccess()
-			
+
 			// 此处仍可以继续写其他接口请求...
 			// 调用其他方法...
 		},
 		/*上拉加载的回调*/
 		upCallback(page) {
+			var that = this
 			// mescroll.setPageSize(6)
 			let pageNum = page.num; // 页码, 默认从1开始
 			let pageSize = page.size; // 页长, 默认每页10条
-			uni.request({
-				url: 'http://121.40.30.19/user/favorite/list?page='+pageNum+'&count='+pageSize,
-				header:{
-					'Authorization':uni.getStorageSync('Authorization')
-				},
-				success: (data) => {
-					console.log('data',data)
-					// 接口返回的当前页数据列表 (数组)
-					let curPageData = data.data.data.list; 
-					console.log('curPageData',curPageData)
-					// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-					let curPageLen = curPageData.length; 
-					console.log('curPageLen',curPageLen)
-					// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-					// let totalPage = data.data.data.list; 
-					// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-					let totalSize = data.data.data.total; 
-					console.log('totalSize',totalSize)
-					// 接口返回的是否有下一页 (true/false)
-					// let hasNext = data.data.data.list; 
-					
-					//设置列表数据
-					if(page.num == 1) this.tipList = []; //如果是第一页需手动置空列表
-					this.tipList = this.tipList.concat(curPageData); //追加新数据
-					console.log('tipList',this.tipList)
-					// 请求成功,隐藏加载状态
-					//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-					// this.mescroll.endByPage(curPageLen, totalPage); 
-					
-					//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-					this.mescroll.endBySize(curPageLen, totalSize); 
-					
-					//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-					//this.mescroll.endSuccess(curPageLen, hasNext); 
-					
-					//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-					//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-					//如果传了hasNext,则翻到第二页即可显示无更多数据.
-					//this.mescroll.endSuccess(curPageLen);
-					
-					// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-					// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-					setTimeout(()=>{
-						this.mescroll.endSuccess(curPageLen)
-					},20)
-					
-					
-				},
-				fail: () => {
-					//  请求失败,隐藏加载状态
-					this.mescroll.endErr()
-				}
-			})
+			if(this.tabCurrent == 0){
+				uni.request({
+					url: this.globalUrl+ '/user/favorite/list?page=' + pageNum + '&count=' + pageSize,
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: data => {
+						console.log('data', data);
+						// 接口返回的当前页数据列表 (数组)
+						if(data.data.data != null){
+							let curPageData = data.data.data.list;
+							console.log('curPageData', curPageData);
+							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+							let curPageLen = curPageData.length;
+							console.log('curPageLen', curPageLen);
+							// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+							// let totalPage = data.data.data.list;
+							// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+							let totalSize = data.data.data.total;
+							console.log('totalSize', totalSize);
+							// 接口返回的是否有下一页 (true/false)
+							// let hasNext = data.data.data.list;
+											
+							//设置列表数据
+							if (page.num == 1) this.tipList = []; //如果是第一页需手动置空列表
+							this.tipList = this.tipList.concat(curPageData); //追加新数据
+							console.log('tipList', this.tipList);
+							// 请求成功,隐藏加载状态
+							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+							// this.mescroll.endByPage(curPageLen, totalPage);
+											
+							//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+							this.mescroll.endBySize(curPageLen, totalSize);
+											
+							//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+							//this.mescroll.endSuccess(curPageLen, hasNext);
+											
+							//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+							//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+							//如果传了hasNext,则翻到第二页即可显示无更多数据.
+							//this.mescroll.endSuccess(curPageLen);
+											
+							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+						}
+						
+					},
+					fail: () => {
+						//  请求失败,隐藏加载状态
+						this.mescroll.endErr();
+					}
+				});
+			}else{
+				uni.request({
+					url: this.globalUrl+ '/user/liked/list?page=' + pageNum + '&count=' + pageSize,
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: data => {
+						console.log('data', data);
+						// 接口返回的当前页数据列表 (数组)
+						let curPageData = data.data.data.list;
+						console.log('curPageData', curPageData);
+						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+						let curPageLen = curPageData.length;
+						console.log('curPageLen', curPageLen);
+						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+						// let totalPage = data.data.data.list;
+						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+						let totalSize = data.data.data.total;
+						console.log('totalSize', totalSize);
+						// 接口返回的是否有下一页 (true/false)
+						// let hasNext = data.data.data.list;
+				
+						//设置列表数据
+						if (page.num == 1) this.likeList = []; //如果是第一页需手动置空列表
+						this.likeList = this.likeList.concat(curPageData); //追加新数据
+						console.log('likeList', this.likeList);
+						// 请求成功,隐藏加载状态
+						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+						// this.mescroll.endByPage(curPageLen, totalPage);
+				
+						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+						this.mescroll.endBySize(curPageLen, totalSize);
+				
+						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+						//this.mescroll.endSuccess(curPageLen, hasNext);
+				
+						//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+						//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+						//如果传了hasNext,则翻到第二页即可显示无更多数据.
+						//this.mescroll.endSuccess(curPageLen);
+				
+						// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+						// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+					},
+					fail: () => {
+						//  请求失败,隐藏加载状态
+						this.mescroll.endErr();
+					}
+				});
+			}
+			
+
 			
 			// 此处仍可以继续写其他接口请求...
 			// 调用其他方法...
 		},
-		...mapMutations(['login']),
-		
-	},
-	filters: {
-		/**
-		 * 处理富文本里的图片宽度自适应
-		 * 1.去掉img标签里的style、width、height属性
-		 * 2.img标签添加style属性：max-width:100%;height:auto
-		 * 3.修改所有style里的width属性为max-width:100%
-		 * 4.去掉<br/>标签
-		 * @param html
-		 * @returns {void|string|*}
-		 */
-		formatRichText (html) { //控制小程序中图片大小
-			let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
-				match = match.replace(/style="[^"]+"/gi, '').replace(/style='[^']+'/gi, '');
-				match = match.replace(/width="[^"]+"/gi, '').replace(/width='[^']+'/gi, '');
-				match = match.replace(/height="[^"]+"/gi, '').replace(/height='[^']+'/gi, '');
-				return match;
-			});
-			newContent = newContent.replace(/style="[^"]+"/gi,function(match,capture){
-				match = match.replace(/width:[^;]+;/gi, 'max-width:100%;').replace(/width:[^;]+;/gi, 'max-width:100%;');
-				return match;
-			});
-			newContent = newContent.replace(/<br[^>]*\/>/gi, '');
-			// newContent = newContent.replace(/\<img/gi, '<img style="width:350px;height:auto;display:inline-block;margin:5px auto;"');
-			// newContent = newContent.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');	
-			// newContent = newContent.replace(/<h2[^>]*>(?:(?!<\/h2>)[\s\S])*<\/h2>/gi, '<h2 style="font-size:14px;line-height:14px"');
-			newContent = newContent.replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/gi, '<p');
-			newContent = newContent.replace(/<p([\s\w"=\/\.:;]+)((?:(class="[^"]+")))/gi, '<p');
-			newContent = newContent.replace(/<p>/gi, '<p style="font-size:14px;line-height:14px;"');
-			newContent = newContent.replace(/<h2([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/gi, '<h2');
-			newContent = newContent.replace(/<h2>/gi, '<h2 style="font-size:14px;line-height:14px;"');
-			newContent = newContent.replace(/<div([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/gi, '<div');
-			newContent = newContent.replace(/<div>/gi, '<div style="font-size:14px;line-height:14px;"');
-			// newContent = newContent.replace(/<span[^>]*>(?:(?!<\/span>)[\s\S])*<\/span>/gi, '<span style="font-size:14px;line-height:14px"');
-			newContent = newContent.replace(/<img[^>]*>/gi, '');
-				console.log(newContent)
-				// debugger
-			return newContent;
-		}	
+		...mapMutations(['login'])
 	}
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+	.example-body {
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 0;
+		font-size: 14px;
+		background-color: #aa557f;
+		// transition: background-color 2s;
+	}
+	.example-body {
+		flex-direction: column;
+		padding: 15px;
+		background-color: #ffffff;
+		
+	}
+	.example-body {
+		padding: 0;
+	}
+	.navBar {
+		display: flex;
+	}
+	.slotleft {
+		display: flex;
+		align-items: center;
+	}
+	.fanhui {
+		width: 40rpx;
+		height: 40rpx;
+		margin-left: 40rpx;
+		
+	}
+	.fhsy {
+		width: 40rpx;
+		height: 40rpx;
+		margin-left: 20rpx;
+	}
+	.slottitle {
+		margin-left: 162rpx;
+		font-size: 38rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 600;
+		color: rgba(0, 0, 0, 1);
+	}
+	.button-v-line {
+		width: 1px;
+		height: 18px;
+		background-color: #2f2f2f;
+		margin: 0 8px;
+	}
 .backImg {
 	position: absolute;
 	height: 440rpx;
 	width: 100%;
-	z-index: -21;
+	z-index: -11;
 }
-// .hello {
-// 	display: flex;
-// 	flex: 1;
-// 	flex-direction: column;
-// }
 
-// .title {
-// 	color: #8f8f94;
-// 	margin-top: 25px;
-// }
-
-// .ul {
-// 	font-size: 15px;
-// 	color: #8f8f94;
-// 	margin-top: 25px;
-// }
-
-// .ul > view {
-// 	line-height: 25px;
-// }
 // /* 用户信息 */
 .usermes {
-	padding-top: 174rpx;
+	padding-top: 154rpx;
 	height: 130rpx;
 	display: flex;
+	height:340rpx ;
 	align-items: center;
+	margin-bottom: 38rpx;
 }
 .userAva {
-	margin-left: 15px;
+	margin-left: 28rpx;
 	width: 130rpx;
 	height: 130rpx;
-	// border: 1px #333333 solid;
+	box-shadow: 0px 0px 14px 0px #F7B500;
+	border: 3px solid #FFFFFF;
 	border-radius: 50%;
-	margin-top: 86rpx;
 }
 .userR {
 	margin-left: 32rpx;
-	margin-top: 104rpx;
+	// margin-top: 24rpx;
 }
 .userName {
 	font-size: 36rpx;
 	font-weight: 500;
 	color: #303133;
+	display: flex;
+	align-items: center;
+	image{
+		width: 32rpx;
+		height: 32rpx;
+		margin-left: 16rpx;
+	}
+}
+.fllow{
+	margin-top: 20rpx;
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #606266;
+	line-height: 24rpx;
+	display: flex;
+	align-items: center;
+	text{
+	}
+}
+.fllowNum{
+	margin-left: 8rpx;
 }
 .logout {
 	margin-top: 4px;
@@ -388,49 +643,115 @@ export default {
 	text-align: center;
 }
 /* 我的收藏卡片 */
-
+.phone {
+	height: 124rpx;
+	width: 124rpx;
+	border-radius: 50%;
+	position: fixed;
+	bottom: 62rpx;
+	right: 18rpx;
+}
+.phone .phoneImg {
+	width: 124rpx;
+	height: 124rpx;
+}
 .myCollection {
-	border-radius: 40rpx 40rpx 0rpx 0rpx;
+	border-radius: 12px 12px 0rpx 0rpx;
 	background-color: #fff;
 	color: #303133;
-	height: 180rpx;
-	font-size: 40rpx;
-	font-weight: 500;
-	padding-left: 32rpx;
-	padding-top: 52rpx;
-	position: relative;
-	top: 190rpx;
-	position: relative;
-	.phone {
-		height: 120rpx;
-		width: 120rpx;
-		border-radius: 50%;
-		position: absolute;
-		top: -60rpx;
-		right:32rpx;
-	}
-	.phone .phoneImg {
-		width: 120rpx;
-		height: 120rpx;
-	}
+	width: 100%;
+	// font-size: 40rpx;
+	// font-weight: 500;
+	// padding-left: 32rpx;
+	padding-top: 30rpx;
+	display: flex;
+	position: absolute;
+	top: 360rpx;
 }
-.noContentItem{
+.fixTabs {
+	position: fixed;
+	top: 126rpx;
+	// padding-left: 10rpx;
+	// padding-top: 15rpx;
+	// left: 0;
+	z-index: 2;
+	// width: 100%;
+	// height:110rpx;
+	// background: #ffffff;
+	// border-bottom: 2rpx solid #eeeeee;
+	// box-shadow: 0px 0px 12rpx 0rpx #eeeeee;
+}
+.noFix {
+	// padding-left: 10rpx;
+	// left: 0;
+	z-index: 1000;
+	// width: 100%;
+	// height: 110rpx;
+	// padding-top: 15rpx;
+	// background: #ffffff;
+}
+.favNum{
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #303133;
+	line-height: 24rpx;
+	z-index: 11111;
+	margin-top: 26rpx;
+	margin-left: -158rpx;
+}
+.favNum1{
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #303133;
+	line-height: 24rpx;
+	z-index: 11111;
+	margin-top: 26rpx;
+	margin-left: -158rpx;
+}
+.likeNum{
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #303133;
+	line-height: 24rpx;
+	z-index: 11111;
+	margin-top: 26rpx;
+	margin-left: 118rpx;
+}
+.likeNum1{
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #303133;
+	line-height: 24rpx;
+	z-index: 11111;
+	margin-top: 26rpx;
+	margin-left: 118rpx;
+}
+
+.noContentItem {
 	// height: 600rpx;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	image{
+	image {
 		width: 154rpx;
 		height: 122rpx;
 		position: fi;
 	}
-	.tipText{
-		font-size:28rpx;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(144,147,153,1);
-		line-height:30rpx;
+	.tipText {
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(144, 147, 153, 1);
+		line-height: 30rpx;
 		margin-top: 40rpx;
 	}
 }
@@ -443,15 +764,16 @@ export default {
 }
 
 .contentItem {
-	width:694rpx;
-	height:230rpx;
+	width: 694rpx;
+	height: 232rpx;
 	margin: 28rpx;
 	margin-left: 0;
+	margin-top: 0;
+	margin-bottom: 20rpx;
 	border-radius: 8px;
-	box-shadow: 4rpx 4rpx 20rpx 0rpx rgba(0, 0, 0, 0.08);
 	display: flex;
 	overflow: hidden;
-	text-overflow:ellipsis;
+	text-overflow: ellipsis;
 	white-space: nowrap;
 	.left {
 		position: relative;
@@ -466,59 +788,66 @@ export default {
 			width: 96rpx;
 			height: 44rpx;
 			text-align: center;
-			background-color: rgba(0,0,0,0.6);
-			border-radius: 16rpx 0 16rpx 0;
+			background-color: rgba(0, 0, 0, 0.6);
+			border-radius: 16rpx 0px 16rpx 0px;
 		}
 		image {
 			// margin: 8rpx;
-			width: 208rpx;
-			height: 246rpx;
+			width: 192rpx;
+			height: 232rpx;
 			margin-right: 20rpx;
-			box-shadow:2px 2px 10px 0px rgba(0,0,0,0.08);
-			border-radius:16rpx 0 0 16rpx;
+			border-radius: 16rpx;
+		}
+		.videoIcon{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -20rpx;
+			margin-left: -30rpx;
+			width: 40rpx;
+			height: 40rpx;
+		}
+		.playIcon{
+			width: 100%;
+			height: 100%;
 		}
 	}
 
 	.right {
-		margin-top: 40rpx;
-		height: 230rpx;
+		margin-top: 12rpx;
+		height: 232rpx;
 		// overflow: hidden;
 		// text-overflow:ellipsis;
 		// white-space: nowrap;
 	}
 	.right .title {
-		width: 444rpx;
+		width: 480rpx;
 		height: 32rpx;
 		font-size: 32rpx;
 		font-weight: 500;
-		color: rgba(48,49,51,1);
-		font-family:PingFangSC-Medium,PingFang SC;
-		line-height:32rpx;
+		color: rgba(48, 49, 51, 1);
+		font-family: PingFangSC-Medium, PingFang SC;
+		line-height: 32rpx;
 		display: flex;
-		
 	}
-	.tips{
+	.tips {
 		margin-right: 10rpx;
 	}
-	.titleText{
-		margin-left: 10rpx;
+	.titleText {
+		flex: 1;
+		// margin-left: 10rpx;
 		overflow: hidden;
-		text-overflow:ellipsis;
+		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-	.right .content {
-		
-		
-		
-	}
-	.richText{
-		width:448rpx;
-		height:70rpx;
+	.richText {
+		width: 480rpx;
+		height: 84rpx;
 		font-size: 28rpx;
 		font-weight: 400;
-		color:rgba(96,98,102,1);
-		line-height:38rpx;
-		margin-top: 20rpx;
+		color: #909399;
+		line-height: 42rpx;
+		margin-top: 12rpx;
 		display: -webkit-box;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -526,29 +855,81 @@ export default {
 		white-space: normal !important;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
-		
+	}
+	.favandlikebox{
+		display: flex;
+		align-items: center;
+		margin-top: 14rpx;
+		font-size: 22rpx;
+		// font-family: Roboto-Regular, Roboto;
+		font-weight: 400;
+		color: #606266;
+		line-height: 22rpx;
+	}
+	.like{
+		margin-left: 20rpx;
 	}
 	.right .position {
 		display: flex;
 		margin-top: 20rpx;
+		// height: 30rpx;
 		// line-height: 40rpx;
 		align-items: center;
 		image {
-			height: 20rpx;
-			width: 20rpx;
+			height: 30rpx;
+			width: 26rpx;
 			margin-right: 4rpx;
 		}
 		view {
-			width: 176rpx;
+			width: 452rpx;
 			font-size: 22rpx;
-			font-family:PingFangSC-Regular,PingFang SC;
-			font-weight:400;
-			color:rgba(0,145,255,1);
-			line-height:22rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: rgba(0, 145, 255, 1);
+			line-height: 22rpx;
 			overflow: hidden;
-			text-overflow:ellipsis;
+			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
 	}
 }
+.line{
+	width: 722rpx;
+	height: 1rpx;
+	background: #EDEFF2;
+	margin-bottom: 20rpx;
+}
+// 列表为空时
+	.empty {
+		position: absolute;
+		left: 50%; 
+		top: 810rpx;
+		transform: translate(-50%, -50%); 
+		-webkit-transform: translate(-50%, -50%);
+		text-align: center;
+		// margin-top: 350rpx;
+		// margin-left: 138rpx;
+	}
+
+	.emptyImg {
+		width: 148rpx;
+		height: 148rpx;
+		margin-left: 164rpx;
+		margin-bottom: 40rpx;
+
+		image {
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	.emptyText {
+		width: 476rpx;
+		height: 30rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #909399;
+		line-height: 30rpx;
+	}
 </style>

@@ -3,7 +3,7 @@
 		<view class="content" :style="{ 'border-radius': radius + 'px' }">
 			<!-- HM修改 增加进入输入状态的点击范围 -->
 			<view class="content-box" :class="{ center: mode === 2 }">
-				<image class="icon icon-serach" src="../../static/images/icon-search.svg"></image>
+				<image class=" icon-serach" mode="aspectFit" src="../../static/images/icon-search.svg"></image>
 				<!-- HM修改 增加placeholder input confirm-type confirm-->
 				<input
 					:placeholder="placeholder"
@@ -20,13 +20,13 @@
 				/>
 				<!-- <view v-if="!active && mode === 2" class="input sub" @click="getFocus">请输入搜索内容</view> -->
 				<!-- HM修改 @click换成@click.stop阻止冒泡 -->
-				<image @click.stop="clear" class="iconImg" src="../../static/images/ic_search_sel.svg"></image>
+				<image @click.stop="clear" v-if="inputVal" class="iconImg" src="../../static/images/ic_search_sel.svg"></image>
 			</view>
 			<!-- <view v-show="(active&&show&&button === 'inside')||(isDelShow && button === 'inside')" class="serachBtn" @click="search">
 				搜索
 			</view> -->
 		</view>
-		<view class="iconTitle " @click.stop="clear">取消</view>
+		<view class="iconTitle "  @click.stop="back">取消</view>
 		<!-- <view  v-if="button === 'outside'" class="button" :class="{'active':show||active}" @click="search">
 			<view class="button-item">{{!show?searchName:'搜索'}}</view>
 		</view> -->
@@ -64,11 +64,11 @@ export default {
 	},
 	data() {
 		return {
-			active: false,
+			active: true,
 			inputVal: '',
 			searchName: '取消',
 			isDelShow: false,
-			isFocus: true
+			isFocus: false
 		};
 	},
 	methods: {
@@ -94,8 +94,9 @@ export default {
 		blur() {
 			console.log('blur');
 			this.isFocus = false;
+			uni.hideKeyboard()
 			if (!this.inputVal) {
-				this.active = false;
+				this.active = true;
 			}
 		},
 		clear() {
@@ -103,10 +104,16 @@ export default {
 			uni.hideKeyboard();
 			this.isFocus = false;
 			this.inputVal = '';
-			this.active = false;
+			this.active = true;
 			//HM修改 清空内容时候触发组件input
 			this.$emit('input', '');
 			//this.$emit('search', '');//HM修改 清空内容时候不进行搜索
+			
+		},
+		back(){
+			uni.navigateBack({
+				delta: 1
+			})
 		},
 		getFocus() {
 			if (!this.isFocus) {
@@ -119,7 +126,7 @@ export default {
 				if (!this.show && this.searchName == '取消') {
 					uni.hideKeyboard();
 					this.isFocus = false;
-					this.active = false;
+					this.active = true;
 					return;
 				}
 			}
@@ -174,11 +181,11 @@ export default {
 			align-items: center;
 			line-height: 72rpx;
 			&.center {
-				justify-content: center;
+				justify-content: flex-start;
 			}
 			.input {
-				width: 380rpx;
-				// max-width: 100%;
+				// width: 380rpx;
+				width: 100%;
 				height: 72rpx;
 				line-height: 72rpx;
 				transition: all 0.2s linear;
@@ -205,21 +212,10 @@ export default {
 			transition: all 0.3s;
 		}
 	}
-	.icon {
-		padding: 0 30rpx;
+	.icon-serach {
 		width: 28rpx;
 		height: 28rpx;
-		display: flex;
-		// text-align: center;
-		align-items: center;
-		color: #cbcbd8;
-		// &.icon-del {
-		// 	font-size: 38upx;
-		// 	&:before {content:"\e644";}
-		// }
-		// &.icon-serach:before {
-		// 	content: '\e61c';
-		// }
+		margin: 0 30rpx;
 	}
 	.iconImg {
 		width: 36rpx;
@@ -249,7 +245,7 @@ export default {
 		white-space: nowrap;
 		overflow: hidden;
 		&.active {
-			padding-left: 15upx;
+			padding-left: 15px;
 			width: 100upx;
 		}
 	}

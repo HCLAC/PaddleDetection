@@ -52,7 +52,7 @@ export default {
 .mescroll-empty {
 	box-sizing: border-box;
 	width: 100%;
-	padding: 100rpx 50rpx;
+	padding: 396rpx 50rpx ;
 	/* #ifndef APP-NVUE */
 	display: flex;
 	/* #endif */
@@ -68,8 +68,8 @@ export default {
 }
 
 .mescroll-empty .empty-icon {
-	width: 280rpx;
-	height: 280rpx;
+	width: 154rpx;
+	height: 122rpx;
 }
 
 .mescroll-empty .empty-tip {

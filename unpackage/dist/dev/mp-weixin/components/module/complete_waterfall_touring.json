@@ -1,9 +1,0 @@
-{
-  "usingComponents": {
-    "u-waterfall": "/uview-ui/components/u-waterfall/u-waterfall",
-    "u-icon": "/uview-ui/components/u-icon/u-icon",
-    "complete_waterfall_touring-u-waterfall-left": "/components/module/complete_waterfall_touring-u-waterfall-left",
-    "complete_waterfall_touring-u-waterfall-right": "/components/module/complete_waterfall_touring-u-waterfall-right"
-  },
-  "component": true
-}

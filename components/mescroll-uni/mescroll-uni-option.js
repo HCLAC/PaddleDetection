@@ -6,7 +6,7 @@ const GlobalOption = {
 		textInOffset: '下拉刷新', // 下拉的距离在offset范围内的提示文本
 		textOutOffset: '释放更新', // 下拉的距离大于offset范围的提示文本
 		textLoading: '加载中 ...', // 加载中的提示文本
-		bgColor:'#F8F8F8',
+		bgColor:'#ffffff',
 		textColor:'#909399',
 		offset: 80, // 在列表顶部,下拉大于80px,松手即可触发下拉刷新的回调
 		native: false // 是否使用系统自带的下拉刷新; 默认false; 仅在mescroll-body生效 (值为true时,还需在pages配置enablePullDownRefresh:true;详请参考mescroll-native的案例)
@@ -14,9 +14,9 @@ const GlobalOption = {
 	up: {
 		// 其他up的配置参数也可以写,这里只展示了常用的配置:
 		textLoading: '加载中 ...', // 加载中的提示文本
-		textNoMore: '~我也是有底线的~', // 没有更多数据的提示文本
+		textNoMore: '~已经到底啦~', // 没有更多数据的提示文本
 		textErr: "加载失败",
-		bgColor:'#FFFFFF',
+		bgColor:'#ffffff',
 		textColor:'rgba(201,202,209,1)',
 		offset: 80, // 距底部多远时,触发upCallback
 		isBounce: false, // 默认禁止橡皮筋的回弹效果, 必读事项: http://www.mescroll.com/qa.html?v=190725#q25
@@ -29,9 +29,9 @@ const GlobalOption = {
 			width: 72 // 回到顶部图标的宽度, 默认72 (支持"20rpx", "20px", "20%"格式的值, 纯数字则默认单位rpx)
 		},
 		empty: {
-			use: true, // 是否显示空布局
-			icon: "http://www.mescroll.com/img/mescroll-empty.png?v=1", // 图标路径 (建议放入static目录, 如 /static/img/mescroll-empty.png )
-			tip: '~ 暂无相关数据 ~' // 提示
+			use: false, // 是否显示空布局
+			icon: "/static/images/wenjianjia.png", // 图标路径 (建议放入static目录, 如 /static/img/mescroll-empty.png )
+			tip: '您的收藏夹空空如也~' // 提示
 		}
 	}
 }

@@ -21,7 +21,7 @@
 				@confirm="search"
 				@input="inputChange"
 				:disabled="disabled"
-				@focus="getFocus"
+				
 				:maxlength="getMaxlength"
 				:focus="focus"
 				placeholder-class="u-placeholder-class"
@@ -35,6 +35,9 @@
 					backgroundColor: bgColor,
 				}, inputStyle]"
 			/>
+			<!-- @focus="getFocus" 
+				
+			-->
 			<view class="u-close-wrap" v-if="keyword && clearabled && focused" @touchstart="clear">
 				<u-icon class="u-clear-icon" name="close-circle-fill" size="34" color="#c0c4cc"></u-icon>
 			</view>
@@ -132,7 +135,7 @@ export default {
 		// 是否启用输入框
 		disabled: {
 			type: Boolean,
-			default: false
+			default: true
 		},
 		// 开启showAction时，是否在input获取焦点时才显示
 		animation: {
@@ -270,6 +273,7 @@ export default {
 			this.focused = false;
 			this.show = false;
 			this.$emit('blur', this.keyword);
+			uni.hideKeyboard();
 		},
 		// 点击搜索框，只有disabled=true时才发出事件，因为禁止了输入，意味着是想跳转真正的搜索页
 		clickHandler() {

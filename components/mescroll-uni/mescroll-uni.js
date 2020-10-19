@@ -55,7 +55,7 @@ MeScroll.prototype.extendDownScroll = function(optDown) {
 		textInOffset: '下拉刷新', // 下拉的距离在offset范围内的提示文本
 		textOutOffset: '释放更新', // 下拉的距离大于offset范围的提示文本
 		textLoading: '加载中 ...', // 加载中的提示文本
-		bgColor: "transparent", // 背景颜色 (建议在pages.json中再设置一下backgroundColorTop)
+		bgColor: "#ffffff", // 背景颜色 (建议在pages.json中再设置一下backgroundColorTop)
 		textColor: "gray", // 文本颜色 (当bgColor配置了颜色,而textColor未配置时,则textColor会默认为白色)
 		inited: null, // 下拉刷新初始化完毕的回调
 		inOffset: null, // 下拉的距离进入offset范围内那一刻的回调
@@ -84,14 +84,14 @@ MeScroll.prototype.extendUpScroll = function(optUp) {
 		callback: null, // 上拉加载的回调;function(page,mescroll){ }
 		page: {
 			num: 0, // 当前页码,默认0,回调之前会加1,即callback(page)会从1开始
-			size: 10, // 每页数据的数量
+			size: 6, // 每页数据的数量
 			time: null // 加载第一页数据服务器返回的时间; 防止用户翻页时,后台新增了数据从而导致下一页数据重复;
 		},
 		noMoreSize: 5, // 如果列表已无数据,可设置列表的总数量要大于等于5条才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看
-		offset: 80, // 距底部多远时,触发upCallback
+		offset: 30, // 距底部多远时,触发upCallback
 		textLoading: '加载中 ...', // 加载中的提示文本
-		textNoMore: '~我也是有底线的~', // 没有更多数据的提示文本
-		bgColor: "#F8F8F8", // 背景颜色 (建议在pages.json中再设置一下backgroundColorBottom)
+		textNoMore: '~已经到底啦~', // 没有更多数据的提示文本
+		bgColor: "transparent", // 背景颜色 (建议在pages.json中再设置一下backgroundColorBottom)
 		textColor: "gray", // 文本颜色 (当bgColor配置了颜色,而textColor未配置时,则textColor会默认为白色)
 		inited: null, // 初始化完毕的回调
 		showLoading: null, // 显示加载中的回调
@@ -114,9 +114,9 @@ MeScroll.prototype.extendUpScroll = function(optUp) {
 			radius: "50%" // 圆角, 默认"50%" (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
 		},
 		empty: {
-			use: true, // 是否显示空布局
+			use: false, // 是否显示空布局
 			icon: null, // 图标路径
-			tip: '~ 暂无相关数据 ~', // 提示
+			tip: '您的收藏夹空空如也~', // 提示
 			btnText: '', // 按钮
 			btnClick: null, // 点击按钮的回调
 			onShow: null, // 是否显示的回调
@@ -124,7 +124,7 @@ MeScroll.prototype.extendUpScroll = function(optUp) {
 			top: "100rpx", // fixed定位的top值 (完整的单位值,如 "10%"; "100rpx")
 			zIndex: 99 // fixed定位z-index值
 		},
-		onScroll: false // 是否监听滚动事件
+		onScroll: true // 是否监听滚动事件
 	})
 }
 
@@ -192,6 +192,7 @@ MeScroll.prototype.touchstartEvent = function(e) {
 
 /* 列表touchmove事件 */
 MeScroll.prototype.touchmoveEvent = function(e) {
+
 	// #ifdef H5
 	window.isPreventDefault = false // 标记不需要阻止window事件
 	// #endif
@@ -273,6 +274,7 @@ MeScroll.prototype.touchmoveEvent = function(e) {
 	}
 
 	me.lastPoint = curPoint; // 记录本次移动的点
+
 }
 
 /* 列表touchend事件 */
@@ -599,7 +601,8 @@ MeScroll.prototype.endBySize = function(dataSize, totalSize, systime) {
 	let hasNext;
 	if (this.optUp.use && totalSize != null) {
 		let loadSize = (this.optUp.page.num - 1) * this.optUp.page.size + dataSize; // 已加载的数据总数
-		hasNext = loadSize < totalSize; // 是否还有下一页
+		hasNext = loadSize <= totalSize; // 是否还有下一页
+		
 	}
 	this.endSuccess(dataSize, hasNext, systime);
 }
@@ -648,6 +651,7 @@ MeScroll.prototype.endSuccess = function(dataSize, hasNext, systime) {
 
 		// 隐藏上拉
 		me.endUpScroll(isShowNoMore);
+		// debugger
 	}
 	// 结束下拉刷新
 	if (me.isDownScrolling) {
