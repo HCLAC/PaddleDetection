@@ -193,8 +193,8 @@ export default {
 				bgColor:'#ffffff'
 			},
 			fllowNum:0,
-			favNum:'',
-			likeNum:'',
+			favNum:0,
+			likeNum:0,
 			current: 0,
 			tablist: ['收藏','已赞'],
 			tabCurrent: 0,
@@ -328,7 +328,6 @@ export default {
 					console.log('收藏列表', res.data);
 					if(res.data.data != null){
 						this.tipList = res.data.data.list;
-						// this.favNum = res.data.data.total
 						console.log('1111111', this.tipList);
 					}
 					
@@ -348,7 +347,6 @@ export default {
 					console.log('点赞列表', res.data);
 					if(res.data.data != null ){
 						this.likeList = res.data.data.list;
-						// this.likeNum = res.data.data.total
 						console.log('likelist', this.likeList);
 					}
 					
