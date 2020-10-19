@@ -208,18 +208,7 @@
 			:down="downOption"
 			:up="upOption"
 		>
-			<!-- 头部轮播图 -->
-			<view class="page-section " v-if="bannerList.length != 0">
-				<view class="page-section-spacing">
-					<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">
-						<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
-							<!-- <navigator :url="'/components/web-view/web-view?website=' + item.url" class="itemUrl"> -->
-							<image :src="item.image" mode="scaleToFill" class="swiperImg" @click="towebview(item)"><!-- <web-view :src="item.url"></web-view> --></image>
-							<!-- </navigator> -->
-						</swiper-item>
-					</swiper>
-				</view>
-			</view>
+			
 			<view class="cus-sty ">
 				<!-- 热门目的地 -->
 				<view class="hot">

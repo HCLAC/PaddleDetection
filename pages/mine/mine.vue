@@ -56,10 +56,10 @@
 							></v-tabs>
 							
 						<!-- </view> -->
-						<view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" v-if="favNum != 0">
+						<view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" >
 							{{favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum}}
 						</view>
-						<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" v-if="likeNum != 0">
+						<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" >
 							{{likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum}}
 						</view>
 					</view>
