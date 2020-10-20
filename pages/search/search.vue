@@ -28,6 +28,7 @@
 					<view class="keyword-entry" hover-class="keyword-entry-tap">
 						<view class="liIcon" v-if="!row.keyword.type"></view>
 						<veiw v-if="row.keyword.type" class="otherIcon"><u-icon size="32" :name="row.keyword.type == 'site' ? 'photo' : row.keyword.type ? 'map-fill' : ''"></u-icon></veiw>
+						<!-- <veiw v-if="row.keyword.type" class="otherIcon"><image  :name="row.keyword.type == 'site' ? 'photo' : row.keyword.type ? 'map-fill' : ''"></u-icon></veiw> -->
 						<view class="keyword-text" @tap.stop="goSearch(row.keyword)"><rich-text :nodes="row.htmlStr"></rich-text></view>
 						<view class="otherText" v-if="row.keyword.type">{{ row.keyword.type == 'site' ? '景点' : '目的地' }}</view>
 					</view>
@@ -383,7 +384,7 @@ export default {
 				var row = keywords[i].name;
 				console.log(row, 1);
 				//定义高亮#9f9f9f
-				var html = row.replace(keyword, "<span style='color: #303133;font-weight:bold'>" + keyword + '</span>');
+				var html = row.replace(keyword, "<span style='color: #A86B13;font-weight:bold'>" + keyword + '</span>');
 				html = '<div>' + html + '</div>';
 				var tmpObj = {
 					keyword: keywords[i],
@@ -698,7 +699,7 @@ view {
 	width: 16rpx;
 	height: 16rpx;
 	background: rgba(255, 255, 255, 1);
-	border: 4rpx solid rgba(255, 182, 77, 1);
+	border: 4rpx solid rgba(201, 202, 209, 1);
 	border-radius: 50%;
 }
 .keyword-entry .otherIcon {
@@ -706,8 +707,8 @@ view {
 	margin-right: 25rpx;
 }
 .keyword-entry .otherText {
-	font-size: 16rpx;
-	width: 60rpx;
+	font-size: 24rpx;
+	// width: 60rpx;
 	position: absolute;
 	right: 30rpx;
 }

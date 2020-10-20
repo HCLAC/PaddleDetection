@@ -101,9 +101,9 @@
 						<view class="cityRank">
 							<view class="rankText" @click="toProvinces(areaList[6])" v-if="areaList[6]">{{ areaList[6].name }}</view>
 							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[7]"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[7])"v-if="areaList[7]">{{ areaList[7].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[8]"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[8])" v-if="areaList[8]">{{ areaList[8].name }}</view>
+							<view class="rankText" @click="toProvinces(areaList[7])" v-if="areaList[7]">{{ areaList[7].name }}</view>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[7]"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[8])" >{{ areaList[8].name }}</view>
 						</view>
 					</view>
 				</view>
