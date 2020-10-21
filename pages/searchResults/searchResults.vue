@@ -132,7 +132,7 @@
 					<view class="swiper">
 						<view class="swiperItem" v-for="(item, index) in route_list" @click="getRoute(item.uuid)" :key="index">
 							<image :src="item.image"></image>
-							<view class="title">{{ item.title }}</view>
+							<view class="title"><rich-text :nodes="item.htmlStr"></rich-text></view>
 						</view>
 					</view>
 				</view>
@@ -169,7 +169,7 @@
 										<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
 										<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
 									</view>
-									<view class="demo-title">{{ item.title }}</view>
+									<view class="demo-title"><rich-text :nodes="item.htmlStr" ></rich-text></view>
 								</view>
 							</view>
 							<view class="demo-user">
@@ -210,7 +210,7 @@
 										<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
 										<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
 									</view>
-									<view class="demo-title">{{ item.title }}</view>
+									<view class="demo-title"><rich-text :nodes="item.htmlStr" ></rich-text></view>
 								</view>
 							</view>
 							<view class="demo-user">
@@ -263,13 +263,25 @@
 		// 方法
 		methods: {
 			getResults() {
+				let keyList  = uni.getStorageSync('OldKeys')
+				var keyword
+				if(keyList&&keyList.length){
+					keyList = JSON.parse(keyList)
+					keyword = keyList[0]
+				}
+				 
 				let res = uni.getStorageSync('article_id');
 				if (res) {
 					console.log('resres',res)
-					this.list = res.data.article_list;
+					let arr = res.data.article_list;
+					let arr1 = res.data.route_list;
+					let list1 = this.drawCorrelativeKeyword(arr, keyword);
+					this.list = list1
+					// this.list = res.data.article_list;
 					this.area = res.data.area;
 					this.site = res.data.site;
-					this.route_list = res.data.route_list;
+					let route_list1 = this.drawCorrelativeKeyword(arr1, keyword);
+					this.route_list = route_list1;
 				}
 				// var that = this
 				// uni.getStorage({
@@ -279,6 +291,26 @@
 				// 		that.list = res.data.data
 				// 	}
 				// })
+			},
+			//高亮关键字
+			drawCorrelativeKeyword(keywords, keyword) {
+				var len = keywords.length;
+				var keywordArr = [];
+				for (var i = 0; i < len; i++) {
+					var row = keywords[i].title;
+					console.log(row, 1);
+					//定义高亮#9f9f9f
+					var html = row.replace(keyword, "<span style='color: #A86B13;font-weight:bold'>" + keyword + '</span>');
+					html = '<div>' + html + '</div>';
+					var tmpObj = {
+						...keywords[i],
+						htmlStr: html
+					};
+					keywordArr.push(tmpObj);
+				}
+			
+				return keywordArr;
+				
 			},
 			// 线路列表
 			toLineMore() {
@@ -315,6 +347,7 @@
 					});
 				}
 			},
+			
 			// 跳转文章详情
 			onPageJump(e) {
 				console.log(e);

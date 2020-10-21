@@ -27,8 +27,11 @@
 				<block v-for="(row, index) in keywordList" :key="index">
 					<view class="keyword-entry" hover-class="keyword-entry-tap">
 						<view class="liIcon" v-if="!row.keyword.type"></view>
-						<veiw v-if="row.keyword.type" class="otherIcon"><u-icon size="32" :name="row.keyword.type == 'site' ? 'photo' : row.keyword.type ? 'map-fill' : ''"></u-icon></veiw>
-						<!-- <veiw v-if="row.keyword.type" class="otherIcon"><image  :name="row.keyword.type == 'site' ? 'photo' : row.keyword.type ? 'map-fill' : ''"></u-icon></veiw> -->
+						<!-- <veiw v-if="row.keyword.type" class="otherIcon"><u-icon size="32" :name="row.keyword.type == 'site' ? 'photo' : row.keyword.type ? 'map-fill' : ''"></u-icon></veiw> -->
+						<veiw v-if="row.keyword.type" :class=" row.keyword.type == 'site' ? 'otherIcon' : 'otherIcon1'">
+							<image v-if="row.keyword.type == 'site'" src="../../static/images/attIcon.svg" ></image>
+							<image v-if="row.keyword.type == 'area'" src="../../static/images/adressIcon.svg" mode=""></image>
+						</veiw>
 						<view class="keyword-text" @tap.stop="goSearch(row.keyword)"><rich-text :nodes="row.htmlStr"></rich-text></view>
 						<view class="otherText" v-if="row.keyword.type">{{ row.keyword.type == 'site' ? '景点' : '目的地' }}</view>
 					</view>
@@ -693,7 +696,7 @@ view {
 	align-items: center;
 }
 .keyword-entry .liIcon {
-	margin-left: 40rpx;
+	margin-left: 52rpx;
 	margin-right: 30rpx;
 
 	width: 16rpx;
@@ -703,9 +706,36 @@ view {
 	border-radius: 50%;
 }
 .keyword-entry .otherIcon {
-	margin-left: 35rpx;
+	margin-left: 40rpx;
 	margin-right: 25rpx;
+	width: 40rpx;
+	height: 40rpx;
+	background: #5CC66E;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	image{
+		width: 24rpx;
+		height: 24rpx;
+	}
 }
+.keyword-entry .otherIcon1 {
+	margin-left: 40rpx;
+	margin-right: 25rpx;
+	width: 40rpx;
+	height: 40rpx;
+	background: #FA8C16;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	image{
+		width: 24rpx;
+		height: 24rpx;
+	}
+}
+
 .keyword-entry .otherText {
 	font-size: 24rpx;
 	// width: 60rpx;
