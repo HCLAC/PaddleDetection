@@ -1,6 +1,6 @@
 {
     "name" : "lingtuyang",
-    "appid" : "__UNI__0F60E1F",
+    "appid" : "__UNI__71D005B",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -8,7 +8,9 @@
     "app-plus" : {
         "nvueCompiler" : "uni-app",
         "compilerVersion" : 3,
-        "modules" : {},
+        "modules" : {
+            "OAuth" : {}
+        },
         "distribute" : {
             "android" : {
                 "permissions" : [
@@ -37,7 +39,17 @@
                 ]
             },
             "ios" : {},
-            "sdkConfigs" : {}
+            "sdkConfigs" : {
+                "ad" : {},
+                "maps" : {},
+                "oauth" : {
+                    "weixin" : {
+                        "appid" : "",
+                        "appsecret" : "",
+                        "UniversalLinks" : ""
+                    }
+                }
+            }
         },
         "uniStatistics" : {
             "enable" : true
