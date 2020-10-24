@@ -79,6 +79,29 @@
 					<!-- <view>#<text></text></view> -->
 				</view>
 				<view class="releaseTime">发布于{{ articleList.data.update_at }}</view>
+				<view class="replyBox">
+					<view class="replyText">
+						回复
+					</view>
+					<view class="replyContent">
+						<view class="reply">
+							<view class="replyTop">
+								<image class="userImg" src="../../static/images/userImg.svg" mode=""></image>
+								<view class="userName">不知名网友</view>
+								<view class="replyTime">
+									2020-10-24
+								</view>
+								<image class="replyLike" src="../../static/images/like.svg"></image>
+							</view>
+							<view class="replyBottom">
+								爱了爱了
+							</view>
+						</view>
+					</view>
+					<view class="moreReply" @click="toMoreReply">
+						查看全部10条回复
+					</view>
+				</view>
 				<view class="safeBox"></view>
 			</view>
 			<view class="bottom">
@@ -386,6 +409,12 @@ export default {
 					}
 				}
 			});
+		},
+		// 查看更多评论
+		toMoreReply(){
+			uni.navigateTo({
+				url:'../comments/comments'
+			})
 		},
 		// 点赞
 		clickLike() {
@@ -1007,6 +1036,44 @@ export default {
 	padding-bottom: 0;
 	padding-bottom: constant(safe-area-inset-bottom);
 	padding-bottom: env(safe-area-inset-bottom);
+}
+// 评论
+.replyBox{
+	margin: 28rpx;
+	
+	.relpyText{
+		
+	}
+	.replyContent{
+		
+		.reply{
+			
+			.replyTop{
+				display: flex;
+				align-items: center;
+				.userImg{
+					width: 40rpx;
+					height: 40rpx;
+				}
+				.userName{
+					
+				}
+				.replyTime{
+					
+				}
+				.replyLike{
+					width: 30rpx;
+					height: 30rpx;
+				}
+			}
+			.replyBottom{
+				text-align: center;
+			}
+		}
+	}
+	.moreReply{
+		text-align: center;
+	}
 }
 .safeBox {
 	height: 142rpx;

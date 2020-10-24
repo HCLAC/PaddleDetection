@@ -156,7 +156,7 @@
 									<view class="rateStart" v-if="item.rate == 2.5">
 										<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 										<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-										<image src="../../static/images/star_svg/starCopy1(1).svg" mode=""></image>
+										<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 									</view>

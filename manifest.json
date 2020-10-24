@@ -1,5 +1,5 @@
 {
-    "name" : "lingtuyang",
+    "name" : "领途羊",
     "appid" : "__UNI__0F60E1F",
     "description" : "",
     "versionName" : "1.0.0",
@@ -37,7 +37,9 @@
                 ]
             },
             "ios" : {},
-            "sdkConfigs" : {}
+            "sdkConfigs" : {
+                "ad" : {}
+            }
         },
         "uniStatistics" : {
             "enable" : true

@@ -167,7 +167,7 @@
 													<view class="rateStart" v-if="pos.rate == 2.5">
 														<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-														<image src="../../static/images/star_svg/starCopy1(1).svg" mode=""></image>
+														<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
@@ -218,7 +218,7 @@
 						<image v-show="lineContent.fav" class="favBtn" src="../../static/images/fav-actived.svg"></image>
 						<view class="favNum">{{ lineContent.fav_count }}</view>
 					</view> -->
-					<view><view class="share" v-if="serviceProvider =='baidu'"  @click="share"><image src="../../static/images/fenxiang.svg"></image></view></view>
+					<view><view class="share" v-if="serviceProvider =='baidu'"  @click="share"><image src="../../static/images/shareIcon.svg"></image></view></view>
 					<view class=""><view class="loginButton" v-if="hasLogin" @click="login">登录</view></view>
 				</view>
 			</view>
