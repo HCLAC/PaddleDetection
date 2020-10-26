@@ -80,30 +80,30 @@
 									<text class="dqwzText1">{{ dqdwText }}</text>
 								</view>
 							</view>
-							<view class="hotCity" @click="toProvinces(areaList[1])">
+							<view class="hotCity" @click="toProvinces(areaList[1])" v-if="areaList[1]">
 								<view class="mask"></view>
 								<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
 								<text class="hotCityText">{{ areaList[1].name }}</text>
 							</view>
-							<view class="hotCity" @click="toProvinces(areaList[2])">
+							<view class="hotCity" @click="toProvinces(areaList[2])" v-if="areaList[2]">
 								<view class="mask"></view>
 								<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
 								<text class="hotCityText1">{{ areaList[2].name }}</text>
 							</view>
 						</view>
 						<view class="cityRank">
-							<view class="rankText" @click="toProvinces(areaList[3])">{{ areaList[3].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[4])">{{ areaList[4].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[5])">{{ areaList[5].name }}</view>
+							<view class="rankText" @click="toProvinces(areaList[3])" v-if="areaList[3]">{{ areaList[3].name }}</view>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[4]"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[4])" v-if="areaList[4]">{{ areaList[4].name }}</view>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[5]"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[5])" v-if="areaList[5]">{{ areaList[5].name }}</view>
 						</view>
 						<view class="cityRank">
-							<view class="rankText" @click="toProvinces(areaList[6])">{{ areaList[6].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[7])">{{ areaList[7].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[8])">{{ areaList[8].name }}</view>
+							<view class="rankText" @click="toProvinces(areaList[6])" v-if="areaList[6]">{{ areaList[6].name }}</view>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[7]"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[7])" v-if="areaList[7]">{{ areaList[7].name }}</view>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[7]"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[8])" >{{ areaList[8].name }}</view>
 						</view>
 					</view>
 				</view>
@@ -208,18 +208,7 @@
 			:down="downOption"
 			:up="upOption"
 		>
-			<!-- 头部轮播图 -->
-			<view class="page-section " v-if="bannerList.length != 0">
-				<view class="page-section-spacing">
-					<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">
-						<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
-							<!-- <navigator :url="'/components/web-view/web-view?website=' + item.url" class="itemUrl"> -->
-							<image :src="item.image" mode="scaleToFill" class="swiperImg" @click="towebview(item)"><!-- <web-view :src="item.url"></web-view> --></image>
-							<!-- </navigator> -->
-						</swiper-item>
-					</swiper>
-				</view>
-			</view>
+			
 			<view class="cus-sty ">
 				<!-- 热门目的地 -->
 				<view class="hot">

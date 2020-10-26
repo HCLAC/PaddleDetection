@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view v-if="userInfo">
 		<!-- 自定义导航栏 -->
 		<view class="example-body" v-if="isFixed">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
@@ -56,10 +56,10 @@
 							></v-tabs>
 							
 						<!-- </view> -->
-						<view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" v-if="favNum != 0">
+						<view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" >
 							{{favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum}}
 						</view>
-						<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" v-if="likeNum != 0">
+						<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" >
 							{{likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum}}
 						</view>
 					</view>
@@ -193,8 +193,8 @@ export default {
 				bgColor:'#ffffff'
 			},
 			fllowNum:0,
-			favNum:'',
-			likeNum:'',
+			favNum:0,
+			likeNum:0,
 			current: 0,
 			tablist: ['收藏','已赞'],
 			tabCurrent: 0,
@@ -220,7 +220,6 @@ export default {
 	},
 	onLoad() {
 		this.getlist()
-		this.getUserMsg();
 	},
 	mounted() {
 		const query = uni.createSelectorQuery().in(this);
@@ -328,7 +327,6 @@ export default {
 					console.log('收藏列表', res.data);
 					if(res.data.data != null){
 						this.tipList = res.data.data.list;
-						// this.favNum = res.data.data.total
 						console.log('1111111', this.tipList);
 					}
 					
@@ -348,7 +346,6 @@ export default {
 					console.log('点赞列表', res.data);
 					if(res.data.data != null ){
 						this.likeList = res.data.data.list;
-						// this.likeNum = res.data.data.total
 						console.log('likelist', this.likeList);
 					}
 					
