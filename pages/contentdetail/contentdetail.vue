@@ -97,7 +97,7 @@
 							<image class="favBtn" src="../../static/images/fav-actived.svg" v-if="articleList.data.fav == 1"></image>
 							<view class="favNum">{{ articleList.data.fav_count }}</view>
 						</view>
-						<view class="share" v-if="serviceProvider =='baidu'" @click="share"><image src="../../static/images/shareIcon.svg"></image></view>
+						<view class="share" v-if="serviceProvider == 'baidu'" @click="share"><image src="../../static/images/shareIcon.svg"></image></view>
 					</view>
 					<view class=""><view class="loginButton" @click="login" v-if="flag">登录</view></view>
 				</view>
@@ -232,14 +232,15 @@ export default {
 				success: async function(res) {
 					uni.hideLoading();
 					uni.setStorageSync('id', res.data);
-					
+
 					let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
 
 					if (strIndex && strIndex.length) {
 						// let strId =  newContent.substring(strIndex,1)
 
-						let strId = strIndex[0].slice(36, -4);
+						let strId = strIndex[0].match(/id为(\S*)groupId/);
 						let resCode = await that.getTemplate(strId);
+						debugger
 						if (resCode.data.code == 0) {
 							let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
 							let str = `<div>
@@ -961,12 +962,11 @@ export default {
 	margin-left: 28rpx;
 	display: flex;
 	flex-wrap: wrap;
-	
 }
 
 .tips view {
 	height: 48rpx;
-	background: #F8F8F8;
+	background: #f8f8f8;
 	border-radius: 12px;
 	margin-right: 38rpx;
 	display: flex;
@@ -975,7 +975,7 @@ export default {
 	padding-right: 16rpx;
 	margin-bottom: 16rpx;
 }
-.tipsIcon{
+.tipsIcon {
 	width: 36rpx;
 	height: 36rpx;
 	margin-right: 8rpx;
