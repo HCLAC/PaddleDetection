@@ -1,0 +1,257 @@
+<template>
+	<view>
+		<!-- 自定义导航栏 -->
+		<view class="example-body"  >
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" :border="true" >
+				<view slot="left" class="slotleft">
+					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+				</view>
+				<view class="slottitle">举报</view>
+			</uni-nav-bar>
+		</view>
+		<!-- 举报内容 -->
+		<view class="reportBox">
+			<view class="reportTitle">
+				这条内容存在什么问题？
+			</view>
+			<u-form :model="model" :rules="rules" ref="uForm" :errorType="errorType">
+				<!-- 选项 -->
+				<u-form-item :label-position="labelPosition" :border-bottom="false" prop="payType" label-width="150">
+					<u-radio-group v-model="radio" @change="radioGroupChange" activeColor="#ffe512" :width="radioCheckWidth" :wrap="radioCheckWrap">
+						<u-radio shape="circle" v-model="item.checked" v-for="(item, index) in radioList" :key="index" :name="item.name">{{ item.name }}</u-radio>
+					</u-radio-group>
+				</u-form-item>
+				<!-- 内容 -->
+				<u-form-item :label-position="labelPosition" :border-bottom="false" prop="intro">
+					<u-input class="textArea" type="textarea" placeholder="为帮助审核人员更加快速处理，请补充违规内容出现位置等详细信息" maxlength="140" height="392" :customStyle="customStyleInput" v-model="model.intro" />
+				</u-form-item>
+			</u-form>
+			<u-button @click="submit" :custom-style="customStyle">提交举报</u-button>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			let that = this;
+			return {
+				model: {
+					intro: '',
+					payType:'广告灌水'
+				},
+				rules:{
+					intro: [
+						{
+							required: true,
+							message: '请填写原因'
+						},
+						{
+							min: 5,
+							message: '原因不能少于5个字',
+							trigger: 'change' ,
+						},
+						// 正则校验示例，此处用正则校验是否中文，此处仅为示例，因为uView有this.$u.test.chinese可以判断是否中文
+						{
+							pattern: /^[\u4e00-\u9fa5]+$/gi,
+							message: '原因只能为中文',
+							trigger: 'change',
+						},
+					],
+					payType: [
+						{
+							required: true,
+							message: '请选择一种举报类型',
+							trigger: 'change',
+						}
+					],
+				},
+				radioList: [
+					{
+						name: '广告灌水',
+						checked: true,
+						disabled: false
+					},
+					{
+						name: '色情暴力',
+						checked: false,
+						disabled: false
+					},
+					{
+						name: '危害国家安全',
+						checked: false,
+						disabled: false
+					},
+					{
+						name: '错误信息',
+						checked: false,
+						disabled: false
+					},
+					{
+						name: '盗用',
+						checked: false,
+						disabled: false
+					},
+					{
+						name: '其他',
+						checked: false,
+						disabled: false
+					}
+				],
+				check: false,
+				radio: '广告灌水',
+				actionSheetShow: false,
+				radioCheckWidth: 'auto',
+				radioCheckWrap: false,
+				labelPosition: 'left',
+				errorType: ['message'],
+				customStyle:{
+					background: '#FFE512',
+					fontSize: '32rpx',
+					fontFamily: 'PingFangSC-Medium, PingFang SC',
+					fontWeight: '500',
+					color: '#303133',
+					borderRadius: '26px',
+					margin:'82rpx 0 0 0'
+					
+				},
+				customStyleInput:{
+					background: '#f8f8f8',
+					borderRadius:'8px',
+					padding:'32rpx 28rpx'
+				}
+			}
+		},
+		onReady() {
+			this.$refs.uForm.setRules(this.rules);
+		},
+		methods: {
+			// 保存
+			submit() {
+				this.$refs.uForm.validate(valid => {
+					if (valid) {
+						console.log('验证通过');
+						// uni.request({
+						// 	url: this.globalUrl + '/user/info',
+						// 	data: {
+						// 		nick_name: this.model.name  ? this.model.name : this.nickName ,
+						// 		avatar:this.avatar,
+						// 		gender: this.model.sex == '男' ? 1 : this.model.sex == '女' ? 2 : this.model.sex == '保密' ? 0:this.sex,
+						// 		location: this.model.region ? this.model.region : this.region
+								
+						// 	},
+						// 	method: 'POST',
+						// 	header: {
+						// 		Authorization: uni.getStorageSync('Authorization')
+						// 	},
+						// 	success: res => {
+						// 		console.log('修改信息',res)
+						// 		uni.reLaunch({
+						// 			url:'../mine/mine'
+						// 		})
+						// 	}
+						// });
+						
+					} else {
+						console.log('验证失败');
+					}
+				});
+			},
+			// radio选择发生变化
+			radioGroupChange(e) {
+				this.model.payType = e;
+			},
+			
+			// 返回上一页
+			back() {
+				uni.navigateBack({
+					delta: 1
+				});
+			},
+			// 返回首页
+			home() {
+				uni.switchTab({
+					url: '/pages/index/index'
+				});
+			},
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+/* 自定义导航栏样式 */
+.example-body {
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	padding: 0;
+	font-size: 14px;
+	background-color: #aa557f;
+	z-index: 9999;
+}
+
+.example-body {
+	flex-direction: column;
+	padding: 15px;
+	background-color: #ffffff;
+}
+
+.example-body {
+	padding: 0;
+}
+
+.navBar {
+	display: flex;
+	z-index: 9999;
+}
+
+.slotleft {
+	display: flex;
+	align-items: center;
+}
+
+.fanhui {
+	width: 40rpx;
+	height: 40rpx;
+	margin-left: 40rpx;
+	margin-right: 20rpx;
+}
+
+.fhsy {
+	width: 40rpx;
+	height: 40rpx;
+}
+
+.slottitle {
+	margin-left: 186rpx;
+	font-size: 38rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 600;
+	color: rgba(0, 0, 0, 1);
+}
+
+.button-v-line {
+	width: 1px;
+	height: 18px;
+	background-color: #2f2f2f;
+	margin: 0 8px;
+}
+
+.reportBox{
+	margin: 48rpx 28rpx;
+	.reportTitle{
+		
+		height: 32rpx;
+		font-size: 32rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #303133;
+		line-height: 32rpx;
+	}
+	.textArea{
+		
+	}
+}
+
+</style>

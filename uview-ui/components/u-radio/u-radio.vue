@@ -1,16 +1,17 @@
 <template>
 	<view class="u-radio" :style="[radioStyle]">
 		<view class="u-radio__icon-wrap" @tap="toggle" :class="[iconClass]" :style="[iconStyle]">
-			<u-icon
+			<!-- <u-icon
 			    name="checkbox-mark"
 			    :size="elIconSize" 
-				:color="iconColor"/>
+				:color="iconColor"/> -->
+			<view class="u-radio__label" @tap="onClickLabel" :style="{
+				fontSize: $u.addUnit(labelSize)
+			}">
+				<slot />
+			</view>
 		</view>
-		<view class="u-radio__label" @tap="onClickLabel" :style="{
-			fontSize: $u.addUnit(labelSize)
-		}">
-			<slot />
-		</view>
+		
 	</view>
 </template>
 
@@ -110,8 +111,8 @@
 					style.borderColor = this.elActiveColor;
 					style.backgroundColor = this.elActiveColor;
 				}
-				style.width = this.$u.addUnit(this.elSize);
-				style.height = this.$u.addUnit(this.elSize);
+				// style.width = this.$u.addUnit(this.elSize);
+				// style.height = this.$u.addUnit(this.elSize);
 				return style;
 			},
 			iconColor() {
@@ -189,17 +190,19 @@
 			align-items: center;
 			justify-content: center;
 			box-sizing: border-box;
-			width: 42rpx;
-			height: 42rpx;
+			// width: 42rpx;
+			// height: 42rpx;
+			height: 56rpx;
 			color: transparent;
 			text-align: center;
 			transition-property: color, border-color, background-color;
 			font-size: 20px;
-			border: 1px solid #c8c9cc;
+			// border: 1px solid #c8c9cc;
 			transition-duration: 0.2s;
 			
 			&--circle {
-				border-radius: 100%;
+				// border-radius: 100%;
+				border-radius: 18px;
 			}
 			
 			&--square {

@@ -183,6 +183,14 @@
             }
             
         }
+		,{
+		    "path" : "pages/report/report",
+		    "style" :                                                                                    
+		    {
+				"navigationStyle": "custom"
+		    }
+		    
+		}
     ],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",

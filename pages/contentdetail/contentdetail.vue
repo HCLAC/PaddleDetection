@@ -108,7 +108,7 @@
 									<view class="">
 										<image class="replyLike" src="../../static/images/attLike.svg"></image>
 										<!-- <image class="replyLike" src="../../static/images/attLikeA.svg" mode="" v-if=""></image> -->
-										<image class="report" src="../../static/images/report.svg" mode=""></image>
+										<image class="report" src="../../static/images/report.svg" mode="" @click="toReport"></image>
 									</view>
 									
 								</view>
@@ -436,6 +436,12 @@ export default {
 					}
 				}
 			});
+		},
+		// 举报
+		toReport() {
+			uni.navigateTo({
+				url:'../report/report'
+			})
 		},
 		// 查看更多评论
 		toMoreReply(){

@@ -26,7 +26,7 @@
 								<view class="">
 									<image class="replyLike" src="../../static/images/attLike.svg"></image>
 									<!-- <image class="replyLike" src="../../static/images/attLikeA.svg" mode="" v-if=""></image> -->
-									<image class="report" src="../../static/images/report.svg" mode=""></image>
+									<image class="report" src="../../static/images/report.svg" mode="" @click="toReport"></image>
 								</view>
 								
 							</view>
@@ -52,6 +52,12 @@
 			};
 		},
 		methods:{
+			// 举报
+			toReport() {
+				uni.navigateTo({
+					url:'../report/report'
+				})
+			},
 			// 返回上一页
 			back() {
 				uni.navigateBack({
