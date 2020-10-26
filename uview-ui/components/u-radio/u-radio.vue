@@ -7,7 +7,7 @@
 				:color="iconColor"/> -->
 			<view class="u-radio__label" @tap="onClickLabel" :style="{
 				fontSize: $u.addUnit(labelSize)
-			}">
+			}" >
 				<slot />
 			</view>
 		</view>
@@ -227,10 +227,13 @@
 		
 		&__label {
 			word-wrap: break-word;
-			margin-left: 10rpx;
-			margin-right: 24rpx;
+			margin-left: 32rpx;
+			margin-right: 32rpx;
 			color: $u-content-color;
-			font-size: 30rpx;
+			font-size: 28rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #909399;
 			
 			&--disabled {
 				color: #c8c9cc;
