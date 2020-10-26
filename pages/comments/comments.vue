@@ -16,11 +16,21 @@
 					<view class="reply">
 						<view class="replyTop">
 							<image class="userImg" src="../../static/images/userImg.svg" mode=""></image>
-							<view class="userName">不知名网友</view>
-							<view class="replyTime">
-								2020-10-24
+							<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
+								<view class="" style="display: flex;align-items: center;">
+									<view class="userName">不知名网友</view>
+									<view class="replyTime">
+										2020-10-24
+									</view>
+								</view>
+								<view class="">
+									<image class="replyLike" src="../../static/images/attLike.svg"></image>
+									<!-- <image class="replyLike" src="../../static/images/attLikeA.svg" mode="" v-if=""></image> -->
+									<image class="report" src="../../static/images/report.svg" mode=""></image>
+								</view>
+								
 							</view>
-							<image class="replyLike" src="../../static/images/like.svg"></image>
+							
 						</view>
 						<view class="replyBottom">
 							爱了爱了
@@ -186,29 +196,71 @@
 .replyList{
 	
 	.replyContent{
-		
+		margin: 0 28rpx;
+		.myReply{
+			display: flex;
+			align-items: center;
+			margin-top: 40rpx;
+			.userImg{
+				width: 68rpx;
+				height: 68rpx;
+				margin-right: 16rpx;
+			}
+			.replyInput{
+				width: 598rpx;
+				height: 68rpx;
+				background: #F8F8F8;
+				border-radius: 17px;
+				padding-left: 32rpx;
+			}
+		}
 		.reply{
-			
+			margin-top: 32rpx;
+			border-bottom: 0.5px solid #edeff2;
 			.replyTop{
 				display: flex;
 				align-items: center;
 				.userImg{
-					width: 40rpx;
-					height: 40rpx;
+					width: 68rpx;
+					height: 68rpx;
+					margin-right: 16rpx;
 				}
 				.userName{
-					
+					height: 28rpx;
+					font-size: 28rpx;
+					font-family: PingFangSC-Medium, PingFang SC;
+					font-weight: 500;
+					color: #303133;
+					line-height: 28rpx;
 				}
 				.replyTime{
-					
+					margin-left: 16rpx;
+					height: 24rpx;
+					font-size: 24rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #C9CAD1;
+					line-height: 24rpx;
 				}
 				.replyLike{
-					width: 30rpx;
-					height: 30rpx;
+					width: 44rpx;
+					height: 44rpx;
+				}
+				.report{
+					margin-left: 28rpx;
+					width: 44rpx;
+					height: 44rpx;
 				}
 			}
 			.replyBottom{
-				
+				height: 42rpx;
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #606266;
+				line-height: 42rpx;
+				margin-left: 84rpx;
+				margin-bottom: 32rpx;
 			}
 		}
 	}

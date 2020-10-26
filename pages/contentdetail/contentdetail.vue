@@ -79,19 +79,40 @@
 					<!-- <view>#<text></text></view> -->
 				</view>
 				<view class="releaseTime">发布于{{ articleList.data.update_at }}</view>
+				<view class="replyLine" >
+					
+				</view>
 				<view class="replyBox">
 					<view class="replyText">
 						回复
 					</view>
 					<view class="replyContent">
+						<view class="myReply">
+							<image class="userImg" src="../../static/images/userImg.svg" mode=""></image>
+							<u-input 
+								class="replyInput"
+								placeholder="成为第一个回复的人吧～" 
+								placeholderStyle="width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" >
+							</u-input>
+						</view>
 						<view class="reply">
 							<view class="replyTop">
 								<image class="userImg" src="../../static/images/userImg.svg" mode=""></image>
-								<view class="userName">不知名网友</view>
-								<view class="replyTime">
-									2020-10-24
+								<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
+									<view class="" style="display: flex;align-items: center;">
+										<view class="userName">不知名网友</view>
+										<view class="replyTime">
+											2020-10-24
+										</view>
+									</view>
+									<view class="">
+										<image class="replyLike" src="../../static/images/attLike.svg"></image>
+										<!-- <image class="replyLike" src="../../static/images/attLikeA.svg" mode="" v-if=""></image> -->
+										<image class="report" src="../../static/images/report.svg" mode=""></image>
+									</view>
+									
 								</view>
-								<image class="replyLike" src="../../static/images/like.svg"></image>
+								
 							</view>
 							<view class="replyBottom">
 								爱了爱了
@@ -112,15 +133,21 @@
 					<view style="display: flex;">
 						<view class="like" @click="clickLike">
 							<image class="likeBtn" src="../../static/images/attheart.svg" v-if="articleList.data.liked == 0"></image>
-							<image class="likeBtn" src="../../static/images/heart-actived.svg" v-if="articleList.data.liked == 1"></image>
+							<image class="likeBtn" src="../../static/images/attHeartActive.svg" v-if="articleList.data.liked == 1"></image>
 							<view class="likeNum" v-model="likemessage">{{ articleList.data.like_count }}</view>
 						</view>
 						<view class="fav" @click="clickFav">
-							<image class="favBtn" src="../../static/images/shouchang.svg" v-if="articleList.data.fav == 0"></image>
-							<image class="favBtn" src="../../static/images/fav-actived.svg" v-if="articleList.data.fav == 1"></image>
+							<image class="favBtn" src="../../static/images/attFav.svg" v-if="articleList.data.fav == 0"></image>
+							<image class="favBtn" src="../../static/images/attFavA.svg" v-if="articleList.data.fav == 1"></image>
 							<view class="favNum">{{ articleList.data.fav_count }}</view>
 						</view>
-						<view class="share" v-if="serviceProvider =='baidu'" @click="share"><image src="../../static/images/shareIcon.svg"></image></view>
+						<view class="replyIcon">
+							<image src="../../static/images/replyIcon.svg" mode=""></image>
+							<view class="replyNum">
+								36
+							</view>
+						</view>
+						<!-- <view class="share" v-if="serviceProvider =='baidu'" @click="share"><image src="../../static/images/shareIcon.svg"></image></view> -->
 					</view>
 					<view class=""><view class="loginButton" @click="login" v-if="flag">登录</view></view>
 				</view>
@@ -1037,42 +1064,101 @@ export default {
 	padding-bottom: constant(safe-area-inset-bottom);
 	padding-bottom: env(safe-area-inset-bottom);
 }
+.replyLine{
+	width: 694rpx;
+	height: 0.5px;
+	background: #edeff2;
+	margin: 28rpx 28rpx 40rpx;
+}
 // 评论
 .replyBox{
 	margin: 28rpx;
 	
 	.relpyText{
-		
+		height: 32rpx;
+		font-size: 32rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #303133;
+		line-height: 32rpx;
 	}
 	.replyContent{
-		
+		.myReply{
+			display: flex;
+			align-items: center;
+			margin-top: 40rpx;
+			.userImg{
+				width: 68rpx;
+				height: 68rpx;
+				margin-right: 16rpx;
+			}
+			.replyInput{
+				width: 598rpx;
+				height: 68rpx;
+				background: #F8F8F8;
+				border-radius: 17px;
+				padding-left: 32rpx;
+			}
+		}
 		.reply{
-			
+			margin-top: 32rpx;
+			border-bottom: 0.5px solid #edeff2;
 			.replyTop{
 				display: flex;
 				align-items: center;
 				.userImg{
-					width: 40rpx;
-					height: 40rpx;
+					width: 68rpx;
+					height: 68rpx;
+					margin-right: 16rpx;
 				}
 				.userName{
-					
+					height: 28rpx;
+					font-size: 28rpx;
+					font-family: PingFangSC-Medium, PingFang SC;
+					font-weight: 500;
+					color: #303133;
+					line-height: 28rpx;
 				}
 				.replyTime{
-					
+					margin-left: 16rpx;
+					height: 24rpx;
+					font-size: 24rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #C9CAD1;
+					line-height: 24rpx;
 				}
 				.replyLike{
-					width: 30rpx;
-					height: 30rpx;
+					width: 44rpx;
+					height: 44rpx;
+				}
+				.report{
+					margin-left: 28rpx;
+					width: 44rpx;
+					height: 44rpx;
 				}
 			}
 			.replyBottom{
-				text-align: center;
+				height: 42rpx;
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #606266;
+				line-height: 42rpx;
+				margin-left: 84rpx;
+				margin-bottom: 32rpx;
 			}
 		}
 	}
 	.moreReply{
 		text-align: center;
+		margin-top: 32rpx;
+		height: 28rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #0091FF;
+		line-height: 28rpx;
 	}
 }
 .safeBox {
@@ -1136,21 +1222,54 @@ export default {
 .likeBtn {
 	width: 52rpx;
 	height: 52rpx;
-	margin-right: 10rpx;
 }
-
+.likeNum{
+	margin-left: 8rpx;
+	margin-right: 40rpx;
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #909399;
+	line-height: 24rpx;
+}
 .fav {
 	display: flex;
-	margin-left: 56rpx;
 	align-items: center;
 }
 
 .favBtn {
 	width: 52rpx;
 	height: 52rpx;
-	margin-right: 10rpx;
 }
-
+.favNum{
+	margin-left: 8rpx;
+	margin-right: 40rpx;
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #909399;
+	line-height: 24rpx;
+}
+.replyIcon{
+	display: flex;
+	align-items: center;
+	image{
+		width: 52rpx;
+		height: 52rpx;
+	}
+	
+}
+.replyNum{
+	margin-left: 8rpx;
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #909399;
+	line-height: 24rpx;
+}
 .share {
 	display: flex;
 	margin-left: 56rpx;
