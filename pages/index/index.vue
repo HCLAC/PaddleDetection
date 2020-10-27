@@ -404,6 +404,7 @@ export default {
 			indicatorDots: true,
 			areaList: [],
 			url: '',
+			serviceProvider: '',
 			e: null
 		};
 	},
@@ -411,7 +412,21 @@ export default {
 	onShow() {
 		// this.getItem();
 	},
-
+	onReady(){
+		uni.getProvider({
+			service: 'oauth',
+			success: res => {
+				if (res.errMsg == 'getProvider:ok') {
+					this.serviceProvider = res.provider[0];
+				} else {
+					uni.showToast({
+						title: '获取提供商失败',
+						icon: 'none'
+					});
+				}
+			}
+		});
+	},
 	onLoad() {
 		uni.showLoading({
 			title: '加载中',
@@ -462,6 +477,7 @@ export default {
 							city_id: this.item.city_id,
 							count: 6,
 							page: 1,
+							source: this.serviceProvider == 'baidu' ? 1 : this.serviceProvider == 'toutiao' ? 2 :this.serviceProvider == '微信' ? 3 : '',
 							first_time: new Date().getTime()
 						},
 						header: {
@@ -593,7 +609,9 @@ export default {
 				data: {
 					count: 6,
 					page: 1,
-					first_time: new Date().getTime()
+					first_time: new Date().getTime(),
+					source: this.serviceProvider == 'baidu' ? 1 : this.serviceProvider == 'toutiao' ? 2 :this.serviceProvider == '微信' ? 3 : '',
+					
 				},
 				header: {
 					Authorization: uni.getStorageSync('Authorization')
@@ -606,7 +624,9 @@ export default {
 							data: {
 								count: 6,
 								page: 1,
-								first_time: new Date().getTime()
+								first_time: new Date().getTime(),
+								source: this.serviceProvider == 'baidu' ? 1 : this.serviceProvider == 'toutiao' ? 2 :this.serviceProvider == '微信' ? 3 : '',
+								
 							},
 							success: res => {
 								uni.setStorageSync('article_id', res.data);
@@ -822,7 +842,9 @@ export default {
 					Authorization: uni.getStorageSync('Authorization')
 				},
 				data: {
-					first_time: this.firstTime
+					first_time: this.firstTime,
+					source: this.serviceProvider == 'baidu' ? 1 : this.serviceProvider == 'toutiao' ? 2 :this.serviceProvider == '微信' ? 3 : '',
+					
 				},
 				success: data => {
 					if (data.data.code == 0) {

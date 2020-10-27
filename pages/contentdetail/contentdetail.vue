@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<!-- 自定义导航栏 -->
+
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
 				<view slot="left" class="slotleft">
@@ -14,7 +14,7 @@
 		<view class="" v-if="swiperHeight">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap">
-				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="articleList.data.type != 4">
+				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="articleList.data.type != 4 && articleList.data.type != 5 ">
 					<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
 						<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
 							<image class="itemImg" :style="{ width: index == 0 ? '100%' : '' }" :mode="index == 0 ? 'widthFix' : 'aspectFit'" :src="item"></image>
@@ -97,7 +97,7 @@
 							<image class="favBtn" src="../../static/images/fav-actived.svg" v-if="articleList.data.fav == 1"></image>
 							<view class="favNum">{{ articleList.data.fav_count }}</view>
 						</view>
-						<view class="share" v-if="serviceProvider =='baidu'" @click="share"><image src="../../static/images/shareIcon.svg"></image></view>
+						<view class="share" v-if="serviceProvider == 'baidu'" @click="share"><image src="../../static/images/shareIcon.svg"></image></view>
 					</view>
 					<view class=""><view class="loginButton" @click="login" v-if="flag">登录</view></view>
 				</view>
@@ -148,7 +148,6 @@ export default {
 			success: () => {
 				this.flag = uni.getStorageSync('Authorization') ? false : true;
 				console.log(this.flag);
-				// debugger
 				this.article_num = currentPage.options.article_id;
 
 				this.getArticleDetail(currentPage.options);
@@ -203,6 +202,12 @@ export default {
 									});
 								}
 							});
+							if(e.planid){
+								tt.sendtoTAQ({convert_id:e.planid,event_type:"game_addiction"})
+								uni.navigateTo({
+									url:"../web/web"
+								})
+							}
 						} else {
 							uni.showToast({
 								title: res.data.msg,
@@ -232,20 +237,21 @@ export default {
 				success: async function(res) {
 					uni.hideLoading();
 					uni.setStorageSync('id', res.data);
-					
+
 					let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
 
 					if (strIndex && strIndex.length) {
 						// let strId =  newContent.substring(strIndex,1)
 
-						let strId = strIndex[0].slice(36, -4);
+						let planId = strIndex[0].match(/id为(\S*)groupId/)[1];
+						let strId = strIndex[0].match(/groupId为(\S*)"/)[1];
 						let resCode = await that.getTemplate(strId);
 						if (resCode.data.code == 0) {
 							let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
 							let str = `<div>
       <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
           详情请加VX：${wechat_id}
-      </span><a groupId="${strId}" group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
+      </span><a groupId="${strId}"  planId="${planId}" group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
     </div>`;
 
 							res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
@@ -349,7 +355,6 @@ export default {
 					},
 					success: res => {
 						if (res.data.code != 0) {
-							// debugger
 							uni.navigateTo({
 								url: '../login/login'
 							});
@@ -377,7 +382,6 @@ export default {
 				},
 				success: res => {
 					if (res.data.code != 0) {
-						// debugger
 						uni.navigateTo({
 							url: '../login/login'
 						});
@@ -407,7 +411,6 @@ export default {
 				success: res => {
 					console.log('点赞', res);
 					if (res.data.code != 0) {
-						// debugger
 						uni.navigateTo({
 							url: '../login/login'
 						});
@@ -432,15 +435,17 @@ export default {
 							if (strIndex && strIndex.length) {
 								// let strId =  newContent.substring(strIndex,1)
 
-								let strId = strIndex[0].slice(36, -4);
+								let planId = strIndex[0].match(/id为(\S*)groupId/)[1];
+								let strId = strIndex[0].match(/groupId为(\S*)"/)[1];
 								let resCode = await that.getTemplate(strId);
+
 								if (resCode.data.code == 0) {
 									let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
 									let str = `<div>
-									  <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
-									      详情请加VX：${wechat_id}
-									  </span><a groupId="${strId}" group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
-									</div>`;
+							  <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
+							      详情请加VX：${wechat_id}
+							  </span><a groupId="${strId}" planId="${planId}" group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
+							</div>`;
 
 									res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 									// console.log(res.data.data.content);
@@ -494,7 +499,7 @@ export default {
 				success: res => {
 					console.log('收藏', res);
 					if (res.data.code != 0) {
-						// debugger
+
 						uni.navigateTo({
 							url: '../login/login'
 						});
@@ -516,15 +521,16 @@ export default {
 							if (strIndex && strIndex.length) {
 								// let strId =  newContent.substring(strIndex,1)
 
-								let strId = strIndex[0].slice(36, -4);
+								let planId = strIndex[0].match(/id为(\S*)groupId/)[1];
+								let strId = strIndex[0].match(/groupId为(\S*)"/)[1];
 								let resCode = await that.getTemplate(strId);
 								if (resCode.data.code == 0) {
 									let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
 									let str = `<div>
-									  <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
-									      详情请加VX：${wechat_id}
-									  </span><a groupId="${strId}" group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
-									</div>`;
+							  <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
+							      详情请加VX：${wechat_id}
+							  </span><a groupId="${strId}" planId="${planId}" group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
+							</div>`;
 
 									res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 
@@ -961,12 +967,11 @@ export default {
 	margin-left: 28rpx;
 	display: flex;
 	flex-wrap: wrap;
-	
 }
 
 .tips view {
 	height: 48rpx;
-	background: #F8F8F8;
+	background: #f8f8f8;
 	border-radius: 12px;
 	margin-right: 38rpx;
 	display: flex;
@@ -975,7 +980,7 @@ export default {
 	padding-right: 16rpx;
 	margin-bottom: 16rpx;
 }
-.tipsIcon{
+.tipsIcon {
 	width: 36rpx;
 	height: 36rpx;
 	margin-right: 8rpx;
