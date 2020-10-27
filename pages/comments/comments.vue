@@ -10,22 +10,23 @@
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
-		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-uni  ref="mescrollRef"  @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="replyList">
 				<view class="replyContent">
-					<view class="reply">
+					<view class="reply" v-for="(item,index) in commentsList" :key="index">
 						<view class="replyTop">
-							<image class="userImg" src="../../static/images/userImg.svg" mode=""></image>
+							<image class="userImg" v-if="!item.avatar" src="../../static/images/userImg.svg" mode=""></image>
+							<image class="userImg" v-if="item.avatar" :src="item.avatar" mode=""></image>
 							<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
 								<view class="" style="display: flex;align-items: center;">
-									<view class="userName">不知名网友</view>
+									<view class="userName">{{item.account_name}}</view>
 									<view class="replyTime">
-										2020-10-24
+										{{item.create_at}}
 									</view>
 								</view>
 								<view class="">
-									<image class="replyLike" src="../../static/images/attLike.svg"></image>
-									<!-- <image class="replyLike" src="../../static/images/attLikeA.svg" mode="" v-if=""></image> -->
+									<image class="replyLike" src="../../static/images/attLike.svg" v-if="item.like == 0" @click="replyLike(item)"></image>
+									<image class="replyLike" src="../../static/images/attLikeA.svg" mode="" v-if="item.like == 1" @click="replyLike(item)"></image>
 									<image class="report" src="../../static/images/report.svg" mode="" @click="toReport"></image>
 								</view>
 								
@@ -33,12 +34,12 @@
 							
 						</view>
 						<view class="replyBottom">
-							爱了爱了
+							{{item.content}}
 						</view>
 					</view>
 				</view>
 			</view>
-		</mescroll-body>
+		</mescroll-uni>
 	</view>
 </template>
 
@@ -48,15 +49,71 @@
 		mixins: [MescrollMixin],
 		data() {
 			return {
-				
+				article_id:'',
+				commentsList:[]
 			};
 		},
+		onLoad(e) {
+			console.log('===',e)
+			this.article_id = e.article_id
+			this.getComments()
+		},
 		methods:{
+			// 获取评论列表
+			getComments(){
+				uni.request({
+					url: this.globalUrl + '/comments/list',
+					data: {
+						article_id: this.article_id,
+						page:1,
+						count:8
+					},
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res => {
+						this.commentsList = res.data.data.list
+						console.log('comments',res.data)
+					}
+				});
+			},
+			// 评论点赞
+			replyLike(e){
+				uni.request({
+					url: this.globalUrl + '/comments/likes',
+					data: {
+						id: e.id,
+						like:e.like == 0 ? 1 : 0
+					},
+					method: 'POST',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res => {
+						console.log('点赞',res)
+						if(res.data.code == 10501){
+							uni.navigateTo({
+								url: '../login/login'
+							});
+						}else{
+							this.getComments()
+						}
+					}
+				});
+			},
 			// 举报
 			toReport() {
-				uni.navigateTo({
-					url:'../report/report'
-				})
+				let token = uni.getStorageSync('Authorization')
+				// console.log('tttt',token)
+				if(!token){
+					uni.navigateTo({
+						url: '../login/login'
+					});
+				}else{
+					uni.navigateTo({
+						url:'../report/report'
+					})
+				}
 			},
 			// 返回上一页
 			back() {
@@ -85,13 +142,19 @@
 				var that = this
 				// mescroll.setPageSize(6)
 				let pageNum = page.num; // 页码, 默认从1开始
-				let pageSize = page.size; // 页长, 默认每页10条
+				let pageSize = 8; // 页长, 默认每页6条
 				uni.request({
-					url: this.globalUrl + '/topics/square_recommend?page=' + pageNum + '&count=' + pageSize,
+					url: this.globalUrl + '/comments/list?page=' + pageNum + '&count=' + pageSize,
+					data:{
+						article_id:that.article_id
+					},
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
 					success: data => {
 						console.log('data', data);
 						// 接口返回的当前页数据列表 (数组)
-						let curPageData = data.data.data.recomm_list;
+						let curPageData = data.data.data.list;
 						console.log('curPageData', curPageData);
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 						let curPageLen = curPageData.length;
@@ -105,9 +168,9 @@
 						// let hasNext = data.data.data.list;
 				
 						//设置列表数据
-						if (page.num == 1) this.recommList = []; //如果是第一页需手动置空列表
-						this.recommList = this.recommList.concat(curPageData); //追加新数据
-						console.log('recommList', this.recommList);
+						if (page.num == 1) this.commentsList = []; //如果是第一页需手动置空列表
+						this.commentsList = this.commentsList.concat(curPageData); //追加新数据
+						console.log('commentsList', this.commentsList);
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 						// this.mescroll.endByPage(curPageLen, totalPage);
@@ -199,8 +262,10 @@
 	background-color: #2f2f2f;
 	margin: 0 8px;
 }
+
+
 .replyList{
-	
+	margin-top: 208rpx;
 	.replyContent{
 		margin: 0 28rpx;
 		.myReply{
@@ -210,6 +275,7 @@
 			.userImg{
 				width: 68rpx;
 				height: 68rpx;
+				border-radius: 50%;
 				margin-right: 16rpx;
 			}
 			.replyInput{
@@ -229,6 +295,7 @@
 				.userImg{
 					width: 68rpx;
 					height: 68rpx;
+					border-radius: 50%;
 					margin-right: 16rpx;
 				}
 				.userName{

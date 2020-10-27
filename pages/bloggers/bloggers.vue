@@ -71,6 +71,7 @@
 												<view v-if="item.type == 1">游记</view>
 												<view v-if="item.type == 2">攻略</view>
 												<view v-if="item.type == 4">视频</view>
+												<view v-if="item.type == 5">推广</view>
 											</view>
 											<view class="videoIcon" v-if="item.type == 4">
 												<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>

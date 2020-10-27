@@ -88,45 +88,57 @@
 					</view>
 					<view class="replyContent">
 						<view class="myReply">
-							<image class="userImg" src="../../static/images/userImg.svg" mode=""></image>
+							<image class="userImg" src="../../static/images/userImg.svg" mode="" v-if="userInfo == null"></image>
+							<image class="userImg" :src="userInfo.avatar" mode="" v-if="userInfo != null"></image>
 							<u-input 
 								class="replyInput"
 								placeholder="成为第一个回复的人吧～" 
-								placeholderStyle="width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" >
+								placeholderStyle="width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
+								confirmType="send"
+								:clearable="false"
+								v-model="value"
+								@confirm="confirm"
+							>
+								
 							</u-input>
 						</view>
-						<view class="reply">
-							<view class="replyTop">
-								<image class="userImg" src="../../static/images/userImg.svg" mode=""></image>
+						<view class="reply" v-for="(item,index) in commentsList" :key="index">
+							<view class="replyTop" >
+								<image class="userImg" v-if="!item.avatar" src="../../static/images/userImg.svg" mode=""></image>
+								<image class="userImg" v-if="item.avatar" :src="item.avatar" mode=""></image>
 								<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
 									<view class="" style="display: flex;align-items: center;">
-										<view class="userName">不知名网友</view>
+										<view class="userName">{{item.account_name}}</view>
 										<view class="replyTime">
-											2020-10-24
+											{{item.create_at}}
 										</view>
 									</view>
 									<view class="">
-										<image class="replyLike" src="../../static/images/attLike.svg"></image>
-										<!-- <image class="replyLike" src="../../static/images/attLikeA.svg" mode="" v-if=""></image> -->
-										<image class="report" src="../../static/images/report.svg" mode="" @click="toReport"></image>
+										<image class="replyLike" src="../../static/images/attLike.svg" v-if="item.like == 0" @click="replyLike(item)"></image>
+										<image class="replyLike" src="../../static/images/attLikeA.svg" mode="" v-if="item.like == 1" @click="replyLike(item)"></image>
+										<image class="report" src="../../static/images/report.svg" mode=""  @click="toReport"></image>
 									</view>
 									
 								</view>
 								
 							</view>
 							<view class="replyBottom">
-								爱了爱了
+								{{item.content}}
 							</view>
 						</view>
 					</view>
-					<view class="moreReply" @click="toMoreReply">
-						查看全部10条回复
+					<view class="moreReply" v-if="total != 0" @click="toMoreReply">
+						查看全部{{total}}条回复
 					</view>
 				</view>
+				
 				<view class="safeBox"></view>
 			</view>
 			<view class="bottom">
 				<!-- 分割线 -->
+				<!-- <view class="bottomLine">
+					
+				</view> -->
 				<view class="line"></view>
 				<!-- 登录 -->
 				<view class="contentBottom savepadding">
@@ -182,7 +194,11 @@ export default {
 			serviceProvider: '',
 			following: 0,
 			content: '',
-			show: false
+			show: false,
+			value:'',
+			commentsList:[],
+			total:'',
+			userInfo:[]
 		};
 	},
 	onShow() {
@@ -192,6 +208,7 @@ export default {
 		let currentPage = pages[pages.length - 1];
 		// 打印出当前页面中的 options
 		console.log('onshow--', currentPage.options);
+		
 		// console.log('文章id====', e);
 		uni.showLoading({
 			title: '加载中',
@@ -200,8 +217,9 @@ export default {
 				console.log(this.flag);
 				// debugger
 				this.article_num = currentPage.options.article_id;
-
 				this.getArticleDetail(currentPage.options);
+				this.getComments(currentPage.options);
+				this.getUserInfo()
 			}
 		});
 	},
@@ -437,16 +455,142 @@ export default {
 				}
 			});
 		},
-		// 举报
-		toReport() {
-			uni.navigateTo({
-				url:'../report/report'
+		// 用户信息
+		getUserInfo(){
+			uni.request({
+				url: this.globalUrl+ '/user/info',
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				method: 'get',
+				success: (res)=> {
+					console.log('个人信息=', res.data);
+					this.userInfo = res.data.data
+				}
 			})
 		},
+		// 举报
+		toReport() {
+			let token = uni.getStorageSync('Authorization')
+			// console.log('tttt',token)
+			if(!token){
+				uni.navigateTo({
+					url: '../login/login'
+				});
+			}else{
+				uni.navigateTo({
+					url:'../report/report'
+				})
+			}
+			
+		},
+		// 评论
+		confirm(e){
+			console.log(e)
+			uni.request({
+				url: this.globalUrl + '/comments',
+				data: {
+					article_id: this.article_num,
+					content:e
+				},
+				method: 'POST',
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: res => {
+					// this.commentsList = res.data.data.list
+					this.value = ''
+					uni.hideKeyboard()
+					this.getComments()
+					console.log('pinglun',res.data)
+					if(res.data.code == 10501){
+						uni.navigateTo({
+							url: '../login/login'
+						});
+					}else{
+						if(res.data.code == 15001){
+							uni.showToast({
+								title: res.data.msg,
+								icon:'none',
+								duration: 2000
+							})
+						}
+					}
+					
+					
+				}
+			})
+		},
+		// 获取评论列表
+		getComments(){
+			uni.request({
+				url: this.globalUrl + '/comments/list',
+				data: {
+					article_id: this.article_num,
+					page:1,
+					count:3
+				},
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: res => {
+					console.log(res)
+					if(res.data.data == null){
+						uni.request({
+							url: this.globalUrl + '/comments/list',
+							data: {
+								article_id: this.article_num,
+								page:1,
+								count:3
+							},
+							success: res =>{
+								this.commentsList = res.data.data.list
+								this.total = res.data.data.total
+								console.log('不带tokencomments',res.data)
+							}
+						})
+					}else{
+						this.commentsList = res.data.data.list
+						this.total = res.data.data.total
+						console.log('comments',res.data)
+					}
+					
+				}
+			});
+		},
+		// 评论点赞
+		replyLike(e){
+			uni.request({
+				url: this.globalUrl + '/comments/likes',
+				data: {
+					id: e.id,
+					like:e.like == 0 ? 1 : 0
+				},
+				method: 'POST',
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: res => {
+					console.log('点赞',res)
+					if(res.data.code == 10501){
+						uni.navigateTo({
+							url: '../login/login'
+						});
+					}else{
+						this.getComments()
+					}
+					
+				}
+			});
+		},
+		// likeBtn(){
+		// 	this.$u.debounce(this.replyLike, 1000)
+		// },
 		// 查看更多评论
 		toMoreReply(){
+			let e = this.article_num
 			uni.navigateTo({
-				url:'../comments/comments'
+				url:'../comments/comments?article_id=' + e
 			})
 		},
 		// 点赞
@@ -752,6 +896,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+html{
+	  padding-bottom: constant(safe-area-inset-bottom);
+	  padding-bottom: env(safe-area-inset-bottom);
+   }
 /* 自定义导航栏样式 */
 .example-body {
 	flex-direction: row;
@@ -1096,6 +1244,7 @@ export default {
 			.userImg{
 				width: 68rpx;
 				height: 68rpx;
+				border-radius: 50%;
 				margin-right: 16rpx;
 			}
 			.replyInput{
@@ -1115,6 +1264,7 @@ export default {
 				.userImg{
 					width: 68rpx;
 					height: 68rpx;
+					border-radius: 50%;
 					margin-right: 16rpx;
 				}
 				.userName{
@@ -1159,6 +1309,7 @@ export default {
 	.moreReply{
 		text-align: center;
 		margin-top: 32rpx;
+		margin-bottom: 100rpx;
 		height: 28rpx;
 		font-size: 28rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
@@ -1166,6 +1317,11 @@ export default {
 		color: #0091FF;
 		line-height: 28rpx;
 	}
+}
+.bottomLine{
+	width: 100%;
+	height: 20rpx;
+	background: #F8F8F8;
 }
 .safeBox {
 	height: 142rpx;
@@ -1181,7 +1337,7 @@ export default {
 	bottom: var(--window-bottom);
 	z-index: 111;
 	background-color: #ffffff;
-	padding-bottom: 68rpx;
+	// padding-bottom: 68rpx;
 	padding-bottom: constant(safe-area-inset-bottom);
 	padding-bottom: env(safe-area-inset-bottom);
 	box-sizing: content-box;
