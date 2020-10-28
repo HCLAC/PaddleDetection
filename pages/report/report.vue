@@ -24,7 +24,7 @@
 				</u-form-item>
 				<!-- 内容 -->
 				<u-form-item :label-position="labelPosition" :border-bottom="false" prop="intro">
-					<u-input class="textArea" type="textarea" placeholder="为帮助审核人员更加快速处理，请补充违规内容出现位置等详细信息" maxlength="140" height="392" :customStyle="customStyleInput" v-model="model.intro" />
+					<u-input class="textArea" type="textarea" @input="inputvalue" :clearable="false" placeholder="为帮助审核人员更加快速处理，请补充违规内容出现位置等详细信息" maxlength="140" height="392" :customStyle="customStyleInput" v-model="model.intro" />
 				</u-form-item>
 			</u-form>
 			<u-button @click="submit" :custom-style="customStyle">提交举报</u-button>
@@ -37,9 +37,10 @@
 		data() {
 			let that = this;
 			return {
+				id:'',
 				model: {
 					intro: '',
-					payType:'广告灌水'
+					payType:''
 				},
 				rules:{
 					intro: [
@@ -61,7 +62,7 @@
 					],
 					payType: [
 						{
-							required: true,
+							required: false,
 							message: '请选择一种举报类型',
 							trigger: 'change',
 						}
@@ -100,19 +101,21 @@
 					}
 				],
 				check: false,
-				radio: '广告灌水',
+				radio: '',
 				actionSheetShow: false,
 				radioCheckWidth: 'auto',
 				radioCheckWrap: false,
 				labelPosition: 'left',
 				errorType: ['message'],
 				customStyle:{
-					background: '#FFE512',
+					
+					height:'98rpx',
+					background: '#EDEFF2',
 					fontSize: '32rpx',
 					fontFamily: 'PingFangSC-Medium, PingFang SC',
 					fontWeight: '500',
 					color: '#303133',
-					borderRadius: '26px',
+					borderRadius: '27px',
 					margin:'82rpx 0 0 0'
 					
 				},
@@ -126,35 +129,56 @@
 		onReady() {
 			this.$refs.uForm.setRules(this.rules);
 		},
+		onLoad(e) {
+			console.log('---',e)
+			this.id = e.id
+		},
 		methods: {
+			inputvalue(){
+				this.$refs.uForm.validate(valid => {
+					if (valid) {
+						console.log('验证通过');
+						this.customStyle.background = 'rgba(255, 229, 18, 1)'
+						
+					} else {
+						console.log('验证失败');
+						this.customStyle.background = '#EDEFF2'
+					}
+				});
+			},
 			// 保存
 			submit() {
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
 						console.log('验证通过');
-						// uni.request({
-						// 	url: this.globalUrl + '/user/info',
-						// 	data: {
-						// 		nick_name: this.model.name  ? this.model.name : this.nickName ,
-						// 		avatar:this.avatar,
-						// 		gender: this.model.sex == '男' ? 1 : this.model.sex == '女' ? 2 : this.model.sex == '保密' ? 0:this.sex,
-						// 		location: this.model.region ? this.model.region : this.region
-								
-						// 	},
-						// 	method: 'POST',
-						// 	header: {
-						// 		Authorization: uni.getStorageSync('Authorization')
-						// 	},
-						// 	success: res => {
-						// 		console.log('修改信息',res)
-						// 		uni.reLaunch({
-						// 			url:'../mine/mine'
-						// 		})
-						// 	}
-						// });
+						uni.request({
+							url: this.globalUrl + '/comments/report',
+							data: {
+								id:this.id,
+								behavior:this.model.payType,
+								content:this.model.intro
+							},
+							method: 'POST',
+							header: {
+								Authorization: uni.getStorageSync('Authorization')
+							},
+							success: res => {
+								console.log('举报信息',res)
+								uni.showToast({
+									title: '举报成功',
+									icon:'none',
+									duration: 2000
+								})
+							}
+						});
 						
 					} else {
 						console.log('验证失败');
+						uni.showToast({
+							title: '举报失败',
+							icon:'none',
+							duration: 2000
+						})
 					}
 				});
 			},
@@ -241,7 +265,7 @@
 .reportBox{
 	margin: 48rpx 28rpx;
 	.reportTitle{
-		
+		margin-bottom: 40rpx;
 		height: 32rpx;
 		font-size: 32rpx;
 		font-family: PingFangSC-Medium, PingFang SC;

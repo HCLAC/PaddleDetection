@@ -190,6 +190,7 @@
 			align-items: center;
 			justify-content: center;
 			box-sizing: border-box;
+			background: #F8F8F8;
 			// width: 42rpx;
 			// height: 42rpx;
 			height: 56rpx;
@@ -199,7 +200,7 @@
 			font-size: 20px;
 			// border: 1px solid #c8c9cc;
 			transition-duration: 0.2s;
-			
+			margin: 0 32rpx 32rpx 0;
 			&--circle {
 				// border-radius: 100%;
 				border-radius: 18px;

@@ -116,7 +116,7 @@
 									<view class="">
 										<image class="replyLike" src="../../static/images/attLike.svg" v-if="item.like == 0" @click="replyLike(item)"></image>
 										<image class="replyLike" src="../../static/images/attLikeA.svg" mode="" v-if="item.like == 1" @click="replyLike(item)"></image>
-										<image class="report" src="../../static/images/report.svg" mode=""  @click="toReport"></image>
+										<image class="report" src="../../static/images/report.svg" mode=""  @click="toReport(item)"></image>
 									</view>
 									
 								</view>
@@ -470,7 +470,7 @@ export default {
 			})
 		},
 		// 举报
-		toReport() {
+		toReport(e) {
 			let token = uni.getStorageSync('Authorization')
 			// console.log('tttt',token)
 			if(!token){
@@ -479,7 +479,7 @@ export default {
 				});
 			}else{
 				uni.navigateTo({
-					url:'../report/report'
+					url:'../report/report?id=' + e.id
 				})
 			}
 			
