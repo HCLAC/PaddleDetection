@@ -92,7 +92,7 @@
 							<image class="userImg" :src="userInfo.avatar" mode="" v-if="userInfo != null"></image>
 							<u-input 
 								class="replyInput"
-								placeholder="成为第一个回复的人吧～" 
+								placeholder="写个回复走个心" 
 								placeholderStyle="width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
 								confirmType="send"
 								:clearable="false"
@@ -153,10 +153,10 @@
 							<image class="favBtn" src="../../static/images/attFavA.svg" v-if="articleList.data.fav == 1"></image>
 							<view class="favNum">{{ articleList.data.fav_count }}</view>
 						</view>
-						<view class="replyIcon">
+						<view class="replyIcon" @click="toMoreReply">
 							<image src="../../static/images/replyIcon.svg" mode=""></image>
-							<view class="replyNum">
-								36
+							<view class="replyNum" >
+								{{total}}
 							</view>
 						</view>
 						<!-- <view class="share" v-if="serviceProvider =='baidu'" @click="share"><image src="../../static/images/shareIcon.svg"></image></view> -->
@@ -511,6 +511,12 @@ export default {
 						if(res.data.code == 15001){
 							uni.showToast({
 								title: res.data.msg,
+								icon:'none',
+								duration: 2000
+							})
+						}else{
+							uni.showToast({
+								title: '评论成功',
 								icon:'none',
 								duration: 2000
 							})

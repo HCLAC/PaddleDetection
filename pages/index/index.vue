@@ -629,6 +629,17 @@ export default {
 		getBanner() {
 			uni.request({
 				url: this.globalUrl + '/banner',
+				data:{
+					// #ifdef MP-WEIXIN
+					source:3
+					// #endif
+					// #ifdef MP-BAIDU
+					source:1
+					// #endif
+					// #ifdef MP-TOUTIAO
+					source:2
+					// #endif
+				},
 				success: res => {
 					console.log('banner--', res);
 					this.bannerList = res.data.data;

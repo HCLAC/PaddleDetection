@@ -24,10 +24,10 @@
 				</u-form-item>
 				<!-- 内容 -->
 				<u-form-item :label-position="labelPosition" :border-bottom="false" prop="intro">
-					<u-input class="textArea" type="textarea" @input="inputvalue" :clearable="false" placeholder="为帮助审核人员更加快速处理，请补充违规内容出现位置等详细信息" maxlength="140" height="392" :customStyle="customStyleInput" v-model="model.intro" />
+					<u-input  type="textarea" @input="inputvalue" :clearable="false" placeholderStyle="word-break:break-all;" placeholder="为帮助审核人员更加快速处理，请补充违规内容出现位置等详细信息" maxlength="140" :height="inputHeight" :customStyle="customStyleInput" v-model="model.intro" />
 				</u-form-item>
 			</u-form>
-			<u-button @click="submit" :custom-style="customStyle">提交举报</u-button>
+			<u-button @click="submit" :custom-style="customStyle" :disabled="disabled" >提交举报</u-button>
 		</view>
 	</view>
 </template>
@@ -48,17 +48,7 @@
 							required: true,
 							message: '请填写原因'
 						},
-						{
-							min: 5,
-							message: '原因不能少于5个字',
-							trigger: 'change' ,
-						},
-						// 正则校验示例，此处用正则校验是否中文，此处仅为示例，因为uView有this.$u.test.chinese可以判断是否中文
-						{
-							pattern: /^[\u4e00-\u9fa5]+$/gi,
-							message: '原因只能为中文',
-							trigger: 'change',
-						},
+						
 					],
 					payType: [
 						{
@@ -107,6 +97,7 @@
 				radioCheckWrap: false,
 				labelPosition: 'left',
 				errorType: ['message'],
+				inputHeight:392,
 				customStyle:{
 					
 					height:'98rpx',
@@ -120,10 +111,12 @@
 					
 				},
 				customStyleInput:{
+					height:'392rpx',
 					background: '#f8f8f8',
 					borderRadius:'8px',
 					padding:'32rpx 28rpx'
-				}
+				},
+				disabled:true
 			}
 		},
 		onReady() {
@@ -135,16 +128,13 @@
 		},
 		methods: {
 			inputvalue(){
-				this.$refs.uForm.validate(valid => {
-					if (valid) {
-						console.log('验证通过');
-						this.customStyle.background = 'rgba(255, 229, 18, 1)'
-						
-					} else {
-						console.log('验证失败');
-						this.customStyle.background = '#EDEFF2'
-					}
-				});
+				 let introLength = this.model.intro.length
+				if(introLength >= 5){
+					this.customStyle.background = 'rgba(255, 229, 18, 1)'
+					this.disabled = false
+				}else {
+					this.customStyle.background = '#EDEFF2'
+				}
 			},
 			// 保存
 			submit() {
@@ -169,6 +159,7 @@
 									icon:'none',
 									duration: 2000
 								})
+								uni.navigateBack({									delta: 1								});
 							}
 						});
 						
@@ -273,9 +264,12 @@
 		color: #303133;
 		line-height: 32rpx;
 	}
-	.textArea{
-		
-	}
+	
 }
-
+button::after {
+	border: none;
+}
+button[disabled] {
+	background: rgba(237, 239, 242, 1) !important;
+}
 </style>

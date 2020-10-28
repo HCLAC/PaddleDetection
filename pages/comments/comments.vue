@@ -50,7 +50,10 @@
 		data() {
 			return {
 				article_id:'',
-				commentsList:[]
+				commentsList:[],
+				downOption:{
+					use: false
+				}
 			};
 		},
 		onLoad(e) {
@@ -142,7 +145,7 @@
 				var that = this
 				// mescroll.setPageSize(6)
 				let pageNum = page.num; // 页码, 默认从1开始
-				let pageSize = 8; // 页长, 默认每页6条
+				let pageSize = page.size; // 页长, 默认每页6条
 				uni.request({
 					url: this.globalUrl + '/comments/list?page=' + pageNum + '&count=' + pageSize,
 					data:{
