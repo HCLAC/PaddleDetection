@@ -98,6 +98,8 @@
 								:clearable="false"
 								v-model="value"
 								@confirm="confirm"
+								:focus='focus'
+								@blur='isfocus'
 							>
 								
 							</u-input>
@@ -153,7 +155,7 @@
 							<image class="favBtn" src="../../static/images/attFavA.svg" v-if="articleList.data.fav == 1"></image>
 							<view class="favNum">{{ articleList.data.fav_count }}</view>
 						</view>
-						<view class="replyIcon" @click="toMoreReply">
+						<view class="replyIcon" @click="replyBtn">
 							<image src="../../static/images/replyIcon.svg" mode=""></image>
 							<view class="replyNum" >
 								{{total}}
@@ -198,7 +200,8 @@ export default {
 			value:'',
 			commentsList:[],
 			total:'',
-			userInfo:[]
+			userInfo:[],
+			focus:false
 		};
 	},
 	onShow() {
@@ -592,6 +595,12 @@ export default {
 		// likeBtn(){
 		// 	this.$u.debounce(this.replyLike, 1000)
 		// },
+		replyBtn(){
+			this.focus = true
+		},
+		isfocus(){
+			this.focus = false
+		},
 		// 查看更多评论
 		toMoreReply(){
 			let e = this.article_num
