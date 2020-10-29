@@ -18,13 +18,23 @@
 			<u-form :model="model" :rules="rules" ref="uForm" :errorType="errorType">
 				<!-- 选项 -->
 				<u-form-item :label-position="labelPosition" :border-bottom="false" prop="payType" label-width="150">
-					<u-radio-group v-model="radio" @change="radioGroupChange" activeColor="#ffe512" :width="radioCheckWidth" :wrap="radioCheckWrap">
-						<u-radio shape="circle" v-model="item.checked" v-for="(item, index) in radioList" :key="index" :name="item.name">{{ item.name }}</u-radio>
+					<u-radio-group v-model="radio" @change="radioGroupChange"  activeColor="#ffe512" :width="radioCheckWidth" :wrap="radioCheckWrap">
+						<u-radio shape="circle" v-model="item.checked"  v-for="(item, index) in radioList" :key="index" :name="item.name">{{ item.name }}</u-radio>
 					</u-radio-group>
 				</u-form-item>
 				<!-- 内容 -->
 				<u-form-item :label-position="labelPosition" :border-bottom="false" prop="intro">
-					<u-input  type="textarea" @input="inputvalue" :clearable="false" placeholderStyle="word-break:break-all;" placeholder="为帮助审核人员更加快速处理，请补充违规内容出现位置等详细信息" maxlength="140" :height="inputHeight" :customStyle="customStyleInput" v-model="model.intro" />
+					<u-input  
+					type="textarea" 
+					@input="inputvalue" 
+					:autoHeight="true" 
+					:clearable="false"  
+					placeholder="为帮助审核人员更加快速处理，请补充违规内容出现位置等详细信息" 
+					maxlength="140"  
+					height="392"
+					:customStyle="customStyleInput" 
+					v-model="model.intro" 
+					/>
 				</u-form-item>
 			</u-form>
 			<u-button @click="submit" :custom-style="customStyle" :disabled="disabled" >提交举报</u-button>
@@ -97,7 +107,6 @@
 				radioCheckWrap: false,
 				labelPosition: 'left',
 				errorType: ['message'],
-				inputHeight:392,
 				customStyle:{
 					
 					height:'98rpx',
@@ -111,10 +120,9 @@
 					
 				},
 				customStyleInput:{
-					height:'392rpx',
 					background: '#f8f8f8',
 					borderRadius:'8px',
-					padding:'32rpx 28rpx'
+					padding:'32rpx 28rpx 0 ',
 				},
 				disabled:true
 			}

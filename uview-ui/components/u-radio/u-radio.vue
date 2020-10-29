@@ -6,8 +6,8 @@
 			    :size="elIconSize" 
 				:color="iconColor"/> -->
 			<view class="u-radio__label" @tap="onClickLabel" :style="{
-				fontSize: $u.addUnit(labelSize)
-				
+				fontSize: $u.addUnit(labelSize),
+				color:$u.addUnit(labelColor)
 			}" >
 				<slot />
 			</view>
@@ -69,6 +69,10 @@
 				type: [String, Number],
 				default: ''
 			},
+			labelColor: {
+				type: String,
+				default: '#909399'
+			},
 		},
 		data() {
 			return {
@@ -111,6 +115,7 @@
 				if (this.elActiveColor && this.name == this.parent.value && !this.elDisabled) {
 					style.borderColor = this.elActiveColor;
 					style.backgroundColor = this.elActiveColor;
+					
 				}
 				// style.width = this.$u.addUnit(this.elSize);
 				// style.height = this.$u.addUnit(this.elSize);
@@ -156,12 +161,15 @@
 			onClickLabel() {
 				if (!this.elLabelDisabled && !this.elDisabled) {
 					this.parent.setValue(this.name);
+					
 					this.emitEvent();
 				}
+				
 			},
 			toggle() {
 				if (!this.elDisabled) {
 					this.parent.setValue(this.name);
+					this.labelColor = '#303133'
 					this.emitEvent();
 				}
 			},
