@@ -1,5 +1,5 @@
 <template>
-	<view >
+	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
@@ -25,7 +25,7 @@
 							placeholder="请输入您的手机号"
 							placeholder-style="color:'#C9CAD1',font-size:30rpx"
 							class="is-input1"
-							:style="{color: styleObj.color}"
+							:style="{ color: styleObj.color }"
 							@input="onInput"
 							v-model="phone"
 							@focus="isfocus"
@@ -41,7 +41,7 @@
 							placeholder="请输入您的验证码"
 							placeholder-style="color:'#C9CAD1',font-size:30rpx"
 							class="is-input1 "
-							:style="{color: styleCode.color}"
+							:style="{ color: styleCode.color }"
 							@input="onCode"
 							v-model="code"
 							@focus="isfocus1"
@@ -49,18 +49,19 @@
 						/>
 						<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-if="code && isShowcode" @click="clearcode()"></image>
 						<view class="code-sx"></view>
-						<view class="codeimg" @click.stop="getCode()" :style="{color:codeColor}">{{ getCodeText }}</view>
+						<view class="codeimg" @click.stop="getCode()" :style="{ color: codeColor }">{{ getCodeText }}</view>
 					</view>
 					<u-line color="rgba(237, 239, 242, 1)" margin="40rpx 0rpx"></u-line>
 				</view>
-		
+
 				<!-- 登录按钮 -->
-				<view class="loginButton"><button class="lb" :disabled="disabled" :style="{background: styleBtn.background}" @tap="doLogin">登录</button></view>
-				<view v-if="serviceProvider!='toutiao'" class="loginButton"><button class="badiduBtn" :style="{background: styleBtn.background}" open-type="getPhoneNumber" @getphonenumber="getPhone">{{ serviceProvider=='baidu'? '百度': serviceProvider== 'weixin' ? '微信' : serviceProvider == 'toutiao' ? '头条' : ''}}账号一键登录</button></view>
+				<view class="loginButton"><button class="lb" :disabled="disabled" :style="{ background: styleBtn.background }" @tap="doLogin">登录</button></view>
+				<view class="loginButton">
+					<button class="badiduBtn" :style="{ background: styleBtn.background }" open-type="getPhoneNumber" @getphonenumber="getPhone">手机号一键登录</button>
+				</view>
 			</view>
 		</view>
 	</view>
-	
 </template>
 
 <script>
@@ -74,6 +75,7 @@ export default {
 			getCodeText: '获取验证码',
 			getCodeBtnColor: '#ffffff',
 			getCodeisWaiting: false,
+			codeObj: '',
 			codeColor: {
 				color: '#0091FF'
 			},
@@ -90,47 +92,45 @@ export default {
 			isShowphone: false,
 			isShowcode: false,
 			serviceProvider: null,
-			ismine:true
+			ismine: true
 		};
 	},
 	onLoad(ismine) {
-		console.log('ismine--',ismine)
-		console.log(ismine.ismine)
-		this.ismine = ismine.ismine
-		console.log(this.ismine)
+		console.log('ismine--', ismine);
+		console.log(ismine.ismine);
+		this.ismine = ismine.ismine;
+		console.log(this.ismine);
 		// if(ismine.ismine == false){
 		// 	this.ismine = false
 		// 	console.log(this.ismine)
 		// }else{
 		// 	this.ismine = true
 		// }
-		
 	},
 	components: {},
 	mounted() {
 		uni.getProvider({
 			service: 'oauth',
 			success: res => {
-			
-				if(res.errMsg == 'getProvider:ok'){
-					this.serviceProvider = res.provider[0]
-				}else{
+				if (res.errMsg == 'getProvider:ok') {
+					this.serviceProvider = res.provider[0];
+				} else {
 					uni.showToast({
 						title: '获取提供商失败',
 						icon: 'none'
-					})
+					});
 				}
 			}
 		});
+		
 	},
 	methods: {
 		onInput(e) {
-			console.log(e)
+			console.log(e);
 			if (e.detail.value.length == 11) {
 				this.styleObj.color = '#303133';
 			} else {
 				this.styleObj.color = '#C9CAD1';
-				
 			}
 		},
 		onCode(e) {
@@ -240,28 +240,34 @@ export default {
 			});
 		},
 		getPhone(res) {
-			console.log(res)
-			
-			if (res.detail.errMsg != 'getPhoneNumber:ok') {
-				uni.showToast({
-					title: '用户拒绝授权',
-					icon: 'none'
-				});
-			} else {
+			uni.checkSession({
+				complete: res=>{
+					console.log(res)
+				}
+			})
+			if (res.detail.errMsg == 'getPhoneNumber:ok') {
 				uni.login({
 					provider: this.serviceProvider,
-
+				
 					success: result => {
 						
 						if (result.code) {
+							this.codeObj = result.code
 							this.baiduLogin({
 								code: result.code,
 								data: res.detail.encryptedData,
 								iv: res.detail.iv
 							});
+						} else {
+							
+							uni.showToast({
+								title: '获取code失败',
+								icon: 'none'
+							});
+							return;
 						}
 					},
-
+				
 					fail: error => {
 						uni.showToast({
 							title: error.errMsg,
@@ -269,21 +275,29 @@ export default {
 						});
 					}
 				});
+				
+			}  else {
+				uni.login()
+				uni.showToast({
+					title: '用户拒绝授权',
+					icon: 'none'
+				});
+				return;
 			}
 		},
 
 		baiduLogin(obj) {
 			uni.hideKeyboard();
 			uni.request({
-				url: this.globalUrl + '/user/oauth/code2session',
+				// url: this.globalUrl + '/user/oauth/code2session',
+				url: 'http://192.168.110.189:4000',
 				data: {
 					code: obj.code,
 					source: this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null
 				},
 				method: 'POST',
 				success: res => {
-					console.log(res);
-
+					
 					if (res.data.code == 0) {
 						this.getSessionKey({
 							uuid: res.data.data,
@@ -313,7 +327,6 @@ export default {
 					iv: obj.iv,
 					uuid: obj.uuid,
 					source: this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null
-					
 				},
 				method: 'POST',
 				success: res => {
@@ -323,12 +336,12 @@ export default {
 							title: '登录成功',
 							icon: 'none'
 						}),
-							uni.navigateBack({
-							    delta: 1
-							});
 							uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
 
 						uni.setStorageSync('nickName', res.data.data.mobile);
+						uni.reLaunch({
+							url: '../mine/mine'
+						});
 					} else {
 						uni.showToast({
 							title: res.data.msg,
@@ -387,11 +400,11 @@ export default {
 							title: '登录成功',
 							icon: 'none'
 						}),
-							uni.reLaunch({
-								url:'../mine/mine'
-							})
 							uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
-							
+
+						uni.reLaunch({
+							url: '../mine/mine'
+						});
 
 						// uni.setStorage({
 						// 	// phone:data.phone
@@ -418,62 +431,60 @@ export default {
 			uni.switchTab({
 				url: '/pages/index/index'
 			});
-		},
+		}
 	}
 };
 </script>
 
 <style lang="scss" scoped>
-	/* 自定义导航栏样式 */
-	.example-body {
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
-		padding: 0;
-		font-size: 14px;
-		background-color: #aa557f;
-	}
-	
-	.example-body {
-		flex-direction: column;
-		padding: 15px;
-		background-color: #ffffff;
-		border-bottom: 1rpx solid rgba(237, 239, 242, 1);
-	}
-	
-	.example-body {
-		padding: 0;
-	}
-	
-	.navBar {
-		display: flex;
-	}
-	
-	.slotleft {
-		display: flex;
-		align-items: center;
-	}
-	
-	.fanhui {
-		width: 40rpx;
-		height: 40rpx;
-		margin-left: 40rpx;
-		
-	}
-	
-	.fhsy {
-		width: 40rpx;
-		height: 40rpx;
-		margin-left: 20rpx;
-	}
-	
-	
-	.button-v-line {
-		width: 1px;
-		height: 18px;
-		background-color: #2f2f2f;
-		margin: 0 8px;
-	}
+/* 自定义导航栏样式 */
+.example-body {
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	padding: 0;
+	font-size: 14px;
+	background-color: #aa557f;
+}
+
+.example-body {
+	flex-direction: column;
+	padding: 15px;
+	background-color: #ffffff;
+	border-bottom: 1rpx solid rgba(237, 239, 242, 1);
+}
+
+.example-body {
+	padding: 0;
+}
+
+.navBar {
+	display: flex;
+}
+
+.slotleft {
+	display: flex;
+	align-items: center;
+}
+
+.fanhui {
+	width: 40rpx;
+	height: 40rpx;
+	margin-left: 40rpx;
+}
+
+.fhsy {
+	width: 40rpx;
+	height: 40rpx;
+	margin-left: 20rpx;
+}
+
+.button-v-line {
+	width: 1px;
+	height: 18px;
+	background-color: #2f2f2f;
+	margin: 0 8px;
+}
 .null-input .el-input__inner {
 	color: #525661;
 }
@@ -560,7 +571,7 @@ export default {
 .loginButton .lb {
 	width: 692rpx;
 	height: 100rpx;
-	background: #EDEFF2;
+	background: #edeff2;
 	border-radius: 58rpx;
 	margin-top: 150rpx;
 	font-size: 36rpx;
@@ -576,7 +587,7 @@ export default {
 	height: 100rpx;
 	background-color: #fff !important;
 	border-radius: 58rpx;
-	border: 2rpx solid #EDEFF2;
+	border: 2rpx solid #edeff2;
 	margin-top: 30rpx;
 	font-size: 36rpx;
 	color: #303133;
@@ -585,7 +596,7 @@ export default {
 button::after {
 	border: none;
 }
-button[disabled]{
-	background: rgba(237, 239, 242, 1)!important;
+button[disabled] {
+	background: rgba(237, 239, 242, 1) !important;
 }
 </style>
