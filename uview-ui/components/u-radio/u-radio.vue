@@ -7,6 +7,7 @@
 				:color="iconColor"/> -->
 			<view class="u-radio__label" @tap="onClickLabel" :style="{
 				fontSize: $u.addUnit(labelSize)
+				
 			}" >
 				<slot />
 			</view>

@@ -238,9 +238,23 @@
 							},
 							success: res => {
 								console.log('修改信息',res)
-								uni.reLaunch({
-									url:'../mine/mine'
-								})
+								if(res.data.code == 10108){
+									uni.showToast({
+										title: res.data.msg,
+										icon:'none',
+										duration: 2000
+									})
+								}else{
+									uni.showToast({
+										title: res.data.msg,
+										icon:'none',
+										duration: 2000
+									})
+									uni.reLaunch({
+										url:'../mine/mine'
+									})
+								}
+								
 							}
 						});
 						// uni.request({
