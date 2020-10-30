@@ -24,14 +24,12 @@
 				</u-form-item>
 				<!-- 内容 -->
 				<u-form-item :label-position="labelPosition" :border-bottom="false" prop="intro">
-					<u-input  
-					type="textarea" 
+					<textarea
+					class="textArea"
 					@input="inputvalue" 
-					:autoHeight="true" 
 					:clearable="false"  
 					placeholder="为帮助审核人员更加快速处理，请补充违规内容出现位置等详细信息" 
 					maxlength="140"  
-					height="392"
 					:customStyle="customStyleInput" 
 					v-model="model.intro" 
 					/>
@@ -273,6 +271,13 @@
 		line-height: 32rpx;
 	}
 	
+}
+.textArea{
+	width: 638rpx;
+	height: 394rpx;
+	background: #F8F8F8;
+	border-radius: 8px;
+	padding: 32rpx 28rpx;
 }
 button::after {
 	border: none;
