@@ -223,7 +223,7 @@ export default {
 		margin:0 14rpx;
 	}
 	.iconTitle {
-		margin-left: 30rpx;
+		margin-left: 12rpx;
 		color: #303133;
 		font-size: 32rpx;
 		width: 100rpx;

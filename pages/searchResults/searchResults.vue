@@ -469,7 +469,7 @@
 				font-weight: 400;
 				color: #909399;
 				line-height: 24rpx;
-				margin-top: 16rpx;
+				margin-top: 10rpx;
 
 			}
 			.iconRight{
@@ -622,7 +622,7 @@
 
 	.search-box {
 		width: 100%;
-		padding: 15upx 2.5%;
+		padding: 8rpx 28rpx 0;
 		display: flex;
 		justify-content: space-between;
 		position: sticky;

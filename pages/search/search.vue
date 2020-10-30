@@ -626,7 +626,7 @@ view {
 	width: 100%;
 	box-sizing: border-box;
 	background-color: rgb(255, 255, 255);
-	padding: 15upx 2.5%;
+	padding: 8rpx 28rpx 0;
 	display: flex;
 	justify-content: space-between;
 	position: sticky;
@@ -688,7 +688,8 @@ view {
 	position: relative;
 	width: 94%;
 	height: 96rpx;
-	margin: 0 3%;
+	margin: 0 3% 0 0;
+	padding-left: 40rpx;
 	font-size: 32rpx;
 	color: #606266;
 	display: flex;
@@ -696,8 +697,8 @@ view {
 	align-items: center;
 }
 .keyword-entry .liIcon {
-	margin-left: 52rpx;
-	margin-right: 30rpx;
+	margin-left: 12rpx;
+	margin-right: 12rpx;
 
 	width: 16rpx;
 	height: 16rpx;
@@ -706,11 +707,9 @@ view {
 	border-radius: 50%;
 }
 .keyword-entry .otherIcon {
-	margin-left: 40rpx;
-	margin-right: 25rpx;
 	width: 40rpx;
 	height: 40rpx;
-	background: #5CC66E;
+	background: rgba(92, 198, 110, 1);
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
@@ -718,14 +717,13 @@ view {
 	image{
 		width: 24rpx;
 		height: 24rpx;
+		
 	}
 }
 .keyword-entry .otherIcon1 {
-	margin-left: 40rpx;
-	margin-right: 25rpx;
 	width: 40rpx;
 	height: 40rpx;
-	background: #FA8C16;
+	background: rgba(250, 140, 22, 1);
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
@@ -739,12 +737,20 @@ view {
 .keyword-entry .otherText {
 	font-size: 24rpx;
 	// width: 60rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #606266;
+	line-height: 24rpx;
 	position: absolute;
 	right: 30rpx;
 }
 .keyword-entry .keyword-text {
 	height: 96rpx;
 	display: flex;
+	color: #303133;
+	font-size: 16px;
+	margin-left: 16rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
 	align-items: center;
 }
 .keyword-entry .keyword-text {
