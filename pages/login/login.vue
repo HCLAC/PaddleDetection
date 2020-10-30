@@ -109,6 +109,28 @@ export default {
 	},
 	components: {},
 	mounted() {
+		uni.login({
+			provider: this.serviceProvider,
+
+			success: result => {
+				if (result.code) {
+					this.codeObj = result.code;
+				} else {
+					uni.showToast({
+						title: '获取code失败',
+						icon: 'none'
+					});
+					return;
+				}
+			},
+
+			fail: error => {
+				uni.showToast({
+					title: error.errMsg,
+					icon: 'none'
+				});
+			}
+		});
 		uni.getProvider({
 			service: 'oauth',
 			success: res => {
@@ -122,7 +144,6 @@ export default {
 				}
 			}
 		});
-		
 	},
 	methods: {
 		onInput(e) {
@@ -241,43 +262,49 @@ export default {
 		},
 		getPhone(res) {
 			uni.checkSession({
-				complete: res=>{
-					console.log(res)
-				}
-			})
-			if (res.detail.errMsg == 'getPhoneNumber:ok') {
-				uni.login({
-					provider: this.serviceProvider,
-				
-					success: result => {
+				success: suc => {
+					if (suc.errMsg != 'checkSession:ok') {
+					
+						uni.login({
+							provider: this.serviceProvider,
 						
-						if (result.code) {
-							this.codeObj = result.code
-							this.baiduLogin({
-								code: result.code,
-								data: res.detail.encryptedData,
-								iv: res.detail.iv
-							});
-						} else {
-							
-							uni.showToast({
-								title: '获取code失败',
-								icon: 'none'
-							});
-							return;
-						}
-					},
-				
-					fail: error => {
-						uni.showToast({
-							title: error.errMsg,
-							icon: 'none'
+							success: result => {
+								if (result.code) {
+									this.codeObj = result.code;
+								} else {
+									uni.showToast({
+										title: '获取code失败',
+										icon: 'none'
+									});
+									return;
+								}
+							},
+						
+							fail: error => {
+								uni.showToast({
+									title: error.errMsg,
+									icon: 'none'
+								});
+							}
 						});
 					}
+	
+				},
+				fail: err => {
+					uni.showToast({
+						title: err.errMsg
+					});
+				}
+			});
+			if (res.detail.errMsg == 'getPhoneNumber:ok') {
+				this.baiduLogin({
+					code: this.codeObj,
+					source: this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null,
+					data: res.detail.encryptedData,
+					iv: res.detail.iv
 				});
-				
-			}  else {
-				uni.login()
+			} else {
+				uni.login();
 				uni.showToast({
 					title: '用户拒绝授权',
 					icon: 'none'
@@ -289,15 +316,14 @@ export default {
 		baiduLogin(obj) {
 			uni.hideKeyboard();
 			uni.request({
-				// url: this.globalUrl + '/user/oauth/code2session',
-				url: 'http://192.168.110.189:4000',
+				url: this.globalUrl + '/user/oauth/code2session',
+				// url: 'http://192.168.110.189:4000',
 				data: {
 					code: obj.code,
 					source: this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null
 				},
 				method: 'POST',
 				success: res => {
-					
 					if (res.data.code == 0) {
 						this.getSessionKey({
 							uuid: res.data.data,
