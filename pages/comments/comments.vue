@@ -76,7 +76,7 @@
 					},
 					success: res => {
 						this.commentsList = res.data.data.list
-						console.log('comments',res.data)
+						console.log('comments',res)
 					}
 				});
 			},

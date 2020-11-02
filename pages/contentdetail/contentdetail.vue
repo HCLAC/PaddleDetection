@@ -161,7 +161,7 @@
 								{{total}}
 							</view>
 						</view>
-						<view class="share" v-if="serviceProvider == 'baidu'" @click="share"><image src="../../static/images/shareIcon.svg"></image></view>
+						<!-- <view class="share" v-if="serviceProvider == 'baidu'" @click="share"><image src="../../static/images/shareIcon.svg"></image></view> -->
 					</view>
 					<view class=""><view class="loginButton" @click="login" v-if="flag">登录</view></view>
 				</view>
@@ -273,12 +273,6 @@ export default {
 									});
 								}
 							});
-							if(e.planid){
-								tt.sendtoTAQ({convert_id:e.planid,event_type:"game_addiction"})
-								uni.navigateTo({
-									url:"../web/web"
-								})
-							}
 						} else {
 							uni.showToast({
 								title: res.data.msg,
@@ -314,15 +308,14 @@ export default {
 					if (strIndex && strIndex.length) {
 						// let strId =  newContent.substring(strIndex,1)
 
-						let planId = strIndex[0].match(/id为(\S*)groupId/)[1];
-						let strId = strIndex[0].match(/groupId为(\S*)"/)[1];
+						let strId = strIndex[0].slice(36, -4);
 						let resCode = await that.getTemplate(strId);
 						if (resCode.data.code == 0) {
 							let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
 							let str = `<div>
       <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
           详情请加VX：${wechat_id}
-      </span><a groupId="${strId}"  planId="${planId}" group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
+      </span><a groupId="${strId}"   group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
     </div>`;
 
 							res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
@@ -656,8 +649,7 @@ export default {
 							if (strIndex && strIndex.length) {
 								// let strId =  newContent.substring(strIndex,1)
 
-								let planId = strIndex[0].match(/id为(\S*)groupId/)[1];
-								let strId = strIndex[0].match(/groupId为(\S*)"/)[1];
+								let strId = strIndex[0].slice(36, -4);
 								let resCode = await that.getTemplate(strId);
 
 								if (resCode.data.code == 0) {
@@ -665,7 +657,7 @@ export default {
 									let str = `<div>
 							  <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
 							      详情请加VX：${wechat_id}
-							  </span><a groupId="${strId}" planId="${planId}" group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
+							  </span><a groupId="${strId}"  group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
 							</div>`;
 
 									res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
@@ -742,15 +734,14 @@ export default {
 							if (strIndex && strIndex.length) {
 								// let strId =  newContent.substring(strIndex,1)
 
-								let planId = strIndex[0].match(/id为(\S*)groupId/)[1];
-								let strId = strIndex[0].match(/groupId为(\S*)"/)[1];
+								let strId = strIndex[0].slice(36, -4);
 								let resCode = await that.getTemplate(strId);
 								if (resCode.data.code == 0) {
 									let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
 									let str = `<div>
 							  <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
 							      详情请加VX：${wechat_id}
-							  </span><a groupId="${strId}" planId="${planId}" group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
+							  </span><a groupId="${strId}"  group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
 							</div>`;
 
 									res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
