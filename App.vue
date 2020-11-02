@@ -1,7 +1,7 @@
 <script>
 export default {
-	onLaunch: function() {
-		console.log('App Launch');
+	onLaunch: function(res) {
+		console.log('App Launch',res);
 		// const updateManager = uni.getUpdateManager();
 		
 		// updateManager.onCheckForUpdate(function (res) {
@@ -28,8 +28,8 @@ export default {
 		// });
 		
 	},
-	onShow: function() {
-		console.log('App Show');
+	onShow: function(data) {
+		console.log('App Show',data);
 	},
 	onHide: function() {
 		console.log('App Hide');
