@@ -209,7 +209,7 @@
 			:up="upOption"
 		>
 			
-			<view class="cus-sty ">
+			<view class="cus-sty1 ">
 				<!-- 热门目的地 -->
 				<view class="hot">
 					<view class="hot-top">
@@ -1050,6 +1050,10 @@ view {
 
 .cus-sty {
 	background-color: #f8f8f8;
+}
+.cus-sty1{
+	background-color: #f8f8f8;
+	margin-top: 156rpx;
 }
 
 /* 热门景点 */
