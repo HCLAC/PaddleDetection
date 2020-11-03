@@ -53,8 +53,9 @@
 				rules:{
 					intro: [
 						{
-							required: true,
-							message: '请填写原因'
+							min: 5, 
+							message: '原因不能少于5个字', 
+							trigger: 'change'
 						},
 						
 					],
@@ -134,7 +135,7 @@
 		},
 		methods: {
 			inputvalue(){
-				 let introLength = this.model.intro.length
+				let introLength = this.model.intro.length
 				if(introLength >= 5){
 					this.customStyle.background = 'rgba(255, 229, 18, 1)'
 					this.disabled = false

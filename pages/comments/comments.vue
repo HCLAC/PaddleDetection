@@ -329,7 +329,7 @@
 				}
 			}
 			.replyBottom{
-				height: 42rpx;
+				// height: 42rpx;
 				font-size: 28rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
 				font-weight: 400;

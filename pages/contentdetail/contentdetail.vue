@@ -93,13 +93,15 @@
 							<u-input 
 								class="replyInput"
 								placeholder="写个回复走个心" 
-								placeholderStyle="width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
+								placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
 								confirmType="send"
 								:clearable="false"
 								v-model="value"
 								@confirm="confirm"
 								:focus='focus'
 								@blur='isfocus'
+								type="textarea"
+								:autoHeight="true"
 							>
 								
 							</u-input>
@@ -1260,7 +1262,7 @@ html{
 			}
 			.replyInput{
 				width: 598rpx;
-				height: 68rpx;
+				// height: 68rpx;
 				background: #F8F8F8;
 				border-radius: 17px;
 				padding-left: 32rpx;
@@ -1306,7 +1308,7 @@ html{
 				}
 			}
 			.replyBottom{
-				height: 42rpx;
+				// height: 42rpx;
 				font-size: 28rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
 				font-weight: 400;
