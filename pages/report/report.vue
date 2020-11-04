@@ -35,7 +35,7 @@
 					/>
 				</u-form-item>
 			</u-form>
-			<u-button @click="submit" :custom-style="customStyle" :disabled="disabled" >提交举报</u-button>
+			<u-button class="bbutton" @click="submit" :custom-style="customStyle"  >提交举报</u-button>
 		</view>
 	</view>
 </template>
@@ -100,7 +100,7 @@
 					}
 				],
 				check: false,
-				radio: '',
+				radio: '广告灌水',
 				actionSheetShow: false,
 				radioCheckWidth: 'auto',
 				radioCheckWrap: false,
@@ -145,40 +145,39 @@
 			},
 			// 保存
 			submit() {
-				this.$refs.uForm.validate(valid => {
-					if (valid) {
-						console.log('验证通过');
-						uni.request({
-							url: this.globalUrl + '/comments/report',
-							data: {
-								id:this.id,
-								behavior:this.model.payType,
-								content:this.model.intro
-							},
-							method: 'POST',
-							header: {
-								Authorization: uni.getStorageSync('Authorization')
-							},
-							success: res => {
-								console.log('举报信息',res)
-								uni.showToast({
-									title: '举报成功',
-									icon:'none',
-									duration: 2000
-								})
-								uni.navigateBack({									delta: 1								});
-							}
-						});
-						
-					} else {
-						console.log('验证失败');
-						uni.showToast({
-							title: '举报失败',
-							icon:'none',
-							duration: 2000
-						})
-					}
-				});
+				let introLength = this.model.intro.length
+				if (introLength >= 5) {
+					// console.log('验证通过');
+					uni.request({
+						url: this.globalUrl + '/comments/report',
+						data: {
+							id:this.id,
+							behavior:this.model.payType,
+							content:this.model.intro
+						},
+						method: 'POST',
+						header: {
+							Authorization: uni.getStorageSync('Authorization')
+						},
+						success: res => {
+							console.log('举报信息',res)
+							uni.showToast({
+								title: '举报成功',
+								icon:'none',
+								duration: 2000
+							})
+							uni.navigateBack({								delta: 1							});
+						}
+					});
+					
+				} else {
+					console.log('验证失败');
+					uni.showToast({
+						title: '原因不能少于5个字',
+						icon:'none',
+						duration: 2000
+					})
+				}
 			},
 			// radio选择发生变化
 			radioGroupChange(e) {
@@ -279,6 +278,10 @@
 	background: #F8F8F8;
 	border-radius: 8px;
 	padding: 32rpx 28rpx;
+}
+.bbutton{
+	background-color: rgba(237, 239, 242, 1) !important;
+	border-radius: 27px;
 }
 button::after {
 	border: none;
