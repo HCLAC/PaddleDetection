@@ -87,10 +87,13 @@
 						回复
 					</view>
 					<view class="replyContent">
-						<view class="myReply">
+						<view class="myReply" @click="toggleMask('show')">
 							<image class="userImg" src="../../static/images/userImg.svg" mode="" v-if="userInfo == null"></image>
 							<image class="userImg" :src="userInfo.avatar" mode="" v-if="userInfo != null"></image>
-							<u-input 
+							<comment ref="comment" 
+							        :placeholder="'发布评论'" 
+							        @pubComment="pubComment"></comment>
+							<!-- <u-input 
 								class="replyInput"
 								placeholder="写个回复走个心" 
 								placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
@@ -102,9 +105,10 @@
 								@blur='isfocus'
 								type="textarea"
 								:autoHeight="true"
+								
 							>
 								
-							</u-input>
+							</u-input> -->
 						</view>
 						<view class="reply" v-for="(item,index) in commentsList" :key="index">
 							<view class="replyTop" >
@@ -176,10 +180,12 @@
 var _this;
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import uniIcons from '@/components/uni-icons/uni-icons.vue';
+import comment from '@/components/comment/comment.vue';
 export default {
 	components: {
 		uniNavBar,
-		uniIcons
+		uniIcons,
+		comment
 		// ourLoading
 	},
 	data() {
@@ -487,6 +493,9 @@ export default {
 			
 		},
 		// 评论
+		toggleMask(type){
+			this.$refs.comment.toggleMask(type);
+		},
 		confirm(e){
 			console.log(e)
 			uni.request({

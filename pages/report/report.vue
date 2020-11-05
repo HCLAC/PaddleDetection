@@ -100,7 +100,7 @@
 					}
 				],
 				check: false,
-				radio: '广告灌水',
+				radio: '',
 				actionSheetShow: false,
 				radioCheckWidth: 'auto',
 				radioCheckWrap: false,
