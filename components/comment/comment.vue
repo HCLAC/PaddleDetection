@@ -31,7 +31,7 @@
 			return {
 				maskState: 0,
 				content: '',
-				focus: false
+				focus: true
 			};
 		},
 		created() {
@@ -45,6 +45,7 @@
 				// this.maskState = 2;
 				setTimeout(()=>{
 					this.maskState = state;
+					
 					// #ifdef APP-PLUS
 					// 安卓app软键盘自动弹出有点问题，暂时还没有很好的解决方案，所以就禁止安卓app软键盘自动弹出，如果哪位朋友有好的解决方案可以在评论里告诉大家参考一下
 					if (uni.getSystemInfoSync().platform == "ios") {

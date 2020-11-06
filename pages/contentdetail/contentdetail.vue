@@ -87,28 +87,23 @@
 						回复
 					</view>
 					<view class="replyContent">
-						<view class="myReply" @click="toggleMask('show')">
+						<view class="myReply" >
 							<image class="userImg" src="../../static/images/userImg.svg" mode="" v-if="userInfo == null"></image>
 							<image class="userImg" :src="userInfo.avatar" mode="" v-if="userInfo != null"></image>
 							<comment ref="comment" 
-							        :placeholder="'发布评论'" 
+							        :placeholder="'快来写下你的评论吧'" 
 							        @pubComment="pubComment"></comment>
-							<!-- <u-input 
+							<u-input 
 								class="replyInput"
 								placeholder="写个回复走个心" 
 								placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
 								confirmType="send"
 								:clearable="false"
-								v-model="value"
-								@confirm="confirm"
-								:focus='focus'
-								@blur='isfocus'
-								type="textarea"
-								:autoHeight="true"
-								
+								:disabled="true"
+								@click="toggleMask('show')"
 							>
 								
-							</u-input> -->
+							</u-input>
 						</view>
 						<view class="reply" v-for="(item,index) in commentsList" :key="index">
 							<view class="replyTop" >
@@ -161,7 +156,7 @@
 							<image class="favBtn" src="../../static/images/attFavA.svg" v-if="articleList.data.fav == 1"></image>
 							<view class="favNum">{{ articleList.data.fav_count }}</view>
 						</view>
-						<view class="replyIcon" @click="replyBtn">
+						<view class="replyIcon" @click="toggleMask('show')">
 							<image src="../../static/images/replyIcon.svg" mode=""></image>
 							<view class="replyNum" >
 								{{total}}
@@ -496,8 +491,8 @@ export default {
 		toggleMask(type){
 			this.$refs.comment.toggleMask(type);
 		},
-		confirm(e){
-			console.log(e)
+		pubComment(e){
+			console.log('eee',e)
 			uni.request({
 				url: this.globalUrl + '/comments',
 				data: {
@@ -512,6 +507,7 @@ export default {
 					// this.commentsList = res.data.data.list
 					this.value = ''
 					uni.hideKeyboard()
+					this.$refs.comment.toggleMask('none');
 					this.getComments()
 					console.log('pinglun',res.data)
 					if(res.data.code == 10501){
@@ -519,6 +515,7 @@ export default {
 							url: '../login/login'
 						});
 					}else{
+						
 						if(res.data.code == 15001){
 							uni.showToast({
 								title: res.data.msg,
@@ -526,11 +523,19 @@ export default {
 								duration: 2000
 							})
 						}else{
-							uni.showToast({
-								title: '评论成功',
-								icon:'none',
-								duration: 2000
-							})
+							if(res.data.code == 500 || 15003){
+								uni.showToast({
+									title: '评论不能为空',
+									icon:'none',
+									duration: 2000
+								})
+							}else{
+								uni.showToast({
+									title: '评论成功',
+									icon:'none',
+									duration: 2000
+								})
+							}
 						}
 					}
 					
@@ -603,12 +608,12 @@ export default {
 		// likeBtn(){
 		// 	this.$u.debounce(this.replyLike, 1000)
 		// },
-		replyBtn(){
-			this.focus = true
-		},
-		isfocus(){
-			this.focus = false
-		},
+		// replyBtn(){
+		// 	this.focus = true
+		// },
+		// isfocus(){
+		// 	this.focus = false
+		// },
 		// 查看更多评论
 		toMoreReply(){
 			let e = this.article_num
