@@ -26,16 +26,16 @@
 				<u-form-item :label-position="labelPosition" :border-bottom="false" prop="intro">
 					<textarea
 					class="textArea"
-					@input="inputvalue" 
+					
 					:clearable="false"  
 					placeholder="为帮助审核人员更加快速处理，请补充违规内容出现位置等详细信息" 
 					maxlength="140"  
-					:customStyle="customStyleInput" 
-					v-model="model.intro" 
+					:style="{background: customStyleInput.background}" 
+					v-model="modelIntro" 
 					/>
 				</u-form-item>
 			</u-form>
-			<u-button class="bbutton" @click="submit" :custom-style="customStyle"  >提交举报</u-button>
+			<button class="bbutton" @click="submit" :style="{background: customStyle.background}"  >提交举报</button>
 		</view>
 	</view>
 </template>
@@ -50,6 +50,7 @@
 					intro: '',
 					payType:''
 				},
+				modelIntro: '',
 				rules:{
 					intro: [
 						{
@@ -108,20 +109,13 @@
 				errorType: ['message'],
 				customStyle:{
 					
-					height:'98rpx',
-					background: '#EDEFF2',
-					fontSize: '32rpx',
-					fontFamily: 'PingFangSC-Medium, PingFang SC',
-					fontWeight: '500',
-					color: '#303133',
-					borderRadius: '27px',
-					margin:'82rpx 0 0 0'
+					background: '#EDEFF2'
+					
 					
 				},
 				customStyleInput:{
 					background: '#f8f8f8',
-					borderRadius:'8px',
-					padding:'32rpx 28rpx 0 ',
+					
 				},
 				disabled:true
 			}
@@ -133,27 +127,41 @@
 			console.log('---',e)
 			this.id = e.id
 		},
+		watch:{
+			modelIntro(val){
+				console.log(val.length)
+				if(val.length && val.length > 4){
+						this.customStyle.background = '#FFE512';
+					}else {
+						this.customStyle.background = '#EDEFF2';
+					}
+			}
+		},
 		methods: {
-			inputvalue(){
-				let introLength = this.model.intro.length
-				if(introLength >= 5){
-					this.customStyle.background = 'rgba(255, 229, 18, 1)'
-					this.disabled = false
-				}else {
-					this.customStyle.background = '#EDEFF2'
-				}
-			},
+			
+			// inputvalue(e){
+			// 	// let introLength = this.model.intro.length
+			// 	console.log('字数',e.detail.value.length)
+			// 	let introLength = e.detail.value.length
+			// 	// console.log('字数',introLength)
+			// 	if(introLength > 4){
+			// 		console.log('ok')
+			// 		this.customStyle.background = '#FFE512'
+			// 	}else {
+			// 		this.customStyle.background = '#EDEFF2'
+			// 	}
+			// },
 			// 保存
 			submit() {
-				let introLength = this.model.intro.length
-				if (introLength >= 5) {
-					// console.log('验证通过');
+				let introLength = this.modelIntro.length
+				if (introLength > 4) {
+					// console.log('验证通过'); 
 					uni.request({
 						url: this.globalUrl + '/comments/report',
 						data: {
 							id:this.id,
 							behavior:this.model.payType,
-							content:this.model.intro
+							content:this.modelIntro
 						},
 						method: 'POST',
 						header: {
@@ -280,8 +288,14 @@
 	padding: 32rpx 28rpx;
 }
 .bbutton{
-	background-color: rgba(237, 239, 242, 1) !important;
 	border-radius: 27px;
+	height:98rpx;
+	line-height: 98rpx;
+	font-size: 32rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #303133;
+	margin:82rpx 0 0 0
 }
 button::after {
 	border: none;

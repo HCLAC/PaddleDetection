@@ -523,7 +523,7 @@ export default {
 								duration: 2000
 							})
 						}else{
-							if(res.data.code == 500 || 15003){
+							if(res.data.code != 0){
 								uni.showToast({
 									title: '评论不能为空',
 									icon:'none',
