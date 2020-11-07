@@ -23,17 +23,22 @@
 					</u-radio-group>
 				</u-form-item>
 				<!-- 内容 -->
-				<u-form-item :label-position="labelPosition" :border-bottom="false" prop="intro">
+				<u-form-item class="formItem" :label-position="labelPosition" :border-bottom="false" prop="intro">
+					
 					<textarea
 					class="textArea"
 					
 					:clearable="false"  
 					placeholder="为帮助审核人员更加快速处理，请补充违规内容出现位置等详细信息" 
+					
 					maxlength="140"  
 					:style="{background: customStyleInput.background}" 
 					v-model="modelIntro" 
 					/>
 				</u-form-item>
+				<view class="textNum">
+					{{number}}/140
+				</view>
 			</u-form>
 			<button class="bbutton" @click="submit" :style="{background: customStyle.background}"  >提交举报</button>
 		</view>
@@ -45,6 +50,7 @@
 		data() {
 			let that = this;
 			return {
+				number:0,
 				id:'',
 				model: {
 					intro: '',
@@ -130,7 +136,8 @@
 		watch:{
 			modelIntro(val){
 				console.log(val.length)
-				if(val.length && val.length > 4){
+				this.number = val.length
+				if(val.length && val.length > 0 ){
 						this.customStyle.background = '#FFE512';
 					}else {
 						this.customStyle.background = '#EDEFF2';
@@ -154,7 +161,7 @@
 			// 保存
 			submit() {
 				let introLength = this.modelIntro.length
-				if (introLength > 4) {
+				if (introLength > 0) {
 					// console.log('验证通过'); 
 					uni.request({
 						url: this.globalUrl + '/comments/report',
@@ -280,12 +287,26 @@
 	}
 	
 }
+
 .textArea{
 	width: 638rpx;
 	height: 394rpx;
 	background: #F8F8F8;
+	margin-top: 32rpx;
 	border-radius: 8px;
 	padding: 32rpx 28rpx;
+	line-height: 42rpx;
+}
+.textNum{
+	position: absolute;
+	right: 56rpx;
+	top: 900rpx;
+	
+	font-size: 28rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #C9CAD1;
+	line-height: 28rpx;
 }
 .bbutton{
 	border-radius: 27px;
@@ -295,7 +316,7 @@
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #303133;
-	margin:82rpx 0 0 0
+	margin:80rpx 0 0 0
 }
 button::after {
 	border: none;

@@ -2,18 +2,22 @@
 	<view class="mask" :class="maskState===0 ? 'none' : maskState===1 ? 'show' : ''" @click="toggleMask">
 		<view class="mask-content"  @click.stop.prevent="stopPrevent">
 			<view class="mask-content-topbar">
-				<view class="left" @click="toggleMask">取消</view>
-				<view class="right" @click="pubComment">发布</view>
+				<view class="left" >
+					<view class="mask-content-input">
+						<textarea class="textarea"
+							v-model="content"
+							:placeholder="placeholder"
+							:cursor-spacing = "100"
+							:show-confirm-bar = "false"
+							:focus="focus"
+							:auto-height="true"
+							maxlength="140"></textarea>
+					</view>
+				</view>
+				
+				<view class="right" @click="pubComment">发送</view>
 			</view>
-			<view class="mask-content-input">
-				<textarea class="textarea"
-					v-model="content"
-					:placeholder="placeholder"
-					:cursor-spacing = "100"
-					:show-confirm-bar = "false"
-					:focus="focus"
-					maxlength="140"></textarea>
-			</view>
+			
 		</view>
 	</view>
 </template>
@@ -90,33 +94,40 @@
 			flex-direction: column;
 			.mask-content-topbar{
 				display: flex;
-				flex-direction: row;
+				align-items: center;
+				// flex-direction: row;
 				justify-content: space-between;
-				padding: 20upx 30upx 10upx;
-				font-size: 32upx;
+				padding: 16rpx 32rpx 14rpx;
+				font-size: 28rpx;
 				.left{
-					padding: 10upx 0upx;
+					// padding: 10upx 0upx;
 					color: $font-color-base;
 				}
 				.right{
-					padding: 10upx 100upx;
+					// padding: 10upx 100upx;
 					border-radius: 6upx;
-					color: #FFFFFF;
+					color: #0091FF;
 					font-weight: 500;
-					background-color: $base-color;
+					// background-color: $base-color;
 				}
 			}
 			.mask-content-input{
-				width: 718upx;//如果textarea的宽带有问题可以把width改为100%试试
+				// width: 718upx;//如果textarea的宽带有问题可以把width改为100%试试
 				// width: 100%;
-				padding: 10upx 16upx 20upx;
+				// padding: 10upx 16upx 20upx;
 				.textarea {
-					height: 100px;
-					width: 686upx;//如果textarea的宽带有问题可以把width改为100%试试
+					width: 590rpx;
+					height: 28rpx;
+					background: #F8F8F8;
+					border-radius: 4px;
+					padding: 20rpx 16rpx;
+					line-height: 68rpx;
+					// height: 100px;
+					// width: 686upx;//如果textarea的宽带有问题可以把width改为100%试试
 					// width: 100%;
-					padding: 16upx;
-					border:2upx solid #d5d5d6;
-					border-radius: 8upx;
+					// padding: 20rpx 16rpx;
+					// border:2upx solid #d5d5d6;
+					// border-radius: 8upx;
 				}
 			}
 		}
