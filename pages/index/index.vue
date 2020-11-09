@@ -117,7 +117,7 @@
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<view class="imgBox">
-											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index"  mode="widthFix">
+											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"  mode="widthFix">
 												<view class="videoIcon" v-if="item.type == 4">
 													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
 												</view>
@@ -157,7 +157,7 @@
 								<view class="" @click="onPageJump" :id="item.article_id">
 									<view class="demo-top">
 										<view class="imgBox">
-											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index"  mode="widthFix">
+											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"  mode="widthFix">
 												<view class="videoIcon" v-if="item.type == 4">
 													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
 												</view>
