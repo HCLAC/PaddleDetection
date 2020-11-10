@@ -1,5 +1,5 @@
 <template>
-	<view class="mask" :class="maskState===0 ? 'none' : maskState===1 ? 'show' : ''" @click="toggleMask">
+	<view @touchmove.stop.prevent="" class="mask" :class="maskState===0 ? 'none' : maskState===1 ? 'show' : ''" @click="toggleMask">
 		<view class="mask-content"  @click.stop.prevent="stopPrevent">
 			<view class="mask-content-topbar">
 				<view class="left" >
@@ -10,7 +10,8 @@
 							:cursor-spacing = "100"
 							:show-confirm-bar = "false"
 							:focus="focus"
-							:auto-height="true"
+							:auto-height="autoHeight"
+							@input="inputValue"
 							maxlength="140"></textarea>
 					</view>
 				</view>
@@ -35,13 +36,22 @@
 			return {
 				maskState: 0,
 				content: '',
-				focus: true
+				focus: true,
+				autoHeight:false
 			};
 		},
 		created() {
 		},
 		methods: {
 			stopPrevent(){
+			},
+			inputValue(e){
+				console.log('eeeee',e.detail.value.length)
+				if(e.detail.value.length>18){
+					this.autoHeight = true
+				}else{
+					this.autoHeight = false
+				}
 			},
 			toggleMask(type){
 				let timer = type === 'show' ? 10 : 300;

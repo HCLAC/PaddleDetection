@@ -1363,7 +1363,7 @@ view {
 	position: relative;
 }
  */
-
+image{will-change: transform}
 .demoImage {
 	width: 100%;
 	min-height: 300rpx;
