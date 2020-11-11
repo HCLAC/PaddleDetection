@@ -24,16 +24,16 @@
 				</u-form-item>
 				<!-- 昵称 -->
 				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}"   :label-position="labelPosition" label="昵　称:" label-width="120" prop="name">
-					<u-input :border="border"  v-model="model.name" type="text"></u-input>
+					<u-input :customStyle="customStyleinput" :border="border"  v-model="model.name" type="text"></u-input>
 				</u-form-item>
 				<!-- 性别 -->
 				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" :label-position="labelPosition" label="性　别:" label-width="120" prop="sex">
-					<u-input :border="border" :disabled="true"  :select-open="actionSheetShow" v-model="model.sex" :placeholder="sex" placeholder-style="color:#303133" @click="actionSheetShow = true"></u-input>
+					<u-input :customStyle="customStyleinput" :border="border" :disabled="true"  :select-open="actionSheetShow" v-model="model.sex" :placeholder="sex" placeholder-style="color:#303133" @click="actionSheetShow = true"></u-input>
 					<image class="moreRight" src="../../static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 				<!-- 常住地 -->
 				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" :label-position="labelPosition" label="常住地:" prop="region" label-width="120">
-					<u-input :border="border" :disabled="true"   :select-open="pickerShow" v-model="model.region" :placeholder="region" placeholder-style="color:#303133" @click="pickerShow = true"></u-input>
+					<u-input :customStyle="customStyleinput" :border="border" :disabled="true"   :select-open="pickerShow" v-model="model.region" :placeholder="region" placeholder-style="color:#303133" @click="pickerShow = true"></u-input>
 					<image class="moreRight" src="../../static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 			</u-form>
@@ -127,6 +127,9 @@
 					borderRadius: '26px',
 					margin:'82rpx 0 0 0'
 					
+				},
+				customStyleinput:{
+					margin:'16rpx 0'
 				}
 			};
 		},
@@ -355,6 +358,9 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	image{
+		margin: 24rpx 0;
+	}
 }
 .avatarText{
 	height: 28rpx;
