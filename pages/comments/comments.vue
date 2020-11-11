@@ -10,7 +10,8 @@
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
-		<mescroll-uni  ref="mescrollRef"  @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<u-loading :show="show" class="loading"></u-loading>
+		<mescroll-uni v-if='!show' ref="mescrollRef"  @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="replyList">
 				<view class="replyContent">
 					<view class="reply" v-for="(item,index) in commentsList" :key="index">
@@ -53,7 +54,8 @@
 				commentsList:[],
 				downOption:{
 					use: false
-				}
+				},
+				show:false
 			};
 		},
 		onLoad(e) {
@@ -99,7 +101,13 @@
 								url: '../login/login'
 							});
 						}else{
-							this.getComments()
+							this.show = true
+							setTimeout(()=>{
+								this.getComments()
+								this.show = false
+							},30)
+							
+							
 						}
 					}
 				});
@@ -266,6 +274,12 @@
 	margin: 0 8px;
 }
 
+.loading{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
 
 .replyList{
 	margin-top: 208rpx;

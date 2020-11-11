@@ -26,20 +26,22 @@
 				<u-form-item class="formItem" :label-position="labelPosition" :border-bottom="false" prop="intro">
 					
 					<textarea
-					class="textArea"
+						class="textArea"
+						
+						:clearable="false"  
+						placeholder="为帮助审核人员更加快速处理，请补充违规内容出现位置等详细信息" 
+						placeholder-style="font-size:28rpx;line-height:42rpx"
+						maxlength="140"  
+						:style="{background: customStyleInput.background}" 
+						v-model="modelIntro" 
+					>
+					</textarea>
 					
-					:clearable="false"  
-					placeholder="为帮助审核人员更加快速处理，请补充违规内容出现位置等详细信息" 
-					
-					maxlength="140"  
-					:style="{background: customStyleInput.background}" 
-					v-model="modelIntro" 
-					/>
 				</u-form-item>
-				<view class="textNum">
-					{{number}}/140
-				</view>
 			</u-form>
+			<view class="textNum">
+				{{number}}/140
+			</view>
 			<button class="bbutton" @click="submit" :style="{background: customStyle.background}"  >提交举报</button>
 		</view>
 	</view>
@@ -287,7 +289,6 @@
 	}
 	
 }
-
 .textArea{
 	width: 638rpx;
 	height: 394rpx;
@@ -296,17 +297,21 @@
 	border-radius: 8px;
 	padding: 32rpx 28rpx;
 	line-height: 42rpx;
+	font-size: 28rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #303133;
 }
 .textNum{
 	position: absolute;
-	right: 56rpx;
-	top: 900rpx;
-	
+	margin-top: -64rpx;
+	margin-left: 590rpx;
 	font-size: 28rpx;
 	font-family: PingFangSC-Regular, PingFang SC;
 	font-weight: 400;
 	color: #C9CAD1;
 	line-height: 28rpx;
+	z-index: 9999999;
 }
 .bbutton{
 	border-radius: 27px;
