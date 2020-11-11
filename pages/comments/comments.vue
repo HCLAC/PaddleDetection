@@ -22,7 +22,7 @@
 								<view class="" style="display: flex;align-items: center;">
 									<view class="userName">{{item.account_name}}</view>
 									<view class="replyTime">
-										{{item.create_at}}
+										{{item.create_at.slice(0,10)}}
 									</view>
 								</view>
 								<view class="">
