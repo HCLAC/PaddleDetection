@@ -90,12 +90,12 @@
 						<view class="myReply" >
 							<image class="userImg" src="../../static/images/userImg.svg" mode="" v-if="userInfo == null"></image>
 							<image class="userImg" :src="userInfo.avatar" mode="" v-if="userInfo != null"></image>
-							<!-- <comment 
+							<comment 
 								ref="comment" 
 								:placeholder="'快来写下你的评论吧'" 
 								@pubComment="pubComment">
-							</comment> -->
-							<!-- <u-input 
+							</comment>
+							<u-input 
 								class="replyInput"
 								placeholder="写个回复走个心" 
 								placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
@@ -105,28 +105,7 @@
 								@click="toggleMask('show')"
 							>
 								
-							</u-input> -->
-							<textarea   
-								style="position: relative;bottom: 0;height: 140rpx;"  
-								:style="textareaStyle"  
-								:auto-height="true"          
-								:adjust-position="false"   
-								:hold-keyboard="true"   
-								cursor-spacing="0"   
-								maxlength="100"   
-								placeholder="写个回复走个心"
-								placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
-								@focus="textareaFocus"   
-								@blur="textareaBlur"  
-							/>
-							<!-- <u-input
-								class="replyInput"
-								placeholder="写个回复走个心" 
-								placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
-								confirmType="send"
-								:clearable="false"
-							>
-							</u-input> -->
+							</u-input>
 						</view>
 						<view class="reply" v-for="(item,index) in commentsList" :key="index">
 							<view class="replyTop" >
