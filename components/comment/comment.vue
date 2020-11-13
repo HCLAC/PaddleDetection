@@ -1,7 +1,7 @@
 <template>
 	<view @touchmove.stop.prevent="" class="mask" :class="maskState===0 ? 'none' : maskState===1 ? 'show' : ''" @click="toggleMask">
 		<view class="mask-content"  @click.stop.prevent="stopPrevent">
-			<view class="mask-content-topbar">
+			<view class="mask-content-topbar" >
 				<view class="mask-content-input">
 					<textarea class="textarea"
 						v-model="content"
@@ -56,7 +56,7 @@
 				let timer = type === 'show' ? 10 : 300;
 				let	state = type === 'show' ? 1 : 0;
 				// this.maskState = 2;
-				setTimeout(()=>{
+				// setTimeout(()=>{
 					this.maskState = state;
 					
 					// #ifdef APP-PLUS
@@ -68,7 +68,7 @@
 					// #ifndef APP-PLUS
 					this.focus = this.maskState ? true : false;
 					// #endif
-				}, timer)
+				// }, timer)
 			},
 			pubComment() {
 				this.$emit('pubComment',this.content);
