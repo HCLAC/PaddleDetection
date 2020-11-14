@@ -83,6 +83,28 @@
 					
 				</view>
 				<view class="replyBox">
+					<view class="commentInput"
+						:style="textareaStyle"
+						v-if="textareafocus"
+					 >
+					  
+						<textarea 
+							class="inputK" 
+							v-model="content" 
+							placeholder="快来写下你的评论吧" 
+							:show-confirm-bar="false" 
+							:focus="textareafocus" 
+							@blur="inputBlur"
+							@focus="inputFocus"
+							:auto-height="autoHeight"
+							@input="inputValue"
+							:adjust-position="false"
+							maxlength="140"
+						/>
+						<view class="send">
+							发送
+						</view>
+					</view>
 					<view class="replyText">
 						回复
 					</view>
@@ -90,12 +112,12 @@
 						<view class="myReply" >
 							<image class="userImg" src="../../static/images/userImg.svg" mode="" v-if="userInfo == null"></image>
 							<image class="userImg" :src="userInfo.avatar" mode="" v-if="userInfo != null"></image>
-							<comment 
+							<!-- <comment 
 								ref="comment" 
 								:placeholder="'快来写下你的评论吧'" 
 								@pubComment="pubComment">
-							</comment>
-							<u-input 
+							</comment> -->
+							<!-- <u-input 
 								class="replyInput"
 								placeholder="写个回复走个心" 
 								placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
@@ -103,9 +125,19 @@
 								:clearable="false"
 								:disabled="true"
 								@click="toggleMask('show')"
+							> -->
+							
+							<u-input
+								class="replyInput"
+								placeholder="写个回复走个心" 
+								placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
+								confirmType="send"
+								:clearable="false"
+								:disabled="true"
+								@click="commentInput"
 							>
-								
 							</u-input>
+							
 						</view>
 						<view class="reply" v-for="(item,index) in commentsList" :key="index">
 							<view class="replyTop" >
@@ -135,10 +167,12 @@
 					<view class="moreReply" v-if="total != 0" @click="toMoreReply">
 						查看全部{{total}}条回复
 					</view>
+					
 				</view>
 				
 				<view class="safeBox"></view>
 			</view>
+			
 			<view class="bottom">
 				<!-- 分割线 -->
 				<!-- <view class="bottomLine">
@@ -206,7 +240,14 @@ export default {
 			commentsList:[],
 			total:'',
 			userInfo:[],
-			focus:false
+			focus:false,
+			inputShow:false,
+			autoHeight:false,
+			textareaStyle:{
+				position:'fixed',
+				bottom:''
+			},
+			textareafocus:false
 		};
 	},
 	onShow() {
@@ -229,6 +270,10 @@ export default {
 				this.getUserInfo()
 			}
 		});
+	},
+	onLoad() {
+		this.animation = uni.createAnimation()  
+		// 创建动画实例
 	},
 	created() {
 		_this = this;
@@ -493,13 +538,29 @@ export default {
 		toggleMask(type){
 			this.$refs.comment.toggleMask(type);
 		},
-		textareaFocus(e) {  
-						   //点击输入框时，获取键盘高度，设置距离底部的高度为键盘的高度  
-			this.textareaStyle= 'bottom: '+e.detail.height+'px;';  
-		},  
-		textareaBlur(e){  
-							//失去焦点时，设置距离底部为0  
-			this.inputClassParent = 'bottom: 0px;';  
+		commentInput(){
+			this.textareafocus = true
+			
+		},
+		inputBlur(){
+			// this.inputShow = false
+			this.textareafocus = false
+		},
+		inputFocus(e){
+			console.log('e.detail.height',e.detail.height)
+			// this.inputShow = true
+			this.textareaStyle.bottom = e.detail.height+'px';
+			
+			// this.textareaStyle.transform = 'translateY('+e.detail.height+'px'+')'
+			
+		},
+		inputValue(e){
+			console.log('eeeee',e.detail.value.length)
+			if(e.detail.value.length>18){
+				this.autoHeight = true
+			}else{
+				this.autoHeight = false
+			}
 		},
 		pubComment(e){
 			console.log('eee',e)
@@ -1353,6 +1414,27 @@ html{
 		font-weight: 400;
 		color: #0091FF;
 		line-height: 28rpx;
+	}
+}
+// 评论框
+.commentInput{
+	width: 100%;
+	background: #FFFFFF;
+	display: flex;
+	align-items: center;
+	.inputK{
+		height: 68rpx;
+		width: 590rpx;
+	}
+	.send{
+		width: 64rpx;
+		height: 32rpx;
+		font-size: 32rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #0091FF;
+		line-height: 32rpx;
+
 	}
 }
 .bottomLine{
