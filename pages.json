@@ -1,6 +1,7 @@
 {
 	"easycom": {
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+		
 	},
 
 
@@ -189,6 +190,15 @@
 		    }
 		    
 		}
+        ,{
+            "path" : "pages/cropper-default-old/cropper-default-old",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",

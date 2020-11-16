@@ -46,7 +46,11 @@
 </template>
 
 <script>
+	import tuiImageCropper from '../../components/tui-image-cropper/tui-image-cropper.vue'
 	export default {
+		comments:{
+			tuiImageCropper
+		},
 		data() {
 			let that = this;
 			return {
@@ -137,34 +141,25 @@
 			this.$refs.uForm.setRules(this.rules);
 		},
 		created() {
+			
 			// 监听从裁剪页发布的事件，获得裁剪结果
-			uni.$on('uAvatarCropper', path => {
+			// uni.$on('uAvatarCropper', path => {
 				
-				let base ='data:image/png;base64,'+uni.getFileSystemManager().readFileSync(path,'base64')
-				this.avatar = base
+			// 	let base ='data:image/png;base64,'+uni.getFileSystemManager().readFileSync(path,'base64')
+			// 	this.avatar = base
+			uni.$on('cropper', e => {
+				console.log('eeee',e)
+				let base ='data:image/png;base64,'+uni.getFileSystemManager().readFileSync(e.url,'base64')
+				console.log('base',base)
+				this.avatar = base	
 				
-				// uni.getFileInfo({
-				// 	filePath: path,
-				// 	success: res=>{
-				// 		console.log(res)
-				// 		// debugger
-				// 	}
-				// })
-				// 可以在此上传到服务端
-				// uni.uploadFile({
-				// 	url: this.globalUrl+ '/usr/avatar',
-				// 	filePath: base,
-				// 	name: 'avator',
-				// 	formData: this.sendDate,
-				// 	header:{"Content-Type": "multipart/form-data"},
-				// 	complete: (res) => {
-				// 		console.log('头像上传',res);
-				// 	}
-				// });
 			})
 		},
-		onLoad() {
+		
+		onLoad(e) {
 			this.getUserInfo()
+			
+			
 		},
 		methods:{
 			// 获取用户现存信息
@@ -203,18 +198,31 @@
 			},
 			// 头像裁剪
 			chooseAvatar() {
-				this.$u.route({
-					url: '/uview-ui/components/u-avatar-cropper/u-avatar-cropper',
-					// 内部已设置以下默认参数值，可不传这些参数
-					params: {
-						// 输出图片宽度，高等于宽，单位px
-						destWidth: 300,
-						// 裁剪框宽度，高等于宽，单位px
-						rectWidth: 200,
-						// 输出的图片类型，如果'png'类型发现裁剪的图片太大，改成"jpg"即可
-						fileType: 'jpg',
+				// 新上传头像方法
+				uni.chooseImage({
+					count: 1,
+					sizeType: ['original', 'compressed'],
+					sourceType: ['album', 'camera'],
+					success: res => {
+						const tempFilePaths = res.tempFilePaths[0];
+						uni.navigateTo({
+							url:'../cropper-default-old/cropper-default-old?src=' + tempFilePaths
+						})
 					}
 				})
+				// 旧上传头像方法
+				// this.$u.route({
+				// 	url: '/uview-ui/components/u-avatar-cropper/u-avatar-cropper',
+				// 	// 内部已设置以下默认参数值，可不传这些参数
+				// 	params: {
+				// 		// 输出图片宽度，高等于宽，单位px
+				// 		destWidth: 300,
+				// 		// 裁剪框宽度，高等于宽，单位px
+				// 		rectWidth: 200,
+				// 		// 输出的图片类型，如果'png'类型发现裁剪的图片太大，改成"jpg"即可
+				// 		fileType: 'jpg',
+				// 	}
+				// })
 			},
 			// 点击actionSheet回调
 			actionSheetCallback(index) {

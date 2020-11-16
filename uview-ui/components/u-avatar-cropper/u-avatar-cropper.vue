@@ -205,6 +205,7 @@ export default {
 						});
 					} else {
 						uni.$emit('uAvatarCropper', path);
+						console.log(path)
 						this.$u.route({
 							type: 'back'
 						});

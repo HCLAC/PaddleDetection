@@ -52,13 +52,13 @@
 					this.autoHeight = false
 				}
 			},
+			
 			toggleMask(type){
 				let timer = type === 'show' ? 10 : 300;
 				let	state = type === 'show' ? 1 : 0;
 				// this.maskState = 2;
 				// setTimeout(()=>{
 					this.maskState = state;
-					
 					// #ifdef APP-PLUS
 					// 安卓app软键盘自动弹出有点问题，暂时还没有很好的解决方案，所以就禁止安卓app软键盘自动弹出，如果哪位朋友有好的解决方案可以在评论里告诉大家参考一下
 					if (uni.getSystemInfoSync().platform == "ios") {
@@ -68,6 +68,7 @@
 					// #ifndef APP-PLUS
 					this.focus = this.maskState ? true : false;
 					// #endif
+					
 				// }, timer)
 			},
 			pubComment() {
@@ -90,8 +91,8 @@
 		width: 100%;
 		background: rgba(0,0,0,0);
 		z-index: 9995;
-		transition: .1s;
-		-webkit-transition: .1s; 
+		transition: .5s;
+		-webkit-transition: .5s; 
 		.mask-content{
 			width: 100%;
 			background: #FFFFFF;
