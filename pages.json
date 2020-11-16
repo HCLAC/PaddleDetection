@@ -151,14 +151,7 @@
             "style" : {
 				"navigationStyle": "custom"
 			}
-        },
-		{
-			"path": "uview-ui/components/u-avatar-cropper/u-avatar-cropper",
-			"style": {
-				"navigationBarTitleText": "头像裁剪",
-				"navigationBarBackgroundColor": "#000000"
-			}
-		}
+        }
         ,{
             "path" : "pages/hotSearchRank/hotSearchRank",
             "style" :                                                                                    
