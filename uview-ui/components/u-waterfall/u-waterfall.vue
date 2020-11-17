@@ -172,6 +172,7 @@ export default {
 	flex: 1;
 	flex-direction: column;
 	height: auto;
+	margin-left: 10rpx;
 }
 
 .u-image {
