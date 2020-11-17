@@ -38,8 +38,22 @@
 		</view>
 		<view class="lineDriver"></view>
 		<view  :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" :style="{top: styleFix.top}">
-			<view style="width: 60%;">
-				<v-tabs
+			<view style="width: 60%;display: flex;">
+				<view class="tripBox" @click="tripChange">
+					<view :class="tabCurrent == 0 ? 'tripText' : 'tripText1'">
+						参考行程
+					</view>
+					<view class="tripLine" v-if="tabCurrent == 0">
+					</view>
+				</view>
+				<view class="serviceBox" @click="serviceChange">
+					<view :class="tabCurrent == 1 ? 'tripText' : 'tripText1'">
+						服务说明
+					</view>
+					<view class="serviceLine" v-if="tabCurrent == 1">
+					</view>
+				</view>
+				<!-- <v-tabs
 					inactive-color="#909399"
 					lineHeight="12rpx"
 					lineColor="#FFE512"
@@ -53,7 +67,7 @@
 					:is-scroll="false"
 					:current="tabCurrent"
 					@change="tabChange"
-				></v-tabs>
+				></v-tabs> -->
 			</view>
 		</view>
 		<view class="linePlan">
@@ -347,19 +361,32 @@ export default {
 		
 	// },
 	methods: {
-		tabChange(index) {
-			console.log(index,'---index')
-			this.tabCurrent = index;
-			if(this.tabCurrent ===1){
-				uni.pageScrollTo({
-				    scrollTop: 999999,
-				})
-			}else{
-				uni.pageScrollTo({
-				    scrollTop: 0,
-				})
-			}
+		// 切换
+		tripChange(){
+			this.tabCurrent = 0
+			uni.pageScrollTo({
+				scrollTop: 0,
+			})
 		},
+		serviceChange(){
+			this.tabCurrent = 1
+			uni.pageScrollTo({
+				scrollTop: 999999,
+			})
+		},
+		// tabChange(index) {
+		// 	console.log(index,'---index')
+		// 	this.tabCurrent = index;
+		// 	if(this.tabCurrent ===1){
+		// 		uni.pageScrollTo({
+		// 		    scrollTop: 999999,
+		// 		})
+		// 	}else{
+		// 		uni.pageScrollTo({
+		// 		    scrollTop: 0,
+		// 		})
+		// 	}
+		// },
 		change(e) {
 			this.current = e.detail.current;
 		},
@@ -941,5 +968,47 @@ export default {
 	height: 110rpx;
 	padding-top: 15rpx;
 	background: #ffffff;
+}
+.tripBox{
+	margin-top: 28rpx;
+	margin-left: 38rpx;
+}
+.tripText{
+	width: 128rpx;
+	height: 32rpx;
+	font-size: 32rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #303133;
+	line-height: 32rpx;
+
+}
+.tripText1{
+	width: 104rpx;
+	height: 26rpx;
+	font-size: 26rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #909399;
+	line-height: 26rpx;
+
+}
+.tripLine{
+	width: 128rpx;
+	height: 12rpx;
+	background: #FFE512;
+	border-radius: 6px;
+	margin-top: -6rpx;
+}
+.serviceBox{
+	margin-top: 28rpx;
+	margin-left: 64rpx;
+}
+.serviceLine{
+	width: 128rpx;
+	height: 12rpx;
+	background: #FFE512;
+	border-radius: 6px;
+	margin-top: -6rpx;
 }
 </style>

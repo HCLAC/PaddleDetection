@@ -744,7 +744,7 @@ export default {
 }
 .fixTabs {
 	position: fixed;
-	top: 126rpx;
+	top: 146rpx;
 	z-index: 2;
 }
 .noFix {
