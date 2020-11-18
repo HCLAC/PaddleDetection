@@ -43,6 +43,7 @@
 				{{number}}/140
 			</view>
 			<button class="bbutton" @click="submit" :style="{background: customStyle.background}"  >提交举报</button>
+			<u-modal v-model="show" :content="content" @confirm="confirm" z-index="999999" :show-title="false" :show-cancel-button="false" confirm-text="OK" confirm-color="#007AFF" ></u-modal>
 		</view>
 	</view>
 </template>
@@ -125,7 +126,9 @@
 					background: '#f8f8f8',
 					
 				},
-				disabled:true
+				disabled:true,
+				show: false,
+				content: '提交成功'
 			}
 		},
 		onReady() {
@@ -178,12 +181,13 @@
 						},
 						success: res => {
 							console.log('举报信息',res)
-							uni.showToast({
-								title: '举报成功',
-								icon:'none',
-								duration: 2000
-							})
-							uni.navigateBack({								delta: 1							});
+							// uni.showToast({
+							// 	title: '举报成功',
+							// 	icon:'none',
+							// 	duration: 2000
+							// })
+							this.show = true
+							
 						}
 					});
 					
@@ -195,6 +199,12 @@
 						duration: 2000
 					})
 				}
+			},
+			confirm(){
+				console.log('1111111111111')
+				uni.navigateBack({
+					delta: 1
+				});
 			},
 			// radio选择发生变化
 			radioGroupChange(e) {
@@ -311,7 +321,7 @@
 	font-weight: 400;
 	color: #C9CAD1;
 	line-height: 28rpx;
-	z-index: 9999999;
+	z-index: 99999;
 }
 .bbutton{
 	border-radius: 27px;
