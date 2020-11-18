@@ -753,8 +753,8 @@ export default {
 	width: 100%;
 	padding-left: 26rpx;
 	position: fixed;
-	top: 136rpx;
-	padding-top: 14rpx;
+	top: 126rpx;
+	padding-top: 38rpx;
 	z-index: 2;
 	display: flex;
 	align-items: center;
@@ -775,7 +775,7 @@ export default {
 	margin-left: 22rpx;
 }
 .recommendedText{
-	width: 64rpx;
+	// width: 64rpx;
 	height: 32rpx;
 	font-size: 32rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
@@ -785,7 +785,7 @@ export default {
 
 }
 .recommendedText1{
-	width: 52rpx;
+	// width: 52rpx;
 	height: 26rpx;
 	font-size: 26rpx;
 	font-family: PingFangSC-Regular, PingFang SC;

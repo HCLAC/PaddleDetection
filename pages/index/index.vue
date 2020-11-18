@@ -425,10 +425,10 @@ export default {
 			title: '加载中',
 
 			success: () => {
-				if (this.item == undefined || null) {
+				// if (this.item == undefined || null) {
 					this.getBanner();
 					this.getAdress();
-				}
+				// }
 			}
 		});
 

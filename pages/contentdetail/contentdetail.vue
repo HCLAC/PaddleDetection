@@ -164,7 +164,7 @@
 							</view>
 						</view>
 					</view>
-					<view class="moreReply" v-if="total != 0" @click="toMoreReply">
+					<view class="moreReply" v-if="total >= 3" @click="toMoreReply">
 						查看全部{{total}}条回复
 					</view>
 					

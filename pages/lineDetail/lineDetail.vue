@@ -974,7 +974,7 @@ export default {
 	margin-left: 38rpx;
 }
 .tripText{
-	width: 128rpx;
+	// width: 128rpx;
 	height: 32rpx;
 	font-size: 32rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
@@ -984,7 +984,7 @@ export default {
 
 }
 .tripText1{
-	width: 104rpx;
+	// width: 104rpx;
 	height: 26rpx;
 	font-size: 26rpx;
 	font-family: PingFangSC-Regular, PingFang SC;

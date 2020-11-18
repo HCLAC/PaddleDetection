@@ -697,7 +697,7 @@ export default {
 	text-align: center;
 }
 .favText{
-	width: 72rpx;
+	// width: 72rpx;
 	height: 36rpx;
 	font-size: 36rpx;
 	font-family: PingFangSC-Semibold, PingFang SC;
@@ -707,7 +707,7 @@ export default {
 	
 }
 .favText1{
-	width: 56rpx;
+	// width: 56rpx;
 	height: 28rpx;
 	font-size: 28rpx;
 	font-family: PingFangSC-Regular, PingFang SC;
@@ -744,8 +744,11 @@ export default {
 }
 .fixTabs {
 	position: fixed;
-	top: 146rpx;
+	top: 126rpx;
 	z-index: 2;
+	height: 98rpx;
+	padding-top: 48rpx;
+	display: flex;
 }
 .noFix {
 	z-index: 1000;
