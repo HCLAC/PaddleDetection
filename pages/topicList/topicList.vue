@@ -67,19 +67,21 @@
 				<view class="touring" id="touring">
 					<!-- 推荐 -->
 					<view class="wrap" v-if="tabCurrent == 0 ">
-						<view class="left">
-							<view class="demo-warter" v-for="(item, index) in recommendList" :key="index" v-if="index % 2 == 0">
-								<view class="" >
-									<view class="demo-top" @click="onPageJump" :id="item.article_id">
-										<view class="imgBox" >
-											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-												<view class="videoIcon" v-if="item.type == 4">
-													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+						<u-waterfall v-model="recommendList" ref="uWaterfall">
+							<template v-slot:left="{ leftList }">
+								<view class="demo-warter" v-for="(item, index) in leftList" :key="index" >
+									<view class="" @click="onPageJump" :id="item.article_id">
+										<view class="demo-top">
+											<view class="imgBox">
+												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"  mode="widthFix">
+													<view class="videoIcon" v-if="item.type == 4">
+														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+													</view>
+												</image>
+												<view class="adress">
+													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+													<view class="adressText">{{ item.location }}</view>
 												</view>
-											</image>
-											<view class="adress">
-												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-												<view class="adressText">{{ item.location }}</view>
 											</view>
 										</view>
 										<view class="titleTip">
@@ -96,7 +98,7 @@
 											<image class="userHeard" :src="item.avatar"></image>
 											<view class="userNikename">{{ item.author_name }}</view>
 										</view>
-										<view class="count" @click="clickLike(item, index)">
+										<view class="count" @click="clickLeftLike(item,index) in leftList "  >
 											<view class="countImg">
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
@@ -105,21 +107,21 @@
 										</view>
 									</view>
 								</view>
-							</view>
-						</view>
-						<view class="right">
-							<view class="demo-warter" v-for="(item, index) in recommendList" :key="index" v-if="index % 2 == 1">
-								<view class="">
-									<view class="demo-top"  @click="onPageJump" :id="item.article_id">
-										<view class="imgBox">
-											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-												<view class="videoIcon" v-if="item.type == 4">
-													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+							</template>
+							<template v-slot:right="{ rightList }">
+								<view class="demo-warter" v-for="(item, index) in rightList" :key="index" >
+									<view class="" @click="onPageJump" :id="item.article_id">
+										<view class="demo-top">
+											<view class="imgBox">
+												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"  mode="widthFix">
+													<view class="videoIcon" v-if="item.type == 4">
+														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+													</view>
+												</image>
+												<view class="adress">
+													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+													<view class="adressText">{{ item.location }}</view>
 												</view>
-											</image>
-											<view class="adress">
-												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-												<view class="adressText">{{ item.location }}</view>
 											</view>
 										</view>
 										<view class="titleTip">
@@ -136,7 +138,7 @@
 											<image class="userHeard" :src="item.avatar"></image>
 											<view class="userNikename">{{ item.author_name }}</view>
 										</view>
-										<view class="count" @click="clickLike(item, index)">
+										<view class="count" @click="clickRightLike(item,index) in rightList">
 											<view class="countImg">
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
@@ -145,24 +147,26 @@
 										</view>
 									</view>
 								</view>
-							</view>
-						</view>
+							</template>
+						</u-waterfall>
 					</view>
 					<!-- 最新 -->
 					<view class="wrap" v-if="tabCurrent == 1 ">
-						<view class="left">
-							<view class="demo-warter" v-for="(item, index) in latestList" :key="index" v-if="index % 2 == 0">
-								<view class="" >
-									<view class="demo-top" @click="onPageJump" :id="item.article_id">
-										<view class="imgBox" >
-											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-												<view class="videoIcon" v-if="item.type == 4">
-													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+						<u-waterfall v-model="latestList" ref="uWaterfall">
+							<template v-slot:left="{ leftList }">
+								<view class="demo-warter" v-for="(item, index) in leftList" :key="index" >
+									<view class="" @click="onPageJump" :id="item.article_id">
+										<view class="demo-top">
+											<view class="imgBox">
+												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"  mode="widthFix">
+													<view class="videoIcon" v-if="item.type == 4">
+														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+													</view>
+												</image>
+												<view class="adress">
+													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+													<view class="adressText">{{ item.location }}</view>
 												</view>
-											</image>
-											<view class="adress">
-												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-												<view class="adressText">{{ item.location }}</view>
 											</view>
 										</view>
 										<view class="titleTip">
@@ -179,7 +183,7 @@
 											<image class="userHeard" :src="item.avatar"></image>
 											<view class="userNikename">{{ item.author_name }}</view>
 										</view>
-										<view class="count" @click="clickLike(item, index)">
+										<view class="count" @click="clickLeftLike(item,index) in leftList "  >
 											<view class="countImg">
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
@@ -188,21 +192,21 @@
 										</view>
 									</view>
 								</view>
-							</view>
-						</view>
-						<view class="right">
-							<view class="demo-warter" v-for="(item, index) in latestList" :key="index" v-if="index % 2 == 1">
-								<view class="">
-									<view class="demo-top"  @click="onPageJump" :id="item.article_id">
-										<view class="imgBox">
-											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-												<view class="videoIcon" v-if="item.type == 4">
-													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+							</template>
+							<template v-slot:right="{ rightList }">
+								<view class="demo-warter" v-for="(item, index) in rightList" :key="index" >
+									<view class="" @click="onPageJump" :id="item.article_id">
+										<view class="demo-top">
+											<view class="imgBox">
+												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"  mode="widthFix">
+													<view class="videoIcon" v-if="item.type == 4">
+														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+													</view>
+												</image>
+												<view class="adress">
+													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+													<view class="adressText">{{ item.location }}</view>
 												</view>
-											</image>
-											<view class="adress">
-												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-												<view class="adressText">{{ item.location }}</view>
 											</view>
 										</view>
 										<view class="titleTip">
@@ -219,7 +223,7 @@
 											<image class="userHeard" :src="item.avatar"></image>
 											<view class="userNikename">{{ item.author_name }}</view>
 										</view>
-										<view class="count" @click="clickLike(item, index)">
+										<view class="count" @click="clickRightLike(item,index) in rightList">
 											<view class="countImg">
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
@@ -228,8 +232,8 @@
 										</view>
 									</view>
 								</view>
-							</view>
-						</view>
+							</template>
+						</u-waterfall>
 					</view>
 				</view>
 		
@@ -264,6 +268,7 @@ export default {
 			console.log('---',e)
 			this.id = e.id
 			this.getRecommend()
+			this.getlatest()
 			this.getTopic()
 		},
 		mounted() {
@@ -329,7 +334,7 @@ export default {
 				});
 			},
 			// 最新列表
-			getRecommend(){
+			getlatest(){
 				uni.request({
 					url: this.globalUrl + '/topics/articles/latest',
 					data: {
@@ -396,14 +401,18 @@ export default {
 			},
 			// 选项卡切换
 			recommendedChange(){
+				
+				this.getRecommend()
+				this.getlatest()
 				this.tabCurrent = 0
-				this.downCallback()
-				this.mescroll.scrollTo(0)
+				// this.mescroll.scrollTo(0)
 			},
 			latestChange(){
+				
+				this.getlatest()
+				this.getRecommend()
 				this.tabCurrent = 1
-				this.downCallback()
-				this.mescroll.scrollTo(0)
+				// this.mescroll.scrollTo(0)
 			},
 				
 			// tabChange(index) {
@@ -412,7 +421,7 @@ export default {
 			// 	this.mescroll.scrollTo(0)
 			// },
 			// 点赞
-			clickLike(e, index) {
+			clickLeftLike(e, index) {
 				console.log('qaz', e, index);
 				// debugger
 				let article = e.article_id;
@@ -436,16 +445,49 @@ export default {
 							});
 						}else{
 							if(this.tabCurrent == 0){
-								that.recommendList[index].liked = e.liked == 1 ? 0 : 1;
-								that.recommendList[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
+								this.$refs.uWaterfall.leftList[index].liked = e.liked == 1 ? 0 : 1;
+								this.$refs.uWaterfall.leftList[index].like_count = e.liked == 1 ? e.like_count - 1 : e.like_count + 1;
 							}else{
-								that.latestList[index].liked = e.liked == 1 ? 0 : 1;
-								that.latestList[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
+								this.$refs.uWaterfall.leftList[index].liked = e.liked == 1 ? 0 : 1;
+								this.$refs.uWaterfall.leftList[index].like_count = e.liked == 1 ? e.like_count - 1 : e.like_count + 1;
 							}
 						}
 						
 						
 						
+					}
+				});
+			},
+			clickRightLike(e,index) {
+				// this.$refs.uWaterfall.clickLike(e);
+				console.log(this.$refs)
+				let article = e.article_id;
+				var that = this;
+				uni.request({
+					url: this.globalUrl + '/user/liked',
+					data: {
+						article_id: article,
+						liked: e.liked == 0 ? 1 : 0
+					},
+					method: 'POST',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res => {
+						if (res.data.code != 0) {
+			
+							uni.navigateTo({
+								url: '../login/login'
+							});
+						} else {
+							if(this.tabCurrent == 0){
+								this.$refs.uWaterfall.rightList[index].liked = e.liked == 1 ? 0 : 1;
+								this.$refs.uWaterfall.rightList[index].like_count = e.liked == 1 ? e.like_count - 1 : e.like_count + 1;
+							}else{
+								this.$refs.uWaterfall.rightList[index].liked = e.liked == 1 ? 0 : 1;
+								this.$refs.uWaterfall.rightList[index].like_count = e.liked == 1 ? e.like_count - 1 : e.like_count + 1;
+							}
+						}
 					}
 				});
 			},
@@ -840,7 +882,6 @@ export default {
 .demo-warter {
 	width: 360rpx;
 	margin-top: 0;
-	margin-right: 10rpx;
 	margin-bottom: 16rpx;
 	padding-bottom: 16rpx;
 	/* position: relative; */

@@ -118,7 +118,7 @@
 					// width: 100%;
 					// padding: 10upx 16upx 20upx;
 					.textarea {
-						width: 590rpx;
+						width: 558rpx;
 						height: 28rpx;
 						background: #F8F8F8;
 						border-radius: 4px;
@@ -138,14 +138,14 @@
 					}
 				}
 				.right{
-					width: 64rpx;
+					// width: 64rpx;
 					height: 32rpx;
 					font-size: 32rpx;
 					font-family: PingFangSC-Medium, PingFang SC;
 					font-weight: 500;
 					color: #0091FF;
 					line-height: 32rpx;
-
+					margin-left: 16rpx;
 				}
 			}
 			

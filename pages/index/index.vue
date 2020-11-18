@@ -402,9 +402,7 @@ export default {
 		};
 	},
 
-	onShow() {
-		// this.getItem();
-	},
+	
 	onReady(){
 		uni.getProvider({
 			service: 'oauth',
@@ -1365,14 +1363,11 @@ view {
 	flex-flow: row;
 	flex-wrap: wrap;
 }
-.demo-warter-l {
-	margin-left: 10rpx;
-}
+
 
 .demo-warter {
-	width: 100%;
+	width: 360rpx;
 	margin-top: 0;
-	margin-right: 10rpx;
 	margin-bottom: 16rpx;
 	padding-bottom: 16rpx;
 	/* position: relative; */
