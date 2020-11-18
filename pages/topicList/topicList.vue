@@ -33,7 +33,21 @@
 			<view class="contentBox" >
 				<!-- 景点推荐 -->
 				<view  :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
-					<v-tabs
+					<view class="recommendedBox" @click="recommendedChange">
+						<view :class="tabCurrent == 0 ? 'recommendedText' : 'recommendedText1' ">
+							推荐
+						</view>
+						<view class="recommendedLine" v-if="tabCurrent==0">
+						</view>
+					</view>
+					<view class="latestBox" @click="latestChange">
+						<view :class="tabCurrent == 1 ? 'recommendedText' : 'recommendedText1' ">
+							最新
+						</view>
+						<view class="latestLine" v-if="tabCurrent==1">
+						</view>
+					</view>
+					<!-- <v-tabs
 						inactive-color="#909399"
 						lineHeight="24rpx"
 						lineColor="#FFE512"
@@ -47,7 +61,7 @@
 						:is-scroll="false"
 						:current="tabCurrent"
 						@change="tabChange"
-					></v-tabs>
+					></v-tabs> -->
 				</view>
 				<!-- 正在旅行 -->
 				<view class="touring" id="touring">
@@ -381,11 +395,22 @@ export default {
 				})
 			},
 			// 选项卡切换
-			tabChange(index) {
-				this.tabCurrent = index;
+			recommendedChange(){
+				this.tabCurrent = 0
 				this.downCallback()
 				this.mescroll.scrollTo(0)
 			},
+			latestChange(){
+				this.tabCurrent = 1
+				this.downCallback()
+				this.mescroll.scrollTo(0)
+			},
+				
+			// tabChange(index) {
+			// 	this.tabCurrent = index;
+			// 	this.downCallback()
+			// 	this.mescroll.scrollTo(0)
+			// },
 			// 点赞
 			clickLike(e, index) {
 				console.log('qaz', e, index);
@@ -745,6 +770,46 @@ export default {
 	align-items: center;
 	z-index: 1000;
 	
+}
+.recommendedBox{
+	margin-left: 22rpx;
+}
+.recommendedText{
+	width: 64rpx;
+	height: 32rpx;
+	font-size: 32rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #303133;
+	line-height: 32rpx;
+
+}
+.recommendedText1{
+	width: 52rpx;
+	height: 26rpx;
+	font-size: 26rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #909399;
+	line-height: 26rpx;
+
+}
+.recommendedLine{
+	width: 64rpx;
+	height: 20rpx;
+	background: #FFE512;
+	border-radius: 1px 5px 1px 1px;
+	margin-top: -16rpx;
+}
+.latestBox{
+	margin-left: 48rpx;
+}
+.latestLine{
+	width: 64rpx;
+	height: 20rpx;
+	background: #FFE512;
+	border-radius: 1px 5px 1px 1px;
+	margin-top: -16rpx;
 }
 // 瀑布流
 .touring{
