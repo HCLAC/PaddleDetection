@@ -2,7 +2,7 @@
 	<view @touchmove.stop.prevent="" class="mask" :class="maskState===0 ? 'none' : maskState===1 ? 'show' : ''" @click="toggleMask">
 		<view class="mask-content"  @click.stop.prevent="stopPrevent">
 			<view class="mask-content-topbar" >
-				<view class="mask-content-input" v-if="inputshow">
+				<view class="mask-content-input">
 					<textarea class="textarea"
 						v-model="content"
 						:placeholder="placeholder"
@@ -37,8 +37,7 @@
 				maskState: 0,
 				content: '',
 				focus: true,
-				autoHeight:false,
-				inputshow:false
+				autoHeight:false
 			};
 		},
 		created() {
@@ -69,7 +68,6 @@
 					// #endif
 					// #ifndef APP-PLUS
 					this.focus = this.maskState ? true : false;
-					this.inputshow = this.maskState ? true : false;
 					// #endif
 					
 				// }, timer)
@@ -94,8 +92,8 @@
 		width: 100%;
 		background: rgba(0,0,0,0);
 		z-index: 9995;
-		transition: .5s;
-		-webkit-transition: .5s; 
+		transition: .3s;
+		-webkit-transition: .3s; 
 		.mask-content{
 			width: 100%;
 			background: #FFFFFF;
