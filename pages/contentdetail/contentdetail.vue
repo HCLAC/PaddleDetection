@@ -84,7 +84,7 @@
 				</view>
 				<view class="replyBox">
 					<!-- <view class="commentInput"
-						:style="textareaStyle"
+						:style="bottom:inputbottom + 'px'"
 						v-if="textareafocus"
 					 >
 					  
@@ -243,10 +243,7 @@ export default {
 			focus:false,
 			inputShow:false,
 			autoHeight:false,
-			textareaStyle:{
-				position:'fixed',
-				bottom:''
-			},
+			inputbottom:0,
 			textareafocus:false
 		};
 	},
@@ -549,7 +546,7 @@ export default {
 		inputFocus(e){
 			console.log('e.detail.height',e.detail.height)
 			// this.inputShow = true
-			this.textareaStyle.bottom = e.detail.height+'px';
+			this.inputbottom= e.detail.height
 			
 			// this.textareaStyle.transform = 'translateY('+e.detail.height+'px'+')'
 			
@@ -1421,6 +1418,8 @@ html{
 	width: 100%;
 	background: #FFFFFF;
 	display: flex;
+	bottom: 0;
+	left: 0;
 	align-items: center;
 	.inputK{
 		height: 68rpx;

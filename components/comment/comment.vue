@@ -2,7 +2,7 @@
 	<view @touchmove.stop.prevent="" class="mask" :class="maskState===0 ? 'none' : maskState===1 ? 'show' : ''" @click="toggleMask">
 		<view class="mask-content"  @click.stop.prevent="stopPrevent">
 			<view class="mask-content-topbar" >
-				<view class="mask-content-input">
+				<view class="mask-content-input" v-if="inputshow">
 					<textarea class="textarea"
 						v-model="content"
 						:placeholder="placeholder"
@@ -11,7 +11,8 @@
 						:focus="focus"
 						:auto-height="autoHeight"
 						@input="inputValue"
-						maxlength="140">
+						maxlength="140"
+					>
 					</textarea>
 				</view>
 				<view class="right" @click="pubComment">发送</view>
@@ -36,7 +37,8 @@
 				maskState: 0,
 				content: '',
 				focus: true,
-				autoHeight:false
+				autoHeight:false,
+				inputshow:false
 			};
 		},
 		created() {
@@ -67,6 +69,7 @@
 					// #endif
 					// #ifndef APP-PLUS
 					this.focus = this.maskState ? true : false;
+					this.inputshow = this.maskState ? true : false;
 					// #endif
 					
 				// }, timer)

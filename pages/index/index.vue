@@ -229,12 +229,10 @@
 								<image class="dqwzImgnoba" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
 								<view class="mask1" v-if="areaList[0].image"></view>
 								<image class="dqwzImgnoba" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
-								<view class="dqwzBoxnoba">
-									<text class="dqwzTextnoba">{{ cityName }}</text>
-									<view class="adressBoxnoba">
-										<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
-										<text class="dqwzText1">{{ dqdwText }}</text>
-									</view>
+								<text class="dqwzTextnoba">{{ cityName }}</text>
+								<view class="adressBoxnoba">
+									<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
+									<text class="dqwzText1">{{ dqdwText }}</text>
 								</view>
 							</view>
 							<view class="hotCity" @click="toProvinces(areaList[1])">
@@ -1210,7 +1208,7 @@ view {
 	font-weight: 500;
 	color: #303133;
 	line-height: 16rpx;
-	/* width: 140rpx; */
+	width: 140rpx;
 	height: 40rpx;
 	background: #ffe512;
 	border-radius: 11px;
@@ -1272,7 +1270,7 @@ view {
 	font-weight: 500;
 	color: #303133;
 	line-height: 16rpx;
-	/* width: 140rpx; */
+	width: 140rpx; 
 	height: 40rpx;
 	background: #ffe512;
 	border-radius: 11px;
@@ -1283,7 +1281,15 @@ view {
 	height: 24rpx;
 	margin-right: 4rpx;
 }
+.dqwzText1{
+	height: 20rpx;
+	font-size: 20rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #303133;
+	line-height: 20rpx;
 
+}
 .hot {
 	/* margin-top: 176rpx; */
 }
