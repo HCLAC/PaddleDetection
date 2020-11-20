@@ -1175,7 +1175,7 @@ html{
 	width: 124rpx;
 	height: 48rpx;
 	background: #f8f8f8;
-	border-radius: 12px;
+	border-radius: 24rpx;
 	margin-right: 28rpx;
 	display: flex;
 	align-items: center;
@@ -1189,7 +1189,7 @@ html{
 	width: 124rpx;
 	height: 48rpx;
 	background: #ffe512;
-	border-radius: 12px;
+	border-radius: 24rpx;
 	margin-right: 28rpx;
 	display: flex;
 	align-items: center;
@@ -1247,7 +1247,7 @@ html{
 	font-weight: 600;
 	color: rgba(48, 49, 51, 1);
 	line-height: 32rpx;
-	margin-left: 20rpx;
+	margin-left: 28rpx;
 	margin-top: 20rpx;
 }
 
@@ -1257,7 +1257,7 @@ html{
 	font-weight: 400;
 	color: rgba(96, 98, 102, 1);
 	line-height: 56rpx;
-	margin: 20rpx;
+	margin: 28rpx;
 }
 
 .copy {
