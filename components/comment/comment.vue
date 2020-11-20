@@ -6,7 +6,7 @@
 					<textarea class="textarea"
 						v-model="content"
 						:placeholder="placeholder"
-						:cursor-spacing = "30"
+						:cursor-spacing = "20"
 						:show-confirm-bar = "false"
 						:focus="focus"
 						:auto-height="autoHeight"
@@ -37,7 +37,8 @@
 				maskState: 0,
 				content: '',
 				focus: true,
-				autoHeight:false
+				autoHeight:false,
+				show:false
 			};
 		},
 		created() {
@@ -92,8 +93,8 @@
 		width: 100%;
 		background: rgba(0,0,0,0);
 		z-index: 9995;
-		transition: .3s;
-		-webkit-transition: .3s; 
+		transition: .1s;
+		-webkit-transition: .1s; 
 		.mask-content{
 			width: 100%;
 			background: #FFFFFF;
@@ -155,7 +156,7 @@
 			display: none;
 		}
 		&.show{
-			background: rgba(0,0,0,.4);
+			// background: rgba(0,0,0,.4);
 			.mask-content{
 				transform: translateY(0);
 			}

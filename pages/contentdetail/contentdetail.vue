@@ -83,28 +83,9 @@
 					
 				</view>
 				<view class="replyBox">
-					<!-- <view class="commentInput"
-						:style="bottom:inputbottom + 'px'"
-						v-if="textareafocus"
-					 >
-					  
-						<textarea 
-							class="inputK" 
-							v-model="content" 
-							placeholder="快来写下你的评论吧" 
-							:show-confirm-bar="false" 
-							:focus="textareafocus" 
-							@blur="inputBlur"
-							@focus="inputFocus"
-							:auto-height="autoHeight"
-							@input="inputValue"
-							:adjust-position="false"
-							maxlength="140"
-						/>
-						<view class="send">
-							发送
-						</view>
-					</view> -->
+					
+					<!-- start 输入框 -->
+					<!-- end 输入框 -->
 					<view class="replyText">
 						回复
 					</view>
@@ -112,7 +93,7 @@
 						<view class="myReply" >
 							<image class="userImg" src="../../static/images/userImg.svg" mode="" v-if="userInfo == null"></image>
 							<image class="userImg" :src="userInfo.avatar" mode="" v-if="userInfo != null"></image>
-							<comment 
+							<!-- <comment 
 								ref="comment" 
 								:placeholder="'快来写下你的评论吧'" 
 								@pubComment="pubComment">
@@ -126,8 +107,8 @@
 								:disabled="true"
 								@click="toggleMask('show')"
 							>
-							</u-input>
-							<!-- <u-input
+							</u-input> -->
+							<u-input
 								class="replyInput"
 								placeholder="写个回复走个心" 
 								placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
@@ -136,9 +117,9 @@
 								:disabled="true"
 								@click="commentInput"
 							>
-							</u-input> -->
-							
+							</u-input>
 						</view>
+						
 						<view class="reply" v-for="(item,index) in commentsList" :key="index">
 							<view class="replyTop" >
 								<image class="userImg" v-if="!item.avatar" src="../../static/images/userImg.svg" mode=""></image>
@@ -172,7 +153,26 @@
 				
 				<view class="safeBox"></view>
 			</view>
-			
+			<!-- <view class="foot" v-show="showInput">
+				<chat-input @send-message="send_comment" @blur="blur" :focus="focus" :placeholder="input_placeholder"></chat-input>
+			</view> -->
+			<view class="commentInput" v-if="textareafocus" :style="inputbottom" >
+				<textarea
+					class="inputK"
+					v-model="content" 
+					placeholder="快来写下你的评论吧" 
+					:show-confirm-bar="false" 
+					:focus="textareafocus" 
+					@blur="inputBlur"
+					@focus="inputFocus"
+					:auto-height="autoHeight"
+					@input="inputValue"
+					maxlength="140"
+					cursor-spacing="20"
+					:adjust-position="false"
+				></textarea>
+				<view class="send">发送</view>
+			</view>
 			<view class="bottom">
 				<!-- 分割线 -->
 				<!-- <view class="bottomLine">
@@ -192,7 +192,7 @@
 							<image class="favBtn" src="../../static/images/attFavA.svg" v-if="articleList.data.fav == 1"></image>
 							<view class="favNum">{{ articleList.data.fav_count }}</view>
 						</view>
-						<view class="replyIcon" @click="toggleMask('show')">
+						<view class="replyIcon"  @click="commentInput">
 							<image src="../../static/images/replyIcon.svg" mode=""></image>
 							<view class="replyNum" >
 								{{total}}
@@ -211,13 +211,14 @@
 var _this;
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import uniIcons from '@/components/uni-icons/uni-icons.vue';
-import comment from '@/components/comment/comment.vue';
+// import comment from '@/components/comment/comment.vue';
+import chatInput from '@/components/comment/chatinput.vue';
 export default {
 	components: {
 		uniNavBar,
 		uniIcons,
-		comment
-		// ourLoading
+		// comment,
+		chatInput
 	},
 	data() {
 		return {
@@ -241,9 +242,10 @@ export default {
 			total:'',
 			userInfo:[],
 			focus:false,
-			inputShow:false,
 			autoHeight:false,
-			inputbottom:0,
+			inputbottom:{
+				bottom:0
+			},
 			textareafocus:false
 		};
 	},
@@ -267,10 +269,20 @@ export default {
 				this.getUserInfo()
 			}
 		});
+		
 	},
 	onLoad() {
 		this.animation = uni.createAnimation()  
 		// 创建动画实例
+		uni.getSystemInfo({ //获取设备信息
+			success: (res) => {
+				this.screenHeight = res.screenHeight;
+				this.platform = res.platform;
+			}
+		});
+	},
+	onHide() {
+		uni.offWindowResize(); //取消监听窗口尺寸变化
 	},
 	created() {
 		_this = this;
@@ -537,20 +549,19 @@ export default {
 		},
 		commentInput(){
 			this.textareafocus = true
-			
 		},
 		inputBlur(){
-			// this.inputShow = false
 			this.textareafocus = false
+			this.inputbottom.bottom = 0 + 'px'
 		},
 		inputFocus(e){
 			console.log('e.detail.height',e.detail.height)
-			// this.inputShow = true
-			this.inputbottom= e.detail.height
+			this.inputbottom.bottom = e.detail.height + 'px'
 			
 			// this.textareaStyle.transform = 'translateY('+e.detail.height+'px'+')'
 			
 		},
+
 		inputValue(e){
 			console.log('eeeee',e.detail.value.length)
 			if(e.detail.value.length>18){
@@ -1416,17 +1427,21 @@ html{
 // 评论框
 .commentInput{
 	width: 100%;
-	background: #FFFFFF;
-	display: flex;
+	position: fixed;
 	bottom: 0;
-	left: 0;
+	background: #ffffff;
+	display: flex;
 	align-items: center;
 	.inputK{
-		height: 68rpx;
-		width: 590rpx;
+		height: 28rpx;
+		width: 558rpx;
+		background: #F8F8F8;
+		border-radius: 4px;
+		margin: 16rpx 32rpx;
+		padding: 20rpx 16rpx;
 	}
 	.send{
-		width: 64rpx;
+		// width: 64rpx;
 		height: 32rpx;
 		font-size: 32rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
@@ -1560,4 +1575,6 @@ html{
 	width: 52rpx;
 	height: 52rpx;
 }
+
+ 
 </style>
