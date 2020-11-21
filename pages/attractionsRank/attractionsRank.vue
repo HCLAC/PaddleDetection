@@ -57,7 +57,7 @@
 			<image :src="banner" mode="" class="bannerImg"></image>
 			<view class="mask">
 				<view class="content">
-					<image class="travel" src="../../static/images/TRAVEL.png" mode=""></image>
+					<!-- <image class="travel" src="../../static/images/TRAVEL.png" mode=""></image> -->
 					<view class="atthotbox">
 						<image src="../../static/images/leftleaves.svg" mode=""></image>
 						<text class="atthottext">{{name}}热门景点</text>
