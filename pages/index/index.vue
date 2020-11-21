@@ -1164,7 +1164,7 @@ view {
 .dqwz {
 	width: 216rpx;
 	height: 180rpx;
-	border-radius: 8px;
+	border-radius: 16rpx;
 	border: 4rpx solid #ffe512;
 	position: relative;
 	display: flex;
@@ -1179,7 +1179,7 @@ view {
 .dqwzImg {
 	width: 216rpx;
 	height: 180rpx;
-	border-radius: 8px;
+	border-radius: 16rpx;
 }
 .dqwzBox {
 	position: absolute;
@@ -1188,7 +1188,7 @@ view {
 .dqwzText {
 	position: absolute;
 	top: 50rpx;
-	/* left: 78rpx; */
+	left: 78rpx;
 	font-size: 32rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
@@ -1196,12 +1196,12 @@ view {
 	line-height: 32rpx;
 }
 .adressBox {
-	display: flex;
-	align-items: center;
 	position: absolute;
 	top: 90rpx;
-	/* left: 40rpx; */
+	left: 38rpx;
 	color: #ffffff;
+	display: flex;
+	align-items: center;
 	padding: 8rpx 16rpx;
 	font-size: 16rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
@@ -1228,14 +1228,14 @@ view {
 	width: 216rpx;
 	height: 180rpx;
 	background: rgba(0, 0, 0, 0.25);
-	border-radius: 8px;
+	border-radius: 16rpx;
 	position: absolute;
 }
 .mask1 {
 	width: 208rpx;
 	height: 172rpx;
 	background: rgba(0, 0, 0, 0.25);
-	border-radius: 8px;
+	border-radius: 16rpx;
 	position: absolute;
 }
 .dqwzImgnoba {
@@ -1248,9 +1248,9 @@ view {
 	text-align: center;
 }
 .dqwzTextnoba {
-	/* position: absolute; */
-	/* margin-top: 50rpx; */
-	/* left: 78rpx; */
+	position: absolute;
+	top: 50rpx;
+	left: 78rpx;
 	font-size: 32rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
@@ -1260,9 +1260,9 @@ view {
 .adressBoxnoba {
 	display: flex;
 	align-items: center;
-	/* position: absolute; */
-	/* margin-top: 90rpx; */
-	/* left: 40rpx; */
+	position: absolute;
+	top: 90rpx;
+	left: 38rpx;
 	color: #ffffff;
 	padding: 8rpx 16rpx;
 	font-size: 16rpx;
@@ -1273,7 +1273,7 @@ view {
 	width: 140rpx; 
 	height: 40rpx;
 	background: #ffe512;
-	border-radius: 11px;
+	border-radius: 22rpx;
 }
 
 .zhishi {

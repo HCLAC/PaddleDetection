@@ -402,15 +402,15 @@ export default {
 			// 选项卡切换
 			recommendedChange(){
 				
-				this.getRecommend()
-				this.getlatest()
+				// this.getRecommend()
+				// this.getlatest()
 				this.tabCurrent = 0
 				// this.mescroll.scrollTo(0)
 			},
 			latestChange(){
 				
-				this.getlatest()
-				this.getRecommend()
+				// this.getlatest()
+				// this.getRecommend()
 				this.tabCurrent = 1
 				// this.mescroll.scrollTo(0)
 			},

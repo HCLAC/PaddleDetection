@@ -281,9 +281,6 @@ export default {
 			}
 		});
 	},
-	onHide() {
-		uni.offWindowResize(); //取消监听窗口尺寸变化
-	},
 	created() {
 		_this = this;
 		this.getOrder();

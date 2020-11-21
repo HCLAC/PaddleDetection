@@ -530,6 +530,7 @@ export default {
 								success: res => {
 									uni.setStorageSync('article_id', res.data);
 									this.list = res.data.data.list;
+									this.mescroll.resetUpScroll()
 									console.log('list=====', this.list);
 								}
 							}),
@@ -572,6 +573,7 @@ export default {
 					success: res => {
 						console.log('城市信息==', res);
 						(this.item = res.data.data), (this.name = this.name = res.data.data.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), (this.show = false);
+						this.mescroll.resetUpScroll()
 					}
 				});
 			}
@@ -608,6 +610,7 @@ export default {
 							success: res => {
 								uni.setStorageSync('article_id', res.data);
 								this.list = res.data.data.list;
+								this.mescroll.resetUpScroll()
 								console.log('list=====', this.list);
 							}
 						}),
@@ -657,6 +660,7 @@ export default {
 					success: res => {
 						console.log('省份信息==', res);
 						(this.item = res.data.data), (this.name = item.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), (this.show = false);
+						this.mescroll.resetUpScroll()
 					}
 				});
 			}
@@ -773,7 +777,7 @@ export default {
 						let curPageLen = curPageData.length;
 						console.log('curPageLen', curPageLen);
 						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-						let totalPage = data.data.data.total / pageSize;
+						// let totalPage = data.data.data.total / pageSize;
 						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
 						let totalSize = data.data.data.total;
 						console.log('totalSize', totalSize);
@@ -786,10 +790,10 @@ export default {
 						console.log('list-', this.list);
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-						this.mescroll.endByPage(curPageLen, totalPage);
+						// this.mescroll.endByPage(curPageLen, totalPage);
 
 						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-						// this.mescroll.endBySize(curPageLen, totalSize);
+						this.mescroll.endBySize(curPageLen, totalSize);
 
 						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
 						//this.mescroll.endSuccess(curPageLen, hasNext);
