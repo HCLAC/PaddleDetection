@@ -1480,7 +1480,8 @@ export default {
 		.rate {
 			margin-left: 12rpx;
 			font-size: 20rpx;
-			font-family: HelveticaNeue;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 500;
 			color: #606266;
 			line-height: 20rpx;
 		}
