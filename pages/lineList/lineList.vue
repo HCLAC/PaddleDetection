@@ -43,7 +43,8 @@ export default {
 			state_id: null,
 			city_id: null,
 			upOption:{
-				textNoMore:'我也是有底线的～'
+				textNoMore:'我也是有底线的～',
+				bgColor:'rgba(0,0,0,0~1)'
 			}
 		};
 	},
