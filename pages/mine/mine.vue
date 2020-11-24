@@ -92,45 +92,45 @@
 				<!-- 收藏 -->
 				<view style="margin-top: 64%; padding: 0 28rpx;" v-if="tabCurrent == 0 ">
 					
-						<view class="" v-for="(item, index) in tipList" :key="index" v-if="favNum != 0">
-							<view class="contentItem" >
-								<view class="left">
-									<image :src="item.main_image" mode="">
-										<view class="imgTip">
-											<view v-if="item.type == 1">游记</view>
-											<view v-if="item.type == 2">攻略</view>
-											<view v-if="item.type == 4">视频</view>
-											<view v-if="item.type == 5">推广</view>
-										</view>
-										<view class="videoIcon" v-if="item.type == 4">
-											<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
-										</view>
-									</image>
+					<view class="" v-for="(item, index) in tipList" :key="index" v-if="favNum != 0">
+						<view class="contentItem" >
+							<view class="left">
+								<image :src="item.main_image" mode="">
+									<view class="imgTip">
+										<view v-if="item.type == 1">游记</view>
+										<view v-if="item.type == 2">攻略</view>
+										<view v-if="item.type == 4">视频</view>
+										<view v-if="item.type == 5">推广</view>
+									</view>
+									<view class="videoIcon" v-if="item.type == 4">
+										<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+									</view>
+								</image>
+							</view>
+							<view class="right" @click="onPageJump" :id="item.article_id">
+								<view class="title">
+									<text class="titleText">{{ item.title }}</text>
 								</view>
-								<view class="right" @click="onPageJump" :id="item.article_id">
-									<view class="title">
-										<text class="titleText">{{ item.title }}</text>
+								<view class="content">
+									<rich-text class="richText" :nodes="item.content"></rich-text>
+								</view>
+								<view class="favandlikebox">
+									<view class="fav">
+										{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}收藏
 									</view>
-									<view class="content">
-										<rich-text class="richText" :nodes="item.content"></rich-text>
+									<view class="like">
+										{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}点赞
 									</view>
-									<view class="favandlikebox">
-										<view class="fav">
-											{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}收藏
-										</view>
-										<view class="like">
-											{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}点赞
-										</view>
-									</view>
-									<view class="position">
-										<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
-										<view>{{ item.location }}</view>
-									</view>
+								</view>
+								<view class="position">
+									<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
+									<view>{{ item.location }}</view>
 								</view>
 							</view>
-							<view class="line"></view>
 						</view>
-						
+						<view class="line"></view>
+					</view>
+					
 						
 					
 					
@@ -366,13 +366,15 @@ export default {
 			this.tabCurrent = 0
 			this.favnumcolor.color = '#303133'
 			this.likenumcolor.color = '#909399'
-			this.downCallback()
+			this.mescroll.resetUpScroll()
+			this.mescroll.scrollTo(0)
 		},
 		change1(){
 			this.tabCurrent = 1
 			this.favnumcolor.color = '#909399'
 			this.likenumcolor.color = '#303133'
-			this.downCallback()
+			this.mescroll.resetUpScroll()
+			this.mescroll.scrollTo(0)
 		},
 		// tabChange(index) {
 		// 	this.tabCurrent = index;

@@ -1165,21 +1165,24 @@ view {
 	width: 216rpx;
 	height: 180rpx;
 	border-radius: 16rpx;
-	border: 4rpx solid #ffe512;
+	// border: 4rpx solid #ffe512;
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	overflow: hidden;
+	// overflow: hidden;
 }
 .dqwzBg {
 	width: 216rpx;
-	height: 180rpx;
+	height: 174rpx;
+	border-radius: 16rpx;
+	border: 4rpx solid #ffe512;
 }
 .dqwzImg {
 	width: 216rpx;
-	height: 180rpx;
+	height: 174rpx;
 	border-radius: 16rpx;
+	border: 4rpx solid #ffe512;
 }
 .dqwzBox {
 	position: absolute;
@@ -1199,7 +1202,6 @@ view {
 	position: absolute;
 	top: 90rpx;
 	left: 38rpx;
-	color: #ffffff;
 	display: flex;
 	align-items: center;
 	padding: 8rpx 16rpx;
@@ -1217,8 +1219,8 @@ view {
 .dqwznoba {
 	width: 216rpx;
 	height: 180rpx;
-	border-radius: 8px;
-	border: 2px solid #ffe512;
+	border-radius: 16rpx;
+	// border: 4rpx solid #ffe512;
 	position: relative;
 	display: flex;
 	align-items: center;
@@ -1241,6 +1243,7 @@ view {
 .dqwzImgnoba {
 	width: 100%;
 	height: 100%;
+	border: 4rpx solid #ffe512;
 	border-radius: 16rpx;
 }
 .dqwzBoxnoba {

@@ -53,21 +53,7 @@
 					<view class="serviceLine" v-if="tabCurrent == 1">
 					</view>
 				</view>
-				<!-- <v-tabs
-					inactive-color="#909399"
-					lineHeight="12rpx"
-					lineColor="#FFE512"
-					activeFontSize="36rpx"
-					activeColor="#303133"
-					fontSize="28rpx"
-					:lineScale="0.7"
-					lineRadius="6px"
-					v-model="tabCurrent"
-					:tabs="tablist"
-					:is-scroll="false"
-					:current="tabCurrent"
-					@change="tabChange"
-				></v-tabs> -->
+				
 			</view>
 		</view>
 		<view class="linePlan">
@@ -242,13 +228,9 @@
 
 <script>
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
-import vTabs from '@/components/v-tabs/v-tabs';
 export default {
 	comments: {
 		uniNavBar
-	},
-	components: {
-		vTabs
 	},
 	data() {
 		return {
