@@ -591,7 +591,7 @@ export default {
 	top: 126rpx;
 	z-index: 2;
 	height: 98rpx;
-	padding-top: 48rpx;
+	padding-top: 52rpx;
 }
 .noFix {
 }
