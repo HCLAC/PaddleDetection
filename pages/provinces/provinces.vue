@@ -24,30 +24,30 @@
 					</view>
 				</view>
 				<view class="weather" v-if="weather != null">
-					<image class="weatherImg" src="../../static/images/weather/xiaoyu.svg" mode="" v-if="weather.icon1 == 'day/xiaoyu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/baoyu.svg" mode="" v-if="weather.icon1 == 'day/baoyu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/dabaoyu.svg" mode="" v-if="weather.icon1 == 'day/dabaoyu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/daxue.svg" mode="" v-if="weather.icon1 == 'day/daxue'"></image>
-					<image class="weatherImg" src="../../static/images/weather/dayu.svg" mode="" v-if="weather.icon1 == 'day/dayu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/dongyu.svg" mode="" v-if="weather.icon1 == 'day/dongyu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/duoyun.svg" mode="" v-if="weather.icon1 == 'day/duoyun'"></image>
-					<image class="weatherImg" src="../../static/images/weather/fuchen.svg" mode="" v-if="weather.icon1 == 'day/fuchen'"></image>
-					<image class="weatherImg" src="../../static/images/weather/leizhenyu.svg" mode="" v-if="weather.icon1 == 'day/leizhenyu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/leizhenyubanyoubingbao.svg" mode="" v-if="weather.icon1 == 'day/leizhenyubanyoubingbao'"></image>
-					<image class="weatherImg" src="../../static/images/weather/mai.svg" mode="" v-if="weather.icon1 == 'day/mai'"></image>
-					<image class="weatherImg" src="../../static/images/weather/qiangshachenbao.svg" mode="" v-if="weather.icon1 == 'day/qiangshachenbao'"></image>
-					<image class="weatherImg" src="../../static/images/weather/qing.svg" mode="" v-if="weather.icon1 == 'day/qing'"></image>
-					<image class="weatherImg" src="../../static/images/weather/shachenbao.svg" mode="" v-if="weather.icon1 == 'day/shachengbao'"></image>
-					<image class="weatherImg" src="../../static/images/weather/tedabaoyu.svg" mode="" v-if="weather.icon1 == 'day/tedabaoyu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/wu.svg" mode="" v-if="weather.icon1 == 'day/wu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/xiaoxue.svg" mode="" v-if="weather.icon1 == 'day/xiaoxue'"></image>
-					<image class="weatherImg" src="../../static/images/weather/yangsha.svg" mode="" v-if="weather.icon1 == 'day/yangsha'"></image>
-					<image class="weatherImg" src="../../static/images/weather/yin.svg" mode="" v-if="weather.icon1 == 'day/yin'"></image>
-					<image class="weatherImg" src="../../static/images/weather/yujiaxue.svg" mode="" v-if="weather.icon1 == 'day/yujiaxue'"></image>
-					<image class="weatherImg" src="../../static/images/weather/zhenxue.svg" mode="" v-if="weather.icon1 == 'day/zhenxue'"></image>
-					<image class="weatherImg" src="../../static/images/weather/zhenyu.svg" mode="" v-if="weather.icon1 == 'day/zhenyu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/zhongxue.svg" mode="" v-if="weather.icon1 == 'day/zhongxue'"></image>
-					<image class="weatherImg" src="../../static/images/weather/zhongyu.svg" mode="" v-if="weather.icon1 == 'day/zhongyu'"></image>
+					<image class="weatherImg" src="../../static/images/weather/xiaoyu.svg" mode="" v-if="weather.weather == '小雨'"></image>
+					<image class="weatherImg" src="../../static/images/weather/baoyu.svg" mode="" v-if="weather.weather == '暴雨'"></image>
+					<image class="weatherImg" src="../../static/images/weather/dabaoyu.svg" mode="" v-if="weather.weather == '大暴雨'"></image>
+					<image class="weatherImg" src="../../static/images/weather/daxue.svg" mode="" v-if="weather.weather == '大雪'"></image>
+					<image class="weatherImg" src="../../static/images/weather/dayu.svg" mode="" v-if="weather.weather == '大雨'"></image>
+					<image class="weatherImg" src="../../static/images/weather/dongyu.svg" mode="" v-if="weather.weather == '冻雨'"></image>
+					<image class="weatherImg" src="../../static/images/weather/duoyun.svg" mode="" v-if="weather.weather == '多云'"></image>
+					<image class="weatherImg" src="../../static/images/weather/fuchen.svg" mode="" v-if="weather.weather == '拂尘'"></image>
+					<image class="weatherImg" src="../../static/images/weather/leizhenyu.svg" mode="" v-if="weather.weather == '雷阵雨'"></image>
+					<image class="weatherImg" src="../../static/images/weather/leizhenyubanyoubingbao.svg" mode="" v-if="weather.weather == '雷阵雨伴有冰雹'"></image>
+					<image class="weatherImg" src="../../static/images/weather/mai.svg" mode="" v-if="weather.weather == '霾'"></image>
+					<image class="weatherImg" src="../../static/images/weather/qiangshachenbao.svg" mode="" v-if="weather.weather == '强沙尘暴'"></image>
+					<image class="weatherImg" src="../../static/images/weather/qing.svg" mode="" v-if="weather.weather == '晴'"></image>
+					<image class="weatherImg" src="../../static/images/weather/shachenbao.svg" mode="" v-if="weather.weather == '沙尘暴'"></image>
+					<image class="weatherImg" src="../../static/images/weather/tedabaoyu.svg" mode="" v-if="weather.weather == '特大暴雨'"></image>
+					<image class="weatherImg" src="../../static/images/weather/wu.svg" mode="" v-if="weather.weather == '雾'"></image>
+					<image class="weatherImg" src="../../static/images/weather/xiaoxue.svg" mode="" v-if="weather.weather == '小雪'"></image>
+					<image class="weatherImg" src="../../static/images/weather/yangsha.svg" mode="" v-if="weather.weather == '扬沙'"></image>
+					<image class="weatherImg" src="../../static/images/weather/yin.svg" mode="" v-if="weather.weather == '阴'"></image>
+					<image class="weatherImg" src="../../static/images/weather/yujiaxue.svg" mode="" v-if="weather.weather == '雨夹雪'"></image>
+					<image class="weatherImg" src="../../static/images/weather/zhenxue.svg" mode="" v-if="weather.weather == '阵雪'"></image>
+					<image class="weatherImg" src="../../static/images/weather/zhenyu.svg" mode="" v-if="weather.weather == '阵雨'"></image>
+					<image class="weatherImg" src="../../static/images/weather/zhongxue.svg" mode="" v-if="weather.weather == '中雪'"></image>
+					<image class="weatherImg" src="../../static/images/weather/zhongyu.svg" mode="" v-if="weather.weather == '中雨'"></image>
 					<view class="temp">{{ weather.temp }}</view>
 				</view>
 			</view>
@@ -934,6 +934,7 @@ export default {
 	width: 750rpx;
 	height: 440rpx;
 	position: relative;
+	border: none;
 }
 .headImg {
 	width: 100%;
@@ -1007,6 +1008,7 @@ export default {
 .contentBox {
 	width: 750rpx;
 	background: #f8f8f8;
+	border: 1px solid #FFFFFF;
 	border-radius: 16rpx 16rpx 0px 0px;
 	position: relative;
 	top: -30rpx;
@@ -1019,6 +1021,7 @@ export default {
 .contentHeader {
 	display: flex;
 	align-items: center;
+	border: none;
 	padding-top: 32rpx;
 	padding-left: 28rpx;
 }
@@ -1099,77 +1102,7 @@ export default {
 		font-weight: 400;
 		color: #606266;
 	}
-	.changeIcon{
-		width: 14rpx;
-		height: 14rpx;
-		margin-left: 6rpx;
-	}
-	.weather{
-		display: flex;
-		align-items: center;
-		width: 200rpx;
-		height: 80rpx;
-		position: absolute;
-		bottom: 56rpx;
-		left: 40rpx;
-	}
-	.weatherImg{
-		width: 44rpx;
-		height: 44rpx;
-	}
-	.temp{
-		font-size: 28rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #FFFFFF;
-		line-height: 40rpx;
-		margin-left: 14rpx;
-	}
-	.contentBox{
-		width: 750rpx;
-		// height: 2014rpx;
-		background: #F8F8F8;
-		border-radius: 16rpx 16rpx 0px 0px;
-		position: relative;
-		top: -30rpx;
-		left: 0;
-	}
-	// 景点推荐
-	.content{
-		width: 750rpx;
-		
-		
-	}
-	.contentHeader{
-		display: flex;
-		align-items: center;
-		padding-top: 32rpx;
-		padding-left: 28rpx;
-	}
-	.contentTitle{
-		// width: 144rpx;
-		height: 36rpx;
-		font-size: 36rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		line-height: 36rpx;
-		margin-right: 456rpx;
-	}
-	.contentMore{
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 94rpx;
-		height: 42rpx;
-		background: #EDEFF2;
-		border-radius: 24rpx;
-		font-size: 22rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #606266;
-		line-height: 20rpx;
-	}
+	
 }
 // 行程推荐
 .trip {

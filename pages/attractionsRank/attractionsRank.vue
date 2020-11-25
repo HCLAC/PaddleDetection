@@ -870,7 +870,7 @@
 		margin-left: 10rpx;
 		padding-top: 380rpx;
 		background: rgba(255, 255, 255, 1);
-		border-radius: 8px 8px 0px 0px;
+		// border-radius: 8px 8px 0px 0px;
 		z-index: 11;
 		position: absolute;
 		top: 70rpx;
@@ -883,7 +883,8 @@
 		top: 420rpx;
 		z-index: 111;
 		background-color: #FFFFFF;
-		border-radius: 8px 8px 0px 0px;
+		border-radius: 16rpx 16rpx 0px 0px;
+		border: 1px solid #FFFFFF;
 	}
 	.city {
 		display: inline-block;
