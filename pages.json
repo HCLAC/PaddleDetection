@@ -24,7 +24,8 @@
 			"path": "pages/attractionsRank/attractionsRank",
 			"style": {
 				"navigationStyle": "custom",
-				"backgroundColor": "#000000"
+				"backgroundColor": "#000000",
+				"disableScroll": true
 			}
 		},
 

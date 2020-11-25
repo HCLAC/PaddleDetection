@@ -323,7 +323,10 @@ export default {
 			show: false,
 			cityList: null,
 			name: null,
-			firstTime: new Date().getTime()
+			firstTime: new Date().getTime(),
+			downOption:{
+				use:false
+			}
 		};
 	},
 	comments: {
@@ -931,7 +934,7 @@ export default {
 	margin: 0 8px;
 }
 .headImgBox {
-	width: 750rpx;
+	width: 100%;
 	height: 440rpx;
 	position: relative;
 	border: none;
@@ -941,7 +944,7 @@ export default {
 	height: 100%;
 }
 .mask {
-	width: 750rpx;
+	width: 100%;
 	height: 244rpx;
 	background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #13c2c2 100%);
 	opacity: 0.4;
@@ -1006,7 +1009,7 @@ export default {
 	margin-left: 14rpx;
 }
 .contentBox {
-	width: 750rpx;
+	width: 100%;
 	background: #f8f8f8;
 	border: 1px solid #FFFFFF;
 	border-radius: 16rpx 16rpx 0px 0px;
@@ -1016,7 +1019,7 @@ export default {
 }
 // 景点推荐
 .content {
-	width: 750rpx;
+	width: 100%;
 }
 .contentHeader {
 	display: flex;
@@ -1187,19 +1190,19 @@ export default {
 }
 
 .wrap {
-	width: 750rpx;
+	width: 100%;
 	display: flex;
 	flex-flow: row;
 	flex-wrap: wrap;
 	margin-top: 24rpx;
 }
 .left {
-	margin-left: 10rpx;
+	// margin-left: 10rpx;
 }
 .demo-warter {
 	width: 360rpx;
 	margin-top: 0;
-	margin-right: 10rpx;
+	margin-left: 10rpx;
 	margin-bottom: 16rpx;
 	padding-bottom: 16rpx;
 	/* position: relative; */
@@ -1509,12 +1512,12 @@ export default {
 		flex-wrap: wrap;
 	}
 	.left{
-		margin-left: 10rpx;
+		// margin-left: 10rpx;
 	}
 	.demo-warter {
 		width: 360rpx;
 		margin-top: 0;
-		margin-right: 10rpx;
+		margin-left: 10rpx;
 		margin-bottom: 16rpx;
 		padding-bottom: 16rpx;
 		/* position: relative; */
