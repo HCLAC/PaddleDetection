@@ -1029,7 +1029,6 @@ export default {
 	padding-left: 28rpx;
 }
 .contentTitle {
-	// width: 144rpx;
 	height: 36rpx;
 	font-size: 36rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
