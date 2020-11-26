@@ -684,7 +684,7 @@ export default {
 	// font-size: 40rpx;
 	// font-weight: 500;
 	// padding-left: 32rpx;
-	padding-top: 30rpx;
+	padding-top: 48rpx;
 	display: flex;
 	position: absolute;
 	top: 360rpx;

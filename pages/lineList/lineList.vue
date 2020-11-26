@@ -160,7 +160,7 @@ export default {
 }
 //导航栏样式end
 .container {
-	// margin: 30rpx;
+	margin-top: 20rpx;
 	text-align: center;
 	font-family: PingFangSC-Medium, PingFang SC;
 	.lineItem {
