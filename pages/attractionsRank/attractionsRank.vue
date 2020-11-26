@@ -1,12 +1,22 @@
 <template>
 	<view>
-		<!-- 自定义导航栏 -->
-		<view class="example-body">
+		<!-- 自定义导航栏 白色-->
+		<view class="example-body" v-if="isFixed == false">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" background-color="transparent" style="z-index: 999999;">
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui-white.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy-white.svg" @click="home" />
 				</view>
+			</uni-nav-bar>
+		</view>
+		<!-- 自定义导航栏 黑色-->
+		<view class="example-body" v-if="isFixed == true">
+			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+				<view slot="left" class="slotleft">
+					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+				</view>
+				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
 		<mescroll-body  class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption"  :up="upOption">
@@ -77,7 +87,7 @@
 			<!-- 排行 -->
 			
 			
-			<view class="rankContent" style="height: 100%;">
+			<view class="rankContent" :style="{'height': (hotsiteslist.length < 6 ? '1604rpx' : '')}">
 				<view class="cityBox">
 					<view class="city" @click="show = true" >
 						<view class="" @click="getCity">
@@ -215,7 +225,8 @@
 				serviceProvider: '',
 				downOption:{
 					use:false
-				}
+				},
+				isFixed:false
 			}
 		},
 		onLoad: function(option) {
@@ -250,6 +261,13 @@
 					}
 				}
 			});
+		},
+		onPageScroll(e) {
+			if (e.scrollTop >  200) {
+				this.isFixed = true;
+			} else {
+				this.isFixed = false;
+			}
 		},
 		methods: {
 			getImg() {
@@ -757,9 +775,9 @@
 
 	
 	.bgBox{
-		position: absolute;
-		top:0;
-		left: 0;
+		// position: absolute;
+		// top:0;
+		// left: 0;
 		// margin-top: -88rpx;
 		width: 750rpx;
 		height: 440rpx;
@@ -779,9 +797,9 @@
 	}
 	.content {
 		position: absolute;
-		top: 70%;
+		top: 60%;
 		left: 50%;
-		transform: translate(-50%, -30%);
+		transform: translate(-50%, -50%);
 		min-width: 564rpx;
 		max-width: 620rpx;
 		height: 140rpx;
@@ -825,8 +843,8 @@
 			}
 			
 			image {
-				width: 40rpx;
-				height: 70rpx;
+				width: 37.34rpx;
+				height: 68.22rpx;
 			}
 		}
 		
@@ -839,7 +857,7 @@
 		color: rgba(255, 255, 255, 0.45);
 		line-height: 28rpx;
 		position: absolute;
-		top: 374rpx;
+		top: 296rpx;
 		left: 234rpx;
 	}
 
@@ -855,18 +873,21 @@
 	}
 	.mescroll{
 		position: relative;
-		top: -176rpx;
+		top: -178rpx;
 		left: 0;
 	}
 	.rankContent {
 		width: 730rpx;
 		// height: 1604rpx;
 		margin-left: 10rpx;
-		padding-top: 380rpx;
+		// padding-top: 480rpx;
 		background: rgba(255, 255, 255, 1);
 		border-radius: 8px 8px 0px 0px;
 		border: 1px solid #FFFFFF;
-		// z-index: 11;
+		// z-index: 999999;
+		// position: relative;
+		// top: 440rpx;
+		// left: 0;
 	}
 	.cityBox{
 		// width: 730rpx;
@@ -909,10 +930,10 @@
 	}
 	
 	.cardList {
-		width: 702rpx;
+		width: 700rpx;
 		height: 100%;
 		margin-left: 28rpx;
-		margin-top: 90rpx;
+		// margin-top: 90rpx;
 	}
 
 	.cards {
