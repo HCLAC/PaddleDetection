@@ -396,6 +396,7 @@
 	background: #EDEFF2;
 	display: flex;
 	align-items: center;
+	line-height: 36rpx;
 	border-radius: 18rpx;
 	padding-left: 20rpx;
 	padding-right: 12rpx;

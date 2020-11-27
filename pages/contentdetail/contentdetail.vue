@@ -185,12 +185,12 @@
 						<view class="like" @click="clickLike">
 							<image class="likeBtn" src="../../static/images/attheart.svg" v-if="articleList.data.liked == 0"></image>
 							<image class="likeBtn" src="../../static/images/attHeartActive.svg" v-if="articleList.data.liked == 1"></image>
-							<view class="likeNum" v-model="likemessage">{{ articleList.data.like_count }}</view>
+							<view class="likeNum" v-model="likemessage" v-if="articleList.data.like_count != 0">{{ articleList.data.like_count }}</view>
 						</view>
 						<view class="fav" @click="clickFav">
 							<image class="favBtn" src="../../static/images/attFav.svg" v-if="articleList.data.fav == 0"></image>
 							<image class="favBtn" src="../../static/images/attFavA.svg" v-if="articleList.data.fav == 1"></image>
-							<view class="favNum">{{ articleList.data.fav_count }}</view>
+							<view class="favNum" v-if="articleList.data.fav_count != 0" >{{ articleList.data.fav_count }}</view>
 						</view>
 						<view class="replyIcon"  @click="commentInput">
 							<image src="../../static/images/replyIcon.svg" mode=""></image>
@@ -1509,15 +1509,16 @@ html{
 	display: flex;
 	margin-left: 28rpx;
 	align-items: center;
+	margin-right: 40rpx;
 }
 
 .likeBtn {
 	width: 52rpx;
 	height: 52rpx;
+	margin-right: 8rpx;
 }
 .likeNum{
-	margin-left: 8rpx;
-	margin-right: 40rpx;
+	
 	height: 24rpx;
 	font-size: 24rpx;
 	font-family: PingFangSC-Regular, PingFang SC;
@@ -1528,15 +1529,15 @@ html{
 .fav {
 	display: flex;
 	align-items: center;
+	margin-right: 40rpx;
 }
 
 .favBtn {
 	width: 52rpx;
 	height: 52rpx;
+	margin-right: 8rpx;
 }
 .favNum{
-	margin-left: 8rpx;
-	margin-right: 40rpx;
 	height: 24rpx;
 	font-size: 24rpx;
 	font-family: PingFangSC-Regular, PingFang SC;

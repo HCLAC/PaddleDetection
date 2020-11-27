@@ -648,15 +648,17 @@ export default {
 			// margin-right: 10rpx;
 			height: 42rpx;
 			position: absolute;
-			right: 10rpx;
+			right: 6rpx;
 			background-color: #FFFFFF;
 			bottom: -2rpx;
 			display: flex;
 			justify-content: flex-end;
 			z-index: 111;
 			.mask{
-				width: 50rpx;
-				background: linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+				width: 36rpx;
+				// background: linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+				
+				background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
 			}
 			text {
 				margin-top: 10rpx;

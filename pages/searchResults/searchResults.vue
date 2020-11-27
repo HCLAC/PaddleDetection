@@ -180,7 +180,7 @@
 											<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 											<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 										</view>
-										<view class="likeCount">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+										<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 									</view>
 								</view>
 							</view>
@@ -220,7 +220,7 @@
 											<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 											<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 										</view>
-										<view class="likeCount">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+										<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 									</view>
 								</view>
 							</view>
@@ -751,13 +751,13 @@
 
 
 	.demo-warter {
-		width: 100%;
+		width: 360rpx;
 		margin-top: 0;
 		margin-bottom: 20rpx;
 		padding-bottom: 16rpx;
 		/* position: relative; */
 		background-color: #ffffff;
-		box-shadow: 0px 10rpx 10rpx 10rpx #f8f8f8;
+		// box-shadow: 0px 10rpx 10rpx 10rpx #f8f8f8;
 	}
 
 	.imgBox {
@@ -876,6 +876,7 @@
 		margin-top: 24rpx;
 		/* margin-bottom: 16rpx; */
 		display: flex;
+		align-items: center;
 		justify-content: space-between;
 	}
 
@@ -904,11 +905,11 @@
 
 	.count {
 		display: flex;
+		align-items: center;
 		font-size: 22rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: rgba(96, 98, 102, 1);
-		align-items: center;
 		margin-right: 20rpx;
 	}
 
@@ -916,5 +917,7 @@
 		width: 26rpx;
 		height: 26rpx;
 		margin-right: 8rpx;
+		display: flex;
+		align-items: center;
 	}
 </style>

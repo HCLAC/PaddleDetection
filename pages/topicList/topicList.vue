@@ -103,7 +103,7 @@
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
-											<view class="likeCount">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
 									</view>
 								</view>
@@ -143,7 +143,7 @@
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
-											<view class="likeCount">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
 									</view>
 								</view>
@@ -188,7 +188,7 @@
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
-											<view class="likeCount">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
 									</view>
 								</view>
@@ -228,7 +228,7 @@
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
-											<view class="likeCount">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
 									</view>
 								</view>
@@ -745,6 +745,7 @@ export default {
 	margin-top: 40rpx;
 	display: flex;
 	align-items: center;
+	line-height: 36rpx;
 	padding-left: 20rpx;
 	padding-right: 12rpx;
 }
