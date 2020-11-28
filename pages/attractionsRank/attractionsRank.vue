@@ -226,6 +226,9 @@
 				downOption:{
 					use:false
 				},
+				upOption:{
+					bgColor:'#ffffff'
+				},
 				isFixed:false
 			}
 		},
