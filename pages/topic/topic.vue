@@ -381,35 +381,31 @@
 	height: 36rpx;
 	margin-right: 8rpx;
 }
-.rightText{
-	flex: 1;
-	height: 36rpx;
-	font-size: 22rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: #606266;
-	line-height: 36rpx;
-}
+
 .titleRight{
 	// width: 166rpx;
 	height: 36rpx;
 	background: #EDEFF2;
 	display: flex;
 	align-items: center;
-	line-height: 36rpx;
 	border-radius: 18rpx;
 	padding-left: 20rpx;
 	padding-right: 12rpx;
 }
 .number{
-	height: 36rpx;
-	line-height: 36rpx;
 	font-size: 22rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #606266;
 }
-
+.rightText{
+	flex: 1;
+	font-size: 22rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #606266;
+	
+}
 .moreRight{
 	width: 14rpx;
 	height: 14rpx;
@@ -421,7 +417,9 @@
 	font-family: PingFangSC-Regular, PingFang SC;
 	font-weight: 400;
 	color: #303133;
-	line-height: 36rpx;
+	// line-height: 36rpx;
+	display: flex;
+	align-items: center;
 }
 .contentImgBox {
 	margin-top: 30rpx;

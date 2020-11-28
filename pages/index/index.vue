@@ -424,6 +424,7 @@ export default {
 				// if (this.item == undefined || null) {
 					this.getBanner();
 					this.getAdress();
+					
 				// }
 			}
 		});
@@ -620,14 +621,15 @@ export default {
 							success: res => {
 								uni.setStorageSync('article_id', res.data);
 								// console.log('存储文章列表==',res.data)
-								this.$refs.uWaterfall.list = res.data.data.list;
+								this.list = res.data.data.list;
 								console.log('list=====',this.list)
 							}
 						});
 					} else {
 						uni.setStorageSync('article_id', res.data);
 						// console.log('存储文章列表==',res.data)
-						this.$refs.uWaterfall.list = res.data.data.list;
+						// console.log(this.$refs)
+						this.list = res.data.data.list;
 						console.log('list=====',this.list)
 					}
 				}
@@ -876,7 +878,7 @@ export default {
 				success: data => {
 					if (data.data.code == 0) {
 						let curPageData = data.data.data.list;
-
+						console.log(this.$refs)
 						console.log('curPageData', curPageData);
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 						let curPageLen = curPageData.length ? curPageData.length : 0;
@@ -1373,7 +1375,10 @@ view {
 	flex-wrap: wrap;
 }
 
-
+.pubuItem{
+	column-count: 2;
+	column-gap: 20rpx;
+}
 .demo-warter {
 	width: 360rpx;
 	margin-top: 0;
@@ -1537,8 +1542,8 @@ image{will-change: transform}
 }
 
 .countImg {
-	width: 26rpx;
-	height: 26rpx;
+	width: 30rpx;
+	height: 28rpx;
 	margin-right: 8rpx;
 	display: flex;
 	align-items: center;

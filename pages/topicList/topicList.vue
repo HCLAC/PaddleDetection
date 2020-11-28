@@ -742,21 +742,19 @@ export default {
 	height: 36rpx;
 	background: rgba(0, 0, 0, 0.3);
 	border-radius: 9px;
+	border: none;
 	margin-top: 40rpx;
 	display: flex;
 	align-items: center;
-	line-height: 36rpx;
 	padding-left: 20rpx;
 	padding-right: 12rpx;
 }
 .squareText{
 	width: 88rpx;
-	height: 36rpx;
 	font-size: 22rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #FFFFFF;
-	line-height: 36rpx;
 }
 .more{
 	margin-left: 4rpx;

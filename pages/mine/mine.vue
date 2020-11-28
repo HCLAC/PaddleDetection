@@ -45,7 +45,7 @@
 								<view class="favLine" v-if="tabCurrent == 0">
 								</view>
 							</view>
-							<view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" >
+							<view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" v-if="favNum != 0" >
 								{{favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum}}
 							</view>
 						</view>
@@ -57,7 +57,7 @@
 								<view class="likeLine" v-if="tabCurrent == 1">
 								</view>
 							</view>
-							<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" >
+							<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" v-if="likeNum != 0" >
 								{{likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum}}
 							</view>
 						</view>
