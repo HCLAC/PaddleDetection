@@ -33,7 +33,21 @@
 			<view class="contentBox" >
 				<!-- 景点推荐 -->
 				<view  :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
-					<v-tabs
+					<view class="recommendedBox" @click="recommendedChange">
+						<view :class="tabCurrent == 0 ? 'recommendedText' : 'recommendedText1' ">
+							推荐
+						</view>
+						<view class="recommendedLine" v-if="tabCurrent==0">
+						</view>
+					</view>
+					<view class="latestBox" @click="latestChange">
+						<view :class="tabCurrent == 1 ? 'recommendedText' : 'recommendedText1' ">
+							最新
+						</view>
+						<view class="latestLine" v-if="tabCurrent==1">
+						</view>
+					</view>
+					<!-- <v-tabs
 						inactive-color="#909399"
 						lineHeight="24rpx"
 						lineColor="#FFE512"
@@ -47,25 +61,27 @@
 						:is-scroll="false"
 						:current="tabCurrent"
 						@change="tabChange"
-					></v-tabs>
+					></v-tabs> -->
 				</view>
 				<!-- 正在旅行 -->
 				<view class="touring" id="touring">
 					<!-- 推荐 -->
 					<view class="wrap" v-if="tabCurrent == 0 ">
-						<view class="left">
-							<view class="demo-warter" v-for="(item, index) in recommendList" :key="index" v-if="index % 2 == 0">
-								<view class="" >
-									<view class="demo-top" @click="onPageJump" :id="item.article_id">
-										<view class="imgBox" >
-											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-												<view class="videoIcon" v-if="item.type == 4">
-													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+						<u-waterfall v-model="recommendList" ref="uWaterfall">
+							<template v-slot:left="{ leftList }">
+								<view class="demo-warter" v-for="(item, index) in leftList" :key="index" >
+									<view class="" @click="onPageJump" :id="item.article_id">
+										<view class="demo-top">
+											<view class="imgBox">
+												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"  mode="widthFix">
+													<view class="videoIcon" v-if="item.type == 4">
+														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+													</view>
+												</image>
+												<view class="adress">
+													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+													<view class="adressText">{{ item.location }}</view>
 												</view>
-											</image>
-											<view class="adress">
-												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-												<view class="adressText">{{ item.location }}</view>
 											</view>
 										</view>
 										<view class="titleTip">
@@ -82,30 +98,30 @@
 											<image class="userHeard" :src="item.avatar"></image>
 											<view class="userNikename">{{ item.author_name }}</view>
 										</view>
-										<view class="count" @click="clickLike(item, index)">
+										<view class="count" @click="clickLeftLike(item,index) in leftList "  >
 											<view class="countImg">
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
-											<view class="likeCount">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
 									</view>
 								</view>
-							</view>
-						</view>
-						<view class="right">
-							<view class="demo-warter" v-for="(item, index) in recommendList" :key="index" v-if="index % 2 == 1">
-								<view class="">
-									<view class="demo-top"  @click="onPageJump" :id="item.article_id">
-										<view class="imgBox">
-											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-												<view class="videoIcon" v-if="item.type == 4">
-													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+							</template>
+							<template v-slot:right="{ rightList }">
+								<view class="demo-warter" v-for="(item, index) in rightList" :key="index" >
+									<view class="" @click="onPageJump" :id="item.article_id">
+										<view class="demo-top">
+											<view class="imgBox">
+												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"  mode="widthFix">
+													<view class="videoIcon" v-if="item.type == 4">
+														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+													</view>
+												</image>
+												<view class="adress">
+													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+													<view class="adressText">{{ item.location }}</view>
 												</view>
-											</image>
-											<view class="adress">
-												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-												<view class="adressText">{{ item.location }}</view>
 											</view>
 										</view>
 										<view class="titleTip">
@@ -122,33 +138,35 @@
 											<image class="userHeard" :src="item.avatar"></image>
 											<view class="userNikename">{{ item.author_name }}</view>
 										</view>
-										<view class="count" @click="clickLike(item, index)">
+										<view class="count" @click="clickRightLike(item,index) in rightList">
 											<view class="countImg">
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
-											<view class="likeCount">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
 									</view>
 								</view>
-							</view>
-						</view>
+							</template>
+						</u-waterfall>
 					</view>
 					<!-- 最新 -->
 					<view class="wrap" v-if="tabCurrent == 1 ">
-						<view class="left">
-							<view class="demo-warter" v-for="(item, index) in latestList" :key="index" v-if="index % 2 == 0">
-								<view class="" >
-									<view class="demo-top" @click="onPageJump" :id="item.article_id">
-										<view class="imgBox" >
-											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-												<view class="videoIcon" v-if="item.type == 4">
-													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+						<u-waterfall v-model="latestList" ref="uWaterfall">
+							<template v-slot:left="{ leftList }">
+								<view class="demo-warter" v-for="(item, index) in leftList" :key="index" >
+									<view class="" @click="onPageJump" :id="item.article_id">
+										<view class="demo-top">
+											<view class="imgBox">
+												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"  mode="widthFix">
+													<view class="videoIcon" v-if="item.type == 4">
+														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+													</view>
+												</image>
+												<view class="adress">
+													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+													<view class="adressText">{{ item.location }}</view>
 												</view>
-											</image>
-											<view class="adress">
-												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-												<view class="adressText">{{ item.location }}</view>
 											</view>
 										</view>
 										<view class="titleTip">
@@ -165,30 +183,30 @@
 											<image class="userHeard" :src="item.avatar"></image>
 											<view class="userNikename">{{ item.author_name }}</view>
 										</view>
-										<view class="count" @click="clickLike(item, index)">
+										<view class="count" @click="clickLeftLike(item,index) in leftList "  >
 											<view class="countImg">
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
-											<view class="likeCount">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
 									</view>
 								</view>
-							</view>
-						</view>
-						<view class="right">
-							<view class="demo-warter" v-for="(item, index) in latestList" :key="index" v-if="index % 2 == 1">
-								<view class="">
-									<view class="demo-top"  @click="onPageJump" :id="item.article_id">
-										<view class="imgBox">
-											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-												<view class="videoIcon" v-if="item.type == 4">
-													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+							</template>
+							<template v-slot:right="{ rightList }">
+								<view class="demo-warter" v-for="(item, index) in rightList" :key="index" >
+									<view class="" @click="onPageJump" :id="item.article_id">
+										<view class="demo-top">
+											<view class="imgBox">
+												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"  mode="widthFix">
+													<view class="videoIcon" v-if="item.type == 4">
+														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+													</view>
+												</image>
+												<view class="adress">
+													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+													<view class="adressText">{{ item.location }}</view>
 												</view>
-											</image>
-											<view class="adress">
-												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-												<view class="adressText">{{ item.location }}</view>
 											</view>
 										</view>
 										<view class="titleTip">
@@ -205,17 +223,17 @@
 											<image class="userHeard" :src="item.avatar"></image>
 											<view class="userNikename">{{ item.author_name }}</view>
 										</view>
-										<view class="count" @click="clickLike(item, index)">
+										<view class="count" @click="clickRightLike(item,index) in rightList">
 											<view class="countImg">
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
-											<view class="likeCount">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
 									</view>
 								</view>
-							</view>
-						</view>
+							</template>
+						</u-waterfall>
 					</view>
 				</view>
 		
@@ -250,6 +268,7 @@ export default {
 			console.log('---',e)
 			this.id = e.id
 			this.getRecommend()
+			this.getlatest()
 			this.getTopic()
 		},
 		mounted() {
@@ -315,7 +334,7 @@ export default {
 				});
 			},
 			// 最新列表
-			getRecommend(){
+			getlatest(){
 				uni.request({
 					url: this.globalUrl + '/topics/articles/latest',
 					data: {
@@ -381,13 +400,28 @@ export default {
 				})
 			},
 			// 选项卡切换
-			tabChange(index) {
-				this.tabCurrent = index;
-				this.downCallback()
-				this.mescroll.scrollTo(0)
+			recommendedChange(){
+				
+				// this.getRecommend()
+				// this.getlatest()
+				this.tabCurrent = 0
+				// this.mescroll.scrollTo(0)
 			},
+			latestChange(){
+				
+				// this.getlatest()
+				// this.getRecommend()
+				this.tabCurrent = 1
+				// this.mescroll.scrollTo(0)
+			},
+				
+			// tabChange(index) {
+			// 	this.tabCurrent = index;
+			// 	this.downCallback()
+			// 	this.mescroll.scrollTo(0)
+			// },
 			// 点赞
-			clickLike(e, index) {
+			clickLeftLike(e, index) {
 				console.log('qaz', e, index);
 				// debugger
 				let article = e.article_id;
@@ -411,16 +445,49 @@ export default {
 							});
 						}else{
 							if(this.tabCurrent == 0){
-								that.recommendList[index].liked = e.liked == 1 ? 0 : 1;
-								that.recommendList[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
+								this.$refs.uWaterfall.leftList[index].liked = e.liked == 1 ? 0 : 1;
+								this.$refs.uWaterfall.leftList[index].like_count = e.liked == 1 ? e.like_count - 1 : e.like_count + 1;
 							}else{
-								that.latestList[index].liked = e.liked == 1 ? 0 : 1;
-								that.latestList[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
+								this.$refs.uWaterfall.leftList[index].liked = e.liked == 1 ? 0 : 1;
+								this.$refs.uWaterfall.leftList[index].like_count = e.liked == 1 ? e.like_count - 1 : e.like_count + 1;
 							}
 						}
 						
 						
 						
+					}
+				});
+			},
+			clickRightLike(e,index) {
+				// this.$refs.uWaterfall.clickLike(e);
+				console.log(this.$refs)
+				let article = e.article_id;
+				var that = this;
+				uni.request({
+					url: this.globalUrl + '/user/liked',
+					data: {
+						article_id: article,
+						liked: e.liked == 0 ? 1 : 0
+					},
+					method: 'POST',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res => {
+						if (res.data.code != 0) {
+			
+							uni.navigateTo({
+								url: '../login/login'
+							});
+						} else {
+							if(this.tabCurrent == 0){
+								this.$refs.uWaterfall.rightList[index].liked = e.liked == 1 ? 0 : 1;
+								this.$refs.uWaterfall.rightList[index].like_count = e.liked == 1 ? e.like_count - 1 : e.like_count + 1;
+							}else{
+								this.$refs.uWaterfall.rightList[index].liked = e.liked == 1 ? 0 : 1;
+								this.$refs.uWaterfall.rightList[index].like_count = e.liked == 1 ? e.like_count - 1 : e.like_count + 1;
+							}
+						}
 					}
 				});
 			},
@@ -675,6 +742,7 @@ export default {
 	height: 36rpx;
 	background: rgba(0, 0, 0, 0.3);
 	border-radius: 9px;
+	border: none;
 	margin-top: 40rpx;
 	display: flex;
 	align-items: center;
@@ -683,12 +751,10 @@ export default {
 }
 .squareText{
 	width: 88rpx;
-	height: 36rpx;
 	font-size: 22rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #FFFFFF;
-	line-height: 36rpx;
 }
 .more{
 	margin-left: 4rpx;
@@ -728,8 +794,8 @@ export default {
 	width: 100%;
 	padding-left: 26rpx;
 	position: fixed;
-	top: 136rpx;
-	padding-top: 14rpx;
+	top: 126rpx;
+	padding-top: 38rpx;
 	z-index: 2;
 	display: flex;
 	align-items: center;
@@ -745,6 +811,46 @@ export default {
 	align-items: center;
 	z-index: 1000;
 	
+}
+.recommendedBox{
+	margin-left: 22rpx;
+}
+.recommendedText{
+	// width: 64rpx;
+	height: 32rpx;
+	font-size: 32rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #303133;
+	line-height: 32rpx;
+
+}
+.recommendedText1{
+	// width: 52rpx;
+	height: 26rpx;
+	font-size: 26rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #909399;
+	line-height: 26rpx;
+
+}
+.recommendedLine{
+	width: 64rpx;
+	height: 20rpx;
+	background: #FFE512;
+	border-radius: 1px 5px 1px 1px;
+	margin-top: -16rpx;
+}
+.latestBox{
+	margin-left: 48rpx;
+}
+.latestLine{
+	width: 64rpx;
+	height: 20rpx;
+	background: #FFE512;
+	border-radius: 1px 5px 1px 1px;
+	margin-top: -16rpx;
 }
 // 瀑布流
 .touring{
@@ -775,7 +881,6 @@ export default {
 .demo-warter {
 	width: 360rpx;
 	margin-top: 0;
-	margin-right: 10rpx;
 	margin-bottom: 16rpx;
 	padding-bottom: 16rpx;
 	/* position: relative; */

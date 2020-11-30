@@ -112,7 +112,7 @@
 					<view class="rateStart" v-if="attDetail.data.rate == 2.5">
 						<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-						<image src="../../static/images/star_svg/starCopy1(1).svg" mode=""></image>
+						<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 					</view>
@@ -648,15 +648,17 @@ export default {
 			// margin-right: 10rpx;
 			height: 42rpx;
 			position: absolute;
-			right: 10rpx;
+			right: 6rpx;
 			background-color: #FFFFFF;
 			bottom: -2rpx;
 			display: flex;
 			justify-content: flex-end;
 			z-index: 111;
 			.mask{
-				width: 50rpx;
-				background: linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+				width: 36rpx;
+				// background: linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+				
+				background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
 			}
 			text {
 				margin-top: 10rpx;

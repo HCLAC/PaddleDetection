@@ -1,9 +1,11 @@
 /* 上拉加载区域 */
 .mescroll-upwarp {
 	min-height: 60rpx;
+	width: 730rpx;
 	padding: 30rpx 0;
 	text-align: center;
 	clear: both;
+	margin: 0 auto;
 }
 
 /*提示文本 */

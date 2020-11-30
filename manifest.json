@@ -1,6 +1,6 @@
 {
     "name" : "lingtuyang",
-    "appid" : "__UNI__0F60E1F",
+    "appid" : "__UNI__71D005B",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -8,7 +8,9 @@
     "app-plus" : {
         "nvueCompiler" : "uni-app",
         "compilerVersion" : 3,
-        "modules" : {},
+        "modules" : {
+            "OAuth" : {}
+        },
         "distribute" : {
             "android" : {
                 "permissions" : [
@@ -37,7 +39,17 @@
                 ]
             },
             "ios" : {},
-            "sdkConfigs" : {}
+            "sdkConfigs" : {
+                "ad" : {},
+                "maps" : {},
+                "oauth" : {
+                    "weixin" : {
+                        "appid" : "",
+                        "appsecret" : "",
+                        "UniversalLinks" : ""
+                    }
+                }
+            }
         },
         "uniStatistics" : {
             "enable" : true
@@ -47,7 +59,7 @@
     "mp-weixin" : {
         "appid" : "wx83611669053cfcbf",
         "setting" : {
-            "urlCheck" : false,
+            "urlCheck" : true,
             "es6" : true,
             "postcss" : true,
             "minified" : true
@@ -57,14 +69,14 @@
         },
         "permission" : {
             "scope.userLocation" : {
-                "desc" : "用于小程序页面展示"
+                "desc" : "用于小程序个性化服务及体验"
             }
         }
     },
     "mp-baidu" : {
         "appid" : "21554227",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : true
         },
         "uniStatistics" : {
             "enable" : true
@@ -72,10 +84,10 @@
     },
     "mp-toutiao" : {
         "setting" : {
-            "es6" : false,
-            "minified" : false,
+            "es6" : true,
+            "minified" : true,
             "urlCheck" : false,
-            "postcss" : false
+            "postcss" : true
         },
         "appid" : "tt74ea0257ebd1c647"
     },

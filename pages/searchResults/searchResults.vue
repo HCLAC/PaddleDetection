@@ -13,22 +13,31 @@
 		<view class="search-box" @click="back">
 			<mSearch class="mSearch-input-box" :mode="2" button="inside" :placeholder="defaultKeyword" v-model="keyword" :focus="isFocus"></mSearch>
 		</view>
-
+		
 		<view class="container">
+			<!-- 省市主题 -->
 			<block v-if="area">
 				<view class="siteView" @click="getCity(area)">
-					<image :src="area.image" mode="widthFix"></image>
-					<view class="title">{{ area.name }}</view>
-					<view class="content">
-						点击查看城市主题页
-						<image src="../../static/images/more-right.svg" mode=""></image>
+					<image class="siteViewImg" :src="area.image" mode=""></image>
+					<view class="siteViewText">
+						<view class="title">{{ area.name }}</view>
+						<view class="content">
+							查看省市主题页
+						</view>
 					</view>
+					<image class="iconRight" src="../../static/images/more-right.svg" mode=""></image>
+				</view>
+				<view class="line">
+					
 				</view>
 			</block>
+			<!-- 景点 -->
 			<block v-if="site">
 				<view class="areaView" @click.stop="getSite(site.id)">
+					<image class="areaImg" :src="site.image[0]" mode=""></image>
 					<view class="top">
 						<view class="title">{{ site.name }}</view>
+						<view class="areacontent">{{ site.description }}</view>
 						<view class="rateBox">
 							<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
 							<!-- 评分图标 -->
@@ -84,7 +93,7 @@
 							<view class="rateStart" v-if="site.rate == 2.5">
 								<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 								<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-								<image src="../../static/images/star_svg/starCopy1(1).svg" mode=""></image>
+								<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 							</view>
@@ -104,118 +113,120 @@
 							</view>
 							<view class="rate">{{ site.rate }} 星</view>
 						</view>
-						<view class="rightIcon">
-							<image src="../../static/images/more-right.svg" mode=""></image>
-						</view>
 					</view>
-					<view class="content">{{ site.description }}</view>
-
-					<view class="smallSwiper">
-						<view v-for="(item, index) in site.image" :key="index" class="swiperItem">
-							<image :src="item"></image>
-						</view>
-					</view>
-
-					<view class="areaTag">景点</view>
+				</view>
+				<view class="line">
+					
 				</view>
 			</block>
+			<!-- 行程路线 -->
 			<block v-if="route_list && route_list.length">
-				<veiw class="contentTitle">行程线路</veiw>
-				<view style="padding-left: 4%; padding-top: 20rpx;">
+				<view class="titleBox">
+					<veiw class="contentTitle">行程线路</veiw>
+					<view class="moreBox" @click="toLineMore()">
+						更多
+						<image src="../../static/images/more-right.svg" mode=""></image>
+					</view>
+				</view>
+				<view style="padding-left: 4%; padding-top: 30rpx;">
 					<view class="swiper">
 						<view class="swiperItem" v-for="(item, index) in route_list" @click="getRoute(item.uuid)" :key="index">
 							<image :src="item.image"></image>
-							<view class="title">{{ item.title }}</view>
+							<view class="title"><rich-text :nodes="item.htmlStr"></rich-text></view>
 						</view>
 					</view>
 				</view>
+				<view class="line">
+					
+				</view>
 			</block>
-
+			<!-- 内容精选 -->
 			<veiw class="contentTitle">内容精选</veiw>
 			<view class="touring">
 				<view class="wrap">
-					<view class="left">
-						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
-							<view class="" @click="onPageJump" :id="item.article_id">
-								<view class="demo-top">
-									<view class="imgBox">
-										<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-											<view class="videoIcon" v-if="item.type == 4">
-												<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+					<u-waterfall v-model="list" ref="uWaterfall">
+						<template v-slot:left="{ leftList }">
+							<view class="demo-warter" v-for="(item, index) in leftList" :key="index" >
+								<view class="" @click="onPageJump" :id="item.article_id">
+									<view class="demo-top">
+										<view class="imgBox">
+											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"  mode="widthFix">
+												<view class="videoIcon" v-if="item.type == 4">
+													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+												</view>
+											</image>
+											<view class="adress">
+												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+												<view class="adressText">{{ item.location }}</view>
 											</view>
-										</image>
-										<view class="adress">
-											<view class="adreessIcon">
-												<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
-											</view>
-
-											<view class="adressText">{{ item.location }}</view>
 										</view>
 									</view>
-								</view>
-								<view class="titleTip">
-									<view class="demo-tag">
-										<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-										<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-										<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+									<view class="titleTip">
+										<view class="demo-tag">
+											<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+											<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+											<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+										</view>
+										<view class="demo-title">{{ item.title }}</view>
 									</view>
-									<view class="demo-title">{{ item.title }}</view>
+								</view>
+								<view class="demo-user">
+									<view class="userMessage">
+										<image class="userHeard" :src="item.avatar"></image>
+										<view class="userNikename">{{ item.author_name }}</view>
+									</view>
+									<view class="count" @click="clickLeftLike(item,index) in leftList "  >
+										<view class="countImg">
+											<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+											<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+										</view>
+										<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+									</view>
 								</view>
 							</view>
-							<view class="demo-user">
-								<view class="userMessage">
-									<image class="userHeard" :src="item.avatar"></image>
-									<view class="userNikename">{{ item.author_name }}</view>
-								</view>
-								<view class="count" @click="clickLike(item, index)">
-									<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-									<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
-									{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}
-								</view>
-							</view>
-						</view>
-					</view>
-					<view class="right">
-						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
-							<view class="" @click="onPageJump" :id="item.article_id">
-								<view class="demo-top">
-									<view class="imgBox">
-										<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-											<view class="videoIcon" v-if="item.type == 4">
-												<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+						</template>
+						<template v-slot:right="{ rightList }">
+							<view class="demo-warter" v-for="(item, index) in rightList" :key="index" >
+								<view class="" @click="onPageJump" :id="item.article_id">
+									<view class="demo-top">
+										<view class="imgBox">
+											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"  mode="widthFix">
+												<view class="videoIcon" v-if="item.type == 4">
+													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+												</view>
+											</image>
+											<view class="adress">
+												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+												<view class="adressText">{{ item.location }}</view>
 											</view>
-										</image>
-										<view class="adress">
-											<view class="adreessIcon">
-												<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
-											</view>
-
-											<view class="adressText">{{ item.location }}</view>
 										</view>
 									</view>
-								</view>
-								<view class="titleTip">
-									<view class="demo-tag">
-										<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-										<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-										<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+									<view class="titleTip">
+										<view class="demo-tag">
+											<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+											<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+											<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+										</view>
+										<view class="demo-title">{{ item.title }}</view>
 									</view>
-									<view class="demo-title">{{ item.title }}</view>
+								</view>
+								<view class="demo-user">
+									<view class="userMessage">
+										<image class="userHeard" :src="item.avatar"></image>
+										<view class="userNikename">{{ item.author_name }}</view>
+									</view>
+									<view class="count" @click="clickRightLike(item,index) in rightList">
+										<view class="countImg">
+											<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+											<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+										</view>
+										<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+									</view>
 								</view>
 							</view>
-							<view class="demo-user">
-								<view class="userMessage">
-									<image class="userHeard" :src="item.avatar"></image>
-									<view class="userNikename">{{ item.author_name }}</view>
-								</view>
-								<view class="count" @click="clickLike(item, index)">
-									<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-									<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
-									{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}
-								</view>
-							</view>
-						</view>
-					</view>
+						</template>
+					</u-waterfall>
+					
 					<!-- <view v-if="isLoadMore">  //loading加载提示处
 						<uni-load-more :status="loadStatus" ></uni-load-more>
 					</view> -->
@@ -253,12 +264,25 @@
 		// 方法
 		methods: {
 			getResults() {
+				let keyList  = uni.getStorageSync('OldKeys')
+				var keyword
+				if(keyList&&keyList.length){
+					keyList = JSON.parse(keyList)
+					keyword = keyList[0]
+				}
+				 
 				let res = uni.getStorageSync('article_id');
 				if (res) {
-					this.list = res.data.article_list;
+					console.log('resres',res)
+					let arr = res.data.article_list;
+					let arr1 = res.data.route_list;
+					let list1 = this.drawCorrelativeKeyword(arr, keyword);
+					this.list = list1
+					// this.list = res.data.article_list;
 					this.area = res.data.area;
 					this.site = res.data.site;
-					this.route_list = res.data.route_list;
+					let route_list1 = this.drawCorrelativeKeyword(arr1, keyword);
+					this.route_list = route_list1;
 				}
 				// var that = this
 				// uni.getStorage({
@@ -268,6 +292,34 @@
 				// 		that.list = res.data.data
 				// 	}
 				// })
+			},
+			//高亮关键字
+			drawCorrelativeKeyword(keywords, keyword) {
+				var len = keywords.length;
+				var keywordArr = [];
+				for (var i = 0; i < len; i++) {
+					var row = keywords[i].title;
+					console.log(row, 1);
+					//定义高亮#9f9f9f
+					var html = row.replace(keyword, "<span style='color: #A86B13;font-weight:bold'>" + keyword + '</span>');
+					html = '<div>' + html + '</div>';
+					var tmpObj = {
+						...keywords[i],
+						htmlStr: html
+					};
+					keywordArr.push(tmpObj);
+				}
+			
+				return keywordArr;
+				
+			},
+			// 线路列表
+			toLineMore() {
+				var state_id = this.area.state_id;
+				var city_id = this.area.city_id;
+				uni.navigateTo({
+					url: '/pages/lineList/lineList?state_id=' + state_id + '&city_id=' + city_id
+				});
 			},
 			getSite(id) {
 				if (id) {
@@ -296,6 +348,7 @@
 					});
 				}
 			},
+			
 			// 跳转文章详情
 			onPageJump(e) {
 				console.log(e);
@@ -307,7 +360,7 @@
 				});
 			},
 			// 点赞
-			clickLike(e, index) {
+			clickRightLike(e, index) {
 				console.log('qaz', e, index);
 				// debugger
 				let article = e.article_id;
@@ -322,19 +375,46 @@
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
-					success: function(res) {
+					success: res=> {
 						console.log('点赞', res);
 						if (res.data.code != 0) {
 							// debugger
 							uni.navigateTo({
 								url: '../login/login'
 							});
-						}else{
-							that.list[index].liked = e.liked == 1 ? 0 : 1;
-							that.list[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
 						}
-
-						
+			
+						this.$refs.uWaterfall.rightList[index].liked = e.liked == 1 ? 0 : 1
+						this.$refs.uWaterfall.rightList[index].like_count = (e.liked == 1 ? e.like_count - 1 : e.like_count  + 1)
+					}
+				});
+			},
+			clickLeftLike(e, index) {
+				console.log('qaz', e, index);
+				// debugger
+				let article = e.article_id;
+				var that = this;
+				uni.request({
+					url: this.globalUrl + '/user/liked',
+					data: {
+						article_id: article,
+						liked: e.liked == 0 ? 1 : 0
+					},
+					method: 'POST',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res=> {
+						console.log('点赞', res);
+						if (res.data.code != 0) {
+							// debugger
+							uni.navigateTo({
+								url: '../login/login'
+							});
+						}
+			
+						this.$refs.uWaterfall.leftList[index].liked = e.liked == 1 ? 0 : 1
+						this.$refs.uWaterfall.leftList[index].like_count = (e.liked == 1 ? e.like_count - 1 : e.like_count  + 1)
 					}
 				});
 			},
@@ -384,63 +464,71 @@
 
 <style lang="scss">
 	.container {
-		padding-top: 20rpx;
+		padding-top: 28rpx;
 
 		.siteView {
-			height: 320rpx;
-			margin: 20rpx;
-			border: 1rpx solid #ededed;
-			padding: 30rpx;
+			padding: 0 28rpx;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
 			border-radius: 16rpx;
-
-			image {
-				width: 35%;
-				border-radius: 16rpx;
+			margin-bottom: 28rpx;
+			.siteViewImg {
+				width: 220rpx;
+				height: 148rpx;
+				border-radius: 8px;
+				margin-right: 20rpx;
 			}
-
+			.siteViewText{
+				flex: 1;
+			}
 			.title {
-				font-size: 36rpx;
+				font-size: 32rpx;
 				font-family: PingFangSC-Medium, PingFang SC;
 				font-weight: 500;
-				color: #303133;
+				color: #A86B13;
 			}
 
 			.content {
-				font-size: 28rpx;
+				width: 168rpx;
+				height: 24rpx;
+				font-size: 24rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
 				font-weight: 400;
-				color: #606266;
-				display: flex;
-				align-items: center;
+				color: #909399;
+				line-height: 24rpx;
+				margin-top: 10rpx;
 
-				image {
-					width: 28rpx;
-					height: 28rpx;
-				}
 			}
+			.iconRight{
+				width: 18rpx;
+				height: 20rpx;
+			}
+		}
+		.line{
+			width: 100%;
+			height: 20rpx;
+			margin-bottom: 44rpx;
+			background: #F8F8F8;
 		}
 
 		.areaView {
-			height: 320rpx;
-			margin: 20rpx;
-			border: 1rpx solid #ededed;
-			padding: 40rpx 30rpx 30rpx 80rpx;
-			border-radius: 16rpx;
+			margin: 0 28rpx 28rpx;
+			display: flex;
+			align-items: center;
 			position: relative;
-
+			.areaImg{
+				width: 262rpx;
+				height: 198rpx;
+				border-radius: 8px;
+				margin-right: 20rpx;
+			}
 			.top {
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-
 				.title {
-					font-size: 36rpx;
+					font-size: 32rpx;
 					font-family: PingFangSC-Medium, PingFang SC;
 					font-weight: 500;
-					color: #303133;
+					color: #A86B13;
 				}
 
 				.rateBox {
@@ -466,63 +554,28 @@
 					}
 				}
 
-				.rightIcon {
-					color: #606266;
-
-					image {
-						width: 28rpx;
-						height: 28rpx;
-					}
-				}
+				
 			}
 
-			.content {
-				margin-top: 5rpx;
+			.areacontent {
+				width: 412rpx;
+				height: 84rpx;
+				margin-top: 12rpx;
+				margin-bottom: 14rpx;
 				font-size: 28rpx;
-				line-height: 36rpx;
+				line-height: 42rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
 				font-weight: 400;
-				color: #606266;
+				color: #909399;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				// text-overflow: ellipsis;
 				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-				margin-bottom: 30rpx;
+				-webkit-line-clamp: 2;
 			}
 
-			.smallSwiper {
-				width: 100%;
-				overflow-x: auto;
-				display: flex;
-				justify-content: space-between;
 
-				.swiperItem {
-					width: 30%;
-					margin-right: calc(10% / 3);
-					flex: none;
-
-					image {
-						width: 100%;
-						height: 100rpx;
-						border-radius: 16rpx;
-					}
-				}
-			}
-
-			.areaTag {
-				width: 80rpx;
-				height: 40rpx;
-				background: #9fd873;
-				border-radius: 16rpx 0px 16rpx 0px;
-				font-size: 20rpx;
-				text-align: center;
-				line-height: 40rpx;
-				color: #ffffff;
-				position: absolute;
-				top: -1rpx;
-				left: -1rpx;
-				font-family: PingFangSC-Medium, PingFang SC;
-				font-weight: 500;
-			}
+			
 		}
 
 		.swiper {
@@ -534,15 +587,19 @@
 
 			.swiperItem {
 				flex: none;
-				width: 45%;
-				margin-right: calc( 10% / 2);
+				width: 46%;
+				margin-right: calc( 8% / 2);
+				// margin-right: 18rpx;
 				image {
 					width: 98%;
+					// width: 338rpx;
 					border-radius: 16rpx;
-					height: 176rpx;
+					height: 180rpx;
 				}
 
 				.title {
+					// width: 338rpx;
+					width: 96%;
 					font-size: 28rpx;
 					font-family: PingFangSC-Medium, PingFang SC;
 					font-weight: 500;
@@ -551,23 +608,49 @@
 					overflow: hidden;
 					text-overflow: ellipsis;
 					white-space: nowrap;
+					display: flex;
+					justify-content: left;
 				}
 			}
 		}
 
 		.contentTitle {
+			flex: 1;
 			font-size: 36rpx;
 			font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 500;
 			color: #303133;
-			margin-left: 20rpx;
+			margin-left: 28rpx;
 			line-height: 36rpx;
+		}
+		.titleBox{
+			display: flex;
+			align-items: center;
+		}
+		.moreBox{
+			width: 94rpx;
+			height: 42rpx;
+			background: #EDEFF2;
+			border-radius: 11px;
+			font-size: 22rpx;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 500;
+			color: #606266;
+			margin-right: 28rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			image{
+				width: 14rpx;
+				height: 14rpx;
+				margin-left: 4rpx;
+			}
 		}
 	}
 
 	.search-box {
 		width: 100%;
-		padding: 15upx 2.5%;
+		padding: 8rpx 28rpx 0;
 		display: flex;
 		justify-content: space-between;
 		position: sticky;
@@ -666,19 +749,15 @@
 		flex-wrap: wrap;
 	}
 
-	.demo-warter-l {
-		margin-left: 10rpx;
-	}
 
 	.demo-warter {
-		width: 100%;
+		width: 360rpx;
 		margin-top: 0;
-		margin-right: 10rpx;
 		margin-bottom: 20rpx;
 		padding-bottom: 16rpx;
 		/* position: relative; */
 		background-color: #ffffff;
-		box-shadow: 0px 10rpx 10rpx 10rpx #f8f8f8;
+		// box-shadow: 0px 10rpx 10rpx 10rpx #f8f8f8;
 	}
 
 	.imgBox {
@@ -797,6 +876,7 @@
 		margin-top: 24rpx;
 		/* margin-bottom: 16rpx; */
 		display: flex;
+		align-items: center;
 		justify-content: space-between;
 	}
 
@@ -825,11 +905,11 @@
 
 	.count {
 		display: flex;
+		align-items: center;
 		font-size: 22rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: rgba(96, 98, 102, 1);
-		align-items: center;
 		margin-right: 20rpx;
 	}
 
@@ -837,5 +917,7 @@
 		width: 26rpx;
 		height: 26rpx;
 		margin-right: 8rpx;
+		display: flex;
+		align-items: center;
 	}
 </style>

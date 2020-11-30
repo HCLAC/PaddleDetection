@@ -79,25 +79,126 @@
 					<!-- <view>#<text></text></view> -->
 				</view>
 				<view class="releaseTime">发布于{{ articleList.data.update_at }}</view>
+				<view class="replyLine" >
+					
+				</view>
+				<view class="replyBox">
+					
+					<!-- start 输入框 -->
+					<!-- end 输入框 -->
+					<view class="replyText">
+						回复
+					</view>
+					<view class="replyContent">
+						<view class="myReply" >
+							<image class="userImg" src="../../static/images/userImg.svg" mode="" v-if="userInfo == null"></image>
+							<image class="userImg" :src="userInfo.avatar" mode="" v-if="userInfo != null"></image>
+							<!-- <comment 
+								ref="comment" 
+								:placeholder="'快来写下你的评论吧'" 
+								@pubComment="pubComment">
+							</comment>
+							<u-input 
+								class="replyInput"
+								placeholder="写个回复走个心" 
+								placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
+								confirmType="send"
+								:clearable="false"
+								:disabled="true"
+								@click="toggleMask('show')"
+							>
+							</u-input> -->
+							<u-input
+								class="replyInput"
+								placeholder="写个回复走个心" 
+								placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
+								confirmType="send"
+								:clearable="false"
+								:disabled="true"
+								@click="commentInput"
+							>
+							</u-input>
+						</view>
+						
+						<view class="reply" v-for="(item,index) in commentsList" :key="index">
+							<view class="replyTop" >
+								<image class="userImg" v-if="!item.avatar" src="../../static/images/userImg.svg" mode=""></image>
+								<image class="userImg" v-if="item.avatar" :src="item.avatar" mode=""></image>
+								<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
+									<view class="" style="display: flex;align-items: center;">
+										<view class="userName">{{item.account_name}}</view>
+										<view class="replyTime">
+											{{item.create_at.slice(0,10)}}
+										</view>
+									</view>
+									<view class="">
+										<image class="replyLike" src="../../static/images/attLike.svg" v-if="item.like == 0" @click="replyLike(item)"></image>
+										<image class="replyLike" src="../../static/images/attLikeA.svg" mode="" v-if="item.like == 1" @click="replyLike(item)"></image>
+										<image class="report" src="../../static/images/report.svg" mode=""  @click="toReport(item)"></image>
+									</view>
+									
+								</view>
+								
+							</view>
+							<view class="replyBottom">
+								{{item.content}}
+							</view>
+						</view>
+					</view>
+					<view class="moreReply" v-if="total > 3" @click="toMoreReply">
+						查看全部{{total}}条回复
+					</view>
+					
+				</view>
+				
 				<view class="safeBox"></view>
+			</view>
+			<!-- <view class="foot" v-show="showInput">
+				<chat-input @send-message="send_comment" @blur="blur" :focus="focus" :placeholder="input_placeholder"></chat-input>
+			</view> -->
+			<view class="commentInput" v-if="textareafocus" :style="inputbottom" >
+				<textarea
+					class="inputK"
+					v-model="content" 
+					placeholder="快来写下你的评论吧" 
+					:show-confirm-bar="false" 
+					:focus="textareafocus" 
+					@blur="inputBlur"
+					@focus="inputFocus"
+					:auto-height="autoHeight"
+					@input="inputValue"
+					maxlength="140"
+					cursor-spacing="20"
+					:adjust-position="false"
+				></textarea>
+				<view class="send">发送</view>
 			</view>
 			<view class="bottom">
 				<!-- 分割线 -->
+				<!-- <view class="bottomLine">
+					
+				</view> -->
 				<view class="line"></view>
 				<!-- 登录 -->
 				<view class="contentBottom savepadding">
 					<view style="display: flex;">
 						<view class="like" @click="clickLike">
 							<image class="likeBtn" src="../../static/images/attheart.svg" v-if="articleList.data.liked == 0"></image>
-							<image class="likeBtn" src="../../static/images/heart-actived.svg" v-if="articleList.data.liked == 1"></image>
-							<view class="likeNum" v-model="likemessage">{{ articleList.data.like_count }}</view>
+							<image class="likeBtn" src="../../static/images/attHeartActive.svg" v-if="articleList.data.liked == 1"></image>
+							<view class="likeNum" v-model="likemessage" v-if="articleList.data.like_count != 0">{{ articleList.data.like_count }}</view>
 						</view>
 						<view class="fav" @click="clickFav">
-							<image class="favBtn" src="../../static/images/shouchang.svg" v-if="articleList.data.fav == 0"></image>
-							<image class="favBtn" src="../../static/images/fav-actived.svg" v-if="articleList.data.fav == 1"></image>
-							<view class="favNum">{{ articleList.data.fav_count }}</view>
+							<image class="favBtn" src="../../static/images/attFav.svg" v-if="articleList.data.fav == 0"></image>
+							<image class="favBtn" src="../../static/images/attFavA.svg" v-if="articleList.data.fav == 1"></image>
+							<view class="favNum" v-if="articleList.data.fav_count != 0" >{{ articleList.data.fav_count }}</view>
 						</view>
-						<view class="share" v-if="serviceProvider == 'baidu'" @click="share"><image src="../../static/images/shareIcon.svg"></image></view>
+						<view class="replyIcon"  @click="commentInput">
+							<image src="../../static/images/replyIcon.svg" mode=""></image>
+							<view class="replyNum" >
+								{{total}}
+							</view>
+						</view>
+						<!-- <view class="share" v-if="serviceProvider == 'baidu'" @click="share"><image src="../../static/images/shareIcon.svg"></image></view> -->
 					</view>
 					<view class=""><view class="loginButton" @click="login" v-if="flag">登录</view></view>
 				</view>
@@ -110,11 +211,14 @@
 var _this;
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import uniIcons from '@/components/uni-icons/uni-icons.vue';
+// import comment from '@/components/comment/comment.vue';
+import chatInput from '@/components/comment/chatinput.vue';
 export default {
 	components: {
 		uniNavBar,
-		uniIcons
-		// ourLoading
+		uniIcons,
+		// comment,
+		chatInput
 	},
 	data() {
 		return {
@@ -132,7 +236,17 @@ export default {
 			serviceProvider: '',
 			following: 0,
 			content: '',
-			show: false
+			show: false,
+			value:'',
+			commentsList:[],
+			total:'',
+			userInfo:[],
+			focus:false,
+			autoHeight:false,
+			inputbottom:{
+				bottom:0
+			},
+			textareafocus:false
 		};
 	},
 	onShow() {
@@ -142,6 +256,7 @@ export default {
 		let currentPage = pages[pages.length - 1];
 		// 打印出当前页面中的 options
 		console.log('onshow--', currentPage.options);
+		
 		// console.log('文章id====', e);
 		uni.showLoading({
 			title: '加载中',
@@ -149,8 +264,20 @@ export default {
 				this.flag = uni.getStorageSync('Authorization') ? false : true;
 				console.log(this.flag);
 				this.article_num = currentPage.options.article_id;
-
 				this.getArticleDetail(currentPage.options);
+				this.getComments(currentPage.options);
+				this.getUserInfo()
+			}
+		});
+		
+	},
+	onLoad() {
+		this.animation = uni.createAnimation()  
+		// 创建动画实例
+		uni.getSystemInfo({ //获取设备信息
+			success: (res) => {
+				this.screenHeight = res.screenHeight;
+				this.platform = res.platform;
 			}
 		});
 	},
@@ -202,12 +329,6 @@ export default {
 									});
 								}
 							});
-							if(e.planid){
-								tt.sendtoTAQ({convert_id:e.planid,event_type:"game_addiction"})
-								uni.navigateTo({
-									url:"../web/web"
-								})
-							}
 						} else {
 							uni.showToast({
 								title: res.data.msg,
@@ -243,15 +364,14 @@ export default {
 					if (strIndex && strIndex.length) {
 						// let strId =  newContent.substring(strIndex,1)
 
-						let planId = strIndex[0].match(/id为(\S*)groupId/)[1];
-						let strId = strIndex[0].match(/groupId为(\S*)"/)[1];
+						let strId = strIndex[0].slice(36, -4);
 						let resCode = await that.getTemplate(strId);
 						if (resCode.data.code == 0) {
 							let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
 							let str = `<div>
       <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
           详情请加VX：${wechat_id}
-      </span><a groupId="${strId}"  planId="${planId}" group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
+      </span><a groupId="${strId}"   group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
     </div>`;
 
 							res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
@@ -391,6 +511,192 @@ export default {
 				}
 			});
 		},
+		// 用户信息
+		getUserInfo(){
+			uni.request({
+				url: this.globalUrl+ '/user/info',
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				method: 'get',
+				success: (res)=> {
+					console.log('个人信息=', res.data);
+					this.userInfo = res.data.data
+				}
+			})
+		},
+		// 举报
+		toReport(e) {
+			let token = uni.getStorageSync('Authorization')
+			// console.log('tttt',token)
+			if(!token){
+				uni.navigateTo({
+					url: '../login/login'
+				});
+			}else{
+				uni.navigateTo({
+					url:'../report/report?id=' + e.id
+				})
+			}
+			
+		},
+		// 评论
+		toggleMask(type){
+			this.$refs.comment.toggleMask(type);
+		},
+		commentInput(){
+			this.textareafocus = true
+		},
+		inputBlur(){
+			this.textareafocus = false
+			this.inputbottom.bottom = 0 + 'px'
+		},
+		inputFocus(e){
+			console.log('e.detail.height',e.detail.height)
+			this.inputbottom.bottom = e.detail.height + 'px'
+			
+			// this.textareaStyle.transform = 'translateY('+e.detail.height+'px'+')'
+			
+		},
+
+		inputValue(e){
+			console.log('eeeee',e.detail.value.length)
+			if(e.detail.value.length>18){
+				this.autoHeight = true
+			}else{
+				this.autoHeight = false
+			}
+		},
+		pubComment(e){
+			console.log('eee',e)
+			uni.request({
+				url: this.globalUrl + '/comments',
+				data: {
+					article_id: this.article_num,
+					content:e
+				},
+				method: 'POST',
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: res => {
+					// this.commentsList = res.data.data.list
+					this.value = ''
+					uni.hideKeyboard()
+					this.$refs.comment.toggleMask('none');
+					this.getComments()
+					console.log('pinglun',res.data)
+					if(res.data.code == 10501){
+						uni.navigateTo({
+							url: '../login/login'
+						});
+					}else{
+						
+						if(res.data.code == 15001){
+							uni.showToast({
+								title: res.data.msg,
+								icon:'none',
+								duration: 2000
+							})
+						}else{
+							if(res.data.code != 0){
+								uni.showToast({
+									title: '评论不能为空',
+									icon:'none',
+									duration: 2000
+								})
+							}else{
+								uni.showToast({
+									title: '评论成功',
+									icon:'none',
+									duration: 2000
+								})
+							}
+						}
+					}
+					
+					
+				}
+			})
+		},
+		// 获取评论列表
+		getComments(){
+			uni.request({
+				url: this.globalUrl + '/comments/list',
+				data: {
+					article_id: this.article_num,
+					page:1,
+					count:3
+				},
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: res => {
+					console.log(res)
+					if(res.data.data == null){
+						uni.request({
+							url: this.globalUrl + '/comments/list',
+							data: {
+								article_id: this.article_num,
+								page:1,
+								count:3
+							},
+							success: res =>{
+								this.commentsList = res.data.data.list
+								this.total = res.data.data.total
+								console.log('不带tokencomments',res.data)
+							}
+						})
+					}else{
+						this.commentsList = res.data.data.list
+						this.total = res.data.data.total
+						console.log('comments',res.data)
+					}
+					
+				}
+			});
+		},
+		// 评论点赞
+		replyLike(e){
+			uni.request({
+				url: this.globalUrl + '/comments/likes',
+				data: {
+					id: e.id,
+					like:e.like == 0 ? 1 : 0
+				},
+				method: 'POST',
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: res => {
+					console.log('点赞',res)
+					if(res.data.code == 10501){
+						uni.navigateTo({
+							url: '../login/login'
+						});
+					}else{
+						this.getComments()
+					}
+					
+				}
+			});
+		},
+		// likeBtn(){
+		// 	this.$u.debounce(this.replyLike, 1000)
+		// },
+		// replyBtn(){
+		// 	this.focus = true
+		// },
+		// isfocus(){
+		// 	this.focus = false
+		// },
+		// 查看更多评论
+		toMoreReply(){
+			let e = this.article_num
+			uni.navigateTo({
+				url:'../comments/comments?article_id=' + e
+			})
+		},
 		// 点赞
 		clickLike() {
 			var that = this;
@@ -435,8 +741,7 @@ export default {
 							if (strIndex && strIndex.length) {
 								// let strId =  newContent.substring(strIndex,1)
 
-								let planId = strIndex[0].match(/id为(\S*)groupId/)[1];
-								let strId = strIndex[0].match(/groupId为(\S*)"/)[1];
+								let strId = strIndex[0].slice(36, -4);
 								let resCode = await that.getTemplate(strId);
 
 								if (resCode.data.code == 0) {
@@ -444,7 +749,7 @@ export default {
 									let str = `<div>
 							  <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
 							      详情请加VX：${wechat_id}
-							  </span><a groupId="${strId}" planId="${planId}" group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
+							  </span><a groupId="${strId}"  group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
 							</div>`;
 
 									res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
@@ -521,15 +826,14 @@ export default {
 							if (strIndex && strIndex.length) {
 								// let strId =  newContent.substring(strIndex,1)
 
-								let planId = strIndex[0].match(/id为(\S*)groupId/)[1];
-								let strId = strIndex[0].match(/groupId为(\S*)"/)[1];
+								let strId = strIndex[0].slice(36, -4);
 								let resCode = await that.getTemplate(strId);
 								if (resCode.data.code == 0) {
 									let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
 									let str = `<div>
 							  <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
 							      详情请加VX：${wechat_id}
-							  </span><a groupId="${strId}" planId="${planId}" group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
+							  </span><a groupId="${strId}"  group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
 							</div>`;
 
 									res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
@@ -696,6 +1000,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+html{
+	  padding-bottom: constant(safe-area-inset-bottom);
+	  padding-bottom: env(safe-area-inset-bottom);
+   }
 /* 自定义导航栏样式 */
 .example-body {
 	flex-direction: row;
@@ -864,7 +1172,7 @@ export default {
 	width: 124rpx;
 	height: 48rpx;
 	background: #f8f8f8;
-	border-radius: 12px;
+	border-radius: 24rpx;
 	margin-right: 28rpx;
 	display: flex;
 	align-items: center;
@@ -878,7 +1186,7 @@ export default {
 	width: 124rpx;
 	height: 48rpx;
 	background: #ffe512;
-	border-radius: 12px;
+	border-radius: 24rpx;
 	margin-right: 28rpx;
 	display: flex;
 	align-items: center;
@@ -936,7 +1244,7 @@ export default {
 	font-weight: 600;
 	color: rgba(48, 49, 51, 1);
 	line-height: 32rpx;
-	margin-left: 20rpx;
+	margin-left: 28rpx;
 	margin-top: 20rpx;
 }
 
@@ -946,7 +1254,7 @@ export default {
 	font-weight: 400;
 	color: rgba(96, 98, 102, 1);
 	line-height: 56rpx;
-	margin: 20rpx;
+	margin: 28rpx;
 }
 
 .copy {
@@ -1013,6 +1321,138 @@ export default {
 	padding-bottom: constant(safe-area-inset-bottom);
 	padding-bottom: env(safe-area-inset-bottom);
 }
+.replyLine{
+	width: 694rpx;
+	height: 0.5px;
+	background: #edeff2;
+	margin: 28rpx 28rpx 40rpx;
+}
+// 评论
+.replyBox{
+	margin: 28rpx;
+	
+	.relpyText{
+		height: 32rpx;
+		font-size: 32rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #303133;
+		line-height: 32rpx;
+	}
+	.replyContent{
+		.myReply{
+			display: flex;
+			align-items: center;
+			margin-top: 40rpx;
+			.userImg{
+				width: 68rpx;
+				height: 68rpx;
+				border-radius: 50%;
+				margin-right: 16rpx;
+			}
+			.replyInput{
+				width: 598rpx;
+				// height: 68rpx;
+				background: #F8F8F8;
+				border-radius: 17px;
+				padding-left: 32rpx;
+			}
+		}
+		.reply{
+			margin-top: 32rpx;
+			border-bottom: 0.5px solid #edeff2;
+			.replyTop{
+				display: flex;
+				align-items: center;
+				.userImg{
+					width: 68rpx;
+					height: 68rpx;
+					border-radius: 50%;
+					margin-right: 16rpx;
+				}
+				.userName{
+					height: 28rpx;
+					font-size: 28rpx;
+					font-family: PingFangSC-Medium, PingFang SC;
+					font-weight: 500;
+					color: #303133;
+					line-height: 28rpx;
+				}
+				.replyTime{
+					margin-left: 16rpx;
+					height: 24rpx;
+					font-size: 24rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #C9CAD1;
+					line-height: 24rpx;
+				}
+				.replyLike{
+					width: 44rpx;
+					height: 44rpx;
+				}
+				.report{
+					margin-left: 28rpx;
+					width: 44rpx;
+					height: 44rpx;
+				}
+			}
+			.replyBottom{
+				// height: 42rpx;
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #606266;
+				line-height: 42rpx;
+				margin-left: 84rpx;
+				margin-bottom: 32rpx;
+			}
+		}
+	}
+	.moreReply{
+		text-align: center;
+		margin-top: 32rpx;
+		margin-bottom: 100rpx;
+		height: 28rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #0091FF;
+		line-height: 28rpx;
+	}
+}
+// 评论框
+.commentInput{
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	background: #ffffff;
+	display: flex;
+	align-items: center;
+	.inputK{
+		height: 28rpx;
+		width: 558rpx;
+		background: #F8F8F8;
+		border-radius: 4px;
+		margin: 16rpx 32rpx;
+		padding: 20rpx 16rpx;
+	}
+	.send{
+		// width: 64rpx;
+		height: 32rpx;
+		font-size: 32rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #0091FF;
+		line-height: 32rpx;
+
+	}
+}
+.bottomLine{
+	width: 100%;
+	height: 20rpx;
+	background: #F8F8F8;
+}
 .safeBox {
 	height: 142rpx;
 	width: 100%;
@@ -1027,7 +1467,7 @@ export default {
 	bottom: var(--window-bottom);
 	z-index: 111;
 	background-color: #ffffff;
-	padding-bottom: 68rpx;
+	// padding-bottom: 68rpx;
 	padding-bottom: constant(safe-area-inset-bottom);
 	padding-bottom: env(safe-area-inset-bottom);
 	box-sizing: content-box;
@@ -1069,26 +1509,60 @@ export default {
 	display: flex;
 	margin-left: 28rpx;
 	align-items: center;
+	margin-right: 40rpx;
 }
 
 .likeBtn {
 	width: 52rpx;
 	height: 52rpx;
-	margin-right: 10rpx;
+	margin-right: 8rpx;
 }
-
+.likeNum{
+	
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #909399;
+	line-height: 24rpx;
+}
 .fav {
 	display: flex;
-	margin-left: 56rpx;
 	align-items: center;
+	margin-right: 40rpx;
 }
 
 .favBtn {
 	width: 52rpx;
 	height: 52rpx;
-	margin-right: 10rpx;
+	margin-right: 8rpx;
 }
-
+.favNum{
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #909399;
+	line-height: 24rpx;
+}
+.replyIcon{
+	display: flex;
+	align-items: center;
+	image{
+		width: 52rpx;
+		height: 52rpx;
+	}
+	
+}
+.replyNum{
+	margin-left: 8rpx;
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #909399;
+	line-height: 24rpx;
+}
 .share {
 	display: flex;
 	margin-left: 56rpx;
@@ -1099,4 +1573,6 @@ export default {
 	width: 52rpx;
 	height: 52rpx;
 }
+
+ 
 </style>

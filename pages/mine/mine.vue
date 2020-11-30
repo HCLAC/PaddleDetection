@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view v-if="userInfo">
 		<!-- 自定义导航栏 -->
 		<view class="example-body" v-if="isFixed">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
@@ -37,9 +37,34 @@
 					<view class="phone" @click="tell"><image class="phoneImg" src="../../static/images/minephone.svg" mode=""></image></view>
 					<!-- 我的收藏 -->
 					<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
+						<view class="favBox" @click="change" >
+							<view class="favBT">
+								<view :class="tabCurrent == 0 ?'favText' : 'favText1 '" >
+									收藏
+								</view>
+								<view class="favLine" v-if="tabCurrent == 0">
+								</view>
+							</view>
+							<view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" v-if="favNum != 0" >
+								{{favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum}}
+							</view>
+						</view>
+						<view class="likeBox" @click="change1">
+							<view class="likeBT">
+								<view :class="tabCurrent == 1 ?'favText' : 'favText1 '">
+									已赞
+								</view>
+								<view class="likeLine" v-if="tabCurrent == 1">
+								</view>
+							</view>
+							<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" v-if="likeNum != 0" >
+								{{likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum}}
+							</view>
+						</view>
+						
 						<!-- <view :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard"> -->
 						<!-- <view>收藏</view> -->
-							<v-tabs 
+							<!-- <v-tabs 
 								inactive-color="#909399"
 								lineHeight="24rpx"
 								lineColor="#FFE512"
@@ -53,58 +78,59 @@
 								:current="tabCurrent"
 								@change="tabChange"
 								paddingItem="0 32rpx"
-							></v-tabs>
+							></v-tabs> -->
 							
 						<!-- </view> -->
-						<view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" v-if="favNum != 0">
+						<!-- <view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" >
 							{{favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum}}
 						</view>
-						<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" v-if="likeNum != 0">
+						<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" >
 							{{likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum}}
-						</view>
+						</view> -->
 					</view>
 				</view>
 				<!-- 收藏 -->
 				<view style="margin-top: 64%; padding: 0 28rpx;" v-if="tabCurrent == 0 ">
 					
-						<view class="" v-for="(item, index) in tipList" :key="index" v-if="favNum != 0">
-							<view class="contentItem" >
-								<view class="left">
-									<image :src="item.main_image" mode="">
-										<view class="imgTip">
-											<view v-if="item.type == 1">游记</view>
-											<view v-if="item.type == 2">攻略</view>
-											<view v-if="item.type == 4">视频</view>
-										</view>
-										<view class="videoIcon" v-if="item.type == 4">
-											<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
-										</view>
-									</image>
+					<view class="" v-for="(item, index) in tipList" :key="index" v-if="favNum != 0">
+						<view class="contentItem" >
+							<view class="left">
+								<image :src="item.main_image" mode="">
+									<view class="imgTip">
+										<view v-if="item.type == 1">游记</view>
+										<view v-if="item.type == 2">攻略</view>
+										<view v-if="item.type == 4">视频</view>
+										<view v-if="item.type == 5">推广</view>
+									</view>
+									<view class="videoIcon" v-if="item.type == 4">
+										<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+									</view>
+								</image>
+							</view>
+							<view class="right" @click="onPageJump" :id="item.article_id">
+								<view class="title">
+									<text class="titleText">{{ item.title }}</text>
 								</view>
-								<view class="right" @click="onPageJump" :id="item.article_id">
-									<view class="title">
-										<text class="titleText">{{ item.title }}</text>
+								<view class="content">
+									<rich-text class="richText" :nodes="item.content"></rich-text>
+								</view>
+								<view class="favandlikebox">
+									<view class="fav">
+										{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}收藏
 									</view>
-									<view class="content">
-										<rich-text class="richText" :nodes="item.content"></rich-text>
+									<view class="like">
+										{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}点赞
 									</view>
-									<view class="favandlikebox">
-										<view class="fav">
-											{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}收藏
-										</view>
-										<view class="like">
-											{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}点赞
-										</view>
-									</view>
-									<view class="position">
-										<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
-										<view>{{ item.location }}</view>
-									</view>
+								</view>
+								<view class="position">
+									<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
+									<view>{{ item.location }}</view>
 								</view>
 							</view>
-							<view class="line"></view>
 						</view>
-						
+						<view class="line"></view>
+					</view>
+					
 						
 					
 					
@@ -120,6 +146,7 @@
 										<view v-if="item.type == 1">游记</view>
 										<view v-if="item.type == 2">攻略</view>
 										<view v-if="item.type == 4">视频</view>
+										<view v-if="item.type == 5">推广</view>
 									</view>
 									<view class="videoIcon" v-if="item.type == 4">
 										<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
@@ -193,8 +220,8 @@ export default {
 				bgColor:'#ffffff'
 			},
 			fllowNum:0,
-			favNum:'',
-			likeNum:'',
+			favNum:0,
+			likeNum:0,
 			current: 0,
 			tablist: ['收藏','已赞'],
 			tabCurrent: 0,
@@ -220,7 +247,6 @@ export default {
 	},
 	onLoad() {
 		this.getlist()
-		this.getUserMsg();
 	},
 	mounted() {
 		const query = uni.createSelectorQuery().in(this);
@@ -246,27 +272,7 @@ export default {
 		getUserMsg() {
 			var that = this;
 
-			// uni.login({
-			// 	provider: 'baidu',
-			// 	success: function(loginRes) {
-			// 		console.log(loginRes.authResult);
-			// 		// 获取用户信息
-			// 		uni.getUserInfo({
-			// 			provider: 'baidu',
-			// 			success: function(infoRes) {
-			// 				console.log('用户昵称为：' + infoRes.userInfo.nickName);
-			// 				var infoRes = infoRes.userInfo;
-			// 				console.log(infoRes.nickName);
-			// 				that.nickName = infoRes.nickName;
-			// 				that.avatarUrl = infoRes.avatarUrl;
-			// 				// that.nickName = infoRes.nickName;
-			// 				// that.avatarUrl = infoRes.avatarUrl;
-			// 				uni.setStorageSync('nickName', infoRes.nickName);
-			// 				uni.setStorageSync('avatarUrl', infoRes.avatarUrl);
-			// 			}
-			// 		});
-			// 	}
-			// });
+			
 
 			uni.getStorage({
 				key: 'Authorization',
@@ -328,7 +334,6 @@ export default {
 					console.log('收藏列表', res.data);
 					if(res.data.data != null){
 						this.tipList = res.data.data.list;
-						// this.favNum = res.data.data.total
 						console.log('1111111', this.tipList);
 					}
 					
@@ -348,25 +353,41 @@ export default {
 					console.log('点赞列表', res.data);
 					if(res.data.data != null ){
 						this.likeList = res.data.data.list;
-						// this.likeNum = res.data.data.total
 						console.log('likelist', this.likeList);
 					}
 					
 				}
 			});
 		},
-		tabChange(index) {
-			this.tabCurrent = index;
-			if(index == 1 ){
-				this.favnumcolor.color = '#909399'
-				this.likenumcolor.color = '#303133'
-				this.downCallback()
-			}else{
-				this.favnumcolor.color = '#303133'
-				this.likenumcolor.color = '#909399'
-				this.downCallback()
-			}
+		
+		// 切换
+		
+		change(){
+			this.tabCurrent = 0
+			this.favnumcolor.color = '#303133'
+			this.likenumcolor.color = '#909399'
+			this.mescroll.resetUpScroll()
+			this.mescroll.scrollTo(0)
 		},
+		change1(){
+			this.tabCurrent = 1
+			this.favnumcolor.color = '#909399'
+			this.likenumcolor.color = '#303133'
+			this.mescroll.resetUpScroll()
+			this.mescroll.scrollTo(0)
+		},
+		// tabChange(index) {
+		// 	this.tabCurrent = index;
+		// 	if(index == 1 ){
+		// 		this.favnumcolor.color = '#909399'
+		// 		this.likenumcolor.color = '#303133'
+		// 		this.downCallback()
+		// 	}else{
+		// 		this.favnumcolor.color = '#303133'
+		// 		this.likenumcolor.color = '#909399'
+		// 		this.downCallback()
+		// 	}
+		// },
 		// 跳转文章详情
 		onPageJump(e) {
 			console.log(e);
@@ -663,32 +684,76 @@ export default {
 	// font-size: 40rpx;
 	// font-weight: 500;
 	// padding-left: 32rpx;
-	padding-top: 30rpx;
+	padding-top: 48rpx;
 	display: flex;
 	position: absolute;
 	top: 360rpx;
 }
+.favBox{
+	display: flex;
+	height: 60rpx;
+	margin-left: 28rpx;
+}
+.favBT{
+	margin-right: 8rpx;
+	text-align: center;
+}
+.favText{
+	// width: 72rpx;
+	height: 36rpx;
+	font-size: 36rpx;
+	font-family: PingFangSC-Semibold, PingFang SC;
+	font-weight: 600;
+	color: #303133;
+	line-height: 36rpx;
+	
+}
+.favText1{
+	// width: 56rpx;
+	height: 28rpx;
+	font-size: 28rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #909399;
+	line-height: 28rpx;
+	margin-top: 8rpx;
+}
+.favLine{
+	width: 72rpx;
+	height: 24rpx;
+	background: #FFE512;
+	border-radius: 1px 6px 1px 1px;
+	margin-top: -20rpx;
+}
+.likeBox{
+	display: flex;
+	margin-left: 56rpx;
+	height: 60rpx;
+}
+.likeBT{
+	margin-right: 8rpx;
+	text-align: center;
+}
+.likeText{
+	
+}
+.likeLine{
+	width: 72rpx;
+	height: 24rpx;
+	background: #FFE512;
+	border-radius: 1px 6px 1px 1px;
+	margin-top: -20rpx;
+}
 .fixTabs {
 	position: fixed;
 	top: 126rpx;
-	// padding-left: 10rpx;
-	// padding-top: 15rpx;
-	// left: 0;
 	z-index: 2;
-	// width: 100%;
-	// height:110rpx;
-	// background: #ffffff;
-	// border-bottom: 2rpx solid #eeeeee;
-	// box-shadow: 0px 0px 12rpx 0rpx #eeeeee;
+	height: 98rpx;
+	padding-top: 48rpx;
+	display: flex;
 }
 .noFix {
-	// padding-left: 10rpx;
-	// left: 0;
 	z-index: 1000;
-	// width: 100%;
-	// height: 110rpx;
-	// padding-top: 15rpx;
-	// background: #ffffff;
 }
 .favNum{
 	height: 24rpx;
@@ -698,8 +763,8 @@ export default {
 	color: #303133;
 	line-height: 24rpx;
 	z-index: 11111;
-	margin-top: 26rpx;
-	margin-left: -158rpx;
+	margin-top: 12rpx;
+	// margin-left: -158rpx;
 }
 .favNum1{
 	height: 24rpx;
@@ -709,8 +774,8 @@ export default {
 	color: #303133;
 	line-height: 24rpx;
 	z-index: 11111;
-	margin-top: 26rpx;
-	margin-left: -158rpx;
+	margin-top: 12rpx;
+	// margin-left: -158rpx;
 }
 .likeNum{
 	height: 24rpx;
@@ -720,8 +785,8 @@ export default {
 	color: #303133;
 	line-height: 24rpx;
 	z-index: 11111;
-	margin-top: 26rpx;
-	margin-left: 118rpx;
+	margin-top: 12rpx;
+	// margin-left: 118rpx;
 }
 .likeNum1{
 	height: 24rpx;
@@ -731,8 +796,8 @@ export default {
 	color: #303133;
 	line-height: 24rpx;
 	z-index: 11111;
-	margin-top: 26rpx;
-	margin-left: 118rpx;
+	margin-top: 12rpx;
+	// margin-left: 118rpx;
 }
 
 .noContentItem {

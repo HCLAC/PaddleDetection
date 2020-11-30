@@ -43,7 +43,8 @@ export default {
 			state_id: null,
 			city_id: null,
 			upOption:{
-				textNoMore:'我也是有底线的～'
+				textNoMore:'我也是有底线的～',
+				bgColor:'rgba(0,0,0,0~1)'
 			}
 		};
 	},
@@ -159,7 +160,7 @@ export default {
 }
 //导航栏样式end
 .container {
-	// margin: 30rpx;
+	margin-top: 20rpx;
 	text-align: center;
 	font-family: PingFangSC-Medium, PingFang SC;
 	.lineItem {
@@ -169,8 +170,9 @@ export default {
 		justify-content: center;
 		flex-flow: column;
 		margin-bottom: 20rpx;
-		box-shadow: 0px 2px 4px 0px #EDEFF2;
+		box-shadow: 0px 4rpx 56rpx 0px #EDEFF2;
 		border-radius: 0px 0px 16rpx 16rpx;
+		z-index: 999999;
 		image {
 			width: 100%;
 			height: 370rpx;

@@ -38,22 +38,22 @@
 		</view>
 		<view class="lineDriver"></view>
 		<view  :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" :style="{top: styleFix.top}">
-			<view style="width: 60%;">
-				<v-tabs
-					inactive-color="#909399"
-					lineHeight="12rpx"
-					lineColor="#FFE512"
-					activeFontSize="36rpx"
-					activeColor="#303133"
-					fontSize="28rpx"
-					:lineScale="0.7"
-					lineRadius="6px"
-					v-model="tabCurrent"
-					:tabs="tablist"
-					:is-scroll="false"
-					:current="tabCurrent"
-					@change="tabChange"
-				></v-tabs>
+			<view style="width: 60%;display: flex;">
+				<view class="tripBox" @click="tripChange">
+					<view :class="tabCurrent == 0 ? 'tripText' : 'tripText1'">
+						参考行程
+					</view>
+					<view class="tripLine" v-if="tabCurrent == 0">
+					</view>
+				</view>
+				<view class="serviceBox" @click="serviceChange">
+					<view :class="tabCurrent == 1 ? 'tripText' : 'tripText1'">
+						服务说明
+					</view>
+					<view class="serviceLine" v-if="tabCurrent == 1">
+					</view>
+				</view>
+				
 			</view>
 		</view>
 		<view class="linePlan">
@@ -167,7 +167,7 @@
 													<view class="rateStart" v-if="pos.rate == 2.5">
 														<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-														<image src="../../static/images/star_svg/starCopy1(1).svg" mode=""></image>
+														<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
@@ -218,7 +218,7 @@
 						<image v-show="lineContent.fav" class="favBtn" src="../../static/images/fav-actived.svg"></image>
 						<view class="favNum">{{ lineContent.fav_count }}</view>
 					</view> -->
-					<view><view class="share" v-if="serviceProvider =='baidu'"  @click="share"><image src="../../static/images/fenxiang.svg"></image></view></view>
+					<view><view class="share" v-if="serviceProvider =='baidu'"  @click="share"><image src="../../static/images/shareIcon.svg"></image></view></view>
 					<view class=""><view class="loginButton" v-if="hasLogin" @click="login">登录</view></view>
 				</view>
 			</view>
@@ -228,13 +228,9 @@
 
 <script>
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
-import vTabs from '@/components/v-tabs/v-tabs';
 export default {
 	comments: {
 		uniNavBar
-	},
-	components: {
-		vTabs
 	},
 	data() {
 		return {
@@ -347,19 +343,32 @@ export default {
 		
 	// },
 	methods: {
-		tabChange(index) {
-			console.log(index,'---index')
-			this.tabCurrent = index;
-			if(this.tabCurrent ===1){
-				uni.pageScrollTo({
-				    scrollTop: 999999,
-				})
-			}else{
-				uni.pageScrollTo({
-				    scrollTop: 0,
-				})
-			}
+		// 切换
+		tripChange(){
+			this.tabCurrent = 0
+			uni.pageScrollTo({
+				scrollTop: 0,
+			})
 		},
+		serviceChange(){
+			this.tabCurrent = 1
+			uni.pageScrollTo({
+				scrollTop: 999999,
+			})
+		},
+		// tabChange(index) {
+		// 	console.log(index,'---index')
+		// 	this.tabCurrent = index;
+		// 	if(this.tabCurrent ===1){
+		// 		uni.pageScrollTo({
+		// 		    scrollTop: 999999,
+		// 		})
+		// 	}else{
+		// 		uni.pageScrollTo({
+		// 		    scrollTop: 0,
+		// 		})
+		// 	}
+		// },
 		change(e) {
 			this.current = e.detail.current;
 		},
@@ -941,5 +950,47 @@ export default {
 	height: 110rpx;
 	padding-top: 15rpx;
 	background: #ffffff;
+}
+.tripBox{
+	margin-top: 28rpx;
+	margin-left: 38rpx;
+}
+.tripText{
+	// width: 128rpx;
+	height: 32rpx;
+	font-size: 32rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #303133;
+	line-height: 32rpx;
+
+}
+.tripText1{
+	// width: 104rpx;
+	height: 26rpx;
+	font-size: 26rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #909399;
+	line-height: 26rpx;
+
+}
+.tripLine{
+	width: 128rpx;
+	height: 12rpx;
+	background: #FFE512;
+	border-radius: 6px;
+	margin-top: -6rpx;
+}
+.serviceBox{
+	margin-top: 28rpx;
+	margin-left: 64rpx;
+}
+.serviceLine{
+	width: 128rpx;
+	height: 12rpx;
+	background: #FFE512;
+	border-radius: 6px;
+	margin-top: -6rpx;
 }
 </style>

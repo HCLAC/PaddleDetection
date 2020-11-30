@@ -19,22 +19,7 @@
 				</view>
 				<view class="topLine"></view>
 			</view>
-			<!-- <v-tabs
-				inactive-color="#909399"
-				lineHeight="24rpx"
-				lineColor="#FFE512"
-				activeFontSize="36rpx"
-				activeColor="#303133"
-				fontSize="36rpx"
-				:lineScale="0.7"
-				lineRadius="6px"
-				v-model="tabCurrent"
-				:tabs="tablist"
-				:is-scroll="false"
-				:current="tabCurrent"
-				@change="tabChange"
-				
-			></v-tabs> -->
+			
 			<view class="topicRankBox">
 				<view class="topicTips" @click="toTopicList(item.topic_id)" v-for="(item,index) in hotTopic " :key="index" >
 					<!-- <image class="rankImg" src="../../static/images/topic-1.png" mode=""></image> -->
@@ -101,11 +86,7 @@
 
 <script>
 	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
-	import vTabs from '@/components/v-tabs/v-tabs';
 	export default {
-		components: {
-			vTabs
-		},
 		mixins: [MescrollMixin],
 		data() {
 			return {
@@ -400,15 +381,7 @@
 	height: 36rpx;
 	margin-right: 8rpx;
 }
-.rightText{
-	flex: 1;
-	height: 36rpx;
-	font-size: 22rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: #606266;
-	line-height: 36rpx;
-}
+
 .titleRight{
 	// width: 166rpx;
 	height: 36rpx;
@@ -420,14 +393,19 @@
 	padding-right: 12rpx;
 }
 .number{
-	height: 36rpx;
-	line-height: 36rpx;
 	font-size: 22rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #606266;
 }
-
+.rightText{
+	flex: 1;
+	font-size: 22rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #606266;
+	
+}
 .moreRight{
 	width: 14rpx;
 	height: 14rpx;
@@ -439,7 +417,9 @@
 	font-family: PingFangSC-Regular, PingFang SC;
 	font-weight: 400;
 	color: #303133;
-	line-height: 36rpx;
+	// line-height: 36rpx;
+	display: flex;
+	align-items: center;
 }
 .contentImgBox {
 	margin-top: 30rpx;

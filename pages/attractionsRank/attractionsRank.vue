@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<!-- 自定义导航栏 -->
-		<view class="example-body">
+		<!-- 自定义导航栏 白色-->
+		<view class="example-body" v-if="isFixed == false">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" background-color="transparent" style="z-index: 999999;">
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui-white.svg" @click="back" />
@@ -9,8 +9,8 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<!-- 城市选择弹窗 -->
-		<u-popup v-model="show" mode="top" height="383px" style="z-index: 9999999;">
+		<!-- 自定义导航栏 黑色-->
+		<view class="example-body" v-if="isFixed == true">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
@@ -18,176 +18,184 @@
 				</view>
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
-			<!-- 城市 -->
-			<view class="nowcity">
-				<text>{{name}}</text>
-				<image src="../../static/images/moreDown.svg" mode=""></image>
-			</view>
-			<!-- 城市选择列表 -->
-			<view class="u-menu-wrap">
-				<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
-					<view v-for="(item,index) in cityList" :key="index" class="u-tab-item" :class="[current==index ? 'u-tab-item-active' : '']"
-					 :data-current="index" @tap.stop="swichMenu(index)">
-						<text class="u-line-1">{{item.name}}</text>
+		</view>
+		<mescroll-body  class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption"  :up="upOption">
+			<!-- 城市选择弹窗 -->
+			<u-popup v-model="show" mode="top" height="383px" style="z-index: 9999999;">
+				<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+					<view slot="left" class="slotleft">
+						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+						<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 					</view>
-				</scroll-view>
-				<block v-for="(item,index) in cityList" :key="index">
-					<scroll-view scroll-y class="right-box" v-if="current==index">
-						<view class="page-view">
-							<view class="class-item">
-								<!-- <view class="item-title" @click="gethotsiteslist2(item)"> -->
-									<!-- <text>{{item.name}}</text> -->
-								<!-- </view> -->
-								<view class="item-container">
-									<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
-										<view class="item-menu-name" @click="gethotsiteslist1(item1)">{{item1.name}}</view>
-									</view>
-									<view class="thumb-box" v-if="item.city_list == null">
-										<view class="item-menu-name" @click="gethotsiteslist1()">全国</view>
-									</view>
-								</view>
-							</view>
+					<view class="slottitle">领途羊</view>
+				</uni-nav-bar>
+				<!-- 城市 -->
+				<view class="nowcity">
+					<text>{{name}}</text>
+					<image src="../../static/images/moreDown.svg" mode=""></image>
+				</view>
+				<!-- 城市选择列表 -->
+				<view class="u-menu-wrap">
+					<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
+						<view v-for="(item,index) in cityList" :key="index" class="u-tab-item" :class="[current==index ? 'u-tab-item-active' : '']"
+						 :data-current="index" @tap.stop="swichMenu(index)">
+							<text class="u-line-1">{{item.name}}</text>
 						</view>
 					</scroll-view>
-				</block>
-			</view>
-		</u-popup>
-		
-		<view class="bgBox">
-			<image :src="banner" mode="" class="bannerImg"></image>
-			<view class="mask">
-				<view class="content">
-					<image class="travel" src="../../static/images/TRAVEL.png" mode=""></image>
-					<view class="atthotbox">
-						<image src="../../static/images/leftleaves.svg" mode=""></image>
-						<text class="atthottext">{{name}}热门景点</text>
-						<image src="../../static/images/rightleaves.svg" mode=""></image>
+					<block v-for="(item,index) in cityList" :key="index">
+						<scroll-view scroll-y class="right-box" v-if="current==index">
+							<view class="page-view">
+								<view class="class-item">
+									<!-- <view class="item-title" @click="gethotsiteslist2(item)"> -->
+										<!-- <text>{{item.name}}</text> -->
+									<!-- </view> -->
+									<view class="item-container">
+										<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
+											<view class="item-menu-name" @click="gethotsiteslist1(item1)">{{item1.name}}</view>
+										</view>
+										<view class="thumb-box" v-if="item.city_list == null">
+											<view class="item-menu-name" @click="gethotsiteslist1()">全国</view>
+										</view>
+									</view>
+								</view>
+							</view>
+						</scroll-view>
+					</block>
+				</view>
+			</u-popup>
+			
+			<view class="bgBox">
+				<image :src="banner" mode="" class="bannerImg"></image>
+				<view class="mask">
+					<view class="content">
+						<!-- <image class="travel" src="../../static/images/TRAVEL.png" mode=""></image> -->
+						<view class="atthotbox">
+							<image src="../../static/images/leftleaves.svg" mode=""></image>
+							<text class="atthottext">{{name}}热门景点</text>
+							<image src="../../static/images/rightleaves.svg" mode=""></image>
+						</view>
+					</view>
+					<view class="rankTime">
+						领途羊景点榜单 · {{month}}月{{day}}日更新
+					</view>
+					<view class="boxshow">
 					</view>
 				</view>
-				<view class="rankTime">
-					领途羊景点榜单 · {{month}}月{{day}}日更新
-				</view>
-				<view class="boxshow">
-				</view>
+				
 			</view>
 			
-		</view>
-		
-		<!-- 排行 -->
-		
-		<view class="cityBox">
-			<view class="city" @click="show = true" >
-				<view class="" @click="getCity">
-					<text class="cityname">{{name}}</text>
-					<image src="../../static/images/more-down.svg" mode=""></image>
-				</view>
-			</view>
-		</view>
-		<view class="rankContent" :style="{'height': (hotsiteslist.length < 6 ? '1604rpx' : '')}">
+			<!-- 排行 -->
 			
 			
-			<!-- <view class="mescroll" > -->
-				<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption">
-					<view class="cardList">
-						<view class="cards" v-for="(item,index) in  hotsiteslist" :key="index" @click="toAtt(item.id)">
-							<view class="cardsleft">
-								<image class="bigImg" :src="item.images[0]" mode=""></image>
-								<image class="rankImg " :src="`../../static/images/rank/top-${index+1}.svg`" v-if="index < 6" mode=""></image>
+			<view class="rankContent" :style="{'height': (hotsiteslist.length < 6 ? '1604rpx' : '')}">
+				<view class="cityBox">
+					<view class="city" @click="show = true" >
+						<view class="" @click="getCity">
+							<text class="cityname">{{name}}</text>
+							<image src="../../static/images/more-down.svg" mode=""></image>
+						</view>
+					</view>
+				</view>		
+				<view class="cardList">
+					<view class="cards" v-for="(item,index) in  hotsiteslist" :key="index" @click="toAtt(item.id)">
+						<view class="cardsleft">
+							<image class="bigImg" :src="item.images[0]" mode=""></image>
+							<image class="rankImg " :src="`../../static/images/rank/top-${index+1}.svg`" v-if="index < 6" mode=""></image>
+						</view>
+						<view class="cardsright">
+							<view class="title">
+								{{item.name}}
 							</view>
-							<view class="cardsright">
-								<view class="title">
-									{{item.name}}
+							<view class="contentText">
+								{{item.description}}
+							</view>
+							<view class="rateBox">
+								<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
+								<!-- 评分图标 -->
+								<view class="rateStart" v-if="item.rate == 5">
+									<image src="../../static/images/star_svg/star4.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star4.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star4.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star4.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star4.svg" mode=""></image>
 								</view>
-								<view class="contentText">
-									{{item.description}}
+								<view class="rateStart" v-if="item.rate == 4">
+									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 								</view>
-								<view class="rateBox">
-									<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
-									<!-- 评分图标 -->
-									<view class="rateStart" v-if="item.rate == 5">
-										<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-									</view>
-									<view class="rateStart" v-if="item.rate == 4">
-										<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									</view>
-									<view class="rateStart" v-if="item.rate == 3">
-										<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									</view>
-									<view class="rateStart" v-if="item.rate == 2">
-										<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									</view>
-									<view class="rateStart" v-if="item.rate == 1">
-										<image src="../../static/images/star_svg/star11.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									</view>
-									<view class="rateStart" v-if="item.rate == 4.5">
-										<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-										<image src="../../static/images/star_svg/starCopy13.svg" mode=""></image>
-									</view>
-									<view class="rateStart" v-if="item.rate == 3.5">
-										<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-										<image src="../../static/images/star_svg/starCopy12.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									</view>
-									<view class="rateStart" v-if="item.rate == 2.5">
-										<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-										<image src="../../static/images/star_svg/starCopy1(1).svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									</view>
-									<view class="rateStart" v-if="item.rate == 1.5">
-										<image src="../../static/images/star_svg/star11.svg" mode=""></image>
-										<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									</view>
-									<view class="rateStart" v-if="item.rate == 0.5">
-										<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-										<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									</view>
-									<!-- <u-rate :disabled="true" current="4"></u-rate> -->
-									<view class="rate">{{item.rate}} 星</view>
+								<view class="rateStart" v-if="item.rate == 3">
+									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 								</view>
+								<view class="rateStart" v-if="item.rate == 2">
+									<image src="../../static/images/star_svg/star1.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star1.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+								</view>
+								<view class="rateStart" v-if="item.rate == 1">
+									<image src="../../static/images/star_svg/star11.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+								</view>
+								<view class="rateStart" v-if="item.rate == 4.5">
+									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+									<image src="../../static/images/star_svg/starCopy13.svg" mode=""></image>
+								</view>
+								<view class="rateStart" v-if="item.rate == 3.5">
+									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+									<image src="../../static/images/star_svg/starCopy12.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+								</view>
+								<view class="rateStart" v-if="item.rate == 2.5">
+									<image src="../../static/images/star_svg/star1.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star1.svg" mode=""></image>
+									<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+								</view>
+								<view class="rateStart" v-if="item.rate == 1.5">
+									<image src="../../static/images/star_svg/star11.svg" mode=""></image>
+									<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+								</view>
+								<view class="rateStart" v-if="item.rate == 0.5">
+									<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+								</view>
+								<!-- <u-rate :disabled="true" current="4"></u-rate> -->
+								<view class="rate">{{item.rate}} 星</view>
 							</view>
 						</view>
 					</view>
-				</mescroll-body>
-			<!-- </view> -->
-			
-		</view>
-		<view class="shareBox" v-if="serviceProvider =='baidu' " @click="share">
+				</view>
+			</view>
+			<view class="shareBox" v-if="serviceProvider =='baidu' " @click="share">
 			<image src="../../static/images/icon-share.svg" mode="" ></image>
 		</view>
+		</mescroll-body>
+		
 	</view>
+	
 </template>
 
 <script>
@@ -216,8 +224,12 @@
 				cityList:null,
 				serviceProvider: '',
 				downOption:{
-					offset:40
-				}
+					use:false
+				},
+				upOption:{
+					bgColor:'#ffffff'
+				},
+				isFixed:false
 			}
 		},
 		onLoad: function(option) {
@@ -252,6 +264,13 @@
 					}
 				}
 			});
+		},
+		onPageScroll(e) {
+			if (e.scrollTop >  200) {
+				this.isFixed = true;
+			} else {
+				this.isFixed = false;
+			}
 		},
 		methods: {
 			getImg() {
@@ -422,9 +441,10 @@
 			downCallback() {
 				// 第1种: 请求具体接口
 				// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
-				this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+				// this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
 				// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
-				// this.mescroll.endSuccess()
+				this.mescroll.endSuccess()
+				// this.mescroll.endDownScroll()
 				// 此处仍可以继续写其他接口请求...
 				// 调用其他方法...
 				console.log('下拉下拉')
@@ -758,12 +778,12 @@
 
 	
 	.bgBox{
-		position: fixed;
-		top: 0;
-		left: 0;
+		// position: absolute;
+		// top:0;
+		// left: 0;
+		// margin-top: -88rpx;
 		width: 750rpx;
 		height: 440rpx;
-		z-index: 111;
 		background-color: #000000;
 	}
 	.mask{
@@ -826,8 +846,8 @@
 			}
 			
 			image {
-				width: 40rpx;
-				height: 70rpx;
+				width: 37.34rpx;
+				height: 68.22rpx;
 			}
 		}
 		
@@ -840,7 +860,7 @@
 		color: rgba(255, 255, 255, 0.45);
 		line-height: 28rpx;
 		position: absolute;
-		top: 304rpx;
+		top: 296rpx;
 		left: 234rpx;
 	}
 
@@ -855,34 +875,32 @@
 		
 	}
 	.mescroll{
-		// height: 1604rpx;
-		// margin-left: 10rpx;
-		// background: rgba(255, 255, 255, 1);
-		// border-radius: 8px 8px 0px 0px;
-		// z-index: 11;
-		// position: absolute;
-		// top: 420rpx;
+		position: relative;
+		top: -178rpx;
+		left: 0;
 	}
 	.rankContent {
 		width: 730rpx;
 		// height: 1604rpx;
 		margin-left: 10rpx;
-		padding-top: 380rpx;
+		// padding-top: 480rpx;
 		background: rgba(255, 255, 255, 1);
 		border-radius: 8px 8px 0px 0px;
-		z-index: 11;
-		position: absolute;
-		top: 70rpx;
+		border: 1px solid #FFFFFF;
+		// z-index: 999999;
+		// position: relative;
+		// top: 440rpx;
+		// left: 0;
 	}
 	.cityBox{
-		width: 730rpx;
-		height: 104rpx;
-		position: fixed;
-		margin-left: 10rpx;
-		top: 420rpx;
-		z-index: 111;
+		// width: 730rpx;
+		// height: 104rpx;
+		// position: fixed;
+		// top: 420rpx;
+		// z-index: 111;
 		background-color: #FFFFFF;
-		border-radius: 8px 8px 0px 0px;
+		border-radius: 16rpx 16rpx 0px 0px;
+		border: 1px solid #FFFFFF;
 	}
 	.city {
 		display: inline-block;
@@ -915,9 +933,10 @@
 	}
 	
 	.cardList {
-		width: 702rpx;
+		width: 700rpx;
+		height: 100%;
 		margin-left: 28rpx;
-		margin-top: 90rpx;
+		// margin-top: 90rpx;
 	}
 
 	.cards {

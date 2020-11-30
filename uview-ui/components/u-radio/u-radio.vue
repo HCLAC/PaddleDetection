@@ -1,16 +1,19 @@
 <template>
 	<view class="u-radio" :style="[radioStyle]">
 		<view class="u-radio__icon-wrap" @tap="toggle" :class="[iconClass]" :style="[iconStyle]">
-			<u-icon
+			<!-- <u-icon
 			    name="checkbox-mark"
 			    :size="elIconSize" 
-				:color="iconColor"/>
+				:color="iconColor"/> -->
+			<!-- <view class="u-radio__label" @tap="onClickLabel" :style="{
+				fontSize: $u.addUnit(labelSize),
+				color:$u.addUnit(labelColor)
+			}" > -->
+			<view class="u-radio__label" @tap="onClickLabel" :style="labelColor" >
+				<slot />
+			</view>
 		</view>
-		<view class="u-radio__label" @tap="onClickLabel" :style="{
-			fontSize: $u.addUnit(labelSize)
-		}">
-			<slot />
-		</view>
+		
 	</view>
 </template>
 
@@ -66,11 +69,18 @@
 			labelSize: {
 				type: [String, Number],
 				default: ''
-			},
+			}
+			// labelColor: {
+			// 	type: String,
+			// 	default: '#909399'
+			// },
 		},
 		data() {
 			return {
-				parentDisabled: false
+				parentDisabled: false,
+				labelColor:{
+					color:'#909399'
+				}
 			};
 		},
 		created() {
@@ -98,6 +108,7 @@
 			// 组件选中激活时的颜色
 			elActiveColor() {
 				return this.activeColor ? this.activeColor : (this.parent ? this.parent.activeColor : 'primary');
+				
 			},
 			// 组件的形状
 			elShape() {
@@ -109,9 +120,13 @@
 				if (this.elActiveColor && this.name == this.parent.value && !this.elDisabled) {
 					style.borderColor = this.elActiveColor;
 					style.backgroundColor = this.elActiveColor;
+					this.labelColor.color = '#303133' 
+					
+				}else{
+					this.labelColor.color = '#909399'
 				}
-				style.width = this.$u.addUnit(this.elSize);
-				style.height = this.$u.addUnit(this.elSize);
+				// style.width = this.$u.addUnit(this.elSize);
+				// style.height = this.$u.addUnit(this.elSize);
 				return style;
 			},
 			iconColor() {
@@ -154,12 +169,15 @@
 			onClickLabel() {
 				if (!this.elLabelDisabled && !this.elDisabled) {
 					this.parent.setValue(this.name);
+					
 					this.emitEvent();
 				}
+				
 			},
 			toggle() {
 				if (!this.elDisabled) {
 					this.parent.setValue(this.name);
+					
 					this.emitEvent();
 				}
 			},
@@ -189,17 +207,20 @@
 			align-items: center;
 			justify-content: center;
 			box-sizing: border-box;
-			width: 42rpx;
-			height: 42rpx;
+			background: #F8F8F8;
+			// width: 42rpx;
+			// height: 42rpx;
+			height: 56rpx;
 			color: transparent;
 			text-align: center;
 			transition-property: color, border-color, background-color;
 			font-size: 20px;
-			border: 1px solid #c8c9cc;
+			// border: 1px solid #c8c9cc;
 			transition-duration: 0.2s;
-			
+			margin: 0 32rpx 32rpx 0;
 			&--circle {
-				border-radius: 100%;
+				// border-radius: 100%;
+				border-radius: 18px;
 			}
 			
 			&--square {
@@ -224,10 +245,13 @@
 		
 		&__label {
 			word-wrap: break-word;
-			margin-left: 10rpx;
-			margin-right: 24rpx;
+			margin-left: 32rpx;
+			margin-right: 32rpx;
 			color: $u-content-color;
-			font-size: 30rpx;
+			font-size: 28rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #909399;
 			
 			&--disabled {
 				color: #c8c9cc;

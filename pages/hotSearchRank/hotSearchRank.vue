@@ -87,11 +87,11 @@
 				this.keyword = keyword;
 				// this.defaultKeyword = keyword;
 				this.saveKeyword(keyword); //保存为历史
-				uni.showToast({
-					title: keyword,
-					icon: 'none',
-					duration: 2000
-				});
+				// uni.showToast({
+				// 	title: keyword,
+				// 	icon: 'none',
+				// 	duration: 2000
+				// });
 				uni.request({
 					url: this.globalUrl + '/search',
 					data: {

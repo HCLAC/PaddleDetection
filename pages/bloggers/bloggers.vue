@@ -46,7 +46,7 @@
 					<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 					<!-- 作品 -->
 					<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard">
-						<v-tabs
+						<!-- <v-tabs
 							lineHeight="22rpx"
 							lineColor="#FFE512"
 							fontSize="36rpx"
@@ -55,7 +55,14 @@
 							paddingItem="0  18rpx"
 							:tabs="tablist"
 							:is-scroll="false"
-						></v-tabs>
+						></v-tabs> -->
+						<view class="worksBox">
+							<view class="worksText">
+								作品
+							</view>
+							<view class="worksLine">
+							</view>
+						</view>
 						<view class="articleNum">
 							{{authorMsg.article_count>10000?((authorMsg.article_count-(authorMsg.article_count%1000))/10000+'w'):authorMsg.article_count}}
 						</view>
@@ -71,6 +78,7 @@
 												<view v-if="item.type == 1">游记</view>
 												<view v-if="item.type == 2">攻略</view>
 												<view v-if="item.type == 4">视频</view>
+												<view v-if="item.type == 5">推广</view>
 											</view>
 											<view class="videoIcon" v-if="item.type == 4">
 												<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
@@ -443,7 +451,6 @@ export default {
 	width: 100%;
 	z-index: -11;
 }
-
 .contentBox{
 	// width: 100%;
 	// height: 100%;
@@ -451,7 +458,6 @@ export default {
 	// top: -88rpx;
 	// z-index: 40000;
 }
-
 // /* 用户信息 */
 .usermes {
 	padding-top: 154rpx;
@@ -570,11 +576,12 @@ export default {
 	border-radius: 24rpx 24rpx 0rpx 0rpx;
 	background-color: #fff;
 	color: #303133;
+	height: 84rpx;
 	width: 100%;
 	font-size: 40rpx;
 	font-weight: 500;
 	padding-left: 10rpx;
-	padding-top: 22rpx;
+	padding-top: 48rpx;
 	display: flex;
 	position: absolute;
 	top: 360rpx;
@@ -582,11 +589,31 @@ export default {
 .fixTabs {
 	position: fixed;
 	top: 126rpx;
-	// height: 100rpx;
-	padding-top: 30rpx;
 	z-index: 2;
+	height: 98rpx;
+	padding-top: 52rpx;
 }
 .noFix {
+}
+.worksBox{
+	// display: flex;
+	margin-left: 18rpx;
+}
+.worksText{
+	height: 36rpx;
+	font-size: 36rpx;
+	font-family: PingFangSC-Semibold, PingFang SC;
+	font-weight: 600;
+	color: #303133;
+	line-height: 36rpx;
+
+}
+.worksLine{
+	width: 72rpx;
+	height: 24rpx;
+	background: #FFE512;
+	border-radius: 2rpx 12rpx 2rpx 2rpx;
+	margin-top: -20rpx;
 }
 .tip{
 	// width: 72rpx;
@@ -602,8 +629,8 @@ export default {
 	// position: absolute;
 	// top: 50rpx;
 	// left: 114rpx;
-	margin-top: 30rpx;
-	margin-left: -14rpx;
+	margin-top: 12rpx;
+	margin-left: 8rpx;
 	height: 24rpx;
 	font-size: 24rpx;
 	font-family: PingFangSC-Regular, PingFang SC;

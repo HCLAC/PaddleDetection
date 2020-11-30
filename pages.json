@@ -1,6 +1,7 @@
 {
 	"easycom": {
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+		
 	},
 
 
@@ -24,7 +25,6 @@
 			"style": {
 				"navigationStyle": "custom",
 				"backgroundColor": "#000000"
-				
 			}
 		},
 
@@ -150,14 +150,7 @@
             "style" : {
 				"navigationStyle": "custom"
 			}
-        },
-		{
-			"path": "uview-ui/components/u-avatar-cropper/u-avatar-cropper",
-			"style": {
-				"navigationBarTitleText": "头像裁剪",
-				"navigationBarBackgroundColor": "#000000"
-			}
-		}
+        }
         ,{
             "path" : "pages/hotSearchRank/hotSearchRank",
             "style" :                                                                                    
@@ -170,6 +163,31 @@
 				"mp-alipay": {
 					"allowsBounceVertical": "NO"
 				} 
+            }
+            
+        }
+        ,{
+            "path" : "pages/comments/comments",
+            "style" :                                                                                    
+            {
+				"navigationStyle": "custom"
+            }
+            
+        }
+		,{
+		    "path" : "pages/report/report",
+		    "style" :                                                                                    
+		    {
+				"navigationStyle": "custom"
+		    }
+		    
+		}
+        ,{
+            "path" : "pages/cropper-default-old/cropper-default-old",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
             }
             
         }

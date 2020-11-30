@@ -24,30 +24,30 @@
 					</view>
 				</view>
 				<view class="weather" v-if="weather != null">
-					<image class="weatherImg" src="../../static/images/weather/xiaoyu.svg" mode="" v-if="weather.icon1 == 'day/xiaoyu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/baoyu.svg" mode="" v-if="weather.icon1 == 'day/baoyu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/dabaoyu.svg" mode="" v-if="weather.icon1 == 'day/dabaoyu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/daxue.svg" mode="" v-if="weather.icon1 == 'day/daxue'"></image>
-					<image class="weatherImg" src="../../static/images/weather/dayu.svg" mode="" v-if="weather.icon1 == 'day/dayu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/dongyu.svg" mode="" v-if="weather.icon1 == 'day/dongyu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/duoyun.svg" mode="" v-if="weather.icon1 == 'day/duoyun'"></image>
-					<image class="weatherImg" src="../../static/images/weather/fuchen.svg" mode="" v-if="weather.icon1 == 'day/fuchen'"></image>
-					<image class="weatherImg" src="../../static/images/weather/leizhenyu.svg" mode="" v-if="weather.icon1 == 'day/leizhenyu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/leizhenyubanyoubingbao.svg" mode="" v-if="weather.icon1 == 'day/leizhenyubanyoubingbao'"></image>
-					<image class="weatherImg" src="../../static/images/weather/mai.svg" mode="" v-if="weather.icon1 == 'day/mai'"></image>
-					<image class="weatherImg" src="../../static/images/weather/qiangshachenbao.svg" mode="" v-if="weather.icon1 == 'day/qiangshachenbao'"></image>
-					<image class="weatherImg" src="../../static/images/weather/qing.svg" mode="" v-if="weather.icon1 == 'day/qing'"></image>
-					<image class="weatherImg" src="../../static/images/weather/shachenbao.svg" mode="" v-if="weather.icon1 == 'day/shachengbao'"></image>
-					<image class="weatherImg" src="../../static/images/weather/tedabaoyu.svg" mode="" v-if="weather.icon1 == 'day/tedabaoyu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/wu.svg" mode="" v-if="weather.icon1 == 'day/wu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/xiaoxue.svg" mode="" v-if="weather.icon1 == 'day/xiaoxue'"></image>
-					<image class="weatherImg" src="../../static/images/weather/yangsha.svg" mode="" v-if="weather.icon1 == 'day/yangsha'"></image>
-					<image class="weatherImg" src="../../static/images/weather/yin.svg" mode="" v-if="weather.icon1 == 'day/yin'"></image>
-					<image class="weatherImg" src="../../static/images/weather/yujiaxue.svg" mode="" v-if="weather.icon1 == 'day/yujiaxue'"></image>
-					<image class="weatherImg" src="../../static/images/weather/zhenxue.svg" mode="" v-if="weather.icon1 == 'day/zhenxue'"></image>
-					<image class="weatherImg" src="../../static/images/weather/zhenyu.svg" mode="" v-if="weather.icon1 == 'day/zhenyu'"></image>
-					<image class="weatherImg" src="../../static/images/weather/zhongxue.svg" mode="" v-if="weather.icon1 == 'day/zhongxue'"></image>
-					<image class="weatherImg" src="../../static/images/weather/zhongyu.svg" mode="" v-if="weather.icon1 == 'day/zhongyu'"></image>
+					<image class="weatherImg" src="../../static/images/weather/xiaoyu.svg" mode="" v-if="weather.weather == '小雨'"></image>
+					<image class="weatherImg" src="../../static/images/weather/baoyu.svg" mode="" v-if="weather.weather == '暴雨'"></image>
+					<image class="weatherImg" src="../../static/images/weather/dabaoyu.svg" mode="" v-if="weather.weather == '大暴雨'"></image>
+					<image class="weatherImg" src="../../static/images/weather/daxue.svg" mode="" v-if="weather.weather == '大雪'"></image>
+					<image class="weatherImg" src="../../static/images/weather/dayu.svg" mode="" v-if="weather.weather == '大雨'"></image>
+					<image class="weatherImg" src="../../static/images/weather/dongyu.svg" mode="" v-if="weather.weather == '冻雨'"></image>
+					<image class="weatherImg" src="../../static/images/weather/duoyun.svg" mode="" v-if="weather.weather == '多云'"></image>
+					<image class="weatherImg" src="../../static/images/weather/fuchen.svg" mode="" v-if="weather.weather == '拂尘'"></image>
+					<image class="weatherImg" src="../../static/images/weather/leizhenyu.svg" mode="" v-if="weather.weather == '雷阵雨'"></image>
+					<image class="weatherImg" src="../../static/images/weather/leizhenyubanyoubingbao.svg" mode="" v-if="weather.weather == '雷阵雨伴有冰雹'"></image>
+					<image class="weatherImg" src="../../static/images/weather/mai.svg" mode="" v-if="weather.weather == '霾'"></image>
+					<image class="weatherImg" src="../../static/images/weather/qiangshachenbao.svg" mode="" v-if="weather.weather == '强沙尘暴'"></image>
+					<image class="weatherImg" src="../../static/images/weather/qing.svg" mode="" v-if="weather.weather == '晴'"></image>
+					<image class="weatherImg" src="../../static/images/weather/shachenbao.svg" mode="" v-if="weather.weather == '沙尘暴'"></image>
+					<image class="weatherImg" src="../../static/images/weather/tedabaoyu.svg" mode="" v-if="weather.weather == '特大暴雨'"></image>
+					<image class="weatherImg" src="../../static/images/weather/wu.svg" mode="" v-if="weather.weather == '雾'"></image>
+					<image class="weatherImg" src="../../static/images/weather/xiaoxue.svg" mode="" v-if="weather.weather == '小雪'"></image>
+					<image class="weatherImg" src="../../static/images/weather/yangsha.svg" mode="" v-if="weather.weather == '扬沙'"></image>
+					<image class="weatherImg" src="../../static/images/weather/yin.svg" mode="" v-if="weather.weather == '阴'"></image>
+					<image class="weatherImg" src="../../static/images/weather/yujiaxue.svg" mode="" v-if="weather.weather == '雨夹雪'"></image>
+					<image class="weatherImg" src="../../static/images/weather/zhenxue.svg" mode="" v-if="weather.weather == '阵雪'"></image>
+					<image class="weatherImg" src="../../static/images/weather/zhenyu.svg" mode="" v-if="weather.weather == '阵雨'"></image>
+					<image class="weatherImg" src="../../static/images/weather/zhongxue.svg" mode="" v-if="weather.weather == '中雪'"></image>
+					<image class="weatherImg" src="../../static/images/weather/zhongyu.svg" mode="" v-if="weather.weather == '中雨'"></image>
 					<view class="temp">{{ weather.temp }}</view>
 				</view>
 			</view>
@@ -120,7 +120,7 @@
 								<view class="rateStart" v-if="item.rate == 2.5">
 									<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-									<image src="../../static/images/star_svg/starCopy1(1).svg" mode=""></image>
+									<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 								</view>
@@ -200,7 +200,7 @@
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
-											<view class="likeCount">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
 									</view>
 								</view>
@@ -240,7 +240,7 @@
 												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
-											<view class="likeCount">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
 									</view>
 								</view>
@@ -323,7 +323,10 @@ export default {
 			show: false,
 			cityList: null,
 			name: null,
-			firstTime: new Date().getTime()
+			firstTime: new Date().getTime(),
+			downOption:{
+				use:false
+			}
 		};
 	},
 	comments: {
@@ -530,6 +533,7 @@ export default {
 								success: res => {
 									uni.setStorageSync('article_id', res.data);
 									this.list = res.data.data.list;
+									this.mescroll.resetUpScroll()
 									console.log('list=====', this.list);
 								}
 							}),
@@ -572,6 +576,7 @@ export default {
 					success: res => {
 						console.log('城市信息==', res);
 						(this.item = res.data.data), (this.name = this.name = res.data.data.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), (this.show = false);
+						this.mescroll.resetUpScroll()
 					}
 				});
 			}
@@ -608,6 +613,7 @@ export default {
 							success: res => {
 								uni.setStorageSync('article_id', res.data);
 								this.list = res.data.data.list;
+								this.mescroll.resetUpScroll()
 								console.log('list=====', this.list);
 							}
 						}),
@@ -657,6 +663,7 @@ export default {
 					success: res => {
 						console.log('省份信息==', res);
 						(this.item = res.data.data), (this.name = item.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), (this.show = false);
+						this.mescroll.resetUpScroll()
 					}
 				});
 			}
@@ -773,7 +780,7 @@ export default {
 						let curPageLen = curPageData.length;
 						console.log('curPageLen', curPageLen);
 						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-						let totalPage = data.data.data.total / pageSize;
+						// let totalPage = data.data.data.total / pageSize;
 						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
 						let totalSize = data.data.data.total;
 						console.log('totalSize', totalSize);
@@ -786,10 +793,10 @@ export default {
 						console.log('list-', this.list);
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-						this.mescroll.endByPage(curPageLen, totalPage);
+						// this.mescroll.endByPage(curPageLen, totalPage);
 
 						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-						// this.mescroll.endBySize(curPageLen, totalSize);
+						this.mescroll.endBySize(curPageLen, totalSize);
 
 						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
 						//this.mescroll.endSuccess(curPageLen, hasNext);
@@ -927,16 +934,17 @@ export default {
 	margin: 0 8px;
 }
 .headImgBox {
-	width: 750rpx;
+	width: 100%;
 	height: 440rpx;
 	position: relative;
+	border: none;
 }
 .headImg {
 	width: 100%;
 	height: 100%;
 }
 .mask {
-	width: 750rpx;
+	width: 100%;
 	height: 244rpx;
 	background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #13c2c2 100%);
 	opacity: 0.4;
@@ -1001,8 +1009,9 @@ export default {
 	margin-left: 14rpx;
 }
 .contentBox {
-	width: 750rpx;
+	width: 100%;
 	background: #f8f8f8;
+	border: 1px solid #FFFFFF;
 	border-radius: 16rpx 16rpx 0px 0px;
 	position: relative;
 	top: -30rpx;
@@ -1010,16 +1019,16 @@ export default {
 }
 // 景点推荐
 .content {
-	width: 750rpx;
+	width: 100%;
 }
 .contentHeader {
 	display: flex;
 	align-items: center;
+	border: none;
 	padding-top: 32rpx;
 	padding-left: 28rpx;
 }
 .contentTitle {
-	// width: 144rpx;
 	height: 36rpx;
 	font-size: 36rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
@@ -1095,77 +1104,7 @@ export default {
 		font-weight: 400;
 		color: #606266;
 	}
-	.changeIcon{
-		width: 14rpx;
-		height: 14rpx;
-		margin-left: 6rpx;
-	}
-	.weather{
-		display: flex;
-		align-items: center;
-		width: 200rpx;
-		height: 80rpx;
-		position: absolute;
-		bottom: 56rpx;
-		left: 40rpx;
-	}
-	.weatherImg{
-		width: 44rpx;
-		height: 44rpx;
-	}
-	.temp{
-		font-size: 28rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #FFFFFF;
-		line-height: 40rpx;
-		margin-left: 14rpx;
-	}
-	.contentBox{
-		width: 750rpx;
-		// height: 2014rpx;
-		background: #F8F8F8;
-		border-radius: 16rpx 16rpx 0px 0px;
-		position: relative;
-		top: -30rpx;
-		left: 0;
-	}
-	// 景点推荐
-	.content{
-		width: 750rpx;
-		
-		
-	}
-	.contentHeader{
-		display: flex;
-		align-items: center;
-		padding-top: 32rpx;
-		padding-left: 28rpx;
-	}
-	.contentTitle{
-		// width: 144rpx;
-		height: 36rpx;
-		font-size: 36rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		line-height: 36rpx;
-		margin-right: 456rpx;
-	}
-	.contentMore{
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 94rpx;
-		height: 42rpx;
-		background: #EDEFF2;
-		border-radius: 24rpx;
-		font-size: 22rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #606266;
-		line-height: 20rpx;
-	}
+	
 }
 // 行程推荐
 .trip {
@@ -1250,19 +1189,19 @@ export default {
 }
 
 .wrap {
-	width: 750rpx;
+	width: 100%;
 	display: flex;
 	flex-flow: row;
 	flex-wrap: wrap;
 	margin-top: 24rpx;
 }
 .left {
-	margin-left: 10rpx;
+	// margin-left: 10rpx;
 }
 .demo-warter {
 	width: 360rpx;
 	margin-top: 0;
-	margin-right: 10rpx;
+	margin-left: 10rpx;
 	margin-bottom: 16rpx;
 	padding-bottom: 16rpx;
 	/* position: relative; */
@@ -1476,7 +1415,8 @@ export default {
 		.rate {
 			margin-left: 12rpx;
 			font-size: 20rpx;
-			font-family: HelveticaNeue;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 500;
 			color: #606266;
 			line-height: 20rpx;
 		}
@@ -1571,12 +1511,12 @@ export default {
 		flex-wrap: wrap;
 	}
 	.left{
-		margin-left: 10rpx;
+		// margin-left: 10rpx;
 	}
 	.demo-warter {
 		width: 360rpx;
 		margin-top: 0;
-		margin-right: 10rpx;
+		margin-left: 10rpx;
 		margin-bottom: 16rpx;
 		padding-bottom: 16rpx;
 		/* position: relative; */

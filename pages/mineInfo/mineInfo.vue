@@ -24,16 +24,16 @@
 				</u-form-item>
 				<!-- 昵称 -->
 				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}"   :label-position="labelPosition" label="昵　称:" label-width="120" prop="name">
-					<u-input :border="border"  v-model="model.name" type="text"></u-input>
+					<u-input :customStyle="customStyleinput" :border="border"  v-model="model.name" type="text"></u-input>
 				</u-form-item>
 				<!-- 性别 -->
 				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" :label-position="labelPosition" label="性　别:" label-width="120" prop="sex">
-					<u-input :border="border" :disabled="true"  :select-open="actionSheetShow" v-model="model.sex" :placeholder="sex" placeholder-style="color:#303133" @click="actionSheetShow = true"></u-input>
+					<u-input :customStyle="customStyleinput" :border="border" :disabled="true"  :select-open="actionSheetShow" v-model="model.sex" :placeholder="sex" placeholder-style="color:#303133" @click="actionSheetShow = true"></u-input>
 					<image class="moreRight" src="../../static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 				<!-- 常住地 -->
 				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" :label-position="labelPosition" label="常住地:" prop="region" label-width="120">
-					<u-input :border="border" :disabled="true"   :select-open="pickerShow" v-model="model.region" :placeholder="region" placeholder-style="color:#303133" @click="pickerShow = true"></u-input>
+					<u-input :customStyle="customStyleinput" :border="border" :disabled="true"   :select-open="pickerShow" v-model="model.region" :placeholder="region" placeholder-style="color:#303133" @click="pickerShow = true"></u-input>
 					<image class="moreRight" src="../../static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 			</u-form>
@@ -46,7 +46,11 @@
 </template>
 
 <script>
+	import tuiImageCropper from '../../components/tui-image-cropper/tui-image-cropper.vue'
 	export default {
+		comments:{
+			tuiImageCropper
+		},
 		data() {
 			let that = this;
 			return {
@@ -127,6 +131,9 @@
 					borderRadius: '26px',
 					margin:'82rpx 0 0 0'
 					
+				},
+				customStyleinput:{
+					margin:'16rpx 0'
 				}
 			};
 		},
@@ -134,34 +141,25 @@
 			this.$refs.uForm.setRules(this.rules);
 		},
 		created() {
+			
 			// 监听从裁剪页发布的事件，获得裁剪结果
-			uni.$on('uAvatarCropper', path => {
+			// uni.$on('uAvatarCropper', path => {
 				
-				let base ='data:image/png;base64,'+uni.getFileSystemManager().readFileSync(path,'base64')
-				this.avatar = base
+			// 	let base ='data:image/png;base64,'+uni.getFileSystemManager().readFileSync(path,'base64')
+			// 	this.avatar = base
+			uni.$on('cropper', e => {
+				console.log('eeee',e)
+				let base ='data:image/png;base64,'+uni.getFileSystemManager().readFileSync(e.url,'base64')
+				console.log('base',base)
+				this.avatar = base	
 				
-				// uni.getFileInfo({
-				// 	filePath: path,
-				// 	success: res=>{
-				// 		console.log(res)
-				// 		// debugger
-				// 	}
-				// })
-				// 可以在此上传到服务端
-				// uni.uploadFile({
-				// 	url: this.globalUrl+ '/usr/avatar',
-				// 	filePath: base,
-				// 	name: 'avator',
-				// 	formData: this.sendDate,
-				// 	header:{"Content-Type": "multipart/form-data"},
-				// 	complete: (res) => {
-				// 		console.log('头像上传',res);
-				// 	}
-				// });
 			})
 		},
-		onLoad() {
+		
+		onLoad(e) {
 			this.getUserInfo()
+			
+			
 		},
 		methods:{
 			// 获取用户现存信息
@@ -200,18 +198,31 @@
 			},
 			// 头像裁剪
 			chooseAvatar() {
-				this.$u.route({
-					url: '/uview-ui/components/u-avatar-cropper/u-avatar-cropper',
-					// 内部已设置以下默认参数值，可不传这些参数
-					params: {
-						// 输出图片宽度，高等于宽，单位px
-						destWidth: 300,
-						// 裁剪框宽度，高等于宽，单位px
-						rectWidth: 200,
-						// 输出的图片类型，如果'png'类型发现裁剪的图片太大，改成"jpg"即可
-						fileType: 'jpg',
+				// 新上传头像方法
+				uni.chooseImage({
+					count: 1,
+					sizeType: ['original', 'compressed'],
+					sourceType: ['album', 'camera'],
+					success: res => {
+						const tempFilePaths = res.tempFilePaths[0];
+						uni.navigateTo({
+							url:'../cropper-default-old/cropper-default-old?src=' + tempFilePaths
+						})
 					}
 				})
+				// 旧上传头像方法
+				// this.$u.route({
+				// 	url: '/uview-ui/components/u-avatar-cropper/u-avatar-cropper',
+				// 	// 内部已设置以下默认参数值，可不传这些参数
+				// 	params: {
+				// 		// 输出图片宽度，高等于宽，单位px
+				// 		destWidth: 300,
+				// 		// 裁剪框宽度，高等于宽，单位px
+				// 		rectWidth: 200,
+				// 		// 输出的图片类型，如果'png'类型发现裁剪的图片太大，改成"jpg"即可
+				// 		fileType: 'jpg',
+				// 	}
+				// })
 			},
 			// 点击actionSheet回调
 			actionSheetCallback(index) {
@@ -238,9 +249,23 @@
 							},
 							success: res => {
 								console.log('修改信息',res)
-								uni.reLaunch({
-									url:'../mine/mine'
-								})
+								if(res.data.code == 10108){
+									uni.showToast({
+										title: res.data.msg,
+										icon:'none',
+										duration: 2000
+									})
+								}else{
+									uni.showToast({
+										title: res.data.msg,
+										icon:'none',
+										duration: 2000
+									})
+									uni.reLaunch({
+										url:'../mine/mine'
+									})
+								}
+								
 							}
 						});
 						// uni.request({
@@ -341,6 +366,9 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	image{
+		margin: 24rpx 0;
+	}
 }
 .avatarText{
 	height: 28rpx;
