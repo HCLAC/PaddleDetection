@@ -81,21 +81,19 @@
 				”相关结果
 			</view>
 				<view class="wrap">
-					<u-waterfall v-model="list" ref="uWaterfall">
-						<template v-slot:left="{ leftList }">
-							<view class="demo-warter" v-for="(item, index) in leftList" :key="index" >
-								<view class="" @click="onPageJump" :id="item.article_id">
-									<view class="demo-top">
-										<view class="imgBox">
-											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"  mode="widthFix">
-												<view class="videoIcon" v-if="item.type == 4">
-													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
-												</view>
-											</image>
-											<view class="adress">
-												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-												<view class="adressText">{{ item.location }}</view>
+					<view class="left">
+						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
+							<view class="" >
+								<view class="demo-top" @click="onPageJump" :id="item.article_id">
+									<view class="imgBox" >
+										<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
+											<view class="videoIcon" v-if="item.type == 4">
+												<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
 											</view>
+										</image>
+										<view class="adress">
+											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+											<view class="adressText">{{ item.location }}</view>
 										</view>
 									</view>
 									<view class="titleTip">
@@ -112,7 +110,7 @@
 										<image class="userHeard" :src="item.avatar"></image>
 										<view class="userNikename">{{ item.author_name }}</view>
 									</view>
-									<view class="count" @click="clickLeftLike(item,index) in leftList "  >
+									<view class="count" @click="clickLike(item, index)">
 										<view class="countImg">
 											<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 											<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
@@ -121,21 +119,21 @@
 									</view>
 								</view>
 							</view>
-						</template>
-						<template v-slot:right="{ rightList }">
-							<view class="demo-warter" v-for="(item, index) in rightList" :key="index" >
-								<view class="" @click="onPageJump" :id="item.article_id">
-									<view class="demo-top">
-										<view class="imgBox">
-											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"  mode="widthFix">
-												<view class="videoIcon" v-if="item.type == 4">
-													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
-												</view>
-											</image>
-											<view class="adress">
-												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-												<view class="adressText">{{ item.location }}</view>
+						</view>
+					</view>
+					<view class="right">
+						<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
+							<view class="">
+								<view class="demo-top"  @click="onPageJump" :id="item.article_id">
+									<view class="imgBox">
+										<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
+											<view class="videoIcon" v-if="item.type == 4">
+												<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
 											</view>
+										</image>
+										<view class="adress">
+											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+											<view class="adressText">{{ item.location }}</view>
 										</view>
 									</view>
 									<view class="titleTip">
@@ -152,7 +150,7 @@
 										<image class="userHeard" :src="item.avatar"></image>
 										<view class="userNikename">{{ item.author_name }}</view>
 									</view>
-									<view class="count" @click="clickRightLike(item,index) in rightList">
+									<view class="count" @click="clickLike(item, index)">
 										<view class="countImg">
 											<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
 											<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
@@ -161,9 +159,8 @@
 									</view>
 								</view>
 							</view>
-						</template>
-					</u-waterfall>
-					
+						</view>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -210,39 +207,40 @@ export default {
 	methods: {
 		getResults() {
 			uni.request({
-						url: this.globalUrl + '/article/list',
-						data: {
-							count: 6,
-							page: 1,
-							first_time: new Date().getTime()	
-						},
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
-						success: res => {
-							console.log('未定位时获取的文章列表', res);
-							if(res.data.data == null ){
-								uni.request({
-									url: this.globalUrl + '/article/list',
-									data: {
-										count: 6,
-										page: 1,
-										first_time: new Date().getTime()	
-									},success: (res) => {
-										uni.setStorageSync('article_id', res.data);
-										// console.log('存储文章列表==',res.data)
-										this.list = res.data.data.list;
-										// console.log('list=====',this.list)
-									}
-								})
-							}else{
+				url: this.globalUrl + '/article/list',
+				data: {
+					count: 6,
+					page: 1,
+					first_time: new Date().getTime()	
+				},
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: res => {
+					console.log('未定位时获取的文章列表', res);
+					if(res.data.data == null ){
+						uni.request({
+							url: this.globalUrl + '/article/list',
+							data: {
+								count: 6,
+								page: 1,
+								first_time: new Date().getTime()	
+							},success: (res) => {
 								uni.setStorageSync('article_id', res.data);
 								// console.log('存储文章列表==',res.data)
 								this.list = res.data.data.list;
 								// console.log('list=====',this.list)
 							}
-						}
-					});
+						})
+					}else{
+						uni.setStorageSync('article_id', res.data);
+						// console.log('存储文章列表==',res.data)
+						console.log(this.$refs)
+						this.list = res.data.data.list;
+						// console.log('list=====',this.list)
+					}
+				}
+			});
 		},
 
 		// 跳转热搜榜单
@@ -262,7 +260,7 @@ export default {
 			});
 		},
 		// 点赞
-		clickRightLike(e, index) {
+		clickLike(e, index) {
 			console.log('qaz', e, index);
 			// debugger
 			let article = e.article_id;
@@ -286,8 +284,8 @@ export default {
 						});
 					}
 
-					this.$refs.uWaterfall.rightList[index].liked = e.liked == 1 ? 0 : 1
-					this.$refs.uWaterfall.rightList[index].like_count = (e.liked == 1 ? e.like_count - 1 : e.like_count  + 1)
+					this.list[index].liked = e.liked == 1 ? 0 : 1
+					this.list[index].like_count = (e.liked == 1 ? e.like_count + 1 : e.like_count  - 1)
 				}
 			});
 		},
@@ -315,8 +313,8 @@ export default {
 						});
 					}
 		
-					this.$refs.uWaterfall.leftList[index].liked = e.liked == 1 ? 0 : 1
-					this.$refs.uWaterfall.leftList[index].like_count = (e.liked == 1 ? e.like_count - 1 : e.like_count  + 1)
+					this.list[index].liked = e.liked == 1 ? 0 : 1
+					this.list[index].like_count = (e.liked == 1 ? e.like_count - 1 : e.like_count  + 1)
 				}
 			});
 		},
@@ -647,13 +645,7 @@ view {
 	width: 100%;
 	overflow-x: hidden;
 }
-.left,
-.right {
-	display: inline-block;
-	margin-left: 10rpx;
-	vertical-align: top;
-	width: 48%;
-}
+
 .search-box {
 	width: 100%;
 	box-sizing: border-box;
@@ -928,6 +920,7 @@ view {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin-top: 8rpx;
 }
 /*  自定义导航栏样式 */
 .example-body {
@@ -978,13 +971,7 @@ view {
 }
 // 瀑布流
 /* 正在旅行 */
-.left,
-.right {
-	display: inline-block;
-	margin-left: 20rpx;
-	vertical-align: top;
-	width: 46%;
-}
+
 .touring {
 	margin-top: 24rpx;
 }
@@ -1009,10 +996,12 @@ view {
 .demo-warter {
 	width: 360rpx;
 	margin-top: 0;
+	margin-left: 10rpx;
 	margin-bottom: 16rpx;
 	padding-bottom: 16rpx;
 	/* position: relative; */
 	background-color: #ffffff;
+	border-radius: 8rpx 8rpx 0 0;
 }
 
 .demo-top {

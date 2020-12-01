@@ -277,7 +277,7 @@
 					let arr = res.data.article_list;
 					let arr1 = res.data.route_list;
 					let list1 = this.drawCorrelativeKeyword(arr, keyword);
-					this.list = list1
+					this.$refs.uWaterfall._props.value = list1
 					// this.list = res.data.article_list;
 					this.area = res.data.area;
 					this.site = res.data.site;
@@ -758,6 +758,7 @@
 		/* position: relative; */
 		background-color: #ffffff;
 		// box-shadow: 0px 10rpx 10rpx 10rpx #f8f8f8;
+		border-radius: 8rpx 8rpx 0 0;
 	}
 
 	.imgBox {

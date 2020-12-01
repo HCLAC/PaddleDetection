@@ -325,7 +325,8 @@ export default {
 			name: null,
 			firstTime: new Date().getTime(),
 			downOption:{
-				use:false
+				use:false,
+				bgColor:'#F8F8F8'
 			}
 		};
 	},
@@ -1013,6 +1014,7 @@ export default {
 	background: #f8f8f8;
 	border: 1px solid #FFFFFF;
 	border-radius: 16rpx 16rpx 0px 0px;
+	border-bottom: none;
 	position: relative;
 	top: -30rpx;
 	left: 0;
@@ -1049,7 +1051,6 @@ export default {
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #606266;
-	line-height: 42rpx;
 }
 .moreIcon {
 	width: 14rpx;
@@ -1136,7 +1137,6 @@ export default {
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #606266;
-	line-height: 42rpx;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -1206,6 +1206,7 @@ export default {
 	padding-bottom: 16rpx;
 	/* position: relative; */
 	background-color: #ffffff;
+	border-radius: 8rpx 8rpx 0 0;
 }
 
 .demo-top {
@@ -1452,7 +1453,6 @@ export default {
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
 		color: #606266;
-		line-height: 42rpx;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -1521,7 +1521,7 @@ export default {
 		padding-bottom: 16rpx;
 		/* position: relative; */
 		background-color: #ffffff;
-		
+		border-radius: 8rpx 8rpx 0 0;
 	}
 	
 	.demo-top {

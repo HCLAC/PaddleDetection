@@ -112,6 +112,7 @@
 				<view class="touring" id="touring">
 					<text class="tourtext">正在旅行</text>
 					<view class="wrap">
+						<!-- <WaterfallsFlow style="height: 100%;" :wfList='list' /> -->
 						<u-waterfall v-model="list" ref="uWaterfall">
 							<template v-slot:left="{ leftList }">
 								<view class="demo-warter" v-for="(item, index) in leftList" :key="index" >
@@ -145,8 +146,8 @@
 										</view>
 										<view class="count" @click="clickLeftLike(item,index) in leftList "  >
 											<view class="countImg">
-												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+												<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+												<image class="likeImg" mode="aspectFit" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
 											<view class="likeCount" v-if="item.like_count != 0" >{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
@@ -185,8 +186,8 @@
 										</view>
 										<view class="count" @click="clickRightLike(item,index) in rightList">
 											<view class="countImg">
-												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+												<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+												<image class="likeImg" mode="aspectFit" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
 											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
@@ -300,8 +301,8 @@
 										</view>
 										<view class="count" @click="clickLeftLike(item,index) in leftList "  >
 											<view class="countImg">
-												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+												<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+												<image class="likeImg" mode="aspectFit" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
 											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
@@ -340,8 +341,8 @@
 										</view>
 										<view class="count" @click="clickRightLike(item,index) in rightList">
 											<view class="countImg">
-												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+												<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+												<image class="likeImg" mode="aspectFit" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
 											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
@@ -396,7 +397,10 @@ export default {
 			areaList: [],
 			url: '',
 			serviceProvider: '',
-			e: null
+			e: null,
+			upOption:{
+				bgColor:'#F8F8F8'
+			}
 		};
 	},
 
@@ -424,7 +428,8 @@ export default {
 				// if (this.item == undefined || null) {
 					this.getBanner();
 					this.getAdress();
-					
+					// this.mescroll.resetUpScroll()
+					// this.mescroll.triggerUpScroll()
 				// }
 			}
 		});
@@ -621,7 +626,7 @@ export default {
 							success: res => {
 								uni.setStorageSync('article_id', res.data);
 								// console.log('存储文章列表==',res.data)
-								this.list = res.data.data.list;
+								this.$refs.uWaterfall._props.value = res.data.data.list;
 								console.log('list=====',this.list)
 							}
 						});
@@ -629,7 +634,7 @@ export default {
 						uni.setStorageSync('article_id', res.data);
 						// console.log('存储文章列表==',res.data)
 						// console.log(this.$refs)
-						this.list = res.data.data.list;
+						this.$refs.uWaterfall._props.value = res.data.data.list;
 						console.log('list=====',this.list)
 					}
 				}
@@ -858,7 +863,6 @@ export default {
 			this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
 		},
 		upCallback(page) {
-			console.log(122132131213);
 			let pageNum = page.num;
 
 			let pageSize = page.size;
@@ -876,7 +880,6 @@ export default {
 					
 				},
 				success: data => {
-					if (data.data.code == 0) {
 						let curPageData = data.data.data.list;
 						console.log(this.$refs)
 						console.log('curPageData', curPageData);
@@ -893,9 +896,7 @@ export default {
 						this.list = this.list.concat(curPageData); //追加新数据
 
 						this.mescroll.endByPage(curPageLen, totalPage);
-					} else {
-						this.mescroll.endErr();
-					}
+					
 				},
 				fail: () => {
 					//  请求失败,隐藏加载状态
@@ -1140,7 +1141,6 @@ view {
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #606266;
-	line-height: 42rpx;
 	margin: 54rpx 32rpx 0 0;
 	display: flex;
 	align-items: center;
@@ -1373,19 +1373,26 @@ view {
 	display: flex;
 	flex-flow: row;
 	flex-wrap: wrap;
+	// column-count:2; 
+	// column-gap: 20rpx; 
 }
 
 .pubuItem{
 	column-count: 2;
-	column-gap: 20rpx;
+	column-gap: 10rpx;
 }
 .demo-warter {
 	width: 360rpx;
 	margin-top: 0;
+	// margin-left: 10rpx;
 	margin-bottom: 16rpx;
 	padding-bottom: 16rpx;
 	/* position: relative; */
 	background-color: #ffffff;
+	border-radius: 8rpx 8rpx 0 0;
+	// display: inline-block;
+	// break-inside: avoid;
+	// box-sizing: border-box;
 }
 .imgBox {
 	position: relative;
@@ -1517,7 +1524,7 @@ image{will-change: transform}
 	font-weight: 900;
 	color: #464646;
 	display: flex;
-	align-items: center;
+	// align-items: center;
 }
 
 .userHeard {
@@ -1537,7 +1544,7 @@ image{will-change: transform}
 
 .count {
 	display: flex;
-	align-items: center;
+	// align-items: center;
 	margin-right: 20rpx;
 }
 
@@ -1545,10 +1552,9 @@ image{will-change: transform}
 	width: 30rpx;
 	height: 28rpx;
 	margin-right: 8rpx;
-	display: flex;
-	align-items: center;
+	
 }
-.countImg image {
+.likeImg {
 	width: 100%;
 	height: 100%;
 }

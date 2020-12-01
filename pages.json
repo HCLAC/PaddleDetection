@@ -9,8 +9,9 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom",
-				"backgroundColorBottom": "#FFFFFF",
+				"backgroundColorBottom": "#F8F8F8",
 				"backgroundColorTop": "#FFFFFF",
+				"backgroundColor":"#F8F8F8",
 				"disableScroll": true,
 				"app-plus": {
 					"bounce": "none" 
@@ -32,6 +33,7 @@
 			"path": "pages/provinces/provinces",
 			"style": {
 				"navigationStyle": "custom",
+				"backgroundColor":"#F8F8F8",
 				"disableScroll": true,
 				"app-plus": {
 					"bounce": "none" 
@@ -137,12 +139,14 @@
             "path" : "pages/topic/topic",
             "style" : {
             	"navigationStyle": "custom"
+				
             }
         },
 		{
             "path" : "pages/topicList/topicList",
             "style" : {
-            	"navigationStyle": "custom"
+            	"navigationStyle": "custom",
+				"backgroundColor":"#F8F8F8"
             }
         }
         ,{

@@ -123,7 +123,7 @@
 									</view>
 								</view>
 								<view class="position">
-									<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
+									<image src="../../static/images/iconNewMap.svg" mode="aspectFit"></image>
 									<view>{{ item.location }}</view>
 								</view>
 							</view>
@@ -169,7 +169,7 @@
 									</view>
 								</view>
 								<view class="position">
-									<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
+									<image src="../../static/images/iconNewMap.svg" mode="aspectFit"></image>
 									<view>{{ item.location }}</view>
 								</view>
 							</view>

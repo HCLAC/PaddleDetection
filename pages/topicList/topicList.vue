@@ -259,7 +259,10 @@ export default {
 				isFixed: false,
 				cardheight:0,
 				id:'',
-				info:''
+				info:'',
+				upOption:{
+					bgColor:'#F8F8F8'
+				}
 				
 			};
 		},
@@ -319,14 +322,14 @@ export default {
 								success: (res) => {
 									uni.setStorageSync('article_id', res.data);
 									console.log('无token推荐',res)
-									this.recommendList = res.data.data.list;
+									this.$refs.uWaterfall._props.value = res.data.data.list;
 									console.log('recommendList=====', this.recommendList);
 								}
 							})
 						}else{
 							uni.setStorageSync('article_id', res.data);
 							console.log('推荐',res)
-							this.recommendList = res.data.data.list;
+							this.$refs.uWaterfall._props.value = res.data.data.list;
 							console.log('recommendList=====', this.recommendList);
 						}
 						
@@ -885,6 +888,7 @@ export default {
 	padding-bottom: 16rpx;
 	/* position: relative; */
 	background-color: #ffffff;
+	border-radius: 8rpx 8rpx 0 0;
 }
 
 .demo-top {

@@ -950,18 +950,14 @@
 	.cardsleft {
 		width: 262rpx;
 		height: 198rpx;
-		border-radius: 8px;
+		border-radius: 16rpx;
 		position: relative;
 
 		.bigImg {
-			width: 100%;
-			height: 100%;
-			border-radius: 8px;
-
-		}
-
-		.rankNum {
-			
+			width: 262rpx;
+			height: 198rpx;
+			border-radius: 16rpx;
+			position: absolute;
 		}
 		.rankImg{
 			width: 88rpx;
