@@ -146,8 +146,8 @@
 										</view>
 										<view class="count" @click="clickLeftLike(item,index) in leftList "  >
 											<view class="countImg">
-												<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image class="likeImg" mode="aspectFit" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+												<image class="likeImg" mode="widthFix" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+												<image class="likeImg" mode="widthFix" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
 											<view class="likeCount" v-if="item.like_count != 0" >{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
@@ -186,8 +186,8 @@
 										</view>
 										<view class="count" @click="clickRightLike(item,index) in rightList">
 											<view class="countImg">
-												<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image class="likeImg" mode="aspectFit" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+												<image class="likeImg" mode="widthFix" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+												<image class="likeImg" mode="widthFix" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
 											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
@@ -301,8 +301,8 @@
 										</view>
 										<view class="count" @click="clickLeftLike(item,index) in leftList "  >
 											<view class="countImg">
-												<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image class="likeImg" mode="aspectFit" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+												<image class="likeImg" mode="widthFix" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+												<image class="likeImg" mode="widthFix" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
 											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
@@ -341,8 +341,8 @@
 										</view>
 										<view class="count" @click="clickRightLike(item,index) in rightList">
 											<view class="countImg">
-												<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image class="likeImg" mode="aspectFit" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+												<image class="likeImg" mode="widthFix" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+												<image class="likeImg" mode="widthFix" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
 											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
@@ -1551,7 +1551,7 @@ image{will-change: transform}
 .countImg {
 	width: 30rpx;
 	height: 28rpx;
-	margin-right: 8rpx;
+	// margin-right: 8rpx;
 	
 }
 .likeImg {
@@ -1562,6 +1562,7 @@ image{will-change: transform}
 	font-size: 22rpx;
 	font-family: PingFangSC-Regular, PingFang SC;
 	font-weight: 400;
+	margin-left: 8rpx;
 	color: rgba(96, 98, 102, 1);
 	/* line-height:20rpx; */
 }

@@ -102,7 +102,7 @@
 											</view>
 										</view>
 										<view class="position">
-											<image src="../../static/images/iconNewMap.svg" mode="aspectFit"></image>
+											<image src="../../static/images/iconNewMap.svg" mode="widthFix"></image>
 											<view class="positionText">{{ item.location }}</view>
 										</view>
 									</view>
