@@ -150,6 +150,7 @@
 												<image class="likeImg" mode="widthFix" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
 											</view>
 											<view class="likeCount" v-if="item.like_count != 0" >{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											<!-- <view class="likeCount" v-if="item.like_count != 0" >1000</view> -->
 										</view>
 									</view>
 								</view>
