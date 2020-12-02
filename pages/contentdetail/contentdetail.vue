@@ -211,13 +211,11 @@
 var _this;
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import uniIcons from '@/components/uni-icons/uni-icons.vue';
-// import comment from '@/components/comment/comment.vue';
 import chatInput from '@/components/comment/chatinput.vue';
 export default {
 	components: {
 		uniNavBar,
 		uniIcons,
-		// comment,
 		chatInput
 	},
 	data() {

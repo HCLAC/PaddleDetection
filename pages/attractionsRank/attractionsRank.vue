@@ -199,7 +199,6 @@
 </template>
 
 <script>
-	// import classifyData from '@/components/common/classify.data.js';
 	// 引入mescroll-mixins.js
 	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 	export default {

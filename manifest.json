@@ -42,13 +42,7 @@
             "sdkConfigs" : {
                 "ad" : {},
                 "maps" : {},
-                "oauth" : {
-                    "weixin" : {
-                        "appid" : "",
-                        "appsecret" : "",
-                        "UniversalLinks" : ""
-                    }
-                }
+                "oauth" : {}
             }
         },
         "uniStatistics" : {

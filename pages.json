@@ -190,7 +190,6 @@
             "path" : "pages/cropper-default-old/cropper-default-old",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
             
