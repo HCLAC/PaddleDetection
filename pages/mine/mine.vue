@@ -103,7 +103,7 @@
 										<view v-if="item.type == 5">推广</view>
 									</view>
 									<view class="videoIcon" v-if="item.type == 4">
-										<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+										<image class="playIcon"  src="../../static/images/playIcon.svg" mode="aspectFit"></image>
 									</view>
 								</image>
 							</view>
@@ -123,7 +123,7 @@
 									</view>
 								</view>
 								<view class="position">
-									<image src="../../static/images/iconNewMap.svg" mode="widthFix"></image>
+									<image src="../../static/images/iconNewMap.svg" mode="aspectFit"></image>
 									<view>{{ item.location }}</view>
 								</view>
 							</view>
@@ -169,7 +169,7 @@
 									</view>
 								</view>
 								<view class="position">
-									<image src="../../static/images/iconNewMap.svg" mode="widthFix" ></image>
+									<image src="../../static/images/iconNewMap.svg" mode="" ></image>
 									<view>{{ item.location }}</view>
 								</view>
 							</view>
@@ -206,7 +206,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import httpType from '../../httpType.js';
+import httpType from '@/httpType.js';
 import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 export default {
 	data() {

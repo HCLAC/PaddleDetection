@@ -142,8 +142,8 @@
 										</view>
 										<view class="count" @click="clickLeftLike(item,index) in leftList ">
 											<view class="countImg">
-												<image class="likeImg" mode="widthFix" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image class="likeImg" mode="widthFix" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+												<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+												<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
 											</view>
 											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 											<!-- <view class="likeCount" v-if="item.like_count != 0" >1000</view> -->
@@ -186,8 +186,8 @@
 										</view>
 										<view class="count" @click="clickRightLike(item,index) in rightList">
 											<view class="countImg">
-												<image class="likeImg" mode="widthFix" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image class="likeImg" mode="widthFix" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+												<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+												<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
 											</view>
 											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
@@ -295,8 +295,8 @@
 										</view>
 										<view class="count" @click="clickLeftLike(item,index) in leftList ">
 											<view class="countImg">
-												<image class="likeImg" mode="widthFix" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image class="likeImg" mode="widthFix" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+												<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+												<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
 											</view>
 											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
@@ -338,8 +338,8 @@
 										</view>
 										<view class="count" @click="clickRightLike(item,index) in rightList">
 											<view class="countImg">
-												<image class="likeImg" mode="widthFix" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image class="likeImg" mode="widthFix" src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
+												<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+												<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
 											</view>
 											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
@@ -400,8 +400,6 @@
 				}
 			};
 		},
-
-
 		onReady() {
 			uni.getProvider({
 				service: 'oauth',
@@ -420,7 +418,6 @@
 		onLoad() {
 			uni.showLoading({
 				title: '加载中',
-
 				success: () => {
 					// if (this.item == undefined || null) {
 					this.getBanner();
@@ -435,57 +432,6 @@
 		},
 
 		methods: {
-			// 接收切换城市信息，请求数据
-			// getItem() {
-			// 	var that = this;
-			// 	this.errCode = 0;
-			// 	if (this.item != getApp().globalData.item) {
-			// 		(this.item = getApp().globalData.item), console.log('item-------', this.item);
-			// 		this.cityName = this.item.name;
-			// 		uni.request({
-			// 			url: this.globalUrl + '/site/hot',
-			// 			data: {
-			// 				state_id: this.item.state_id,
-			// 				city_id: this.item.city_id,
-			// 				count: 3
-			// 			},
-			// 			header: {
-			// 				Authorization: uni.getStorageSync('Authorization')
-			// 			},
-			// 			success: res => {
-			// 				console.log('跳转热门景点=========', res);
-			// 				// uni.setStorageSync('description',res.data)
-			// 				this.hotAtt = res.data.data;
-			// 			}
-			// 		}),
-			// 			// 清除旧数据
-			// 			// this.$refs.uWaterfall.clear()
-			// 			uni.request({
-			// 				url: this.globalUrl + '/article/list',
-			// 				data: {
-			// 					state_id: this.item.state_id,
-			// 					city_id: this.item.city_id,
-			// 					count: 6,
-			// 					page: 1,
-			// 					source: this.serviceProvider == 'baidu' ? 1 : this.serviceProvider == 'toutiao' ? 2 :this.serviceProvider == '微信' ? 3 : '',
-			// 					first_time: new Date().getTime()
-			// 				},
-			// 				header: {
-			// 					Authorization: uni.getStorageSync('Authorization')
-			// 				},
-			// 				success: res => {
-			// 					console.log('切换文章列表', res);
-			// 					uni.setStorageSync('article_id', res.data);
-			// 					that.list = [];
-			// 					this.mescroll.scrollTo(0, this.mescroll.optUp.toTop.duration);
-			// 					that.list = res.data.data.list;
-			// 					this.downCallback();
-			// 					console.log(that.list, 88888);
-			// 				}
-			// 			});
-			// 	}
-			// },
-
 			// 获取当前地理位置
 			getAdress() {
 				var that = this;
@@ -903,6 +849,56 @@
 					}
 				});
 			}
+			// 接收切换城市信息，请求数据
+			// getItem() {
+			// 	var that = this;
+			// 	this.errCode = 0;
+			// 	if (this.item != getApp().globalData.item) {
+			// 		(this.item = getApp().globalData.item), console.log('item-------', this.item);
+			// 		this.cityName = this.item.name;
+			// 		uni.request({
+			// 			url: this.globalUrl + '/site/hot',
+			// 			data: {
+			// 				state_id: this.item.state_id,
+			// 				city_id: this.item.city_id,
+			// 				count: 3
+			// 			},
+			// 			header: {
+			// 				Authorization: uni.getStorageSync('Authorization')
+			// 			},
+			// 			success: res => {
+			// 				console.log('跳转热门景点=========', res);
+			// 				// uni.setStorageSync('description',res.data)
+			// 				this.hotAtt = res.data.data;
+			// 			}
+			// 		}),
+			// 			// 清除旧数据
+			// 			// this.$refs.uWaterfall.clear()
+			// 			uni.request({
+			// 				url: this.globalUrl + '/article/list',
+			// 				data: {
+			// 					state_id: this.item.state_id,
+			// 					city_id: this.item.city_id,
+			// 					count: 6,
+			// 					page: 1,
+			// 					source: this.serviceProvider == 'baidu' ? 1 : this.serviceProvider == 'toutiao' ? 2 :this.serviceProvider == '微信' ? 3 : '',
+			// 					first_time: new Date().getTime()
+			// 				},
+			// 				header: {
+			// 					Authorization: uni.getStorageSync('Authorization')
+			// 				},
+			// 				success: res => {
+			// 					console.log('切换文章列表', res);
+			// 					uni.setStorageSync('article_id', res.data);
+			// 					that.list = [];
+			// 					this.mescroll.scrollTo(0, this.mescroll.optUp.toTop.duration);
+			// 					that.list = res.data.data.list;
+			// 					this.downCallback();
+			// 					console.log(that.list, 88888);
+			// 				}
+			// 			});
+			// 	}
+			// },
 		}
 	};
 </script>
@@ -1496,7 +1492,7 @@
 	.adreessIcon {
 		width: 24rpx;
 		height: 24rpx;
-		/* padding: 0 4rpx; */
+		margin: 0 4rpx;
 		display: flex;
 	}
 
@@ -1555,6 +1551,7 @@
 	}
 
 	.demo-user {
+		width: 100%;
 		font-size: 10rpx;
 		margin-top: 24rpx;
 		/* margin-bottom: 16rpx; */
@@ -1568,7 +1565,7 @@
 		font-weight: 900;
 		color: #464646;
 		display: flex;
-		// align-items: center;
+		align-items: center;
 	}
 
 	.userHeard {
@@ -1588,12 +1585,12 @@
 
 	.count {
 		display: flex;
-		// align-items: center;
+		align-items: center;
 		margin-right: 20rpx;
 	}
 
 	.countImg {
-		width: 30rpx;
+		width: 28rpx;
 		height: 28rpx;
 		// margin-right: 8rpx;
 

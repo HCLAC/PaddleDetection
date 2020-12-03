@@ -35,51 +35,51 @@
 		
 		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 		<!-- 推荐 -->
-		<view class="recommended">
-			<view class="recommendedTop">
-				<view class="recommendedTitle">
-					推荐
+			<view class="recommended">
+				<view class="recommendedTop">
+					<view class="recommendedTitle">
+						推荐
+					</view>
+					<view class="recommendedTopLine"></view>
 				</view>
-				<view class="recommendedTopLine"></view>
+				<view class="topicList" v-for="(item,index) in recommList" :key="index"  >
+					<view class="topicTitle">
+						<view class="titleLeft">
+							<image class="titleImg" src="../../static/images/topicIcon.svg" mode=""></image>
+							<view class="titleText">
+								{{item.name}}
+							</view>
+						</view>
+						<view class="titleRight" @click="toTopicList(item.topics_id)">
+							<view class="number">
+								{{item.total>10000?((item.total-(item.total%1000))/10000+'w'):item.total}}
+							</view>
+							<view class="rightText">
+								篇文章
+							</view>
+							<image class="moreRight" src="../../static/images/more-right.svg" mode=""></image>
+						</view>
+					</view>
+					<view class="conttentBox">
+						<view class="contentImgBox">
+							<view class="contentImg" v-for="(item1,index) in item.list" :key="index" @click="onPageJump" :id="item1.article_id">
+								<image class="attImg" :src="item1.image" mode="">
+									<view class="videoIcon" v-if="item1.type == 4">
+										<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+									</view>
+								</image>
+								<view class="attText">{{ item1.title }}</view>
+							</view>
+							
+						</view>
+						<view class="line">
+							
+						</view>
+					</view>
+				</view>
+				
+				
 			</view>
-			<view class="topicList" v-for="(item,index) in recommList" :key="index"  >
-				<view class="topicTitle">
-					<view class="titleLeft">
-						<image class="titleImg" src="../../static/images/topicIcon.svg" mode=""></image>
-						<view class="titleText">
-							{{item.name}}
-						</view>
-					</view>
-					<view class="titleRight" @click="toTopicList(item.topics_id)">
-						<view class="number">
-							{{item.total>10000?((item.total-(item.total%1000))/10000+'w'):item.total}}
-						</view>
-						<view class="rightText">
-							篇文章
-						</view>
-						<image class="moreRight" src="../../static/images/more-right.svg" mode=""></image>
-					</view>
-				</view>
-				<view class="conttentBox">
-					<view class="contentImgBox">
-						<view class="contentImg" v-for="(item1,index) in item.list" :key="index" @click="onPageJump" :id="item1.article_id">
-							<image class="attImg" :src="item1.image" mode="">
-								<view class="videoIcon" v-if="item1.type == 4">
-									<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
-								</view>
-							</image>
-							<view class="attText">{{ item1.title }}</view>
-						</view>
-						
-					</view>
-					<view class="line">
-						
-					</view>
-				</view>
-			</view>
-			
-			
-		</view>
 		</mescroll-body>
 	</view>
 </template>
@@ -96,7 +96,10 @@
 				tabCurrent: 0,
 				siteHot:'',
 				hotTopic:'',
-				recommList:''
+				recommList:'',
+				downOption:{
+					use:false
+				}
 			};
 		},
 		onLoad() {
@@ -466,6 +469,7 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	-webkit-line-clamp: 2;
+	line-height: 42rpx;
 }
 .line{
 	width: 694rpx;

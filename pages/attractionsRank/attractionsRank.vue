@@ -19,7 +19,8 @@
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
-		<mescroll-body  class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption"  :up="upOption">
+		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption"
+		 :up="upOption">
 			<!-- 城市选择弹窗 -->
 			<u-popup v-model="show" mode="top" height="383px" style="z-index: 9999999;">
 				<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
@@ -47,7 +48,7 @@
 							<view class="page-view">
 								<view class="class-item">
 									<!-- <view class="item-title" @click="gethotsiteslist2(item)"> -->
-										<!-- <text>{{item.name}}</text> -->
+									<!-- <text>{{item.name}}</text> -->
 									<!-- </view> -->
 									<view class="item-container">
 										<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
@@ -63,7 +64,7 @@
 					</block>
 				</view>
 			</u-popup>
-			
+
 			<view class="bgBox">
 				<image :src="banner" mode="" class="bannerImg"></image>
 				<view class="mask">
@@ -81,21 +82,21 @@
 					<view class="boxshow">
 					</view>
 				</view>
-				
+
 			</view>
-			
+
 			<!-- 排行 -->
-			
-			
+
+
 			<view class="rankContent" :style="{'height': (hotsiteslist.length < 6 ? '1604rpx' : '')}">
 				<view class="cityBox">
-					<view class="city" @click="show = true" >
+					<view class="city" @click="show = true">
 						<view class="" @click="getCity">
 							<text class="cityname">{{name}}</text>
 							<image src="../../static/images/more-down.svg" mode=""></image>
 						</view>
 					</view>
-				</view>		
+				</view>
 				<view class="cardList">
 					<view class="cards" v-for="(item,index) in  hotsiteslist" :key="index" @click="toAtt(item.id)">
 						<view class="cardsleft">
@@ -190,12 +191,12 @@
 				</view>
 			</view>
 			<view class="shareBox" v-if="serviceProvider =='baidu' " @click="share">
-			<image src="../../static/images/icon-share.svg" mode="" ></image>
-		</view>
+				<image src="../../static/images/icon-share.svg" mode=""></image>
+			</view>
 		</mescroll-body>
-		
+
 	</view>
-	
+
 </template>
 
 <script>
@@ -214,48 +215,48 @@
 				current: 0, // 预设当前项的值
 				menuHeight: 0, // 左边菜单的高度
 				menuItemHeight: 0, // 左边菜单item的高度
-				name:null,
+				name: null,
 				month: new Date().getMonth() + 1,
 				day: new Date().getDate(),
 				item: null,
 				area: null,
-				hotsiteslist:null,
-				cityList:null,
+				hotsiteslist: null,
+				cityList: null,
 				serviceProvider: '',
-				downOption:{
-					use:false
+				downOption: {
+					use: false
 				},
-				upOption:{
-					bgColor:'#ffffff'
+				upOption: {
+					bgColor: '#ffffff'
 				},
-				isFixed:false
+				isFixed: false
 			}
 		},
 		onLoad: function(option) {
-			if(option.state_id == undefined){
+			if (option.state_id == undefined) {
 				this.name = "全国"
 			}
-			console.log('option',option)
+			console.log('option', option)
 			console.log('stateid---', option.state_id)
 			console.log('cityid----', option.city_id)
 			this.item = option
 			this.getArea(),
-			this.gethotsiteslist(),
-			this.getCity()
+				this.gethotsiteslist(),
+				this.getCity()
 		},
 		mounted() {
 			uni.getProvider({
 				service: 'oauth',
 				success: res => {
-				
-					if(res.errMsg == 'getProvider:ok'){
+
+					if (res.errMsg == 'getProvider:ok') {
 						this.serviceProvider = res.provider[0]
-						if(this.serviceProvider != 'baidu'){
+						if (this.serviceProvider != 'baidu') {
 							uni.showShareMenu({
-								
+
 							})
 						}
-					}else{
+					} else {
 						uni.showToast({
 							title: '获取提供商失败',
 							icon: 'none'
@@ -265,7 +266,7 @@
 			});
 		},
 		onPageScroll(e) {
-			if (e.scrollTop >  200) {
+			if (e.scrollTop > 200) {
 				this.isFixed = true;
 			} else {
 				this.isFixed = false;
@@ -294,56 +295,56 @@
 				})
 			},
 			// 获取全国城市
-			getCity(){
+			getCity() {
 				uni.request({
-					url:this.globalUrl + '/area/guide',
+					url: this.globalUrl + '/area/guide',
 					success: (res) => {
-						console.log('获取全国城市',res)
+						console.log('获取全国城市', res)
 						this.cityList = res.data.data.areas
 					}
 				})
 			},
 			// 获取热门景点
-			gethotsiteslist(){
-				if(this.item.state_id == 0){
+			gethotsiteslist() {
+				if (this.item.state_id == 0) {
 					uni.request({
-						url:this.globalUrl + '/site/hotsiteslist',
-						data:{
+						url: this.globalUrl + '/site/hotsiteslist',
+						data: {
 							state_id: this.item.city_id,
-							page:1
+							page: 1
 						},
 						success: (res) => {
-							console.log('省热门景点',res)
+							console.log('省热门景点', res)
 							this.hotsiteslist = res.data.data.list
 						}
 					})
-				}else{
+				} else {
 					uni.request({
-						url:this.globalUrl + '/site/hotsiteslist',
-						data:{
+						url: this.globalUrl + '/site/hotsiteslist',
+						data: {
 							state_id: this.item.state_id,
 							city_id: this.item.city_id,
-							page:1
+							page: 1
 						},
 						success: (res) => {
-							console.log('热门景点==',res)
+							console.log('热门景点==', res)
 							this.hotsiteslist = res.data.data.list
 						}
 					})
 				}
 			},
-			gethotsiteslist1(item1){
-				console.log('item1',item1)
+			gethotsiteslist1(item1) {
+				console.log('item1', item1)
 				this.item = item1
-				console.log('this.item',this.item)
-				if(this.item == undefined){
+				console.log('this.item', this.item)
+				if (this.item == undefined) {
 					uni.request({
-						url:this.globalUrl + '/site/hotsiteslist',
-						data:{
-							page:1
+						url: this.globalUrl + '/site/hotsiteslist',
+						data: {
+							page: 1
 						},
 						success: (res) => {
-							console.log('全国热门景点==',res)
+							console.log('全国热门景点==', res)
 							this.hotsiteslist = null
 							this.hotsiteslist = res.data.data.list
 							this.name = res.data.data.name
@@ -353,16 +354,16 @@
 							this.mescroll.scrollTo(0)
 						}
 					})
-				}else{
+				} else {
 					uni.request({
-						url:this.globalUrl + '/site/hotsiteslist',
-						data:{
+						url: this.globalUrl + '/site/hotsiteslist',
+						data: {
 							state_id: item1.state_id,
 							city_id: item1.city_id,
-							page:1
+							page: 1
 						},
 						success: (res) => {
-							console.log('切换热门景点==',res)
+							console.log('切换热门景点==', res)
 							this.hotsiteslist = null
 							this.hotsiteslist = res.data.data.list
 							this.name = res.data.data.name
@@ -457,7 +458,7 @@
 				console.log('pagem=num----', pageNum);
 				let pageSize = page.size; // 页长, 默认每页6条
 				var that = this;
-				if(that.item == null ){
+				if (that.item == null) {
 					uni.request({
 						url: this.globalUrl + '/site/hotsiteslist?page=' + pageNum + '&count=' + pageSize,
 						header: {
@@ -467,7 +468,7 @@
 							console.log('data=', data);
 							// 接口返回的当前页数据列表 (数组)
 							let curPageData = data.data.data.list;
-						
+
 							console.log('curPageData', curPageData);
 							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 							let curPageLen = curPageData.length;
@@ -479,7 +480,7 @@
 							console.log('totalSize', totalSize);
 							// 接口返回的是否有下一页 (true/false)
 							// let hasNext = data.data.data.list;
-						
+
 							//设置列表数据
 							if (page.num == 1) this.hotsiteslist = []; //如果是第一页需手动置空列表
 							this.hotsiteslist = this.hotsiteslist.concat(curPageData); //追加新数据
@@ -487,18 +488,18 @@
 							// 请求成功,隐藏加载状态
 							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 							this.mescroll.endByPage(curPageLen, totalPage);
-						
+
 							//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
 							// this.mescroll.endBySize(curPageLen, totalSize);
-						
+
 							//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
 							//this.mescroll.endSuccess(curPageLen, hasNext);
-						
+
 							//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
 							//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
 							//如果传了hasNext,则翻到第二页即可显示无更多数据.
 							//this.mescroll.endSuccess(curPageLen);
-						
+
 							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
 							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
 							// setTimeout(() => {
@@ -510,11 +511,11 @@
 							this.mescroll.endErr();
 						}
 					});
-				}else{
-					if(that.item.city_id == 0){
+				} else {
+					if (that.item.city_id == 0) {
 						uni.request({
 							url: this.globalUrl + '/site/hotsiteslist?page=' + pageNum + '&count=' + pageSize,
-							data:{
+							data: {
 								state_id: that.item.state_id,
 							},
 							header: {
@@ -524,7 +525,7 @@
 								console.log('data-', data);
 								// 接口返回的当前页数据列表 (数组)
 								let curPageData = data.data.data.list;
-							
+
 								console.log('curPageData', curPageData);
 								// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 								let curPageLen = curPageData.length;
@@ -536,7 +537,7 @@
 								console.log('totalSize', totalSize);
 								// 接口返回的是否有下一页 (true/false)
 								// let hasNext = data.data.data.list;
-							
+
 								//设置列表数据
 								if (page.num == 1) this.hotsiteslist = []; //如果是第一页需手动置空列表
 								this.hotsiteslist = this.hotsiteslist.concat(curPageData); //追加新数据
@@ -544,18 +545,18 @@
 								// 请求成功,隐藏加载状态
 								//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 								this.mescroll.endByPage(curPageLen, totalPage);
-							
+
 								//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
 								// this.mescroll.endBySize(curPageLen, totalSize);
-							
+
 								//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
 								//this.mescroll.endSuccess(curPageLen, hasNext);
-							
+
 								//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
 								//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
 								//如果传了hasNext,则翻到第二页即可显示无更多数据.
 								//this.mescroll.endSuccess(curPageLen);
-							
+
 								// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
 								// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
 								// setTimeout(() => {
@@ -567,11 +568,11 @@
 								this.mescroll.endErr();
 							}
 						});
-					}else{
-						if(that.item.state_id == 0){
+					} else {
+						if (that.item.state_id == 0) {
 							uni.request({
 								url: this.globalUrl + '/site/hotsiteslist?page=' + pageNum + '&count=' + pageSize,
-								data:{
+								data: {
 									state_id: that.item.city_id,
 								},
 								header: {
@@ -581,7 +582,7 @@
 									console.log('data+', data);
 									// 接口返回的当前页数据列表 (数组)
 									let curPageData = data.data.data.list;
-								
+
 									console.log('curPageData', curPageData);
 									// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 									let curPageLen = curPageData.length;
@@ -593,7 +594,7 @@
 									console.log('totalSize', totalSize);
 									// 接口返回的是否有下一页 (true/false)
 									// let hasNext = data.data.data.list;
-								
+
 									//设置列表数据
 									if (page.num == 1) this.hotsiteslist = []; //如果是第一页需手动置空列表
 									this.hotsiteslist = this.hotsiteslist.concat(curPageData); //追加新数据
@@ -601,18 +602,18 @@
 									// 请求成功,隐藏加载状态
 									//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 									this.mescroll.endByPage(curPageLen, totalPage);
-								
+
 									//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
 									// this.mescroll.endBySize(curPageLen, totalSize);
-								
+
 									//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
 									//this.mescroll.endSuccess(curPageLen, hasNext);
-								
+
 									//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
 									//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
 									//如果传了hasNext,则翻到第二页即可显示无更多数据.
 									//this.mescroll.endSuccess(curPageLen);
-								
+
 									// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
 									// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
 									// setTimeout(() => {
@@ -624,10 +625,10 @@
 									this.mescroll.endErr();
 								}
 							});
-						}else{
+						} else {
 							uni.request({
 								url: this.globalUrl + '/site/hotsiteslist?page=' + pageNum + '&count=' + pageSize,
-								data:{
+								data: {
 									state_id: that.item.state_id,
 									city_id: that.item.city_id,
 								},
@@ -638,7 +639,7 @@
 									console.log('data+', data);
 									// 接口返回的当前页数据列表 (数组)
 									let curPageData = data.data.data.list;
-								
+
 									console.log('curPageData', curPageData);
 									// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 									let curPageLen = curPageData.length;
@@ -650,7 +651,7 @@
 									console.log('totalSize', totalSize);
 									// 接口返回的是否有下一页 (true/false)
 									// let hasNext = data.data.data.list;
-								
+
 									//设置列表数据
 									if (page.num == 1) this.hotsiteslist = []; //如果是第一页需手动置空列表
 									this.hotsiteslist = this.hotsiteslist.concat(curPageData); //追加新数据
@@ -658,18 +659,18 @@
 									// 请求成功,隐藏加载状态
 									//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 									this.mescroll.endByPage(curPageLen, totalPage);
-								
+
 									//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
 									// this.mescroll.endBySize(curPageLen, totalSize);
-								
+
 									//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
 									//this.mescroll.endSuccess(curPageLen, hasNext);
-								
+
 									//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
 									//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
 									//如果传了hasNext,则翻到第二页即可显示无更多数据.
 									//this.mescroll.endSuccess(curPageLen);
-								
+
 									// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
 									// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
 									// setTimeout(() => {
@@ -682,12 +683,12 @@
 								}
 							});
 						}
-						
+
 					}
-					
+
 				}
-					
-				
+
+
 				// 此处仍可以继续写其他接口请求...
 				// 调用其他方法...
 			},
@@ -711,12 +712,11 @@
 	}
 </script>
 <style lang="scss">
-	page{
-		background-color: #000000!important;
+	page {
+		background-color: #000000 !important;
 	}
 </style>
 <style lang="scss" scoped>
-	
 	/* 自定义导航栏样式 */
 	.example-body {
 		flex-direction: row;
@@ -726,40 +726,40 @@
 		font-size: 14px;
 		z-index: 999999;
 	}
-	
+
 	.example-body {
 		flex-direction: column;
 		padding: 15px;
 		background-color: #ffffff;
 		border-bottom: 1rpx solid rgba(237, 239, 242, 1);
 	}
-	
+
 	.example-body {
 		padding: 0;
 	}
-	
+
 	.navBar {
 		display: flex;
 		z-index: 999999;
 	}
-	
+
 	.slotleft {
 		display: flex;
 		align-items: center;
 	}
-	
+
 	.fanhui {
 		width: 40rpx;
 		height: 40rpx;
 		margin-left: 40rpx;
 		margin-right: 20rpx;
 	}
-	
+
 	.fhsy {
 		width: 40rpx;
 		height: 40rpx;
 	}
-	
+
 	.slottitle {
 		margin-left: 162rpx;
 		font-size: 38rpx;
@@ -767,7 +767,7 @@
 		font-weight: 600;
 		color: rgba(0, 0, 0, 1);
 	}
-	
+
 	.button-v-line {
 		width: 1px;
 		height: 18px;
@@ -775,8 +775,8 @@
 		margin: 0 8px;
 	}
 
-	
-	.bgBox{
+
+	.bgBox {
 		// position: absolute;
 		// top:0;
 		// left: 0;
@@ -785,7 +785,8 @@
 		height: 440rpx;
 		background-color: #000000;
 	}
-	.mask{
+
+	.mask {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -793,10 +794,12 @@
 		height: 440rpx;
 		background: rgba(0, 0, 0, 0.35);
 	}
-	.bannerImg{
+
+	.bannerImg {
 		width: 100%;
 		height: 100%;
 	}
+
 	.content {
 		position: absolute;
 		top: 60%;
@@ -807,14 +810,15 @@
 		height: 140rpx;
 		display: flex;
 		align-items: center;
-		
+
 		font-size: 56rpx;
 		font-family: AlibabaPuHuiTiM;
 		color: rgba(255, 255, 255, 1);
 		line-height: 56rpx;
 		letter-spacing: 2rpx;
+
 		// background: url(../../static/images/TRAVEL.png) no-repeat center 4rpx;
-		.travel{
+		.travel {
 			width: 100%;
 			height: 100%;
 			position: absolute;
@@ -822,7 +826,8 @@
 			left: 50%;
 			transform: translate(-50%, -50%);
 		}
-		.atthotbox{
+
+		.atthotbox {
 			position: absolute;
 			top: 40%;
 			left: 50%;
@@ -831,6 +836,7 @@
 			align-items: center;
 			justify-content: center;
 			min-width: 640rpx;
+
 			.atthottext {
 				// min-width: 402rpx;
 				max-width: 600rpx;
@@ -843,13 +849,13 @@
 				font-weight: 600;
 				margin: 0 6rpx;
 			}
-			
+
 			image {
 				width: 37.34rpx;
 				height: 68.22rpx;
 			}
 		}
-		
+
 	}
 
 	.rankTime {
@@ -871,13 +877,15 @@
 		position: absolute;
 		bottom: 0;
 		left: 0;
-		
+
 	}
-	.mescroll{
+
+	.mescroll {
 		position: relative;
 		top: -178rpx;
 		left: 0;
 	}
+
 	.rankContent {
 		width: 730rpx;
 		// height: 1604rpx;
@@ -891,7 +899,8 @@
 		// top: 440rpx;
 		// left: 0;
 	}
-	.cityBox{
+
+	.cityBox {
 		// width: 730rpx;
 		// height: 104rpx;
 		// position: fixed;
@@ -901,6 +910,7 @@
 		border-radius: 16rpx 16rpx 0px 0px;
 		border: 1px solid #FFFFFF;
 	}
+
 	.city {
 		display: inline-block;
 		min-width: 124rpx;
@@ -908,11 +918,12 @@
 		height: 60rpx;
 		background: #FFE512;
 		border-radius: 30rpx;
-		
+
 		// align-items: center;
 		// justify-content: center;
 		margin: 28rpx;
 		padding: 14rpx 16rpx 14rpx 20rpx;
+
 		// position: fixed;
 		// top: 480rpx;
 		.cityname {
@@ -930,7 +941,7 @@
 			height: 18rpx;
 		}
 	}
-	
+
 	.cardList {
 		width: 700rpx;
 		height: 100%;
@@ -958,7 +969,8 @@
 			border-radius: 16rpx;
 			position: absolute;
 		}
-		.rankImg{
+
+		.rankImg {
 			width: 88rpx;
 			height: 44rpx;
 			position: absolute;
@@ -1039,6 +1051,7 @@
 		align-items: center;
 		justify-content: center;
 		border-radius: 50%;
+
 		image {
 			width: 38rpx;
 			height: 38rpx;

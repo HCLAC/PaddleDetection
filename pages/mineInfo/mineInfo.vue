@@ -46,7 +46,7 @@
 </template>
 
 <script>
-	import tuiImageCropper from '../../components/tui-image-cropper/tui-image-cropper.vue'
+	import tuiImageCropper from '@/components/tui-image-cropper/tui-image-cropper.vue'
 	export default {
 		comments:{
 			tuiImageCropper

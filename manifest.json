@@ -78,7 +78,7 @@
     },
     "mp-toutiao" : {
         "setting" : {
-            "es6" : true,
+            "es6" : false,
             "minified" : true,
             "urlCheck" : false,
             "postcss" : true
