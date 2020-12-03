@@ -123,7 +123,9 @@
 									</view>
 								</view>
 								<view class="position">
-									<image src="../../static/images/iconNewMap.svg" mode="aspectFit"></image>
+									<view class="pImg">
+										<image src="../../static/images/iconNewMap.svg" mode="widthFix"></image>
+									</view>
 									<view>{{ item.location }}</view>
 								</view>
 							</view>
@@ -169,7 +171,9 @@
 									</view>
 								</view>
 								<view class="position">
-									<image src="../../static/images/iconNewMap.svg" mode="" ></image>
+									<view class="pImg">
+										<image src="../../static/images/iconNewMap.svg" mode="widthFix"></image>
+									</view>
 									<view>{{ item.location }}</view>
 								</view>
 							</view>
@@ -940,14 +944,20 @@ export default {
 		// height: 30rpx;
 		// line-height: 40rpx;
 		align-items: center;
-		image {
-			height: 30rpx;
+		.pImg{
 			width: 26rpx;
-			margin-right: 4rpx;
+			height: 30rpx;
+			
+			image {
+				height: 100%;
+				width: 100%;
+			}
 		}
+		
 		view {
 			width: 452rpx;
 			font-size: 22rpx;
+			margin-left: 4rpx;
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			color: rgba(0, 145, 255, 1);
