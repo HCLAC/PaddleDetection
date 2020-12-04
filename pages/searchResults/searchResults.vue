@@ -226,10 +226,6 @@
 							</view>
 						</template>
 					</u-waterfall>
-					
-					<!-- <view v-if="isLoadMore">  //loading加载提示处
-						<uni-load-more :status="loadStatus" ></uni-load-more>
-					</view> -->
 				</view>
 			</view>
 		</view>

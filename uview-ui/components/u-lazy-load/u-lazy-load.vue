@@ -136,7 +136,13 @@
 			},
 			// 图片路径发生变化时，需要重新标记一些变量，否则会一直卡在某一个状态，比如isError
 			image(n) {
-				this.init();
+				if(!n) {
+					// 如果传入null或者''，或者undefined，标记为错误状态
+					this.isError = true;
+				} else {
+					this.init();
+					this.isError = false;
+				}
 			}
 		},
 		methods: {
@@ -227,12 +233,12 @@
 
 	.u-lazy-item {
 		width: 100%;
-		min-height: 300rpx;
-		max-height: 460rpx;
 		// 骗系统开启硬件加速
 		transform: transition3d(0, 0, 0);
 		// 防止图片加载“闪一下”
 		will-change: transform;
+		/* #ifndef APP-NVUE */
 		display: block;
+		/* #endif */
 	}
 </style>

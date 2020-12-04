@@ -104,8 +104,8 @@
 				<!-- 正在旅行 -->
 				<view class="touring" id="touring">
 					<text class="tourtext">正在旅行</text>
-					<view class="wrap">
-						<!-- <WaterfallsFlow style="height: 100%;" :wfList='list' /> -->
+					<view class="wrap" >
+						<!-- <waterfall-goods :list="list"></waterfall-goods> -->
 						<u-waterfall v-model="list" ref="uWaterfall">
 							<template v-slot:left="{ leftList }">
 								<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
@@ -146,7 +146,6 @@
 												<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
 											</view>
 											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											<!-- <view class="likeCount" v-if="item.like_count != 0" >1000</view> -->
 										</view>
 									</view>
 								</view>
@@ -358,13 +357,15 @@
 	import uniIcons from '@/components/uni-icons/uni-icons.vue';
 	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 	import uniSection from '@/components/uni-section/uni-section.vue';
+	import waterfallGoods from '@/components/module/stable_waterfall_goods.vue'
 	// 引入mescroll-mixins.js
 	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 	export default {
 		components: {
 			uniIcons,
 			uniNavBar,
-			uniSection
+			uniSection,
+			waterfallGoods
 		},
 		mixins: [MescrollMixin],
 		data() {
@@ -432,6 +433,35 @@
 		},
 
 		methods: {
+			updateWaterFullFunc() {
+				let leftHeight = 0
+				let rightHeight = 0
+				let item = this.list.shift()
+				if (!item) return
+				this.getHeightFunc('left').then(res => {
+					leftHeight = res
+					this.getHeightFunc('right').then(res2 => {
+						rightHeight = res2
+						if (rightHeight >= leftHeight) {
+							this.leftData.push(item)
+						} else {
+							this.rightData.push(item)
+						}
+						this.$nextTick(() => {
+							this.updateWaterFullFunc()
+						})
+					})
+			
+				})
+			},
+			getHeightFunc(el) {
+				return new Promise((resolve, reject) => {
+					let dom = uni.createSelectorQuery().select('#' + el)
+					dom.boundingClientRect(res => {
+						resolve(res.height)
+					}).exec()
+				})
+			},
 			// 获取当前地理位置
 			getAdress() {
 				var that = this;
@@ -570,7 +600,8 @@
 								success: res => {
 									uni.setStorageSync('article_id', res.data);
 									// console.log('存储文章列表==',res.data)
-									this.$refs.uWaterfall._props.value = res.data.data.list;
+									// this.$refs.uWaterfall._props.value = res.data.data.list;
+									this.list = res.data.data.list;
 									console.log('list=====', this.list)
 								}
 							});
@@ -578,7 +609,8 @@
 							uni.setStorageSync('article_id', res.data);
 							// console.log('存储文章列表==',res.data)
 							// console.log(this.$refs)
-							this.$refs.uWaterfall._props.value = res.data.data.list;
+							// this.$refs.uWaterfall._props.value = res.data.data.list;
+							this.list = res.data.data.list;
 							console.log('list=====', this.list)
 						}
 					}

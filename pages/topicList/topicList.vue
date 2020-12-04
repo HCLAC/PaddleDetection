@@ -47,21 +47,6 @@
 						<view class="latestLine" v-if="tabCurrent==1">
 						</view>
 					</view>
-					<!-- <v-tabs
-						inactive-color="#909399"
-						lineHeight="24rpx"
-						lineColor="#FFE512"
-						activeFontSize="36rpx"
-						activeColor="#303133"
-						color="#909399"
-						fontSize="36rpx"
-						:lineScale="0.7"
-						v-model="tabCurrent"
-						:tabs="tablist"
-						:is-scroll="false"
-						:current="tabCurrent"
-						@change="tabChange"
-					></v-tabs> -->
 				</view>
 				<!-- 正在旅行 -->
 				<view class="touring" id="touring">
