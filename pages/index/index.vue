@@ -106,96 +106,179 @@
 					<text class="tourtext">正在旅行</text>
 					<view class="wrap" >
 						<!-- <waterfall-goods :list="list"></waterfall-goods> -->
-						<u-waterfall v-model="list" ref="uWaterfall">
-							<template v-slot:left="{ leftList }">
-								<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
-									<view class="" @click="onPageJump" :id="item.article_id">
-										<view class="demo-top">
-											<view class="imgBox">
-												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-												 mode="widthFix">
+						<!-- #ifndef MP-TOUTIAO -->
+							<u-waterfall v-model="list" ref="uWaterfall">
+								<template v-slot:left="{ leftList }">
+									<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
+										<view class="" @click="onPageJump" :id="item.article_id">
+											<view class="demo-top">
+												<view class="imgBox">
+													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
+													 mode="widthFix">
+														<view class="videoIcon" v-if="item.type == 4">
+															<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
+														</view>
+													</image>
+													<view class="adress">
+														<view class="adreessIcon">
+															<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
+														</view>
+														<view class="adressText">{{ item.location }}</view>
+													</view>
+												</view>
+											</view>
+											<view class="titleTip">
+												<view class="demo-tag">
+													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+												</view>
+												<view class="demo-title">{{ item.title }}</view>
+											</view>
+										</view>
+										<view class="demo-user">
+											<view class="userMessage">
+												<image class="userHeard" :src="item.avatar"></image>
+												<view class="userNikename">{{ item.author_name }}</view>
+											</view>
+											<view class="count" @click="clickLeftLike(item,index) in leftList ">
+												<view class="countImg">
+													<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+													<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+												</view>
+												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											</view>
+										</view>
+									</view>
+								</template>
+								<template v-slot:right="{ rightList }">
+									<view class="demo-warter" v-for="(item, index) in rightList" :key="index">
+										<view class="" @click="onPageJump" :id="item.article_id">
+											<view class="demo-top">
+												<view class="imgBox">
+													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
+													 mode="widthFix">
+														<view class="videoIcon" v-if="item.type == 4">
+															<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
+														</view>
+													</image>
+													<view class="adress">
+														<view class="adreessIcon">
+															<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
+														</view>
+														<view class="adressText">{{ item.location }}</view>
+													</view>
+												</view>
+											</view>
+											<view class="titleTip">
+												<view class="demo-tag">
+													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+												</view>
+												<view class="demo-title">{{ item.title }}</view>
+											</view>
+										</view>
+										<view class="demo-user">
+											<view class="userMessage">
+												<image class="userHeard" :src="item.avatar"></image>
+												<view class="userNikename">{{ item.author_name }}</view>
+											</view>
+											<view class="count" @click="clickRightLike(item,index) in rightList">
+												<view class="countImg">
+													<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+													<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+												</view>
+												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											</view>
+										</view>
+									</view>
+								</template>
+							</u-waterfall>
+						<!-- #endif -->
+						<!-- #ifdef MP-TOUTIAO -->
+							<view class="left">
+								<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
+									<view class="" >
+										<view class="demo-top" @click="onPageJump" :id="item.article_id">
+											<view class="imgBox" >
+												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
 													<view class="videoIcon" v-if="item.type == 4">
-														<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
+														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
 													</view>
 												</image>
 												<view class="adress">
-													<view class="adreessIcon">
-														<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
-													</view>
+													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 													<view class="adressText">{{ item.location }}</view>
 												</view>
 											</view>
-										</view>
-										<view class="titleTip">
-											<view class="demo-tag">
-												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-												<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+											<view class="titleTip">
+												<view class="demo-tag">
+													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+												</view>
+												<view class="demo-title">{{ item.title }}</view>
 											</view>
-											<view class="demo-title">{{ item.title }}</view>
 										</view>
-									</view>
-									<view class="demo-user">
-										<view class="userMessage">
-											<image class="userHeard" :src="item.avatar"></image>
-											<view class="userNikename">{{ item.author_name }}</view>
-										</view>
-										<view class="count" @click="clickLeftLike(item,index) in leftList ">
-											<view class="countImg">
-												<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+										<view class="demo-user">
+											<view class="userMessage">
+												<image class="userHeard" :src="item.avatar"></image>
+												<view class="userNikename">{{ item.author_name }}</view>
 											</view>
-											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											<view class="count" @click="clickLike(item, index)">
+												<view class="countImg">
+													<image mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+													<image mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+												</view>
+												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											</view>
 										</view>
 									</view>
 								</view>
-							</template>
-							<template v-slot:right="{ rightList }">
-								<view class="demo-warter" v-for="(item, index) in rightList" :key="index">
-									<view class="" @click="onPageJump" :id="item.article_id">
-										<view class="demo-top">
+							</view>
+							<view class="right">
+								<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
+									<view class="">
+										<view class="demo-top"  @click="onPageJump" :id="item.article_id">
 											<view class="imgBox">
-												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-												 mode="widthFix">
+												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
 													<view class="videoIcon" v-if="item.type == 4">
-														<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
+														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
 													</view>
 												</image>
 												<view class="adress">
-													<view class="adreessIcon">
-														<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
-													</view>
+													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 													<view class="adressText">{{ item.location }}</view>
 												</view>
 											</view>
-										</view>
-										<view class="titleTip">
-											<view class="demo-tag">
-												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-												<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+											<view class="titleTip">
+												<view class="demo-tag">
+													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+												</view>
+												<view class="demo-title">{{ item.title }}</view>
 											</view>
-											<view class="demo-title">{{ item.title }}</view>
 										</view>
-									</view>
-									<view class="demo-user">
-										<view class="userMessage">
-											<image class="userHeard" :src="item.avatar"></image>
-											<view class="userNikename">{{ item.author_name }}</view>
-										</view>
-										<view class="count" @click="clickRightLike(item,index) in rightList">
-											<view class="countImg">
-												<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+										<view class="demo-user">
+											<view class="userMessage">
+												<image class="userHeard" :src="item.avatar"></image>
+												<view class="userNikename">{{ item.author_name }}</view>
 											</view>
-											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											<view class="count" @click="clickLike(item, index)">
+												<view class="countImg">
+													<image mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+													<image mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+												</view>
+												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											</view>
 										</view>
 									</view>
 								</view>
-							</template>
-						</u-waterfall>
+							</view>
+						<!-- #endif -->
 					</view>
-
 				</view>
 			</view>
 		</mescroll-uni>
@@ -258,94 +341,178 @@
 				<view class="touring" id="touring">
 					<text class="tourtext">正在旅行</text>
 					<view class="wrap">
-						<u-waterfall v-model="list" ref="uWaterfall">
-							<template v-slot:left="{ leftList }">
-								<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
-									<view class="" @click="onPageJump" :id="item.article_id">
-										<view class="demo-top">
-											<view class="imgBox">
-												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-												 mode="widthFix">
+						<!-- #ifndef MP-TOUTIAO -->
+							<u-waterfall v-model="list" ref="uWaterfall">
+								<template v-slot:left="{ leftList }">
+									<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
+										<view class="" @click="onPageJump" :id="item.article_id">
+											<view class="demo-top">
+												<view class="imgBox">
+													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
+													 mode="widthFix">
+														<view class="videoIcon" v-if="item.type == 4">
+															<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
+														</view>
+													</image>
+													<view class="adress">
+														<view class="adreessIcon">
+															<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
+														</view>
+														<view class="adressText">{{ item.location }}</view>
+													</view>
+												</view>
+											</view>
+											<view class="titleTip">
+												<view class="demo-tag">
+													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+												</view>
+												<view class="demo-title">{{ item.title }}</view>
+											</view>
+										</view>
+										<view class="demo-user">
+											<view class="userMessage">
+												<image class="userHeard" :src="item.avatar"></image>
+												<view class="userNikename">{{ item.author_name }}</view>
+											</view>
+											<view class="count" @click="clickLeftLike(item,index) in leftList ">
+												<view class="countImg">
+													<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+													<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+												</view>
+												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											</view>
+										</view>
+									</view>
+								</template>
+								<template v-slot:right="{ rightList }">
+									<view class="demo-warter" v-for="(item, index) in rightList" :key="index">
+										<view class="" @click="onPageJump" :id="item.article_id">
+											<view class="demo-top">
+												<view class="imgBox">
+													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
+													 mode="widthFix">
+														<view class="videoIcon" v-if="item.type == 4">
+															<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
+														</view>
+													</image>
+													<view class="adress">
+														<view class="adreessIcon">
+															<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
+														</view>
+														<view class="adressText">{{ item.location }}</view>
+													</view>
+												</view>
+											</view>
+											<view class="titleTip">
+												<view class="demo-tag">
+													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+												</view>
+												<view class="demo-title">{{ item.title }}</view>
+											</view>
+										</view>
+										<view class="demo-user">
+											<view class="userMessage">
+												<image class="userHeard" :src="item.avatar"></image>
+												<view class="userNikename">{{ item.author_name }}</view>
+											</view>
+											<view class="count" @click="clickRightLike(item,index) in rightList">
+												<view class="countImg">
+													<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+													<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+												</view>
+												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											</view>
+										</view>
+									</view>
+								</template>
+							</u-waterfall>
+						<!-- #endif -->
+						<!-- #ifdef MP-TOUTIAO -->
+							<view class="left">
+								<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
+									<view class="" >
+										<view class="demo-top" @click="onPageJump" :id="item.article_id">
+											<view class="imgBox" >
+												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
 													<view class="videoIcon" v-if="item.type == 4">
-														<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
+														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
 													</view>
 												</image>
 												<view class="adress">
-													<view class="adreessIcon">
-														<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
-													</view>
+													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 													<view class="adressText">{{ item.location }}</view>
 												</view>
 											</view>
-										</view>
-										<view class="titleTip">
-											<view class="demo-tag">
-												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-												<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+											<view class="titleTip">
+												<view class="demo-tag">
+													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+												</view>
+												<view class="demo-title">{{ item.title }}</view>
 											</view>
-											<view class="demo-title">{{ item.title }}</view>
 										</view>
-									</view>
-									<view class="demo-user">
-										<view class="userMessage">
-											<image class="userHeard" :src="item.avatar"></image>
-											<view class="userNikename">{{ item.author_name }}</view>
-										</view>
-										<view class="count" @click="clickLeftLike(item,index) in leftList ">
-											<view class="countImg">
-												<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+										<view class="demo-user">
+											<view class="userMessage">
+												<image class="userHeard" :src="item.avatar"></image>
+												<view class="userNikename">{{ item.author_name }}</view>
 											</view>
-											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											<view class="count" @click="clickLike(item, index)">
+												<view class="countImg">
+													<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+													<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+												</view>
+												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											</view>
 										</view>
 									</view>
 								</view>
-							</template>
-							<template v-slot:right="{ rightList }">
-								<view class="demo-warter" v-for="(item, index) in rightList" :key="index">
-									<view class="" @click="onPageJump" :id="item.article_id">
-										<view class="demo-top">
+							</view>
+							<view class="right">
+								<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
+									<view class="">
+										<view class="demo-top"  @click="onPageJump" :id="item.article_id">
 											<view class="imgBox">
-												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-												 mode="widthFix">
+												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
 													<view class="videoIcon" v-if="item.type == 4">
-														<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
+														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
 													</view>
 												</image>
 												<view class="adress">
-													<view class="adreessIcon">
-														<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
-													</view>
+													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
 													<view class="adressText">{{ item.location }}</view>
 												</view>
 											</view>
-										</view>
-										<view class="titleTip">
-											<view class="demo-tag">
-												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-												<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+											<view class="titleTip">
+												<view class="demo-tag">
+													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+												</view>
+												<view class="demo-title">{{ item.title }}</view>
 											</view>
-											<view class="demo-title">{{ item.title }}</view>
 										</view>
-									</view>
-									<view class="demo-user">
-										<view class="userMessage">
-											<image class="userHeard" :src="item.avatar"></image>
-											<view class="userNikename">{{ item.author_name }}</view>
-										</view>
-										<view class="count" @click="clickRightLike(item,index) in rightList">
-											<view class="countImg">
-												<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+										<view class="demo-user">
+											<view class="userMessage">
+												<image class="userHeard" :src="item.avatar"></image>
+												<view class="userNikename">{{ item.author_name }}</view>
 											</view>
-											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											<view class="count" @click="clickLike(item, index)">
+												<view class="countImg">
+													<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+													<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+												</view>
+												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											</view>
 										</view>
 									</view>
 								</view>
-							</template>
-						</u-waterfall>
+							</view>
+						<!-- #endif -->
 					</view>
 				</view>
 			</view>
@@ -600,8 +767,12 @@
 								success: res => {
 									uni.setStorageSync('article_id', res.data);
 									// console.log('存储文章列表==',res.data)
-									// this.$refs.uWaterfall._props.value = res.data.data.list;
-									this.list = res.data.data.list;
+										// #ifndef MP-TOUTIAO
+										this.$refs.uWaterfall._props.value = res.data.data.list;
+										// #endif
+										// #ifdef MP-TOUTIAO
+										this.list = res.data.data.list;
+										// #endif
 									console.log('list=====', this.list)
 								}
 							});
@@ -609,8 +780,12 @@
 							uni.setStorageSync('article_id', res.data);
 							// console.log('存储文章列表==',res.data)
 							// console.log(this.$refs)
-							// this.$refs.uWaterfall._props.value = res.data.data.list;
-							this.list = res.data.data.list;
+								// #ifndef MP-TOUTIAO
+								this.$refs.uWaterfall._props.value = res.data.data.list;
+								// #endif
+								// #ifdef MP-TOUTIAO
+								this.list = res.data.data.list;
+								// #endif
 							console.log('list=====', this.list)
 						}
 					}
@@ -732,7 +907,36 @@
 					}
 				});
 			},
-
+			// 点赞
+			clickLike(e, index) {
+				console.log('qaz', e, index);
+				// debugger
+				let article = e.article_id;
+				var that = this;
+				uni.request({
+					url: this.globalUrl + '/user/liked',
+					data: {
+						article_id: article,
+						liked: e.liked == 0 ? 1 : 0
+					},
+					method: 'POST',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res=> {
+						console.log('点赞', res);
+						if (res.data.code != 0) {
+							// debugger
+							uni.navigateTo({
+								url: '../login/login'
+							});
+						}
+			
+						this.list[index].liked = e.liked == 1 ? 0 : 1
+						this.list[index].like_count = (e.liked == 1 ? e.like_count + 1 : e.like_count  - 1)
+					}
+				});
+			},
 			lookAll() {
 				if (this.item == undefined || null) {
 					var city = uni.getStorageSync('city_id');
@@ -1620,7 +1824,15 @@
 		align-items: center;
 		margin-right: 20rpx;
 	}
-
+	/* #ifdef MP-TOUTIAO */
+	.count image {
+		width: 26rpx;
+		height: 26rpx;
+		margin-right: 8rpx;
+		display: flex;
+		align-items: center;
+	}
+	/* #endif */
 	.countImg {
 		width: 28rpx;
 		height: 28rpx;
