@@ -1085,7 +1085,56 @@
 					}
 				});
 			}
-			
+			// 接收切换城市信息，请求数据
+			// getItem() {
+			// 	var that = this;
+			// 	this.errCode = 0;
+			// 	if (this.item != getApp().globalData.item) {
+			// 		(this.item = getApp().globalData.item), console.log('item-------', this.item);
+			// 		this.cityName = this.item.name;
+			// 		uni.request({
+			// 			url: this.globalUrl + '/site/hot',
+			// 			data: {
+			// 				state_id: this.item.state_id,
+			// 				city_id: this.item.city_id,
+			// 				count: 3
+			// 			},
+			// 			header: {
+			// 				Authorization: uni.getStorageSync('Authorization')
+			// 			},
+			// 			success: res => {
+			// 				console.log('跳转热门景点=========', res);
+			// 				// uni.setStorageSync('description',res.data)
+			// 				this.hotAtt = res.data.data;
+			// 			}
+			// 		}),
+			// 			// 清除旧数据
+			// 			// this.$refs.uWaterfall.clear()
+			// 			uni.request({
+			// 				url: this.globalUrl + '/article/list',
+			// 				data: {
+			// 					state_id: this.item.state_id,
+			// 					city_id: this.item.city_id,
+			// 					count: 6,
+			// 					page: 1,
+			// 					source: this.serviceProvider == 'baidu' ? 1 : this.serviceProvider == 'toutiao' ? 2 :this.serviceProvider == '微信' ? 3 : '',
+			// 					first_time: new Date().getTime()
+			// 				},
+			// 				header: {
+			// 					Authorization: uni.getStorageSync('Authorization')
+			// 				},
+			// 				success: res => {
+			// 					console.log('切换文章列表', res);
+			// 					uni.setStorageSync('article_id', res.data);
+			// 					that.list = [];
+			// 					this.mescroll.scrollTo(0, this.mescroll.optUp.toTop.duration);
+			// 					that.list = res.data.data.list;
+			// 					this.downCallback();
+			// 					console.log(that.list, 88888);
+			// 				}
+			// 			});
+			// 	}
+			// },
 		}
 	};
 </script>
