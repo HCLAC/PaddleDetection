@@ -34,7 +34,7 @@
 						</view>
 					</view>
 					<!-- 客服 -->
-					<view class="phone" @click="tell"><image class="phoneImg" src="../../static/images/minephone.svg" mode=""></image></view>
+					<!-- <view class="phone" @click="tell"><image class="phoneImg" src="../../static/images/minephone.svg" mode=""></image></view> -->
 					<!-- 我的收藏 -->
 					<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
 						<view class="favBox" @click="change" >

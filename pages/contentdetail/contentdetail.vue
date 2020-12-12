@@ -140,7 +140,7 @@
 				<textarea class="inputK" v-model="content" placeholder="快来写下你的评论吧" :show-confirm-bar="false" :focus="textareafocus"
 				 @blur="inputBlur" @focus="inputFocus" :auto-height="autoHeight" @input="inputValue" maxlength="140" cursor-spacing="20"
 				 :adjust-position="false"></textarea>
-				<view class="send">发送</view>
+				<view class="send" @click="pubComment">发送</view>
 			</view>
 			<view class="bottom">
 				<!-- 分割线 -->
@@ -537,13 +537,13 @@
 					this.autoHeight = false
 				}
 			},
-			pubComment(e) {
-				console.log('eee', e)
+			pubComment() {
+				console.log('发送',this.content)
 				uni.request({
 					url: this.globalUrl + '/comments',
 					data: {
 						article_id: this.article_num,
-						content: e
+						content: this.content
 					},
 					method: 'POST',
 					header: {
@@ -553,7 +553,7 @@
 						// this.commentsList = res.data.data.list
 						this.value = ''
 						uni.hideKeyboard()
-						this.$refs.comment.toggleMask('none');
+						// this.$refs.comment.toggleMask('none');
 						this.getComments()
 						console.log('pinglun', res.data)
 						if (res.data.code == 10501) {
