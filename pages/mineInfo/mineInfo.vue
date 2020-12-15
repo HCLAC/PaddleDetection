@@ -28,7 +28,7 @@
 				</u-form-item>
 				<!-- 性别 -->
 				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" :label-position="labelPosition" label="性　别:" label-width="120" prop="sex">
-					<u-input :customStyle="customStyleinput" :border="border" :disabled="true"  :select-open="actionSheetShow" v-model="model.sex" :placeholder="sex" placeholder-style="color:#303133" @click="actionSheetShow = true"></u-input>
+					<u-input :customStyle="customStyleinput" :border="border" :disabled="true"  :select-open="actionSheetShow" v-model="model.sex" :placeholder="model.sex" placeholder-style="color:#303133" @click="actionSheetShow = true"></u-input>
 					<image class="moreRight" src="../../static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 				<!-- 常住地 -->
@@ -185,7 +185,7 @@
 							this.model.name = res.data.data.mobile
 						}
 						// 获取性别
-						this.sex = res.data.data.gender == 0 ? '保密' : res.data.data.gender == 2 ? '女' : res.data.data.gender == 1 ? '男' : '保密'
+						this.model.sex = res.data.data.gender == 0 ? '保密' : res.data.data.gender == 2 ? '女' : '男'
 						// 获取地区
 						if(res.data.data.location){
 							this.region = res.data.data.location
@@ -239,7 +239,7 @@
 							data: {
 								nick_name: this.model.name  ? this.model.name : this.nickName ,
 								avatar:this.avatar,
-								gender: this.model.sex == '男' ? 1 : this.model.sex == '女' ? 2 : this.model.sex == '保密' ? 0:this.sex,
+								gender: this.model.sex == '男' ? 1 : this.model.sex == '女' ? 2 : 0,
 								location: this.model.region ? this.model.region : this.region
 								
 							},

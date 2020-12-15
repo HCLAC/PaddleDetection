@@ -522,8 +522,10 @@
 				this.inputbottom.bottom = 0 + 'px'
 			},
 			inputFocus(e) {
-				console.log('e.detail.height', e.detail.height)
+				console.log(e.detail,'eeee')
+				// console.log('e.detail.height', e.detail.height)
 				this.inputbottom.bottom = e.detail.height + 'px'
+				
 
 				// this.textareaStyle.transform = 'translateY('+e.detail.height+'px'+')'
 
@@ -1427,7 +1429,6 @@
 	.commentInput {
 		width: 100%;
 		position: fixed;
-		bottom: 0;
 		background: #ffffff;
 		display: flex;
 		align-items: center;
