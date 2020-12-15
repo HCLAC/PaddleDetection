@@ -136,7 +136,7 @@
 			<!-- <view class="foot" v-show="showInput">
 				<chat-input @send-message="send_comment" @blur="blur" :focus="focus" :placeholder="input_placeholder"></chat-input>
 			</view> -->
-			<view class="commentInput" v-if="textareafocus" :style="inputbottom">
+			<view class="commentInput" v-if="textareafocus" :style="{bottom : inputbottom.bottom}">
 				<textarea class="inputK" v-model="content" placeholder="快来写下你的评论吧" :show-confirm-bar="false" :focus="textareafocus"
 				 @blur="inputBlur" @focus="inputFocus" :auto-height="autoHeight" @input="inputValue" maxlength="140" cursor-spacing="20"
 				 :adjust-position="false"></textarea>
@@ -213,7 +213,7 @@
 				focus: false,
 				autoHeight: false,
 				inputbottom: {
-					bottom: 0
+					bottom: ''
 				},
 				textareafocus: false
 			};
@@ -523,6 +523,7 @@
 			},
 			inputFocus(e) {
 				console.log(e.detail,'eeee')
+				this.textareafocus = true
 				// console.log('e.detail.height', e.detail.height)
 				this.inputbottom.bottom = e.detail.height + 'px'
 				
