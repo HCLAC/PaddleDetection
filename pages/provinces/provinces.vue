@@ -23,6 +23,7 @@
 								<image class="changeIcon" src="../../static/images/more-down.svg" mode=""></image>
 							</view>
 						</view>
+						<!-- 天气 -->
 						<view class="weather" v-if="weather != null">
 							<image class="weatherImg" src="../../static/images/weather/xiaoyu.svg" mode="" v-if="weather.weather == '小雨'"></image>
 							<image class="weatherImg" src="../../static/images/weather/baoyu.svg" mode="" v-if="weather.weather == '暴雨'"></image>
@@ -160,8 +161,33 @@
 								</view>
 							</view>
 						</view>
+						<!-- 旅途问答 -->
+						<view class="travelQuestionsBox">
+							<view class="tQTop">
+								<text class="tQText">旅途问答</text>
+								<view class="tQBtn" @click="toQuestions">
+									我要提问
+								</view>
+							</view>
+							<view class="tQContent">
+								<view class="tQCard" v-for="(item,index) in questions " :key="index" >
+									<view class="tQCLeft">
+										问
+									</view>
+									<view class="tQCRight">
+										<view class="tQCTitle">
+											{{item.title}}
+										</view>
+										<u-parse ref="parse"  style="overflow: hidden;" lazy-load 
+										 :html="item.content"></u-parse>
+									</view>
+								</view>
+								<view class="tQToMore">
+									查看更多 >
+								</view>
+							</view>
+						</view>
 						<!-- 正在旅行 -->
-						
 						<view class="touring" id="touring">
 							<text class="tourtext">正在旅行</text>
 							
@@ -328,7 +354,8 @@ export default {
 			downOption:{
 				use:false,
 				bgColor:'#F8F8F8'
-			}
+			},
+			questions:{}
 		};
 	},
 	comments: {
@@ -338,7 +365,7 @@ export default {
 		let item = JSON.parse(options.id);
 		console.log('参数', item);
 		(this.item = item), (this.name = item.name);
-		this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), this.getCity();
+		this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), this.getCity(),this.getQuestions();
 	},
 	methods: {
 		
@@ -494,6 +521,24 @@ export default {
 					url: '/pages/lineList/lineList?state_id=' + state_id + '&city_id=' + city_id
 				});
 			}
+		},
+		// 获取精选问题
+		getQuestions(){
+			uni.request({
+				url: this.globalUrl + '/questions/selected',
+				data: {
+					state_id: this.item.state_id,
+					city_id: this.item.city_id,
+					count: 2
+				},
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: res => {
+					console.log('获取精选问题', res.data.data);
+					this.questions = res.data.data
+				}
+			});
 		},
 		// 获取全国城市
 		getCity() {
@@ -734,6 +779,12 @@ export default {
 					that.list[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
 				}
 			});
+		},
+		// 提问按钮
+		toQuestions(){
+			uni.navigateTo({
+				url:'/pages/questions/questions'
+			})
 		},
 		back() {
 			uni.navigateBack({
@@ -1773,5 +1824,36 @@ export default {
 .item-menu-image {
 	width: 120rpx;
 	height: 120rpx;
+}
+// 旅途问答
+.travelQuestionsBox{
+	margin: 28rpx;
+	.tQTop{
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.tQContent{
+		margin: 20rpx;
+		.tQCard{
+			display: flex;
+			background: #FFFFFF;
+			border-radius: 16rpx;
+			margin-bottom: 20rpx;
+			.tQCLeft{
+				font-size: 32rpx;
+			}
+			.tQCRight{
+				margin-left: 16rpx;
+				.tQCTitle{
+					font-weight: 600;
+				}
+			}
+		}
+		.tQToMore{
+			text-align: center;
+		}
+	}
 }
 </style>

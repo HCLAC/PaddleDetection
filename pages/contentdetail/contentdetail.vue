@@ -329,11 +329,15 @@
 						uni.setStorageSync('id', res.data);
 
 						let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
+						console.log(strIndex,'strIndex')
 
 						if (strIndex && strIndex.length) {
 							// let strId =  newContent.substring(strIndex,1)
 
-							let strId = strIndex[0].slice(36, -4);
+							// let strId = strIndex[0].slice(36, -4);
+							let strIdarr = strIndex[0].match(/\d+/g);
+							let strId = strIdarr.join('')
+							console.log(strId,'strId')
 							let resCode = await that.getTemplate(strId);
 							if (resCode.data.code == 0) {
 								let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
@@ -714,7 +718,9 @@
 								if (strIndex && strIndex.length) {
 									// let strId =  newContent.substring(strIndex,1)
 
-									let strId = strIndex[0].slice(36, -4);
+									// let strId = strIndex[0].slice(36, -4);
+									let strIdarr = strIndex[0].match(/\d+/g);
+									let strId = strIdarr.join('')
 									let resCode = await that.getTemplate(strId);
 
 									if (resCode.data.code == 0) {
@@ -800,7 +806,9 @@
 								if (strIndex && strIndex.length) {
 									// let strId =  newContent.substring(strIndex,1)
 
-									let strId = strIndex[0].slice(36, -4);
+									// let strId = strIndex[0].slice(36, -4);
+									let strIdarr = strIndex[0].match(/\d+/g);
+									let strId = strIdarr.join('')
 									let resCode = await that.getTemplate(strId);
 									if (resCode.data.code == 0) {
 										let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
