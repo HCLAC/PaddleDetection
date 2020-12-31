@@ -1,17 +1,18 @@
 <template>
 	<view class="u-radio" :style="[radioStyle]">
 		<view class="u-radio__icon-wrap" @tap="toggle" :class="[iconClass]" :style="[iconStyle]">
-			<u-icon
-				class="u-radio__icon-wrap__icon"
+			<!-- <u-icon
 			    name="checkbox-mark"
 			    :size="elIconSize" 
-				:color="iconColor"/>
+				:color="iconColor"/> -->
+			<view class="u-radio__label" @tap="onClickLabel" :style="{
+				fontSize: $u.addUnit(labelSize),
+				color:$u.addUnit(labelColor)
+			}" >
+				<slot />
+			</view>
 		</view>
-		<view class="u-radio__label" @tap="onClickLabel" :style="{
-			fontSize: $u.addUnit(labelSize)
-		}">
-			<slot />
-		</view>
+		
 	</view>
 </template>
 
@@ -68,94 +69,85 @@
 				type: [String, Number],
 				default: ''
 			},
+			labelColor: {
+				type: String,
+				default: '#909399'
+			},
 		},
 		data() {
 			return {
-				// 父组件的默认值，因为头条小程序不支持在computed中使用this.parent.shape的形式
-				// 故只能使用如此方法
-				parentData: {
-					iconSize: null,
-					labelDisabled: null,
-					disabled: null,
-					shape: null,
-					activeColor: null,
-					size: null,
-					width: null,
-					height: null,
-					value: null,
-					wrap: null
-				}
+				parentDisabled: false
 			};
 		},
 		created() {
-			this.parent = false;
-			// 支付宝小程序不支持provide/inject，所以使用这个方法获取整个父组件，在created定义，避免循环引用
-			this.updateParentData();
-			this.parent.children.push(this);
+			// this.parentDisabled = this.parent.disabled;
+			// 支付宝小程序不支持provide/inject，所以使用这个方法获取整个父组件，在created定义，避免循环应用
+			this.parent = this.$u.$parent.call(this, 'u-radio-group');
 		},
 		computed: {
 			// 是否禁用，如果父组件u-raios-group禁用的话，将会忽略子组件的配置
 			elDisabled() {
-				return this.disabled !== '' ? this.disabled : this.parentData.disabled !== null ? this.parentData.disabled : false;
+				return this.disabled !== '' ? this.disabled : this.parent ? this.parent.disabled : false;
 			},
 			// 是否禁用label点击
 			elLabelDisabled() {
-				return this.labelDisabled !== '' ? this.labelDisabled : this.parentData.labelDisabled !== null ? this.parentData.labelDisabled : false;
+				return this.labelDisabled !== '' ? this.labelDisabled : this.parent ? this.parent.labelDisabled : false;
 			},
 			// 组件尺寸，对应size的值，默认值为34rpx
 			elSize() {
-				return this.size ? this.size : (this.parentData.size ? this.parentData.size : 34);
+				return this.size ? this.size : (this.parent ? this.parent.size : 34);
 			},
 			// 组件的勾选图标的尺寸，默认20
 			elIconSize() {
-				return this.iconSize ? this.iconSize : (this.parentData.iconSize ? this.parentData.iconSize : 20);
+				return this.iconSize ? this.iconSize : (this.parent ? this.parent.iconSize : 20);
 			},
 			// 组件选中激活时的颜色
 			elActiveColor() {
-				return this.activeColor ? this.activeColor : (this.parentData.activeColor ? this.parentData.activeColor : 'primary');
+				return this.activeColor ? this.activeColor : (this.parent ? this.parent.activeColor : 'primary');
 			},
 			// 组件的形状
 			elShape() {
-				return this.shape ? this.shape : (this.parentData.shape ? this.parentData.shape : 'circle');
+				return this.shape ? this.shape : (this.parent ? this.parent.shape : 'circle');
 			},
 			// 设置radio的状态，要求radio的name等于parent的value时才为选中状态
 			iconStyle() {
 				let style = {};
-				if (this.elActiveColor && this.parentData.value == this.name && !this.elDisabled) {
+				if (this.elActiveColor && this.name == this.parent.value && !this.elDisabled) {
 					style.borderColor = this.elActiveColor;
 					style.backgroundColor = this.elActiveColor;
+					
 				}
-				style.width = this.$u.addUnit(this.elSize);
-				style.height = this.$u.addUnit(this.elSize);
+				// style.width = this.$u.addUnit(this.elSize);
+				// style.height = this.$u.addUnit(this.elSize);
 				return style;
 			},
 			iconColor() {
-				return this.name ==  this.parentData.value ? '#ffffff' : 'transparent';
+				return this.name == this.parent.value ? '#ffffff' : 'transparent';
 			},
 			iconClass() {
 				let classes = [];
 				classes.push('u-radio__icon-wrap--' + this.elShape);
-				if (this.name == this.parentData.value) classes.push('u-radio__icon-wrap--checked');
+				if (this.name == this.parent.value) classes.push('u-radio__icon-wrap--checked');
 				if (this.elDisabled) classes.push('u-radio__icon-wrap--disabled');
-				if (this.name == this.parentData.value && this.elDisabled) classes.push(
+				if (this.name == this.parent.value && this.elDisabled) classes.push(
 					'u-radio__icon-wrap--disabled--checked');
 				// 支付宝小程序无法动态绑定一个数组类名，否则解析出来的结果会带有","，而导致失效
 				return classes.join(' ');
 			},
 			radioStyle() {
 				let style = {};
-				if (this.parentData.width) {
-					style.width = this.$u.addUnit(this.parentData.width);
+				if (this.parent.width) {
+					style.width = this.parent.width;
 					// #ifdef MP
 					// 各家小程序因为它们特殊的编译结构，使用float布局
 					style.float = 'left';
 					// #endif
 					// #ifndef MP
 					// H5和APP使用flex布局
-					style.flex = `0 0 ${this.$u.addUnit(this.parentData.width)}`;
+					style.flex = `0 0 ${this.parent.width}`;
 					// #endif
 				}
-				if (this.parentData.wrap) {
+				if (this.parent.wrap) {
 					style.width = '100%';
 					// #ifndef MP
 					// H5和APP使用flex布局，将宽度设置100%，即可自动换行
@@ -166,33 +158,25 @@
 			}
 		},
 		methods: {
-			updateParentData() {
-				this.getParentData('u-radio-group');
-			},
 			onClickLabel() {
 				if (!this.elLabelDisabled && !this.elDisabled) {
-					this.setRadioCheckedStatus();
+					this.parent.setValue(this.name);
+					
+					this.emitEvent();
 				}
+				
 			},
 			toggle() {
 				if (!this.elDisabled) {
-					this.setRadioCheckedStatus();
+					this.parent.setValue(this.name);
+					this.labelColor = '#303133'
+					this.emitEvent();
 				}
 			},
 			emitEvent() {
 				// u-radio的name不等于父组件的v-model的值时(意味着未选中)，才发出事件，避免多次点击触发事件
-				if(this.parentData.value != this.name) this.$emit('change', this.name);
+				if(this.parent.value != this.name) this.$emit('change', this.name);
 			},
-			// 改变组件选中状态
-			// 这里的改变的依据是，更改本组件的parentData.value值为本组件的name值，同时通过父组件遍历所有u-radio实例
-			// 将本组件外的其他u-radio的parentData.value都设置为空(由computed计算后，都被取消选中状态)，因而只剩下一个为选中状态
-			setRadioCheckedStatus() {
-				this.emitEvent();
-				if(this.parent) {
-					this.parent.setValue(this.name);
-					this.parentData.value = this.name;
-				}
-			}
 		}
 	};
 </script>
@@ -201,9 +185,8 @@
 	@import "../../libs/css/style.components.scss";
 
 	.u-radio {
-		/* #ifndef APP-NVUE */
-		display: inline-flex;
-		/* #endif */
+		display: -webkit-flex;
+		display: flex;
 		align-items: center;
 		overflow: hidden;
 		user-select: none;
@@ -211,29 +194,25 @@
 		
 		&__icon-wrap {
 			color: $u-content-color;
-			@include vue-flex;
+			display: flex;
 			flex: none;
 			align-items: center;
 			justify-content: center;
 			box-sizing: border-box;
-			width: 42rpx;
-			height: 42rpx;
+			background: #F8F8F8;
+			// width: 42rpx;
+			// height: 42rpx;
+			height: 56rpx;
 			color: transparent;
 			text-align: center;
 			transition-property: color, border-color, background-color;
 			font-size: 20px;
-			border: 1px solid #c8c9cc;
+			// border: 1px solid #c8c9cc;
 			transition-duration: 0.2s;
-			
-			/* #ifdef MP-TOUTIAO */
-			// 头条小程序兼容性问题，需要设置行高为0，否则图标偏下
-			&__icon {
-				line-height: 0;
-			}
-			/* #endif */
-			
+			margin: 0 32rpx 32rpx 0;
 			&--circle {
-				border-radius: 100%;
+				// border-radius: 100%;
+				border-radius: 18px;
 			}
 			
 			&--square {
@@ -258,10 +237,13 @@
 		
 		&__label {
 			word-wrap: break-word;
-			margin-left: 10rpx;
-			margin-right: 24rpx;
+			margin-left: 32rpx;
+			margin-right: 32rpx;
 			color: $u-content-color;
-			font-size: 30rpx;
+			font-size: 28rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #909399;
 			
 			&--disabled {
 				color: #c8c9cc;

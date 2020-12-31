@@ -30,12 +30,25 @@
 				<view class="">
 					兴趣标签
 				</view>
+				<view class="tipsCheck">
+					<view class="tip" v-for="(item,index) in tipsCheck" :key="index" >
+						#{{item.name}}
+					</view>
+				</view>
 				<view class="tipsBox">
-					<view class="tip" v-for="(item,index) in tips" :key="index" >
-						#{{item}}
+					<view class="tip" v-for="(item,index) in tips" :key="index" @click="clickTip(item)">
+						#{{item.name}}
 					</view>
 				</view>
 			</view>
+			<!-- 匿名提问开关 -->
+			<view class="anonymous">
+				<view class="">
+					匿名提问
+				</view>
+				<u-switch v-model="checked"></u-switch>
+			</view>
+			<u-button @click="buttonUp">提交</u-button>
 		</view>
 		<!-- 城市选择弹窗 -->
 		<u-popup v-model="show" mode="top" height="383px">
@@ -102,7 +115,10 @@
 				show: false,
 				state_id:0,
 				city_id:0,
-				tips:{}
+				tips:{},
+				tipsCheck:[],
+				tipsCheckId:[],
+				checked: false,
 			};
 		},
 		onLoad(options) {
@@ -137,7 +153,7 @@
 					},
 					success: res => {
 						console.log('获取标签', res);
-						this.tips = res
+						this.tips = res.data.data
 					}
 				});
 			},
@@ -161,8 +177,8 @@
 							state_id: item1.state_id
 						},
 						success: res => {
-							console.log('城市信息==', res);
-							(this.name = this.name = res.data.data.name),
+							console.log('城市信息=', res);
+							(this.name = res.data.data.name),
 							this.state_id = res.data.data.state_id
 							this.city_id = res.data.data.city_id
 							
@@ -178,8 +194,11 @@
 						},
 						success: res => {
 							console.log('城市信息==', res);
-							(this.item = res.data.data), (this.name = this.name = res.data.data.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), (this.show = false);
-							this.mescroll.resetUpScroll()
+							this.item = res.data.data 
+							this.name  = res.data.data.name
+							this.state_id = res.data.data.state_id
+							this.city_id = res.data.data.city_id
+							this.show = false
 						}
 					});
 				}
@@ -219,6 +238,34 @@
 							}
 						)
 						.exec();
+				});
+			},
+			// 点击标签
+			clickTip(item){
+				console.log(item)
+				this.tipsCheck.push(item)
+				this.tipsCheckId.push(item.label_id)
+				console.log(this.tipsCheck)
+			},
+			// 提交
+			buttonUp(){
+				uni.request({
+					url: this.globalUrl + '/questions',
+					data:{
+						title:this.title,
+						state_id: this.state_id,
+						city_id: this.city_id,
+						labels:this.tipsCheckId,
+						content:this.questionsContent,
+						anonymous:this.checked
+					},
+					method: 'POST',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res => {
+						console.log('提交', res);
+					}
 				});
 			},
 			back() {
