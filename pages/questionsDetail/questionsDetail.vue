@@ -87,7 +87,7 @@
 				<view class="answersLine">
 				</view>
 			</view>
-			<view class="moreAnswers">
+			<view class="moreAnswers" @click="moreAnswers()">
 				查看全部{{answersNum}}条回答
 			</view>
 		</view>
@@ -171,6 +171,13 @@
 						this.answersNum = res.data.data.total
 						this.answersList = res.data.data.list
 					}
+				});
+			},
+			// 查看全部回答
+			moreAnswers(){
+				
+				uni.navigateTo({
+					url: '/pages/answersList/answersList?question_id=' + this.question_id
 				});
 			},
 			// 返回上一页

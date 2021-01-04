@@ -217,6 +217,14 @@
             }
             
         }
+        ,{
+            "path" : "pages/answersList/answersList",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",
