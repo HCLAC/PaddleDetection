@@ -161,29 +161,38 @@
 								</view>
 							</view>
 						</view>
+						<view class="line">
+							
+						</view>
 						<!-- 旅途问答 -->
 						<view class="travelQuestionsBox">
 							<view class="tQTop">
-								<text class="tQText">旅途问答</text>
+								<view class="tQTBox">
+									<text class="tQText">旅途问答</text>
+									<view class="tQLine"></view>
+								</view>
+								
 								<view class="tQBtn" @click="toQuestions">
-									我要提问
+									<image src="../../static/images/followIcon.svg" mode=""></image>
+									<view class="tQBT">
+										我要提问
+									</view>
 								</view>
 							</view>
 							<view class="tQContent">
-								<view class="tQCard" v-for="(item,index) in questions " :key="index" >
-									<view class="tQCLeft">
-										问
-									</view>
+								<view class="tQCard" v-for="(item,index) in questions " :key="index" @click="toQuestionsDetail(item)">
 									<view class="tQCRight">
 										<view class="tQCTitle">
 											{{item.title}}
 										</view>
-										<u-parse ref="parse"  style="overflow: hidden;" lazy-load 
-										 :html="item.content"></u-parse>
+										<view class="tQCParse">
+											<u-parse ref="parse"  style="overflow: hidden;" lazy-load
+											 :html="item.content"></u-parse>
+										</view>
 									</view>
 								</view>
 								<view class="tQToMore">
-									查看更多 >
+									查看更多
 								</view>
 							</view>
 						</view>
@@ -538,6 +547,14 @@ export default {
 					console.log('获取精选问题', res.data.data);
 					this.questions = res.data.data
 				}
+			});
+		},
+		// 跳转问题详情
+		toQuestionsDetail(item){
+			console.log(item)
+			var question_id = item.question_id
+			uni.navigateTo({
+				url: '/pages/questionsDetail/questionsDetail?question_id=' + question_id
 			});
 		},
 		// 获取全国城市
@@ -1063,7 +1080,7 @@ export default {
 }
 .contentBox {
 	width: 100%;
-	background: #f8f8f8;
+	background: #FFFFFF;
 	border: 1px solid #FFFFFF;
 	border-radius: 16rpx 16rpx 0px 0px;
 	border-bottom: none;
@@ -1119,7 +1136,8 @@ export default {
 	margin-right: 20rpx;
 	background-color: #ffffff;
 	padding-bottom: 24rpx;
-	border-radius: 8px 8px 0px 0px;
+	border-radius: 16rpx 16rpx 0rpx 0rpx;
+	box-shadow: 0rpx 4rpx 24rpx 0rpx #EDEFF2;
 }
 .attImg {
 	width: 100%;
@@ -1163,12 +1181,14 @@ export default {
 .trip {
 	margin-top: 44rpx;
 	margin-left: 28rpx;
+	padding-bottom: 40rpx;
+	background: #FFFFFF;
 }
 .tripHeader {
 	display: flex;
 	align-items: center;
 	margin-top: 32rpx;
-	background: #f8f8f8;
+	
 }
 .tripTitle {
 	// width: 144rpx;
@@ -1825,6 +1845,11 @@ export default {
 	width: 120rpx;
 	height: 120rpx;
 }
+.line{
+	width: 100%;
+	height: 20rpx;
+	background: #F8F8F8;
+}
 // 旅途问答
 .travelQuestionsBox{
 	margin: 28rpx;
@@ -1833,26 +1858,95 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		.tQTBox{
+			.tQText{
+				height: 36rpx;
+				font-size: 36rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
+				color: #303133;
+				line-height: 36rpx;
+
+			}
+			.tQLine{
+				margin-top: -8rpx;
+				width: 144rpx;
+				height: 12rpx;
+				background: #FFE512;
+				border-radius: 12rpx;
+
+			}
+		}
+		.tQBtn{
+			width: 180rpx;
+			height: 52rpx;
+			background: #EDEFF2;
+			border-radius: 26rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			image{
+				width: 20rpx;
+				height: 20rpx;
+				margin-right: 8rpx;
+			}
+			.tQBT{
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #303133;
+				line-height: 28rpx;
+			}
+		}
 	}
 	.tQContent{
-		margin: 20rpx;
+		margin: 44rpx 0rpx 20rpx;
 		.tQCard{
-			display: flex;
 			background: #FFFFFF;
-			border-radius: 16rpx;
+			padding-bottom: 20rpx;
+			border-bottom: 2rpx solid #EDEFF2;
 			margin-bottom: 20rpx;
-			.tQCLeft{
-				font-size: 32rpx;
-			}
 			.tQCRight{
-				margin-left: 16rpx;
+				width: 694rpx;
 				.tQCTitle{
-					font-weight: 600;
+					font-size: 40rpx;
+					font-family: PingFangSC-Medium, PingFang SC;
+					font-weight: 500;
+					color: #303133;
+					line-height: 56rpx;
+					margin-bottom: 20rpx;
+					display: -webkit-box;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					word-wrap: break-word;
+					white-space: normal !important;
+					-webkit-line-clamp: 2;
+					-webkit-box-orient: vertical;
+				}
+				.tQCParse{
+					font-size: 30rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #606266;
+					line-height: 42rpx;
+					display: -webkit-box;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					word-wrap: break-word;
+					white-space: normal !important;
+					-webkit-line-clamp: 2;
+					-webkit-box-orient: vertical;
 				}
 			}
 		}
 		.tQToMore{
 			text-align: center;
+			font-size: 28rpx;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 500;
+			color: #303133;
+			line-height: 28rpx;
+			margin-top: 40rpx;
 		}
 	}
 }

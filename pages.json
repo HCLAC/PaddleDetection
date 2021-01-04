@@ -4,13 +4,7 @@
 		
 	},
 	"pages": [
-		{
-		    "path" : "pages/questions/questions",
-		    "style" : {
-		    	"navigationStyle": "custom"
-				
-		    }
-		},
+		
 		{
 			"path": "pages/index/index",
 			"style": {
@@ -50,7 +44,13 @@
 			}
 		},
 		
-
+		{
+		    "path" : "pages/questions/questions",
+		    "style" : {
+		    	"navigationStyle": "custom"
+				
+		    }
+		},
 
 		{
 		    "path" : "pages/login/login",
@@ -205,8 +205,7 @@
             "path" : "pages/questionsDetail/questionsDetail",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+                "navigationStyle": "custom"
             }
             
         }
