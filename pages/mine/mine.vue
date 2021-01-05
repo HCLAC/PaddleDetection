@@ -62,31 +62,7 @@
 							</view>
 						</view>
 						
-						<!-- <view :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard"> -->
-						<!-- <view>收藏</view> -->
-							<!-- <v-tabs 
-								inactive-color="#909399"
-								lineHeight="24rpx"
-								lineColor="#FFE512"
-								activeColor="#303133"
-								fontSize="36rpx"
-								v-model="tabCurrent"
-								:bold="true"
-								color="#909399"
-								:tabs="tablist"
-								:is-scroll="false"
-								:current="tabCurrent"
-								@change="tabChange"
-								paddingItem="0 32rpx"
-							></v-tabs> -->
-							
-						<!-- </view> -->
-						<!-- <view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" >
-							{{favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum}}
-						</view>
-						<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" >
-							{{likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum}}
-						</view> -->
+						
 					</view>
 				</view>
 				<!-- 收藏 -->

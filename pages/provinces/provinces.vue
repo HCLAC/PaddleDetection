@@ -191,7 +191,7 @@
 										</view>
 									</view>
 								</view>
-								<view class="tQToMore">
+								<view class="tQToMore" @click="toMoreQuestions">
 									查看更多
 								</view>
 							</view>
@@ -555,6 +555,14 @@ export default {
 			var question_id = item.question_id
 			uni.navigateTo({
 				url: '/pages/questionsDetail/questionsDetail?question_id=' + question_id
+			});
+		},
+		// 跳转问答列表页
+		toMoreQuestions(){
+			var state_id = this.item.state_id;
+			var city_id = this.item.city_id;
+			uni.navigateTo({
+				url: '/pages/moreQuestions/moreQuestions?state_id=' + state_id + '&city_id=' + city_id
 			});
 		},
 		// 获取全国城市
