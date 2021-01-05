@@ -91,13 +91,18 @@
 				查看全部{{answersNum}}条回答
 			</view>
 		</view>
-		<!-- <view class="line">
-			
+		<view class="myAnswersBtn">
+			<image src="../../static/images/followIcon.svg" mode=""></image>
+			<view class="mabt">
+				我要提问
+			</view>
 		</view>
+		<!-- 相关问题 -->
+		<view class="line">	</view>
 		<view class="travelQuestionsBox">
 			<view class="tQTop">
 				<view class="tQTBox">
-					<text class="tQText">旅途问答</text>
+					<text class="tQText">相关问题</text>
 					<view class="tQLine"></view>
 				</view>
 				
@@ -115,7 +120,7 @@
 					</view>
 				</view>
 			</view>
-		</view> -->
+		</view>
 	</view>
 </template>
 
@@ -127,7 +132,8 @@
 				detail:{},
 				create_at:'',
 				answersNum:'',
-				answersList:{}
+				answersList:{},
+				questions:{}
 			};
 		},
 		onLoad(question_id) {
@@ -136,6 +142,7 @@
 			console.log(this.question_id)
 			this.getQuestionsDetail()
 			this.getanswersList()
+			this.getQuestionsRelated()
 		},
 		methods:{
 			// 获取问题详情
@@ -152,6 +159,23 @@
 						console.log('问题详情',res)
 						this.detail = res.data.data
 						this.create_at = res.data.data.create_at.slice(0,10)
+					}
+				});
+			},
+			// 获取相关问题
+			getQuestionsRelated(){
+				uni.request({
+					url: this.globalUrl + '/questions/related',
+					data: {
+						question_id: this.question_id,
+						count:2
+					},
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res => {
+						console.log('相关问题',res)
+						this.questions = res.data.data
 					}
 				});
 			},
@@ -179,6 +203,14 @@
 				
 				uni.navigateTo({
 					url: '/pages/answersList/answersList?question_id=' + this.question_id
+				});
+			},
+			// 跳转问题详情
+			toQuestionsDetail(item){
+				console.log(item)
+				var question_id = item.question_id
+				uni.navigateTo({
+					url: '/pages/questionsDetail/questionsDetail?question_id=' + question_id
 				});
 			},
 			// 点赞
@@ -550,6 +582,141 @@
 			line-height: 28rpx;
 			margin-top: 32rpx;
 			margin-bottom: 80rpx;
+		}
+	}
+	.line{
+		width: 100%;
+		height: 20rpx;
+		background: #F8F8F8;
+	}
+	// 旅途问答
+	.travelQuestionsBox{
+		margin: 28rpx;
+		.tQTop{
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			.tQTBox{
+				.tQText{
+					height: 36rpx;
+					font-size: 36rpx;
+					font-family: PingFangSC-Medium, PingFang SC;
+					font-weight: 500;
+					color: #303133;
+					line-height: 36rpx;
+	
+				}
+				.tQLine{
+					margin-top: -8rpx;
+					width: 144rpx;
+					height: 12rpx;
+					background: #FFE512;
+					border-radius: 12rpx;
+	
+				}
+			}
+			.tQBtn{
+				width: 180rpx;
+				height: 52rpx;
+				background: #EDEFF2;
+				border-radius: 26rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				image{
+					width: 20rpx;
+					height: 20rpx;
+					margin-right: 8rpx;
+				}
+				.tQBT{
+					font-size: 28rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #303133;
+					line-height: 28rpx;
+				}
+			}
+		}
+		.tQContent{
+			margin: 44rpx 0rpx 20rpx;
+			.tQCard{
+				background: #FFFFFF;
+				padding-bottom: 20rpx;
+				border-bottom: 2rpx solid #EDEFF2;
+				margin-bottom: 20rpx;
+				.tQCRight{
+					width: 694rpx;
+					.tQCTitle{
+						font-size: 40rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #303133;
+						line-height: 56rpx;
+						margin-bottom: 20rpx;
+						display: -webkit-box;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						word-wrap: break-word;
+						white-space: normal !important;
+						-webkit-line-clamp: 2;
+						-webkit-box-orient: vertical;
+					}
+					.tQCParse{
+						font-size: 30rpx;
+						font-family: PingFangSC-Regular, PingFang SC;
+						font-weight: 400;
+						color: #606266;
+						line-height: 42rpx;
+						display: -webkit-box;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						word-wrap: break-word;
+						white-space: normal !important;
+						-webkit-line-clamp: 2;
+						-webkit-box-orient: vertical;
+					}
+				}
+			}
+			.tQToMore{
+				text-align: center;
+				font-size: 28rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
+				color: #303133;
+				line-height: 28rpx;
+				margin-top: 40rpx;
+			}
+		}
+	}
+	// 我来回答
+	.myAnswersBtn{
+		position:fixed; 
+		margin:auto;
+		left:0;
+		right:0;
+		bottom:80rpx;
+		text-align:center;
+		width: 236rpx;
+		height: 88rpx;
+		background: #FFE512;
+		box-shadow: 0rpx 4rpx 16rpx 0rpx rgba(0, 0, 0, 0.1), 0rpx 16rpx 56rpx 0rpx rgba(255, 229, 18, 0.4);
+		border-radius: 44rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		image{
+			width: 20rpx;
+			height: 20rpx;
+		}
+		.mabt{
+			height: 40rpx;
+			font-size: 28rpx;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 500;
+			color: #303133;
+			line-height: 40rpx;
+			margin-left: 10rpx;
 		}
 	}
 </style>
