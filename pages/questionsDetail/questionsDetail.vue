@@ -91,11 +91,19 @@
 				查看全部{{answersNum}}条回答
 			</view>
 		</view>
-		<view class="myAnswersBtn">
+		<!-- 我要提问按钮 -->
+		<view class="myAnswersBtn" @click="commentInput" v-if="!textareafocus">
 			<image src="../../static/images/followIcon.svg" mode=""></image>
 			<view class="mabt">
-				我要提问
+				我来回答
 			</view>
+		</view>
+		<!-- 输入框 -->
+		<view class="commentInput" v-if="textareafocus" :style="{bottom : inputbottom.bottom}">
+			<textarea class="inputK" v-model="content" placeholder="快来写下你的回答吧" :show-confirm-bar="false" :focus="textareafocus"
+			 @blur="inputBlur" @focus="inputFocus" :auto-height="autoHeight" @input="inputValue" maxlength="140" cursor-spacing="20"
+			 :adjust-position="false"></textarea>
+			<view class="send" @click="pubComment">发送</view>
 		</view>
 		<!-- 相关问题 -->
 		<view class="line">	</view>
@@ -133,7 +141,14 @@
 				create_at:'',
 				answersNum:'',
 				answersList:{},
-				questions:{}
+				questions:{},
+				content: '',
+				value: '',
+				autoHeight: false,
+				inputbottom: {
+					bottom: ''
+				},
+				textareafocus: false
 			};
 		},
 		onLoad(question_id) {
@@ -212,6 +227,80 @@
 				uni.navigateTo({
 					url: '/pages/questionsDetail/questionsDetail?question_id=' + question_id
 				});
+			},
+			// 提问按钮
+			commentInput() {
+				this.textareafocus = true
+			},
+			inputBlur() {
+				this.textareafocus = false
+				this.inputbottom.bottom = 0 + 'px'
+			},
+			inputFocus(e) {
+				console.log(e.detail,'eeee')
+				this.textareafocus = true
+				this.inputbottom.bottom = e.detail.height + 'px'
+			
+			},
+			inputValue(e) {
+				console.log('eeeee', e.detail.value.length)
+				if (e.detail.value.length > 18) {
+					this.autoHeight = true
+				} else {
+					this.autoHeight = false
+				}
+			},
+			pubComment() {
+				console.log('发送',this.content)
+				uni.request({
+					url: this.globalUrl + '/answers',
+					data: {
+						question_id: this.question_id,
+						content: this.content
+					},
+					method: 'POST',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res => {
+						// this.commentsList = res.data.data.list
+						this.value = ''
+						uni.hideKeyboard()
+						// this.$refs.comment.toggleMask('none');
+						this.getanswersList()
+						console.log('pinglun', res.data)
+						if (res.data.code == 10501) {
+							uni.navigateTo({
+								url: '../login/login'
+							});
+						} else {
+			
+							if (res.data.code == 15001) {
+								uni.showToast({
+									title: res.data.msg,
+									icon: 'none',
+									duration: 2000
+								})
+							} else {
+								if (res.data.code != 0) {
+									uni.showToast({
+										title: '回答不能为空',
+										icon: 'none',
+										duration: 2000
+									})
+								} else {
+									uni.showToast({
+										title: '回答成功',
+										icon: 'none',
+										duration: 2000
+									})
+								}
+							}
+						}
+			
+			
+					}
+				})
 			},
 			// 点赞
 			like(e,index){
@@ -717,6 +806,34 @@
 			color: #303133;
 			line-height: 40rpx;
 			margin-left: 10rpx;
+		}
+	}
+	// 评论框
+	.commentInput {
+		width: 100%;
+		position: fixed;
+		background: #ffffff;
+		display: flex;
+		align-items: center;
+	
+		.inputK {
+			height: 28rpx;
+			width: 558rpx;
+			background: #F8F8F8;
+			border-radius: 4px;
+			margin: 16rpx 32rpx;
+			padding: 20rpx 16rpx;
+		}
+	
+		.send {
+			// width: 64rpx;
+			height: 32rpx;
+			font-size: 32rpx;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 500;
+			color: #0091FF;
+			line-height: 32rpx;
+	
 		}
 	}
 </style>
