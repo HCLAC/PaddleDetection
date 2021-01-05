@@ -71,14 +71,14 @@
 				</view>
 				<view class="answersCardBottom">
 					<view class="acbr">
-						<view class="answersLike">
-							<image src="../../static/images/aLike.svg" v-if="item.option == 0" mode=""></image>
+						<view class="answersLike" @click="like(item,index) in answersList">
+							<image src="../../static/images/aLike.svg" v-if="item.option == 0 || item.option == 2" mode=""></image>
 							<image src="../../static/images/aLikeActive.svg" v-if="item.option == 1" mode=""></image>
 							<text>{{item.like}}</text> 
 						</view>
 						
-						<view class="answersDisLike">
-							<image src="../../static/images/aDisLike.svg" v-if="item.option == 0" mode=""></image>
+						<view class="answersDisLike" @click="disLike(item,index) in answersList">
+							<image src="../../static/images/aDisLike.svg" v-if="item.option == 0 || item.option == 1" mode=""></image>
 							<image src="../../static/images/aDisLikeActive.svg" v-if="item.option == 2" mode=""></image>
 							<text>{{item.dislike}}</text>
 						</view>
@@ -155,6 +155,7 @@
 					}
 				});
 			},
+			// 获取回复列表
 			getanswersList(){
 				uni.request({
 					url: this.globalUrl + '/answers/list',
@@ -178,6 +179,62 @@
 				
 				uni.navigateTo({
 					url: '/pages/answersList/answersList?question_id=' + this.question_id
+				});
+			},
+			// 点赞
+			like(e,index){
+				console.log(e)
+				var answer_id = e.$orig.answer_id
+				console.log(answer_id)
+				uni.request({
+					url: this.globalUrl + '/answers/like',
+					data: {
+						answer_id: answer_id,
+					},
+					method: 'POST',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res => {
+						if (res.data.code != 0) {
+				
+							uni.navigateTo({
+								url: '../login/login'
+							});
+						} else {
+							console.log(res)
+							this.getanswersList()
+							// this.answersList[index].option = e.$orig.option == 1 ? 0 : 1
+						}
+					}
+				});
+			},
+			// 点踩
+			disLike(e,index){
+				console.log(e)
+				var answer_id = e.$orig.answer_id
+				console.log(answer_id)
+				uni.request({
+					url: this.globalUrl + '/answers/dislike',
+					data: {
+						answer_id: answer_id,
+					},
+					method: 'POST',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res => {
+						if (res.data.code != 0) {
+				
+							uni.navigateTo({
+								url: '../login/login'
+							});
+						} else {
+							console.log(res)
+							this.getanswersList()
+							// this.answersList[index].option = e.$orig.option == 1 ? 0 : 1
+						}
+					}
 				});
 			},
 			// 返回上一页
