@@ -12,7 +12,7 @@
 		</view>
 		<!-- 搜索框 -->
 		<view class="searchBox">
-			<u-search :show-action="true" placeholder="输入搜索内容" action-text="取消" :animation="false"></u-search>
+			<u-search v-model="keyword" @search="search" @custom="custom" :show-action="true" :clearabled="false" placeholder="输入搜索内容" action-text="取消" :animation="false"></u-search>
 		</view>
 		<!-- 问答列表 -->
 		<view class="answersList">
@@ -93,6 +93,10 @@
 				</view>
 			</view>
 		</mescroll-body>
+		<!-- 提问按钮 -->
+		<view class="questionsBtn" @click="toQuestions">
+			<image src="../../static/images/twIcon.svg" mode=""></image>
+		</view>
 	</view>
 </template>
 
@@ -101,6 +105,7 @@
 	export default {
 		data() {
 			return {
+				keyword:'',
 				tabCurrent: 0,
 				downOption:{
 					use:false
@@ -159,13 +164,64 @@
 			// 切换
 			change(){
 				this.tabCurrent = 0
+				this.keyword = ''
 				this.mescroll.resetUpScroll()
 				this.mescroll.scrollTo(0)
 			},
 			change1(){
 				this.tabCurrent = 1
+				this.keyword = ''
 				this.mescroll.resetUpScroll()
 				this.mescroll.scrollTo(0)
+			},
+			// 搜索问题
+			search(value){
+				console.log(value)
+				console.log(this.tabCurrent)
+				if(this.tabCurrent == 0){
+					uni.request({
+						url: this.globalUrl + '/questions/seemore',
+						data: {
+							state_id: this.state_id,
+							city_id: this.city_id,
+							type:'selected',
+							title: value,
+							page:1,
+							count:10
+						},
+						header: {
+							Authorization: uni.getStorageSync('Authorization')
+						},
+						success: res => {
+							console.log('精选列表',res)
+							this.selectedList = res.data.data.list
+						}
+					});
+				}else{
+					uni.request({
+						url: this.globalUrl + '/questions/seemore',
+						data: {
+							state_id: this.state_id,
+							city_id: this.city_id,
+							type:'newest',
+							title: value,
+							page:1,
+							count:10
+						},
+						header: {
+							Authorization: uni.getStorageSync('Authorization')
+						},
+						success: res => {
+							console.log('最新列表',res)
+							this.newestList = res.data.data.list
+							
+						}
+					});
+				}
+			},
+			// 取消搜索
+			custom(){
+				this.keyword = ''
 			},
 			// 跳转问题详情
 			toQuestionsDetail(item){
@@ -174,6 +230,12 @@
 				uni.navigateTo({
 					url: '/pages/questionsDetail/questionsDetail?question_id=' + question_id
 				});
+			},
+			// 提问按钮
+			toQuestions(){
+				uni.navigateTo({
+					url:'/pages/questions/questions'
+				})
 			},
 			// 返回上一页
 			back() {
@@ -583,6 +645,24 @@
 				}
 			}
 		}
+	}
+}
+// 提问按钮
+.questionsBtn{
+	width: 88rpx;
+	height: 88rpx;
+	background: #FFE512;
+	box-shadow: 0rpx 16rpx 56rpx 0rpx rgba(255, 229, 18, 0.4);
+	border-radius: 50%;
+	position: fixed;
+	bottom: 400rpx;
+	right: 40rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	image{
+		width: 48rpx;
+		height: 48rpx;
 	}
 }
 </style>
