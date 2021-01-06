@@ -22,6 +22,15 @@
 			}
 		},
 		{
+		    "path" : "pages/questionsPage/questionsPage",
+		    "style" :                                                                                    
+		    {
+		        "navigationStyle": "custom"
+		    }
+		    
+		}
+		,
+		{
 			"path": "pages/attractionsRank/attractionsRank",
 			"style": {
 				"navigationStyle": "custom",
@@ -210,14 +219,6 @@
             
         }
         ,{
-            "path" : "pages/questionsPage/questionsPage",
-            "style" :                                                                                    
-            {
-                "navigationStyle": "custom"
-            }
-            
-        }
-        ,{
             "path" : "pages/answersList/answersList",
             "style" :                                                                                    
             {
@@ -227,6 +228,14 @@
         }
         ,{
             "path" : "pages/moreQuestions/moreQuestions",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom"
+            }
+            
+        }
+        ,{
+            "path" : "pages/questionsComplete/questionsComplete",
             "style" :                                                                                    
             {
                 "navigationStyle": "custom"

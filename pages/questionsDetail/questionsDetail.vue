@@ -11,7 +11,7 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 问题详情卡片 -->
-		<view class="detailCard">
+		<view class="detailCard" v-if="detail">
 			<view class="cardTopBox">
 				<view class="cardTop">
 					<view class="cardTopText">

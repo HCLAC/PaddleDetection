@@ -11,27 +11,42 @@
 			</uni-nav-bar>
 		</view>
 		<view class="questionsTitle">
-			{{title}}(问题标题)
+			{{title}}
 		</view>
 		<view class="questionsContent">
-			<u-input v-model="questionsContent" :type="textarea" :clearable="false" placeholder="写下关于问题的详细描述" />
+			<!-- <u-input v-model="questionsContent" :type="textarea" :clearable="false" placeholder="写下关于问题的详细描述" /> -->
+			<textarea
+				class="textArea"
+				:clearable="false"  
+				placeholder="写下关于问题的详细描述..." 
+				placeholder-style="font-size:28rpx;line-height:42rpx"
+				maxlength="1000"  
+				:style="{background: customStyleInput.background}" 
+				v-model="questionsContent" 
+			>
+			</textarea>
+			<view class="textNum">
+				{{number}}/1000
+			</view>
 			<!-- 问题目的地 -->
-			<view class="">
-				<view class="">
-					问题目的地
+			<view class="adressBox">
+				<view class="adressText">
+					<image src="../../static/images/iconMapt.svg" mode=""></image>
+					<text>问题目的地</text>
 				</view>
 				<view class="change" @click="getCity">
 					<view class="changeText" @click="show = true">{{name}}</view>
-					<image class="changeIcon" src="../../static/images/more-down.svg" mode=""></image>
+					<image class="changeIcon" src="../../static/images/more-right.svg" mode=""></image>
 				</view>
 			</view>
 			<!-- 兴趣标签 -->
-			<view class="">
-				<view class="">
-					兴趣标签
+			<view class="intTipBox">
+				<view class="intTipText">
+					<image src="../../static/images/iconMapt.svg" mode=""></image>
+					<text>兴趣标签</text>
 				</view>
 				<view class="tipsCheck">
-					<view class="tip" v-for="(item,index) in tipsCheck" :key="index" >
+					<view class="tip" v-for="(item,index) in tipsCheck" :key="index" @click="clickTipsCheck(item)">
 						#{{item.name}}
 					</view>
 				</view>
@@ -43,12 +58,12 @@
 			</view>
 			<!-- 匿名提问开关 -->
 			<view class="anonymous">
-				<view class="">
+				<view class="anonymousT">
 					匿名提问
 				</view>
-				<u-switch v-model="checked"></u-switch>
+				<u-switch v-model="checked" active-color="#ffe512"></u-switch>
 			</view>
-			<u-button @click="buttonUp">提交</u-button>
+			<u-button :custom-style="customStyle" @click="buttonUp">发布问题</u-button>
 		</view>
 		<!-- 城市选择弹窗 -->
 		<u-popup v-model="show" mode="top" height="383px">
@@ -119,6 +134,21 @@
 				tipsCheck:[],
 				tipsCheckId:[],
 				checked: false,
+				number:0,
+				customStyleInput:{
+					background: '#f8f8f8',
+					
+				},
+				customStyle:{
+					width: '694rpx',
+					height: '98rpx',
+					background: '#FFE512',
+					borderRadius: '54rpx',
+					fontSize: '32rpx',
+					fontFamily: 'PingFangSC-Medium, PingFang SC',
+					fontWeight: '500',
+					color: '#303133'
+				}
 			};
 		},
 		onLoad(options) {
@@ -127,6 +157,12 @@
 			this.getCity()
 			this.getAdress()
 			this.getTips()
+		},
+		watch:{
+			questionsContent(val){
+				console.log(val.length)
+				this.number = val.length
+			}
 		},
 		methods: {
 			// 获取全国城市
@@ -242,10 +278,36 @@
 			},
 			// 点击标签
 			clickTip(item){
-				console.log(item)
+				// console.log(item)
 				this.tipsCheck.push(item)
+				let listVar = new Array
+				for(let i=0; i<this.tips.length; i++){
+					listVar.push(this.tips)
+					if (this.tips[i] == item){
+						listVar[i].splice(i, 1)
+					}
+				}
 				this.tipsCheckId.push(item.label_id)
-				console.log(this.tipsCheck)
+				console.log(this.tipsCheckId)
+			},
+			// 点击已选标签
+			clickTipsCheck(item){
+				this.tips.push(item)
+				let listVar = new Array
+				for(let i=0; i<this.tipsCheck.length; i++){
+					listVar.push(this.tipsCheck)
+					if (this.tipsCheck[i] == item){
+						listVar[i].splice(i, 1)
+					}
+				}
+				let listA = new Array
+				for(let i=0; i<this.tipsCheckId.length; i++){
+					listA.push(this.tipsCheckId)
+					if (this.tipsCheckId[i] == item.label_id){
+						listA[i].splice(i, 1)
+					}
+				}
+				console.log(this.tipsCheckId)
 			},
 			// 提交
 			buttonUp(){
@@ -265,6 +327,10 @@
 					},
 					success: res => {
 						console.log('提交', res);
+						var question_id = res.data.data.question_id
+						uni.navigateTo({
+							url: '/pages/questionsComplete/questionsComplete?question_id=' + question_id
+						});
 					}
 				});
 			},
@@ -488,5 +554,152 @@
 	.item-menu-image {
 		width: 120rpx;
 		height: 120rpx;
+	}
+	// 标题
+	.questionsTitle{
+		font-size: 32rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #303133;
+		line-height: 36rpx;
+		margin: 38rpx 28rpx 20rpx;
+	}
+	.textArea{
+		width: 638rpx;
+		height: 394rpx;
+		background: #F8F8F8;
+		border-radius: 8px;
+		padding: 32rpx 28rpx;
+		line-height: 42rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #303133;
+		margin: 0px 28rpx;
+	}
+	.textNum{
+		position: absolute;
+		margin-top: -64rpx;
+		margin-left: 590rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #C9CAD1;
+		line-height: 28rpx;
+	}
+	// 问题目的地
+	.adressBox{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-top: 48rpx;
+		margin-left: 28rpx;
+		margin-right: 28rpx;
+		.adressText{
+			display: flex;
+			align-items: center;
+			image{
+				width: 32rpx;
+				height: 32rpx;
+			}
+			text{
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #303133;
+				margin-left: 16rpx;
+
+			}
+		}
+		.change{
+			.changeText{
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #0091FF;
+				line-height: 28rpx;
+
+			}
+			.changeIcon{
+				width: 24rpx;
+				height: 24rpx;
+			}
+		}
+	}
+	// 兴趣标签
+	.intTipBox{
+		margin: 56rpx 28rpx 30rpx;
+		.intTipText{
+			image{
+				width: 32rpx;
+				height: 32rpx;
+			}
+			text{
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #303133;
+				margin-left: 16rpx;
+			}
+		}
+		.tipsCheck{
+			margin-top: 48rpx;
+			display: flex;
+			flex-wrap: wrap;
+			.tip{
+				height: 48rpx;
+				background: #FFE512;
+				border-radius: 24rpx;
+				margin-right: 20rpx;
+				margin-bottom: 20rpx;
+				text-align: center;
+				line-height: 48rpx;
+				padding: 0 20rpx;
+				font-size: 28rpx;
+				font-family: PingFangSC-Light, PingFang SC;
+				font-weight: 300;
+				color: #606266;
+			}
+		}
+		.tipsBox{
+			display: flex;
+			flex-wrap: wrap;
+			.tip{
+				height: 48rpx;
+				border-radius: 24rpx;
+				margin-right: 20rpx;
+				margin-bottom: 20rpx;
+				text-align: center;
+				line-height: 48rpx;
+				padding: 0 20rpx;
+				background: #FFFFFF;
+				border: 2rpx solid #C9CAD1;
+				font-size: 28rpx;
+				font-family: PingFangSC-Light, PingFang SC;
+				font-weight: 300;
+				color: #606266;
+
+
+			}
+		}
+	}
+	// 匿名提问
+	.anonymous{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin: 0rpx 28rpx;
+		margin-bottom: 80rpx;
+		padding: 30rpx 0rpx;
+		border-top: 1rpx solid #edeff2;
+		.anonymousT{
+			font-size: 28rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #606266;
+			line-height: 28rpx;
+
+		}
+		
 	}
 </style>

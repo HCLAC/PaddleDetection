@@ -14,53 +14,52 @@
 		<view class="search-box">
 			<!-- mSearch组件 如果使用原样式，删除组件元素-->
 			<view class="" style="display: flex;align-items: center;">
-				<view class="">
+				<!-- <view class="searchTitle">
 					标题：
-				</view>
-				<u-input v-model="questionsValue" :type="textarea" :clearable="false" placeholder="清晰描述你的疑问" />
+				</view> -->
+				<!-- <u-input v-model="questionsValue"  :type="textarea" :clearable="false" placeholder="标题: 清晰描述你的疑问" 
+				placeholderStyle="font-size: 20px;color: #303133;font-family: PingFangSC-Semibold, PingFang SC;font-weight: 600;" /> -->
+				<u-search 
+					v-model="questionsValue"
+					bg-color="#ffffff" 
+					placeholder="标题: 清晰描述你的疑问" 
+					:clearabled="false" 
+					:show-action="false" 
+					placeholder-color="#303133"
+					:input-style="inputStyle"
+					@change="inputChange"
+				></u-search>
 			</view>
 			
-			<view class="" @click="toQuestions()">
+			<view class="nextBtn" @click="toQuestions()">
 				下一步
 			</view>
-			<!-- <mSearch
-				class="mSearch-input-box"
-				:mode="2"
-				button="inside"
-				:placeholder="defaultKeyword"
-				
-				@search="doSearch(keyword)"
-				@input="inputChange"
-				confirm-type="search"
-				@confirm="Toresults()"
-				v-model="keyValue"
-			></mSearch> -->
 		</view>
 		<view class="search-keyword">
 			<scroll-view class="keyword-list-box" scroll-y scroll-x="false" v-if="isShowKeywordList">
 				<block v-for="(row, index) in keywordList" :key="index">
 					<view class="keyword-entry" hover-class="keyword-entry-tap">
-						<view class="liIcon" v-if="!row.keyword.type"></view>
-						<veiw v-if="row.keyword.type" :class=" row.keyword.type == 'site' ? 'otherIcon' : 'otherIcon1'">
+						<!-- <view class="liIcon" v-if="!row.keyword.type"></view> -->
+						<!-- <veiw v-if="row.keyword.type" :class=" row.keyword.type == 'site' ? 'otherIcon' : 'otherIcon1'">
 							<image v-if="row.keyword.type == 'site'" src="../../static/images/attIcon.svg" ></image>
 							<image v-if="row.keyword.type == 'area'" src="../../static/images/adressIcon.svg" mode=""></image>
-						</veiw>
-						<view class="keyword-text" @tap.stop="goSearch(row.keyword)"><rich-text :nodes="row.htmlStr"></rich-text></view>
-						<view class="otherText" v-if="row.keyword.type">{{ row.keyword.type == 'site' ? '景点' : '目的地' }}</view>
+						</veiw> -->
+						<view class="keyword-text" @tap.stop="goSearch(row.keyword)">
+							<rich-text :nodes="row.htmlStr"></rich-text>
+							<view class="kTB">
+								{{row.keyword.city}}'· <text>{{row.keyword.read}}</text>人看过 · <text>{{row.keyword.reply_count}}</text>回答
+							</view>
+						</view>
+						<!-- <view class="otherText" v-if="row.keyword.type">{{ row.keyword.type == 'site' ? '景点' : '目的地' }}</view> -->
 					</view>
 				</block>
 			</scroll-view>
 		</view>
-		<view v-if="noResult == '暂无结果'">
-			<view class="noResult">
-				没找到“
-				<veiw>{{ keyValue }}</veiw>
-				”相关结果
-			</view>
-		</view>
+		
 		<view class="tipsBox">
 			<view class="tipsTitle">
-				提示
+			 	<text>提示</text>
+				<view class="tipsLine"></view>
 			</view>
 			<view class="tipsText">
 				1.用户只可通过文字进行问答，标题越描述清晰完整，越容易收到满意的回答哦~
@@ -84,7 +83,14 @@
 				hotKeywordList: [],
 				noResult: null,
 				isShowKeywordList: false,
-				questionsValue:''
+				questionsValue:'',
+				inputStyle:{
+					'width':'440rpx',
+					'fontSize': '40rpx',
+					'fontFamily': 'PingFangSC-Semibold, PingFang SC',
+					'fontWeight': '600',
+					'color': '#303133'
+				}
 			};
 		},
 		components: {
@@ -121,10 +127,14 @@
 				}
 				this.isShowKeywordList = true;
 				uni.request({
-					url: this.globalUrl + '/search/suggest',
+					url: this.globalUrl + '/questions/matchtitle',
 					data: {
-						query: keyword,
-						hit: 8
+						title: keyword,
+						page:1,
+						count: 10
+					},
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
 					},
 					// type:"GET",
 					success: res => {
@@ -144,6 +154,7 @@
 			
 								this.noResult = '有结果';
 								this.keywordList = this.drawCorrelativeKeyword(arr, keyword);
+								console.log(this.keywordList)
 								this.isShowKeywordList = true;
 								this.isShowHt = false;
 							} else {
@@ -166,10 +177,10 @@
 				var len = keywords.length;
 				var keywordArr = [];
 				for (var i = 0; i < len; i++) {
-					var row = keywords[i].name;
+					var row = keywords[i].title;
 					console.log(row, 1);
 					//定义高亮#9f9f9f
-					var html = row.replace(keyword, "<span style='color: #A86B13;font-weight:bold'>" + keyword + '</span>');
+					var html = row.replace(keyword, "<span style='background: rgba(255, 229, 18, 0.3);'>" + keyword + '</span>');
 					html = '<div>' + html + '</div>';
 					var tmpObj = {
 						keyword: keywords[i],
@@ -180,111 +191,13 @@
 			
 				return keywordArr;
 			},
-			Toresults() {
-				var keyword = this.keyValue;
-				this.keyword = keyword;
-				// this.defaultKeyword = keyword;
-				this.saveKeyword(keyword); //保存为历史
-				// uni.showToast({
-				// 	title: keyword,
-				// 	icon: 'none',
-				// 	duration: 2000
-				// });
-				uni.request({
-					url: this.globalUrl + '/search',
-					data: {
-						query: keyword,
-						hit: 8
-					},
-					success: res => {
-						console.log('搜素数据', res);
-						uni.setStorageSync('article_id', res.data);
-						console.log('存储数据', res.data);
-						if(res.data.code == 0){
-							uni.navigateTo({
-								url: '../searchResults/searchResults'
-							});
-						}
-					}
-				});
-			},
-			//执行搜索
-			doSearch(keyword) {
-				if (!keyword) return false;
-			
-				keyword = keyword === false ? this.keyword : keyword;
-				this.keyword = keyword;
-				// this.defaultKeyword = keyword;
-				this.saveKeyword(keyword); //保存为历史
-				// uni.showToast({
-				// 	title: keyword,
-				// 	icon: 'none',
-				// 	duration: 2000
-				// });
-				uni.request({
-					url: this.globalUrl + '/search',
-					data: {
-						query: keyword,
-						hit: 8
-					},
-					success: res => {
-						console.log('搜素数据', res);
-						uni.setStorageSync('article_id', res.data);
-						if(res.data.code == 0){
-							uni.navigateTo({
-								url: '../searchResults/searchResults'
-							});
-						}
-						
-					}
-				})
-				
-			},
+			// 点击搜索列表跳转
 			goSearch(keyword) {
 				console.log(keyword);
-			
-				if (keyword.type) {
-					if (keyword.type == 'area') {
-						let obj = {
-							state_id: keyword.state_id,
-							name: keyword.name,
-							image: keyword.image,
-							city_id: keyword.city_id
-						};
-						uni.navigateTo({
-							url: '/pages/provinces/provinces?id=' + JSON.stringify(obj)
-						});
-					}
-					if (keyword.type == 'site') {
-						uni.navigateTo({
-							url: '/pages/positionContent/positionContent?id=' + keyword.id
-						});
-					}
-				} else {
-					this.defaultKeyword = keyword.name;
-					this.saveKeyword(keyword.name); //保存为历史
-					// uni.showToast({
-					// 	title: keyword.name,
-					// 	icon: 'none',
-					// 	duration: 2000
-					// });
-					uni.request({
-						url: this.globalUrl + '/search',
-						data: {
-							query: keyword.name,
-							hit: 8
-						},
-						success: res => {
-							console.log('搜素数据', res);
-							uni.setStorageSync('article_id', res.data);
-							if(res.data.code == 0){
-								uni.navigateTo({
-									url: '../searchResults/searchResults'
-								});
-							}
-						}
-					});
-				}
+				var question_id = keyword.question_id
+				uni.navigateTo({
+					url: '/pages/questionsDetail/questionsDetail?question_id=' + question_id
+				});
 			},
 			back() {
 				uni.navigateBack({
@@ -412,77 +325,46 @@
 	background-color: #eee;
 }
 .keyword-entry {
+	width: 100%;
 	position: relative;
-	width: 94%;
-	height: 96rpx;
 	margin: 0 3% 0 0;
-	padding-left: 40rpx;
+	padding:0rpx 24rpx;
 	font-size: 32rpx;
 	color: #606266;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
-.keyword-entry .liIcon {
-	margin-left: 12rpx;
-	margin-right: 12rpx;
 
-	width: 16rpx;
-	height: 16rpx;
-	background: rgba(255, 255, 255, 1);
-	border: 4rpx solid rgba(201, 202, 209, 1);
-	border-radius: 50%;
-}
-.keyword-entry .otherIcon {
-	width: 40rpx;
-	height: 40rpx;
-	background: rgba(92, 198, 110, 1);
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	image{
-		width: 24rpx;
-		height: 24rpx;
-		
-	}
-}
-.keyword-entry .otherIcon1 {
-	width: 40rpx;
-	height: 40rpx;
-	background: rgba(250, 140, 22, 1);
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	image{
-		width: 24rpx;
-		height: 24rpx;
-	}
-}
-
-.keyword-entry .otherText {
-	font-size: 24rpx;
-	// width: 60rpx;
+.keyword-entry .keyword-text {
+	width: 100%;
+	font-size: 30rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
+	color: #303133;
+	line-height: 30rpx;
+	padding: 30rpx 0rpx;
+
+}
+.keyword-entry .keyword-text {
+	border-top: solid 0.5rpx #edeff2;
+}
+.kTB{
+	margin-top: 16rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
 	color: #606266;
 	line-height: 24rpx;
-	position: absolute;
-	right: 30rpx;
-}
-.keyword-entry .keyword-text {
-	height: 96rpx;
-	display: flex;
-	color: #303133;
-	font-size: 16px;
-	margin-left: 16rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	align-items: center;
-}
-.keyword-entry .keyword-text {
-	width: 90%;
-	border-bottom: solid 0.5rpx #edeff2;
+	text{
+		font-size: 24rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #606266;
+		line-height: 24rpx;
+
+	}
+
 }
 
 .search-bottom {
@@ -547,14 +429,47 @@
 	align-items: center;
 	margin-bottom: 40rpx;
 }
+.nextBtn{
+	width: 124rpx;
+	height: 52rpx;
+	background: #FFE512;
+	border-radius: 26rpx;
+	font-size: 28rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #303133;
+	line-height: 52rpx;
+	text-align: center;
+
+}
 // 提示
 .tipsBox{
+	margin-top: 240rpx;
 	padding: 28rpx;
 	.tipsTitle{
 		margin-bottom: 20rpx;
+		font-size: 32rpx;
+		font-family: PingFangSC-Semibold, PingFang SC;
+		font-weight: 600;
+		color: #303133;
+		line-height: 32rpx;
+
+		.tipsLine{
+			width: 64rpx;
+			height: 20rpx;
+			background: #FFE512;
+			border-radius: 2rpx 10rpx 2rpx 2rpx;
+			margin-top: -16rpx;
+
+		}
 	}
 	.tipsText{
-		
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #909399;
+		line-height: 42rpx;
+
 	}
 }
 </style>
