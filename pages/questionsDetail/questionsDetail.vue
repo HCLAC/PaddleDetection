@@ -17,8 +17,11 @@
 					<view class="cardTopText">
 						领途羊·旅行问答
 					</view>
-					<view class="cardFollow">
+					<view class="cardFollow" v-if="!detail.is_follow" @click="Fllow()">
 						关注
+					</view>
+					<view class="cardFollow" v-if="detail.is_follow" @click="Fllow()">
+						已关注
 					</view>
 				</view>
 				<view class="cradTitle">
@@ -129,6 +132,8 @@
 				</view>
 			</view>
 		</view>
+		<!-- 弹窗 -->
+		<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 	</view>
 </template>
 
@@ -148,7 +153,9 @@
 				inputbottom: {
 					bottom: ''
 				},
-				textareafocus: false
+				textareafocus: false,
+				show: false,
+				content: '',
 			};
 		},
 		onLoad(question_id) {
@@ -299,6 +306,68 @@
 						}
 			
 			
+					}
+				})
+			},
+			// 关注
+			Fllow() {
+				// console.log(item, index)
+				var that = this;
+				let msg = this.detail.is_follow ? '确认取消关注?' : '确认关注?'
+				let status = this.detail.is_follow ? 0 : 1
+			
+				if (status == 0) {
+			
+					that.show = true
+					that.content = '确认取消关注?'
+				} else {
+					uni.request({
+						url: that.globalUrl + '/questions/follow',
+						data: {
+							question_id: that.question_id
+						},
+						method: 'POST',
+						header: {
+							Authorization: uni.getStorageSync('Authorization')
+						},
+						success: (res) => {
+							if (res.data.code != 0) {
+								// debugger
+								uni.navigateTo({
+									url: '../login/login'
+								});
+							} else {
+								console.log(res)
+								that.detail.is_follow = status == 1 ? true : false
+							}
+						}
+					})
+				}
+			},
+			// 点击确认
+			confirm() {
+				var that = this;
+				let msg = this.detail.is_follow ? '确认取消关注?' : '确认关注?'
+				let status = this.detail.is_follow ? 0 : 1
+				uni.request({
+					url: that.globalUrl + '/questions/follow',
+					data: {
+						question_id: that.question_id
+					},
+					method: 'POST',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: (res) => {
+						if (res.data.code != 0) {
+							// debugger
+							uni.navigateTo({
+								url: '../login/login'
+							});
+						} else {
+							console.log(res)
+							that.detail.is_follow = status == 1 ? true : false
+						}
 					}
 				})
 			},
