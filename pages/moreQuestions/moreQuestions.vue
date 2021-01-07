@@ -13,6 +13,15 @@
 		<!-- 搜索框 -->
 		<view class="searchBox">
 			<u-search v-model="keyword" @search="search" @custom="custom" :show-action="true" :clearabled="false" placeholder="输入搜索内容" action-text="取消" :animation="false"></u-search>
+			<!-- <mSearch
+				class="mSearch-input-box"
+				:mode="2"
+				button="inside"
+				placeholder="输入搜索内容"
+				
+				@search="search"
+				v-model="keyword"
+			></mSearch> -->
 		</view>
 		<!-- 问答列表 -->
 		<view class="answersList">
@@ -101,6 +110,7 @@
 </template>
 
 <script>
+	import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision.vue';
 	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 	export default {
 		data() {
@@ -117,6 +127,10 @@
 			};
 		},
 		mixins: [MescrollMixin],
+		components: {
+			//引用mSearch组件，如不需要删除即可
+			mSearch
+		},
 		onLoad(option) {
 			console.log(option)
 			this.state_id = option.state_id

@@ -11,9 +11,9 @@
 				height: height + 'rpx'
 			}"
 		>
-			<!-- <view class="u-icon-wrap">
+			<view class="u-icon-wrap">
 				<u-icon class="u-clear-icon" :size="30" :name="searchIcon" :color="searchIconColor ? searchIconColor : color"></u-icon>
-			</view> -->
+			</view>
 			<input
 				confirm-type="search"
 				@blur="blur"
@@ -295,7 +295,7 @@ export default {
 .u-content {
 	@include vue-flex;
 	align-items: center;
-	padding-right:  18rpx;
+	padding:0rpx  18rpx;
 	flex: 1;
 }
 
@@ -308,7 +308,7 @@ export default {
 	flex: 1;
 	font-size: 28rpx;
 	line-height: 1;
-	margin-right:  10rpx;
+	margin:0rpx  10rpx;
 	color: $u-tips-color;
 }
 

@@ -7,7 +7,7 @@
 					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="slottitle">我要提问</view>
+				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
 		<view class="questionsTitle">
@@ -47,12 +47,14 @@
 				</view>
 				<view class="tipsCheck">
 					<view class="tip" v-for="(item,index) in tipsCheck" :key="index" @click="clickTipsCheck(item)">
-						#{{item.name}}
+						<image src="../../static/images/aTip.svg" mode=""></image>
+						<text>{{item.name}}</text>
 					</view>
 				</view>
 				<view class="tipsBox">
 					<view class="tip" v-for="(item,index) in tips" :key="index" @click="clickTip(item)">
-						#{{item.name}}
+						<image src="../../static/images/aTip.svg" mode=""></image>
+						<text>{{item.name}}</text>	
 					</view>
 				</view>
 			</view>
@@ -279,16 +281,39 @@
 			// 点击标签
 			clickTip(item){
 				// console.log(item)
-				this.tipsCheck.push(item)
-				let listVar = new Array
-				for(let i=0; i<this.tips.length; i++){
-					listVar.push(this.tips)
-					if (this.tips[i] == item){
-						listVar[i].splice(i, 1)
+				if(this.tipsCheck.length < 3){
+					this.tipsCheck.push(item)
+					let listVar = new Array
+					for(let i=0; i<this.tips.length; i++){
+						listVar.push(this.tips)
+						if (this.tips[i] == item){
+							listVar[i].splice(i, 1)
+						}
 					}
+					this.tipsCheckId.push(item.label_id)
+					console.log(this.tipsCheckId)
+				}else{
+					// this.tipsCheck.shift()
+					
+					var tip = this.tipsCheck.shift()
+					console.log(tip)
+					this.tips.push(tip)
+					
+					this.tipsCheck.push(item)
+					
+					let listVar = new Array
+					for(let i=0; i<this.tips.length; i++){
+						listVar.push(this.tips)
+						if (this.tips[i] == item){
+							listVar[i].splice(i, 1)
+						}
+					}
+					this.tipsCheckId.shift()
+					
+					this.tipsCheckId.push(item.label_id)
+					console.log(this.tipsCheckId)
 				}
-				this.tipsCheckId.push(item.label_id)
-				console.log(this.tipsCheckId)
+				
 			},
 			// 点击已选标签
 			clickTipsCheck(item){
@@ -659,6 +684,11 @@
 				font-family: PingFangSC-Light, PingFang SC;
 				font-weight: 300;
 				color: #606266;
+				image{
+					width: 20rpx;
+					height: 19.6rpx;
+					margin-right: 4rpx;
+				}
 			}
 		}
 		.tipsBox{
@@ -678,7 +708,11 @@
 				font-family: PingFangSC-Light, PingFang SC;
 				font-weight: 300;
 				color: #606266;
-
+				image{
+					width: 20rpx;
+					height: 19.6rpx;
+					margin-right: 4rpx;
+				}
 
 			}
 		}

@@ -7,7 +7,7 @@
 					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="slottitle">我要提问</view>
+				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
 		<!-- 问题 -->
@@ -27,6 +27,7 @@
 					:show-action="false" 
 					placeholder-color="#303133"
 					:input-style="inputStyle"
+					search-icon-color="#ffffff"
 					@change="inputChange"
 				></u-search>
 			</view>
@@ -265,7 +266,7 @@
 	width: 100%;
 	box-sizing: border-box;
 	background-color: rgb(255, 255, 255);
-	padding: 8rpx 28rpx 0;
+	padding: 8rpx 28rpx 0 0;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
