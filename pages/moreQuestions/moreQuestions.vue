@@ -123,7 +123,8 @@
 				state_id:'',
 				city_id:'',
 				selectedList:{},
-				newestList:{}
+				newestList:{},
+				isFixed:false
 			};
 		},
 		mixins: [MescrollMixin],
@@ -136,6 +137,26 @@
 			this.state_id = option.state_id
 			this.city_id = option.city_id
 			this.getAnswersList()
+		},
+		mounted() {
+			const query = uni.createSelectorQuery().in(this);
+			query.select('#selectcard').boundingClientRect(data => {
+			console.log("得到布局位置信息" + JSON.stringify(data));
+			console.log("节点离页面顶部的距离为" + data.top);
+			 
+			if(data.top == 0 ){
+				this.cardheight = 200
+			}else{
+				this.cardheight = data.top
+			}
+			}).exec();
+		},
+		onPageScroll(e) {
+			if (e.scrollTop >  this.cardheight) {
+				this.isFixed = true;
+			} else {
+				this.isFixed = false;
+			}
 		},
 		methods:{
 			// 获取问答列表
@@ -464,8 +485,8 @@
 	// font-size: 40rpx;
 	// font-weight: 500;
 	// padding-left: 32rpx;
-	padding-top: 48rpx;
-	padding-bottom: 22rpx;
+	padding-top: 28rpx;
+	// padding-bottom: 22rpx;
 	display: flex;
 	border-bottom: 2rpx solid #edeff2;
 }

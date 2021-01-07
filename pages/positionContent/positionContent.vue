@@ -95,35 +95,35 @@
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-if="attDetail.data.rate == 4.5">
+					<view class="rateStart" v-if="attDetail.data.rate >= 4.1 && attDetail.data.rate < 5">
 						<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 						<image src="../../static/images/star_svg/starCopy13.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-if="attDetail.data.rate == 3.5">
+					<view class="rateStart" v-if="attDetail.data.rate >= 3.1 && attDetail.data.rate < 4">
 						<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 						<image src="../../static/images/star_svg/starCopy12.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-if="attDetail.data.rate == 2.5">
+					<view class="rateStart" v-if="attDetail.data.rate >= 2.1 && attDetail.data.rate < 3">
 						<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 						<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-if="attDetail.data.rate == 1.5">
+					<view class="rateStart" v-if="attDetail.data.rate >= 1.1 && attDetail.data.rate < 2">
 						<image src="../../static/images/star_svg/star11.svg" mode=""></image>
 						<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-if="attDetail.data.rate == 0.5">
+					<view class="rateStart" v-if="attDetail.data.rate >= 0.1 && attDetail.data.rate < 1">
 						<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
