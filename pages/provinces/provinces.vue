@@ -179,21 +179,25 @@
 									</view>
 								</view>
 							</view>
-							<view class="tQContent">
+							<view class="tQContent" v-if="questions.length != 0">
 								<view class="tQCard" v-for="(item,index) in questions " :key="index" @click="toQuestionsDetail(item)">
 									<view class="tQCRight">
 										<view class="tQCTitle">
 											{{item.title}}
 										</view>
 										<view class="tQCParse">
-											<u-parse ref="parse"  style="overflow: hidden;" lazy-load
-											 :html="item.content"></u-parse>
+											{{item.content}}
+											<!-- <u-parse ref="parse" 
+											 :html="item.content"></u-parse> -->
 										</view>
 									</view>
 								</view>
 								<view class="tQToMore" @click="toMoreQuestions">
 									查看更多
 								</view>
+							</view>
+							<view class="tQContentNull" v-if="questions.length == 0">
+								还没有问答，快来做第一个提问者吧~
 							</view>
 						</view>
 						<!-- 正在旅行 -->
@@ -364,7 +368,7 @@ export default {
 				use:false,
 				bgColor:'#F8F8F8'
 			},
-			questions:{}
+			questions:null
 		};
 	},
 	comments: {
@@ -547,7 +551,10 @@ export default {
 					console.log('获取精选问题', res.data.data);
 					this.questions = res.data.data
 				}
-			});
+			})
+			
+			
+
 		},
 		// 跳转问题详情
 		toQuestionsDetail(item){
@@ -647,7 +654,7 @@ export default {
 					},
 					success: res => {
 						console.log('城市信息==', res);
-						(this.item = res.data.data), (this.name = this.name = res.data.data.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), (this.show = false);
+						(this.item = res.data.data), (this.name = this.name = res.data.data.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(),this.getQuestions(), (this.show = false);
 						this.mescroll.resetUpScroll()
 					}
 				});
@@ -734,7 +741,7 @@ export default {
 					},
 					success: res => {
 						console.log('省份信息==', res);
-						(this.item = res.data.data), (this.name = item.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), (this.show = false);
+						(this.item = res.data.data), (this.name = item.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(),this.getQuestions(), (this.show = false);
 						this.mescroll.resetUpScroll()
 					}
 				});
@@ -807,9 +814,19 @@ export default {
 		},
 		// 提问按钮
 		toQuestions(){
-			uni.navigateTo({
-				url:'/pages/questions/questions'
-			})
+			// console.log()
+			var Authorization = uni.getStorageSync('Authorization')
+			console.log(Authorization)
+			if (!Authorization) {
+				uni.navigateTo({
+					url: '../login/login'
+				});
+			}else{
+				uni.navigateTo({
+					url:'/pages/questions/questions'
+				})
+			}
+			
 		},
 		back() {
 			uni.navigateBack({
@@ -958,6 +975,17 @@ export default {
 			// 此处仍可以继续写其他接口请求...
 			// 调用其他方法...
 		}
+	},
+	filters: {
+		richTextFormat(value) {
+			// value = value.replace(/<\/?[^>]*>/g,'')
+			value = value.replace(/<\/?.+?>/g,'')
+		  	value = value.replace(/\s+/g,'')
+			  if (value.length > 30) {
+		    	return value.slice(0, 30) + "...";
+		  	}
+		  	return value;
+		},
 	}
 };
 </script>
@@ -1923,27 +1951,25 @@ export default {
 					color: #303133;
 					line-height: 56rpx;
 					margin-bottom: 20rpx;
-					display: -webkit-box;
 					overflow: hidden;
 					text-overflow: ellipsis;
 					word-wrap: break-word;
-					white-space: normal !important;
 					-webkit-line-clamp: 2;
 					-webkit-box-orient: vertical;
 				}
 				.tQCParse{
+					width: 100%;
 					font-size: 30rpx;
 					font-family: PingFangSC-Regular, PingFang SC;
 					font-weight: 400;
 					color: #606266;
 					line-height: 42rpx;
-					display: -webkit-box;
-					overflow: hidden;
+					overflow:hidden;
 					text-overflow: ellipsis;
-					word-wrap: break-word;
-					white-space: normal !important;
-					-webkit-line-clamp: 2;
+					display: -webkit-box;
+					-webkit-line-clamp: 3;
 					-webkit-box-orient: vertical;
+
 				}
 			}
 		}
@@ -1956,6 +1982,15 @@ export default {
 			line-height: 28rpx;
 			margin-top: 40rpx;
 		}
+	}
+	.tQContentNull{
+		margin: 80rpx 0rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #909399;
+		line-height: 28rpx;
+		text-align: center;
 	}
 }
 </style>

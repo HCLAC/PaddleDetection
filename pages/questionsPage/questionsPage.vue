@@ -203,6 +203,25 @@
 					success: res => {
 						console.log(111, res);
 						this.name = res.city.substr(0, res.city.length - 1);
+						var city = res.city
+						var state = res.province
+						uni.request({
+							url: this.globalUrl + '/user/location',
+							data: {
+								state: state,
+								city: city
+							},
+							header: {
+								Authorization: uni.getStorageSync('Authorization')
+							},
+							method: 'POST',
+							success: res => {
+								console.log('城市信息=', res);
+								this.state_id = res.data.data.state_id
+								this.city_id = res.data.data.city_id
+								
+							}
+						});
 					},
 				})
 			},

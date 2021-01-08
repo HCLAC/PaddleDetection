@@ -52,15 +52,16 @@
 			</view>
 		</view>
 		<!-- 问题回答 -->
-		<view class="answersTip">
-			<text>全部回答·{{answersNum}}</text>
+		<view class="answersTip" v-if="answersNum != 0">
+			<text>全部回答·{{answersNum || 0}}</text>
 			<view class="answersLine"></view>
 		</view>
-		<view class="answersList">
+		<view class="answersList" v-if="answersNum != 0">
 			<view class="answersCardBox" v-for=" (item,index) in answersList" :key="index" >
 				<view class="answersCardTop">
 					<view class="answersAuthor">
-						<image :src="item.avatar" mode=""></image>
+						<image :src="item.avatar" mode="" v-if="item.avatar"></image>
+						<image src="../../static/images/userImg.svg" v-if="!item.avatar" mode=""></image>
 						<view class="userName">
 							{{item.account_id}}
 						</view>
@@ -90,9 +91,12 @@
 				<view class="answersLine">
 				</view>
 			</view>
-			<view class="moreAnswers" @click="moreAnswers()">
+			<view class="moreAnswers" @click="moreAnswers()" v-if="answersNum > 3">
 				查看全部{{answersNum}}条回答
 			</view>
+		</view>
+		<view class="answersNull" v-if="answersNum == 0">
+			还没有收到回答
 		</view>
 		<!-- 我要提问按钮 -->
 		<view class="myAnswersBtn" @click="commentInput" v-if="!textareafocus">
@@ -118,18 +122,22 @@
 				</view>
 				
 			</view>
-			<view class="tQContent">
+			<view class="tQContent" v-if="questions.length != 0">
 				<view class="tQCard" v-for="(item,index) in questions " :key="index" @click="toQuestionsDetail(item)">
 					<view class="tQCRight">
 						<view class="tQCTitle">
 							{{item.title}}
 						</view>
 						<view class="tQCParse">
-							<u-parse ref="parse"  style="overflow: hidden;" lazy-load
-							 :html="item.content"></u-parse>
+							{{item.content}}
+							<!-- <u-parse ref="parse"  style="overflow: hidden;" lazy-load
+							 :html="item.content"></u-parse> -->
 						</view>
 					</view>
 				</view>
+			</view>
+			<view class="tQNull" v-if="questions.length == 0">
+				暂无相关问题
 			</view>
 		</view>
 		<!-- 弹窗 -->
@@ -599,7 +607,7 @@
 						color: #303133;
 						line-height: 34rpx;
 						text-shadow: 0rpx 8rpx 28rpx #EDEFF2;
-
+						margin-left: 16rpx;
 					}
 				}
 				.questionsDate{
@@ -742,6 +750,16 @@
 			margin-bottom: 80rpx;
 		}
 	}
+	.answersNull{
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #909399;
+		line-height: 28rpx;
+		text-align: center;
+		margin: 80rpx 0rpx;
+
+	}
 	.line{
 		width: 100%;
 		height: 20rpx;
@@ -826,13 +844,12 @@
 						font-weight: 400;
 						color: #606266;
 						line-height: 42rpx;
-						display: -webkit-box;
-						overflow: hidden;
+						overflow:hidden; 
 						text-overflow: ellipsis;
-						word-wrap: break-word;
-						white-space: normal !important;
-						-webkit-line-clamp: 2;
+						display: -webkit-box;
+						-webkit-line-clamp: 3;
 						-webkit-box-orient: vertical;
+
 					}
 				}
 			}
@@ -845,6 +862,16 @@
 				line-height: 28rpx;
 				margin-top: 40rpx;
 			}
+		}
+		.tQNull{
+			margin-top: 80rpx;
+			margin-bottom: 190rpx;
+			font-size: 28rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #909399;
+			line-height: 28rpx;
+			text-align: center;
 		}
 	}
 	// 我来回答

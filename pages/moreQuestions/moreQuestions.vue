@@ -12,7 +12,7 @@
 		</view>
 		<!-- 搜索框 -->
 		<view class="searchBox">
-			<u-search v-model="keyword" @search="search" @custom="custom" :show-action="true" :clearabled="false" placeholder="输入搜索内容" action-text="取消" :animation="false"></u-search>
+			<u-search v-model="keyword" @search="search" @custom="custom" :show-action="true" search-icon-color="#c9cad1" placeholder="输入搜索内容" placeholder-color="#c9cad1" action-text="取消" :animation="true"></u-search>
 			<!-- <mSearch
 				class="mSearch-input-box"
 				:mode="2"
@@ -268,9 +268,17 @@
 			},
 			// 提问按钮
 			toQuestions(){
-				uni.navigateTo({
-					url:'/pages/questions/questions'
-				})
+				var Authorization = uni.getStorageSync('Authorization')
+				console.log(Authorization)
+				if (!Authorization) {
+					uni.navigateTo({
+						url: '../login/login'
+					});
+				}else{
+					uni.navigateTo({
+						url:'/pages/questions/questions'
+					})
+				}
 			},
 			// 返回上一页
 			back() {
