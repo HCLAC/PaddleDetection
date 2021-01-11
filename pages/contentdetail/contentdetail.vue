@@ -558,7 +558,7 @@
 					},
 					success: res => {
 						// this.commentsList = res.data.data.list
-						this.value = ''
+						this.content = ''
 						uni.hideKeyboard()
 						// this.$refs.comment.toggleMask('none');
 						this.getComments()
@@ -1196,16 +1196,20 @@
 	}
 
 	.adress {
-		// width: 100rpx;
 		height: 40rpx;
 		margin-top: 32rpx;
 		margin-left: 28rpx;
+		margin-right: 28rpx;
 		background: rgba(0, 145, 255, 0.1);
 		border-radius: 20rpx;
 		// border: 2rpx solid rgba(0, 145, 255, 1);
 		display: inline-block;
 		line-height: 40rpx;
 		padding: 0 14rpx;
+		// display: flex;
+		// align-items: center;
+		
+		 
 	}
 
 	.adreessIcon {
@@ -1213,6 +1217,7 @@
 		height: 24rpx;
 		margin-top: 8rpx;
 		float: left;
+		
 	}
 
 	/*  #ifdef  MP-TOUTIAO  */
@@ -1226,11 +1231,15 @@
 	/*  #endif  */
 
 	.adressText {
+		max-width: 400rpx;
 		font-size: 22rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: rgba(0, 145, 255, 1);
 		float: right;
+		overflow: hidden;
+		white-space: nowrap; 
+		text-overflow: ellipsis; 
 	}
 
 	// 内容

@@ -300,7 +300,7 @@
 			// 点击标签
 			clickTip(item){
 				// console.log(item)
-				if(this.tipsCheck.length < 3){
+				if(this.tipsCheck.length < 1){
 					this.tipsCheck.push(item)
 					let listVar = new Array
 					for(let i=0; i<this.tips.length; i++){
@@ -719,7 +719,8 @@
 				margin-right: 20rpx;
 				margin-bottom: 20rpx;
 				text-align: center;
-				line-height: 48rpx;
+				// align-items: center;
+				// line-height: 44rpx;
 				padding: 0 20rpx;
 				background: #FFFFFF;
 				border: 2rpx solid #C9CAD1;

@@ -61,7 +61,8 @@
 					</view>
 					<view class="authorBox">
 						<view class="author">
-							<image :src="item.avatar" mode=""></image>
+							<image :src="item.avatar" mode="" v-if="item.avatar"></image>
+							<image src="../../static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
 							<text>{{item.account_name}}</text>
 						</view>
 						<view class="lookAnswers">
@@ -87,7 +88,8 @@
 					</view>
 					<view class="authorBox">
 						<view class="author">
-							<image :src="item.avatar" mode=""></image>
+							<image :src="item.avatar" mode="" v-if="item.avatar"></image>
+							<image src="../../static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
 							<text>{{item.account_name}}</text>
 						</view>
 						<view class="lookAnswers">
@@ -561,8 +563,8 @@
 	position: fixed;
 	top: 126rpx;
 	z-index: 2;
-	height: 98rpx;
-	padding-top: 48rpx;
+	height: 108rpx;
+	padding-top: 58rpx;
 	display: flex;
 }
 .noFix {

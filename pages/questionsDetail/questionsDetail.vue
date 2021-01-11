@@ -20,7 +20,7 @@
 					<view class="cardFollow" v-if="!detail.is_follow" @click="Fllow()">
 						关注
 					</view>
-					<view class="cardFollow" v-if="detail.is_follow" @click="Fllow()">
+					<view class="cardIsFollow" v-if="detail.is_follow" @click="Fllow()">
 						已关注
 					</view>
 				</view>
@@ -32,6 +32,7 @@
 						#{{item}}
 					</view>
 				</view>
+				<image class="answersIcon" src="../../static/images/answersIcon.png" mode=""></image>
 			</view>
 			<view class="cardBottomBox">
 				<view class="cardContent">
@@ -39,8 +40,8 @@
 				</view>
 				<view class="cardAuthorBox">
 					<view class="author">
-						<image class="userImg" src="../../static/images/userImg.svg" v-if="detail.avatar == null" mode="" ></image>
-						<image class="userImg" :src="detail.avatar" v-if="detail.avatar != null" mode="" ></image>
+						<image class="userImg" src="../../static/images/userImg.svg" v-if="!detail.avatar" mode="" ></image>
+						<image class="userImg" :src="detail.avatar" v-if="detail.avatar" mode="" ></image>
 						<view class="authorName">
 							{{detail.account_name}}
 						</view>
@@ -279,7 +280,7 @@
 					},
 					success: res => {
 						// this.commentsList = res.data.data.list
-						this.value = ''
+						this.content = ''
 						uni.hideKeyboard()
 						// this.$refs.comment.toggleMask('none');
 						this.getanswersList()
@@ -505,6 +506,7 @@
 		margin-left: 32rpx;
 		margin-right: 32rpx;
 		.cardTopBox{
+			position: relative;
 			width: 686rpx;
 			height: 296rpx;
 			background: linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);
@@ -537,6 +539,19 @@
 					color: #0091FF;
 					line-height: 44rpx;
 				}
+				.cardIsFollow{
+					width: 100rpx;
+					height: 44rpx;
+					background: rgba(255, 255, 255, 0.35);
+					border-radius: 22rpx;
+					text-align: center;
+					font-size: 24rpx;
+					font-family: PingFangSC-Medium, PingFang SC;
+					font-weight: 500;
+					color: #0091FF;
+					line-height: 44rpx;
+
+				}
 			}
 			.cradTitle{
 				width: 638rpx;
@@ -566,6 +581,13 @@
 					margin-right: 16rpx;
 					text-align: center;
 				}
+			}
+			.answersIcon{
+				width: 176rpx;
+				height: 206rpx;
+				position: absolute;
+				bottom: 16rpx;
+				right: 4rpx;
 			}
 		}
 		.cardBottomBox{

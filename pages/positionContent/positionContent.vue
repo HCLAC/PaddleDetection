@@ -174,7 +174,7 @@
 				</view>
 			</view>
 			<view class="magrinBck" v-show="attDetail.data.articles"></view>
-			<view class="gonglueBox" v-show="attDetail.data.articles">
+			<view class="gonglueBox" v-if="attDetail.data.articles.length != 0 && attDetail.data.articles != null">
 				<view class="title">热门攻略</view>
 				<view class="contentBox">
 					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[0].article_id" v-show="attDetail.data.articles[0]">

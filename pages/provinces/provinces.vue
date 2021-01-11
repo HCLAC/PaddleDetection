@@ -179,7 +179,7 @@
 									</view>
 								</view>
 							</view>
-							<view class="tQContent" v-if="questions.length != 0">
+							<view class="tQContent" v-if="questions.length != 0 || questions != undefined">
 								<view class="tQCard" v-for="(item,index) in questions " :key="index" @click="toQuestionsDetail(item)">
 									<view class="tQCRight">
 										<view class="tQCTitle">
@@ -187,8 +187,6 @@
 										</view>
 										<view class="tQCParse">
 											{{item.content}}
-											<!-- <u-parse ref="parse" 
-											 :html="item.content"></u-parse> -->
 										</view>
 									</view>
 								</view>
@@ -378,7 +376,10 @@ export default {
 		let item = JSON.parse(options.id);
 		console.log('参数', item);
 		(this.item = item), (this.name = item.name);
-		this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), this.getCity(),this.getQuestions();
+		this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), 
+		this.getCity()
+		,this.getQuestions()
+		;
 	},
 	methods: {
 		
@@ -548,8 +549,8 @@ export default {
 					Authorization: uni.getStorageSync('Authorization')
 				},
 				success: res => {
-					console.log('获取精选问题', res.data.data);
 					this.questions = res.data.data
+					console.log('获取精选问题', this.questions);
 				}
 			})
 			
@@ -654,7 +655,9 @@ export default {
 					},
 					success: res => {
 						console.log('城市信息==', res);
-						(this.item = res.data.data), (this.name = this.name = res.data.data.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(),this.getQuestions(), (this.show = false);
+						(this.item = res.data.data), (this.name = this.name = res.data.data.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(),
+						this.getQuestions(),
+						(this.show = false);
 						this.mescroll.resetUpScroll()
 					}
 				});
@@ -741,7 +744,9 @@ export default {
 					},
 					success: res => {
 						console.log('省份信息==', res);
-						(this.item = res.data.data), (this.name = item.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(),this.getQuestions(), (this.show = false);
+						(this.item = res.data.data), (this.name = item.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(),
+						this.getQuestions(), 
+						(this.show = false);
 						this.mescroll.resetUpScroll()
 					}
 				});
@@ -1217,7 +1222,7 @@ export default {
 .trip {
 	margin-top: 44rpx;
 	margin-left: 28rpx;
-	padding-bottom: 40rpx;
+	// padding-bottom: 40rpx;
 	background: #FFFFFF;
 }
 .tripHeader {
@@ -1884,6 +1889,7 @@ export default {
 .line{
 	width: 100%;
 	height: 20rpx;
+	margin-top: 40rpx;
 	background: #F8F8F8;
 }
 // 旅途问答
