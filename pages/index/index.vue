@@ -1140,11 +1140,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.left,
-	.right {
-		margin-left: 10rpx;
-		width: 48%;
-	}
+	
 
 	/* 头条小程序组件内不能引入字体 */
 	/* #ifdef MP-TOUTIAO */
@@ -1621,6 +1617,7 @@
 	/* 正在旅行 */
 	.touring {
 		margin-top: 24rpx;
+		background: #FFFFFF;
 	}
 
 	.touring .tourtext {
@@ -1639,24 +1636,20 @@
 		display: flex;
 		flex-flow: row;
 		flex-wrap: wrap;
-		// column-count:2; 
-		// column-gap: 20rpx; 
+		padding: 0 14rpx 0 28rpx;
 	}
 
-	.pubuItem {
-		column-count: 2;
-		column-gap: 10rpx;
-	}
 
 	.demo-warter {
-		width: 360rpx;
+		width: 340rpx;
 		margin-top: 0;
-		// margin-left: 10rpx;
+		margin-right: 14rpx;
 		margin-bottom: 16rpx;
 		padding-bottom: 16rpx;
 		/* position: relative; */
 		background-color: #ffffff;
-		border-radius: 8rpx 8rpx 0 0;
+		border-radius: 16rpx 16rpx;
+		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 		// display: inline-block;
 		// break-inside: avoid;
 		// box-sizing: border-box;
@@ -1687,14 +1680,18 @@
 		width: 100%;
 		min-height: 300rpx;
 		max-height: 460rpx;
-		border-radius: 8rpx 8rpx 0 0;
+		// box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+		border-radius: 16rpx 16rpx 0px 0px;
+
 	}
 
 	.demoImage4 {
 		width: 100%;
 		min-height: 272rpx;
 		max-height: 480rpx;
-		border-radius: 8rpx 8rpx 0 0;
+		// box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+		border-radius: 16rpx 16rpx 0px 0px;
+		
 	}
 
 	.videoIcon {
@@ -1765,6 +1762,13 @@
 		color: rgba(48, 49, 51, 1);
 		margin-left: 8rpx;
 		line-height: 46rpx;
+		display: -webkit-box;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		word-wrap: break-word;
+		white-space: normal !important;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
 	}
 
 	.demo-tag {
@@ -1794,6 +1798,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		// box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+		// border-radius: 0px 0px 16rpx 16rpx;
 	}
 
 	.userMessage {

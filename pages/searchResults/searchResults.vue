@@ -866,18 +866,20 @@
 		display: flex;
 		flex-flow: row;
 		flex-wrap: wrap;
+		padding: 0 14rpx 0 28rpx;
 	}
 
 
 	.demo-warter {
-		width: 360rpx;
+		width: 340rpx;
 		margin-top: 0;
+		margin-right: 14rpx;
 		margin-bottom: 20rpx;
 		padding-bottom: 16rpx;
 		/* position: relative; */
 		background-color: #ffffff;
-		// box-shadow: 0px 10rpx 10rpx 10rpx #f8f8f8;
-		border-radius: 8rpx 8rpx 0 0;
+		border-radius: 16rpx 16rpx;
+		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 	}
 
 	.imgBox {
@@ -894,14 +896,16 @@
 		min-height: 300rpx !important;
 		max-height: 460rpx;
 		width: 100%;
-		border-radius: 8rpx 8rpx 0 0;
+		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+		border-radius: 16rpx 16rpx 0px 0px;
 		position: relative;
 	}
 	.demoImage4 {
 		width: 100%;
 		min-height: 272rpx;
 		max-height: 480rpx;
-		border-radius: 8rpx 8rpx 0 0;
+		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+		border-radius: 16rpx 16rpx 0px 0px;
 	}
 	.videoIcon{
 		position: absolute;

@@ -242,6 +242,9 @@
 											</view>
 										</view>
 									</view>
+									<!-- <view class="demo-answers">
+										
+									</view> -->
 								</view>
 								<view class="right">
 									<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
@@ -1302,24 +1305,26 @@ export default {
 }
 
 .wrap {
-	width: 100%;
+	width: 750rpx;
 	display: flex;
 	flex-flow: row;
 	flex-wrap: wrap;
 	margin-top: 24rpx;
+	padding: 0 14rpx 0 28rpx;
 }
 .left {
 	// margin-left: 10rpx;
 }
 .demo-warter {
-	width: 360rpx;
+	width: 340rpx;
 	margin-top: 0;
-	margin-left: 10rpx;
+	margin-right: 14rpx;
 	margin-bottom: 16rpx;
 	padding-bottom: 16rpx;
 	/* position: relative; */
 	background-color: #ffffff;
-	border-radius: 8rpx 8rpx 0 0;
+	border-radius: 16rpx 16rpx;
+	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 }
 
 .demo-top {
@@ -1334,13 +1339,15 @@ export default {
 	min-height: 300rpx !important;
 	max-height: 460rpx;
 	width: 100%;
-	border-radius: 8rpx 8rpx 0 0;
+	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+	border-radius: 16rpx 16rpx 0px 0px;
 }
 .demoImage4 {
 	width: 100%;
 	min-height: 272rpx;
 	max-height: 480rpx;
-	border-radius: 8rpx 8rpx 0 0;
+	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+	border-radius: 16rpx 16rpx 0px 0px;
 }
 .videoIcon{
 	position: absolute;
@@ -1601,173 +1608,7 @@ export default {
 		white-space: nowrap;
 	}
 	
-	/* 正在旅行 */
-	.touring {
-		// margin-top: 24rpx;
-	}
 	
-	.touring .tourtext {
-		width: 160rpx;
-		height: 104rpx;
-		line-height: 104rpx;
-		font-size: 40rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		margin-left: 32rpx;
-	}
-	
-	.wrap {
-		width: 750rpx;
-		display: flex;
-		flex-flow: row;
-		flex-wrap: wrap;
-	}
-	.left{
-		// margin-left: 10rpx;
-	}
-	.demo-warter {
-		width: 360rpx;
-		margin-top: 0;
-		margin-left: 10rpx;
-		margin-bottom: 16rpx;
-		padding-bottom: 16rpx;
-		/* position: relative; */
-		background-color: #ffffff;
-		border-radius: 8rpx 8rpx 0 0;
-	}
-	
-	.demo-top {
-		position: relative;
-	}
-	.imgBox{
-		position: relative;
-	}
-	.demo-image {
-		min-height: 300rpx !important;
-		max-height: 460rpx;
-		width: 100%;
-		border-radius: 8rpx 8rpx 0 0;
-		position: relative;
-	}
-	
-	.adress {
-		position: absolute;
-		left: 0;
-		bottom: 8rpx;
-		display: flex;
-		align-items: center;
-		max-width: 240rpx;
-		height: 40rpx;
-		padding-right: 16rpx;
-		background: rgba(0, 0, 0, 0.6);
-		border-radius: 0px 14rpx 0px 0px;
-	}
-	
-	.adreessIcon {
-		width: 24rpx;
-		height: 24rpx;
-		margin: 0 4rpx;
-		display: flex;
-	}
-	
-	.adreessIcon image {
-		width: 100%;
-		height: 100%;
-	}
-	
-	.adressText {
-		max-width: 192rpx;
-		font-size: 24rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: rgba(255, 255, 255, 1);
-		/* line-height:24px; */
-		/* margin-right: 16rpx; */
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-	
-	.titleTip {
-		display: flex;
-		margin-top: 10rpx;
-		margin-left: 8rpx;
-	}
-	
-	.demo-title {
-		width: 278rpx;
-		/* max-height: 70rpx; */
-		font-size: 28rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: rgba(48, 49, 51, 1);
-		margin-left: 8rpx;
-		line-height: 46rpx;
-	}
-	
-	.demo-tag {
-		margin-top: 9rpx;
-	}
-	
-	.demo-tag-owner {
-		width: 52rpx;
-		height: 28rpx;
-		text-align: center;
-		align-items: center;
-		color: #0091ff;
-		border: 2rpx solid rgba(0, 145, 255, 1);
-		border-radius: 14rpx;
-		font-size: 16rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: rgba(0, 145, 255, 1);
-		/* margin-top: 6rpx; */
-	}
-	
-	.demo-user {
-		font-size: 10rpx;
-		margin-top: 24rpx;
-		/* margin-bottom: 16rpx; */
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	
-	.userMessage {
-		font-size: 10px;
-		font-weight: 900;
-		color: #464646;
-		display: flex;
-		align-items: center;
-	}
-	
-	.userHeard {
-		width: 40rpx;
-		height: 40rpx;
-		border-radius: 50%;
-		margin-left: 14rpx;
-	}
-	
-	.userNikename {
-		font-size: 24rpx;
-		margin-left: 16rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: rgba(96, 98, 102, 1);
-	}
-	
-	.count {
-		display: flex;
-		align-items: center;
-		margin-right: 20rpx;
-	}
-	
-	.countImg {
-		width: 26rpx;
-		height: 26rpx;
-		margin-right: 8rpx;
-	}
 
 	image {
 		width: 11.4rpx;

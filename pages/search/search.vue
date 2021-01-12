@@ -991,17 +991,20 @@ view {
 	display: flex;
 	flex-flow: row;
 	flex-wrap: wrap;
+	padding: 0 14rpx 0 28rpx;
+	background: #F8F8F8;
 }
 
 .demo-warter {
-	width: 360rpx;
+	width: 340rpx;
 	margin-top: 0;
-	margin-left: 10rpx;
+	margin-right: 14rpx;
 	margin-bottom: 16rpx;
 	padding-bottom: 16rpx;
 	/* position: relative; */
-	background-color: #ffffff;
-	border-radius: 8rpx 8rpx 0 0;
+	// background-color: #ffffff;
+	border-radius: 16rpx 16rpx;
+	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 }
 
 .demo-top {
@@ -1012,7 +1015,8 @@ view {
 	min-height: 300rpx !important;
 	max-height: 460rpx;
 	width: 100%;
-	border-radius: 8rpx 8rpx 0 0;
+	// box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+	border-radius: 16rpx 16rpx 0px 0px;
 	
 }
 .videoIcon{

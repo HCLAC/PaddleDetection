@@ -1248,7 +1248,7 @@
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 600;
 		color: rgba(48, 49, 51, 1);
-		line-height: 32rpx;
+		line-height: 48rpx;
 		margin-left: 28rpx;
 		margin-top: 20rpx;
 	}
