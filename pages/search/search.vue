@@ -93,7 +93,7 @@
 										</image>
 										<view class="adress">
 											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-											<view class="adressText">{{ item.location }}</view>
+											<view class="adressText">{{ item.location.replace(/\（.*?\）/g, '') }}</view>
 										</view>
 									</view>
 									<view class="titleTip">
@@ -133,7 +133,7 @@
 										</image>
 										<view class="adress">
 											<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-											<view class="adressText">{{ item.location }}</view>
+											<view class="adressText">{{ item.location.replace(/\（.*?\）/g, '') }}</view>
 										</view>
 									</view>
 									<view class="titleTip">

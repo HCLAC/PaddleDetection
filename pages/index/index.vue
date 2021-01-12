@@ -106,6 +106,7 @@
 					<text class="tourtext">正在旅行</text>
 					<view class="wrap" >
 						<!-- <waterfall-goods :list="list"></waterfall-goods> -->
+						<!-- 非头条可见 -->
 						<!-- #ifndef MP-TOUTIAO -->
 							<u-waterfall v-model="list" ref="uWaterfall">
 								<template v-slot:left="{ leftList }">
@@ -123,7 +124,7 @@
 														<view class="adreessIcon">
 															<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
 														</view>
-														<view class="adressText">{{ item.location }}</view>
+														<view class="adressText">{{ item.location  }}</view>
 													</view>
 												</view>
 											</view>
@@ -196,6 +197,7 @@
 								</template>
 							</u-waterfall>
 						<!-- #endif -->
+						<!-- 头条可见 -->
 						<!-- #ifdef MP-TOUTIAO -->
 							<view class="left">
 								<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
@@ -566,6 +568,7 @@
 				upOption: {
 					bgColor: '#F8F8F8'
 				}
+				
 			};
 		},
 		onReady() {
@@ -1061,6 +1064,9 @@
 
 					},
 					success: data => {
+						
+						// let curPageData = curPageData[index].location.replace(/\（.*?\）/g, '')
+						
 						let curPageData = data.data.data.list;
 						console.log(this.$refs)
 						console.log('curPageData', curPageData);
