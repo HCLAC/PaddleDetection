@@ -49,25 +49,27 @@
 			<!-- 用户发布的回答 -->
 			<view class="selectedList" v-if="tabCurrent == 0">
 				<view class="card" v-for="(item,index) in selectedList" :key="index" @click="toQuestionsDetail(item)">
-					<view class="title">
+					<!-- <view class="title">
 						{{item.title}}
+					</view> -->
+					<view class="avatar">
+						<image :src="item.avatar" mode="" v-if="item.avatar"></image>
+						<image src="../../static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
 					</view>
-					<view class="content">
-						<u-parse ref="parse"  style="overflow: hidden;" lazy-load
-						 :html="item.content"></u-parse>
-					</view>
-					<view class="authorBox">
-						<view class="author">
-							<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-							<image src="../../static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
-							<text>{{item.account_name}}</text>
+					
+					<view class="cradR">
+						<view class="authorBox">
+							<text class="authorName">{{item.account_name}}</text>
+							<text class="date">{{item.create_at.slice(0,10)}}</text>
+						</view>
+						<view class="content">
+							<u-parse ref="parse"  style="overflow: hidden;" lazy-load
+							 :html="item.content"></u-parse>
 						</view>
 						<view class="lookAnswers">
-							<!-- <view class="look">
-								{{item.read}}人看过
-							</view> -->
+							{{item.reply_count>10000?((item.reply_count-(item.reply_count%1000))/10000+'w'):item.reply_count}}
 							<view class="answers">
-								{{item.reply_count}}回答
+								回答
 							</view>
 						</view>
 					</view>
@@ -76,25 +78,24 @@
 			<!-- 用户关注的回答 -->
 			<view class="newestList" v-if="tabCurrent == 1">
 				<view class="card" v-for="(item,index) in newestList" :key="index" @click="toQuestionsDetail(item)">
-					<view class="title">
-						{{item.title}}
+					<view class="avatar">
+						<image :src="item.avatar" mode="" v-if="item.avatar"></image>
+						<image src="../../static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
 					</view>
-					<view class="content">
-						<u-parse ref="parse"  style="overflow: hidden;" lazy-load
-						 :html="item.content"></u-parse>
-					</view>
-					<view class="authorBox">
-						<view class="author">
-							<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-							<image src="../../static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
-							<text>{{item.account_name}}</text>
+					
+					<view class="cradR">
+						<view class="authorBox">
+							<text class="authorName">{{item.account_name}}</text>
+							<text class="date">{{item.create_at.slice(0,10)}}</text>
+						</view>
+						<view class="content">
+							<u-parse ref="parse"  style="overflow: hidden;" lazy-load
+							 :html="item.content"></u-parse>
 						</view>
 						<view class="lookAnswers">
-							<!-- <view class="look">
-								{{item.read>10000?((item.read-(item.read%1000))/10000+'w'):item.read}}人看过
-							</view> -->
+							{{item.reply_count>10000?((item.reply_count-(item.reply_count%1000))/10000+'w'):item.reply_count}}
 							<view class="answers">
-								{{item.reply_count>10000?((item.reply_count-(item.reply_count%1000))/10000+'w'):item.reply_count}}回答
+								回答
 							</view>
 						</view>
 					</view>
@@ -103,25 +104,24 @@
 			<!-- 用户回复的回答 -->
 			<view class="newestList" v-if="tabCurrent == 2">
 				<view class="card" v-for="(item,index) in answersList" :key="index" @click="toQuestionsDetail(item)">
-					<view class="title">
-						{{item.title}}
+					<view class="avatar">
+						<image :src="item.avatar" mode="" v-if="item.avatar"></image>
+						<image src="../../static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
 					</view>
-					<view class="content">
-						<u-parse ref="parse"  style="overflow: hidden;" lazy-load
-						 :html="item.content"></u-parse>
-					</view>
-					<view class="authorBox">
-						<view class="author">
-							<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-							<image src="../../static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
-							<text>{{item.account_name}}</text>
+					
+					<view class="cradR">
+						<view class="authorBox">
+							<text class="authorName">{{item.account_name}}</text>
+							<text class="date">{{item.create_at.slice(0,10)}}</text>
+						</view>
+						<view class="content">
+							<u-parse ref="parse"  style="overflow: hidden;" lazy-load
+							 :html="item.content"></u-parse>
 						</view>
 						<view class="lookAnswers">
-							<!-- <view class="look">
-								{{item.read>10000?((item.read-(item.read%1000))/10000+'w'):item.read}}人看过
-							</view> -->
+							{{item.reply_count>10000?((item.reply_count-(item.reply_count%1000))/10000+'w'):item.reply_count}}
 							<view class="answers">
-								{{item.reply_count>10000?((item.reply_count-(item.reply_count%1000))/10000+'w'):item.reply_count}}回答
+								回答
 							</view>
 						</view>
 					</view>
@@ -591,55 +591,67 @@
 		margin-bottom: 0rpx;
 		padding-bottom: 40rpx;
 		border-bottom: 1rpx solid #edeff2;
-		.title{
-			font-size: 34rpx;
-			font-family: PingFangSC-Medium, PingFang SC;
-			font-weight: 500;
-			color: #303133;
-			line-height: 48rpx;
-	
+		display: flex;
+		.avatar{
+			image{
+				width: 68rpx;
+				height: 68rpx;
+				border-radius: 50%;
+			}
+			
 		}
-		.content{
-			font-size: 30rpx;
-			font-family: PingFangSC-Light, PingFang SC;
-			font-weight: 300;
-			color: #606266;
-			line-height: 42rpx;
-			margin-top: 12rpx;
-		}
-		.authorBox{
-			margin-top: 20rpx;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			.author{
+		.cradR{
+			// width: 610rpx;
+			margin-left: 16rpx;
+			.authorBox{
 				display: flex;
 				align-items: center;
-				image{
-					width: 48rpx;
-					height: 48rpx;
-					border-radius: 50%;
-					margin-right: 16rpx;
+				justify-content:space-between;
+				.authorName{
+					height: 40rpx;
+					font-size: 28rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #909399;
+					line-height: 40rpx;
+		
 				}
-				text{
+				.date{
+					height: 40rpx;
 					font-size: 24rpx;
-					font-family: PingFangSC-Medium, PingFang SC;
-					font-weight: 500;
-					color: #303133;
-					line-height: 34rpx;
-	
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #C9CAD1;
+					line-height: 40rpx;
+		
 				}
 			}
-			.lookAnswers{
-				display: flex;
-				align-items: center;
-				font-size: 24rpx;
+			.content{
+				font-size: 32rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
 				font-weight: 400;
+				color: #303133;
+				line-height: 44rpx;
+				margin-top: 8rpx;
+		
+			}
+			.lookAnswers{
+				margin-top: 20rpx;
+				display: flex;
+				justify-content: flex-end;
+				font-size: 24rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
 				color: #606266;
 				line-height: 34rpx;
-				.look{
-					margin-right: 16rpx;
+		
+				.answers{
+					font-size: 24rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #606266;
+					line-height: 34rpx;
+		
 				}
 			}
 		}
@@ -651,55 +663,67 @@
 		margin-bottom: 0rpx;
 		padding-bottom: 40rpx;
 		border-bottom: 1rpx solid #edeff2;
-		.title{
-			font-size: 34rpx;
-			font-family: PingFangSC-Medium, PingFang SC;
-			font-weight: 500;
-			color: #303133;
-			line-height: 48rpx;
-
+		display: flex;
+		.avatar{
+			image{
+				width: 68rpx;
+				height: 68rpx;
+				border-radius: 50%;
+			}
+			
 		}
-		.content{
-			font-size: 30rpx;
-			font-family: PingFangSC-Light, PingFang SC;
-			font-weight: 300;
-			color: #606266;
-			line-height: 42rpx;
-			margin-top: 12rpx;
-		}
-		.authorBox{
-			margin-top: 20rpx;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			.author{
+		.cradR{
+			// width: 610rpx;
+			margin-left: 16rpx;
+			.authorBox{
 				display: flex;
 				align-items: center;
-				image{
-					width: 48rpx;
-					height: 48rpx;
-					border-radius: 50%;
-					margin-right: 16rpx;
+				justify-content:space-between;
+				.authorName{
+					height: 40rpx;
+					font-size: 28rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #909399;
+					line-height: 40rpx;
+		
 				}
-				text{
+				.date{
+					height: 40rpx;
 					font-size: 24rpx;
-					font-family: PingFangSC-Medium, PingFang SC;
-					font-weight: 500;
-					color: #303133;
-					line-height: 34rpx;
-
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #C9CAD1;
+					line-height: 40rpx;
+		
 				}
 			}
-			.lookAnswers{
-				display: flex;
-				align-items: center;
-				font-size: 24rpx;
+			.content{
+				font-size: 32rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
 				font-weight: 400;
+				color: #303133;
+				line-height: 44rpx;
+				margin-top: 8rpx;
+		
+			}
+			.lookAnswers{
+				margin-top: 20rpx;
+				display: flex;
+				justify-content: flex-end;
+				font-size: 24rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
 				color: #606266;
 				line-height: 34rpx;
-				.look{
-					margin-right: 16rpx;
+		
+				.answers{
+					font-size: 24rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #606266;
+					line-height: 34rpx;
+		
 				}
 			}
 		}
