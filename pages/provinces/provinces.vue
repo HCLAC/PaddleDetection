@@ -190,7 +190,7 @@
 										</view>
 									</view>
 								</view>
-								<view class="tQToMore" @click="toMoreQuestions">
+								<view class="tQToMore" @click="toMoreQuestions"  v-if="questions.length >= 2">
 									查看更多
 								</view>
 							</view>

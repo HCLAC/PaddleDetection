@@ -25,10 +25,17 @@
 								<view class="userName" @click="toMineInfo">{{ nickName }}
 									<image src="../../static/images/iconExit.svg" mode=""></image>
 								</view>
-								<view class="fllow" @click="toConcern()">
-									<text>关注</text>
-									<view class="fllowNum">{{fllowNum>10000?((fllowNum-(fllowNum%1000))/10000+'w'):fllowNum}}</view>
+								<view class="fa">
+									<view class="fllow" @click="toConcern()">
+										<view class="fllowNum">{{fllowNum>10000?((fllowNum-(fllowNum%1000))/10000+'w'):fllowNum}}</view>
+										<text>关注</text>
+									</view>
+									<view class="answers" @click="toAnswers()">
+										<view class="answersNum">{{answersNum>10000?((answersNum-(answersNum%1000))/10000+'w'):answersNum}}</view>
+										<text>问答</text>
+									</view>
 								</view>
+								
 								<!-- <view class="logout">退出登录</view> -->
 							</view>
 						</view>
@@ -200,6 +207,7 @@ export default {
 				bgColor:'#ffffff'
 			},
 			fllowNum:0,
+			answersNum:0,
 			favNum:0,
 			likeNum:0,
 			current: 0,
@@ -227,6 +235,7 @@ export default {
 	},
 	onLoad() {
 		this.getlist()
+		this.getAnswers()
 	},
 	mounted() {
 		const query = uni.createSelectorQuery().in(this);
@@ -249,6 +258,7 @@ export default {
 		}
 	},
 	methods: {
+		// 获取用户信息
 		getUserMsg() {
 			var that = this;
 
@@ -339,7 +349,27 @@ export default {
 				}
 			});
 		},
-		
+		// 获取问答
+		getAnswers(){
+			uni.request({
+				url: this.globalUrl+ '/user/askquestion/list',
+				data: {
+					page:1,
+					count:10
+				},
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				method: 'get',
+				success: (res)=> {
+					console.log('问答=', res.data);
+					this.answersNum = res.data.data.total
+						
+					
+					
+				}
+			})
+		},
 		// 切换
 		
 		change(){
@@ -383,6 +413,12 @@ export default {
 			uni.navigateTo({
 				url:'/pages/mineConcern/mineConcern'
 			});
+		},
+		// 跳转个人问答页
+		toAnswers(){
+			uni.navigateTo({
+				url:'../mineAnswers/mineAnswers'
+			})
 		},
 		// 跳转信息修改页
 		toMineInfo(){
@@ -616,22 +652,36 @@ export default {
 		margin-left: 16rpx;
 	}
 }
-.fllow{
+.fa{
 	margin-top: 20rpx;
-	height: 24rpx;
-	font-size: 24rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: #606266;
-	line-height: 24rpx;
 	display: flex;
 	align-items: center;
-	text{
+	.fllow{
+		
+		height: 24rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #606266;
+		line-height: 24rpx;
+		display: flex;
+		align-items: center;
+		text{
+		}
+	}
+	.answers{
+		height: 24rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #606266;
+		line-height: 24rpx;
+		display: flex;
+		align-items: center;
+		margin-left: 20rpx;
 	}
 }
-.fllowNum{
-	margin-left: 8rpx;
-}
+
 .logout {
 	margin-top: 4px;
 	width: 80px;
