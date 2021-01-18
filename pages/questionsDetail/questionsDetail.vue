@@ -17,27 +17,31 @@
 					<view class="cardTopText">
 						领途羊·旅行问答
 					</view>
-					<view class="cardFollow" v-if="!detail.is_follow" @click="Fllow()">
+					<!-- <view class="cardFollow" v-if="!detail.is_follow" @click="Fllow()">
 						关注
 					</view>
 					<view class="cardIsFollow" v-if="detail.is_follow" @click="Fllow()">
 						已关注
-					</view>
+					</view> -->
 				</view>
 				<view class="cradTitle">
 					{{detail.title}}
 				</view>
 				<view class="cardTipsBox">
-					<view class="cardTips" v-for="(item,index ) in detail.labels" :key="index" >
-						#{{item}}
+					<view class="cTL">
+						<view class="cardTips" v-for="(item,index ) in detail.labels" :key="index" >
+							#{{item}}
+						</view>
+					</view>
+					
+					<view class="questionsDate">
+						{{detail.account_name}}问于{{create_at}}
 					</view>
 				</view>
 				<image class="answersIcon" src="../../static/images/answersIcon.png" mode=""></image>
 			</view>
-			<view class="cardBottomBox">
-				<view class="cardContent">
-					<rich-text :nodes="detail.content"></rich-text>
-				</view>
+			<!-- <view class="cardBottomBox">
+				
 				<view class="cardAuthorBox">
 					<view class="author">
 						<image class="userImg" src="../../static/images/userImg.svg" v-if="!detail.avatar" mode="" ></image>
@@ -50,7 +54,7 @@
 						问于{{create_at}}
 					</view>
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<!-- 问题回答 -->
 		<view class="answersTip" v-if="answersNum != 0">
@@ -100,10 +104,22 @@
 			还没有收到回答
 		</view>
 		<!-- 我要提问按钮 -->
-		<view class="myAnswersBtn" @click="commentInput" v-if="!textareafocus">
+		<!-- <view class="myAnswersBtn" @click="commentInput" v-if="!textareafocus">
 			<image src="../../static/images/followIcon.svg" mode=""></image>
 			<view class="mabt">
 				我来回答
+			</view>
+		</view> -->
+		<view class="answersFollow" >
+			<view class="addBox" @click="commentInput" v-if="!textareafocus">
+				<image src="../../static/images/addQ.svg" mode=""></image>
+				<text>添加问答</text>
+			</view>
+			<view class="aFLine"></view>
+			<view class="followBox"  @click="Fllow()">
+				<image src="../../static/images/followQ.svg" mode=""></image>
+				<text v-if="detail.is_follow == 0">关注问题</text>
+				<text v-if="detail.is_follow == 1">已关注</text>
 			</view>
 		</view>
 		<!-- 输入框 -->
@@ -129,10 +145,20 @@
 						<view class="tQCTitle">
 							{{item.title}}
 						</view>
-						<view class="tQCParse">
-							{{item.content}}
-							<!-- <u-parse ref="parse"  style="overflow: hidden;" lazy-load
-							 :html="item.content"></u-parse> -->
+						<view class="authorBox">
+							<view class="author">
+								<image :src="item.avatar" mode="" v-if="item.avatar"></image>
+								<image src="../../static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
+								<text>{{item.account_name}}</text>
+							</view>
+							<view class="lookAnswers">
+								<view class="look">
+									{{item.read}}人看过
+								</view>
+								<view class="answers">
+									{{item.reply_count}}回答
+								</view>
+							</view>
 						</view>
 					</view>
 				</view>
@@ -142,7 +168,7 @@
 			</view>
 		</view>
 		<!-- 弹窗 -->
-		<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
+		<u-modal v-model="show" :content="contentp" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 	</view>
 </template>
 
@@ -164,7 +190,7 @@
 				},
 				textareafocus: false,
 				show: false,
-				content: '',
+				contentp: '',
 			};
 		},
 		onLoad(question_id) {
@@ -328,7 +354,7 @@
 				if (status == 0) {
 			
 					that.show = true
-					that.content = '确认取消关注?'
+					that.contentp = '确认取消关注?'
 				} else {
 					uni.request({
 						url: that.globalUrl + '/questions/follow',
@@ -567,19 +593,35 @@
 			}
 			.cardTipsBox{
 				display: flex;
-				margin-left: 28rpx;
-				.cardTips{
-					width: 98rpx;
-					height: 36rpx;
-					background: rgba(255, 255, 255, 0.3);
-					border-radius: 0rpx 18rpx 18rpx 18rpx;
+				align-items: center;
+				justify-content: space-between;
+				margin:0rpx 28rpx;
+				.cTL{
+					display: flex;
+					align-items: center;
+					.cardTips{
+						width: 98rpx;
+						height: 36rpx;
+						background: rgba(255, 255, 255, 0.3);
+						border-radius: 0rpx 18rpx 18rpx 18rpx;
+						font-size: 22rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: rgba(255, 255, 255, 1);
+						line-height: 36rpx;
+						margin-right: 16rpx;
+						text-align: center;
+					}
+				}
+				
+				.questionsDate{
+					height: 32rpx;
 					font-size: 22rpx;
-					font-family: PingFangSC-Medium, PingFang SC;
-					font-weight: 500;
-					color: rgba(255, 255, 255, 1);
-					line-height: 36rpx;
-					margin-right: 16rpx;
-					text-align: center;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #FFFFFF;
+					line-height: 32rpx;
+
 				}
 			}
 			.answersIcon{
@@ -860,18 +902,41 @@
 						-webkit-line-clamp: 2;
 						-webkit-box-orient: vertical;
 					}
-					.tQCParse{
-						font-size: 30rpx;
-						font-family: PingFangSC-Regular, PingFang SC;
-						font-weight: 400;
-						color: #606266;
-						line-height: 42rpx;
-						overflow:hidden; 
-						text-overflow: ellipsis;
-						display: -webkit-box;
-						-webkit-line-clamp: 3;
-						-webkit-box-orient: vertical;
-
+					.authorBox{
+						margin-top: 20rpx;
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+						.author{
+							display: flex;
+							align-items: center;
+							image{
+								width: 48rpx;
+								height: 48rpx;
+								border-radius: 50%;
+								margin-right: 16rpx;
+							}
+							text{
+								font-size: 24rpx;
+								font-family: PingFangSC-Medium, PingFang SC;
+								font-weight: 500;
+								color: #303133;
+								line-height: 34rpx;
+						
+							}
+						}
+						.lookAnswers{
+							display: flex;
+							align-items: center;
+							font-size: 24rpx;
+							font-family: PingFangSC-Regular, PingFang SC;
+							font-weight: 400;
+							color: #606266;
+							line-height: 34rpx;
+							.look{
+								margin-right: 16rpx;
+							}
+						}
 					}
 				}
 			}
@@ -924,6 +989,64 @@
 			color: #303133;
 			line-height: 40rpx;
 			margin-left: 10rpx;
+		}
+	}
+	.answersFollow{
+		position:fixed;
+		margin:auto;
+		left:0;
+		right:0;
+		bottom:0;
+		width: 100%;
+		height: 166rpx;
+		background: #FFFFFF;
+		box-shadow: 0px -16rpx 56rpx 0px rgba(0, 0, 0, 0.05);
+		display: flex;
+		justify-content: space-around;
+		.addBox{
+			// margin-top: 24rpx;
+			height: 98rpx;
+			display: flex;
+			align-items: center;
+			image{
+				width: 48rpx;
+				height: 48rpx;
+			}
+			text{
+				height: 40rpx;
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #303133;
+				line-height: 40rpx;
+
+			}
+		}
+		.aFLine{
+			margin-top: 30rpx;
+			width: 1rpx;
+			height: 40rpx;
+			background: #EDEFF2;
+
+		}
+		.followBox{
+			// margin-top: 24rpx;
+			height: 98rpx;
+			display: flex;
+			align-items: center;
+			image{
+				width: 48rpx;
+				height: 48rpx;
+			}
+			text{
+				height: 40rpx;
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #303133;
+				line-height: 40rpx;
+			
+			}
 		}
 	}
 	// 评论框

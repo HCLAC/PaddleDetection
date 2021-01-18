@@ -165,7 +165,7 @@
 							
 						</view>
 						<!-- 旅途问答 -->
-						<view class="travelQuestionsBox">
+						<!-- <view class="travelQuestionsBox">
 							<view class="tQTop">
 								<view class="tQTBox">
 									<text class="tQText">旅途问答</text>
@@ -197,7 +197,7 @@
 							<view class="tQContentNull" v-if="questions.length == 0">
 								还没有问答，快来做第一个提问者吧~
 							</view>
-						</view>
+						</view> -->
 						<!-- 正在旅行 -->
 						<view class="touring" id="touring">
 							<text class="tourtext">正在旅行</text>
@@ -205,7 +205,7 @@
 							<view class="wrap">
 								<view class="left">
 									<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
-										<view class="" >
+										<view class="" v-if="item.type != 6">
 											<view class="demo-top" @click="onPageJump" :id="item.article_id">
 												<view class="imgBox" >
 													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
@@ -241,14 +241,20 @@
 												</view>
 											</view>
 										</view>
+										<view class="answersBox" v-if="item.type == 6" @click="toQuestionsDetail(item)">
+											<image src="../../static/images/yh.svg" mode=""></image>
+											<view class="answersTitle">
+												{{item.title}}
+											</view>
+											<view class="answersNum">
+												{{item.reply_count}}回答
+											</view>
+										</view>
 									</view>
-									<!-- <view class="demo-answers">
-										
-									</view> -->
 								</view>
 								<view class="right">
 									<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
-										<view class="">
+										<view class="" v-if="item.type != 6">
 											<view class="demo-top"  @click="onPageJump" :id="item.article_id">
 												<view class="imgBox">
 													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
@@ -282,6 +288,15 @@
 													</view>
 													<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 												</view>
+											</view>
+										</view>
+										<view class="answersBoxR" v-if="item.type == 6" @click="toQuestionsDetail(item)">
+											<image src="../../static/images/yh.svg" mode=""></image>
+											<view class="answersTitle">
+												{{item.title}}
+											</view>
+											<view class="answersNum">
+												{{item.reply_count}}回答
 											</view>
 										</view>
 									</view>
@@ -369,7 +384,8 @@ export default {
 				use:false,
 				bgColor:'#F8F8F8'
 			},
-			questions:null
+			questions:null,
+			answersList:{}
 		};
 	},
 	comments: {
@@ -382,6 +398,7 @@ export default {
 		this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), 
 		this.getCity()
 		,this.getQuestions()
+		this.getAnswersList()
 		;
 	},
 	methods: {
@@ -427,6 +444,30 @@ export default {
 				}
 			});
 		},
+		// 获取问答列表
+		getAnswersList() {
+			uni.request({
+				url: this.globalUrl + '/questions/random',
+				data: {
+					state_id: this.item.state_id,
+					city_id: this.item.city_id,
+					count: 10
+				},
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: res => {
+					console.log('wenda列表',res)
+					this.answersList = res.data.data
+				}
+			});
+		},
+		// 随机获取问答
+		// async getRandom(arr) {
+		//     var len = arr.length;
+		//     var i = Math.ceil(Math.random() * (len ))%len;
+		//     return arr[i];
+		// },
 		// 跳转文章详情
 		onPageJump(e) {
 			console.log(e);
@@ -660,6 +701,7 @@ export default {
 						console.log('城市信息==', res);
 						(this.item = res.data.data), (this.name = this.name = res.data.data.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(),
 						this.getQuestions(),
+						this.getAnswersList()
 						(this.show = false);
 						this.mescroll.resetUpScroll()
 					}
@@ -749,6 +791,7 @@ export default {
 						console.log('省份信息==', res);
 						(this.item = res.data.data), (this.name = item.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(),
 						this.getQuestions(), 
+						this.getAnswersList()
 						(this.show = false);
 						this.mescroll.resetUpScroll()
 					}
@@ -947,11 +990,22 @@ export default {
 						console.log('totalSize', totalSize);
 						// 接口返回的是否有下一页 (true/false)
 						// let hasNext = data.data.data.list;
-
+						var answer = this.answersList
+						var sar = Math.floor((Math.random()*answer.length));
+						var addAnswer = answer[sar]
+						let answerArr = [addAnswer]
+						// var answerArr = Object.entries(addAnswer)
+						// console.log(Object.values(addAnswer))
+						// console.log(Object.entries(addAnswer))
+						// const touristInfo = [];
+						// touristInfo.push(addAnswer.touristInfo);
+						console.log(answerArr,'随机数据')
 						//设置列表数据
 						if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+						curPageData = curPageData.concat(answerArr)
 						that.list = that.list.concat(curPageData); //追加新数据
 						console.log('that-list-', that.list);
+						// that.list = that.list.concat(answerArr)
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 						this.mescroll.endByPage(curPageLen, totalPage);
@@ -1325,6 +1379,78 @@ export default {
 	background-color: #ffffff;
 	border-radius: 16rpx 16rpx;
 	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+}
+.answersBox{
+	// height: 344rpx;
+	background: linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);
+	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+	border-radius: 16rpx;
+	padding: 80rpx 32rpx 40rpx;
+	position: relative;
+	image{
+		width: 76rpx;
+		height: 54rpx;
+		position: absolute;
+		top: 48rpx;
+		left: 32rpx;
+	}
+	.answersTitle{
+		width: 138px;
+		font-size: 36rpx;
+		font-family: PingFangSC-Semibold, PingFang SC;
+		font-weight: 600;
+		color: #FFFFFF;
+		line-height: 50rpx;
+		margin-top: -8rpx;
+
+	}
+	.answersNum{
+		// height: 34rpx;
+		font-size: 24rpx;
+		font-family: PingFangSC-Light, PingFang SC;
+		font-weight: 300;
+		color: #FFFFFF;
+		line-height: 34rpx;
+		margin-top: 40rpx;
+
+	}
+
+}
+.answersBoxR{
+	// height: 344rpx;
+	background: linear-gradient(270deg, #FFE512 0%, #FFB64D 100%);
+	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+	border-radius: 16rpx;
+	padding: 80rpx 32rpx 40rpx;
+	position: relative;
+	image{
+		position: absolute;
+		top: 48rpx;
+		left: 32rpx;
+		width: 76rpx;
+		height: 54rpx;
+		
+	}
+	.answersTitle{
+		width: 138px;
+		font-size: 36rpx;
+		font-family: PingFangSC-Semibold, PingFang SC;
+		font-weight: 600;
+		color: #FFFFFF;
+		line-height: 50rpx;
+
+	}
+	.answersNum{
+		// height: 34rpx;
+		font-size: 24rpx;
+		font-family: PingFangSC-Light, PingFang SC;
+		font-weight: 300;
+		color: #FFFFFF;
+		line-height: 34rpx;
+		margin-top: 40rpx;
+
+	}
+
 }
 
 .demo-top {
