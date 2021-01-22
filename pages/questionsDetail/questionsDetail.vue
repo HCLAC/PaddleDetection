@@ -70,14 +70,14 @@
 						<view class="userName">
 							{{item.account_id}}
 						</view>
-						<image class="gficon" src="../../static/images/gficon.svg" mode=""></image>
+						<image class="gficon" src="../../static/images/gficon.svg" mode="" v-if="item.account_type == 1"></image>
 					</view>
 					<view class="answersDate">
 						{{item.create_at.slice(0,10)}}
 					</view>
 				</view>
 				<view class="answersCardContent">
-					<u-parse ref="parse" v-if="answersList" style="overflow: hidden;" lazy-load :tag-style="style"
+					<u-parse ref="parse" v-if="answersList" style="overflow: hidden;" lazy-load :tag-style="style" @linkpress="templateAdd"
 					 :html="item.content "></u-parse>
 				</view>
 				
@@ -86,20 +86,20 @@
 						<view class="answersLike" @click="like(item,index) in answersList">
 							<image src="../../static/images/aLike.svg" v-if="item.option == 0 || item.option == 2" mode=""></image>
 							<image src="../../static/images/aLikeActive.svg" v-if="item.option == 1" mode=""></image>
-							<text>{{item.like}}</text> 
+							<text>{{item.like == 0 ? '赞同' : item.like}}</text> 
 						</view>
 						
 						<view class="answersDisLike" @click="disLike(item,index) in answersList">
 							<image src="../../static/images/aDisLike.svg" v-if="item.option == 0 || item.option == 1" mode=""></image>
 							<image src="../../static/images/aDisLikeActive.svg" v-if="item.option == 2" mode=""></image>
-							<text>{{item.dislike}}</text>
+							<text>{{item.dislike == 0 ? '踩' : item.dislike}}</text>
 						</view>
 					</view>
 				</view>
 				<view class="answersLine">
 				</view>
 			</view>
-			<view class="moreAnswers" @click="moreAnswers()" v-if="answersNum > 3">
+			<view class="moreAnswers" @click="moreAnswers()">
 				查看全部{{answersNum}}条回答
 			</view>
 		</view>
@@ -244,22 +244,109 @@
 			},
 			// 获取回复列表
 			getanswersList(){
+				var that = this
 				uni.request({
 					url: this.globalUrl + '/answers/list',
 					data: {
 						question_id: this.question_id,
 						page:1,
-						count:3
+						count:1
 					},
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
-					success: res => {
+					success: async function(res) {
 						console.log('回复列表',res)
-						this.answersNum = res.data.data.total
-						this.answersList = res.data.data.list
+						that.answersNum = res.data.data.total
+						
+						let strIndex = res.data.data.list[0].content.match(/<input[^>]*\/>/gi);
+						console.log(strIndex,'strIndex')
+						if(strIndex == null){
+							that.answersList = res.data.data.list
+						}else{
+							let strIdarr = strIndex[0].match(/\d+/g);
+							let strId = strIdarr.join('')
+							console.log(strId,'strId')
+							let resCode =  await that.getTemplate(strId);
+							console.log(resCode,'resCode')
+							let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
+							let str =
+								`<div>
+									<span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
+										详情请加VX：${wechat_id}
+									</span><a groupId="${strId}"   group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
+								</div>`;
+							
+							res.data.data.list[0].content = res.data.data.list[0].content.replace(/<input[^>]*\/>/gi, str);
+							that.answersList = res.data.data.list
+						}
+						
 					}
-				});
+				})
+			},
+			getTemplate(id) {
+				if (id) {
+					return new Promise((resolve, reject) => {
+						uni.request({
+							// url:'article',
+							url: this.globalUrl + '/marketing/unit',
+							method: 'get',
+							data: {
+								group_id: id,
+								article_id: this.article_num
+							},
+							header: {
+								Authorization: uni.getStorageSync('Authorization')
+							},
+			
+							success: res => {
+								resolve(res);
+							},
+							fail: error => {
+								reject(error);
+							}
+						});
+					});
+				}
+			},
+			// 点击复制
+			templateAdd(e) {
+				console.log('e', e);
+			
+				if (e.group && e.groupid) {
+					uni.request({
+						url: this.globalUrl + '/marketing/copy',
+						data: {
+							id: e.groupid
+						},
+						method: 'PUT',
+						header: {
+							Authorization: uni.getStorageSync('Authorization')
+						},
+						success: res => {
+							if (res.data.code == 0) {
+								uni.setClipboardData({
+									data: e.group,
+									success: () => {
+										uni.showToast({
+											title: '复制成功',
+											icon: 'success'
+										});
+									}
+								});
+							} else {
+								uni.showToast({
+									title: res.data.msg,
+									icon: 'none'
+								});
+							}
+						}
+					});
+				} else {
+					console.log(e);
+					e.ignore();
+					return false;
+				}
 			},
 			// 查看全部回答
 			moreAnswers(){

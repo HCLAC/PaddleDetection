@@ -451,7 +451,7 @@ export default {
 				data: {
 					state_id: this.item.state_id,
 					city_id: this.item.city_id,
-					count: 10
+					count: 6
 				},
 				header: {
 					Authorization: uni.getStorageSync('Authorization')
