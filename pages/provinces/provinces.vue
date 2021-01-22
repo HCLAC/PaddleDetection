@@ -1374,14 +1374,13 @@ export default {
 	margin-top: 0;
 	margin-right: 14rpx;
 	margin-bottom: 16rpx;
-	padding-bottom: 16rpx;
+	// padding-bottom: 16rpx;
 	/* position: relative; */
 	background-color: #ffffff;
 	border-radius: 16rpx 16rpx;
 	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 }
 .answersBox{
-	// height: 344rpx;
 	background: linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);
 	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 	border-radius: 16rpx;
@@ -1417,7 +1416,6 @@ export default {
 
 }
 .answersBoxR{
-	// height: 344rpx;
 	background: linear-gradient(270deg, #FFE512 0%, #FFB64D 100%);
 	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 	border-radius: 16rpx;
@@ -1569,6 +1567,7 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	padding-bottom: 16rpx;
 }
 
 .userMessage {

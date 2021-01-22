@@ -56,7 +56,7 @@
 						{{item.title}}
 					</view>
 					<view class="content">
-						<u-parse ref="parse"  style="overflow: hidden;" lazy-load
+						<u-parse ref="parse"  style="overflow: hidden;" lazy-load :tag-style="style"
 						 :html="item.content"></u-parse>
 					</view>
 					<view class="authorBox">
@@ -83,7 +83,7 @@
 						{{item.title}}
 					</view>
 					<view class="content">
-						<u-parse ref="parse"  style="overflow: hidden;" lazy-load
+						<u-parse ref="parse"  style="overflow: hidden;" lazy-load :tag-style="style"
 						 :html="item.content"></u-parse>
 					</view>
 					<view class="authorBox">
@@ -126,7 +126,10 @@
 				city_id:'',
 				selectedList:{},
 				newestList:{},
-				isFixed:false
+				isFixed:false,
+				style: {
+					img: 'border-radius: 16rpx'
+				}
 			};
 		},
 		mixins: [MescrollMixin],

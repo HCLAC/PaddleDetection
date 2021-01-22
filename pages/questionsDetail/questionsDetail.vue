@@ -70,14 +70,17 @@
 						<view class="userName">
 							{{item.account_id}}
 						</view>
+						<image class="gficon" src="../../static/images/gficon.svg" mode=""></image>
 					</view>
 					<view class="answersDate">
 						{{item.create_at.slice(0,10)}}
 					</view>
 				</view>
 				<view class="answersCardContent">
-					{{item.content}}
+					<u-parse ref="parse" v-if="answersList" style="overflow: hidden;" lazy-load :tag-style="style"
+					 :html="item.content "></u-parse>
 				</view>
+				
 				<view class="answersCardBottom">
 					<view class="acbr">
 						<view class="answersLike" @click="like(item,index) in answersList">
@@ -191,6 +194,9 @@
 				textareafocus: false,
 				show: false,
 				contentp: '',
+				style: {
+					img: 'border-radius: 16rpx'
+				}
 			};
 		},
 		onLoad(question_id) {
@@ -225,7 +231,7 @@
 					url: this.globalUrl + '/questions/related',
 					data: {
 						question_id: this.question_id,
-						count:2
+						count:6
 					},
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
@@ -473,7 +479,8 @@
 				uni.switchTab({
 					url: '/pages/index/index'
 				});
-			},
+			}
+			
 			
 		}
 	}
@@ -729,6 +736,11 @@
 						color: #303133;
 						line-height: 28rpx;
 						margin-left: 16rpx;
+					}
+					.gficon{
+						width: 56rpx;
+						height: 40rpx;
+						margin-left: 8rpx;
 					}
 				}
 				.answersDate{
