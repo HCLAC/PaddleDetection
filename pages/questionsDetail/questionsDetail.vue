@@ -77,7 +77,7 @@
 					</view>
 				</view>
 				<view class="answersCardContent">
-					<u-parse ref="parse" v-if="answersList" style="overflow: hidden;" lazy-load :tag-style="style" @linkpress="templateAdd"
+					<u-parse ref="parse" v-if="answersList" style="overflow: hidden;" lazy-load :tag-style="style" 
 					 :html="answersList.content "></u-parse>
 				</view>
 				
@@ -134,6 +134,14 @@
 		</view>
 		<!-- 相关问题 -->
 		<view class="line">	</view>
+		<!-- 营销组件 -->
+		<view class="componment" v-if="groupId">
+			<view class="wechat">
+				<image :src="answersList.avatar" mode=""></image>
+				<view class="wechatText">vx:{{wechat}}</view>
+			</view>
+			<view class="wechatBtn" @click="templateAdd">复制导游微信</view>
+		</view>
 		<view class="travelQuestionsBox">
 			<view class="tQTop">
 				<view class="tQTBox">
@@ -197,7 +205,9 @@
 				style: {
 					img: 'border-radius: 16rpx'
 				},
-				answersDate:''
+				answersDate:'',
+				wechat:'',
+				groupId:''
 			};
 		},
 		onLoad(question_id) {
@@ -268,15 +278,17 @@
 							let resCode =  await that.getTemplate(strId);
 							console.log(resCode,'resCode')
 							let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
-							let str =
-								`<div>
-									<image src="../../static/images/userImg.svg" style="width:68rpx;height:68rpx;" mode=""></image>
-									<span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
-										详情请加VX：${wechat_id}
-									</span><a groupId="${strId}"   group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
-								</div>`;
+							that.wechat = wechat_id
+							that.groupId = strId
+							// let str =
+							// 	`<div>
+							// 		<image src="../../static/images/userImg.svg" style="width:68rpx;height:68rpx;" mode=""></image>
+							// 		<span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
+							// 			详情请加VX：${wechat_id}
+							// 		</span><a groupId="${strId}"   group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
+							// 	</div>`;
 							
-							res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
+							// res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 							that.answersList = res.data.data
 							that.answersDate = res.data.data.create_at.slice(0.10)
 							console.log('官方回复',that.answersList)
@@ -346,23 +358,24 @@
 				}
 			},
 			// 点击复制
-			templateAdd(e) {
-				console.log('e', e);
+			templateAdd() {
+				// console.log('e', e);
 			
-				if (e.group && e.groupid) {
+				// if (e.group && e.groupid) {
 					uni.request({
 						url: this.globalUrl + '/marketing/copy',
 						data: {
-							id: e.groupid
+							id: this.groupId
 						},
 						method: 'PUT',
 						header: {
 							Authorization: uni.getStorageSync('Authorization')
 						},
 						success: res => {
+							console.log(res,'复制微信')
 							if (res.data.code == 0) {
 								uni.setClipboardData({
-									data: e.group,
+									data: this.wechat,
 									success: () => {
 										uni.showToast({
 											title: '复制成功',
@@ -378,11 +391,11 @@
 							}
 						}
 					});
-				} else {
-					console.log(e);
-					e.ignore();
-					return false;
-				}
+				// } else {
+				// 	console.log(e);
+				// 	e.ignore();
+				// 	return false;
+				// }
 			},
 			// 查看全部回答
 			moreAnswers(){
@@ -849,6 +862,9 @@
 					image{
 						width: 68rpx;
 						height: 68rpx;
+						
+						// border: 4rpx solid;
+						// border-image: linear-gradient(270deg, rgba(255, 229, 18, 1), rgba(255, 182, 77, 1)) 2 2;
 						border-radius: 50%;
 					}
 					.userName{
@@ -963,6 +979,47 @@
 		width: 100%;
 		height: 20rpx;
 		background: #F8F8F8;
+	}
+	.componment{
+		width: 694rpx;
+		height: 108rpx;
+		background: #FFE512;
+		border-radius: 8rpx;
+		margin: 20rpx 28rpx 40rpx;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 20rpx;
+		.wechat{
+			display: flex;
+			align-items: center;
+			image{
+				width: 68rpx;
+				height: 68rpx;
+				margin-right: 16rpx;
+				border-radius: 50%;
+			}
+			.wechatText{
+				height: 40rpx;
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #303133;
+				line-height: 40rpx;
+			}
+
+		}
+		.wechatBtn{
+			background: #FFFFFF;
+			box-shadow: 0px 16rpx 56rpx 0px rgba(0, 0, 0, 0.05);
+			border-radius: 40rpx;
+			font-size: 24rpx;
+			font-family: PingFangSC-Semibold, PingFang SC;
+			font-weight: 600;
+			color: #303133;
+			padding: 12rpx 32rpx;
+		}
+
 	}
 	// 旅途问答
 	.travelQuestionsBox{
