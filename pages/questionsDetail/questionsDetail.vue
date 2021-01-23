@@ -62,37 +62,37 @@
 			<view class="answersLine"></view>
 		</view>
 		<view class="answersList" v-if="answersNum != 0">
-			<view class="answersCardBox" v-for=" (item,index) in answersList" :key="index" >
+			<view class="answersCardBox" >
 				<view class="answersCardTop">
 					<view class="answersAuthor">
-						<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-						<image src="../../static/images/userImg.svg" v-if="!item.avatar" mode=""></image>
+						<image :src="answersList.avatar" mode="" v-if="answersList.avatar"></image>
+						<image src="../../static/images/userImg.svg" v-if="!answersList.avatar" mode=""></image>
 						<view class="userName">
-							{{item.account_id}}
+							{{answersList.account_id}}
 						</view>
-						<image class="gficon" src="../../static/images/gficon.svg" mode="" v-if="item.account_type == 1"></image>
+						<image class="gficon" src="../../static/images/gficon.svg" mode="" v-if="answersList.account_type == 1"></image>
 					</view>
 					<view class="answersDate">
-						{{item.create_at.slice(0,10)}}
+						{{answersDate }}
 					</view>
 				</view>
 				<view class="answersCardContent">
 					<u-parse ref="parse" v-if="answersList" style="overflow: hidden;" lazy-load :tag-style="style" @linkpress="templateAdd"
-					 :html="item.content "></u-parse>
+					 :html="answersList.content "></u-parse>
 				</view>
 				
 				<view class="answersCardBottom">
 					<view class="acbr">
-						<view class="answersLike" @click="like(item,index) in answersList">
-							<image src="../../static/images/aLike.svg" v-if="item.option == 0 || item.option == 2" mode=""></image>
-							<image src="../../static/images/aLikeActive.svg" v-if="item.option == 1" mode=""></image>
-							<text>{{item.like == 0 ? '赞同' : item.like}}</text> 
+						<view class="answersLike" @click="like(answersList)">
+							<image src="../../static/images/aLike.svg" v-if="answersList.option == 0 || answersList.option == 2" mode=""></image>
+							<image src="../../static/images/aLikeActive.svg" v-if="answersList.option == 1" mode=""></image>
+							<text>{{answersList.like == 0 ? '赞同' : answersList.like}}</text> 
 						</view>
 						
-						<view class="answersDisLike" @click="disLike(item,index) in answersList">
-							<image src="../../static/images/aDisLike.svg" v-if="item.option == 0 || item.option == 1" mode=""></image>
-							<image src="../../static/images/aDisLikeActive.svg" v-if="item.option == 2" mode=""></image>
-							<text>{{item.dislike == 0 ? '踩' : item.dislike}}</text>
+						<view class="answersDisLike" @click="disLike(answersList)">
+							<image src="../../static/images/aDisLike.svg" v-if="answersList.option == 0 || answersList.option == 1" mode=""></image>
+							<image src="../../static/images/aDisLikeActive.svg" v-if="answersList.option == 2" mode=""></image>
+							<text>{{answersList.dislike == 0 ? '踩' : answersList.dislike}}</text>
 						</view>
 					</view>
 				</view>
@@ -196,7 +196,8 @@
 				contentp: '',
 				style: {
 					img: 'border-radius: 16rpx'
-				}
+				},
+				answersDate:''
 			};
 		},
 		onLoad(question_id) {
@@ -206,6 +207,7 @@
 			this.getQuestionsDetail()
 			this.getanswersList()
 			this.getQuestionsRelated()
+			this.getanswersOfficial()
 		},
 		methods:{
 			// 获取问题详情
@@ -243,27 +245,23 @@
 				});
 			},
 			// 获取回复列表
-			getanswersList(){
+			getanswersOfficial(){
 				var that = this
 				uni.request({
-					url: this.globalUrl + '/answers/list',
+					url: this.globalUrl + '/answers/official',
 					data: {
-						question_id: this.question_id,
-						page:1,
-						count:1
+						question_id: this.question_id
 					},
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: async function(res) {
-						console.log('回复列表',res)
-						that.answersNum = res.data.data.total
 						
-						let strIndex = res.data.data.list[0].content.match(/<input[^>]*\/>/gi);
+						// that.answersNum = res.data.data.total
+						
+						let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
 						console.log(strIndex,'strIndex')
-						if(strIndex == null){
-							that.answersList = res.data.data.list
-						}else{
+						if(strIndex != null){
 							let strIdarr = strIndex[0].match(/\d+/g);
 							let strId = strIdarr.join('')
 							console.log(strId,'strId')
@@ -272,15 +270,53 @@
 							let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
 							let str =
 								`<div>
+									<image src="../../static/images/userImg.svg" style="width:68rpx;height:68rpx;" mode=""></image>
 									<span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
 										详情请加VX：${wechat_id}
 									</span><a groupId="${strId}"   group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
 								</div>`;
 							
-							res.data.data.list[0].content = res.data.data.list[0].content.replace(/<input[^>]*\/>/gi, str);
-							that.answersList = res.data.data.list
+							res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
+							that.answersList = res.data.data
+							that.answersDate = res.data.data.create_at.slice(0.10)
+							console.log('官方回复',that.answersList)
+						}else{
+							uni.request({
+								url: that.globalUrl + '/answers/list',
+								data: {
+									question_id: that.question_id,
+									count:10,
+									page:1
+								},
+								header: {
+									Authorization: uni.getStorageSync('Authorization')
+								},
+								success: async function(res) {
+									console.log('无官方回答时',res)
+									that.answersList = res.data.data.list[0]
+									that.answersDate = res.data.data.list[0].create_at.slice(0.10)
+								}
+							})
 						}
 						
+					}
+				})
+			},
+			getanswersList(){
+				var that = this
+				uni.request({
+					url: this.globalUrl + '/answers/list',
+					data: {
+						question_id: this.question_id,
+						count:10,
+						page:1
+					},
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: async function(res) {
+						console.log('回复列表',res)
+						that.answersNum = res.data.data.total
 					}
 				})
 			},
@@ -502,7 +538,7 @@
 			// 点赞
 			like(e,index){
 				console.log(e)
-				var answer_id = e.$orig.answer_id
+				var answer_id = e.answer_id
 				console.log(answer_id)
 				uni.request({
 					url: this.globalUrl + '/answers/like',
@@ -521,7 +557,7 @@
 							});
 						} else {
 							console.log(res)
-							this.getanswersList()
+							this.getanswersOfficial()
 							// this.answersList[index].option = e.$orig.option == 1 ? 0 : 1
 						}
 					}
@@ -530,7 +566,7 @@
 			// 点踩
 			disLike(e,index){
 				console.log(e)
-				var answer_id = e.$orig.answer_id
+				var answer_id = e.answer_id
 				console.log(answer_id)
 				uni.request({
 					url: this.globalUrl + '/answers/dislike',
@@ -549,7 +585,7 @@
 							});
 						} else {
 							console.log(res)
-							this.getanswersList()
+							this.getanswersOfficial()
 							// this.answersList[index].option = e.$orig.option == 1 ? 0 : 1
 						}
 					}
