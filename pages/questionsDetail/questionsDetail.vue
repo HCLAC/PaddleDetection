@@ -135,12 +135,13 @@
 		<!-- 相关问题 -->
 		<view class="line">	</view>
 		<!-- 营销组件 -->
-		<view class="componment" v-if="groupId">
+		<view class="componment" v-if="groupId" onclick="popup('blur-in')">
 			<view class="wechat">
 				<image :src="answersList.avatar" mode=""></image>
 				<view class="wechatText">vx:{{wechat}}</view>
 			</view>
-			<view class="wechatBtn" @click="templateAdd">复制导游微信</view>
+			<view class="wechatBtn ldx infinite ldx-blur-in" @click="templateAdd">复制导游微信</view>
+			
 		</view>
 		<view class="travelQuestionsBox">
 			<view class="tQTop">
@@ -180,6 +181,14 @@
 		</view>
 		<!-- 弹窗 -->
 		<u-modal v-model="show" :content="contentp" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
+		<u-modal v-model="weshow" width="670rpx" :show-title="false"  :mask-close-able="true" :show-confirm-button="false" :show-cancel-button="false" >
+			<view class="slot-content">
+				<image class="sucIcon" src="../../static/images/sucIcon.svg" mode=""></image>
+				<view class="text">微信已复制</view>
+				<rich-text :nodes="wecontent"></rich-text>
+				<image class="wechatImg" src="../../static/images/wechatimg.png" mode=""></image>
+			</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -201,7 +210,12 @@
 				},
 				textareafocus: false,
 				show: false,
+				weshow:false,
 				contentp: '',
+				wetitle:'微信已复制',
+				wecontent:`
+					微信号复制成功<br>
+					快去添加微信免费咨询吧`,
 				style: {
 					img: 'border-radius: 16rpx'
 				},
@@ -377,10 +391,7 @@
 								uni.setClipboardData({
 									data: this.wechat,
 									success: () => {
-										uni.showToast({
-											title: '复制成功',
-											icon: 'success'
-										});
+										this.weshow = true
 									}
 								});
 							} else {
@@ -623,6 +634,7 @@
 </script>
 
 <style lang="scss" scoped>
+	@import url('../../components/transition-min/transition.min.css');
 // 自定义导航栏样式
 	.example-body {
 		flex-direction: row;
@@ -1195,6 +1207,7 @@
 		box-shadow: 0px -16rpx 56rpx 0px rgba(0, 0, 0, 0.05);
 		display: flex;
 		justify-content: space-around;
+		z-index: 9999;
 		.addBox{
 			// margin-top: 24rpx;
 			height: 98rpx;
@@ -1267,6 +1280,33 @@
 			color: #0091FF;
 			line-height: 32rpx;
 	
+		}
+	}
+	// 提示框
+	.slot-content{
+		font-size: 26rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #606266;
+		line-height: 36rpx;
+		text-align: center;
+		padding: 60rpx 24rpx 0 ;
+		.sucIcon{
+			width: 68rpx;
+			height: 68rpx;
+		}
+		.text{
+			font-size: 32rpx;
+			font-family: PingFangSC-Semibold, PingFang SC;
+			font-weight: 600;
+			color: #303133;
+			margin-top: 32rpx;
+			margin-bottom: 20rpx;
+		}
+		.wechatImg{
+			margin: 40rpx 0rpx 26rpx;
+			width: 620rpx;
+			height: 452rpx;
 		}
 	}
 </style>
