@@ -391,6 +391,7 @@
 								uni.setClipboardData({
 									data: this.wechat,
 									success: () => {
+										uni.hideToast()
 										this.weshow = true
 									}
 								});
