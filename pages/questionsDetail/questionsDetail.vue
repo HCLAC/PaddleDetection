@@ -99,7 +99,7 @@
 				<view class="answersLine">
 				</view>
 			</view>
-			<view class="moreAnswers" @click="moreAnswers()">
+			<view class="moreAnswers" @click="moreAnswers()" v-if="answersNum > 1">
 				查看全部{{answersNum}}条回答
 			</view>
 		</view>
@@ -342,7 +342,11 @@
 					},
 					success: async function(res) {
 						console.log('回复列表',res)
-						that.answersNum = res.data.data.total
+						if(res.data.data.list != 0){
+							that.answersNum = res.data.data.total
+						}else{
+							that.answersNum = 1
+						}
 					}
 				})
 			},
@@ -374,7 +378,7 @@
 			// 点击复制
 			templateAdd() {
 				// console.log('e', e);
-			
+				var that = this
 				// if (e.group && e.groupid) {
 					uni.request({
 						url: this.globalUrl + '/marketing/copy',
@@ -387,12 +391,16 @@
 						},
 						success: res => {
 							console.log(res,'复制微信')
+							uni.hideToast()
 							if (res.data.code == 0) {
 								uni.setClipboardData({
 									data: this.wechat,
 									success: () => {
 										uni.hideToast()
 										this.weshow = true
+										setTimeout(function(){
+											that.weshow = false
+										},3000)
 									}
 								});
 							} else {
@@ -460,25 +468,21 @@
 					},
 					success: res => {
 						// this.commentsList = res.data.data.list
-						this.content = ''
-						uni.hideKeyboard()
-						// this.$refs.comment.toggleMask('none');
-						this.getanswersList()
 						console.log('pinglun', res.data)
-						if (res.data.code == 10501) {
+						if (res.data.code == 10502) {
 							uni.navigateTo({
 								url: '../login/login'
 							});
 						} else {
 			
-							if (res.data.code == 15001) {
+							if (res.data.code == 16002) {
 								uni.showToast({
 									title: res.data.msg,
 									icon: 'none',
 									duration: 2000
 								})
 							} else {
-								if (res.data.code != 0) {
+								if (res.data.code == 500) {
 									uni.showToast({
 										title: '回答不能为空',
 										icon: 'none',
@@ -493,6 +497,10 @@
 								}
 							}
 						}
+						this.content = ''
+						uni.hideKeyboard()
+						// this.$refs.comment.toggleMask('none');
+						this.getanswersList()
 			
 			
 					}
@@ -693,7 +701,7 @@
 			height: 296rpx;
 			background: linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);
 			box-shadow: 0rpx 8rpx 28rpx 0rpx #EDEFF2;
-			border-radius: 16rpx 16rpx 0rpx 0rpx;
+			border-radius: 16rpx;
 			.cardTop{
 				display: flex;
 				justify-content: space-between;
@@ -930,13 +938,10 @@
 								height: 44rpx;
 							}
 							text{
-								height: 28rpx;
 								font-size: 20rpx;
 								font-family: PingFangSC-Regular, PingFang SC;
 								font-weight: 400;
 								color: #606266;
-								line-height: 28rpx;
-
 							}
 						}
 						.answersDisLike{
@@ -947,12 +952,10 @@
 								height: 44rpx;
 							}
 							text{
-								height: 28rpx;
 								font-size: 20rpx;
 								font-family: PingFangSC-Regular, PingFang SC;
 								font-weight: 400;
 								color: #606266;
-								line-height: 28rpx;
 							
 							}
 						}
@@ -1037,6 +1040,7 @@
 	// 旅途问答
 	.travelQuestionsBox{
 		margin: 28rpx;
+		margin-bottom: 186rpx;
 		.tQTop{
 			width: 100%;
 			display: flex;
@@ -1262,7 +1266,7 @@
 		background: #ffffff;
 		display: flex;
 		align-items: center;
-	
+		z-index: 99999;
 		.inputK {
 			height: 28rpx;
 			width: 558rpx;

@@ -241,7 +241,7 @@
 												</view>
 											</view>
 										</view>
-										<view class="answersBox" v-if="item.type == 6" @click="toQuestionsDetail(item)">
+										<view class="answersBox" v-if="item.type == 6 && item.type" @click="toQuestionsDetail(item)">
 											<image src="../../static/images/yh.svg" mode=""></image>
 											<view class="answersTitle">
 												{{item.title}}
@@ -339,8 +339,6 @@
 							<scroll-view scroll-y class="right-box" v-if="current == index">
 								<view class="page-view">
 									<view class="class-item">
-										<!-- <view class="item-title" @click="gethotsiteslist2(item)"> -->
-										<!-- <text>全省</text> -->
 										<!-- </view> -->
 										<view class="item-container">
 											<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
@@ -397,9 +395,9 @@ export default {
 		(this.item = item), (this.name = item.name);
 		this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), 
 		this.getCity()
-		,this.getQuestions()
+		this.getQuestions()
 		this.getAnswersList()
-		;
+		
 	},
 	methods: {
 		
@@ -662,6 +660,8 @@ export default {
 								}
 							}),
 							this.getWeather(),
+							this.getQuestions(),
+							this.getAnswersList(),
 							// 景点
 							uni.request({
 								url: this.globalUrl + '/site/hot',
@@ -701,103 +701,14 @@ export default {
 						console.log('城市信息==', res);
 						(this.item = res.data.data), (this.name = this.name = res.data.data.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(),
 						this.getQuestions(),
-						this.getAnswersList()
+						this.getAnswersList(),
 						(this.show = false);
 						this.mescroll.resetUpScroll()
 					}
 				});
 			}
 		},
-		gethotsiteslist2(item) {
-			if (item.state_id == 0) {
-				uni.request({
-					url: this.globalUrl + '/area',
-					success: res => {
-						console.log('省份信息==', res);
-						if (res.data == null) {
-							this.name = '全国';
-							this.item.name = '全国';
-						}
-						this.item = res.data.data;
-						if (item.name == null) {
-							this.name = '全国';
-							this.item.name = '全国';
-						} else {
-							this.name = item.name;
-						}
-
-						// 正在旅行
-						uni.request({
-							url: this.globalUrl + '/article/list',
-							data: {
-								count: 6,
-								page: 1,
-								first_time: new Date().getTime()
-							},
-							header: {
-								Authorization: uni.getStorageSync('Authorization')
-							},
-							success: res => {
-								uni.setStorageSync('article_id', res.data);
-								this.list = res.data.data.list;
-								this.mescroll.resetUpScroll()
-								console.log('list=====', this.list);
-							}
-						}),
-							uni.request({
-								url: 'https://api.asilu.com/weather/',
-								data: {
-									city: '全国'
-								},
-								success: res => {
-									console.log('天气--', res);
-									this.weather = res.data.weather[0];
-								}
-							}),
-							// 景点
-							uni.request({
-								url: this.globalUrl + '/site/hot',
-								data: {
-									count: 3,
-									sort_by: 3
-								},
-								success: res => {
-									console.log('景点推荐', res);
-									this.siteHot = res.data.data;
-								}
-							});
-						// 线路
-						uni.request({
-							url: this.globalUrl + '/route/hot',
-							data: {
-								count: 2
-							},
-							success: res => {
-								console.log('热门线路', res);
-								this.routeHot = res.data.data;
-							}
-						}),
-							(this.show = false);
-					}
-				});
-			} else {
-				uni.request({
-					url: this.globalUrl + '/area',
-					data: {
-						state_id: item.state_id,
-						city_id: item.city_id
-					},
-					success: res => {
-						console.log('省份信息==', res);
-						(this.item = res.data.data), (this.name = item.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(),
-						this.getQuestions(), 
-						this.getAnswersList()
-						(this.show = false);
-						this.mescroll.resetUpScroll()
-					}
-				});
-			}
-		},
+		
 		// 点击左边的栏目切换
 		async swichMenu(index) {
 			if (index == this.current) return;
@@ -933,10 +844,24 @@ export default {
 						// 接口返回的是否有下一页 (true/false)
 						// let hasNext = data.data.data.list;
 
-						//设置列表数据
-						if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
-						this.list = this.list.concat(curPageData); //追加新数据
-						console.log('list-', this.list);
+						if(this.answersList.length > 0 ){
+							var answer = this.answersList
+							var sar = Math.floor((Math.random()*answer.length));
+							var addAnswer = answer[sar]
+							let answerArr = [addAnswer]
+							console.log(answerArr,'随机数据')
+							//设置列表数据
+							if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+							curPageData = curPageData.concat(answerArr)
+							that.list = that.list.concat(curPageData); //追加新数据
+							console.log('that-list-', that.list);
+						}else{
+							// console.log(answerArr,'随机数据')
+							//设置列表数据
+							if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+							that.list = that.list.concat(curPageData); //追加新数据
+							console.log('that-list-', that.list);
+						}
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 						// this.mescroll.endByPage(curPageLen, totalPage);
@@ -990,21 +915,25 @@ export default {
 						console.log('totalSize', totalSize);
 						// 接口返回的是否有下一页 (true/false)
 						// let hasNext = data.data.data.list;
-						var answer = this.answersList
-						var sar = Math.floor((Math.random()*answer.length));
-						var addAnswer = answer[sar]
-						let answerArr = [addAnswer]
-						// var answerArr = Object.entries(addAnswer)
-						// console.log(Object.values(addAnswer))
-						// console.log(Object.entries(addAnswer))
-						// const touristInfo = [];
-						// touristInfo.push(addAnswer.touristInfo);
-						console.log(answerArr,'随机数据')
-						//设置列表数据
-						if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
-						curPageData = curPageData.concat(answerArr)
-						that.list = that.list.concat(curPageData); //追加新数据
-						console.log('that-list-', that.list);
+						console.log(this.answersList)
+						if(this.answersList.length > 0 ){
+							var answer = this.answersList
+							var sar = Math.floor((Math.random()*answer.length));
+							var addAnswer = answer[sar]
+							let answerArr = [addAnswer]
+							console.log(answerArr,'随机数据')
+							//设置列表数据
+							if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+							curPageData = curPageData.concat(answerArr)
+							that.list = that.list.concat(curPageData); //追加新数据
+							console.log('that-list-', that.list);
+						}else{
+							// console.log(answerArr,'随机数据')
+							//设置列表数据
+							if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+							that.list = that.list.concat(curPageData); //追加新数据
+							console.log('that-list-', that.list);
+						}
 						// that.list = that.list.concat(answerArr)
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage

@@ -563,7 +563,7 @@
 						// this.$refs.comment.toggleMask('none');
 						this.getComments()
 						console.log('pinglun', res.data)
-						if (res.data.code == 10501) {
+						if (res.data.code == 10502) {
 							uni.navigateTo({
 								url: '../login/login'
 							});
