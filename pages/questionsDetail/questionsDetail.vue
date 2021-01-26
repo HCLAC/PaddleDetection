@@ -106,25 +106,14 @@
 		<view class="answersNull" v-if="answersNum == 0">
 			还没有收到回答
 		</view>
-		<!-- 我要提问按钮 -->
+		
 		<!-- <view class="myAnswersBtn" @click="commentInput" v-if="!textareafocus">
 			<image src="../../static/images/followIcon.svg" mode=""></image>
 			<view class="mabt">
 				我来回答
 			</view>
 		</view> -->
-		<view class="answersFollow" >
-			<view class="addBox" @click="commentInput" v-if="!textareafocus">
-				<image src="../../static/images/addQ.svg" mode=""></image>
-				<text>添加问答</text>
-			</view>
-			<view class="aFLine"></view>
-			<view class="followBox"  @click="Fllow()">
-				<image src="../../static/images/followQ.svg" mode=""></image>
-				<text v-if="detail.is_follow == 0">关注问题</text>
-				<text v-if="detail.is_follow == 1">已关注</text>
-			</view>
-		</view>
+		
 		<!-- 输入框 -->
 		<view class="commentInput" v-if="textareafocus" :style="{bottom : inputbottom.bottom}">
 			<textarea class="inputK" v-model="content" placeholder="快来写下你的回答吧" :show-confirm-bar="false" :focus="textareafocus"
@@ -177,6 +166,19 @@
 			</view>
 			<view class="tQNull" v-if="questions.length == 0">
 				暂无相关问题
+			</view>
+		</view>
+		<!-- 我要提问按钮 -->
+		<view class="answersFollow" >
+			<view class="addBox" @click="commentInput" v-if="!textareafocus">
+				<image src="../../static/images/addQ.svg" mode=""></image>
+				<text>添加问答</text>
+			</view>
+			<view class="aFLine"></view>
+			<view class="followBox"  @click="Fllow()">
+				<image src="../../static/images/followQ.svg" mode=""></image>
+				<text v-if="detail.is_follow == 0">关注问题</text>
+				<text v-if="detail.is_follow == 1">已关注</text>
 			</view>
 		</view>
 		<!-- 弹窗 -->
@@ -501,6 +503,7 @@
 						uni.hideKeyboard()
 						// this.$refs.comment.toggleMask('none');
 						this.getanswersList()
+						this.getanswersOfficial()
 			
 			
 					}
@@ -1040,7 +1043,7 @@
 	// 旅途问答
 	.travelQuestionsBox{
 		margin: 28rpx;
-		margin-bottom: 186rpx;
+		padding-bottom: 186rpx;
 		.tQTop{
 			width: 100%;
 			display: flex;
