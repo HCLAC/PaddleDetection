@@ -64,16 +64,20 @@
 		<view class="answersList" v-if="answersNum != 0">
 			<view class="answersCardBox" >
 				<view class="answersCardTop">
-					<view class="answersAuthor">
-						<image :src="answersList.avatar" mode="" v-if="answersList.avatar"></image>
-						<image src="../../static/images/userImg.svg" v-if="!answersList.avatar" mode=""></image>
+					<view class="answersAuthor" onclick="popup('zoom-in')">
+						<view class="avatar ldx infinite ldx-zoom-in" >
+							
+						</view>
+						<image class="avatarImg" :src="answersList.avatar" mode="" v-if="answersList.avatar"></image>
+						<image class="avatarImg" src="../../static/images/userImg.svg" v-if="!answersList.avatar" mode=""></image>
+						
 						<view class="userName">
 							{{answersList.account_id}}
 						</view>
 						<image class="gficon" src="../../static/images/gficon.svg" mode="" v-if="answersList.account_type == 1"></image>
 					</view>
 					<view class="answersDate">
-						{{answersDate }}
+						{{answersDate.slice(0,10) }}
 					</view>
 				</view>
 				<view class="answersCardContent">
@@ -154,10 +158,10 @@
 							</view>
 							<view class="lookAnswers">
 								<view class="look">
-									{{item.read}}人看过
+									<text>{{item.read}}</text>人看过
 								</view>
 								<view class="answers">
-									{{item.reply_count}}回答
+									<text>{{item.reply_count}}</text>回答
 								</view>
 							</view>
 						</view>
@@ -171,14 +175,18 @@
 		<!-- 我要提问按钮 -->
 		<view class="answersFollow" >
 			<view class="addBox" @click="commentInput" v-if="!textareafocus">
-				<image src="../../static/images/addQ.svg" mode=""></image>
-				<text>添加问答</text>
+				<view class="midBox">
+					<image src="../../static/images/addQ.svg" mode=""></image>
+					<text>添加问答</text>
+				</view>
 			</view>
 			<view class="aFLine"></view>
 			<view class="followBox"  @click="Fllow()">
-				<image src="../../static/images/followQ.svg" mode=""></image>
-				<text v-if="detail.is_follow == 0">关注问题</text>
-				<text v-if="detail.is_follow == 1">已关注</text>
+				<view class="midBox">
+					<image src="../../static/images/followQ.svg" mode=""></image>
+					<text v-if="detail.is_follow == 0">关注问题</text>
+					<text v-if="detail.is_follow == 1">已关注</text>
+				</view>
 			</view>
 		</view>
 		<!-- 弹窗 -->
@@ -231,7 +239,7 @@
 			this.question_id = question_id.question_id
 			console.log(this.question_id)
 			this.getQuestionsDetail()
-			this.getanswersList()
+			// this.getanswersList()
 			this.getQuestionsRelated()
 			this.getanswersOfficial()
 		},
@@ -250,6 +258,7 @@
 						console.log('问题详情',res)
 						this.detail = res.data.data
 						this.create_at = res.data.data.create_at.slice(0,10)
+						this.answersNum = res.data.data.reply_count
 					}
 				});
 			},
@@ -330,28 +339,28 @@
 					}
 				})
 			},
-			getanswersList(){
-				var that = this
-				uni.request({
-					url: this.globalUrl + '/answers/list',
-					data: {
-						question_id: this.question_id,
-						count:10,
-						page:1
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: async function(res) {
-						console.log('回复列表',res)
-						if(res.data.data.list != 0){
-							that.answersNum = res.data.data.total
-						}else{
-							that.answersNum = 1
-						}
-					}
-				})
-			},
+			// getanswersList(){
+			// 	var that = this
+			// 	uni.request({
+			// 		url: this.globalUrl + '/answers/list',
+			// 		data: {
+			// 			question_id: this.question_id,
+			// 			count:10,
+			// 			page:1
+			// 		},
+			// 		header: {
+			// 			Authorization: uni.getStorageSync('Authorization')
+			// 		},
+			// 		success: async function(res) {
+			// 			console.log('回复列表',res)
+			// 			if(res.data.data.list != 0){
+			// 				 = res.data.data.total
+			// 			}else{
+			// 				that.answersNum = 1
+			// 			}
+			// 		}
+			// 	})
+			// },
 			getTemplate(id) {
 				if (id) {
 					return new Promise((resolve, reject) => {
@@ -502,7 +511,8 @@
 						this.content = ''
 						uni.hideKeyboard()
 						// this.$refs.comment.toggleMask('none');
-						this.getanswersList()
+						// this.getanswersList()
+						this.getQuestionsDetail()
 						this.getanswersOfficial()
 			
 			
@@ -871,7 +881,7 @@
 		}
 	}
 	.answersList{
-		margin: 0px 32rpx;
+		margin: 0px 28rpx;
 		.answersCardBox{
 			margin-top: 20rpx;
 			.answersCardTop{
@@ -883,14 +893,55 @@
 				.answersAuthor{
 					display: flex;
 					align-items: center;
-					image{
+					position: relative;
+					.avatar{
+						position: relative;
+						width: 80rpx;
+						height: 80rpx;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						border-radius: 50%;
+						&::before {
+							content: "";
+							position: absolute;
+							top: 0;
+							left: 0;
+							right: 0;
+							bottom: 0;
+							border-radius: 50%;
+							border: 2rpx solid gold;
+							// transition: all .5s;
+							// animation: clippath 3s infinite linear;
+						}
+					}
+					.avatarImg{
 						width: 68rpx;
 						height: 68rpx;
-						
-						// border: 4rpx solid;
-						// border-image: linear-gradient(270deg, rgba(255, 229, 18, 1), rgba(255, 182, 77, 1)) 2 2;
 						border-radius: 50%;
+						position: absolute;
+						top: 6rpx;
+						left: 6rpx;
+						
 					}
+					@keyframes clippath {
+					    0%  {
+					        clip-path: inset(0 0 95% 0);
+					    }
+					    25% {
+					        clip-path: inset(0 95% 0 0);
+					    }
+					    50% {
+					        clip-path: inset(95% 0 0 0);
+					    }
+					    75% {
+					        clip-path: inset(0 0 0 95%);
+					    }
+						100% {
+						    clip-path: inset(0 0 95% 0);
+						}
+					}
+					
 					.userName{
 						height: 28rpx;
 						font-size: 28rpx;
@@ -933,7 +984,7 @@
 						display: flex;
 						align-items: center;
 						.answersLike{
-							margin-right: 28rpx;
+							margin-right: 40rpx;
 							display: flex;
 							align-items: center;
 							image{
@@ -941,6 +992,7 @@
 								height: 44rpx;
 							}
 							text{
+								width: 48rpx;
 								font-size: 20rpx;
 								font-family: PingFangSC-Regular, PingFang SC;
 								font-weight: 400;
@@ -955,6 +1007,7 @@
 								height: 44rpx;
 							}
 							text{
+								// width: 48rpx;
 								font-size: 20rpx;
 								font-family: PingFangSC-Regular, PingFang SC;
 								font-weight: 400;
@@ -981,7 +1034,7 @@
 			color: #0091FF;
 			line-height: 28rpx;
 			margin-top: 32rpx;
-			margin-bottom: 80rpx;
+			margin-bottom: 32rpx;
 		}
 	}
 	.answersNull{
@@ -1100,7 +1153,7 @@
 				.tQCRight{
 					width: 694rpx;
 					.tQCTitle{
-						font-size: 40rpx;
+						font-size: 32rpx;
 						font-family: PingFangSC-Medium, PingFang SC;
 						font-weight: 500;
 						color: #303133;
@@ -1147,6 +1200,24 @@
 							line-height: 34rpx;
 							.look{
 								margin-right: 16rpx;
+								text{
+									font-size: 24rpx;
+									font-family: PingFangSC-Medium, PingFang SC;
+									font-weight: 500;
+									color: #606266;
+									line-height: 34rpx;
+
+								}
+							}
+							.answers{
+								text{
+									font-size: 24rpx;
+									font-family: PingFangSC-Medium, PingFang SC;
+									font-weight: 500;
+									color: #606266;
+									line-height: 34rpx;
+								
+								}
 							}
 						}
 					}
@@ -1214,26 +1285,34 @@
 		background: #FFFFFF;
 		box-shadow: 0px -16rpx 56rpx 0px rgba(0, 0, 0, 0.05);
 		display: flex;
-		justify-content: space-around;
+		// justify-content: space-around;
 		z-index: 9999;
 		.addBox{
 			// margin-top: 24rpx;
+			margin-left: 108rpx;
+			margin-right: 106rpx;
 			height: 98rpx;
 			display: flex;
 			align-items: center;
-			image{
-				width: 48rpx;
-				height: 48rpx;
+			justify-content: center;
+			.midBox{
+				display: flex;
+				align-items: center;
+				image{
+					width: 48rpx;
+					height: 48rpx;
+				}
+				text{
+					height: 40rpx;
+					font-size: 28rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #303133;
+					line-height: 40rpx;
+				
+				}
 			}
-			text{
-				height: 40rpx;
-				font-size: 28rpx;
-				font-family: PingFangSC-Regular, PingFang SC;
-				font-weight: 400;
-				color: #303133;
-				line-height: 40rpx;
-
-			}
+			
 		}
 		.aFLine{
 			margin-top: 30rpx;
@@ -1244,22 +1323,30 @@
 		}
 		.followBox{
 			// margin-top: 24rpx;
+			margin-left: 106rpx;
+			margin-right: 108rpx;
 			height: 98rpx;
 			display: flex;
 			align-items: center;
-			image{
-				width: 48rpx;
-				height: 48rpx;
+			justify-content: center;
+			.midBox{
+				display: flex;
+				align-items: center;
+				image{
+					width: 48rpx;
+					height: 48rpx;
+				}
+				text{
+					height: 40rpx;
+					font-size: 28rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #303133;
+					line-height: 40rpx;
+				
+				}
 			}
-			text{
-				height: 40rpx;
-				font-size: 28rpx;
-				font-family: PingFangSC-Regular, PingFang SC;
-				font-weight: 400;
-				color: #303133;
-				line-height: 40rpx;
 			
-			}
 		}
 	}
 	// 评论框

@@ -41,7 +41,7 @@
 							<view class="answersDisLike" @click="disLike(item,index) in answersList">
 								<image src="../../static/images/aDisLike.svg" v-if="item.option == 0 || item.option == 1" mode=""></image>
 								<image src="../../static/images/aDisLikeActive.svg" v-if="item.option == 2" mode=""></image>
-								<text>{{item.dislike == 0 ? '踩' : item.disLike}}</text>
+								<text>{{item.dislike == 0 ? '踩' : item.dislike}}</text>
 							</view>
 						</view>
 					</view>
@@ -286,7 +286,7 @@
 	}
 	// 回复列表
 	.answersList{
-		margin: 0px 32rpx;
+		margin: 0px 28rpx;
 		.answersCardBox{
 			margin-top: 20rpx;
 			.answersCardTop{
@@ -340,7 +340,7 @@
 						display: flex;
 						align-items: center;
 						.answersLike{
-							margin-right: 28rpx;
+							margin-right: 40rpx;
 							display: flex;
 							align-items: center;
 							image{
@@ -348,6 +348,7 @@
 								height: 44rpx;
 							}
 							text{
+								width: 48rpx;
 								font-size: 20rpx;
 								font-family: PingFangSC-Regular, PingFang SC;
 								font-weight: 400;
@@ -363,6 +364,7 @@
 								height: 44rpx;
 							}
 							text{
+								// width: 48rpx;
 								font-size: 20rpx;
 								font-family: PingFangSC-Regular, PingFang SC;
 								font-weight: 400;

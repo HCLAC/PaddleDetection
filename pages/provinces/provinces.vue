@@ -851,10 +851,17 @@ export default {
 							let answerArr = [addAnswer]
 							console.log(answerArr,'随机数据')
 							//设置列表数据
-							if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
-							curPageData = curPageData.concat(answerArr)
-							that.list = that.list.concat(curPageData); //追加新数据
-							console.log('that-list-', that.list);
+							if (curPageData > 5){
+								if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+								curPageData = curPageData.concat(answerArr)
+								that.list = that.list.concat(curPageData); //追加新数据
+								console.log('that-list-', that.list);
+							}else{
+								if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+								that.list = that.list.concat(curPageData); //追加新数据
+								console.log('that-list-', that.list);
+							}
+							
 						}else{
 							// console.log(answerArr,'随机数据')
 							//设置列表数据
@@ -923,10 +930,17 @@ export default {
 							let answerArr = [addAnswer]
 							console.log(answerArr,'随机数据')
 							//设置列表数据
-							if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
-							curPageData = curPageData.concat(answerArr)
-							that.list = that.list.concat(curPageData); //追加新数据
-							console.log('that-list-', that.list);
+							if (curPageData.length > 5){
+								if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+								curPageData = curPageData.concat(answerArr)
+								that.list = that.list.concat(curPageData); //追加新数据
+								console.log('that-list-', that.list);
+							}else{
+								if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+								that.list = that.list.concat(curPageData); //追加新数据
+								console.log('that-list-', that.list);
+							}
+							
 						}else{
 							// console.log(answerArr,'随机数据')
 							//设置列表数据
@@ -1323,13 +1337,15 @@ export default {
 		left: 32rpx;
 	}
 	.answersTitle{
-		width: 138px;
+		// width: 276rpx;
 		font-size: 36rpx;
+		letter-spacing: 2rpx;
 		font-family: PingFangSC-Semibold, PingFang SC;
 		font-weight: 600;
 		color: #FFFFFF;
 		line-height: 50rpx;
 		margin-top: -8rpx;
+		line-height: 50rpx;
 
 	}
 	.answersNum{
@@ -1359,8 +1375,9 @@ export default {
 		
 	}
 	.answersTitle{
-		width: 138px;
+		// width: 276rpx;
 		font-size: 36rpx;
+		letter-spacing: 2rpx;
 		font-family: PingFangSC-Semibold, PingFang SC;
 		font-weight: 600;
 		color: #FFFFFF;
