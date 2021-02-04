@@ -65,7 +65,10 @@
             "scope.userLocation" : {
                 "desc" : "用于小程序个性化服务及体验"
             }
-        }
+        },
+		"optimization": {
+			"subPackages": true
+		}
     },
     "mp-baidu" : {
         "appid" : "21554227",
@@ -75,6 +78,7 @@
         "uniStatistics" : {
             "enable" : true
         }
+		
     },
     "mp-toutiao" : {
         "setting" : {

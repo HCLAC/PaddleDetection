@@ -107,7 +107,7 @@
 					<view class="wrap" >
 						<!-- <waterfall-goods :list="list"></waterfall-goods> -->
 						<!-- 非头条可见 -->
-						<!-- #ifndef MP-TOUTIAO -->
+						<!-- #ifdef MP-BAIDU -->
 							<u-waterfall v-model="list" ref="uWaterfall">
 								<template v-slot:left="{ leftList }">
 									<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
@@ -198,7 +198,7 @@
 							</u-waterfall>
 						<!-- #endif -->
 						<!-- 头条可见 -->
-						<!-- #ifdef MP-TOUTIAO -->
+						<!-- #ifdef MP-TOUTIAO || MP-WEIXIN -->
 							<view class="left">
 								<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
 									<view class="" >
@@ -343,7 +343,7 @@
 				<view class="touring" id="touring">
 					<text class="tourtext">正在旅行</text>
 					<view class="wrap">
-						<!-- #ifndef MP-TOUTIAO -->
+						<!-- #ifdef MP-BAIDU -->
 							<u-waterfall v-model="list" ref="uWaterfall">
 								<template v-slot:left="{ leftList }">
 									<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
@@ -433,7 +433,7 @@
 								</template>
 							</u-waterfall>
 						<!-- #endif -->
-						<!-- #ifdef MP-TOUTIAO -->
+						<!-- #ifdef MP-TOUTIAO || MP-WEIXIN -->
 							<view class="left">
 								<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
 									<view class="" >
@@ -1836,7 +1836,7 @@
 		align-items: center;
 		margin-right: 20rpx;
 	}
-	/* #ifdef MP-TOUTIAO */
+	/* #ifdef MP-TOUTIAO || MP-WEIXIN */
 	.count image {
 		width: 26rpx;
 		height: 26rpx;
