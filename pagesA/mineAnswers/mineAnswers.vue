@@ -13,7 +13,7 @@
 		<!-- 问答列表 -->
 		<view class="answersList">
 			<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
-				<view class="favBox" @click="change" >
+				<!-- <view class="favBox" @click="change" >
 					<view class="favBT">
 						<view :class="tabCurrent == 0 ?'favText' : 'favText1 '" >
 							发布的问题
@@ -22,7 +22,7 @@
 						</view>
 					</view>
 					
-				</view>
+				</view> -->
 				<view class="likeBox" @click="change1">
 					<view class="likeBT">
 						<view :class="tabCurrent == 1 ?'favText' : 'favText1 '">
@@ -47,11 +47,8 @@
 		</view>
 		<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption"  >
 			<!-- 用户发布的回答 -->
-			<view class="selectedList" v-if="tabCurrent == 0">
+			<!-- <view class="selectedList" v-if="tabCurrent == 0">
 				<view class="card" v-for="(item,index) in selectedList" :key="index" @click="toQuestionsDetail(item)">
-					<!-- <view class="title">
-						{{item.title}}
-					</view> -->
 					<view class="avatar">
 						<image :src="item.avatar" mode="" v-if="item.avatar"></image>
 						<image src="../../static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
@@ -74,7 +71,7 @@
 						</view>
 					</view>
 				</view>
-			</view>
+			</view> -->
 			<!-- 用户关注的回答 -->
 			<view class="newestList" v-if="tabCurrent == 1">
 				<view class="card" v-for="(item,index) in newestList" :key="index" @click="toQuestionsDetail(item)">
@@ -89,8 +86,9 @@
 							<text class="date">{{item.create_at.slice(0,10)}}</text>
 						</view>
 						<view class="content">
-							<u-parse ref="parse"  style="overflow: hidden;" lazy-load
-							 :html="item.content"></u-parse>
+							<!-- <u-parse ref="parse"  style="overflow: hidden;" lazy-load
+							 :html="item.content"></u-parse> -->
+							 {{item.title}}
 						</view>
 						<view class="lookAnswers">
 							{{item.reply_count>10000?((item.reply_count-(item.reply_count%1000))/10000+'w'):item.reply_count}}
@@ -115,8 +113,9 @@
 							<text class="date">{{item.create_at.slice(0,10)}}</text>
 						</view>
 						<view class="content">
-							<u-parse ref="parse"  style="overflow: hidden;" lazy-load
-							 :html="item.content"></u-parse>
+							<!-- <u-parse ref="parse"  style="overflow: hidden;" lazy-load
+							 :html="item.content"></u-parse> -->
+							 {{item.title}}
 						</view>
 						<view class="lookAnswers">
 							{{item.reply_count>10000?((item.reply_count-(item.reply_count%1000))/10000+'w'):item.reply_count}}
@@ -136,7 +135,7 @@
 	export default {
 		data() {
 			return {
-				tabCurrent: 0,
+				tabCurrent: 1,
 				downOption:{
 					use:false
 				},
@@ -168,29 +167,29 @@
 			}
 		},
 		onLoad() {
-			this.getAskQuestion()
+			// this.getAskQuestion()
 			this.getFollowQuestion()
 			this.getAnsersQuestion()
 		},
 		methods:{
 			// 用户发布的问答
-			getAskQuestion(){
-				uni.request({
-					url: this.globalUrl + '/user/askquestion/list',
-					data: {
-						page:1,
-						count:10
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: res => {
-						console.log('发布的问答',res)
-						this.selectedList = res.data.data.list
+			// getAskQuestion(){
+			// 	uni.request({
+			// 		url: this.globalUrl + '/user/askquestion/list',
+			// 		data: {
+			// 			page:1,
+			// 			count:10
+			// 		},
+			// 		header: {
+			// 			Authorization: uni.getStorageSync('Authorization')
+			// 		},
+			// 		success: res => {
+			// 			console.log('发布的问答',res)
+			// 			this.selectedList = res.data.data.list
 						
-					}
-				});
-			},
+			// 		}
+			// 	});
+			// },
 			// 用户关注的问答
 			getFollowQuestion(){
 				uni.request({
@@ -264,7 +263,7 @@
 			// 返回首页
 			home() {
 				uni.switchTab({
-					url: '/pages/index/index'
+					url: '/pagesA/index/index'
 				});
 			},
 			/*下拉刷新的回调, 有三种处理方式:*/
@@ -473,7 +472,7 @@
 .fanhui{
 	width: 40rpx;
 	height: 40rpx;
-	margin-left: 40rpx;
+	margin-left: 42rpx;
 	margin-right: 20rpx;
 }
 .fhsy{

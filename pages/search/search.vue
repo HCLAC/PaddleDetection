@@ -949,7 +949,7 @@ view {
 .fanhui {
 	width: 40rpx;
 	height: 40rpx;
-	margin-left: 40rpx;
+	margin-left: 42rpx;
 	/* margin-right: 20rpx; */
 }
 .fhsy {

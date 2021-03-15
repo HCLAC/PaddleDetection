@@ -352,7 +352,7 @@ export default {
 		},
 		home() {
 			uni.switchTab({
-				url: '/pages/index/index'
+				url: '/pagesA/index/index'
 			});
 		},
 		likeclick() {
@@ -414,7 +414,7 @@ export default {
 	.fanhui{
 		width: 40rpx;
 		height: 40rpx;
-		margin-left: 40rpx;
+		margin-left: 42rpx;
 		margin-right: 20rpx;
 	}
 	.fhsy{

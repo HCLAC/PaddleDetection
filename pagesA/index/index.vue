@@ -835,9 +835,9 @@
 			},
 			// 点击banner
 			towebview(item) {
-				uni.navigateTo({
-					url: `/pages/webview/webview?url=${item.url}`
-				});
+				// uni.navigateTo({
+				// 	url: `/pages/webview/webview?url=${item.url}`
+				// });
 			},
 			// toUrl(item) {
 			// 	console.log(111111);

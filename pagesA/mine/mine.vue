@@ -352,7 +352,7 @@ export default {
 		// 获取问答
 		getAnswers(){
 			uni.request({
-				url: this.globalUrl+ '/user/askquestion/list',
+				url: this.globalUrl+ '/user/followquestion/list',
 				data: {
 					page:1,
 					count:10
@@ -411,7 +411,7 @@ export default {
 		// 跳转关注页
 		toConcern(){
 			uni.navigateTo({
-				url:'/pages/mineConcern/mineConcern'
+				url:'/pagesA/mineConcern/mineConcern'
 			});
 		},
 		// 跳转个人问答页
@@ -591,7 +591,7 @@ export default {
 	.fanhui {
 		width: 40rpx;
 		height: 40rpx;
-		margin-left: 40rpx;
+		margin-left: 42rpx;
 		
 	}
 	.fhsy {

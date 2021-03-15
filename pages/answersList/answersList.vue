@@ -158,7 +158,7 @@
 			// 返回首页
 			home() {
 				uni.switchTab({
-					url: '/pages/index/index'
+					url: '/pagesA/index/index'
 				});
 			},
 			/*下拉刷新的回调, 有三种处理方式:*/
@@ -264,7 +264,7 @@
 	.fanhui{
 		width: 40rpx;
 		height: 40rpx;
-		margin-left: 40rpx;
+		margin-left: 42rpx;
 		margin-right: 20rpx;
 	}
 	.fhsy{

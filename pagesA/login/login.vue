@@ -4,6 +4,12 @@
 		<view class="example-body">
 			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
 				<view slot="left" class="slotleft">
+					<!-- #ifdef MP-BAIDU -->
+					<image  class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->
+					<!-- #ifndef MP-BAIDU -->
+					<image v-if="ismine == true" class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->
 					<image v-if="ismine == true" class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
@@ -407,7 +413,7 @@ export default {
 				// 	'Content-Type': 'application/x-www-form-urlencoded',
 				// },
 				success: res => {
-					console.log(res);
+					console.log(res,'手机号登录');
 					if (res.data.code == 0) {
 						// _this.login(true, res.data.data, function() {
 						// _this.getRongyToken();
@@ -454,7 +460,7 @@ export default {
 		// 返回首页
 		home() {
 			uni.switchTab({
-				url: '/pages/index/index'
+				url: '/pagesA/index/index'
 			});
 		}
 	}
@@ -495,7 +501,7 @@ export default {
 .fanhui {
 	width: 40rpx;
 	height: 40rpx;
-	margin-left: 40rpx;
+	margin-left: 42rpx;
 }
 
 .fhsy {
