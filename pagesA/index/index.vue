@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor">
+			<uni-nav-bar :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor">
 				<match-media :max-width="360">
 					<view class="input-view" @click="confirm" style="position:relative; top: -6rpx ; ">
 						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
@@ -70,7 +70,7 @@
 								<text class="dqwzText">{{ cityName }}</text>
 								<view class="adressBox">
 									<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
-									<text class="dqwzText1">{{ dqdwText }}</text>
+									<text :class="errCode == 0 ? dqwzText1 : dqwzText2" >{{ dqdwText }}</text>
 								</view>
 							</view>
 							<view class="hotCity" @click="toProvinces(areaList[1])" v-if="areaList[1]">
@@ -715,7 +715,7 @@
 						this.errCode = 1;
 						this.dqdwText = '正在定位...';
 						setTimeout(() => {
-							this.dqdwText = '未获取到定位';
+							this.dqdwText = '未取得定位';
 						}, 3000);
 
 						uni.request({
@@ -835,9 +835,9 @@
 			},
 			// 点击banner
 			towebview(item) {
-				// uni.navigateTo({
-				// 	url: `/pages/webview/webview?url=${item.url}`
-				// });
+				uni.navigateTo({
+					url: `/pages/webview/webview?url=${item.url}`
+				});
 			},
 			// toUrl(item) {
 			// 	console.log(111111);
@@ -985,7 +985,7 @@
 				// 	title: '选择城市'
 				// })
 				uni.navigateTo({
-					url: '../city/city'
+					url: '/pages/city/city'
 				});
 			},
 			toProvinces(e) {
@@ -1554,6 +1554,14 @@
 		color: #303133;
 		line-height: 20rpx;
 
+	}
+	.dqwzText2{
+		height: 20rpx;
+		font-size: 16rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #303133;
+		line-height: 20rpx;
 	}
 
 	.hot {
