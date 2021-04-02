@@ -845,7 +845,7 @@
 			// },
 			// 跳转文章详情
 			onPageJump(e) {
-				console.log(e);
+				console.log(e,'跳转按钮');
 				let id = e.currentTarget.id;
 				// debugger
 				// return
@@ -1038,7 +1038,7 @@
 				// 	title: '搜索'
 				// })
 				uni.navigateTo({
-					url: '../search/search'
+					url: '../../pages/search/search'
 				});
 			},
 			/*下拉刷新的回调, 有三种处理方式:*/

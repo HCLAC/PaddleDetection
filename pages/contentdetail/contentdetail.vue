@@ -1,7 +1,9 @@
 <template>
 	<view>
-		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+		
+		<!-- 游记文章 -->
+		<view class="example-body" v-if="articleList.data.type != 2">
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
@@ -9,10 +11,9 @@
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
-
-		<view class="" v-if="swiperHeight">
+		<view class="" v-if="swiperHeight && articleList.data.type != 2">
 			<!-- 内容详情轮播图 -->
-			<view class="uni-padding-wrap">
+			<view class="uni-padding-wrap" >
 				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="articleList.data.type != 4 && articleList.data.type != 5 ">
 					<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
 						<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
@@ -131,6 +132,169 @@
 
 				</view>
 
+				<view class="safeBox"></view>
+			</view>
+			<!-- <view class="foot" v-show="showInput">
+				<chat-input @send-message="send_comment" @blur="blur" :focus="focus" :placeholder="input_placeholder"></chat-input>
+			</view> -->
+			<view class="commentInput" v-if="textareafocus" :style="{bottom : inputbottom.bottom}">
+				<textarea class="inputK" v-model="content" placeholder="快来写下你的评论吧" :show-confirm-bar="false" :focus="textareafocus"
+				 @blur="inputBlur" @focus="inputFocus" :auto-height="autoHeight" @input="inputValue" maxlength="140" cursor-spacing="20"
+				 :adjust-position="false"></textarea>
+				<view class="send" @click="pubComment">发送</view>
+			</view>
+			<view class="bottom">
+				<!-- 分割线 -->
+				<!-- <view class="bottomLine">
+					
+				</view> -->
+				<view class="line"></view>
+				<!-- 登录 -->
+				<view class="contentBottom savepadding">
+					<view style="display: flex;">
+						<view class="like" @click="clickLike">
+							<image class="likeBtn" src="../../static/images/attheart.svg" v-if="articleList.data.liked == 0"></image>
+							<image class="likeBtn" src="../../static/images/attHeartActive.svg" v-if="articleList.data.liked == 1"></image>
+							<view class="likeNum" v-model="likemessage" v-if="articleList.data.like_count != 0">{{ articleList.data.like_count }}</view>
+						</view>
+						<view class="fav" @click="clickFav">
+							<image class="favBtn" src="../../static/images/attFav.svg" v-if="articleList.data.fav == 0"></image>
+							<image class="favBtn" src="../../static/images/attFavA.svg" v-if="articleList.data.fav == 1"></image>
+							<view class="favNum" v-if="articleList.data.fav_count != 0">{{ articleList.data.fav_count }}</view>
+						</view>
+						<view class="replyIcon" @click="commentInput">
+							<image src="../../static/images/replyIcon.svg" mode=""></image>
+							<view class="replyNum">
+								{{total}}
+							</view>
+						</view>
+						<!-- <view class="share" v-if="serviceProvider == 'baidu'" @click="share"><image src="../../static/images/shareIcon.svg"></image></view> -->
+					</view>
+					<view class="">
+						<view class="loginButton" @click="login" v-if="flag">登录</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<!-- 攻略文章 -->
+		<view class="example-body strategy" v-if="articleList.data.type == 2">
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
+				<view slot="left" class="slotleft">
+					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+				</view>
+				<view class="slottitle">领途羊</view>
+			</uni-nav-bar>
+		</view>
+		<view class="" v-if="swiperHeight && articleList.data.type == 2">
+			<!-- 内容详情 -->
+			<view class="detailContent savebottom">
+				<!-- 标题 -->
+				<view class="contentTitle-strategy">{{ articleList.data.title }}</view>
+				<view class="StrategyTip">
+					<image class="StrategyImg" src="../../static/images/Strategy.svg" mode=""></image>
+				</view>
+				<!-- 作者信息 -->
+				<view class="userMse-strategy">
+					<image class="userHeard" :src="articleList.data.avatar" @click="tobloggers(articleList.data.author_id)"></image>
+					<view class="userMse-r">
+						<view class="userNikename-strategy">{{ articleList.data.author_name }}</view>
+						<view class="releaseTime-strategy">发布于{{ articleList.data.update_at.slice(0,10) }}</view>
+					</view>
+					<view class="followBox" @click="follow()" v-if="!articleList.data.is_follow">
+						<image class="followImg" src="../../static/images/followIcon.svg" mode=""></image>
+						关注
+					</view>
+					<view class="isfollowBox" @click="follow()" v-if="articleList.data.is_follow">已关注</view>
+				</view>
+				<!-- 弹窗 -->
+				<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
+				
+				
+				<!-- 内容文章 -->
+				<view class="contentText-strategy">
+					<!-- <rich-text :nodes="articleList.data.content | formatRichText"></rich-text> -->
+					<u-parse ref="parse" v-if="articleList" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linkpress="templateAdd"
+					 :html="articleList.data.content | formatRichText"></u-parse>
+				</view>
+				<!-- 地址 -->
+				<view class="adress-strategy">
+					<image src="../../static/images/iconMap.svg" mode="" class="adreessIcon"></image>
+					<view class="adressText" @click="map()">{{ articleList.data.location }}</view>
+				</view>
+				<view class="strategyLine"></view>
+				<!-- 话题 -->
+				<view class="tipsStrategy">
+					<view v-for="item in articleList.data.topics" :key="item.id" @click="toTopic(item.id)">
+						<image class="tipsIcon" src="../../static/images/topicIcon.svg" mode=""></image>
+						<text>{{ item.name }}</text>
+					</view>
+					<!-- <view>#<text></text></view> -->
+				</view>
+				
+				<view class="replyLine"></view>
+				<view class="replyBox">
+		
+					<!-- start 输入框 -->
+					<!-- end 输入框 -->
+					<view class="replyText">
+						回复
+					</view>
+					<view class="replyContent">
+						<view class="myReply">
+							<image class="userImg" src="../../static/images/userImg.svg" mode="" v-if="userInfo == null"></image>
+							<image class="userImg" :src="userInfo.avatar" mode="" v-if="userInfo != null"></image>
+							<!-- <comment 
+								ref="comment" 
+								:placeholder="'快来写下你的评论吧'" 
+								@pubComment="pubComment">
+							</comment>
+							<u-input 
+								class="replyInput"
+								placeholder="写个回复走个心" 
+								placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
+								confirmType="send"
+								:clearable="false"
+								:disabled="true"
+								@click="toggleMask('show')"
+							>
+							</u-input> -->
+							<u-input class="replyInput" placeholder="写个回复走个心" placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;"
+							 confirmType="send" :clearable="false" :disabled="true" @click="commentInput">
+							</u-input>
+						</view>
+		
+						<view class="reply" v-for="(item,index) in commentsList" :key="index">
+							<view class="replyTop">
+								<image class="userImg" v-if="!item.avatar" src="../../static/images/userImg.svg" mode=""></image>
+								<image class="userImg" v-if="item.avatar" :src="item.avatar" mode=""></image>
+								<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
+									<view class="" style="display: flex;align-items: center;">
+										<view class="userName">{{item.account_name}}</view>
+										<view class="replyTime">
+											{{item.create_at.slice(0,10)}}
+										</view>
+									</view>
+									<view class="">
+										<image class="replyLike" src="../../static/images/attLike.svg" v-if="item.like == 0" @click="replyLike(item)"></image>
+										<image class="replyLike" src="../../static/images/attLikeA.svg" mode="" v-if="item.like == 1" @click="replyLike(item)"></image>
+										<image class="report" src="../../static/images/report.svg" mode="" @click="toReport(item)"></image>
+									</view>
+		
+								</view>
+		
+							</view>
+							<view class="replyBottom">
+								{{item.content}}
+							</view>
+						</view>
+					</view>
+					<view class="moreReply" v-if="total > 3" @click="toMoreReply">
+						查看全部{{total}}条回复
+					</view>
+		
+				</view>
+		
 				<view class="safeBox"></view>
 			</view>
 			<!-- <view class="foot" v-show="showInput">
@@ -1001,13 +1165,14 @@
 
 	.example-body {
 		flex-direction: column;
-		padding: 15px;
 		background-color: #ffffff;
+		
+	}
+	.strategy{
+		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2
 	}
 
-	.example-body {
-		padding: 0;
-	}
+	
 
 	.navBar {
 		display: flex;
@@ -1138,6 +1303,12 @@
 		margin-left: 28rpx;
 		margin-top: 50rpx;
 	}
+	.userMse-strategy{
+		display: flex;
+		align-items: center;
+		margin-left: 28rpx;
+		margin-top: 40rpx;
+	}
 
 	.userHeard {
 		width: 80rpx;
@@ -1155,6 +1326,14 @@
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
 		color: rgba(48, 49, 51, 1);
+		line-height: 28rpx;
+	}
+	.userNikename-strategy {
+		height: 28rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #303133;
 		line-height: 28rpx;
 	}
 
@@ -1208,8 +1387,15 @@
 		padding: 0 14rpx;
 		// display: flex;
 		// align-items: center;
-		
-		 
+	}
+	.adress-strategy{
+		height: 40rpx;
+		margin: 20rpx 28rpx;
+		background: rgba(0, 145, 255, 0.1);
+		border-radius: 20rpx;
+		display: inline-block;
+		line-height: 40rpx;
+		padding: 0 14rpx;
 	}
 
 	.adreessIcon {
@@ -1252,6 +1438,24 @@
 		margin-left: 28rpx;
 		margin-top: 20rpx;
 	}
+	.contentTitle-strategy{
+		margin: 40rpx 28rpx 0rpx;
+		font-size: 38rpx;
+		font-family: PingFangSC-Semibold, PingFang SC;
+		font-weight: 600;
+		color: #303133;
+		line-height: 52rpx;
+	}
+	.StrategyTip{
+		margin-top: 8rpx;
+		margin-left: 28rpx;
+		width: 88rpx;
+		height: 40rpx;
+		.StrategyImg{
+			width: 100%;
+			height: 100%;
+		}
+	}
 
 	.contentText {
 		font-size: 28rpx;
@@ -1260,6 +1464,14 @@
 		color: rgba(96, 98, 102, 1);
 		line-height: 56rpx;
 		margin: 28rpx;
+	}
+	.contentText-strategy{
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: rgba(96, 98, 102, 1);
+		line-height: 56rpx;
+		margin: 40rpx 28rpx 0rpx;
 	}
 
 	.copy {
@@ -1274,14 +1486,34 @@
 		color: rgba(0, 145, 255, 1);
 		margin-left: 36rpx;
 	}
-
+	.strategyLine{
+		width: 750rpx;
+		height: 1rpx;
+		background: #EDEFF2;
+	}
 	.tips {
 		margin-top: 28rpx;
 		margin-left: 28rpx;
 		display: flex;
 		flex-wrap: wrap;
 	}
-
+	.tipsStrategy{
+		margin-top: 20rpx;
+		margin-left: 28rpx;
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.tipsStrategy view{
+		height: 48rpx;
+		background: #f8f8f8;
+		border-radius: 12px;
+		margin-right: 38rpx;
+		display: flex;
+		align-items: center;
+		padding-left: 8rpx;
+		padding-right: 16rpx;
+		margin-bottom: 16rpx;
+	}
 	.tips view {
 		height: 48rpx;
 		background: #f8f8f8;
@@ -1327,6 +1559,17 @@
 		padding-bottom: 0;
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
+	}
+	.releaseTime-strategy{
+		width: 198rpx;
+		height: 22rpx;
+		font-size: 22rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #909399;
+		line-height: 22rpx;
+		margin-top: 12rpx;
+		background: #EDEFF2;
 	}
 
 	.replyLine {
