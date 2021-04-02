@@ -3,31 +3,52 @@
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
 			<uni-nav-bar :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor">
-				<match-media :max-width="360">
+				<view class="headerL">
+					<view class="world">
+						<view class="worldText">全世界</view>
+						<view class="worldLine"></view>
+					</view>
+					<view class="nowCityName" @click="toProvinces(areaList[0])">
+						<view class="nowCityNameText">{{ cityName }}</view>
+						<view class="downIcon">
+							<image class="downIconImg" src="../../static/images/downIcon.svg" mode=""></image>
+						</view>
+					</view>
+				</view>
+				<view class="input-view" @click="confirm">
+					<view class="input-uni-icon-Box">
+						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
+					</view>
+					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索" disabled="true" />
+				</view>
+				<!-- <match-media :max-width="360" >
+					
 					<view class="input-view" @click="confirm" style="position:relative; top: -6rpx ; ">
 						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
-						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true" />
+						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索" disabled="true" />
 					</view>
 				</match-media>
-				<match-media :max-width="375" :min-width="361">
+				<match-media :max-width="375" :min-width="361" >
+					
 					<view class="input-view" @click="confirm">
 						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
-						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true" />
+						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索" disabled="true" />
 					</view>
 				</match-media>
-
-				<match-media :min-width="376" :max-width="414">
+				<match-media :min-width="376" :max-width="414" >
+					
 					<view class="input-view" @click="confirm" style="position:relative; top: -6rpx ; ">
 						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
-						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true" />
+						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索" disabled="true" />
 					</view>
 				</match-media>
-				<match-media :min-width="415">
+				<match-media :min-width="415" > 
+					
 					<view class="input-view" @click="confirm">
 						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
-						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索热门目的地" disabled="true" />
+						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索" disabled="true" />
 					</view>
-				</match-media>
+				</match-media> -->
 			</uni-nav-bar>
 		</view>
 
@@ -38,31 +59,83 @@
 			<view class="page-section " v-if="bannerList.length != 0">
 
 				<view class="page-section-spacing">
-					<swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">
+					<!-- 新版 -->
+					<image class="bannerImg" :src="bannerList[0].image" mode=""></image>
+					<!-- 旧版轮播 -->
+					<!-- <swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">
 						<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
-							<!-- <navigator :url="'/components/web-view/web-view?website=' + item.url" class="itemUrl"> -->
 							<image :src="item.image" mode="scaleToFill" class="swiperImg" @click="towebview(item)">
-								<!-- <web-view :src="item.url"></web-view> -->
 							</image>
-							<!-- </navigator> -->
+							</navigator>
 						</swiper-item>
-					</swiper>
+					</swiper> -->
 				</view>
 			</view>
 			<view class="cus-sty ">
 				<!-- 热门目的地 -->
 				<view class="hot">
-					<view class="hot-top">
+					<view class="wave">
+						<image class="waveImg" src="../../static/images/wave.png" mode=""></image>
+					</view>
+					<!-- <u-swiper :list="uswiperlist" mode="none" :autoplay="false" ></u-swiper> -->
+					<view class="citysBox">
+						<view class="citysBoxLeft">
+							<view class="cblt">
+								<view class="cbltcBig">
+									<image class="hotCityImg" :src="areaList[0].image" mode="scaleToFill"></image>
+									<view class="cbltcBigText">
+										杭州
+									</view>
+								</view>
+								<view class="cbltcSmall">
+									<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
+									<view class="cbltcSmallText">
+										丽江
+									</view>
+								</view>
+								<view class="cbltcSmall">
+									<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
+									<view class="cbltcSmallText">
+										青岛
+									</view>
+								</view>
+							</view>
+							<view class="cblb">
+								<view class="cblbcBig">
+									<image class="hotCityImg" :src="areaList[3].image" mode="scaleToFill"></image>
+									<view class="cblbcBigText">
+										杭州
+									</view>
+								</view>
+								<view class="cblbcSmall">
+									<image class="hotCityImg" :src="areaList[4].image" mode="scaleToFill"></image>
+									<view class="cblbcSmallText">
+										丽江
+									</view>
+								</view>
+								<view class="cblbcSmall">
+									<image class="hotCityImg" :src="areaList[5].image" mode="scaleToFill"></image>
+									<view class="cblbcSmallText">
+										青岛
+									</view>
+								</view>
+							</view>
+						</view>
+						<view class="citysBoxRight">
+							
+						</view>
+					</view>
+						
+					<!-- <view class="hot-top">
 						<text class="ht-l">热门目的地</text>
 						<view class="ht-r" @click="showCity">
 							更多
 							<image src="../../static/images/more-right.svg" class="moreIcon" mode=""></image>
 						</view>
-					</view>
+					</view> -->
 
-					<view class="hot-bot" v-if="areaList && areaList.length">
+					<!-- <view class="hot-bot" v-if="areaList && areaList.length">
 						<view class="hotAdress">
-							<!-- 当前位置 -->
 							<view class="dqwz" @click="toProvinces(areaList[0])">
 								<image class="dqwzBg" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
 								<view class="mask1" v-if="areaList[0].image"></view>
@@ -98,7 +171,7 @@
 							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[7]"></u-line>
 							<view class="rankText" @click="toProvinces(areaList[8])">{{ areaList[8].name }}</view>
 						</view>
-					</view>
+					</view> -->
 				</view>
 
 				<!-- 正在旅行 -->
@@ -539,7 +612,7 @@
 		mixins: [MescrollMixin],
 		data() {
 			return {
-				backgroundColor: 'transparent',
+				backgroundColor: '#403A3D46',
 				firstTime: new Date().getTime(),
 				cityName: '',
 				dqdwText: '当前位置',
@@ -548,6 +621,14 @@
 				city_id: '',
 				hotAtt: [],
 				list: [],
+				uswiperlist:[
+					{
+						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
+					},
+					{
+						title: '身无彩凤双飞翼，心有灵犀一点通'
+					}
+				],
 				token: '',
 				liked: '',
 				page: 1,
@@ -796,11 +877,11 @@
 			},
 			uniScroll(e) {
 				if (this.bannerList.length == 0) {
-					this.backgroundColor = '#ffffff';
+					this.backgroundColor = '#403A3D46';
 				} else {
 					// console.log(e.scrollTop)
 					if (e.scrollTop >= 100) {
-						this.backgroundColor = '#ffffff';
+						this.backgroundColor = '#403A3D46';
 					} else {
 						this.backgroundColor = 'transparent';
 					}
@@ -1203,6 +1284,10 @@
 	.page-section-spacing {
 		width: 100%;
 		height: 440rpx;
+		.bannerImg{
+			width: 100%;
+			height: 100%;
+		}
 	}
 
 	.swiper {
@@ -1238,7 +1323,56 @@
 		/* padding-top: 12rpx; */
 		font-size: 14px;
 	}
-
+	.mediaRight{
+		display: flex;
+		align-items: center;
+	}
+	.headerL{
+		display: flex;
+		align-items: center;
+		margin-left: 20px;
+		height: 76rpx;
+		// width: 260rpx;
+		.world{
+			
+			.worldText{
+				height: 48rpx;
+				font-size: 34rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
+				color: #FFFFFF;
+				line-height: 48rpx;
+			}
+			.worldLine{
+				width: 102rpx;
+				height: 4rpx;
+				background: #FFFFFF;
+				border-radius: 2rpx;
+			}
+		}
+		.nowCityName{
+			margin-left: 20rpx;
+			display: flex;
+			align-items: center;
+			.nowCityNameText{
+				height: 40rpx;
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #FFFFFF;
+				line-height: 40rpx;
+			}
+			.downIcon{
+				width: 48rpx;
+				height: 48rpx;
+				line-height: 48rpx;
+				.downIconImg{
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
+	}
 	.mescroll {
 		position: relative;
 		top: -184rpx;
@@ -1274,6 +1408,7 @@
 	}
 
 	.example-body {
+		display: flex;
 		flex-direction: column;
 		background-color: #ffffff;
 	}
@@ -1310,34 +1445,35 @@
 	}
 
 	.input-view {
-		/* #ifndef APP-PLUS-NVUE */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 		/* min-width: 350rpx; */
-		width: 486rpx;
+		width: 212rpx;
 		height: 64rpx;
 		align-items: center;
-		flex: 1;
+		// flex: 1;
 		background: rgba(248, 248, 248, 1);
 		border-radius: 36rpx;
 		flex-wrap: nowrap;
-		margin-left: 24rpx;
+		margin-left: 52rpx;
+		.input-uni-icon-Box{
+			width: 28rpx;
+			height: 28rpx;
+			margin-left: 32rpx;
+			line-height: 28rpx;
+			.input-uni-icon {
+				width: 100%;
+				height: 100%;
+			}
+		}
+		
 	}
-
-	.input-uni-icon {
-		width: 28rpx;
-		height: 28rpx;
-		margin-left: 32rpx;
-	}
+	
 
 	.nav-bar-input {
 		height: 64rpx;
-		/* min-width: 350rpx; */
-		width: 410rpx;
+		// width: 410rpx;
 		line-height: 64rpx;
-		/* #ifdef APP-PLUS-NVUE */
-		/* #endif */
 		font-size: 28rpx;
 		color: #c9cad1;
 		margin-left: 16rpx;
@@ -1359,7 +1495,126 @@
 		flex-direction: column;
 		background-color: #ffffff;
 	}
-
+	.wave{
+		margin-top: -90rpx;
+		width: 100%;
+		height: 90rpx;
+		.waveImg{
+			width: 100%;
+			height: 100%;
+		}
+	}
+	.citysBox{
+		display: flex;
+		align-items: center;
+		.citysBoxLeft{
+			.cblt{
+				display: flex;
+				.cbltcBig{
+					width: 226rpx;
+					height: 226rpx;
+					border-radius: 48rpx;
+					margin-left: 28rpx;
+					position: relative;
+					.cbltcBigText{
+						width: 96rpx;
+						height: 48rpx;
+						background: #FFFFFF;
+						border-radius: 8rpx;
+						opacity: 0.7;
+						font-size: 32rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #303133;
+						line-height: 48rpx;
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						margin-left: -70rpx;
+						margin-top: -16rpx;
+					}
+				}
+				.cbltcSmall{
+					width: 178rpx;
+					height: 178rpx;
+					border-radius: 48rpx;
+					margin-left: 12rpx;
+					position: relative;
+					.cbltcSmallText{
+						width: 96rpx;
+						height: 48rpx;
+						background: #FFFFFF;
+						border-radius: 8rpx;
+						opacity: 0.7;
+						font-size: 32rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #303133;
+						line-height: 48rpx;
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						margin-left: -70rpx;
+						margin-top: -16rpx;
+					}
+				}
+			}
+			.cblb{
+				display: flex;
+				.cblbcBig{
+					width: 226rpx;
+					height: 226rpx;
+					border-radius: 48rpx;
+					margin-left: 28rpx;
+					position: relative;
+					.cblbcBigText{
+						width: 96rpx;
+						height: 48rpx;
+						background: #FFFFFF;
+						border-radius: 8rpx;
+						opacity: 0.7;
+						font-size: 32rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #303133;
+						line-height: 48rpx;
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						margin-left: -70rpx;
+						margin-top: -16rpx;
+					}
+				}
+				.cblbcSmall{
+					width: 178rpx;
+					height: 178rpx;
+					border-radius: 48rpx;
+					margin-left: 12rpx;
+					position: relative;
+					.cblbcSmallText{
+						width: 96rpx;
+						height: 48rpx;
+						background: #FFFFFF;
+						border-radius: 8rpx;
+						opacity: 0.7;
+						font-size: 32rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #303133;
+						line-height: 48rpx;
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						margin-left: -70rpx;
+						margin-top: -16rpx;
+					}
+				}
+			}
+		}
+	}
+	.u-swiper-text{
+		color: #007AFF;
+	}
 	.hot .hot-top {
 		display: flex;
 		justify-content: space-between;

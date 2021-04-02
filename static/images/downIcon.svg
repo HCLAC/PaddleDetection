@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>定位</title>
+    <desc>Created with Sketch.</desc>
+    <g id="定位" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组-6" transform="translate(2.000000, 7.000000)">
+            <circle id="椭圆形" fill="#FFFFFF" cx="5" cy="5" r="5"></circle>
+            <g id="more2" transform="translate(3.333333, 2.500000)" stroke="#303133" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.07142857">
+                <polyline id="Stroke-1" transform="translate(1.666667, 2.234771) rotate(-45.000000) translate(-1.666667, -2.234771) " points="0.595238095 1.16334261 0.595238095 3.30619975 2.73809524 3.30619975"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
