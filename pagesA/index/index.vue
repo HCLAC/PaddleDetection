@@ -79,45 +79,57 @@
 					</view>
 					<!-- <u-swiper :list="uswiperlist" mode="none" :autoplay="false" ></u-swiper> -->
 					<view class="citysBox">
-						<scroll-view scroll-x="true" class="kite-classify-scroll">
+						<scroll-view scroll-x="true" class="kite-classify-scroll" v-if="areaList.length != 0">
 							<view class="citysBoxLeft">
 								<view class="cblt">
 									<view class="cbltcBig" @click="toProvinces(areaList[0])" :style="{backgroundImage: 'url('+areaList[0].image+')'}">
 										<!-- <image class="hotCityImg" :src="areaList[0].image" mode="scaleToFill"></image> -->
-										<view class="cbltcBigText">
-											{{areaList[0].name}}
+										<view class="cbltcBigTextBox">
+											<view class="cbltcBigText">
+												{{areaList[0].name}}
+											</view>
 										</view>
 									</view>
 									<view class="cbltcSmall" @click="toProvinces(areaList[1])" :style="{backgroundImage: 'url('+areaList[1].image+')'}">
 										<!-- <image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image> -->
-										<view class="cbltcSmallText">
-											{{areaList[1].name}}
+										<view class="cbltcBigTextBox">
+											<view class="cbltcSmallText">
+												{{areaList[1].name}}
+											</view>
 										</view>
 									</view>
 									<view class="cbltcSmall" @click="toProvinces(areaList[2])" :style="{backgroundImage: 'url('+areaList[2].image+')'}">
 										<!-- <image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image> -->
-										<view class="cbltcSmallText">
-											{{areaList[2].name}}
+										<view class="cbltcBigTextBox">
+											<view class="cbltcSmallText">
+												{{areaList[2].name}}
+											</view>
 										</view>
 									</view>
 								</view>
 								<view class="cblb">
 									<view class="cblbcSmall" @click="toProvinces(areaList[3])" :style="{backgroundImage: 'url('+areaList[3].image+')'}">
 										<!-- <image class="hotCityImg" :src="areaList[3].image" mode="scaleToFill"></image> -->
-										<view class="cblbcSmallText">
-											{{areaList[3].name}}
+										<view class="cbltcBigTextBox">
+											<view class="cblbcSmallText">
+												{{areaList[3].name}}
+											</view>
 										</view>
 									</view>
 									<view class="cblbcSmall" @click="toProvinces(areaList[4])" :style="{backgroundImage: 'url('+areaList[4].image+')'}">
 										<!-- <image class="hotCityImg" :src="areaList[4].image" mode="scaleToFill"></image> -->
-										<view class="cblbcSmallText">
-											{{areaList[4].name}}
+										<view class="cbltcBigTextBox">
+											<view class="cblbcSmallText">
+												{{areaList[4].name}}
+											</view>
 										</view>
 									</view>
 									<view class="cblbcBig" @click="toProvinces(areaList[5])" :style="{backgroundImage: 'url('+areaList[5].image+')'}">
 										<!-- <image class="hotCityImg" :src="areaList[5].image" mode="scaleToFill"></image> -->
-										<view class="cblbcBigText">
-											{{areaList[5].name}}
+										<view class="cbltcBigTextBox">
+											<view class="cblbcBigText">
+												{{areaList[5].name}}
+											</view>
 										</view>
 									</view>
 								</view>
@@ -126,40 +138,52 @@
 								<view class="cblt">
 									<view class="cbltcBig" @click="toProvinces(areaList[6])" :style="{backgroundImage: 'url('+areaList[6].image+')'}">
 										<!-- <image class="hotCityImg" :src="areaList[6].image" mode="scaleToFill"></image> -->
-										<view class="cbltcBigText">
-											{{areaList[6].name}}
+										<view class="cbltcBigTextBox">
+											<view class="cbltcBigText">
+												{{areaList[6].name}}
+											</view>
 										</view>
 									</view>
 									<view class="cbltcSmall" @click="toProvinces(areaList[7])" :style="{backgroundImage: 'url('+areaList[7].image+')'}">
 										<!-- <image class="hotCityImg" :src="areaList[7].image" mode="scaleToFill"></image> -->
-										<view class="cbltcSmallText">
-											{{areaList[7].name}}
+										<view class="cbltcBigTextBox">
+											<view class="cbltcSmallText">
+												{{areaList[7].name}}
+											</view>
 										</view>
 									</view>
 									<view class="cbltcSmall" @click="toProvinces(areaList[8])" :style="{backgroundImage: 'url('+areaList[8].image+')'}">
 										<!-- <image class="hotCityImg" :src="areaList[8].image" mode="scaleToFill"></image> -->
-										<view class="cbltcSmallText">
-											{{areaList[8].name}}
+										<view class="cbltcBigTextBox">
+											<view class="cbltcSmallText">
+												{{areaList[8].name}}
+											</view>
 										</view>
 									</view>
 								</view>
 								<view class="cblb">
 									<view class="cblbcSmall" @click="toProvinces(areaList[9])" :style="{backgroundImage: 'url('+areaList[9].image+')'}">
 										<!-- <image class="hotCityImg" :src="areaList[9].image" mode="scaleToFill"></image> -->
-										<view class="cblbcSmallText">
-											{{areaList[9].name}}
+										<view class="cbltcBigTextBox">
+											<view class="cblbcSmallText">
+												{{areaList[9].name}}
+											</view>
 										</view>
 									</view>
 									<view class="cblbcSmall" @click="toProvinces(areaList[10])" :style="{backgroundImage: 'url('+areaList[10].image+')'}">
 										<!-- <image class="hotCityImg" :src="areaList[10].image" mode="scaleToFill"></image> -->
-										<view class="cblbcSmallText">
-											{{areaList[10].name}}
+										<view class="cbltcBigTextBox">
+											<view class="cblbcSmallText">
+												{{areaList[10].name}}
+											</view>
 										</view>
 									</view>
 									<view class="cblbcBig" @click="toProvinces(areaList[11])" :style="{backgroundImage: 'url('+areaList[11].image+')'}">
 										<!-- <image class="hotCityImg" :src="areaList[11].image" mode="scaleToFill"></image> -->
-										<view class="cblbcBigText">
-											{{areaList[11].name}}
+										<view class="cbltcBigTextBox">
+											<view class="cblbcBigText">
+												{{areaList[11].name}}
+											</view>
 										</view>
 									</view>
 								</view>
@@ -418,87 +442,111 @@
 					</view>
 					<!-- <u-swiper :list="uswiperlist" mode="none" :autoplay="false" ></u-swiper> -->
 					<view class="citysBox">
-						<scroll-view scroll-x="true" class="kite-classify-scroll">
+						<scroll-view scroll-x="true" class="kite-classify-scroll" v-if="areaList.length != 0">
 							<view class="citysBoxLeft">
 								<view class="cblt">
 									<view class="cbltcBig" @click="toProvinces(areaList[0])" :style="{backgroundImage: 'url('+areaList[0].image+')'}">
 										<!-- <image class="hotCityImg" :src="areaList[0].image" mode="scaleToFill"></image> -->
-										<view class="cbltcBigText">
-											{{areaList[0].name}}
+										<view class="cbltcBigTextBox">
+											<view class="cbltcBigText">
+												{{areaList[0].name}}
+											</view>
 										</view>
 									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[1])">
-										<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
-										<view class="cbltcSmallText">
-											{{areaList[1].name}}
+									<view class="cbltcSmall" @click="toProvinces(areaList[1])" :style="{backgroundImage: 'url('+areaList[1].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image> -->
+										<view class="cbltcBigTextBox">
+											<view class="cbltcSmallText">
+												{{areaList[1].name}}
+											</view>
 										</view>
 									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[2])">
-										<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
-										<view class="cbltcSmallText">
-											{{areaList[2].name}}
+									<view class="cbltcSmall" @click="toProvinces(areaList[2])" :style="{backgroundImage: 'url('+areaList[2].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image> -->
+										<view class="cbltcBigTextBox">
+											<view class="cbltcSmallText">
+												{{areaList[2].name}}
+											</view>
 										</view>
 									</view>
 								</view>
 								<view class="cblb">
-									<view class="cblbcSmall" @click="toProvinces(areaList[3])">
-										<image class="hotCityImg" :src="areaList[3].image" mode="scaleToFill"></image>
-										<view class="cblbcSmallText">
-											{{areaList[3].name}}
+									<view class="cblbcSmall" @click="toProvinces(areaList[3])" :style="{backgroundImage: 'url('+areaList[3].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[3].image" mode="scaleToFill"></image> -->
+										<view class="cbltcBigTextBox">
+											<view class="cblbcSmallText">
+												{{areaList[3].name}}
+											</view>
 										</view>
 									</view>
-									<view class="cblbcSmall" @click="toProvinces(areaList[4])">
-										<image class="hotCityImg" :src="areaList[4].image" mode="scaleToFill"></image>
-										<view class="cblbcSmallText">
-											{{areaList[4].name}}
+									<view class="cblbcSmall" @click="toProvinces(areaList[4])" :style="{backgroundImage: 'url('+areaList[4].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[4].image" mode="scaleToFill"></image> -->
+										<view class="cbltcBigTextBox">
+											<view class="cblbcSmallText">
+												{{areaList[4].name}}
+											</view>
 										</view>
 									</view>
-									<view class="cblbcBig" @click="toProvinces(areaList[5])">
-										<image class="hotCityImg" :src="areaList[5].image" mode="scaleToFill"></image>
-										<view class="cblbcBigText">
-											{{areaList[5].name}}
+									<view class="cblbcBig" @click="toProvinces(areaList[5])" :style="{backgroundImage: 'url('+areaList[5].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[5].image" mode="scaleToFill"></image> -->
+										<view class="cbltcBigTextBox">
+											<view class="cblbcBigText">
+												{{areaList[5].name}}
+											</view>
 										</view>
 									</view>
 								</view>
 							</view>
 							<view class="citysBoxRight">
 								<view class="cblt">
-									<view class="cbltcBig" @click="toProvinces(areaList[6])">
-										<image class="hotCityImg" :src="areaList[6].image" mode="scaleToFill"></image>
-										<view class="cbltcBigText">
-											{{areaList[6].name}}
+									<view class="cbltcBig" @click="toProvinces(areaList[6])" :style="{backgroundImage: 'url('+areaList[6].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[6].image" mode="scaleToFill"></image> -->
+										<view class="cbltcBigTextBox">
+											<view class="cbltcBigText">
+												{{areaList[6].name}}
+											</view>
 										</view>
 									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[7])">
-										<image class="hotCityImg" :src="areaList[7].image" mode="scaleToFill"></image>
-										<view class="cbltcSmallText">
-											{{areaList[7].name}}
+									<view class="cbltcSmall" @click="toProvinces(areaList[7])" :style="{backgroundImage: 'url('+areaList[7].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[7].image" mode="scaleToFill"></image> -->
+										<view class="cbltcBigTextBox">
+											<view class="cbltcSmallText">
+												{{areaList[7].name}}
+											</view>
 										</view>
 									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[8])">
-										<image class="hotCityImg" :src="areaList[8].image" mode="scaleToFill"></image>
-										<view class="cbltcSmallText">
-											{{areaList[8].name}}
+									<view class="cbltcSmall" @click="toProvinces(areaList[8])" :style="{backgroundImage: 'url('+areaList[8].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[8].image" mode="scaleToFill"></image> -->
+										<view class="cbltcBigTextBox">
+											<view class="cbltcSmallText">
+												{{areaList[8].name}}
+											</view>
 										</view>
 									</view>
 								</view>
 								<view class="cblb">
-									<view class="cblbcSmall" @click="toProvinces(areaList[9])">
-										<image class="hotCityImg" :src="areaList[9].image" mode="scaleToFill"></image>
-										<view class="cblbcSmallText">
-											{{areaList[9].name}}
+									<view class="cblbcSmall" @click="toProvinces(areaList[9])" :style="{backgroundImage: 'url('+areaList[9].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[9].image" mode="scaleToFill"></image> -->
+										<view class="cbltcBigTextBox">
+											<view class="cblbcSmallText">
+												{{areaList[9].name}}
+											</view>
 										</view>
 									</view>
-									<view class="cblbcSmall" @click="toProvinces(areaList[10])">
-										<image class="hotCityImg" :src="areaList[10].image" mode="scaleToFill"></image>
-										<view class="cblbcSmallText">
-											{{areaList[10].name}}
+									<view class="cblbcSmall" @click="toProvinces(areaList[10])" :style="{backgroundImage: 'url('+areaList[10].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[10].image" mode="scaleToFill"></image> -->
+										<view class="cbltcBigTextBox">
+											<view class="cblbcSmallText">
+												{{areaList[10].name}}
+											</view>
 										</view>
 									</view>
-									<view class="cblbcBig" @click="toProvinces(areaList[11])">
-										<image class="hotCityImg" :src="areaList[11].image" mode="scaleToFill"></image>
-										<view class="cblbcBigText">
-											{{areaList[11].name}}
+									<view class="cblbcBig" @click="toProvinces(areaList[11])" :style="{backgroundImage: 'url('+areaList[11].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[11].image" mode="scaleToFill"></image> -->
+										<view class="cbltcBigTextBox">
+											<view class="cblbcBigText">
+												{{areaList[11].name}}
+											</view>
 										</view>
 									</view>
 								</view>
@@ -707,7 +755,7 @@
 		mixins: [MescrollMixin],
 		data() {
 			return {
-				backgroundColor: '#403A3D46',
+				backgroundColor: 'transparent',
 				firstTime: new Date().getTime(),
 				cityName: '',
 				dqdwText: '当前位置',
@@ -973,11 +1021,11 @@
 			// 滚动
 			uniScroll(e) {
 				if (this.bannerList.length == 0) {
-					this.backgroundColor = '#403A3D46';
+					this.backgroundColor = 'rgba(58, 61, 70, 0.25)';
 				} else {
 					// console.log(e.scrollTop)
 					if (e.scrollTop >= 100) {
-						this.backgroundColor = '#403A3D46';
+						this.backgroundColor = 'rgba(58, 61, 70, 0.25)';
 					} else {
 						this.backgroundColor = 'transparent';
 					}
@@ -1003,9 +1051,9 @@
 						this.bannerList = res.data.data;
 						console.log('------------', this.bannerList.length);
 						if (this.bannerList.length == 0) {
-							this.backgroundColor = '#ffffff';
+							this.backgroundColor = 'rgba(58, 61, 70, 0.25)';
 						} else {
-							this.backgroundColor = 'transparent';
+							this.backgroundColor = 'rgba(58, 61, 70, 0.25)';
 						}
 					}
 				});
@@ -1535,7 +1583,8 @@
 	.example-body {
 		display: flex;
 		flex-direction: column;
-		background-color: #ffffff;
+		// background-color: #ffffff;
+		background: rgba(58, 61, 70, 0.25);
 	}
 
 	.word-btn-white {
@@ -1762,17 +1811,19 @@
 						background-repeat: no-repeat;
 						background-size: cover;
 						background-position: center center;
-						.cbltcBigText{
+						.cbltcBigTextBox{
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
 							opacity: 0.7;
-							font-size: 32rpx;
-							font-family: PingFangSC-Medium, PingFang SC;
-							font-weight: 500;
-							color: #303133;
-							line-height: 48rpx;
-							text-align: center;
+							.cbltcBigText{
+								font-size: 32rpx;
+								font-family: PingFangSC-Medium, PingFang SC;
+								font-weight: 500;
+								color: #303133;
+								line-height: 48rpx;
+								text-align: center;
+							}
 						}
 					}
 					.cbltcSmall{
@@ -1786,20 +1837,21 @@
 						background-repeat: no-repeat;
 						background-size: cover;
 						background-position: center center;
-						
-						.cbltcSmallText{
-							
+						.cbltcBigTextBox{
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
 							opacity: 0.7;
-							font-size: 32rpx;
-							font-family: PingFangSC-Medium, PingFang SC;
-							font-weight: 500;
-							color: #303133;
-							line-height: 48rpx;
-							text-align: center;
+							.cbltcSmallText{
+								font-size: 32rpx;
+								font-family: PingFangSC-Medium, PingFang SC;
+								font-weight: 500;
+								color: #303133;
+								line-height: 48rpx;
+								text-align: center;
+							}
 						}
+						
 					}
 				}
 				.cblb{
@@ -1816,20 +1868,21 @@
 						background-repeat: no-repeat;
 						background-size: cover;
 						background-position: center center;
-						
-						.cblbcBigText{
-							
+						.cbltcBigTextBox{
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
 							opacity: 0.7;
-							font-size: 32rpx;
-							font-family: PingFangSC-Medium, PingFang SC;
-							font-weight: 500;
-							color: #303133;
-							line-height: 48rpx;
-							text-align: center;
+							.cblbcBigText{
+								font-size: 32rpx;
+								font-family: PingFangSC-Medium, PingFang SC;
+								font-weight: 500;
+								color: #303133;
+								line-height: 48rpx;
+								text-align: center;
+							}
 						}
+						
 					}
 					.cblbcSmall{
 						width: 178rpx;
@@ -1842,20 +1895,21 @@
 						background-repeat: no-repeat;
 						background-size: cover;
 						background-position: center center;
-						
-						.cblbcSmallText{
-							
+						.cbltcBigTextBox{
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
 							opacity: 0.7;
-							font-size: 32rpx;
-							font-family: PingFangSC-Medium, PingFang SC;
-							font-weight: 500;
-							color: #303133;
-							line-height: 48rpx;
-							text-align: center;
+							.cblbcSmallText{
+								font-size: 32rpx;
+								font-family: PingFangSC-Medium, PingFang SC;
+								font-weight: 500;
+								color: #303133;
+								line-height: 48rpx;
+								text-align: center;
+							}
 						}
+						
 					}
 				}
 			}
@@ -2148,6 +2202,7 @@
 		font-weight: 500;
 		color: #303133;
 		margin-left: 32rpx;
+		margin-top: 10rpx;
 	}
 
 	.wrap {

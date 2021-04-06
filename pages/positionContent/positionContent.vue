@@ -135,9 +135,9 @@
 					<view class="goTo">{{attDetail.data.visited}}人去过</view>
 				</view>
 				<view class="contentText">
-					<text :class="isShow ? 'loseText' : 'moreText'" id="moreText">
+					<view :class="isShow ? 'loseText' : 'moreText'" id="moreText">
 						简介：{{attDetail.data.description}}
-					</text>
+					</view>
 					<view class="btnBox" @click="showMore" v-if="!isShow && more">
 						<text>收起</text>
 						<image class="iconImg" src="../../static/images/zhankaiIcon.png" mode=""></image>
@@ -559,6 +559,10 @@ export default {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		position: fixed;
+		top: 685rpx;
+		right: 40rpx;
+		z-index: 11111;
 	}
 	.shareBox image {
 		height: 34rpx;
@@ -570,6 +574,7 @@ export default {
 		flex-wrap: wrap;
 		.tip {
 			margin-right: 8rpx;
+			margin-top: 4rpx;
 			padding: 2rpx 8rpx;
 			border-radius: 4rpx;
 			border: 2rpx solid rgba(144, 147, 153, 1);
@@ -580,6 +585,7 @@ export default {
 		}
 		.tipHot {
 			margin-right: 8rpx;
+			margin-top: 4rpx;
 			padding: 2rpx 8rpx;
 			border-radius: 4rpx;
 			background: rgba(113, 200, 23, 1);
@@ -587,7 +593,7 @@ export default {
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			color: #fff;
-			height: 36rpx;
+			// height: 36rpx;
 			display: flex;
 			align-items: center;
 		}
@@ -630,6 +636,8 @@ export default {
 			font-weight: 400;
 			color: rgba(144, 147, 153, 1);
 			line-height: 42rpx;
+			text-align:justify;
+			text-justify:inter-ideograph;
 			// position: relative;
 		}
 		.loseText {
@@ -638,11 +646,14 @@ export default {
 			font-weight: 400;
 			color: rgba(144, 147, 153, 1);
 			line-height: 42rpx;
+			
 			display: -webkit-box;
 			-webkit-box-orient: vertical;
 			// text-overflow: ellipsis;
 			overflow: hidden;
 			-webkit-line-clamp: 2;
+			text-align:justify;
+			text-justify:inter-ideograph;
 			
 		}
 		.btnBox {
