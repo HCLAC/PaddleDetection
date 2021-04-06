@@ -79,53 +79,93 @@
 					</view>
 					<!-- <u-swiper :list="uswiperlist" mode="none" :autoplay="false" ></u-swiper> -->
 					<view class="citysBox">
-						<view class="citysBoxLeft">
-							<view class="cblt">
-								<view class="cbltcBig">
-									<image class="hotCityImg" :src="areaList[0].image" mode="scaleToFill"></image>
-									<view class="cbltcBigText">
-										杭州
+						<scroll-view scroll-x="true" class="kite-classify-scroll">
+							<view class="citysBoxLeft">
+								<view class="cblt">
+									<view class="cbltcBig" @click="toProvinces(areaList[0])">
+										<image class="hotCityImg" :src="areaList[0].image" mode="scaleToFill"></image>
+										<view class="cbltcBigText">
+											{{areaList[0].name}}
+										</view>
+									</view>
+									<view class="cbltcSmall" @click="toProvinces(areaList[1])">
+										<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
+										<view class="cbltcSmallText">
+											{{areaList[1].name}}
+										</view>
+									</view>
+									<view class="cbltcSmall" @click="toProvinces(areaList[2])">
+										<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
+										<view class="cbltcSmallText">
+											{{areaList[2].name}}
+										</view>
 									</view>
 								</view>
-								<view class="cbltcSmall">
-									<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
-									<view class="cbltcSmallText">
-										丽江
+								<view class="cblb">
+									<view class="cblbcSmall" @click="toProvinces(areaList[3])">
+										<image class="hotCityImg" :src="areaList[3].image" mode="scaleToFill"></image>
+										<view class="cblbcSmallText">
+											{{areaList[3].name}}
+										</view>
 									</view>
-								</view>
-								<view class="cbltcSmall">
-									<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
-									<view class="cbltcSmallText">
-										青岛
+									<view class="cblbcSmall" @click="toProvinces(areaList[4])">
+										<image class="hotCityImg" :src="areaList[4].image" mode="scaleToFill"></image>
+										<view class="cblbcSmallText">
+											{{areaList[4].name}}
+										</view>
+									</view>
+									<view class="cblbcBig" @click="toProvinces(areaList[5])">
+										<image class="hotCityImg" :src="areaList[5].image" mode="scaleToFill"></image>
+										<view class="cblbcBigText">
+											{{areaList[5].name}}
+										</view>
 									</view>
 								</view>
 							</view>
-							<view class="cblb">
-								<view class="cblbcBig">
-									<image class="hotCityImg" :src="areaList[3].image" mode="scaleToFill"></image>
-									<view class="cblbcBigText">
-										杭州
+							<view class="citysBoxRight">
+								<view class="cblt">
+									<view class="cbltcBig" @click="toProvinces(areaList[6])">
+										<image class="hotCityImg" :src="areaList[6].image" mode="scaleToFill"></image>
+										<view class="cbltcBigText">
+											{{areaList[6].name}}
+										</view>
+									</view>
+									<view class="cbltcSmall" @click="toProvinces(areaList[7])">
+										<image class="hotCityImg" :src="areaList[7].image" mode="scaleToFill"></image>
+										<view class="cbltcSmallText">
+											{{areaList[7].name}}
+										</view>
+									</view>
+									<view class="cbltcSmall" @click="toProvinces(areaList[8])">
+										<image class="hotCityImg" :src="areaList[8].image" mode="scaleToFill"></image>
+										<view class="cbltcSmallText">
+											{{areaList[8].name}}
+										</view>
 									</view>
 								</view>
-								<view class="cblbcSmall">
-									<image class="hotCityImg" :src="areaList[4].image" mode="scaleToFill"></image>
-									<view class="cblbcSmallText">
-										丽江
+								<view class="cblb">
+									<view class="cblbcSmall" @click="toProvinces(areaList[9])">
+										<image class="hotCityImg" :src="areaList[9].image" mode="scaleToFill"></image>
+										<view class="cblbcSmallText">
+											{{areaList[9].name}}
+										</view>
 									</view>
-								</view>
-								<view class="cblbcSmall">
-									<image class="hotCityImg" :src="areaList[5].image" mode="scaleToFill"></image>
-									<view class="cblbcSmallText">
-										青岛
+									<view class="cblbcSmall" @click="toProvinces(areaList[10])">
+										<image class="hotCityImg" :src="areaList[10].image" mode="scaleToFill"></image>
+										<view class="cblbcSmallText">
+											{{areaList[10].name}}
+										</view>
+									</view>
+									<view class="cblbcBig" @click="toProvinces(areaList[11])">
+										<image class="hotCityImg" :src="areaList[11].image" mode="scaleToFill"></image>
+										<view class="cblbcBigText">
+											{{areaList[11].name}}
+										</view>
 									</view>
 								</view>
 							</view>
-						</view>
-						<view class="citysBoxRight">
-							
-						</view>
-					</view>
-						
+						</scroll-view>
+					</view>	
 					<!-- <view class="hot-top">
 						<text class="ht-l">热门目的地</text>
 						<view class="ht-r" @click="showCity">
@@ -729,10 +769,10 @@
 							console.log(this.city, this.province);
 							uni.request({
 								url: this.globalUrl + '/area/hot',
-								data: {
-									state: this.province ? this.province : null,
-									city: this.city ? this.city : null
-								},
+								// data: {
+								// 	state: this.province ? this.province : null,
+								// 	city: this.city ? this.city : null
+								// },
 								success: res => {
 									// console.log(this.areaList);
 									this.areaList = res.data.data;
@@ -762,10 +802,10 @@
 										console.log('当前定位', this.city, this.province);
 										uni.request({
 											url: this.globalUrl + '/area/hot',
-											data: {
-												state: this.province ? this.province : null,
-												city: this.city ? this.city : null
-											},
+											// data: {
+											// 	state: this.province ? this.province : null,
+											// 	city: this.city ? this.city : null
+											// },
 											success: res => {
 												this.areaList = res.data.data;
 
@@ -875,6 +915,7 @@
 					}
 				});
 			},
+			// 滚动
 			uniScroll(e) {
 				if (this.bannerList.length == 0) {
 					this.backgroundColor = '#403A3D46';
@@ -1507,110 +1548,285 @@
 	.citysBox{
 		display: flex;
 		align-items: center;
-		.citysBoxLeft{
-			.cblt{
-				display: flex;
-				.cbltcBig{
-					width: 226rpx;
-					height: 226rpx;
-					border-radius: 48rpx;
-					margin-left: 28rpx;
-					position: relative;
-					.cbltcBigText{
-						width: 96rpx;
-						height: 48rpx;
-						background: #FFFFFF;
-						border-radius: 8rpx;
-						opacity: 0.7;
-						font-size: 32rpx;
-						font-family: PingFangSC-Medium, PingFang SC;
-						font-weight: 500;
-						color: #303133;
-						line-height: 48rpx;
-						position: absolute;
-						top: 50%;
-						left: 50%;
-						margin-left: -70rpx;
-						margin-top: -16rpx;
+		.kite-classify-scroll{
+		    width: 100%;
+			overflow: hidden;
+		 	white-space: nowrap;
+			display: flex;
+			align-items: center;
+			.citysBoxLeft{
+				display: inline-block;
+				.cblt{
+					display: flex;
+					.cbltcBig{
+						width: 226rpx;
+						height: 226rpx;
+						border-radius: 48rpx;
+						margin-left: 28rpx;
+						// position: relative;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						.hotCityImg{
+							position: relative;
+						}
+						.cbltcBigText{
+							// width: 96rpx;
+							// height: 48rpx;
+							padding: 2rpx 14.6rpx 4rpx 16rpx;
+							background: #FFFFFF;
+							border-radius: 8rpx;
+							opacity: 0.7;
+							font-size: 32rpx;
+							font-family: PingFangSC-Medium, PingFang SC;
+							font-weight: 500;
+							color: #303133;
+							line-height: 48rpx;
+							position: absolute;
+							// top: 50%;
+							// left: 50%;
+							// margin-left: -48rpx;
+							// margin-top: -24rpx;
+							text-align: center;
+						}
+					}
+					.cbltcSmall{
+						width: 178rpx;
+						height: 178rpx;
+						border-radius: 48rpx;
+						margin-left: 12rpx;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						.hotCityImg{
+							position: relative;
+						}
+						.cbltcSmallText{
+							// width: 96rpx;
+							// height: 48rpx;
+							padding: 2rpx 14.6rpx 4rpx 16rpx;
+							background: #FFFFFF;
+							border-radius: 8rpx;
+							opacity: 0.7;
+							font-size: 32rpx;
+							font-family: PingFangSC-Medium, PingFang SC;
+							font-weight: 500;
+							color: #303133;
+							line-height: 48rpx;
+							position: absolute;
+							// top: 50%;
+							// left: 50%;
+							// margin-left: -48rpx;
+							// margin-top: -24rpx;
+							text-align: center;
+						}
 					}
 				}
-				.cbltcSmall{
-					width: 178rpx;
-					height: 178rpx;
-					border-radius: 48rpx;
-					margin-left: 12rpx;
-					position: relative;
-					.cbltcSmallText{
-						width: 96rpx;
-						height: 48rpx;
-						background: #FFFFFF;
-						border-radius: 8rpx;
-						opacity: 0.7;
-						font-size: 32rpx;
-						font-family: PingFangSC-Medium, PingFang SC;
-						font-weight: 500;
-						color: #303133;
-						line-height: 48rpx;
-						position: absolute;
-						top: 50%;
-						left: 50%;
-						margin-left: -70rpx;
-						margin-top: -16rpx;
+				.cblb{
+					display: flex;
+					align-items: center;
+					margin-left: 28rpx;
+					.cblbcBig{
+						width: 226rpx;
+						height: 226rpx;
+						border-radius: 48rpx;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						.hotCityImg{
+							position: relative;
+						}
+						.cblbcBigText{
+							// width: 96rpx;
+							// height: 48rpx;
+							padding: 2rpx 14.6rpx 4rpx 16rpx;
+							background: #FFFFFF;
+							border-radius: 8rpx;
+							opacity: 0.7;
+							font-size: 32rpx;
+							font-family: PingFangSC-Medium, PingFang SC;
+							font-weight: 500;
+							color: #303133;
+							line-height: 48rpx;
+							position: absolute;
+							// top: 50%;
+							// left: 50%;
+							// margin-left: -48rpx;
+							// margin-top: -24rpx;
+							text-align: center;
+						}
+					}
+					.cblbcSmall{
+						width: 178rpx;
+						height: 178rpx;
+						border-radius: 48rpx;
+						margin-right: 12rpx;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						.hotCityImg{
+							position: relative;
+						}
+						.cblbcSmallText{
+							// width: 96rpx;
+							// height: 48rpx;
+							padding: 2rpx 14.6rpx 4rpx 16rpx;
+							background: #FFFFFF;
+							border-radius: 8rpx;
+							opacity: 0.7;
+							font-size: 32rpx;
+							font-family: PingFangSC-Medium, PingFang SC;
+							font-weight: 500;
+							color: #303133;
+							line-height: 48rpx;
+							position: absolute;
+							// top: 50%;
+							// left: 50%;
+							// margin-left: -48rpx;
+							// margin-top: -24rpx;
+							text-align: center;
+						}
 					}
 				}
 			}
-			.cblb{
-				display: flex;
-				.cblbcBig{
-					width: 226rpx;
-					height: 226rpx;
-					border-radius: 48rpx;
-					margin-left: 28rpx;
-					position: relative;
-					.cblbcBigText{
-						width: 96rpx;
-						height: 48rpx;
-						background: #FFFFFF;
-						border-radius: 8rpx;
-						opacity: 0.7;
-						font-size: 32rpx;
-						font-family: PingFangSC-Medium, PingFang SC;
-						font-weight: 500;
-						color: #303133;
-						line-height: 48rpx;
-						position: absolute;
-						top: 50%;
-						left: 50%;
-						margin-left: -70rpx;
-						margin-top: -16rpx;
+			.citysBoxRight{
+				display: inline-block;
+				margin-right: 28rpx;
+				.cblt{
+					display: flex;
+					.cbltcBig{
+						width: 226rpx;
+						height: 226rpx;
+						border-radius: 48rpx;
+						margin-left: 12rpx;
+						// position: relative;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						.hotCityImg{
+							position: relative;
+						}
+						.cbltcBigText{
+							// width: 96rpx;
+							// height: 48rpx;
+							padding: 2rpx 14.6rpx 4rpx 16rpx;
+							background: #FFFFFF;
+							border-radius: 8rpx;
+							opacity: 0.7;
+							font-size: 32rpx;
+							font-family: PingFangSC-Medium, PingFang SC;
+							font-weight: 500;
+							color: #303133;
+							line-height: 48rpx;
+							position: absolute;
+							// top: 50%;
+							// left: 50%;
+							// margin-left: -48rpx;
+							// margin-top: -24rpx;
+							text-align: center;
+						}
+					}
+					.cbltcSmall{
+						width: 178rpx;
+						height: 178rpx;
+						border-radius: 48rpx;
+						margin-left: 12rpx;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						.hotCityImg{
+							position: relative;
+						}
+						.cbltcSmallText{
+							// width: 96rpx;
+							// height: 48rpx;
+							padding: 2rpx 14.6rpx 4rpx 16rpx;
+							background: #FFFFFF;
+							border-radius: 8rpx;
+							opacity: 0.7;
+							font-size: 32rpx;
+							font-family: PingFangSC-Medium, PingFang SC;
+							font-weight: 500;
+							color: #303133;
+							line-height: 48rpx;
+							position: absolute;
+							// top: 50%;
+							// left: 50%;
+							// margin-left: -48rpx;
+							// margin-top: -24rpx;
+							text-align: center;
+						}
 					}
 				}
-				.cblbcSmall{
-					width: 178rpx;
-					height: 178rpx;
-					border-radius: 48rpx;
+				.cblb{
+					display: flex;
+					align-items: center;
 					margin-left: 12rpx;
-					position: relative;
-					.cblbcSmallText{
-						width: 96rpx;
-						height: 48rpx;
-						background: #FFFFFF;
-						border-radius: 8rpx;
-						opacity: 0.7;
-						font-size: 32rpx;
-						font-family: PingFangSC-Medium, PingFang SC;
-						font-weight: 500;
-						color: #303133;
-						line-height: 48rpx;
-						position: absolute;
-						top: 50%;
-						left: 50%;
-						margin-left: -70rpx;
-						margin-top: -16rpx;
+					.cblbcBig{
+						width: 226rpx;
+						height: 226rpx;
+						border-radius: 48rpx;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						.hotCityImg{
+							position: relative;
+						}
+						.cblbcBigText{
+							// width: 96rpx;
+							// height: 48rpx;
+							padding: 2rpx 14.6rpx 4rpx 16rpx;
+							background: #FFFFFF;
+							border-radius: 8rpx;
+							opacity: 0.7;
+							font-size: 32rpx;
+							font-family: PingFangSC-Medium, PingFang SC;
+							font-weight: 500;
+							color: #303133;
+							line-height: 48rpx;
+							position: absolute;
+							// top: 50%;
+							// left: 50%;
+							// margin-left: -48rpx;
+							// margin-top: -24rpx;
+							text-align: center;
+						}
+					}
+					.cblbcSmall{
+						width: 178rpx;
+						height: 178rpx;
+						border-radius: 48rpx;
+						margin-right: 12rpx;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						.hotCityImg{
+							position: relative;
+						}
+						.cblbcSmallText{
+							// width: 96rpx;
+							// height: 48rpx;
+							padding: 2rpx 14.6rpx 4rpx 16rpx;
+							background: #FFFFFF;
+							border-radius: 8rpx;
+							opacity: 0.7;
+							font-size: 32rpx;
+							font-family: PingFangSC-Medium, PingFang SC;
+							font-weight: 500;
+							color: #303133;
+							line-height: 48rpx;
+							position: absolute;
+							// top: 50%;
+							// left: 50%;
+							// margin-left: -48rpx;
+							// margin-top: -24rpx;
+							text-align: center;
+						}
 					}
 				}
 			}
 		}
+		
 	}
 	.u-swiper-text{
 		color: #007AFF;
@@ -1834,7 +2050,7 @@
 	.hotCityImg {
 		width: 100%;
 		height: 100%;
-		border-radius: 16rpx;
+		border-radius: 48rpx;
 	}
 
 	.hotCityText {
@@ -1885,7 +2101,7 @@
 
 	/* 正在旅行 */
 	.touring {
-		margin-top: 24rpx;
+		// margin-top: 24rpx;
 		background: #FFFFFF;
 	}
 

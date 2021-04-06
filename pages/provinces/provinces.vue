@@ -4,7 +4,7 @@
 			<view >
 				<!-- 自定义导航栏 -->
 				<view class="example-body">
-					<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+					<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
 						<view slot="left" class="slotleft">
 							<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 							<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
