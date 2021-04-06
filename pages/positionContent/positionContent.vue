@@ -567,6 +567,7 @@ export default {
 	.tips {
 		margin-top: 16rpx;
 		display: flex;
+		flex-wrap: wrap;
 		.tip {
 			margin-right: 8rpx;
 			padding: 2rpx 8rpx;

@@ -8,7 +8,7 @@
 						<view class="worldText">全世界</view>
 						<view class="worldLine"></view>
 					</view>
-					<view class="nowCityName" @click="toProvinces(areaList[0])">
+					<view class="nowCityName" @click="toProvincesNC()">
 						<view class="nowCityNameText">{{ cityName }}</view>
 						<view class="downIcon">
 							<image class="downIconImg" src="../../static/images/downIcon.svg" mode=""></image>
@@ -82,40 +82,40 @@
 						<scroll-view scroll-x="true" class="kite-classify-scroll">
 							<view class="citysBoxLeft">
 								<view class="cblt">
-									<view class="cbltcBig" @click="toProvinces(areaList[0])">
-										<image class="hotCityImg" :src="areaList[0].image" mode="scaleToFill"></image>
+									<view class="cbltcBig" @click="toProvinces(areaList[0])" :style="{backgroundImage: 'url('+areaList[0].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[0].image" mode="scaleToFill"></image> -->
 										<view class="cbltcBigText">
 											{{areaList[0].name}}
 										</view>
 									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[1])">
-										<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
+									<view class="cbltcSmall" @click="toProvinces(areaList[1])" :style="{backgroundImage: 'url('+areaList[1].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image> -->
 										<view class="cbltcSmallText">
 											{{areaList[1].name}}
 										</view>
 									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[2])">
-										<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
+									<view class="cbltcSmall" @click="toProvinces(areaList[2])" :style="{backgroundImage: 'url('+areaList[2].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image> -->
 										<view class="cbltcSmallText">
 											{{areaList[2].name}}
 										</view>
 									</view>
 								</view>
 								<view class="cblb">
-									<view class="cblbcSmall" @click="toProvinces(areaList[3])">
-										<image class="hotCityImg" :src="areaList[3].image" mode="scaleToFill"></image>
+									<view class="cblbcSmall" @click="toProvinces(areaList[3])" :style="{backgroundImage: 'url('+areaList[3].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[3].image" mode="scaleToFill"></image> -->
 										<view class="cblbcSmallText">
 											{{areaList[3].name}}
 										</view>
 									</view>
-									<view class="cblbcSmall" @click="toProvinces(areaList[4])">
-										<image class="hotCityImg" :src="areaList[4].image" mode="scaleToFill"></image>
+									<view class="cblbcSmall" @click="toProvinces(areaList[4])" :style="{backgroundImage: 'url('+areaList[4].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[4].image" mode="scaleToFill"></image> -->
 										<view class="cblbcSmallText">
 											{{areaList[4].name}}
 										</view>
 									</view>
-									<view class="cblbcBig" @click="toProvinces(areaList[5])">
-										<image class="hotCityImg" :src="areaList[5].image" mode="scaleToFill"></image>
+									<view class="cblbcBig" @click="toProvinces(areaList[5])" :style="{backgroundImage: 'url('+areaList[5].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[5].image" mode="scaleToFill"></image> -->
 										<view class="cblbcBigText">
 											{{areaList[5].name}}
 										</view>
@@ -124,40 +124,40 @@
 							</view>
 							<view class="citysBoxRight">
 								<view class="cblt">
-									<view class="cbltcBig" @click="toProvinces(areaList[6])">
-										<image class="hotCityImg" :src="areaList[6].image" mode="scaleToFill"></image>
+									<view class="cbltcBig" @click="toProvinces(areaList[6])" :style="{backgroundImage: 'url('+areaList[6].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[6].image" mode="scaleToFill"></image> -->
 										<view class="cbltcBigText">
 											{{areaList[6].name}}
 										</view>
 									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[7])">
-										<image class="hotCityImg" :src="areaList[7].image" mode="scaleToFill"></image>
+									<view class="cbltcSmall" @click="toProvinces(areaList[7])" :style="{backgroundImage: 'url('+areaList[7].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[7].image" mode="scaleToFill"></image> -->
 										<view class="cbltcSmallText">
 											{{areaList[7].name}}
 										</view>
 									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[8])">
-										<image class="hotCityImg" :src="areaList[8].image" mode="scaleToFill"></image>
+									<view class="cbltcSmall" @click="toProvinces(areaList[8])" :style="{backgroundImage: 'url('+areaList[8].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[8].image" mode="scaleToFill"></image> -->
 										<view class="cbltcSmallText">
 											{{areaList[8].name}}
 										</view>
 									</view>
 								</view>
 								<view class="cblb">
-									<view class="cblbcSmall" @click="toProvinces(areaList[9])">
-										<image class="hotCityImg" :src="areaList[9].image" mode="scaleToFill"></image>
+									<view class="cblbcSmall" @click="toProvinces(areaList[9])" :style="{backgroundImage: 'url('+areaList[9].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[9].image" mode="scaleToFill"></image> -->
 										<view class="cblbcSmallText">
 											{{areaList[9].name}}
 										</view>
 									</view>
-									<view class="cblbcSmall" @click="toProvinces(areaList[10])">
-										<image class="hotCityImg" :src="areaList[10].image" mode="scaleToFill"></image>
+									<view class="cblbcSmall" @click="toProvinces(areaList[10])" :style="{backgroundImage: 'url('+areaList[10].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[10].image" mode="scaleToFill"></image> -->
 										<view class="cblbcSmallText">
 											{{areaList[10].name}}
 										</view>
 									</view>
-									<view class="cblbcBig" @click="toProvinces(areaList[11])">
-										<image class="hotCityImg" :src="areaList[11].image" mode="scaleToFill"></image>
+									<view class="cblbcBig" @click="toProvinces(areaList[11])" :style="{backgroundImage: 'url('+areaList[11].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[11].image" mode="scaleToFill"></image> -->
 										<view class="cblbcBigText">
 											{{areaList[11].name}}
 										</view>
@@ -404,52 +404,107 @@
 			<view class="cus-sty1 ">
 				<!-- 热门目的地 -->
 				<view class="hot">
-					<view class="hot-top">
+					<!-- 旧版 -->
+					<!-- <view class="hot-top">
 						<text class="ht-l">热门目的地</text>
 						<view class="ht-r" @click="showCity">
 							更多
 							<image src="../../static/images/more-right.svg" class="moreIcon" mode=""></image>
 						</view>
+					</view> -->
+					<!-- 新版 -->
+					<view class="wave">
+						<image class="waveImg" src="../../static/images/wave.png" mode=""></image>
 					</view>
-					<view class="hot-bot" v-if="areaList != null">
-						<view class="hotAdress">
-							<!-- 当前位置 -->
-							<view class="dqwznoba" @click="toProvinces(areaList[0])">
-								<image class="dqwzImgnoba" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
-								<view class="mask1" v-if="areaList[0].image"></view>
-								<image class="dqwzImgnoba" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
-								<text class="dqwzTextnoba">{{ cityName }}</text>
-								<view class="adressBoxnoba">
-									<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
-									<text class="dqwzText1">{{ dqdwText }}</text>
+					<!-- <u-swiper :list="uswiperlist" mode="none" :autoplay="false" ></u-swiper> -->
+					<view class="citysBox">
+						<scroll-view scroll-x="true" class="kite-classify-scroll">
+							<view class="citysBoxLeft">
+								<view class="cblt">
+									<view class="cbltcBig" @click="toProvinces(areaList[0])" :style="{backgroundImage: 'url('+areaList[0].image+')'}">
+										<!-- <image class="hotCityImg" :src="areaList[0].image" mode="scaleToFill"></image> -->
+										<view class="cbltcBigText">
+											{{areaList[0].name}}
+										</view>
+									</view>
+									<view class="cbltcSmall" @click="toProvinces(areaList[1])">
+										<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
+										<view class="cbltcSmallText">
+											{{areaList[1].name}}
+										</view>
+									</view>
+									<view class="cbltcSmall" @click="toProvinces(areaList[2])">
+										<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
+										<view class="cbltcSmallText">
+											{{areaList[2].name}}
+										</view>
+									</view>
+								</view>
+								<view class="cblb">
+									<view class="cblbcSmall" @click="toProvinces(areaList[3])">
+										<image class="hotCityImg" :src="areaList[3].image" mode="scaleToFill"></image>
+										<view class="cblbcSmallText">
+											{{areaList[3].name}}
+										</view>
+									</view>
+									<view class="cblbcSmall" @click="toProvinces(areaList[4])">
+										<image class="hotCityImg" :src="areaList[4].image" mode="scaleToFill"></image>
+										<view class="cblbcSmallText">
+											{{areaList[4].name}}
+										</view>
+									</view>
+									<view class="cblbcBig" @click="toProvinces(areaList[5])">
+										<image class="hotCityImg" :src="areaList[5].image" mode="scaleToFill"></image>
+										<view class="cblbcBigText">
+											{{areaList[5].name}}
+										</view>
+									</view>
 								</view>
 							</view>
-							<view class="hotCity" @click="toProvinces(areaList[1])">
-								<view class="mask"></view>
-								<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
-								<text class="hotCityText">{{ areaList[1].name }}</text>
+							<view class="citysBoxRight">
+								<view class="cblt">
+									<view class="cbltcBig" @click="toProvinces(areaList[6])">
+										<image class="hotCityImg" :src="areaList[6].image" mode="scaleToFill"></image>
+										<view class="cbltcBigText">
+											{{areaList[6].name}}
+										</view>
+									</view>
+									<view class="cbltcSmall" @click="toProvinces(areaList[7])">
+										<image class="hotCityImg" :src="areaList[7].image" mode="scaleToFill"></image>
+										<view class="cbltcSmallText">
+											{{areaList[7].name}}
+										</view>
+									</view>
+									<view class="cbltcSmall" @click="toProvinces(areaList[8])">
+										<image class="hotCityImg" :src="areaList[8].image" mode="scaleToFill"></image>
+										<view class="cbltcSmallText">
+											{{areaList[8].name}}
+										</view>
+									</view>
+								</view>
+								<view class="cblb">
+									<view class="cblbcSmall" @click="toProvinces(areaList[9])">
+										<image class="hotCityImg" :src="areaList[9].image" mode="scaleToFill"></image>
+										<view class="cblbcSmallText">
+											{{areaList[9].name}}
+										</view>
+									</view>
+									<view class="cblbcSmall" @click="toProvinces(areaList[10])">
+										<image class="hotCityImg" :src="areaList[10].image" mode="scaleToFill"></image>
+										<view class="cblbcSmallText">
+											{{areaList[10].name}}
+										</view>
+									</view>
+									<view class="cblbcBig" @click="toProvinces(areaList[11])">
+										<image class="hotCityImg" :src="areaList[11].image" mode="scaleToFill"></image>
+										<view class="cblbcBigText">
+											{{areaList[11].name}}
+										</view>
+									</view>
+								</view>
 							</view>
-							<view class="hotCity" @click="toProvinces(areaList[2])" v-if="areaList[2]">
-								<view class="mask"></view>
-								<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
-								<text class="hotCityText1">{{ areaList[2].name }}</text>
-							</view>
-						</view>
-						<view class="cityRank">
-							<view class="rankText" @click="toProvinces(areaList[3])" v-if="areaList[3]">{{ areaList[3].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" v-if="areaList[3]"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[4])" v-if="areaList[4]">{{ areaList[4].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" v-if="areaList[4]"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[5])" v-if="areaList[5]">{{ areaList[5].name }}</view>
-						</view>
-						<view class="cityRank">
-							<view class="rankText" @click="toProvinces(areaList[6])" v-if="areaList[6]">{{ areaList[6].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" v-if="areaList[6]"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[7])" v-if="areaList[7]">{{ areaList[7].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" v-if="areaList[7]"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[8])" v-if="areaList[8]">{{ areaList[8].name }}</view>
-						</view>
-					</view>
+						</scroll-view>
+					</view>	
 				</view>
 
 				<!-- 正在旅行 -->
@@ -1110,6 +1165,35 @@
 					url: '/pages/city/city'
 				});
 			},
+			// 跳转省市主题页
+			toProvincesNC(){
+				uni.request({
+					url: this.globalUrl + '/area/judge',
+					data: {
+						state: this.province,
+						city: this.city
+				
+					},
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res => {
+						console.log(res)
+						if(res.data.data.city_id == 0){
+							uni.showToast({
+								title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
+								icon: 'none',
+								duration: 3000
+							});
+						} else {
+							var e = JSON.stringify(res.data.data);
+							uni.navigateTo({
+								url: '/pages/provinces/provinces?id=' + e
+							});
+						}
+					}
+				});
+			},
 			toProvinces(e) {
 				var that = this;
 				this.e = e;
@@ -1488,36 +1572,34 @@
 	.input-view {
 		display: flex;
 		flex-direction: row;
-		/* min-width: 350rpx; */
 		width: 212rpx;
 		height: 64rpx;
 		align-items: center;
-		// flex: 1;
 		background: rgba(248, 248, 248, 1);
 		border-radius: 36rpx;
 		flex-wrap: nowrap;
 		margin-left: 52rpx;
+		padding-left: 32rpx;
 		.input-uni-icon-Box{
 			width: 28rpx;
 			height: 28rpx;
-			margin-left: 32rpx;
 			line-height: 28rpx;
 			.input-uni-icon {
-				width: 100%;
-				height: 100%;
+				width: 28rpx;
+				height: 28rpx;
 			}
 		}
+		
 		
 	}
 	
 
 	.nav-bar-input {
 		height: 64rpx;
-		// width: 410rpx;
 		line-height: 64rpx;
 		font-size: 28rpx;
 		color: #c9cad1;
-		margin-left: 16rpx;
+		padding-left: 16rpx;
 		font-size: 28rpx;
 	}
 
@@ -1546,8 +1628,8 @@
 		}
 	}
 	.citysBox{
-		display: flex;
-		align-items: center;
+		// display: flex;
+		// align-items: center;
 		.kite-classify-scroll{
 		    width: 100%;
 			overflow: hidden;
@@ -1563,16 +1645,13 @@
 						height: 226rpx;
 						border-radius: 48rpx;
 						margin-left: 28rpx;
-						// position: relative;
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						.hotCityImg{
-							position: relative;
-						}
+						background-repeat: no-repeat;
+						background-size: cover;
+						background-position: center center;
 						.cbltcBigText{
-							// width: 96rpx;
-							// height: 48rpx;
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
@@ -1582,12 +1661,8 @@
 							font-weight: 500;
 							color: #303133;
 							line-height: 48rpx;
-							position: absolute;
-							// top: 50%;
-							// left: 50%;
-							// margin-left: -48rpx;
-							// margin-top: -24rpx;
 							text-align: center;
+							
 						}
 					}
 					.cbltcSmall{
@@ -1598,12 +1673,13 @@
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						.hotCityImg{
-							position: relative;
-						}
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						background-repeat: no-repeat;
+						background-size: cover;
+						background-position: center center;
 						.cbltcSmallText{
-							// width: 96rpx;
-							// height: 48rpx;
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
@@ -1613,11 +1689,6 @@
 							font-weight: 500;
 							color: #303133;
 							line-height: 48rpx;
-							position: absolute;
-							// top: 50%;
-							// left: 50%;
-							// margin-left: -48rpx;
-							// margin-top: -24rpx;
 							text-align: center;
 						}
 					}
@@ -1633,12 +1704,10 @@
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						.hotCityImg{
-							position: relative;
-						}
+						background-repeat: no-repeat;
+						background-size: cover;
+						background-position: center center;
 						.cblbcBigText{
-							// width: 96rpx;
-							// height: 48rpx;
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
@@ -1648,11 +1717,6 @@
 							font-weight: 500;
 							color: #303133;
 							line-height: 48rpx;
-							position: absolute;
-							// top: 50%;
-							// left: 50%;
-							// margin-left: -48rpx;
-							// margin-top: -24rpx;
 							text-align: center;
 						}
 					}
@@ -1664,12 +1728,10 @@
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						.hotCityImg{
-							position: relative;
-						}
+						background-repeat: no-repeat;
+						background-size: cover;
+						background-position: center center;
 						.cblbcSmallText{
-							// width: 96rpx;
-							// height: 48rpx;
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
@@ -1679,11 +1741,6 @@
 							font-weight: 500;
 							color: #303133;
 							line-height: 48rpx;
-							position: absolute;
-							// top: 50%;
-							// left: 50%;
-							// margin-left: -48rpx;
-							// margin-top: -24rpx;
 							text-align: center;
 						}
 					}
@@ -1699,16 +1756,13 @@
 						height: 226rpx;
 						border-radius: 48rpx;
 						margin-left: 12rpx;
-						// position: relative;
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						.hotCityImg{
-							position: relative;
-						}
+						background-repeat: no-repeat;
+						background-size: cover;
+						background-position: center center;
 						.cbltcBigText{
-							// width: 96rpx;
-							// height: 48rpx;
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
@@ -1718,11 +1772,6 @@
 							font-weight: 500;
 							color: #303133;
 							line-height: 48rpx;
-							position: absolute;
-							// top: 50%;
-							// left: 50%;
-							// margin-left: -48rpx;
-							// margin-top: -24rpx;
 							text-align: center;
 						}
 					}
@@ -1734,12 +1783,12 @@
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						.hotCityImg{
-							position: relative;
-						}
+						background-repeat: no-repeat;
+						background-size: cover;
+						background-position: center center;
+						
 						.cbltcSmallText{
-							// width: 96rpx;
-							// height: 48rpx;
+							
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
@@ -1749,11 +1798,6 @@
 							font-weight: 500;
 							color: #303133;
 							line-height: 48rpx;
-							position: absolute;
-							// top: 50%;
-							// left: 50%;
-							// margin-left: -48rpx;
-							// margin-top: -24rpx;
 							text-align: center;
 						}
 					}
@@ -1769,12 +1813,12 @@
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						.hotCityImg{
-							position: relative;
-						}
+						background-repeat: no-repeat;
+						background-size: cover;
+						background-position: center center;
+						
 						.cblbcBigText{
-							// width: 96rpx;
-							// height: 48rpx;
+							
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
@@ -1784,11 +1828,6 @@
 							font-weight: 500;
 							color: #303133;
 							line-height: 48rpx;
-							position: absolute;
-							// top: 50%;
-							// left: 50%;
-							// margin-left: -48rpx;
-							// margin-top: -24rpx;
 							text-align: center;
 						}
 					}
@@ -1800,12 +1839,12 @@
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						.hotCityImg{
-							position: relative;
-						}
+						background-repeat: no-repeat;
+						background-size: cover;
+						background-position: center center;
+						
 						.cblbcSmallText{
-							// width: 96rpx;
-							// height: 48rpx;
+							
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
@@ -1815,11 +1854,6 @@
 							font-weight: 500;
 							color: #303133;
 							line-height: 48rpx;
-							position: absolute;
-							// top: 50%;
-							// left: 50%;
-							// margin-left: -48rpx;
-							// margin-top: -24rpx;
 							text-align: center;
 						}
 					}
