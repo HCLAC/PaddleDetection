@@ -437,7 +437,7 @@
 						</view>
 					</view> -->
 					<!-- 新版 -->
-					<view class="wave">
+					<view class="wave waveNoB">
 						<image class="waveImg" src="../../static/images/wave.png" mode=""></image>
 					</view>
 					<!-- <u-swiper :list="uswiperlist" mode="none" :autoplay="false" ></u-swiper> -->
@@ -1675,6 +1675,9 @@
 			width: 100%;
 			height: 100%;
 		}
+	}
+	.waveNoB{
+		margin-top:20rpx
 	}
 	.citysBox{
 		// display: flex;

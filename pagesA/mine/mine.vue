@@ -2,7 +2,7 @@
 	<view v-if="userInfo">
 		<!-- 自定义导航栏 -->
 		<view class="example-body" v-if="isFixed">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src=""  />
 					<image class="fhsy" src=""  />

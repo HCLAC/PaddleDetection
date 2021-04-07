@@ -85,13 +85,21 @@
 			"style": {
 				"navigationStyle": "custom",
 				"backgroundColor":"#F8F8F8",
-				"disableScroll": true,
 				"app-plus": {
 					"bounce": "none" 
 				},
-				"mp-alipay": {
-					"allowsBounceVertical": "NO"
-				} 
+				"mp-weixin": {
+					"allowsBounceVertical": "NO",
+					"bounce": "none" 
+				},
+				"mp-baidu": {
+					"allowsBounceVertical": "NO",
+					"bounce": "none" 
+				},
+				"mp-toutiao": {
+					"allowsBounceVertical": "NO",
+					"bounce": "none" 
+				}
 			}
 		},
 		

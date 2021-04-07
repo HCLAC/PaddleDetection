@@ -1561,7 +1561,7 @@
 		padding-bottom: env(safe-area-inset-bottom);
 	}
 	.releaseTime-strategy{
-		width: 198rpx;
+		width: 200rpx;
 		height: 22rpx;
 		font-size: 22rpx;
 		font-family: PingFangSC-Regular, PingFang SC;

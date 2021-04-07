@@ -81,7 +81,7 @@
 			},
 			backgroundColor: {
 				type: String,
-				default: "rgba(58, 61, 70, 0.25)"
+				default: "#ffffff"
 			},
 			statusBar: {
 				type: [Boolean, String],

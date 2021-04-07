@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<mescroll-uni class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view >
 				<!-- 自定义导航栏 -->
 				<view class="example-body">
@@ -309,7 +309,7 @@
 				
 				<!-- 城市选择弹窗 -->
 				<u-popup v-model="show" mode="top" height="383px">
-					<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+					<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
 						<view slot="left" class="slotleft">
 							<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 							<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
@@ -353,7 +353,7 @@
 					</view>
 				</u-popup>
 			</view>
-		</mescroll-uni>	
+		</mescroll-body>	
 	</view>
 </template>
 
@@ -996,7 +996,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	
 // 自定义导航栏样式
 .example-body {
 	flex-direction: row;

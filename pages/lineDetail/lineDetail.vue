@@ -1,7 +1,7 @@
 <template>
 	<view id="bigBox">
 		<view class="example-body" >
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" style="z-index: 99999 !important;">
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" style="z-index: 99999 !important;">
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />

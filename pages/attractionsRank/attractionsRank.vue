@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 白色-->
 		<view class="example-body" v-if="isFixed == false">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" background-color="transparent" style="z-index: 999999;">
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" background-color="transparent" style="z-index: 999999;">
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui-white.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy-white.svg" @click="home" />
@@ -11,7 +11,7 @@
 		</view>
 		<!-- 自定义导航栏 黑色-->
 		<view class="example-body" v-if="isFixed == true">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
