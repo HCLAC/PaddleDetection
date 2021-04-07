@@ -379,7 +379,7 @@ export default {
 					icon: 'none'
 				});
 				uni.navigateTo({
-					url: '/pages/login/login'
+					url: '/pagesA/login/login'
 				});
 			} else {
 				uni.request({
@@ -453,7 +453,7 @@ export default {
 		},
 		login() {
 			uni.navigateTo({
-				url: '/pages/login/login'
+				url: '/pagesA/login/login'
 			});
 		},
 		tell(){

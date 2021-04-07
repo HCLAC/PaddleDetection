@@ -614,7 +614,7 @@
 						success: res => {
 							if (res.data.code != 0) {
 								uni.navigateTo({
-									url: '../login/login'
+									url: '/pagesA/login/login'
 								});
 							} else {
 								that.articleList.data.is_follow = status == 1 ? true : false;
@@ -641,7 +641,7 @@
 					success: res => {
 						if (res.data.code != 0) {
 							uni.navigateTo({
-								url: '../login/login'
+								url: '/pagesA/login/login'
 							});
 						} else {
 							that.articleList.data.is_follow = status == 1 ? true : false;
@@ -669,7 +669,7 @@
 				// console.log('tttt',token)
 				if (!token) {
 					uni.navigateTo({
-						url: '../login/login'
+						url: '/pagesA/login/login'
 					});
 				} else {
 					uni.navigateTo({
@@ -727,9 +727,9 @@
 						// this.$refs.comment.toggleMask('none');
 						this.getComments()
 						console.log('pinglun', res.data)
-						if (res.data.code == 10502) {
+						if (res.data.code == 10502 || res.data.code == 10501) {
 							uni.navigateTo({
-								url: '../login/login'
+								url: '/pagesA/login/login'
 							});
 						} else {
 
@@ -813,7 +813,7 @@
 						console.log('点赞', res)
 						if (res.data.code == 10501) {
 							uni.navigateTo({
-								url: '../login/login'
+								url: '/pagesA/login/login'
 							});
 						} else {
 							this.getComments()
@@ -859,7 +859,7 @@
 						console.log('点赞', res);
 						if (res.data.code != 0) {
 							uni.navigateTo({
-								url: '../login/login'
+								url: '/pagesA/login/login'
 							});
 						}
 						uni.request({
@@ -950,7 +950,7 @@
 						if (res.data.code != 0) {
 
 							uni.navigateTo({
-								url: '../login/login'
+								url: '/pagesA/login/login'
 							});
 						}
 						uni.request({
@@ -1051,7 +1051,7 @@
 			// 登录
 			login() {
 				uni.navigateTo({
-					url: '../login/login'
+					url: '/pagesA/login/login'
 				});
 			},
 			change(e) {

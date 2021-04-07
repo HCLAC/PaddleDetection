@@ -9,7 +9,7 @@
 						<view class="worldLine"></view>
 					</view>
 					<view class="nowCityName" @click="toProvincesNC()">
-						<view class="nowCityNameText">{{ cityName }}</view>
+						<view class="nowCityNameText">{{ cityName }} </view>
 						<view class="downIcon">
 							<image class="downIconImg" src="../../static/images/downIcon.svg" mode=""></image>
 						</view>
@@ -810,13 +810,16 @@
 				}
 			});
 		},
+		onShow() {
+			this.getAdress();
+		},
 		onLoad() {
 			uni.showLoading({
 				title: '加载中',
 				success: () => {
 					// if (this.item == undefined || null) {
 					this.getBanner();
-					this.getAdress();
+					
 					// }
 				}
 			});
@@ -938,16 +941,17 @@
 						// uni.setStorageSync('errCode',res.errCode)
 						this.errCode = 1;
 						this.dqdwText = '正在定位...';
+						this.cityName = '未定位'
 						setTimeout(() => {
 							this.dqdwText = '未取得定位';
 						}, 3000);
 
 						uni.request({
 							url: this.globalUrl + '/area/hot',
-							data: {
-								state: this.province ? this.province : null,
-								city: this.city ? this.city : null
-							},
+							// data: {
+							// 	state: this.province ? this.province : null,
+							// 	city: this.city ? this.city : null
+							// },
 							success: res => {
 								console.log(this.areaList);
 								this.areaList = res.data.data;

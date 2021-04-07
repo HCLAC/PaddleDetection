@@ -54,7 +54,7 @@
 					</view>
 					<view class="contentBox" >
 						<!-- 景点推荐 -->
-						<view class="content">
+						<view class="content" v-if="siteHot">
 							<view class="contentHeader">
 								<view class="contentTitle">景点推荐</view>
 								<view class="contentMore" @click="toMore()">
@@ -161,9 +161,7 @@
 								</view>
 							</view>
 						</view>
-						<view class="line">
-							
-						</view>
+						<view class="line"></view>
 						<!-- 旅途问答 -->
 						<!-- <view class="travelQuestionsBox">
 							<view class="tQTop">
@@ -199,7 +197,7 @@
 							</view>
 						</view> -->
 						<!-- 正在旅行 -->
-						<view class="touring" id="touring">
+						<view class="touring" id="touring" v-if="list">
 							<text class="tourtext">正在旅行</text>
 							
 							<view class="wrap">
