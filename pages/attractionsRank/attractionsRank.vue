@@ -980,6 +980,7 @@
 	}
 
 	.cardsright {
+		width: 338rpx;
 		margin-left: 20rpx;
 		margin-right: 28rpx;
 	}
@@ -991,6 +992,10 @@
 		color: #303133;
 		line-height: 32rpx;
 		margin-bottom: 12rpx;
+		display: -webkit-box; 
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 1; 
+		overflow: hidden; 
 	}
 
 	.contentText {

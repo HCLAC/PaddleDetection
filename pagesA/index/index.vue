@@ -1672,7 +1672,7 @@
 		background-color: #ffffff;
 	}
 	.wave{
-		margin-top: -90rpx;
+		margin-top: -88rpx;
 		width: 100%;
 		height: 90rpx;
 		.waveImg{

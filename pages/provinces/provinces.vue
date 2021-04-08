@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		
 			<view >
 				<!-- 自定义导航栏 -->
 				<view class="example-body">
@@ -54,7 +54,7 @@
 					</view>
 					<view class="contentBox" >
 						<!-- 景点推荐 -->
-						<view class="content" v-if="siteHot">
+						<view class="content">
 							<view class="contentHeader">
 								<view class="contentTitle">景点推荐</view>
 								<view class="contentMore" @click="toMore()">
@@ -144,6 +144,10 @@
 									</view>
 								</view>
 							</view>
+							<!-- 无数据展示 -->
+							<view class="contentNull" v-if="siteHot.length == 0">
+								暂无数据请切换其他城市
+							</view>
 						</view>
 						<!-- 行程推荐 -->
 						<view class="trip" v-if="routeHot.length">
@@ -197,7 +201,8 @@
 							</view>
 						</view> -->
 						<!-- 正在旅行 -->
-						<view class="touring" id="touring" v-if="list">
+						<mescroll-body v-if="list" class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+							<view class="touring" id="touring" >
 							<text class="tourtext">正在旅行</text>
 							
 							<view class="wrap">
@@ -302,7 +307,7 @@
 							</view>
 							
 						</view>
-				
+						</mescroll-body>
 					</view>
 				
 				<!-- 城市选择弹窗 -->
@@ -351,7 +356,7 @@
 					</view>
 				</u-popup>
 			</view>
-		</mescroll-body>	
+			
 	</view>
 </template>
 
@@ -370,7 +375,7 @@ export default {
 			list: [],
 			weather: null,
 			item: null,
-			siteHot: null,
+			siteHot: [],
 			routeHot: null,
 			show: false,
 			cityList: null,
@@ -628,6 +633,7 @@ export default {
 		// 获取
 
 		gethotsiteslist1(item1) {
+			console.log(item1,'点击城市')
 			if (item1.city_id == 0) {
 				uni.request({
 					url: this.globalUrl + '/area',
@@ -635,14 +641,15 @@ export default {
 						state_id: item1.state_id
 					},
 					success: res => {
-						console.log('城市信息==', res);
+						console.log('省市信息==', res);
 						(this.item = res.data.data),
 							(this.name = this.name = res.data.data.name),
 							// 正在旅行
 							uni.request({
 								url: this.globalUrl + '/article/list',
 								data: {
-									state_id: item1.state_id,
+									state_id: res.data.data.state_id,
+									city_id: 0,
 									count: 6,
 									page: 1,
 									first_time: new Date().getTime()
@@ -653,10 +660,11 @@ export default {
 								success: res => {
 									uni.setStorageSync('article_id', res.data);
 									this.list = res.data.data.list;
-									this.mescroll.resetUpScroll()
-									console.log('list=====', this.list);
+									// this.mescroll.resetUpScroll()
+									console.log('list=====', res.data);
 								}
 							}),
+							
 							this.getWeather(),
 							this.getQuestions(),
 							this.getAnswersList(),
@@ -664,7 +672,8 @@ export default {
 							uni.request({
 								url: this.globalUrl + '/site/hot',
 								data: {
-									state_id: item1.state_id,
+									state_id: res.data.data.state_id,
+									city_id: 0,
 									count: 3,
 									sort_by: 3
 								},
@@ -677,7 +686,8 @@ export default {
 						uni.request({
 							url: this.globalUrl + '/route/hot',
 							data: {
-								state_id: item1.state_id,
+								state_id: res.data.data.state_id,
+								city_id: 0,
 								count: 2
 							},
 							success: res => {
@@ -1168,6 +1178,14 @@ export default {
 	margin-top: 30rpx;
 	display: flex;
 	margin-left: 28rpx;
+}
+.contentNull{
+	font-size: 32rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #909399;
+	text-align: center;
+	margin-top: 40rpx;
 }
 .contentImg {
 	width: 218rpx;
