@@ -500,15 +500,16 @@
 
 							// let strId = strIndex[0].slice(36, -4);
 							let strIdarr = strIndex[0].match(/\d+/g);
+							console.log(strIdarr,'1234')
 							let strId = strIdarr.join('')
-							console.log(strId,'strId')
 							let resCode = await that.getTemplate(strId);
 							if (resCode.data.code == 0) {
 								let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
+								let wechat_name = resCode.data.data.wechat_name.replace(/\s*/g, '');
 								let str =
 									`<div>
       <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
-          详情请加VX：${wechat_id}
+          详情请加VX：${wechat_name}${wechat_id}
       </span><a groupId="${strId}"   group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
     </div>`;
 
@@ -889,10 +890,11 @@
 
 									if (resCode.data.code == 0) {
 										let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
+										let wechat_name = resCode.data.data.wechat_name.replace(/\s*/g, '');
 										let str =
 											`<div>
 							  <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
-							      详情请加VX：${wechat_id}
+							      详情请加VX：${wechat_name}${wechat_id}
 							  </span><a groupId="${strId}"  group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
 							</div>`;
 
@@ -976,10 +978,11 @@
 									let resCode = await that.getTemplate(strId);
 									if (resCode.data.code == 0) {
 										let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
+										let wechat_name = resCode.data.data.wechat_name.replace(/\s*/g, '');
 										let str =
 											`<div>
 							  <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
-							      详情请加VX：${wechat_id}
+							      详情请加VX：${wechat_name}${wechat_id}
 							  </span><a groupId="${strId}"  group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
 							</div>`;
 
@@ -1039,7 +1042,7 @@
 							},
 
 							success: res => {
-								resolve(res);
+								resolve(res,'客服');
 							},
 							fail: error => {
 								reject(error);

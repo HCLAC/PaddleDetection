@@ -1192,6 +1192,13 @@ export default {
 	color: rgba(48, 49, 51, 1);
 	margin-left: 8rpx;
 	line-height: 46rpx;
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	white-space: normal !important;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
 
 .demo-tag {
