@@ -599,6 +599,11 @@ export default {
 		height: 40rpx;
 		margin-left: 20rpx;
 	}
+	/* #ifdef  MP-BAIDU*/
+	.fhsy {
+		margin-left: 100rpx;
+	}
+	/*  #endif  */
 	.slottitle {
 		margin-left: 162rpx;
 		font-size: 38rpx;

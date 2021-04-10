@@ -4,8 +4,13 @@
 		<view class="example-body" v-if="isFixed == false">
 			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" background-color="transparent" style="z-index: 999999;">
 				<view slot="left" class="slotleft">
+					<!-- #ifndef  MP-BAIDU -->
 					<image class="fanhui" src="../../static/images/icon-fanhui-white.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy-white.svg" @click="home" />
+					<!-- #endif -->
+					<!-- #ifdef MP-BAIDU -->
+					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+					<!-- #endif -->
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -13,7 +18,9 @@
 		<view class="example-body" v-if="isFixed == true">
 			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
 				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #ifndef  MP-BAIDU -->
+						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<view class="slottitle">领途羊</view>
@@ -25,8 +32,9 @@
 			<u-popup v-model="show" mode="top" height="383px" style="z-index: 9999999;">
 				<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
 					<view slot="left" class="slotleft">
-						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-						<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+						<i<!-- #ifndef  MP-BAIDU -->
+								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+							<!-- #endif -->					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 					</view>
 					<view class="slottitle">领途羊</view>
 				</uni-nav-bar>
@@ -759,7 +767,11 @@
 		width: 40rpx;
 		height: 40rpx;
 	}
-
+	/* #ifdef  MP-BAIDU*/
+	.fhsy {
+		margin-left: 100rpx;
+	}
+	/*  #endif  */
 	.slottitle {
 		margin-left: 162rpx;
 		font-size: 38rpx;

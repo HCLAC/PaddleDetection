@@ -86,7 +86,10 @@
 				"navigationStyle": "custom",
 				"backgroundColor":"#F8F8F8",
 				"app-plus": {
-					"bounce": "none" 
+					"bounce": "none" ,
+					"titleNView": {
+						"autoBackButton": false
+					}
 				},
 				"mp-weixin": {
 					"allowsBounceVertical": "NO",

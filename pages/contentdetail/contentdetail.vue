@@ -5,7 +5,9 @@
 		<view class="example-body" v-if="articleList.data.type != 2">
 			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
 				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #ifndef  MP-BAIDU -->
+								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+							<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<view class="slottitle">领途羊</view>
@@ -177,11 +179,12 @@
 			</view>
 		</view>
 		<!-- 攻略文章 -->
-		<view class="example-body strategy" v-if="articleList.data.type == 2">
-			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
+		<view class="example-body " v-if="articleList.data.type == 2">
+			<uni-nav-bar :fixed="true" :status-bar="true" :shadow="true" class="navbar ">
 				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+					<i<!-- #ifndef  MP-BAIDU -->
+								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+							<!-- #endif -->				<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
@@ -523,7 +526,7 @@
       <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
           
 		  详情请加${wechat_name}：${wechat_id}
-      </span><a groupId="${strId}"   group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
+      </span><a groupId="${strId}"   group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;padding:0;margin-left: 36rpx; font-weight: 400;">点击复制</a>
     </div>`;
 
 								res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
@@ -1150,7 +1153,7 @@
 				// 适配字体
 				newContent = newContent.replace(/(\d+)px/g, function(s, t) {
 					s = s.replace('px', '');
-					var value = parseInt(s) * 2; //   此处 1rem =120px
+					var value = parseInt(s) * 2; //   此处 1rem =120px
 					return value + 'rpx';
 				});
 				// newContent = newContent.replace(/<br[^>]*\/>/gi, '');
@@ -1185,7 +1188,7 @@
 		
 	}
 	.strategy{
-		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2
+		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 	}
 
 	
@@ -1210,7 +1213,11 @@
 		width: 40rpx;
 		height: 40rpx;
 	}
-
+	/* #ifdef  MP-BAIDU*/
+	.fhsy {
+		margin-left: 100rpx;
+	}
+	/*  #endif  */
 	.slottitle {
 		margin-left: 162rpx;
 		font-size: 38rpx;

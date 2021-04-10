@@ -4,13 +4,12 @@
 		<view class="example-body">
 			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
 				<view slot="left" class="slotleft">
-					<!-- #ifdef MP-BAIDU -->
+					<!-- #ifndef MP-BAIDU -->
 					<image  class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
 					<!-- #ifndef MP-BAIDU -->
 					<image v-if="ismine == true" class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
-					<image v-if="ismine == true" class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
@@ -498,18 +497,34 @@ export default {
 	align-items: center;
 }
 
+
+/* #ifndef  MP-BAIDU*/
 .fanhui {
 	width: 40rpx;
 	height: 40rpx;
 	margin-left: 42rpx;
 }
-
+/*  #endif  */
+/* #ifdef  MP-BAIDU*/
+.fanhui {
+	width: 40rpx;
+	height: 40rpx;
+}
+/*  #endif  */
+/* #ifndef  MP-BAIDU*/
 .fhsy {
 	width: 40rpx;
 	height: 40rpx;
 	margin-left: 20rpx;
 }
-
+/*  #endif  */
+/* #ifdef  MP-BAIDU*/
+.fhsy {
+	width: 40rpx;
+	height: 40rpx;
+	margin-left: 100rpx;
+}
+/*  #endif  */
 .button-v-line {
 	width: 1px;
 	height: 18px;

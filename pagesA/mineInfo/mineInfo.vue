@@ -4,7 +4,9 @@
 		<view class="example-body">
 			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" :border="true">
 				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #ifndef  MP-BAIDU -->
+								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+							<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<view class="slottitle">修改资料</view>
@@ -145,11 +147,11 @@
 			// 监听从裁剪页发布的事件，获得裁剪结果
 			// uni.$on('uAvatarCropper', path => {
 				
-			// 	let base ='data:image/png;base64,'+uni.getFileSystemManager().readFileSync(path,'base64')
+			// 	let base ='data:image/png;base64,'+uni.getFileSystemManager().readFileSync(path,'base64')
 			// 	this.avatar = base
 			uni.$on('cropper', e => {
 				console.log('eeee',e)
-				let base ='data:image/png;base64,'+uni.getFileSystemManager().readFileSync(e.url,'base64')
+				let base ='data:image/png;base64,'+uni.getFileSystemManager().readFileSync(e.url,'base64')
 				console.log('base',base)
 				this.avatar = base	
 				
@@ -347,7 +349,11 @@
 	width: 40rpx;
 	height: 40rpx;
 }
-
+/* #ifdef  MP-BAIDU*/
+.fhsy {
+	margin-left: 100rpx;
+}
+/*  #endif  */
 .slottitle {
 	margin-left: 162rpx;
 	font-size: 38rpx;
