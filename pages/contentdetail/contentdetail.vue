@@ -186,7 +186,7 @@
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
-		<view class="" v-if="swiperHeight && articleList.data.type == 2">
+		<view class="" v-if="articleList && articleList.data.type == 2">
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<!-- 标题 -->
@@ -494,22 +494,35 @@
 
 						let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
 						console.log(strIndex,'strIndex')
-
+						// let strIndex = strIndex.match(?<=").*?(?=")
 						if (strIndex && strIndex.length) {
 							// let strId =  newContent.substring(strIndex,1)
 
 							// let strId = strIndex[0].slice(36, -4);
 							let strIdarr = strIndex[0].match(/\d+/g);
+							
+							let strValue = strIndex[0].match(/value="(\S*),/)[1];
 							console.log(strIdarr,'1234')
+							console.log(strValue,'value')
 							let strId = strIdarr.join('')
 							let resCode = await that.getTemplate(strId);
+							
 							if (resCode.data.code == 0) {
 								let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
 								let wechat_name = resCode.data.data.wechat_name.replace(/\s*/g, '');
+								console.log(wechat_id,wechat_name)
+								
+								var name = "[name]";
+								var wechat_name1 = wechat_name;
+								
+								var number = "[number]";
+								var wechat_id1 = wechat_id
+								strValue = strValue.replace(name,wechat_name1)
+								strValue = strValue.replace(number,wechat_id1)
 								let str =
-									`<div>
+									`<div style=" display:flex;aline-item:center; ">
       <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
-          详情请加VX：${wechat_name}${wechat_id}
+          ${strValue}
       </span><a groupId="${strId}"   group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
     </div>`;
 

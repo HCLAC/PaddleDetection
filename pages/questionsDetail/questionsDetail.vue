@@ -131,7 +131,7 @@
 		<view class="componment" v-if="groupId" onclick="popup('blur-in')">
 			<view class="wechat">
 				<image :src="answersList.avatar" mode=""></image>
-				<view class="wechatText">vx:{{wechat}}</view>
+				<view class="wechatText">{{wechat_name}}:{{wechat}}</view>
 			</view>
 			<view class="wechatBtn ldx infinite ldx-blur-in" @click="templateAdd">复制导游微信</view>
 			
@@ -231,6 +231,7 @@
 				},
 				answersDate:'',
 				wechat:'',
+				wechat_name:'',
 				groupId:''
 			};
 		},
@@ -303,7 +304,9 @@
 							let resCode =  await that.getTemplate(strId);
 							console.log(resCode,'resCode')
 							let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
+							let wechat_name = resCode.data.data.wechat_name.replace(/\s*/g, '');
 							that.wechat = wechat_id
+							that.wechat_name = wechat_name
 							that.groupId = strId
 							// let str =
 							// 	`<div>
