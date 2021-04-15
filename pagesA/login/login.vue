@@ -268,12 +268,14 @@ export default {
 		getPhone(res) {
 			uni.checkSession({
 				success: suc => {
-					if (suc.errMsg != 'checkSession:ok') {
+					console.log(suc,'suc')
+					// if (suc.errMsg != 'checkSession:ok') {
 					
-						uni.login({
+						uni.getLoginCode({
 							provider: this.serviceProvider,
 						
 							success: result => {
+								console.log('result',result)
 								if (result.code) {
 									this.codeObj = result.code;
 								} else {
@@ -292,7 +294,7 @@ export default {
 								});
 							}
 						});
-					}
+					// }
 	
 				},
 				fail: err => {
@@ -320,6 +322,7 @@ export default {
 
 		baiduLogin(obj) {
 			uni.hideKeyboard();
+			console.log(obj.code,'code')
 			uni.request({
 				url: this.globalUrl + '/user/oauth/code2session',
 				// url: 'http://192.168.110.189:4000',
