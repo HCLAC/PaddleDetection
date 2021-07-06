@@ -100,7 +100,7 @@
 			tobloggers(e){
 				console.log(e)
 				uni.navigateTo({
-					url:'../bloggers/bloggers?author_id=' + e
+					url:'/pages/bloggers/bloggers?author_id=' + e
 				})
 			},
 			// 关注

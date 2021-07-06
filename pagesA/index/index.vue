@@ -865,7 +865,7 @@
 				uni.getLocation({
 					type: 'wgs84',
 					success: res => {
-						console.log(111, res);
+						console.log(121, res);
 						if (res.city && res.province) {
 							this.cityName = res.city.substr(0, res.city.length - 1);
 							this.city = res.city;

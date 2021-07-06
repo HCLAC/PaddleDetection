@@ -168,7 +168,7 @@
 			// 保存
 			submit() {
 				let introLength = this.modelIntro.length
-				if (introLength > 0) {
+				if (introLength >= 5) {
 					// console.log('验证通过'); 
 					uni.request({
 						url: this.globalUrl + '/comments/report',
@@ -182,6 +182,14 @@
 							Authorization: uni.getStorageSync('Authorization')
 						},
 						success: res => {
+							if(this.model.payType == ''){
+								uni.showToast({
+									title: '请选择一种举报类型',
+									icon:'none',
+									duration: 2000
+								})
+								return
+							}
 							console.log('举报信息',res)
 							// uni.showToast({
 							// 	title: '举报成功',
@@ -203,7 +211,6 @@
 				}
 			},
 			confirm(){
-				console.log('1111111111111')
 				uni.navigateBack({
 					delta: 1
 				});

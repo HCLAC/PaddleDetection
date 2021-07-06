@@ -58,7 +58,6 @@
 					</view>
 					<u-line color="rgba(237, 239, 242, 1)" margin="40rpx 0rpx"></u-line>
 				</view>
-
 				<!-- 登录按钮 -->
 				<view class="loginButton"><button class="lb" :disabled="disabled" :style="{ background: styleBtn.background }" @tap="doLogin">登录</button></view>
 				<view class="loginButton">
@@ -198,7 +197,7 @@ export default {
 		},
 		getCode() {
 			let _this = this;
-			uni.hideKeyboard();
+			// uni.hideKeyboard();
 			if (_this.getCodeisWaiting) {
 				return;
 			}
@@ -265,15 +264,14 @@ export default {
 				}
 			});
 		},
+		//一键登录
 		getPhone(res) {
 			uni.checkSession({
 				success: suc => {
 					console.log(suc,'suc')
-					// if (suc.errMsg != 'checkSession:ok') {
-					
+					if (suc.errMsg != 'checkSession:ok') {
 						uni.getLoginCode({
 							provider: this.serviceProvider,
-						
 							success: result => {
 								console.log('result',result)
 								if (result.code) {
@@ -286,7 +284,6 @@ export default {
 									return;
 								}
 							},
-						
 							fail: error => {
 								uni.showToast({
 									title: error.errMsg,
@@ -294,8 +291,7 @@ export default {
 								});
 							}
 						});
-					// }
-	
+					}
 				},
 				fail: err => {
 					uni.showToast({
@@ -321,7 +317,7 @@ export default {
 		},
 
 		baiduLogin(obj) {
-			uni.hideKeyboard();
+			// uni.hideKeyboard();
 			console.log(obj.code,'code')
 			uni.request({
 				url: this.globalUrl + '/user/oauth/code2session',
@@ -393,7 +389,7 @@ export default {
 		},
 		doLogin() {
 			let _this = this;
-			uni.hideKeyboard();
+			// uni.hideKeyboard();
 			//模板示例部分验证规则
 			if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phone)) {
 				uni.showToast({ title: '请填写正确手机号码', icon: 'none' });

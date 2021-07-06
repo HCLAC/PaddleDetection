@@ -382,7 +382,7 @@
 				inputbottom: {
 					bottom: ''
 				},
-				textareafocus: false
+				textareafocus: false,
 			};
 		},
 		onShow() {
@@ -500,32 +500,34 @@
 						// let strIndex = strIndex.match(?<=").*?(?=")
 						if (strIndex && strIndex.length) {
 							// let strId =  newContent.substring(strIndex,1)
-
-							// let strId = strIndex[0].slice(36, -4);
-							let strIdarr = strIndex[0].match(/\d+/g);
-							
+							//旧
+							let strId = strIndex[0].slice(36, -4);
+							// let strIdarr = strIndex[0].match(/\d+/g);
+							// 新版营销组件
 							// let strValue = strIndex[0].match(/value="(\S*),/)[1];
-							console.log(strIdarr,'1234')
-							let strId = strIdarr.join('')
+							// console.log(strIdarr,'1234')
+							// let strId = strIdarr.join('')
 							let resCode = await that.getTemplate(strId);
 							
 							if (resCode.data.code == 0) {
+								// 旧营销
 								let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
 								let wechat_name = resCode.data.data.wechat_name.replace(/\s*/g, '');
+								// 详情请加${wechat_name}：${wechat_id}
 								// 营销组件
-								// var name = "[name]";
-								// var wechat_name1 = wechat_name;
+								var name = "[name]";
+								var wechat_name1 = wechat_name;
 								
-								// var number = "[number]";
-								// var wechat_id1 = wechat_id
-								// strValue = strValue.replace(name,wechat_name1)
-								// strValue = strValue.replace(number,wechat_id1)
+								var number = "[number]";
+								var wechat_id1 = wechat_id
+								strValue = strValue.replace(name,wechat_name1)
+								strValue = strValue.replace(number,wechat_id1)
 								// ${strValue}
 								let str =
 									`<div style="text-aline:center; ">
       <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
-          
-		  详情请加${wechat_name}：${wechat_id}
+          ${strValue}
+		  
       </span><a groupId="${strId}"   group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;padding:0;margin-left: 36rpx; font-weight: 400;">点击复制</a>
     </div>`;
 
@@ -701,6 +703,7 @@
 			},
 			commentInput() {
 				this.textareafocus = true
+				console.log(111)
 			},
 			inputBlur() {
 				this.textareafocus = false
@@ -1716,7 +1719,7 @@
 		background: #ffffff;
 		display: flex;
 		align-items: center;
-
+		padding-bottom: 110rpx;
 		.inputK {
 			height: 28rpx;
 			width: 558rpx;
