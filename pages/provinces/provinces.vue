@@ -1,306 +1,366 @@
 <template>
-	<mescroll-uni class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-	
-	<view >
-		<!-- 自定义导航栏 -->
-		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
-				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
-				</view>
-				<view class="slottitle">领途羊</view>
-			</uni-nav-bar>
-		</view>
-		<!-- 头图 -->
-			<view class="headImgBox">
-				<image class="headImg" :src="item.image" mode="scaleToFill"></image>
-				<view class="mask"></view>
-				<view class="cityBox">
-					<view class="city">{{ item.name || '全国' }}</view>
-					<view class="change" @click="getCity">
-						<view class="changeText" @click="show = true">切换</view>
-						<image class="changeIcon" src="../../static/images/more-down.svg" mode=""></image>
-					</view>
-				</view>
-				<view class="weather" v-if="weather != null">
-					<image class="weatherImg" src="../../static/images/weather/xiaoyu.svg" mode="" v-if="weather.weather == '小雨'"></image>
-					<image class="weatherImg" src="../../static/images/weather/baoyu.svg" mode="" v-if="weather.weather == '暴雨'"></image>
-					<image class="weatherImg" src="../../static/images/weather/dabaoyu.svg" mode="" v-if="weather.weather == '大暴雨'"></image>
-					<image class="weatherImg" src="../../static/images/weather/daxue.svg" mode="" v-if="weather.weather == '大雪'"></image>
-					<image class="weatherImg" src="../../static/images/weather/dayu.svg" mode="" v-if="weather.weather == '大雨'"></image>
-					<image class="weatherImg" src="../../static/images/weather/dongyu.svg" mode="" v-if="weather.weather == '冻雨'"></image>
-					<image class="weatherImg" src="../../static/images/weather/duoyun.svg" mode="" v-if="weather.weather == '多云'"></image>
-					<image class="weatherImg" src="../../static/images/weather/fuchen.svg" mode="" v-if="weather.weather == '拂尘'"></image>
-					<image class="weatherImg" src="../../static/images/weather/leizhenyu.svg" mode="" v-if="weather.weather == '雷阵雨'"></image>
-					<image class="weatherImg" src="../../static/images/weather/leizhenyubanyoubingbao.svg" mode="" v-if="weather.weather == '雷阵雨伴有冰雹'"></image>
-					<image class="weatherImg" src="../../static/images/weather/mai.svg" mode="" v-if="weather.weather == '霾'"></image>
-					<image class="weatherImg" src="../../static/images/weather/qiangshachenbao.svg" mode="" v-if="weather.weather == '强沙尘暴'"></image>
-					<image class="weatherImg" src="../../static/images/weather/qing.svg" mode="" v-if="weather.weather == '晴'"></image>
-					<image class="weatherImg" src="../../static/images/weather/shachenbao.svg" mode="" v-if="weather.weather == '沙尘暴'"></image>
-					<image class="weatherImg" src="../../static/images/weather/tedabaoyu.svg" mode="" v-if="weather.weather == '特大暴雨'"></image>
-					<image class="weatherImg" src="../../static/images/weather/wu.svg" mode="" v-if="weather.weather == '雾'"></image>
-					<image class="weatherImg" src="../../static/images/weather/xiaoxue.svg" mode="" v-if="weather.weather == '小雪'"></image>
-					<image class="weatherImg" src="../../static/images/weather/yangsha.svg" mode="" v-if="weather.weather == '扬沙'"></image>
-					<image class="weatherImg" src="../../static/images/weather/yin.svg" mode="" v-if="weather.weather == '阴'"></image>
-					<image class="weatherImg" src="../../static/images/weather/yujiaxue.svg" mode="" v-if="weather.weather == '雨夹雪'"></image>
-					<image class="weatherImg" src="../../static/images/weather/zhenxue.svg" mode="" v-if="weather.weather == '阵雪'"></image>
-					<image class="weatherImg" src="../../static/images/weather/zhenyu.svg" mode="" v-if="weather.weather == '阵雨'"></image>
-					<image class="weatherImg" src="../../static/images/weather/zhongxue.svg" mode="" v-if="weather.weather == '中雪'"></image>
-					<image class="weatherImg" src="../../static/images/weather/zhongyu.svg" mode="" v-if="weather.weather == '中雨'"></image>
-					<view class="temp">{{ weather.temp }}</view>
-				</view>
-			</view>
-			<view class="contentBox" >
-				<!-- 景点推荐 -->
-				<view class="content">
-					<view class="contentHeader">
-						<view class="contentTitle">景点推荐</view>
-						<view class="contentMore" @click="toMore()">
-							更多
-							<image class="moreIcon" src="../../static/images/more-right.svg" mode="widthFix"></image>
+	<view>
+		
+			<view >
+				<!-- 自定义导航栏 -->
+				<view class="example-body">
+					<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
+						<view slot="left" class="slotleft">
+							<!-- #ifndef  MP-BAIDU -->
+								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+							<!-- #endif -->
+							<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 						</view>
-					</view>
-					<view class="contentImgBox">
-						<view class="contentImg" v-for="(item, index) in siteHot" :key="index" @click="toAtt(item.id)">
-							<image class="attImg" :src="item.image" mode=""></image>
-							<view class="attText">{{ item.name }}</view>
-							<view class="rateBox">
-								<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
-								<!-- 评分图标 -->
-								<view class="rateStart" v-if="item.rate == 5">
-									<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-								</view>
-								<view class="rateStart" v-if="item.rate == 4">
-									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								</view>
-								<view class="rateStart" v-if="item.rate == 3">
-									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								</view>
-								<view class="rateStart" v-if="item.rate == 2">
-									<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								</view>
-								<view class="rateStart" v-if="item.rate == 1">
-									<image src="../../static/images/star_svg/star11.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								</view>
-								<view class="rateStart" v-if="item.rate == 4.5">
-									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-									<image src="../../static/images/star_svg/starCopy13.svg" mode=""></image>
-								</view>
-								<view class="rateStart" v-if="item.rate == 3.5">
-									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-									<image src="../../static/images/star_svg/starCopy12.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								</view>
-								<view class="rateStart" v-if="item.rate == 2.5">
-									<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-									<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								</view>
-								<view class="rateStart" v-if="item.rate == 1.5">
-									<image src="../../static/images/star_svg/star11.svg" mode=""></image>
-									<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								</view>
-								<view class="rateStart" v-if="item.rate == 0.5">
-									<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								</view>
-								<!-- <u-rate :disabled="true" current="4"></u-rate> -->
-								<view class="rate">{{ item.rate }} 星</view>
+						<view class="slottitle">领途羊</view>
+					</uni-nav-bar>
+				</view>
+				<!-- 头图 -->
+					<view class="headImgBox">
+						<image class="headImg" :src="item.image" mode="scaleToFill"></image>
+						<view class="mask"></view>
+						<view class="cityBox">
+							<view class="city">{{ item.name || '全国' }}</view>
+							<view class="change" @click="getCity">
+								<view class="changeText" @click="show = true">切换</view>
+								<image class="changeIcon" src="../../static/images/more-down.svg" mode=""></image>
 							</view>
 						</view>
-					</view>
-				</view>
-				<!-- 行程推荐 -->
-				<view class="trip" v-if="routeHot.length">
-					<view class="tripHeader">
-						<view class="tripTitle">行程路线</view>
-						<view class="tripMore" @click="toLineMore()">
-							更多
-							<image class="moreIcon" src="../../static/images/more-right.svg" mode="widthFix"></image>
+						<!-- 天气 -->
+						<view class="weather" v-if="weather != null">
+							<image class="weatherImg" src="../../static/images/weather/xiaoyu.svg" mode="" v-if="weather.weather == '小雨'"></image>
+							<image class="weatherImg" src="../../static/images/weather/baoyu.svg" mode="" v-if="weather.weather == '暴雨'"></image>
+							<image class="weatherImg" src="../../static/images/weather/dabaoyu.svg" mode="" v-if="weather.weather == '大暴雨'"></image>
+							<image class="weatherImg" src="../../static/images/weather/daxue.svg" mode="" v-if="weather.weather == '大雪'"></image>
+							<image class="weatherImg" src="../../static/images/weather/dayu.svg" mode="" v-if="weather.weather == '大雨'"></image>
+							<image class="weatherImg" src="../../static/images/weather/dongyu.svg" mode="" v-if="weather.weather == '冻雨'"></image>
+							<image class="weatherImg" src="../../static/images/weather/duoyun.svg" mode="" v-if="weather.weather == '多云'"></image>
+							<image class="weatherImg" src="../../static/images/weather/fuchen.svg" mode="" v-if="weather.weather == '拂尘'"></image>
+							<image class="weatherImg" src="../../static/images/weather/leizhenyu.svg" mode="" v-if="weather.weather == '雷阵雨'"></image>
+							<image class="weatherImg" src="../../static/images/weather/leizhenyubanyoubingbao.svg" mode="" v-if="weather.weather == '雷阵雨伴有冰雹'"></image>
+							<image class="weatherImg" src="../../static/images/weather/mai.svg" mode="" v-if="weather.weather == '霾'"></image>
+							<image class="weatherImg" src="../../static/images/weather/qiangshachenbao.svg" mode="" v-if="weather.weather == '强沙尘暴'"></image>
+							<image class="weatherImg" src="../../static/images/weather/qing.svg" mode="" v-if="weather.weather == '晴'"></image>
+							<image class="weatherImg" src="../../static/images/weather/shachenbao.svg" mode="" v-if="weather.weather == '沙尘暴'"></image>
+							<image class="weatherImg" src="../../static/images/weather/tedabaoyu.svg" mode="" v-if="weather.weather == '特大暴雨'"></image>
+							<image class="weatherImg" src="../../static/images/weather/wu.svg" mode="" v-if="weather.weather == '雾'"></image>
+							<image class="weatherImg" src="../../static/images/weather/xiaoxue.svg" mode="" v-if="weather.weather == '小雪'"></image>
+							<image class="weatherImg" src="../../static/images/weather/yangsha.svg" mode="" v-if="weather.weather == '扬沙'"></image>
+							<image class="weatherImg" src="../../static/images/weather/yin.svg" mode="" v-if="weather.weather == '阴'"></image>
+							<image class="weatherImg" src="../../static/images/weather/yujiaxue.svg" mode="" v-if="weather.weather == '雨夹雪'"></image>
+							<image class="weatherImg" src="../../static/images/weather/zhenxue.svg" mode="" v-if="weather.weather == '阵雪'"></image>
+							<image class="weatherImg" src="../../static/images/weather/zhenyu.svg" mode="" v-if="weather.weather == '阵雨'"></image>
+							<image class="weatherImg" src="../../static/images/weather/zhongxue.svg" mode="" v-if="weather.weather == '中雪'"></image>
+							<image class="weatherImg" src="../../static/images/weather/zhongyu.svg" mode="" v-if="weather.weather == '中雨'"></image>
+							<view class="temp">{{ weather.temp }}</view>
 						</view>
 					</view>
-					<view class="tripBox">
-						<view class="tripContent" v-for="(item, index) in routeHot" :key="index" @click="getLineDetail(item)">
-							<image class="tripImg" :src="item.image" mode=""></image>
-							<view class="tripText">{{ item.title }}</view>
+					<view class="contentBox" >
+						<!-- 景点推荐 -->
+						<view class="content">
+							<view class="contentHeader">
+								<view class="contentTitle">景点推荐</view>
+								<view class="contentMore" @click="toMore()">
+									更多
+									<image class="moreIcon" src="../../static/images/more-right.svg" mode="widthFix"></image>
+								</view>
+							</view>
+							<view class="contentImgBox">
+								<view class="contentImg" v-for="(item, index) in siteHot" :key="index" @click="toAtt(item.id)">
+									<image class="attImg" :src="item.image" mode=""></image>
+									<view class="attText">{{ item.name }}</view>
+									<view class="rateBox">
+										<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
+										<!-- 评分图标 -->
+										<view class="rateStart" v-if="item.rate == 5">
+											<image src="../../static/images/star_svg/star4.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star4.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star4.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star4.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star4.svg" mode=""></image>
+										</view>
+										<view class="rateStart" v-if="item.rate == 4">
+											<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+										</view>
+										<view class="rateStart" v-if="item.rate == 3">
+											<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+										</view>
+										<view class="rateStart" v-if="item.rate == 2">
+											<image src="../../static/images/star_svg/star1.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star1.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+										</view>
+										<view class="rateStart" v-if="item.rate == 1">
+											<image src="../../static/images/star_svg/star11.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+										</view>
+										<view class="rateStart" v-if="item.rate >= 4.1 && item.rate < 5">
+											<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star3.svg" mode=""></image>
+											<image src="../../static/images/star_svg/starCopy13.svg" mode=""></image>
+										</view>
+										<view class="rateStart" v-if="item.rate >= 3.1 && item.rate < 4">
+											<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star2.svg" mode=""></image>
+											<image src="../../static/images/star_svg/starCopy12.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+										</view>
+										<view class="rateStart" v-if="item.rate >= 2.1 && item.rate < 3">
+											<image src="../../static/images/star_svg/star1.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star1.svg" mode=""></image>
+											<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+										</view>
+										<view class="rateStart" v-if="item.rate >= 1.1 && item.rate < 2">
+											<image src="../../static/images/star_svg/star11.svg" mode=""></image>
+											<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+										</view>
+										<view class="rateStart" v-if="item.rate >= 0.1 && item.rate < 1">
+											<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+											<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+										</view>
+										<!-- <u-rate :disabled="true" current="4"></u-rate> -->
+										<view class="rate">{{ item.rate }} 星</view>
+									</view>
+								</view>
+							</view>
+							<!-- 无数据展示 -->
+							<view class="contentNull" v-if="siteHot.length == 0">
+								暂无数据请切换其他城市
+							</view>
 						</view>
+						<!-- 行程推荐 -->
+						<view class="trip" v-if="routeHot.length">
+							<view class="tripHeader">
+								<view class="tripTitle">行程路线</view>
+								<view class="tripMore" @click="toLineMore()">
+									更多
+									<image class="moreIcon" src="../../static/images/more-right.svg" mode="widthFix"></image>
+								</view>
+							</view>
+							<view class="tripBox">
+								<view class="tripContent" v-for="(item, index) in routeHot" :key="index" @click="getLineDetail(item)">
+									<image class="tripImg" :src="item.image" mode=""></image>
+									<view class="tripText">{{ item.title }}</view>
+								</view>
+							</view>
+						</view>
+						<view class="line"></view>
+						<!-- 旅途问答 -->
+						<!-- <view class="travelQuestionsBox">
+							<view class="tQTop">
+								<view class="tQTBox">
+									<text class="tQText">旅途问答</text>
+									<view class="tQLine"></view>
+								</view>
+								
+								<view class="tQBtn" @click="toQuestions">
+									<image src="../../static/images/followIcon.svg" mode=""></image>
+									<view class="tQBT">
+										我要提问
+									</view>
+								</view>
+							</view>
+							<view class="tQContent" v-if="questions.length != 0 || questions != undefined">
+								<view class="tQCard" v-for="(item,index) in questions " :key="index" @click="toQuestionsDetail(item)">
+									<view class="tQCRight">
+										<view class="tQCTitle">
+											{{item.title}}
+										</view>
+										<view class="tQCParse">
+											{{item.content}}
+										</view>
+									</view>
+								</view>
+								<view class="tQToMore" @click="toMoreQuestions"  v-if="questions.length >= 2">
+									查看更多
+								</view>
+							</view>
+							<view class="tQContentNull" v-if="questions.length == 0">
+								还没有问答，快来做第一个提问者吧~
+							</view>
+						</view> -->
+						<!-- 正在旅行 -->
+						<mescroll-body v-if="list" class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+							<view class="touring" id="touring" >
+							<text class="tourtext">正在旅行</text>
+							
+							<view class="wrap">
+								<view class="left">
+									<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
+										<view class="" v-if="item.type != 6">
+											<view class="demo-top" @click="onPageJump" :id="item.article_id">
+												<view class="imgBox" >
+													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
+														<view class="videoIcon" v-if="item.type == 4">
+															<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+														</view>
+													</image>
+													<view class="adress">
+														<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+														<view class="adressText">{{ item.location.replace(/\（.*?\）/g, '') }}</view>
+													</view>
+												</view>
+												<view class="titleTip">
+													<view class="demo-tag">
+														<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+														<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+														<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+													</view>
+													<view class="demo-title">{{ item.title }}</view>
+												</view>
+											</view>
+											<view class="demo-user">
+												<view class="userMessage">
+													<image class="userHeard" :src="item.avatar"></image>
+													<view class="userNikename">{{ item.author_name }}</view>
+												</view>
+												<view class="count" @click="clickLike(item, index)">
+													<view class="countImg">
+														<image mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+														<image mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+													</view>
+													<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+												</view>
+											</view>
+										</view>
+										<view class="answersBox" v-if="item.type == 6 && item.type" @click="toQuestionsDetail(item)">
+											<image src="../../static/images/yh.svg" mode=""></image>
+											<view class="answersTitle">
+												{{item.title}}
+											</view>
+											<view class="answersNum">
+												{{item.reply_count}}回答
+											</view>
+										</view>
+									</view>
+								</view>
+								<view class="right">
+									<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
+										<view class="" v-if="item.type != 6">
+											<view class="demo-top"  @click="onPageJump" :id="item.article_id">
+												<view class="imgBox">
+													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
+														<view class="videoIcon" v-if="item.type == 4">
+															<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+														</view>
+													</image>
+													<view class="adress">
+														<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+														<view class="adressText">{{ item.location.replace(/\（.*?\）/g, '' ) }}</view>
+													</view>
+												</view>
+												<view class="titleTip">
+													<view class="demo-tag">
+														<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+														<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+														<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+													</view>
+													<view class="demo-title">{{ item.title }}</view>
+												</view>
+											</view>
+											<view class="demo-user">
+												<view class="userMessage">
+													<image class="userHeard" :src="item.avatar"></image>
+													<view class="userNikename">{{ item.author_name }}</view>
+												</view>
+												<view class="count" @click="clickLike(item, index)">
+													<view class="countImg">
+														<image mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+														<image mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+													</view>
+													<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+												</view>
+											</view>
+										</view>
+										<view class="answersBoxR" v-if="item.type == 6" @click="toQuestionsDetail(item)">
+											<image src="../../static/images/yh.svg" mode=""></image>
+											<view class="answersTitle">
+												{{item.title}}
+											</view>
+											<view class="answersNum">
+												{{item.reply_count}}回答
+											</view>
+										</view>
+									</view>
+								</view>
+							</view>
+							
+						</view>
+						</mescroll-body>
 					</view>
-				</view>
-				<!-- 正在旅行 -->
 				
-				<view class="touring" id="touring">
-					<text class="tourtext">正在旅行</text>
-					
-					<view class="wrap">
-						<view class="left">
-							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
-								<view class="" >
-									<view class="demo-top" @click="onPageJump" :id="item.article_id">
-										<view class="imgBox" >
-											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-												<view class="videoIcon" v-if="item.type == 4">
-													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
-												</view>
-											</image>
-											<view class="adress">
-												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-												<view class="adressText">{{ item.location }}</view>
-											</view>
-										</view>
-										<view class="titleTip">
-											<view class="demo-tag">
-												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-												<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-											</view>
-											<view class="demo-title">{{ item.title }}</view>
-										</view>
-									</view>
-									<view class="demo-user">
-										<view class="userMessage">
-											<image class="userHeard" :src="item.avatar"></image>
-											<view class="userNikename">{{ item.author_name }}</view>
-										</view>
-										<view class="count" @click="clickLike(item, index)">
-											<view class="countImg">
-												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
-											</view>
-											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-										</view>
-									</view>
-								</view>
-							</view>
+				<!-- 城市选择弹窗 -->
+				<u-popup v-model="show" mode="top" height="383px">
+					<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
+						<view slot="left" class="slotleft">
+							<i<!-- #ifndef  MP-BAIDU -->
+								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+							<!-- #endif -->						<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 						</view>
-						<view class="right">
-							<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
-								<view class="">
-									<view class="demo-top"  @click="onPageJump" :id="item.article_id">
-										<view class="imgBox">
-											<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-												<view class="videoIcon" v-if="item.type == 4">
-													<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
-												</view>
-											</image>
-											<view class="adress">
-												<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-												<view class="adressText">{{ item.location }}</view>
-											</view>
-										</view>
-										<view class="titleTip">
-											<view class="demo-tag">
-												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-												<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-												<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-											</view>
-											<view class="demo-title">{{ item.title }}</view>
-										</view>
-									</view>
-									<view class="demo-user">
-										<view class="userMessage">
-											<image class="userHeard" :src="item.avatar"></image>
-											<view class="userNikename">{{ item.author_name }}</view>
-										</view>
-										<view class="count" @click="clickLike(item, index)">
-											<view class="countImg">
-												<image src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-												<image src="../../static/images/heart-actived.svg" v-if="item.liked == 1"></image>
-											</view>
-											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-										</view>
-									</view>
-								</view>
-							</view>
-						</view>
+						<view class="slottitle">领途羊</view>
+					</uni-nav-bar>
+					<!-- 城市 -->
+					<view class="nowcity">
+						<text>{{ name }}</text>
+						<image class="nowcityImg" src="../../static/images/moreDown.svg" mode=""></image>
 					</view>
-					
-				</view>
-		
-			</view>
-		
-		<!-- 城市选择弹窗 -->
-		<u-popup v-model="show" mode="top" height="383px">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
-				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
-				</view>
-				<view class="slottitle">领途羊</view>
-			</uni-nav-bar>
-			<!-- 城市 -->
-			<view class="nowcity">
-				<text>{{ name }}</text>
-				<image class="nowcityImg" src="../../static/images/moreDown.svg" mode=""></image>
-			</view>
-			<!-- 城市选择列表 -->
-			<view class="u-menu-wrap">
-				<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
-					<view
-						v-for="(item, index) in cityList"
-						:key="index"
-						class="u-tab-item"
-						:class="[current == index ? 'u-tab-item-active' : '']"
-						:data-current="index"
-						@tap.stop="swichMenu(index)"
-					>
-						<text class="u-line-1">{{ item.name }}</text>
-					</view>
-				</scroll-view>
-				<block v-for="(item, index) in cityList" :key="index">
-					<scroll-view scroll-y class="right-box" v-if="current == index">
-						<view class="page-view">
-							<view class="class-item">
-								<!-- <view class="item-title" @click="gethotsiteslist2(item)"> -->
-								<!-- <text>全省</text> -->
-								<!-- </view> -->
-								<view class="item-container">
-									<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
-										<!-- <image class="item-menu-image" :src="item1.icon" mode=""></image> -->
-										<view class="item-menu-name" @click="gethotsiteslist1(item1)">{{ item1.name }}</view>
+					<!-- 城市选择列表 -->
+					<view class="u-menu-wrap">
+						<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
+							<view
+								v-for="(item, index) in cityList"
+								:key="index"
+								class="u-tab-item"
+								:class="[current == index ? 'u-tab-item-active' : '']"
+								:data-current="index"
+								@tap.stop="swichMenu(index)"
+							>
+								<text class="u-line-1">{{ item.name }}</text>
+							</view>
+						</scroll-view>
+						<block v-for="(item, index) in cityList" :key="index">
+							<scroll-view scroll-y class="right-box" v-if="current == index">
+								<view class="page-view">
+									<view class="class-item">
+										<!-- </view> -->
+										<view class="item-container">
+											<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
+												<!-- <image class="item-menu-image" :src="item1.icon" mode=""></image> -->
+												<view class="item-menu-name" @click="gethotsiteslist1(item1)">{{ item1.name }}</view>
+											</view>
+										</view>
 									</view>
 								</view>
-							</view>
-						</view>
-					</scroll-view>
-				</block>
+							</scroll-view>
+						</block>
+					</view>
+				</u-popup>
 			</view>
-		</u-popup>
+			
 	</view>
-	</mescroll-uni>	
 </template>
 
 <script>
@@ -318,15 +378,18 @@ export default {
 			list: [],
 			weather: null,
 			item: null,
-			siteHot: null,
+			siteHot: [],
 			routeHot: null,
 			show: false,
 			cityList: null,
 			name: null,
 			firstTime: new Date().getTime(),
 			downOption:{
-				use:false
-			}
+				use:false,
+				bgColor:'#F8F8F8'
+			},
+			questions:null,
+			answersList:{}
 		};
 	},
 	comments: {
@@ -336,10 +399,17 @@ export default {
 		let item = JSON.parse(options.id);
 		console.log('参数', item);
 		(this.item = item), (this.name = item.name);
-		this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), this.getCity();
+		this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), 
+		this.getCity()
+		this.getQuestions()
+		this.getAnswersList()
+		this.delbackbtn()
 	},
 	methods: {
-		
+		delbackbtn(){
+			var a = document.getElementsByClassName('uni-page-head-hd')[0]
+			a.style.display = 'none';
+		},
 		// 文章瀑布流接口
 		getTour() {
 			uni.request({
@@ -381,6 +451,30 @@ export default {
 				}
 			});
 		},
+		// 获取问答列表
+		getAnswersList() {
+			uni.request({
+				url: this.globalUrl + '/questions/random',
+				data: {
+					state_id: this.item.state_id,
+					city_id: this.item.city_id,
+					count: 6
+				},
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: res => {
+					console.log('wenda列表',res)
+					this.answersList = res.data.data
+				}
+			});
+		},
+		// 随机获取问答
+		// async getRandom(arr) {
+		//     var len = arr.length;
+		//     var i = Math.ceil(Math.random() * (len ))%len;
+		//     return arr[i];
+		// },
 		// 跳转文章详情
 		onPageJump(e) {
 			console.log(e);
@@ -493,6 +587,43 @@ export default {
 				});
 			}
 		},
+		// 获取精选问题
+		getQuestions(){
+			uni.request({
+				url: this.globalUrl + '/questions/selected',
+				data: {
+					state_id: this.item.state_id,
+					city_id: this.item.city_id,
+					count: 2
+				},
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: res => {
+					this.questions = res.data.data
+					console.log('获取精选问题', this.questions);
+				}
+			})
+			
+			
+
+		},
+		// 跳转问题详情
+		toQuestionsDetail(item){
+			console.log(item)
+			var question_id = item.question_id
+			uni.navigateTo({
+				url: '/pages/questionsDetail/questionsDetail?question_id=' + question_id
+			});
+		},
+		// 跳转问答列表页
+		toMoreQuestions(){
+			var state_id = this.item.state_id;
+			var city_id = this.item.city_id;
+			uni.navigateTo({
+				url: '/pages/moreQuestions/moreQuestions?state_id=' + state_id + '&city_id=' + city_id
+			});
+		},
 		// 获取全国城市
 		getCity() {
 			uni.request({
@@ -508,6 +639,7 @@ export default {
 		// 获取
 
 		gethotsiteslist1(item1) {
+			console.log(item1,'点击城市')
 			if (item1.city_id == 0) {
 				uni.request({
 					url: this.globalUrl + '/area',
@@ -515,14 +647,15 @@ export default {
 						state_id: item1.state_id
 					},
 					success: res => {
-						console.log('城市信息==', res);
+						console.log('省市信息==', res);
 						(this.item = res.data.data),
 							(this.name = this.name = res.data.data.name),
 							// 正在旅行
 							uni.request({
 								url: this.globalUrl + '/article/list',
 								data: {
-									state_id: item1.state_id,
+									state_id: res.data.data.state_id,
+									city_id: 0,
 									count: 6,
 									page: 1,
 									first_time: new Date().getTime()
@@ -533,16 +666,20 @@ export default {
 								success: res => {
 									uni.setStorageSync('article_id', res.data);
 									this.list = res.data.data.list;
-									this.mescroll.resetUpScroll()
-									console.log('list=====', this.list);
+									// this.mescroll.resetUpScroll()
+									console.log('list=====', res.data);
 								}
 							}),
+							
 							this.getWeather(),
+							this.getQuestions(),
+							this.getAnswersList(),
 							// 景点
 							uni.request({
 								url: this.globalUrl + '/site/hot',
 								data: {
-									state_id: item1.state_id,
+									state_id: res.data.data.state_id,
+									city_id: 0,
 									count: 3,
 									sort_by: 3
 								},
@@ -555,7 +692,8 @@ export default {
 						uni.request({
 							url: this.globalUrl + '/route/hot',
 							data: {
-								state_id: item1.state_id,
+								state_id: res.data.data.state_id,
+								city_id: 0,
 								count: 2
 							},
 							success: res => {
@@ -575,99 +713,16 @@ export default {
 					},
 					success: res => {
 						console.log('城市信息==', res);
-						(this.item = res.data.data), (this.name = this.name = res.data.data.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), (this.show = false);
+						(this.item = res.data.data), (this.name = this.name = res.data.data.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(),
+						this.getQuestions(),
+						this.getAnswersList(),
+						(this.show = false);
 						this.mescroll.resetUpScroll()
 					}
 				});
 			}
 		},
-		gethotsiteslist2(item) {
-			if (item.state_id == 0) {
-				uni.request({
-					url: this.globalUrl + '/area',
-					success: res => {
-						console.log('省份信息==', res);
-						if (res.data == null) {
-							this.name = '全国';
-							this.item.name = '全国';
-						}
-						this.item = res.data.data;
-						if (item.name == null) {
-							this.name = '全国';
-							this.item.name = '全国';
-						} else {
-							this.name = item.name;
-						}
-
-						// 正在旅行
-						uni.request({
-							url: this.globalUrl + '/article/list',
-							data: {
-								count: 6,
-								page: 1,
-								first_time: new Date().getTime()
-							},
-							header: {
-								Authorization: uni.getStorageSync('Authorization')
-							},
-							success: res => {
-								uni.setStorageSync('article_id', res.data);
-								this.list = res.data.data.list;
-								this.mescroll.resetUpScroll()
-								console.log('list=====', this.list);
-							}
-						}),
-							uni.request({
-								url: 'https://api.asilu.com/weather/',
-								data: {
-									city: '全国'
-								},
-								success: res => {
-									console.log('天气--', res);
-									this.weather = res.data.weather[0];
-								}
-							}),
-							// 景点
-							uni.request({
-								url: this.globalUrl + '/site/hot',
-								data: {
-									count: 3,
-									sort_by: 3
-								},
-								success: res => {
-									console.log('景点推荐', res);
-									this.siteHot = res.data.data;
-								}
-							});
-						// 线路
-						uni.request({
-							url: this.globalUrl + '/route/hot',
-							data: {
-								count: 2
-							},
-							success: res => {
-								console.log('热门线路', res);
-								this.routeHot = res.data.data;
-							}
-						}),
-							(this.show = false);
-					}
-				});
-			} else {
-				uni.request({
-					url: this.globalUrl + '/area',
-					data: {
-						state_id: item.state_id,
-						city_id: item.city_id
-					},
-					success: res => {
-						console.log('省份信息==', res);
-						(this.item = res.data.data), (this.name = item.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), (this.show = false);
-						this.mescroll.resetUpScroll()
-					}
-				});
-			}
-		},
+		
 		// 点击左边的栏目切换
 		async swichMenu(index) {
 			if (index == this.current) return;
@@ -733,6 +788,22 @@ export default {
 				}
 			});
 		},
+		// 提问按钮
+		toQuestions(){
+			// console.log()
+			var Authorization = uni.getStorageSync('Authorization')
+			console.log(Authorization)
+			if (!Authorization) {
+				uni.navigateTo({
+					url: '../login/login'
+				});
+			}else{
+				uni.navigateTo({
+					url:'/pages/questions/questions'
+				})
+			}
+			
+		},
 		back() {
 			uni.navigateBack({
 				delta: 1
@@ -740,7 +811,7 @@ export default {
 		},
 		home() {
 			uni.switchTab({
-				url: '/pages/index/index'
+				url: '/pagesA/index/index'
 			});
 		},
 		/*下拉刷新的回调, 有三种处理方式:*/
@@ -787,10 +858,31 @@ export default {
 						// 接口返回的是否有下一页 (true/false)
 						// let hasNext = data.data.data.list;
 
-						//设置列表数据
-						if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
-						this.list = this.list.concat(curPageData); //追加新数据
-						console.log('list-', this.list);
+						if(this.answersList.length > 0 ){
+							var answer = this.answersList
+							var sar = Math.floor((Math.random()*answer.length));
+							var addAnswer = answer[sar]
+							let answerArr = [addAnswer]
+							console.log(answerArr,'随机数据')
+							//设置列表数据
+							if (curPageData > 5){
+								if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+								curPageData = curPageData.concat(answerArr)
+								that.list = that.list.concat(curPageData); //追加新数据
+								console.log('that-list-', that.list);
+							}else{
+								if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+								that.list = that.list.concat(curPageData); //追加新数据
+								console.log('that-list-', that.list);
+							}
+							
+						}else{
+							// console.log(answerArr,'随机数据')
+							//设置列表数据
+							if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+							that.list = that.list.concat(curPageData); //追加新数据
+							console.log('that-list-', that.list);
+						}
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 						// this.mescroll.endByPage(curPageLen, totalPage);
@@ -844,11 +936,33 @@ export default {
 						console.log('totalSize', totalSize);
 						// 接口返回的是否有下一页 (true/false)
 						// let hasNext = data.data.data.list;
-
-						//设置列表数据
-						if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
-						that.list = that.list.concat(curPageData); //追加新数据
-						console.log('that-list-', that.list);
+						console.log(this.answersList)
+						if(this.answersList.length > 0 ){
+							var answer = this.answersList
+							var sar = Math.floor((Math.random()*answer.length));
+							var addAnswer = answer[sar]
+							let answerArr = [addAnswer]
+							console.log(answerArr,'随机数据')
+							//设置列表数据
+							if (curPageData.length > 5){
+								if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+								curPageData = curPageData.concat(answerArr)
+								that.list = that.list.concat(curPageData); //追加新数据
+								console.log('that-list-', that.list);
+							}else{
+								if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+								that.list = that.list.concat(curPageData); //追加新数据
+								console.log('that-list-', that.list);
+							}
+							
+						}else{
+							// console.log(answerArr,'随机数据')
+							//设置列表数据
+							if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+							that.list = that.list.concat(curPageData); //追加新数据
+							console.log('that-list-', that.list);
+						}
+						// that.list = that.list.concat(answerArr)
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 						this.mescroll.endByPage(curPageLen, totalPage);
@@ -880,12 +994,22 @@ export default {
 			// 此处仍可以继续写其他接口请求...
 			// 调用其他方法...
 		}
+	},
+	filters: {
+		richTextFormat(value) {
+			// value = value.replace(/<\/?[^>]*>/g,'')
+			value = value.replace(/<\/?.+?>/g,'')
+		  	value = value.replace(/\s+/g,'')
+			  if (value.length > 30) {
+		    	return value.slice(0, 30) + "...";
+		  	}
+		  	return value;
+		},
 	}
 };
 </script>
 
 <style lang="scss" scoped>
-	
 // 自定义导航栏样式
 .example-body {
 	flex-direction: row;
@@ -913,13 +1037,18 @@ export default {
 .fanhui {
 	width: 40rpx;
 	height: 40rpx;
-	margin-left: 40rpx;
+	margin-left: 42rpx;
 	margin-right: 20rpx;
 }
 .fhsy {
 	width: 40rpx;
 	height: 40rpx;
 }
+/* #ifdef  MP-BAIDU*/
+.fhsy {
+	margin-left: 100rpx;
+}
+/*  #endif  */
 .slottitle {
 	margin-left: 162rpx;
 	font-size: 38rpx;
@@ -1010,9 +1139,10 @@ export default {
 }
 .contentBox {
 	width: 100%;
-	background: #f8f8f8;
+	background: #FFFFFF;
 	border: 1px solid #FFFFFF;
 	border-radius: 16rpx 16rpx 0px 0px;
+	border-bottom: none;
 	position: relative;
 	top: -30rpx;
 	left: 0;
@@ -1049,7 +1179,6 @@ export default {
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #606266;
-	line-height: 42rpx;
 }
 .moreIcon {
 	width: 14rpx;
@@ -1061,12 +1190,21 @@ export default {
 	display: flex;
 	margin-left: 28rpx;
 }
+.contentNull{
+	font-size: 32rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #909399;
+	text-align: center;
+	margin-top: 40rpx;
+}
 .contentImg {
 	width: 218rpx;
 	margin-right: 20rpx;
 	background-color: #ffffff;
 	padding-bottom: 24rpx;
-	border-radius: 8px 8px 0px 0px;
+	border-radius: 16rpx 16rpx 0rpx 0rpx;
+	box-shadow: 0rpx 4rpx 24rpx 0rpx #EDEFF2;
 }
 .attImg {
 	width: 100%;
@@ -1110,12 +1248,14 @@ export default {
 .trip {
 	margin-top: 44rpx;
 	margin-left: 28rpx;
+	// padding-bottom: 40rpx;
+	background: #FFFFFF;
 }
 .tripHeader {
 	display: flex;
 	align-items: center;
 	margin-top: 32rpx;
-	background: #f8f8f8;
+	
 }
 .tripTitle {
 	// width: 144rpx;
@@ -1136,7 +1276,6 @@ export default {
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #606266;
-	line-height: 42rpx;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -1189,23 +1328,99 @@ export default {
 }
 
 .wrap {
-	width: 100%;
+	width: 750rpx;
 	display: flex;
 	flex-flow: row;
 	flex-wrap: wrap;
 	margin-top: 24rpx;
+	padding: 0 14rpx 0 28rpx;
 }
 .left {
 	// margin-left: 10rpx;
 }
 .demo-warter {
-	width: 360rpx;
+	width: 340rpx;
 	margin-top: 0;
-	margin-left: 10rpx;
+	margin-right: 14rpx;
 	margin-bottom: 16rpx;
-	padding-bottom: 16rpx;
+	// padding-bottom: 16rpx;
 	/* position: relative; */
 	background-color: #ffffff;
+	border-radius: 16rpx 16rpx;
+	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+}
+.answersBox{
+	background: linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);
+	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+	border-radius: 16rpx;
+	padding: 80rpx 32rpx 40rpx;
+	position: relative;
+	image{
+		width: 76rpx;
+		height: 54rpx;
+		position: absolute;
+		top: 48rpx;
+		left: 32rpx;
+	}
+	.answersTitle{
+		// width: 276rpx;
+		font-size: 36rpx;
+		letter-spacing: 2rpx;
+		font-family: PingFangSC-Semibold, PingFang SC;
+		font-weight: 600;
+		color: #FFFFFF;
+		line-height: 50rpx;
+		margin-top: -8rpx;
+		line-height: 50rpx;
+
+	}
+	.answersNum{
+		// height: 34rpx;
+		font-size: 24rpx;
+		font-family: PingFangSC-Light, PingFang SC;
+		font-weight: 300;
+		color: #FFFFFF;
+		line-height: 34rpx;
+		margin-top: 40rpx;
+
+	}
+
+}
+.answersBoxR{
+	background: linear-gradient(270deg, #FFE512 0%, #FFB64D 100%);
+	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+	border-radius: 16rpx;
+	padding: 80rpx 32rpx 40rpx;
+	position: relative;
+	image{
+		position: absolute;
+		top: 48rpx;
+		left: 32rpx;
+		width: 76rpx;
+		height: 54rpx;
+		
+	}
+	.answersTitle{
+		// width: 276rpx;
+		font-size: 36rpx;
+		letter-spacing: 2rpx;
+		font-family: PingFangSC-Semibold, PingFang SC;
+		font-weight: 600;
+		color: #FFFFFF;
+		line-height: 50rpx;
+
+	}
+	.answersNum{
+		// height: 34rpx;
+		font-size: 24rpx;
+		font-family: PingFangSC-Light, PingFang SC;
+		font-weight: 300;
+		color: #FFFFFF;
+		line-height: 34rpx;
+		margin-top: 40rpx;
+
+	}
+
 }
 
 .demo-top {
@@ -1220,13 +1435,15 @@ export default {
 	min-height: 300rpx !important;
 	max-height: 460rpx;
 	width: 100%;
-	border-radius: 8rpx 8rpx 0 0;
+	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+	border-radius: 16rpx 16rpx 0px 0px;
 }
 .demoImage4 {
 	width: 100%;
 	min-height: 272rpx;
 	max-height: 480rpx;
-	border-radius: 8rpx 8rpx 0 0;
+	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+	border-radius: 16rpx 16rpx 0px 0px;
 }
 .videoIcon{
 	position: absolute;
@@ -1294,6 +1511,13 @@ export default {
 	color: rgba(48, 49, 51, 1);
 	margin-left: 8rpx;
 	line-height: 46rpx;
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	white-space: normal !important;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
 
 .demo-tag {
@@ -1322,6 +1546,7 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	padding-bottom: 16rpx;
 }
 
 .userMessage {
@@ -1452,7 +1677,6 @@ export default {
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
 		color: #606266;
-		line-height: 42rpx;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -1488,173 +1712,7 @@ export default {
 		white-space: nowrap;
 	}
 	
-	/* 正在旅行 */
-	.touring {
-		// margin-top: 24rpx;
-	}
 	
-	.touring .tourtext {
-		width: 160rpx;
-		height: 104rpx;
-		line-height: 104rpx;
-		font-size: 40rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		margin-left: 32rpx;
-	}
-	
-	.wrap {
-		width: 750rpx;
-		display: flex;
-		flex-flow: row;
-		flex-wrap: wrap;
-	}
-	.left{
-		// margin-left: 10rpx;
-	}
-	.demo-warter {
-		width: 360rpx;
-		margin-top: 0;
-		margin-left: 10rpx;
-		margin-bottom: 16rpx;
-		padding-bottom: 16rpx;
-		/* position: relative; */
-		background-color: #ffffff;
-		
-	}
-	
-	.demo-top {
-		position: relative;
-	}
-	.imgBox{
-		position: relative;
-	}
-	.demo-image {
-		min-height: 300rpx !important;
-		max-height: 460rpx;
-		width: 100%;
-		border-radius: 8rpx 8rpx 0 0;
-		position: relative;
-	}
-	
-	.adress {
-		position: absolute;
-		left: 0;
-		bottom: 8rpx;
-		display: flex;
-		align-items: center;
-		max-width: 240rpx;
-		height: 40rpx;
-		padding-right: 16rpx;
-		background: rgba(0, 0, 0, 0.6);
-		border-radius: 0px 14rpx 0px 0px;
-	}
-	
-	.adreessIcon {
-		width: 24rpx;
-		height: 24rpx;
-		margin: 0 4rpx;
-		display: flex;
-	}
-	
-	.adreessIcon image {
-		width: 100%;
-		height: 100%;
-	}
-	
-	.adressText {
-		max-width: 192rpx;
-		font-size: 24rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: rgba(255, 255, 255, 1);
-		/* line-height:24px; */
-		/* margin-right: 16rpx; */
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-	
-	.titleTip {
-		display: flex;
-		margin-top: 10rpx;
-		margin-left: 8rpx;
-	}
-	
-	.demo-title {
-		width: 278rpx;
-		/* max-height: 70rpx; */
-		font-size: 28rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: rgba(48, 49, 51, 1);
-		margin-left: 8rpx;
-		line-height: 46rpx;
-	}
-	
-	.demo-tag {
-		margin-top: 9rpx;
-	}
-	
-	.demo-tag-owner {
-		width: 52rpx;
-		height: 28rpx;
-		text-align: center;
-		align-items: center;
-		color: #0091ff;
-		border: 2rpx solid rgba(0, 145, 255, 1);
-		border-radius: 14rpx;
-		font-size: 16rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: rgba(0, 145, 255, 1);
-		/* margin-top: 6rpx; */
-	}
-	
-	.demo-user {
-		font-size: 10rpx;
-		margin-top: 24rpx;
-		/* margin-bottom: 16rpx; */
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	
-	.userMessage {
-		font-size: 10px;
-		font-weight: 900;
-		color: #464646;
-		display: flex;
-		align-items: center;
-	}
-	
-	.userHeard {
-		width: 40rpx;
-		height: 40rpx;
-		border-radius: 50%;
-		margin-left: 14rpx;
-	}
-	
-	.userNikename {
-		font-size: 24rpx;
-		margin-left: 16rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: rgba(96, 98, 102, 1);
-	}
-	
-	.count {
-		display: flex;
-		align-items: center;
-		margin-right: 20rpx;
-	}
-	
-	.countImg {
-		width: 26rpx;
-		height: 26rpx;
-		margin-right: 8rpx;
-	}
 
 	image {
 		width: 11.4rpx;
@@ -1772,5 +1830,118 @@ export default {
 .item-menu-image {
 	width: 120rpx;
 	height: 120rpx;
+}
+.line{
+	width: 100%;
+	height: 20rpx;
+	margin-top: 40rpx;
+	background: #F8F8F8;
+}
+// 旅途问答
+.travelQuestionsBox{
+	margin: 28rpx;
+	.tQTop{
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		.tQTBox{
+			.tQText{
+				height: 36rpx;
+				font-size: 36rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
+				color: #303133;
+				line-height: 36rpx;
+
+			}
+			.tQLine{
+				margin-top: -8rpx;
+				width: 144rpx;
+				height: 12rpx;
+				background: #FFE512;
+				border-radius: 12rpx;
+
+			}
+		}
+		.tQBtn{
+			width: 180rpx;
+			height: 52rpx;
+			background: #EDEFF2;
+			border-radius: 26rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			image{
+				width: 20rpx;
+				height: 20rpx;
+				margin-right: 8rpx;
+			}
+			.tQBT{
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #303133;
+				line-height: 28rpx;
+			}
+		}
+	}
+	.tQContent{
+		margin: 44rpx 0rpx 20rpx;
+		.tQCard{
+			background: #FFFFFF;
+			padding-bottom: 20rpx;
+			border-bottom: 2rpx solid #EDEFF2;
+			margin-bottom: 20rpx;
+			.tQCRight{
+				width: 694rpx;
+				.tQCTitle{
+					font-size: 40rpx;
+					font-family: PingFangSC-Medium, PingFang SC;
+					font-weight: 500;
+					color: #303133;
+					line-height: 56rpx;
+					margin-bottom: 20rpx;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					word-wrap: break-word;
+					-webkit-line-clamp: 2;
+					-webkit-box-orient: vertical;
+				}
+				.tQCParse{
+					width: 100%;
+					font-size: 30rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #606266;
+					line-height: 42rpx;
+					overflow:hidden;
+					text-overflow: ellipsis;
+					display: -webkit-box;
+					-webkit-line-clamp: 3;
+					-webkit-box-orient: vertical;
+
+				}
+			}
+		}
+		.tQToMore{
+			text-align: center;
+			font-size: 28rpx;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 500;
+			color: #303133;
+			line-height: 28rpx;
+			margin-top: 40rpx;
+		}
+	}
+	.tQContentNull{
+		margin: 80rpx 0rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #909399;
+		line-height: 28rpx;
+		text-align: center;
+	}
 }
 </style>

@@ -2,7 +2,7 @@
 	<view v-if="userInfo">
 		<!-- 自定义导航栏 -->
 		<view class="example-body" v-if="isFixed">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src=""  />
 					<image class="fhsy" src=""  />
@@ -25,16 +25,23 @@
 								<view class="userName" @click="toMineInfo">{{ nickName }}
 									<image src="../../static/images/iconExit.svg" mode=""></image>
 								</view>
-								<view class="fllow" @click="toConcern()">
-									<text>关注</text>
-									<view class="fllowNum">{{fllowNum>10000?((fllowNum-(fllowNum%1000))/10000+'w'):fllowNum}}</view>
+								<view class="fa">
+									<view class="fllow" @click="toConcern()">
+										<view class="fllowNum">{{fllowNum>10000?((fllowNum-(fllowNum%1000))/10000+'w'):fllowNum}}</view>
+										<text>关注</text>
+									</view>
+									<view class="answers" @click="toAnswers()">
+										<view class="answersNum">{{answersNum>10000?((answersNum-(answersNum%1000))/10000+'w'):answersNum}}</view>
+										<text>问答</text>
+									</view>
 								</view>
+								
 								<!-- <view class="logout">退出登录</view> -->
 							</view>
 						</view>
 					</view>
 					<!-- 客服 -->
-					<view class="phone" @click="tell"><image class="phoneImg" src="../../static/images/minephone.svg" mode=""></image></view>
+					<!-- <view class="phone" @click="tell"><image class="phoneImg" src="../../static/images/minephone.svg" mode=""></image></view> -->
 					<!-- 我的收藏 -->
 					<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
 						<view class="favBox" @click="change" >
@@ -62,31 +69,7 @@
 							</view>
 						</view>
 						
-						<!-- <view :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard"> -->
-						<!-- <view>收藏</view> -->
-							<!-- <v-tabs 
-								inactive-color="#909399"
-								lineHeight="24rpx"
-								lineColor="#FFE512"
-								activeColor="#303133"
-								fontSize="36rpx"
-								v-model="tabCurrent"
-								:bold="true"
-								color="#909399"
-								:tabs="tablist"
-								:is-scroll="false"
-								:current="tabCurrent"
-								@change="tabChange"
-								paddingItem="0 32rpx"
-							></v-tabs> -->
-							
-						<!-- </view> -->
-						<!-- <view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" >
-							{{favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum}}
-						</view>
-						<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" >
-							{{likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum}}
-						</view> -->
+						
 					</view>
 				</view>
 				<!-- 收藏 -->
@@ -103,7 +86,7 @@
 										<view v-if="item.type == 5">推广</view>
 									</view>
 									<view class="videoIcon" v-if="item.type == 4">
-										<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+										<image class="playIcon"  src="../../static/images/playIcon.svg" mode="aspectFit"></image>
 									</view>
 								</image>
 							</view>
@@ -123,7 +106,9 @@
 									</view>
 								</view>
 								<view class="position">
-									<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
+									<view class="pImg">
+										<image src="../../static/images/iconNewMap.svg" mode="widthFix"></image>
+									</view>
 									<view>{{ item.location }}</view>
 								</view>
 							</view>
@@ -169,7 +154,9 @@
 									</view>
 								</view>
 								<view class="position">
-									<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
+									<view class="pImg">
+										<image src="../../static/images/iconNewMap.svg" mode="widthFix"></image>
+									</view>
 									<view>{{ item.location }}</view>
 								</view>
 							</view>
@@ -206,7 +193,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import httpType from '../../httpType.js';
+import httpType from '@/httpType.js';
 import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 export default {
 	data() {
@@ -220,6 +207,7 @@ export default {
 				bgColor:'#ffffff'
 			},
 			fllowNum:0,
+			answersNum:0,
 			favNum:0,
 			likeNum:0,
 			current: 0,
@@ -247,6 +235,7 @@ export default {
 	},
 	onLoad() {
 		this.getlist()
+		this.getAnswers()
 	},
 	mounted() {
 		const query = uni.createSelectorQuery().in(this);
@@ -269,6 +258,7 @@ export default {
 		}
 	},
 	methods: {
+		// 获取用户信息
 		getUserMsg() {
 			var that = this;
 
@@ -359,7 +349,27 @@ export default {
 				}
 			});
 		},
-		
+		// 获取问答
+		getAnswers(){
+			uni.request({
+				url: this.globalUrl+ '/user/followquestion/list',
+				data: {
+					page:1,
+					count:10
+				},
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				method: 'get',
+				success: (res)=> {
+					console.log('问答=', res.data);
+					this.answersNum = res.data.data.total
+						
+					
+					
+				}
+			})
+		},
 		// 切换
 		
 		change(){
@@ -401,8 +411,14 @@ export default {
 		// 跳转关注页
 		toConcern(){
 			uni.navigateTo({
-				url:'/pages/mineConcern/mineConcern'
+				url:'/pagesA/mineConcern/mineConcern'
 			});
+		},
+		// 跳转个人问答页
+		toAnswers(){
+			uni.navigateTo({
+				url:'../mineAnswers/mineAnswers'
+			})
 		},
 		// 跳转信息修改页
 		toMineInfo(){
@@ -575,7 +591,7 @@ export default {
 	.fanhui {
 		width: 40rpx;
 		height: 40rpx;
-		margin-left: 40rpx;
+		margin-left: 42rpx;
 		
 	}
 	.fhsy {
@@ -583,6 +599,11 @@ export default {
 		height: 40rpx;
 		margin-left: 20rpx;
 	}
+	/* #ifdef  MP-BAIDU*/
+	.fhsy {
+		margin-left: 100rpx;
+	}
+	/*  #endif  */
 	.slottitle {
 		margin-left: 162rpx;
 		font-size: 38rpx;
@@ -636,22 +657,36 @@ export default {
 		margin-left: 16rpx;
 	}
 }
-.fllow{
+.fa{
 	margin-top: 20rpx;
-	height: 24rpx;
-	font-size: 24rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: #606266;
-	line-height: 24rpx;
 	display: flex;
 	align-items: center;
-	text{
+	.fllow{
+		
+		height: 24rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #606266;
+		line-height: 24rpx;
+		display: flex;
+		align-items: center;
+		text{
+		}
+	}
+	.answers{
+		height: 24rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #606266;
+		line-height: 24rpx;
+		display: flex;
+		align-items: center;
+		margin-left: 20rpx;
 	}
 }
-.fllowNum{
-	margin-left: 8rpx;
-}
+
 .logout {
 	margin-top: 4px;
 	width: 80px;
@@ -940,14 +975,20 @@ export default {
 		// height: 30rpx;
 		// line-height: 40rpx;
 		align-items: center;
-		image {
-			height: 30rpx;
+		.pImg{
 			width: 26rpx;
-			margin-right: 4rpx;
+			height: 30rpx;
+			
+			image {
+				height: 100%;
+				width: 100%;
+			}
 		}
+		
 		view {
 			width: 452rpx;
 			font-size: 22rpx;
+			margin-left: 4rpx;
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			color: rgba(0, 145, 255, 1);

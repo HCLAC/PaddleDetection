@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body" v-if="isFixed == false">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" background-color="transparent" style="z-index: 999999;">
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" background-color="transparent" style="z-index: 999999;">
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui-white.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy-white.svg" @click="home" />
@@ -10,9 +10,11 @@
 			</uni-nav-bar>
 		</view>
 		<view class="example-body" v-if="isFixed == true">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
 				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #ifndef  MP-BAIDU -->
+								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+							<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<view class="slottitle">领途羊</view>
@@ -144,7 +146,7 @@
 			},
 			home() {
 				uni.switchTab({
-					url: '/pages/index/index'
+					url: '/pagesA/index/index'
 				});
 			},
 			/*下拉刷新的回调, 有三种处理方式:*/
@@ -252,7 +254,7 @@
 	.fanhui {
 		width: 40rpx;
 		height: 40rpx;
-		margin-left: 40rpx;
+		margin-left: 42rpx;
 		margin-right: 20rpx;
 	}
 	
@@ -260,7 +262,11 @@
 		width: 40rpx;
 		height: 40rpx;
 	}
-	
+	/* #ifdef  MP-BAIDU*/
+	.fhsy {
+		margin-left: 100rpx;
+	}
+	/*  #endif  */
 	.slottitle {
 		margin-left: 162rpx;
 		font-size: 38rpx;

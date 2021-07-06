@@ -42,13 +42,7 @@
             "sdkConfigs" : {
                 "ad" : {},
                 "maps" : {},
-                "oauth" : {
-                    "weixin" : {
-                        "appid" : "",
-                        "appsecret" : "",
-                        "UniversalLinks" : ""
-                    }
-                }
+                "oauth" : {}
             }
         },
         "uniStatistics" : {
@@ -71,6 +65,9 @@
             "scope.userLocation" : {
                 "desc" : "用于小程序个性化服务及体验"
             }
+        },
+        "optimization" : {
+            "subPackages" : true
         }
     },
     "mp-baidu" : {
@@ -80,16 +77,22 @@
         },
         "uniStatistics" : {
             "enable" : true
-        }
+        },
+		"optimization" : {
+		    "subPackages" : true
+		}
     },
     "mp-toutiao" : {
         "setting" : {
-            "es6" : true,
+            "es6" : false,
             "minified" : true,
             "urlCheck" : false,
             "postcss" : true
         },
-        "appid" : "tt74ea0257ebd1c647"
+        "appid" : "tt74ea0257ebd1c647",
+		"optimization" : {
+		    "subPackages" : true
+		}
     },
     "uniStatistics" : {
         "enable" : true
@@ -97,6 +100,10 @@
     "h5" : {
         "uniStatistics" : {
             "enable" : true
+        },
+        "title" : "领途羊",
+        "router" : {
+            "mode" : "hash"
         }
     },
     "mp-alipay" : {

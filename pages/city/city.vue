@@ -2,8 +2,10 @@
 	<view class="">
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
-				<view slot="left" class="slotleft"><image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" /></view>
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
+				<view slot="left" class="slotleft"><!-- #ifndef  MP-BAIDU -->
+								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+							<!-- #endif --></view>
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
@@ -101,7 +103,7 @@ export default {
 		},
 		home() {
 			uni.switchTab({
-				url: '/pages/index/index'
+				url: '/pagesA/index/index'
 			});
 		},
 		getAdress() {
@@ -233,7 +235,7 @@ export default {
 .fanhui {
 	width: 40rpx;
 	height: 40rpx;
-	margin-left: 40rpx;
+	margin-left: 42rpx;
 	/* margin-right: 20rpx; */
 }
 
@@ -241,7 +243,11 @@ export default {
 	width: 40rpx;
 	height: 40rpx;
 }
-
+/* #ifdef  MP-BAIDU*/
+.fhsy {
+	margin-left: 100rpx;
+}
+/*  #endif  */
 .slottitle {
 	margin-left: 220rpx;
 	font-size: 38rpx;

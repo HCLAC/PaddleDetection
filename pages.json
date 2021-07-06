@@ -3,14 +3,15 @@
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 		
 	},
-
-
-	"pages": [{
-			"path": "pages/index/index",
+	"pages": [
+		
+		{
+			"path": "pagesA/index/index",
 			"style": {
 				"navigationStyle": "custom",
-				"backgroundColorBottom": "#FFFFFF",
+				"backgroundColorBottom": "#F8F8F8",
 				"backgroundColorTop": "#FFFFFF",
+				"backgroundColor":"#F8F8F8",
 				"disableScroll": true,
 				"app-plus": {
 					"bounce": "none" 
@@ -21,7 +22,58 @@
 			}
 		},
 		{
-			"path": "pages/attractionsRank/attractionsRank",
+			"path": "pagesA/mine/mine",
+			"style": {
+				"navigationStyle": "custom"
+		
+			}
+		},
+		{
+		    "path" : "pagesA/mineConcern/mineConcern",
+		    "style" : {
+				"navigationStyle": "custom",
+				"backgroundColor": "#fff"
+			}
+		},
+		{
+		    "path" : "pagesA/mineInfo/mineInfo",
+		    "style" : {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+		    "path" : "pagesA/mineAnswers/mineAnswers",
+		    "style" :                                                                                    
+		    {
+		        "navigationStyle": "custom"
+		    }
+		    
+		},
+		{
+		    "path" : "pagesA/login/login",
+		    "style" : {
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"backgroundColor":"#fff",
+				"navigationStyle": "custom",
+				"disableScroll":true
+			}
+		}
+        
+    ],
+	"subPackages": [{
+		"root":"pages",
+		"pages":[
+		{
+		    "path" : "questionsPage/questionsPage",
+		    "style" :                                                                                    
+		    {
+		        "navigationStyle": "custom"
+		    }
+		    
+		}
+		,
+		{
+			"path": "attractionsRank/attractionsRank",
 			"style": {
 				"navigationStyle": "custom",
 				"backgroundColor": "#000000"
@@ -29,130 +81,123 @@
 		},
 
 		{
-			"path": "pages/provinces/provinces",
+			"path": "provinces/provinces",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+				"backgroundColor":"#F8F8F8",
 				"app-plus": {
+					"bounce": "none" ,
+					"titleNView": {
+						"autoBackButton": false
+					}
+				},
+				"mp-weixin": {
+					"allowsBounceVertical": "NO",
 					"bounce": "none" 
 				},
-				"mp-alipay": {
-					"allowsBounceVertical": "NO"
-				} 
+				"mp-baidu": {
+					"allowsBounceVertical": "NO",
+					"bounce": "none" 
+				},
+				"mp-toutiao": {
+					"allowsBounceVertical": "NO",
+					"bounce": "none" 
+				}
 			}
 		},
-
-
-
+		
 		{
-		    "path" : "pages/login/login",
+		    "path" : "questions/questions",
 		    "style" : {
-				"navigationBarBackgroundColor":"#FFFFFF",
-				"backgroundColor":"#fff",
-				"navigationStyle": "custom",
-				"disableScroll":true
-			}
+		    	"navigationStyle": "custom"
+				
+		    }
 		},
 
 		{
-			"path": "pages/city/city",
+			"path": "city/city",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
 		{
-			"path": "pages/contentdetail/contentdetail",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
-
-		{
-			"path": "pages/attractionsList/attractionsList",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
-
-
-		{
-			"path": "pages/mine/mine",
-			"style": {
-				"navigationStyle": "custom"
-
-			}
-		},
-
-		{
-			"path": "pages/searchResults/searchResults",
+			"path": "contentdetail/contentdetail",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
 
 		{
-			"path": "pages/search/search",
+			"path": "attractionsList/attractionsList",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+
+
+		
+
+		{
+			"path": "searchResults/searchResults",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+
+		{
+			"path": "search/search",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
 		{
-			"path": "pages/positionContent/positionContent",
+			"path": "positionContent/positionContent",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		}, 
 		{
-			"path": "pages/lineList/lineList",
+			"path": "lineList/lineList",
 			"style": {
 				"navigationStyle": "custom",
 				"backgroundColor": "#fff"
 			}
 		}, 
 		{
-			"path": "pages/lineDetail/lineDetail",
+			"path": "lineDetail/lineDetail",
 			"style": {
 				"navigationStyle": "custom",
 				"backgroundColor": "#fff"
 			}
 		}, 
 		{
-			"path": "pages/webview/webview",
+			"path": "webview/webview",
 			"style": {}
 		},
+		
 		{
-            "path" : "pages/mineConcern/mineConcern",
-            "style" : {
-				"navigationStyle": "custom",
-				"backgroundColor": "#fff"
-			}
-        },
-		{
-            "path" : "pages/bloggers/bloggers",
+            "path" : "bloggers/bloggers",
             "style" : {
 				"navigationStyle": "custom"
 			}
         },
 		{
-            "path" : "pages/topic/topic",
+            "path" : "topic/topic",
             "style" : {
             	"navigationStyle": "custom"
+				
             }
         },
 		{
-            "path" : "pages/topicList/topicList",
+            "path" : "topicList/topicList",
             "style" : {
-            	"navigationStyle": "custom"
+            	"navigationStyle": "custom",
+				"backgroundColor":"#F8F8F8"
             }
         }
+       
         ,{
-            "path" : "pages/mineInfo/mineInfo",
-            "style" : {
-				"navigationStyle": "custom"
-			}
-        }
-        ,{
-            "path" : "pages/hotSearchRank/hotSearchRank",
+            "path" : "hotSearchRank/hotSearchRank",
             "style" :                                                                                    
             {
 				"navigationStyle": "custom",
@@ -167,7 +212,7 @@
             
         }
         ,{
-            "path" : "pages/comments/comments",
+            "path" : "comments/comments",
             "style" :                                                                                    
             {
 				"navigationStyle": "custom"
@@ -175,7 +220,7 @@
             
         }
 		,{
-		    "path" : "pages/report/report",
+		    "path" : "report/report",
 		    "style" :                                                                                    
 		    {
 				"navigationStyle": "custom"
@@ -183,32 +228,65 @@
 		    
 		}
         ,{
-            "path" : "pages/cropper-default-old/cropper-default-old",
+            "path" : "cropper-default-old/cropper-default-old",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
             
         }
-    ],
+        
+        ,{
+            "path" : "questionsDetail/questionsDetail",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom"
+            }
+            
+        }
+        ,{
+            "path" : "answersList/answersList",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom"
+            }
+            
+        }
+        ,{
+            "path" : "moreQuestions/moreQuestions",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom"
+            }
+            
+        }
+        ,{
+            "path" : "questionsComplete/questionsComplete",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom"
+            }
+            
+        }]
+	}],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",
 		"navigationBarTextStyle": "black",
-		"backgroundColorTop": "#FFFFFF"
+		"backgroundColorTop": "#FFFFFF",
+		"navigationStyle":"custom"
 	},
 	"tabBar": {
 		"list": [{
-				"pagePath": "pages/index/index",
+				"pagePath": "pagesA/index/index",
 				"text": "首页",
 				"iconPath": "/static/images/index.png",
-				"selectedIconPath": "/static/images/index-active.png"
+				"selectedIconPath": "/static/images/index_active.png"
 			},
 			{
-				"pagePath": "pages/mine/mine",
+				"pagePath": "pagesA/mine/mine",
 				"text": "我的",
 				"iconPath": "/static/images/mine.png",
-				"selectedIconPath": "/static/images/mine-active.png"
+				"selectedIconPath": "/static/images/mine_active.png"
 			}
 		],
 		"backgroundColor": "#ffffff",

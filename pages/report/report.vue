@@ -2,9 +2,11 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body"  >
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" :border="true" >
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" :border="true" >
 				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #ifndef  MP-BAIDU -->
+								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+							<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<view class="slottitle">举报</view>
@@ -166,7 +168,7 @@
 			// 保存
 			submit() {
 				let introLength = this.modelIntro.length
-				if (introLength > 0) {
+				if (introLength >= 5) {
 					// console.log('验证通过'); 
 					uni.request({
 						url: this.globalUrl + '/comments/report',
@@ -180,6 +182,14 @@
 							Authorization: uni.getStorageSync('Authorization')
 						},
 						success: res => {
+							if(this.model.payType == ''){
+								uni.showToast({
+									title: '请选择一种举报类型',
+									icon:'none',
+									duration: 2000
+								})
+								return
+							}
 							console.log('举报信息',res)
 							// uni.showToast({
 							// 	title: '举报成功',
@@ -201,7 +211,6 @@
 				}
 			},
 			confirm(){
-				console.log('1111111111111')
 				uni.navigateBack({
 					delta: 1
 				});
@@ -220,7 +229,7 @@
 			// 返回首页
 			home() {
 				uni.switchTab({
-					url: '/pages/index/index'
+					url: '/pagesA/index/index'
 				});
 			},
 		}
@@ -262,7 +271,7 @@
 .fanhui {
 	width: 40rpx;
 	height: 40rpx;
-	margin-left: 40rpx;
+	margin-left: 42rpx;
 	margin-right: 20rpx;
 }
 
@@ -270,7 +279,11 @@
 	width: 40rpx;
 	height: 40rpx;
 }
-
+/* #ifdef  MP-BAIDU*/
+.fhsy {
+	margin-left: 100rpx;
+}
+/*  #endif  */
 .slottitle {
 	margin-left: 186rpx;
 	font-size: 38rpx;

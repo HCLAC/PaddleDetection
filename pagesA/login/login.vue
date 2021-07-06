@@ -2,9 +2,14 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
 				<view slot="left" class="slotleft">
+					<!-- #ifndef MP-BAIDU -->
+					<image  class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->
+					<!-- #ifndef MP-BAIDU -->
 					<image v-if="ismine == true" class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
@@ -53,7 +58,6 @@
 					</view>
 					<u-line color="rgba(237, 239, 242, 1)" margin="40rpx 0rpx"></u-line>
 				</view>
-
 				<!-- 登录按钮 -->
 				<view class="loginButton"><button class="lb" :disabled="disabled" :style="{ background: styleBtn.background }" @tap="doLogin">登录</button></view>
 				<view class="loginButton">
@@ -193,7 +197,7 @@ export default {
 		},
 		getCode() {
 			let _this = this;
-			uni.hideKeyboard();
+			// uni.hideKeyboard();
 			if (_this.getCodeisWaiting) {
 				return;
 			}
@@ -260,15 +264,16 @@ export default {
 				}
 			});
 		},
+		//一键登录
 		getPhone(res) {
 			uni.checkSession({
 				success: suc => {
+					console.log(suc,'suc')
 					if (suc.errMsg != 'checkSession:ok') {
-					
-						uni.login({
+						uni.getLoginCode({
 							provider: this.serviceProvider,
-						
 							success: result => {
+								console.log('result',result)
 								if (result.code) {
 									this.codeObj = result.code;
 								} else {
@@ -279,7 +284,6 @@ export default {
 									return;
 								}
 							},
-						
 							fail: error => {
 								uni.showToast({
 									title: error.errMsg,
@@ -288,7 +292,6 @@ export default {
 							}
 						});
 					}
-	
 				},
 				fail: err => {
 					uni.showToast({
@@ -314,7 +317,8 @@ export default {
 		},
 
 		baiduLogin(obj) {
-			uni.hideKeyboard();
+			// uni.hideKeyboard();
+			console.log(obj.code,'code')
 			uni.request({
 				url: this.globalUrl + '/user/oauth/code2session',
 				// url: 'http://192.168.110.189:4000',
@@ -385,7 +389,7 @@ export default {
 		},
 		doLogin() {
 			let _this = this;
-			uni.hideKeyboard();
+			// uni.hideKeyboard();
 			//模板示例部分验证规则
 			if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phone)) {
 				uni.showToast({ title: '请填写正确手机号码', icon: 'none' });
@@ -407,7 +411,7 @@ export default {
 				// 	'Content-Type': 'application/x-www-form-urlencoded',
 				// },
 				success: res => {
-					console.log(res);
+					console.log(res,'手机号登录');
 					if (res.data.code == 0) {
 						// _this.login(true, res.data.data, function() {
 						// _this.getRongyToken();
@@ -454,7 +458,7 @@ export default {
 		// 返回首页
 		home() {
 			uni.switchTab({
-				url: '/pages/index/index'
+				url: '/pagesA/index/index'
 			});
 		}
 	}
@@ -492,18 +496,34 @@ export default {
 	align-items: center;
 }
 
+
+/* #ifndef  MP-BAIDU*/
 .fanhui {
 	width: 40rpx;
 	height: 40rpx;
-	margin-left: 40rpx;
+	margin-left: 42rpx;
 }
-
+/*  #endif  */
+/* #ifdef  MP-BAIDU*/
+.fanhui {
+	width: 40rpx;
+	height: 40rpx;
+}
+/*  #endif  */
+/* #ifndef  MP-BAIDU*/
 .fhsy {
 	width: 40rpx;
 	height: 40rpx;
 	margin-left: 20rpx;
 }
-
+/*  #endif  */
+/* #ifdef  MP-BAIDU*/
+.fhsy {
+	width: 40rpx;
+	height: 40rpx;
+	margin-left: 100rpx;
+}
+/*  #endif  */
 .button-v-line {
 	width: 1px;
 	height: 18px;

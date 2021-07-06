@@ -5,11 +5,10 @@
 			    name="checkbox-mark"
 			    :size="elIconSize" 
 				:color="iconColor"/> -->
-			<!-- <view class="u-radio__label" @tap="onClickLabel" :style="{
+			<view class="u-radio__label" @tap="onClickLabel" :style="{
 				fontSize: $u.addUnit(labelSize),
 				color:$u.addUnit(labelColor)
-			}" > -->
-			<view class="u-radio__label" @tap="onClickLabel" :style="labelColor" >
+			}" >
 				<slot />
 			</view>
 		</view>
@@ -69,18 +68,15 @@
 			labelSize: {
 				type: [String, Number],
 				default: ''
-			}
-			// labelColor: {
-			// 	type: String,
-			// 	default: '#909399'
-			// },
+			},
+			labelColor: {
+				type: String,
+				default: '#909399'
+			},
 		},
 		data() {
 			return {
-				parentDisabled: false,
-				labelColor:{
-					color:'#909399'
-				}
+				parentDisabled: false
 			};
 		},
 		created() {
@@ -108,7 +104,6 @@
 			// 组件选中激活时的颜色
 			elActiveColor() {
 				return this.activeColor ? this.activeColor : (this.parent ? this.parent.activeColor : 'primary');
-				
 			},
 			// 组件的形状
 			elShape() {
@@ -120,10 +115,7 @@
 				if (this.elActiveColor && this.name == this.parent.value && !this.elDisabled) {
 					style.borderColor = this.elActiveColor;
 					style.backgroundColor = this.elActiveColor;
-					this.labelColor.color = '#303133' 
 					
-				}else{
-					this.labelColor.color = '#909399'
 				}
 				// style.width = this.$u.addUnit(this.elSize);
 				// style.height = this.$u.addUnit(this.elSize);
@@ -177,7 +169,7 @@
 			toggle() {
 				if (!this.elDisabled) {
 					this.parent.setValue(this.name);
-					
+					this.labelColor = '#303133'
 					this.emitEvent();
 				}
 			},

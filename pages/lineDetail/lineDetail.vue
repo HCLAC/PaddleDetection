@@ -1,9 +1,11 @@
 <template>
 	<view id="bigBox">
 		<view class="example-body" >
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" style="z-index: 99999 !important;">
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" style="z-index: 99999 !important;">
 				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #ifndef  MP-BAIDU -->
+								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+							<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<view class="slottitle">领途羊</view>
@@ -379,7 +381,7 @@ export default {
 					icon: 'none'
 				});
 				uni.navigateTo({
-					url: '/pages/login/login'
+					url: '/pagesA/login/login'
 				});
 			} else {
 				uni.request({
@@ -453,7 +455,7 @@ export default {
 		},
 		login() {
 			uni.navigateTo({
-				url: '/pages/login/login'
+				url: '/pagesA/login/login'
 			});
 		},
 		tell(){
@@ -469,7 +471,7 @@ export default {
 		},
 		home() {
 			uni.switchTab({
-				url: '/pages/index/index'
+				url: '/pagesA/index/index'
 			});
 		},
 		share() {
@@ -510,13 +512,18 @@ export default {
 .fanhui {
 	width: 40rpx;
 	height: 40rpx;
-	margin-left: 40rpx;
+	margin-left: 42rpx;
 	margin-right: 20rpx;
 }
 .fhsy {
 	width: 40rpx;
 	height: 40rpx;
 }
+/* #ifdef  MP-BAIDU*/
+.fhsy {
+	margin-left: 100rpx;
+}
+/*  #endif  */
 .slottitle {
 	margin-left: 162rpx;
 	font-size: 38rpx;

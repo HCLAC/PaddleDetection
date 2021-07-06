@@ -14,7 +14,8 @@
 					    class="u-title u-line-1"
 					    :style="{
 							color: titleColor,
-							fontSize: titleSize + 'rpx'
+							fontSize: titleSize + 'rpx',
+							fontWeight: titleBold ? 'bold' : 'normal'
 						}">
 						{{ title }}
 					</view>
@@ -115,6 +116,11 @@
 				type: String,
 				default: '#606266'
 			},
+			// 标题字体是否加粗
+			titleBold: {
+				type: Boolean,
+				default: false
+			},
 			// 标题的字体大小
 			titleSize: {
 				type: [String, Number],
@@ -129,7 +135,7 @@
 				type: Object,
 				default () {
 					return {
-						background: '',
+						background: '#ffffff'
 					}
 				}
 			},
@@ -146,7 +152,7 @@
 			// 是否显示导航栏的下边框
 			borderBottom: {
 				type: Boolean,
-				default: false
+				default: true
 			},
 			zIndex: {
 				type: [String, Number],
@@ -164,7 +170,6 @@
 				statusBarHeight: systemInfo.statusBarHeight
 			};
 		},
-		
 		computed: {
 			// 导航栏内部盒子的样式
 			navbarInnerStyle() {
@@ -186,7 +191,6 @@
 				Object.assign(style, this.background);
 				return style;
 			},
-			
 			// 导航中间的标题的样式
 			titleStyle() {
 				let style = {};
@@ -213,7 +217,7 @@
 				// 小程序特别处理，让导航栏高度 = 胶囊高度 + 两倍胶囊顶部与状态栏底部的距离之差(相当于同时获得了导航栏底部与胶囊底部的距离)
 				// 此方法有缺陷，暂不用(会导致少了几个px)，采用直接固定值的方式
 				// return menuButtonInfo.height + (menuButtonInfo.top - this.statusBarHeight) * 2;//导航高度
-				let height = systemInfo.platform == 'ios' ? 44 : 44;
+				let height = systemInfo.platform == 'ios' ? 44 : 48;
 				return this.height ? this.height : height;
 				// #endif
 			}
@@ -230,8 +234,6 @@
 					uni.navigateBack();
 				}
 			}
-			
-			
 		}
 	};
 </script>
@@ -256,14 +258,14 @@
 	}
 
 	.u-navbar-inner {
-		display: flex;
+		@include vue-flex;
 		justify-content: space-between;
 		position: relative;
 		align-items: center;
 	}
 
 	.u-back-wrap {
-		display: flex;
+		@include vue-flex;
 		align-items: center;
 		flex: 1;
 		flex-grow: 0;
@@ -276,7 +278,7 @@
 	}
 
 	.u-navbar-content-title {
-		display: flex;
+		@include vue-flex;
 		align-items: center;
 		justify-content: center;
 		flex: 1;
@@ -300,14 +302,14 @@
 
 	.u-navbar-right {
 		flex: 1;
-		display: flex;
+		@include vue-flex;
 		align-items: center;
 		justify-content: flex-end;
 	}
 
 	.u-slot-content {
 		flex: 1;
-		display: flex;
+		@include vue-flex;
 		align-items: center;
 	}
 </style>

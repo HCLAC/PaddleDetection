@@ -2,9 +2,11 @@
 	<view> 
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #ifndef  MP-BAIDU -->
+								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+							<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<view class="slottitle">领途羊</view>
@@ -19,7 +21,7 @@
 					<view class="page-section-spacing" >
 						<swiper @change="change" :autoplay="true" class="swiper"  :indicator-dots="false">
 							<swiper-item v-for="item in attDetail.data.images" :key="item.id" class="swiper-item" > 
-								<image :src="item" id="itemImg" class="itemImg" mode="scaleToFill" ></image>
+								<image :src="item" id="itemImg" class="itemImg" mode="aspectFit" ></image>
 							</swiper-item>
 						</swiper>
 						<view class="imageCount">{{ current + 1 }}/{{ attDetail.data.images.length }}</view>
@@ -95,35 +97,35 @@
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-if="attDetail.data.rate == 4.5">
+					<view class="rateStart" v-if="attDetail.data.rate >= 4.1 && attDetail.data.rate < 5">
 						<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 						<image src="../../static/images/star_svg/starCopy13.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-if="attDetail.data.rate == 3.5">
+					<view class="rateStart" v-if="attDetail.data.rate >= 3.1 && attDetail.data.rate < 4">
 						<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 						<image src="../../static/images/star_svg/starCopy12.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-if="attDetail.data.rate == 2.5">
+					<view class="rateStart" v-if="attDetail.data.rate >= 2.1 && attDetail.data.rate < 3">
 						<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 						<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-if="attDetail.data.rate == 1.5">
+					<view class="rateStart" v-if="attDetail.data.rate >= 1.1 && attDetail.data.rate < 2">
 						<image src="../../static/images/star_svg/star11.svg" mode=""></image>
 						<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-if="attDetail.data.rate == 0.5">
+					<view class="rateStart" v-if="attDetail.data.rate >= 0.1 && attDetail.data.rate < 1">
 						<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
@@ -135,9 +137,9 @@
 					<view class="goTo">{{attDetail.data.visited}}人去过</view>
 				</view>
 				<view class="contentText">
-					<text :class="isShow ? 'loseText' : 'moreText'" id="moreText">
+					<view :class="isShow ? 'loseText' : 'moreText'" id="moreText">
 						简介：{{attDetail.data.description}}
-					</text>
+					</view>
 					<view class="btnBox" @click="showMore" v-if="!isShow && more">
 						<text>收起</text>
 						<image class="iconImg" src="../../static/images/zhankaiIcon.png" mode=""></image>
@@ -174,7 +176,7 @@
 				</view>
 			</view>
 			<view class="magrinBck" v-show="attDetail.data.articles"></view>
-			<view class="gonglueBox" v-show="attDetail.data.articles">
+			<view class="gonglueBox" v-if="attDetail.data.articles.length != 0 && attDetail.data.articles != null">
 				<view class="title">热门攻略</view>
 				<view class="contentBox">
 					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[0].article_id" v-show="attDetail.data.articles[0]">
@@ -352,7 +354,7 @@ export default {
 		},
 		home() {
 			uni.switchTab({
-				url: '/pages/index/index'
+				url: '/pagesA/index/index'
 			});
 		},
 		likeclick() {
@@ -414,13 +416,18 @@ export default {
 	.fanhui{
 		width: 40rpx;
 		height: 40rpx;
-		margin-left: 40rpx;
+		margin-left: 42rpx;
 		margin-right: 20rpx;
 	}
 	.fhsy{
 		width: 40rpx;
 		height: 40rpx;
 	}
+	/* #ifdef  MP-BAIDU*/
+	.fhsy {
+		margin-left: 100rpx;
+	}
+	/*  #endif  */
 	.slottitle{
 		margin-left: 162rpx;
 		font-size: 38rpx;
@@ -559,6 +566,10 @@ export default {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		position: fixed;
+		top: 685rpx;
+		right: 40rpx;
+		z-index: 11111;
 	}
 	.shareBox image {
 		height: 34rpx;
@@ -567,8 +578,10 @@ export default {
 	.tips {
 		margin-top: 16rpx;
 		display: flex;
+		flex-wrap: wrap;
 		.tip {
 			margin-right: 8rpx;
+			margin-top: 4rpx;
 			padding: 2rpx 8rpx;
 			border-radius: 4rpx;
 			border: 2rpx solid rgba(144, 147, 153, 1);
@@ -579,6 +592,7 @@ export default {
 		}
 		.tipHot {
 			margin-right: 8rpx;
+			margin-top: 4rpx;
 			padding: 2rpx 8rpx;
 			border-radius: 4rpx;
 			background: rgba(113, 200, 23, 1);
@@ -586,7 +600,7 @@ export default {
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			color: #fff;
-			height: 36rpx;
+			// height: 36rpx;
 			display: flex;
 			align-items: center;
 		}
@@ -629,6 +643,8 @@ export default {
 			font-weight: 400;
 			color: rgba(144, 147, 153, 1);
 			line-height: 42rpx;
+			text-align:justify;
+			text-justify:inter-ideograph;
 			// position: relative;
 		}
 		.loseText {
@@ -637,11 +653,14 @@ export default {
 			font-weight: 400;
 			color: rgba(144, 147, 153, 1);
 			line-height: 42rpx;
+			
 			display: -webkit-box;
 			-webkit-box-orient: vertical;
 			// text-overflow: ellipsis;
 			overflow: hidden;
 			-webkit-line-clamp: 2;
+			text-align:justify;
+			text-justify:inter-ideograph;
 			
 		}
 		.btnBox {

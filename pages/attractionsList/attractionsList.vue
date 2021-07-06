@@ -2,9 +2,11 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar fixed="true" :status-bar="true" class="navbar" >
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #ifndef  MP-BAIDU -->
+								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+							<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<view class="slottitle">热门景点</view>
@@ -149,7 +151,7 @@
 			},
 			home(){
 				uni.switchTab({
-					url:"/pages/index/index"
+					url:"/pagesA/index/index"
 				})
 			},
 			toAttractionsDetails(e){
@@ -191,13 +193,18 @@
 	.fanhui{
 		width: 40rpx;
 		height: 40rpx;
-		margin-left: 40rpx;
+		margin-left: 42rpx;
 		margin-right: 20rpx;
 	}
 	.fhsy{
 		width: 40rpx;
 		height: 40rpx;
 	}
+	/* #ifdef  MP-BAIDU*/
+	.fhsy {
+		margin-left: 100rpx;
+	}
+	/*  #endif  */
 	.slottitle{
 		margin-left: 162rpx;
 		font-size: 38rpx;
