@@ -19,7 +19,7 @@
 			<view class="uni-padding-wrap">
 				<view class="page-section" >
 					<view class="page-section-spacing" >
-						<swiper @change="change" :autoplay="true" class="swiper"  :indicator-dots="false">
+						<swiper @change="change" :autoplay="true" class="swiper"  :indicator-dots="false" circular='true'>
 							<swiper-item v-for="item in attDetail.data.images" :key="item.id" class="swiper-item" > 
 								<image :src="item" id="itemImg" class="itemImg" mode="aspectFit" ></image>
 							</swiper-item>
