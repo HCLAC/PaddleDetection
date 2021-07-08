@@ -128,12 +128,12 @@ export default {
 				}
 			},
 
-			fail: error => {
-				uni.showToast({
-					title: error.errMsg,
-					icon: 'none'
-				});
-			}
+			// fail: error => {
+			// 	uni.showToast({
+			// 		title: error.errMsg,
+			// 		icon: 'none'
+			// 	});
+			// }
 		});
 		uni.getProvider({
 			service: 'oauth',
