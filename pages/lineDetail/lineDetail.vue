@@ -16,7 +16,7 @@
 			<view class="uni-padding-wrap">
 				<view class="page-section" >
 					<view class="page-section-spacing" >
-						<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
+						<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false" circular='true'>
 							<swiper-item v-for="(item, index) in lineContent.images" :key="index">
 								<image class="itemImg" mode="scaleToFill" :src="item"></image>
 							</swiper-item>

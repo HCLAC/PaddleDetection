@@ -16,9 +16,9 @@
 		<view class="" v-if="swiperHeight && article.data.type != 2">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap" >
-				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="article.data.type != 4 && article.data.type != 5 ">
-					<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
-						<swiper-item v-for="(item, index) in article.data.images" :key="index">
+				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="articleList.data.type != 4 && articleList.data.type != 5 ">
+					<swiper @change="change" class="swiper" :autoplay="true" circular='true' :indicator-dots="false">
+						<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
 							<image class="itemImg" :style="{ width: index == 0 ? '100%' : '' }" :mode="index == 0 ? 'widthFix' : 'aspectFit'"
 							 :src="item"></image>
 						</swiper-item>
