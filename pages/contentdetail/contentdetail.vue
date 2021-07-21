@@ -2,7 +2,7 @@
 	<view>
 		
 		<!-- 游记文章 -->
-		<view class="example-body" v-if="articleList.data.type != 2">
+		<view class="example-body" v-if="article.data.type != 2">
 			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -13,64 +13,64 @@
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
-		<view class="" v-if="swiperHeight && articleList.data.type != 2">
+		<view class="" v-if="swiperHeight && article.data.type != 2">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap" >
-				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="articleList.data.type != 4 && articleList.data.type != 5 ">
+				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="article.data.type != 4 && article.data.type != 5 ">
 					<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false">
-						<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
+						<swiper-item v-for="(item, index) in article.data.images" :key="index">
 							<image class="itemImg" :style="{ width: index == 0 ? '100%' : '' }" :mode="index == 0 ? 'widthFix' : 'aspectFit'"
 							 :src="item"></image>
 						</swiper-item>
 					</swiper>
-					<view class="imageCount">{{ current + 1 }}/{{ articleList.data.images.length }}</view>
+					<view class="imageCount">{{ current + 1 }}/{{ article.data.images.length }}</view>
 					<view class="dots">
-						<block v-for="(item, index) in articleList.data.images" :key="index">
+						<block v-for="(item, index) in article.data.images" :key="index">
 							<view :class="[index == current ? 'activieDot' : 'dot']"></view>
 						</block>
 					</view>
 				</view>
-				<view class="page-section-spacing" width="100%" v-if="articleList.data.type == 4">
-					<video class="videobox" :style="{ height: swiperHeight }" :src="articleList.data.images[1]" object-fit="contain"
-					 :poster="articleList.data.images[0]" controls></video>
+				<view class="page-section-spacing" width="100%" v-if="article.data.type == 4">
+					<video class="videobox" :style="{ height: swiperHeight }" :src="article.data.images[1]" object-fit="contain"
+					 :poster="article.data.images[0]" controls></video>
 				</view>
 			</view>
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<view class="userMse">
-					<image class="userHeard" :src="articleList.data.avatar" @click="tobloggers(articleList.data.author_id)"></image>
+					<image class="userHeard" :src="article.data.avatar" @click="tobloggers(article.data.author_id)"></image>
 					<view class="userMse-r">
-						<view class="userNikename">{{ articleList.data.author_name }}</view>
+						<view class="userNikename">{{ article.data.author_name }}</view>
 					</view>
-					<view class="followBox" @click="follow()" v-if="!articleList.data.is_follow">
+					<view class="followBox" @click="follow()" v-if="!article.data.is_follow">
 						<image class="followImg" src="../../static/images/followIcon.svg" mode=""></image>
 						关注
 					</view>
-					<view class="isfollowBox" @click="follow()" v-if="articleList.data.is_follow">已关注</view>
+					<view class="isfollowBox" @click="follow()" v-if="article.data.is_follow">已关注</view>
 				</view>
 				<!-- 弹窗 -->
 				<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 				<!-- 地址 -->
 				<view class="adress">
 					<image src="../../static/images/iconMap.svg" mode="" class="adreessIcon"></image>
-					<view class="adressText" @click="map()">{{ articleList.data.location }}</view>
+					<view class="adressText" @click="map()">{{ article.data.location }}</view>
 				</view>
 				<!-- 标题 -->
-				<view class="contentTitle">{{ articleList.data.title }}</view>
+				<view class="contentTitle">{{ article.data.title }}</view>
 				<!-- 内容文章 -->
 				<view class="contentText">
-					<!-- <rich-text :nodes="articleList.data.content | formatRichText"></rich-text> -->
-					<u-parse ref="parse" v-if="articleList" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linkpress="templateAdd"
-					 :html="articleList.data.content | formatRichText"></u-parse>
+					<!-- <rich-text :nodes="article.data.content | formatRichText"></rich-text> -->
+					<mp-html ref="parse" v-if="article" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
+					 :content="article.data.content | formatRichText"></mp-html>
 				</view>
 				<view class="tips">
-					<view v-for="item in articleList.data.topics" :key="item.id" @click="toTopic(item.id)">
+					<view v-for="item in article.data.topics" :key="item.id" @click="toTopic(item.id)">
 						<image class="tipsIcon" src="../../static/images/topicIcon.svg" mode=""></image>
 						<text>{{ item.name }}</text>
 					</view>
 					<!-- <view>#<text></text></view> -->
 				</view>
-				<view class="releaseTime">发布于{{ articleList.data.update_at }}</view>
+				<view class="releaseTime">发布于{{ article.data.update_at }}</view>
 				<view class="replyLine"></view>
 				<view class="replyBox">
 
@@ -155,14 +155,14 @@
 				<view class="contentBottom savepadding">
 					<view style="display: flex;">
 						<view class="like" @click="clickLike">
-							<image class="likeBtn" src="../../static/images/attheart.svg" v-if="articleList.data.liked == 0"></image>
-							<image class="likeBtn" src="../../static/images/attHeartActive.svg" v-if="articleList.data.liked == 1"></image>
-							<view class="likeNum" v-model="likemessage" v-if="articleList.data.like_count != 0">{{ articleList.data.like_count }}</view>
+							<image class="likeBtn" src="../../static/images/attheart.svg" v-if="article.data.liked == 0"></image>
+							<image class="likeBtn" src="../../static/images/attHeartActive.svg" v-if="article.data.liked == 1"></image>
+							<view class="likeNum" v-model="likemessage" v-if="article.data.like_count != 0">{{ article.data.like_count }}</view>
 						</view>
 						<view class="fav" @click="clickFav">
-							<image class="favBtn" src="../../static/images/attFav.svg" v-if="articleList.data.fav == 0"></image>
-							<image class="favBtn" src="../../static/images/attFavA.svg" v-if="articleList.data.fav == 1"></image>
-							<view class="favNum" v-if="articleList.data.fav_count != 0">{{ articleList.data.fav_count }}</view>
+							<image class="favBtn" src="../../static/images/attFav.svg" v-if="article.data.fav == 0"></image>
+							<image class="favBtn" src="../../static/images/attFavA.svg" v-if="article.data.fav == 1"></image>
+							<view class="favNum" v-if="article.data.fav_count != 0">{{ article.data.fav_count }}</view>
 						</view>
 						<view class="replyIcon" @click="commentInput">
 							<image src="../../static/images/replyIcon.svg" mode=""></image>
@@ -179,7 +179,7 @@
 			</view>
 		</view>
 		<!-- 攻略文章 -->
-		<view class="example-body " v-if="articleList.data.type == 2">
+		<view class="example-body " v-if="article.data.type == 2">
 			<uni-nav-bar :fixed="true" :status-bar="true" :shadow="true" class="navbar ">
 				<view slot="left" class="slotleft">
 					<i<!-- #ifndef  MP-BAIDU -->
@@ -189,26 +189,26 @@
 				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
-		<view class="" v-if="articleList && articleList.data.type == 2">
+		<view class="" v-if="article && article.data.type == 2">
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<!-- 标题 -->
-				<view class="contentTitle-strategy">{{ articleList.data.title }}</view>
+				<view class="contentTitle-strategy">{{ article.data.title }}</view>
 				<view class="StrategyTip">
 					<image class="StrategyImg" src="../../static/images/Strategy.svg" mode=""></image>
 				</view>
 				<!-- 作者信息 -->
 				<view class="userMse-strategy">
-					<image class="userHeard" :src="articleList.data.avatar" @click="tobloggers(articleList.data.author_id)"></image>
+					<image class="userHeard" :src="article.data.avatar" @click="tobloggers(article.data.author_id)"></image>
 					<view class="userMse-r">
-						<view class="userNikename-strategy">{{ articleList.data.author_name }}</view>
-						<view class="releaseTime-strategy">发布于{{ articleList.data.update_at.slice(0,10) }}</view>
+						<view class="userNikename-strategy">{{ article.data.author_name }}</view>
+						<view class="releaseTime-strategy">发布于{{ article.data.update_at.slice(0,10) }}</view>
 					</view>
-					<view class="followBox" @click="follow()" v-if="!articleList.data.is_follow">
+					<view class="followBox" @click="follow()" v-if="!article.data.is_follow">
 						<image class="followImg" src="../../static/images/followIcon.svg" mode=""></image>
 						关注
 					</view>
-					<view class="isfollowBox" @click="follow()" v-if="articleList.data.is_follow">已关注</view>
+					<view class="isfollowBox" @click="follow()" v-if="article.data.is_follow">已关注</view>
 				</view>
 				<!-- 弹窗 -->
 				<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
@@ -216,19 +216,19 @@
 				
 				<!-- 内容文章 -->
 				<view class="contentText-strategy">
-					<!-- <rich-text :nodes="articleList.data.content | formatRichText"></rich-text> -->
-					<u-parse ref="parse" v-if="articleList" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linkpress="templateAdd"
-					 :html="articleList.data.content | formatRichText"></u-parse>
+					<!-- <rich-text :nodes="article.data.content | formatRichText"></rich-text> -->
+					<mp-html ref="parse" v-if="article" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
+					 :content="article.data.content | formatRichText"></mp-html>
 				</view>
 				<!-- 地址 -->
 				<view class="adress-strategy">
 					<image src="../../static/images/iconMap.svg" mode="" class="adreessIcon"></image>
-					<view class="adressText" @click="map()">{{ articleList.data.location }}</view>
+					<view class="adressText" @click="map()">{{ article.data.location }}</view>
 				</view>
 				<view class="strategyLine"></view>
 				<!-- 话题 -->
 				<view class="tipsStrategy">
-					<view v-for="item in articleList.data.topics" :key="item.id" @click="toTopic(item.id)">
+					<view v-for="item in article.data.topics" :key="item.id" @click="toTopic(item.id)">
 						<image class="tipsIcon" src="../../static/images/topicIcon.svg" mode=""></image>
 						<text>{{ item.name }}</text>
 					</view>
@@ -319,14 +319,14 @@
 				<view class="contentBottom savepadding">
 					<view style="display: flex;">
 						<view class="like" @click="clickLike">
-							<image class="likeBtn" src="../../static/images/attheart.svg" v-if="articleList.data.liked == 0"></image>
-							<image class="likeBtn" src="../../static/images/attHeartActive.svg" v-if="articleList.data.liked == 1"></image>
-							<view class="likeNum" v-model="likemessage" v-if="articleList.data.like_count != 0">{{ articleList.data.like_count }}</view>
+							<image class="likeBtn" src="../../static/images/attheart.svg" v-if="article.data.liked == 0"></image>
+							<image class="likeBtn" src="../../static/images/attHeartActive.svg" v-if="article.data.liked == 1"></image>
+							<view class="likeNum" v-model="likemessage" v-if="article.data.like_count != 0">{{ article.data.like_count }}</view>
 						</view>
 						<view class="fav" @click="clickFav">
-							<image class="favBtn" src="../../static/images/attFav.svg" v-if="articleList.data.fav == 0"></image>
-							<image class="favBtn" src="../../static/images/attFavA.svg" v-if="articleList.data.fav == 1"></image>
-							<view class="favNum" v-if="articleList.data.fav_count != 0">{{ articleList.data.fav_count }}</view>
+							<image class="favBtn" src="../../static/images/attFav.svg" v-if="article.data.fav == 0"></image>
+							<image class="favBtn" src="../../static/images/attFavA.svg" v-if="article.data.fav == 1"></image>
+							<view class="favNum" v-if="article.data.fav_count != 0">{{ article.data.fav_count }}</view>
 						</view>
 						<view class="replyIcon" @click="commentInput">
 							<image src="../../static/images/replyIcon.svg" mode=""></image>
@@ -362,10 +362,9 @@
 				current: 0,
 				list: [],
 				VX: 17827277778,
-				articleList: null,
+				article: null,
 				token: '',
 				article_id: '',
-				article_num: null,
 				flag: true,
 				wechat_id: null,
 				swiperHeight: '',
@@ -399,7 +398,7 @@
 				success: () => {
 					this.flag = uni.getStorageSync('Authorization') ? false : true;
 					console.log(this.flag);
-					this.article_num = currentPage.options.article_id;
+					this.article_id = currentPage.options.article_id;
 					this.getArticleDetail(currentPage.options);
 					this.getComments(currentPage.options);
 					this.getUserInfo()
@@ -407,7 +406,7 @@
 			});
 
 		},
-		onLoad() {
+		onLoad(obj) {
 			this.animation = uni.createAnimation()
 			// 创建动画实例
 			uni.getSystemInfo({ //获取设备信息
@@ -419,7 +418,6 @@
 		},
 		created() {
 			_this = this;
-			this.getOrder();
 		},
 		mounted() {
 			uni.getProvider({
@@ -440,53 +438,32 @@
 			});
 		},
 		methods: {
-			getOrder() {},
-			templateAdd(e) {
+			mpLinktap(e) {
 				console.log('e', e);
-
-				if (e.group && e.groupid) {
-					uni.request({
-						url: this.globalUrl + '/marketing/copy',
-						data: {
-							id: e.groupid
-						},
-						method: 'PUT',
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
-						success: res => {
-							if (res.data.code == 0) {
-								uni.setClipboardData({
-									data: e.group,
-									success: () => {
-										uni.showToast({
-											title: '复制成功',
-											icon: 'success'
-										});
-									}
-								});
-							} else {
-								uni.showToast({
-									title: res.data.msg,
-									icon: 'none'
-								});
-							}
+				if(e['data-url']){
+					uni.navigateTo({
+						url: '../webview/webview?url=' + encodeURIComponent(e['data-url'])
+					});
+				} else if (e['data-weixin']){
+					uni.setClipboardData({
+						data: e['data-weixin'],
+						success: () => {
+							uni.showToast({
+								title: '复制成功',
+								icon: 'success'
+							});
 						}
 					});
-				} else {
-					console.log(e);
-					e.ignore();
-					return false;
 				}
 			},
 			// 获取文章详情
-			getArticleDetail(e) {
+			getArticleDetail() {
 				var that = this;
 				uni.request({
 					// url:'article',
 					url: this.globalUrl + '/article',
 					data: {
-						article_id: e.article_id
+						article_id: that.article_id
 					},
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
@@ -495,103 +472,266 @@
 						uni.hideLoading();
 						uni.setStorageSync('id', res.data);
 
-						let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
-						console.log(strIndex,'strIndex')
-						// let strIndex = strIndex.match(?<=").*?(?=")
-						if (strIndex && strIndex.length) {
-							// let strId =  newContent.substring(strIndex,1)
-							//旧
-							let strId = strIndex[0].slice(36, -4);
-							// let strIdarr = strIndex[0].match(/\d+/g);
-							// 新版营销组件
-							// let strValue = strIndex[0].match(/value="(\S*),/)[1];
-							// console.log(strIdarr,'1234')
-							// let strId = strIdarr.join('')
-							let resCode = await that.getTemplate(strId);
-							
-							if (resCode.data.code == 0) {
-								// 旧营销
-								let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
-								let wechat_name = resCode.data.data.wechat_name.replace(/\s*/g, '');
-								// 详情请加${wechat_name}：${wechat_id}
-								// 营销组件
-								var name = "[name]";
-								var wechat_name1 = wechat_name;
-								
-								var number = "[number]";
-								var wechat_id1 = wechat_id
-								strValue = strValue.replace(name,wechat_name1)
-								strValue = strValue.replace(number,wechat_id1)
-								// ${strValue}
-								let str =
-									`<div style="text-aline:center; ">
-      <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
-          ${strValue}
-		  
-      </span><a groupId="${strId}"   group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;padding:0;margin-left: 36rpx; font-weight: 400;">点击复制</a>
-    </div>`;
-
-								res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
-								that.articleList = res.data;
-								console.log('文章详情--', that.articleList);
-								that.following = that.articleList.data.follow;
-								that.$nextTick(() => {
-									uni.getImageInfo({
-										src: that.articleList.data.images[0],
-										success: function(image) {
-											console.log('图片高度--', image.height);
-											let caseRes = image.width / image.height;
-											that.swiperHeight = 100 / caseRes + 'vw';
-										},
-										fail: error => {
-											console.log(1111, error);
+						let inputComponets = res.data.data.content.match(/<input[^>]*\/>/gi);
+						if (inputComponets != null && inputComponets.length > 0){
+							for (var i=0;i<inputComponets.length;i++){
+								var item = inputComponets[i]
+								let strValue = item.match(/name="(\S*)"/);
+								var replaceStr = ''
+								if (strValue != null && strValue.length == 2){
+									var id = strValue[1]
+									if (item.indexOf("营销组件")!=-1){
+										let component = await that.asyncGetComponentInfo('/marketing/unit', {
+																				group_id: id,
+																				article_id: that.article_id
+																			});
+										if (component.data.code != 0) {
+											console.error('获取营销组件信息失败', component)
+											replaceStr = ""
+										} else {
+											var obj = component.data.data
+											replaceStr = that.generateWeixinMarketingGroup(obj)
+											res.data.data.content = res.data.data.content.replace(item, replaceStr);
+											// console.log("营销组件", replaceStr)
 										}
-									});
-								});
-							} else {
-								that.articleList = res.data;
-								console.log('文章详情', that.articleList);
-								that.following = that.articleList.data.follow;
-								that.$nextTick(() => {
-									uni.getImageInfo({
-										src: that.articleList.data.images[0],
-										success: function(image) {
-											console.log('图片高度--', image.height);
-											let caseRes = image.width / image.height;
-											that.swiperHeight = 100 / caseRes + 'vw';
-										},
-										fail: error => {
-											console.log(1111, error);
-										}
-									});
-								});
-							}
-						} else {
-							that.articleList = res.data;
-							console.log('文章详情=', that.articleList);
-							that.following = that.articleList.data.follow;
-							that.$nextTick(() => {
-								uni.getImageInfo({
-									src: that.articleList.data.images[0],
-									success: function(image) {
-										console.log('图片高度--', image.height);
-										let caseRes = image.width / image.height;
-										that.swiperHeight = 100 / caseRes + 'vw';
-									},
-									fail: error => {
-										console.log(1111, error);
+									} else if (item.indexOf("在线客服")!=-1){
+										res.data.data.content = res.data.data.content.replace(item, '');
+										// let component = await that.asyncGetComponentInfo('/online/call', {id:id});
+										// if (component.data.code != 0) {
+										// 	console.error('获取在线客服信息失败', component)
+										// 	replaceStr = ""
+										// } else {
+										// 	var obj = component.data.data
+										// 	replaceStr = that.generateOnlineCustomer(obj)
+										// 	res.data.data.content = res.data.data.content.replace(item, replaceStr);
+										// 	// console.log("在线客服", replaceStr)
+										// }
+									} else if (item.indexOf("小程序")!=-1){
+										res.data.data.content = res.data.data.content.replace(item, '');
+										// let component = await that.asyncGetComponentInfo('/miniapp/call', {id:id});
+										// if (component.data.code != 0) {
+										// 	console.error('获取小程序信息失败', component)
+										// 	replaceStr = ""
+										// } else {
+										// 	console.log('component', component)
+										// 	var obj = component.data.data
+										// 	replaceStr = that.generateMiniapp(obj)
+										// 	res.data.data.content = res.data.data.content.replace(item, replaceStr);
+										// 	// console.log("在线客服", replaceStr)
+										// }
 									}
-								});
-							});
+								}
+							}
 						}
+						
+						that.article = res.data;
+						console.log('文章详情=', that.article);
+						that.following = that.article.data.follow;
+						that.$nextTick(() => {
+							uni.getImageInfo({
+								src: that.article.data.images[0],
+								success: function(image) {
+									console.log('图片高度--', image.height);
+									let caseRes = image.width / image.height;
+									that.swiperHeight = 100 / caseRes + 'vw';
+								},
+								fail: error => {
+									console.log(1111, error);
+								}
+							});
+						});
 					},
 					fail: error => {
 						uni.hideLoading();
 					}
 				});
 			},
+			async asyncGetComponentInfo(url, data){
+				return new Promise((resolve, reject) => {
+					uni.request({
+						// url:'article',
+						url: this.globalUrl + url,
+						method: 'get',
+						data: data,
+						header: {
+							Authorization: uni.getStorageSync('Authorization')
+						},
+				
+						success: res => {
+							resolve(res,'组件信息');
+						},
+						fail: error => {
+							reject(error);
+						}
+					});
+				});
+			},
+			generateWeixinMarketingGroup(obj){
+				return `  <div style="display: flex;
+						align-items: center;
+						width: 347px;
+						height: 54px;
+						background: #FFE512;
+						border-radius: 4px;
+						padding: 0 10px;
+						margin: 0 auto;
+						position: relative;
+					  ">
+					  <a data-weixin='`+obj.wechat_id+`'/>
+						  <div style="width: 34px;height: 34px;
+						  position: absolute;
+						  top:10px;
+						  ">
+							<img class="component_img box-one-img" src="../../static/images/tu1.png" alt="" style="width: 100%;height: 100%;">
+						  </div>
+						<div style="font-size: 14px;
+						font-family: PingFangSC-Regular, PingFang SC;
+						font-weight: 400;
+						color: #303133;
+						line-height: 20px;
+						margin-left: 8px;"
+						>
+						  ${obj.template}
+						</div>
+						<div style="width: 104px;
+						height: 29px;
+						background: #FFFFFF;
+						box-shadow: 0px 8px 28px 0px rgba(0, 0, 0, 0.05);
+						border-radius: 20px;
+						font-size: 12px;
+						font-family: PingFangSC-Semibold, PingFang SC;
+						font-weight: 600;
+						color: #303133;
+						line-height: 17px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						position: absolute;
+						top:-23px;
+						left:150px;
+						
+						margin-left: 63px;">
+						  复制导游微信
+						</div>
+					  </div>
+					`;
+			},
+			generateOnlineCustomer(obj){
+				return `<div class="box marketting_component" style="width: 100%;
+			  height: 130px;
+			  position: relative;
+			"> 
+							<a data-url='`+obj.url+`'/>
+			    <img class="component_img box-img" src="https://lingtuyang-prod.oss-cn-hangzhou.aliyuncs.com/marketing_group/bjt.png" alt="" style="	width: 100%;
+			    height: 100%;
+			    position: absolute;
+			    pointer-events: none; 
+			    top: 0;
+			  ">
+			    <div class="box-one" style="	position: absolute;
+			    top: 40px;
+			    left: 32px;
+			    width: 51px;
+			    height: 51px;
+			    z-index: 1;
+						  border-radius: 50%;
+			  ">
+			      <img class="component_img box-one-img" src="` + obj.avatar + `" alt="" style="	width: 100%;
+			      height: 100%;border-radius: 50%;
+			    ">
+			    </div>
+			    <div class="box-two" style="	position: absolute;
+			    top: 50px;
+			    left: 98px;
+			    font-size: 16px;
+			    color: #303133;
+			    font-weight: 600;
+			  ">` + obj.nickname + `</div>
+			    <div class="box-there" style="	position: absolute;
+			    top: 48px;
+			    right: 34px;
+			    width: 88px;
+			    height: 30px;
+			    font-size: 14px;
+			    font-weight: 600;
+			    color: #FFFFFF;
+			    background: linear-gradient(90deg, #FF5A79 0%, #FF74B4 100%);
+			    box-shadow: 0px 3px 15px 0px rgba(255, 115, 178, 0.35);
+			    border-radius: 20px;
+			    display: flex;
+			    justify-content: center;
+			    align-items: center;
+			  ">点击咨询</div>
+			    <div class="box-min" style="	position: absolute;
+			    width: 37px;
+			    height: 12px;
+			    font-size: 9px;
+			    font-weight: 400;
+			    background: linear-gradient(90deg, #FF5A79 0%, #FF74B4 100%);
+			    color: #FFFFFF;
+			    display: flex;
+			    justify-content: center;
+			    align-items: center;
+			    top: 85px;
+			    left: 39px;
+			    z-index: 2;
+			  ">在线中</div>
+			    <div class="bk" style="	width: 57px;
+			    height: 57px;
+			    border-radius: 50%;
+			    border: 2px solid #FF5A79;
+			    position: absolute;
+			    top: 35px;
+			    left: 27px;
+			  "></div>
+			    <div class="pulse"></div>
+			  </div>`
+						},
+			generateMiniapp(obj){
+				return `<div class='marketting_component' style="
+						width: 347px;
+			  display: flex;
+			  align-items: center;
+			  height: 74px;
+			  background: #F4F5F7;
+			  border-radius: 4px;
+			  padding: 0 10px;
+						position: relative;
+			  margin: 0 auto;"
+			  >
+						<a data-url='`+obj.url+`'/>
+						
+			    <div style="width: 54px;
+			    height: 54px;
+							position: absolute;
+							top:10px;
+			    border-radius: 4px;">
+			      <img src="` + obj.avatar + `" alt="" style="width: 100%;height: 100%;border-radius: 4px;">
+			    </div>
+			    <div style="width: 238px;
+			    font-size: 14px;
+			    font-family: PingFangSC-Medium, PingFang SC;
+			    font-weight: 500;
+			    margin: 0 10px;
+			    color: #303133;
+						  position: absolute;
+						  left:80px;
+						  top:-10px;
+			    line-height: 20px;">
+			      ` + obj.description + `
+			    </div>
+						  
+			    <div style="width:14px;height:14px;margin-left: 10px;
+						  position: absolute;
+						  right:20px;
+						  bottom:35px;
+						  ">
+			      <img src="https://lingtuyang-prod.oss-cn-hangzhou.aliyuncs.com/marketing_group/you.png" alt="">
+			    </div>
+			  </div>`
+			},
 			imgTap(e) {
-				console.log(e);
+				console.log('imgTap', e);
 
 				return false;
 			},
@@ -613,8 +753,8 @@
 			follow() {
 				// console.log(item, index)
 				var that = this;
-				let msg = this.articleList.data.is_follow ? '确认取消关注?' : '确认关注?';
-				let status = this.articleList.data.is_follow ? 0 : 1;
+				let msg = this.article.data.is_follow ? '确认取消关注?' : '确认关注?';
+				let status = this.article.data.is_follow ? 0 : 1;
 
 				if (status == 0) {
 					that.show = true;
@@ -623,7 +763,7 @@
 					uni.request({
 						url: that.globalUrl + '/user/follow',
 						data: {
-							author_id: that.articleList.data.author_id,
+							author_id: that.article.data.author_id,
 							follow: status
 						},
 						method: 'POST',
@@ -636,7 +776,7 @@
 									url: '/pagesA/login/login'
 								});
 							} else {
-								that.articleList.data.is_follow = status == 1 ? true : false;
+								that.article.data.is_follow = status == 1 ? true : false;
 							}
 						}
 					});
@@ -645,12 +785,12 @@
 			// 点击确认
 			confirm() {
 				var that = this;
-				let msg = this.articleList.data.is_follow ? '确认取消关注?' : '确认关注?';
-				let status = this.articleList.data.is_follow ? 0 : 1;
+				let msg = this.article.data.is_follow ? '确认取消关注?' : '确认关注?';
+				let status = this.article.data.is_follow ? 0 : 1;
 				uni.request({
 					url: that.globalUrl + '/user/follow',
 					data: {
-						author_id: that.articleList.data.author_id,
+						author_id: that.article.data.author_id,
 						follow: status
 					},
 					method: 'POST',
@@ -663,7 +803,7 @@
 								url: '/pagesA/login/login'
 							});
 						} else {
-							that.articleList.data.is_follow = status == 1 ? true : false;
+							that.article.data.is_follow = status == 1 ? true : false;
 						}
 					}
 				});
@@ -733,7 +873,7 @@
 				uni.request({
 					url: this.globalUrl + '/comments',
 					data: {
-						article_id: this.article_num,
+						article_id: this.article_id,
 						content: this.content
 					},
 					method: 'POST',
@@ -785,7 +925,7 @@
 				uni.request({
 					url: this.globalUrl + '/comments/list',
 					data: {
-						article_id: this.article_num,
+						article_id: this.article_id,
 						page: 1,
 						count: 3
 					},
@@ -798,7 +938,7 @@
 							uni.request({
 								url: this.globalUrl + '/comments/list',
 								data: {
-									article_id: this.article_num,
+									article_id: this.article_id,
 									page: 1,
 									count: 3
 								},
@@ -853,7 +993,7 @@
 			// },
 			// 查看更多评论
 			toMoreReply() {
-				let e = this.article_num
+				let e = this.article_id
 				uni.navigateTo({
 					url: '../comments/comments?article_id=' + e
 				})
@@ -862,14 +1002,11 @@
 			clickLike() {
 				var that = this;
 
-				var article_id = uni.getStorageSync('id');
-				console.log('art', article_id);
-
 				uni.request({
 					url: this.globalUrl + '/user/liked',
 					data: {
-						article_id: article_id.data.uuid,
-						liked: article_id.data.liked == 0 ? 1 : 0
+						article_id: that.article_id,
+						liked: that.article.data.liked == 0 ? 1 : 0
 					},
 					method: 'POST',
 					header: {
@@ -881,73 +1018,10 @@
 							uni.navigateTo({
 								url: '/pagesA/login/login'
 							});
+						} else {
+							that.article.data.liked = res.data.data.liked
+							that.article.data.like_count = res.data.data.like_count
 						}
-						uni.request({
-							// url:'article',
-							url: this.globalUrl + '/article',
-							data: {
-								article_id: article_id.data.uuid
-							},
-							header: {
-								Authorization: uni.getStorageSync('Authorization')
-							},
-							success: async function(res) {
-								console.log(res.data.data.liked, res.data.data.like_count, res.data.data.uuid, 333333);
-								console.log('eeeeeeeeeeeeeeee', res);
-								console.log('文章详情====', res);
-								uni.setStorageSync('id', res.data);
-
-								let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
-
-								if (strIndex && strIndex.length) {
-									// let strId =  newContent.substring(strIndex,1)
-
-									// let strId = strIndex[0].slice(36, -4);
-									let strIdarr = strIndex[0].match(/\d+/g);
-									let strId = strIdarr.join('')
-									let resCode = await that.getTemplate(strId);
-
-									if (resCode.data.code == 0) {
-										let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
-										let wechat_name = resCode.data.data.wechat_name.replace(/\s*/g, '');
-										let str =
-											`<div>
-							  <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
-							      详情请加${wechat_name}：${wechat_id}
-							  </span><a groupId="${strId}"  group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
-							</div>`;
-
-										res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
-										// console.log(res.data.data.content);
-
-										that.articleList = res.data;
-										uni.getImageInfo({
-											src: that.articleList.data.images[0],
-											success: function(image) {
-												console.log('图片高度--', image.height);
-												let caseRes = image.width / image.height;
-												that.swiperHeight = 100 / caseRes + 'vw';
-											}
-										});
-									} else {
-										that.articleList = res.data;
-										that.following = that.articleList.data.follow;
-										uni.getImageInfo({
-											src: that.articleList.data.images[0],
-											success: function(image) {
-												console.log('图片高度--', image.height);
-												let caseRes = image.width / image.height;
-												that.swiperHeight = 100 / caseRes + 'vw';
-											}
-										});
-									}
-								} else {
-									that.articleList = res.data;
-									that.following = that.articleList.data.follow;
-									console.log('articleList', that.articleList);
-								}
-							}
-						});
 					}
 				});
 			},
@@ -955,12 +1029,11 @@
 			clickFav() {
 				var that = this;
 
-				var article_id = uni.getStorageSync('id');
 				uni.request({
 					url: this.globalUrl + '/user/favorite',
 					data: {
-						article_id: article_id.data.uuid,
-						favorite: article_id.data.fav == 1 ? 0 : 1
+						article_id: that.article_id,
+						favorite: that.article.data.fav == 1 ? 0 : 1
 					},
 					method: 'POST',
 					header: {
@@ -969,107 +1042,17 @@
 					success: res => {
 						console.log('收藏', res);
 						if (res.data.code != 0) {
-
 							uni.navigateTo({
 								url: '/pagesA/login/login'
 							});
+						} else {
+							that.article.data.fav = res.data.data.fav
+							that.article.data.fav_count = res.data.data.fav_count
 						}
-						uni.request({
-							// url:'article',
-							url: this.globalUrl + '/article',
-							data: {
-								article_id: article_id.data.uuid
-							},
-							header: {
-								Authorization: uni.getStorageSync('Authorization')
-							},
-							success: async function(res) {
-								uni.setStorageSync('id', res.data);
-
-								let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
-
-								if (strIndex && strIndex.length) {
-									// let strId =  newContent.substring(strIndex,1)
-
-									// let strId = strIndex[0].slice(36, -4);
-									let strIdarr = strIndex[0].match(/\d+/g);
-									let strId = strIdarr.join('')
-									let resCode = await that.getTemplate(strId);
-									if (resCode.data.code == 0) {
-										let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
-										let wechat_name = resCode.data.data.wechat_name.replace(/\s*/g, '');
-										let str =
-											`<div>
-							  <span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
-							      详情请加${wechat_name}：${wechat_id}
-							  </span><a groupId="${strId}"  group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
-							</div>`;
-
-										res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
-
-										that.articleList = res.data;
-										that.following = that.articleList.data.follow;
-										uni.getImageInfo({
-											src: that.articleList.data.images[0],
-											success: function(image) {
-												console.log('图片高度--', image.height);
-												let caseRes = image.width / image.height;
-												that.swiperHeight = 100 / caseRes + 'vw';
-											}
-										});
-									} else {
-										that.articleList = res.data;
-										that.following = that.articleList.data.follow;
-										uni.getImageInfo({
-											src: that.articleList.data.images[0],
-											success: function(image) {
-												console.log('图片高度--', image.height);
-												let caseRes = image.width / image.height;
-												that.swiperHeight = 100 / caseRes + 'vw';
-											}
-										});
-									}
-								} else {
-									that.articleList = res.data;
-									uni.getImageInfo({
-										src: that.articleList.data.images[0],
-										success: function(image) {
-											console.log('图片高度--', image.height);
-											let caseRes = image.width / image.height;
-											that.swiperHeight = 100 / caseRes + 'vw';
-										}
-									});
-								}
-							}
-						});
 					}
 				});
 			},
-			getTemplate(id) {
-				if (id) {
-					return new Promise((resolve, reject) => {
-						uni.request({
-							// url:'article',
-							url: this.globalUrl + '/marketing/unit',
-							method: 'get',
-							data: {
-								group_id: id,
-								article_id: this.article_num
-							},
-							header: {
-								Authorization: uni.getStorageSync('Authorization')
-							},
-
-							success: res => {
-								resolve(res,'客服');
-							},
-							fail: error => {
-								reject(error);
-							}
-						});
-					});
-				}
-			},
+			
 			// 登录
 			login() {
 				uni.navigateTo({
@@ -1093,8 +1076,8 @@
 			map() {
 				var that = this;
 
-				const latitude = that.articleList.data.latitude;
-				const longitude = that.articleList.data.longitude;
+				const latitude = that.article.data.latitude;
+				const longitude = that.article.data.longitude;
 				uni.openLocation({
 					latitude: latitude,
 					longitude: longitude,
@@ -1141,18 +1124,18 @@
 
 			formatRichText(html) {
 				//控制小程序中图片大小
-				let newContent = html.replace(/<img[^>]*>/gi, function(match, capture) {
+				let newContent = html.replace(/<img[?!component_img|^>]*>/gi, function(match, capture) {
 					match = match.replace(/style="[^"]+"/gi, '').replace(/style='[^']+'/gi, '');
 					match = match.replace(/width="[^"]+"/gi, '').replace(/width='[^']+'/gi, '');
 					match = match.replace(/height="[^"]+"/gi, '').replace(/height='[^']+'/gi, '');
 					return match;
 				});
 
-				newContent = newContent.replace(/style="[^"]+"/gi, function(match, capture) {
-					match = match.replace(/width:[^;]+;/gi, 'max-width:100%;').replace(/width:[^;]+;/gi, 'max-width:100%;');
+				// newContent = newContent.replace(/style="[^"]+"/gi, function(match, capture) {
+				// 	match = match.replace(/width:[^;]+;/gi, 'max-width:100%;').replace(/width:[^;]+;/gi, 'max-width:100%;');
 
-					return match;
-				});
+				// 	return match;
+				// });
 				// 适配字体
 				newContent = newContent.replace(/(\d+)px/g, function(s, t) {
 					s = s.replace('px', '');

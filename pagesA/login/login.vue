@@ -130,7 +130,7 @@ export default {
 
 			fail: error => {
 				uni.showToast({
-					title: error.errMsg,
+					title: "获取登录code失败",
 					icon: 'none'
 				});
 			}

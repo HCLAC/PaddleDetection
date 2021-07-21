@@ -12,8 +12,9 @@
             }
         },
         onLoad(e) {
+			console.log(e)
              // 获取传递过来的链接
-            this.url = e.url
+            this.url = decodeURIComponent(e.url)
         }
     }
 </script>
