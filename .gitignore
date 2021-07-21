@@ -1,1 +1,3 @@
 unpackage/*
+package-lock.json
+.vscode-swan/settings.json

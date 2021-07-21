@@ -607,8 +607,8 @@
 						justify-content: center;
 						align-items: center;
 						position: absolute;
-						top:-23px;
-						left:150px;
+						top:12px;
+						left:160px;
 						
 						margin-left: 63px;">
 						  复制导游微信
