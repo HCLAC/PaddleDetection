@@ -401,7 +401,7 @@ export default {
 		(this.item = item), (this.name = item.name);
 		this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), 
 		this.getCity()
-		this.getQuestions()
+		// this.getQuestions()
 		this.getAnswersList()
 		this.delbackbtn()
 	},
@@ -588,26 +588,26 @@ export default {
 			}
 		},
 		// 获取精选问题
-		getQuestions(){
-			uni.request({
-				url: this.globalUrl + '/questions/selected',
-				data: {
-					state_id: this.item.state_id,
-					city_id: this.item.city_id,
-					count: 2
-				},
-				header: {
-					Authorization: uni.getStorageSync('Authorization')
-				},
-				success: res => {
-					this.questions = res.data.data
-					console.log('获取精选问题', this.questions);
-				}
-			})
+		// getQuestions(){
+		// 	uni.request({
+		// 		url: this.globalUrl + '/questions/selected',
+		// 		data: {
+		// 			state_id: this.item.state_id,
+		// 			city_id: this.item.city_id,
+		// 			count: 2
+		// 		},
+		// 		header: {
+		// 			Authorization: uni.getStorageSync('Authorization')
+		// 		},
+		// 		success: res => {
+		// 			this.questions = res.data.data
+		// 			console.log('获取精选问题', this.questions);
+		// 		}
+		// 	})
 			
 			
 
-		},
+		// },
 		// 跳转问题详情
 		toQuestionsDetail(item){
 			console.log(item)
@@ -672,7 +672,7 @@ export default {
 							}),
 							
 							this.getWeather(),
-							this.getQuestions(),
+							// this.getQuestions(),
 							this.getAnswersList(),
 							// 景点
 							uni.request({
@@ -714,7 +714,7 @@ export default {
 					success: res => {
 						console.log('城市信息==', res);
 						(this.item = res.data.data), (this.name = this.name = res.data.data.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(),
-						this.getQuestions(),
+						// this.getQuestions(),
 						this.getAnswersList(),
 						(this.show = false);
 						this.mescroll.resetUpScroll()
