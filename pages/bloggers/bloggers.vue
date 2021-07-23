@@ -305,7 +305,10 @@
 				});
 			},
 			home() {
-				uni.switchTab({
+				// uni.switchTab({
+				// 	url: '/pagesA/index/index'
+				// });
+				uni.reLaunch({
 					url: '/pagesA/index/index'
 				});
 			},
