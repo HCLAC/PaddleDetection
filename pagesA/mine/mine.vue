@@ -229,11 +229,21 @@ export default {
 	mixins: [MescrollMixin],
 	computed: mapState(['forcedLogin', 'hasLogin', 'phone']),
 	onShow() {
-	
+		var auth = uni.getStorageSync('Authorization')
+		if (!auth){
+			uni.redirectTo({
+				url: '../login/login?ismine=1'
+			});
+			return
+		}
 		this.getUserMsg();
 		this.downCallback()
 	},
 	onLoad() {
+		var auth = uni.getStorageSync('Authorization')
+		if (!auth){
+			return
+		}
 		this.getlist()
 		this.getAnswers()
 	},
@@ -288,12 +298,7 @@ export default {
 					success: function(res) {
 						console.log('个人信息=', res.data);
 						that.userInfo = res.data.data
-						if (res.data.code != 0) {
-							// debugger
-							uni.navigateTo({
-								url: '../login/login?ismine=' + false
-							});
-						}else{
+						if (res.data.code == 0) {
 							uni.setStorageSync('mobile', res.data);
 							if(res.data.data.nick_name){
 								that.nickName = res.data.data.nick_name

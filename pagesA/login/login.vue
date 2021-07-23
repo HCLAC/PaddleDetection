@@ -8,7 +8,7 @@
 					<image  class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
 					<!-- #ifndef MP-BAIDU -->
-					<image v-if="ismine == true" class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<image v-if="ismine == '1'" class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
@@ -96,45 +96,14 @@ export default {
 			isShowphone: false,
 			isShowcode: false,
 			serviceProvider: null,
-			ismine: true
+			ismine: ''
 		};
 	},
-	onLoad(ismine) {
-		console.log('ismine--', ismine);
-		console.log(ismine.ismine);
-		this.ismine = ismine.ismine;
-		console.log(this.ismine);
-		// if(ismine.ismine == false){
-		// 	this.ismine = false
-		// 	console.log(this.ismine)
-		// }else{
-		// 	this.ismine = true
-		// }
+	onLoad(options) {
+		this.ismine = options.ismine;
 	},
 	components: {},
 	mounted() {
-		uni.login({
-			provider: this.serviceProvider,
-
-			success: result => {
-				if (result.code) {
-					this.codeObj = result.code;
-				} else {
-					uni.showToast({
-						title: '获取code失败',
-						icon: 'none'
-					});
-					return;
-				}
-			},
-
-			fail: error => {
-				uni.showToast({
-					title: "获取登录code失败",
-					icon: 'none'
-				});
-			}
-		});
 		uni.getProvider({
 			service: 'oauth',
 			success: res => {
@@ -266,54 +235,40 @@ export default {
 		},
 		//一键登录
 		getPhone(res) {
-			uni.checkSession({
-				success: suc => {
-					console.log(suc,'suc')
-					if (suc.errMsg != 'checkSession:ok') {
-						uni.getLoginCode({
-							provider: this.serviceProvider,
-							success: result => {
-								console.log('result',result)
-								if (result.code) {
-									this.codeObj = result.code;
-								} else {
-									uni.showToast({
-										title: '获取code失败',
-										icon: 'none'
-									});
-									return;
-								}
-							},
-							fail: error => {
-								uni.showToast({
-									title: error.errMsg,
-									icon: 'none'
-								});
-							}
-						});
-					}
-				},
-				fail: err => {
-					uni.showToast({
-						title: err.errMsg
-					});
-				}
-			});
-			if (res.detail.errMsg == 'getPhoneNumber:ok') {
-				this.baiduLogin({
-					code: this.codeObj,
-					source: this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null,
-					data: res.detail.encryptedData,
-					iv: res.detail.iv
-				});
-			} else {
-				uni.login();
+			console.log('getPhone', res)
+			if (res.detail.errMsg != 'getPhoneNumber:ok') {
 				uni.showToast({
 					title: '用户拒绝授权',
 					icon: 'none'
 				});
 				return;
 			}
+			uni.login({
+				provider: this.serviceProvider,
+				success: result => {
+					console.log('result',result)
+					if (result.code) {
+						this.baiduLogin({
+							code: result.code,
+							source: this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null,
+							data: res.detail.encryptedData,
+							iv: res.detail.iv
+						});
+					} else {
+						uni.showToast({
+							title: '获取code失败',
+							icon: 'none'
+						});
+						return;
+					}
+				},
+				fail: error => {
+					uni.showToast({
+						title: error.errMsg,
+						icon: 'none'
+					});
+				}
+			});
 		},
 
 		baiduLogin(obj) {
@@ -430,7 +385,7 @@ export default {
 							title: '登录成功',
 							icon: 'none'
 						}),
-							uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
+						uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
 						uni.reLaunch({
 							url: '../mine/mine'
 						});
@@ -451,12 +406,21 @@ export default {
 		},
 		// 返回上一页
 		back() {
-			uni.navigateBack({
-				delta: 1
-			});
+			if (this.ismine === '1'){
+				uni.switchTab({
+					url: '/pagesA/index/index'
+				});
+			} else {
+				uni.navigateBack({
+					delta: 1
+				});
+			}
 		},
 		// 返回首页
 		home() {
+			// uni.navigateBack({
+			// 	delta: 1
+			// });
 			uni.switchTab({
 				url: '/pagesA/index/index'
 			});
