@@ -582,7 +582,6 @@
 						  position: absolute;
 						  top:10px;
 						  ">
-							<img class="component_img box-one-img" src="../../static/images/tu1.png" alt="" style="width: 100%;height: 100%;">
 						  </div>
 						<div style="font-size: 14px;
 						font-family: PingFangSC-Regular, PingFang SC;

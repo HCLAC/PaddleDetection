@@ -231,7 +231,7 @@ export default {
 	onShow() {
 		var auth = uni.getStorageSync('Authorization')
 		if (!auth){
-			uni.redirectTo({
+			uni.navigateTo({
 				url: '../login/login?ismine=1'
 			});
 			return
