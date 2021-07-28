@@ -264,7 +264,7 @@
 										duration: 2000
 									})
 									uni.reLaunch({
-										url:'../mine/mine'
+										url:'/pagesA/mine/mine'
 									})
 								}
 								

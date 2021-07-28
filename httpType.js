@@ -59,7 +59,7 @@ function request(obj) {
 					success: function(res) {
 						if (res.confirm) {
 							uni.navigateTo({
-								url: '../login/login'
+								url: '/pagesA/login/login'
 							})
 						}
 					}

@@ -231,8 +231,8 @@ export default {
 	onShow() {
 		var auth = uni.getStorageSync('Authorization')
 		if (!auth){
-			uni.redirectTo({
-				url: '../login/login?ismine=1'
+			uni.navigateTo({
+				url: '/pagesA/login/login?ismine=1'
 			});
 			return
 		}
@@ -271,9 +271,6 @@ export default {
 		// 获取用户信息
 		getUserMsg() {
 			var that = this;
-
-			
-
 			uni.getStorage({
 				key: 'Authorization',
 				success: function(res) {
@@ -308,8 +305,12 @@ export default {
 							that.fllowNum = res.data.data.following
 							that.favNum = res.data.data.fav_count
 							that.likeNum = res.data.data.like_count
+						} else{
+							uni.removeStorageSync('Authorization')
+							uni.navigateTo({
+								url: '/pagesA/login/login?ismine=1'
+							});
 						}
-						
 					}
 				})
 				

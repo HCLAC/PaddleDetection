@@ -243,32 +243,62 @@ export default {
 				});
 				return;
 			}
-			uni.login({
-				provider: this.serviceProvider,
-				success: result => {
-					console.log('result',result)
-					if (result.code) {
-						this.baiduLogin({
-							code: result.code,
-							source: this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null,
-							data: res.detail.encryptedData,
-							iv: res.detail.iv
-						});
-					} else {
+			
+			if (this.serviceProvider == 'baidu'){
+				swan.getLoginCode({
+					success: result => {
+						console.log('result',result)
+						if (result.code && result.code.length != 0) {
+							this.baiduLogin({
+								code: result.code,
+								source: this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null,
+								data: res.detail.encryptedData,
+								iv: res.detail.iv
+							});
+						} else {
+							uni.showToast({
+								title: '获取code失败',
+								icon: 'none'
+							});
+							return;
+						}
+					},
+					fail: err => {
+						console.error('getLoginCode', err)
+						// uni.showToast({
+						// 	title: err.errMsg,
+						// 	icon: 'none'
+						// });
+					}
+				});
+			} else {
+				uni.login({
+					provider: this.serviceProvider,
+					success: result => {
+						console.log('result',result)
+						if (result.code) {
+							this.baiduLogin({
+								code: result.code,
+								source: this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null,
+								data: res.detail.encryptedData,
+								iv: res.detail.iv
+							});
+						} else {
+							uni.showToast({
+								title: '获取code失败',
+								icon: 'none'
+							});
+							return;
+						}
+					},
+					fail: error => {
 						uni.showToast({
-							title: '获取code失败',
+							title: error.errMsg,
 							icon: 'none'
 						});
-						return;
 					}
-				},
-				fail: error => {
-					uni.showToast({
-						title: error.errMsg,
-						icon: 'none'
-					});
-				}
-			});
+				});
+			}
 		},
 
 		baiduLogin(obj) {
@@ -321,11 +351,11 @@ export default {
 							title: '登录成功',
 							icon: 'none'
 						}),
-							uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
+						uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
 
 						uni.setStorageSync('nickName', res.data.data.mobile);
 						uni.reLaunch({
-							url: '../mine/mine'
+							url: '/pagesA/mine/mine'
 						});
 					} else {
 						uni.showToast({
@@ -387,7 +417,7 @@ export default {
 						}),
 						uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
 						uni.reLaunch({
-							url: '../mine/mine'
+							url: '/pagesA/mine/mine'
 						});
 
 						// uni.setStorage({
@@ -508,7 +538,11 @@ export default {
 	margin-left: 32rpx;
 }
 .headerTitle {
+<<<<<<< HEAD
 	width: 370rpx;
+=======
+	width: 360rpx;
+>>>>>>> 3ae938070b2a44d63c3a14d27a49192ac32e07bb
 	height: 48rpx;
 	font-size: 48rpx;
 	font-family: PingFangSC-Semibold, PingFang SC;

@@ -100,7 +100,7 @@
 						console.log('点赞',res)
 						if(res.data.code == 10501){
 							uni.navigateTo({
-								url: '../login/login'
+								url: '/pagesA/login/login'
 							});
 						}else{
 							this.show = true
@@ -120,7 +120,7 @@
 				// console.log('tttt',token)
 				if(!token){
 					uni.navigateTo({
-						url: '../login/login'
+						url: '/pagesA/login/login'
 					});
 				}else{
 					uni.navigateTo({
