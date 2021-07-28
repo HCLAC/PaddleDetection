@@ -355,7 +355,7 @@ export default {
 
 						uni.setStorageSync('nickName', res.data.data.mobile);
 						uni.reLaunch({
-							url: '../mine/mine'
+							url: '/pagesA/mine/mine'
 						});
 					} else {
 						uni.showToast({
@@ -417,7 +417,7 @@ export default {
 						}),
 						uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
 						uni.reLaunch({
-							url: '../mine/mine'
+							url: '/pagesA/mine/mine'
 						});
 
 						// uni.setStorage({

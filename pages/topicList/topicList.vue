@@ -622,7 +622,7 @@ export default {
 						if (res.data.code != 0) {
 							// debugger
 							uni.navigateTo({
-								url: '../login/login'
+								url: '/pagesA/login/login'
 							});
 						}else{
 							if(this.tabCurrent == 0){
@@ -658,7 +658,7 @@ export default {
 						if (res.data.code != 0) {
 			
 							uni.navigateTo({
-								url: '../login/login'
+								url: '/pagesA/login/login'
 							});
 						} else {
 							if(this.tabCurrent == 0){
@@ -692,7 +692,7 @@ export default {
 						if (res.data.code != 0) {
 							// debugger
 							uni.navigateTo({
-								url: '../login/login'
+								url: '/pagesA/login/login'
 							});
 						}
 						if(this.tabCurrent == 0){

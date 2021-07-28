@@ -232,7 +232,7 @@ export default {
 		var auth = uni.getStorageSync('Authorization')
 		if (!auth){
 			uni.navigateTo({
-				url: '../login/login?ismine=1'
+				url: '/pagesA/login/login?ismine=1'
 			});
 			return
 		}
@@ -308,7 +308,7 @@ export default {
 						} else{
 							uni.removeStorageSync('Authorization')
 							uni.navigateTo({
-								url: '../login/login?ismine=1'
+								url: '/pagesA/login/login?ismine=1'
 							});
 						}
 					}
