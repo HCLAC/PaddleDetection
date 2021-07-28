@@ -538,11 +538,7 @@ export default {
 	margin-left: 32rpx;
 }
 .headerTitle {
-<<<<<<< HEAD
 	width: 370rpx;
-=======
-	width: 360rpx;
->>>>>>> 3ae938070b2a44d63c3a14d27a49192ac32e07bb
 	height: 48rpx;
 	font-size: 48rpx;
 	font-family: PingFangSC-Semibold, PingFang SC;
