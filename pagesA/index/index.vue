@@ -814,6 +814,7 @@
 			this.getAdress();
 		},
 		onLoad() {
+			console.log('uni.getSystemInfoSync()', uni.getSystemInfoSync())
 			uni.showLoading({
 				title: '加载中',
 				success: () => {
