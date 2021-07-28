@@ -418,6 +418,7 @@
 				}
 			});
 		},
+		
 		created() {
 			_this = this;
 		},
