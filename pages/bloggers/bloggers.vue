@@ -281,7 +281,7 @@
 						if (res.data.code != 0) {
 							// debugger
 							uni.navigateTo({
-								url: '../login/login'
+								url: '/pagesA/login/login'
 							});
 						} else {
 							that.authorMsg.is_follow = status == 1 ? true : false

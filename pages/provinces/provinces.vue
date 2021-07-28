@@ -779,7 +779,7 @@ export default {
 					if (res.data.code != 0) {
 						// debugger
 						uni.navigateTo({
-							url: '../login/login'
+							url: '/pagesA/login/login'
 						});
 					}
 
@@ -795,7 +795,7 @@ export default {
 			console.log(Authorization)
 			if (!Authorization) {
 				uni.navigateTo({
-					url: '../login/login'
+					url: '/pagesA/login/login'
 				});
 			}else{
 				uni.navigateTo({

@@ -487,7 +487,7 @@
 						console.log('pinglun', res.data)
 						if (res.data.code == 10502) {
 							uni.navigateTo({
-								url: '../login/login'
+								url: '/pagesA/login/login'
 							});
 						} else {
 			
@@ -549,7 +549,7 @@
 							if (res.data.code != 0) {
 								// debugger
 								uni.navigateTo({
-									url: '../login/login'
+									url: '/pagesA/login/login'
 								});
 							} else {
 								console.log(res)
@@ -577,7 +577,7 @@
 						if (res.data.code != 0) {
 							// debugger
 							uni.navigateTo({
-								url: '../login/login'
+								url: '/pagesA/login/login'
 							});
 						} else {
 							console.log(res)
@@ -604,7 +604,7 @@
 						if (res.data.code != 0) {
 				
 							uni.navigateTo({
-								url: '../login/login'
+								url: '/pagesA/login/login'
 							});
 						} else {
 							console.log(res)
@@ -632,7 +632,7 @@
 						if (res.data.code != 0) {
 				
 							uni.navigateTo({
-								url: '../login/login'
+								url: '/pagesA/login/login'
 							});
 						} else {
 							console.log(res)
