@@ -271,9 +271,6 @@ export default {
 		// 获取用户信息
 		getUserMsg() {
 			var that = this;
-
-			
-
 			uni.getStorage({
 				key: 'Authorization',
 				success: function(res) {
@@ -308,8 +305,12 @@ export default {
 							that.fllowNum = res.data.data.following
 							that.favNum = res.data.data.fav_count
 							that.likeNum = res.data.data.like_count
+						} else{
+							uni.removeStorageSync('Authorization')
+							uni.navigateTo({
+								url: '../login/login?ismine=1'
+							});
 						}
-						
 					}
 				})
 				
