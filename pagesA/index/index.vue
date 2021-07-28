@@ -252,7 +252,7 @@
 											<view class="demo-top">
 												<view class="imgBox">
 													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-													 mode="widthFix">
+													 mode="aspectFill">
 														<view class="videoIcon" v-if="item.type == 4">
 															<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
 														</view>
@@ -295,7 +295,7 @@
 											<view class="demo-top">
 												<view class="imgBox">
 													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-													 mode="widthFix">
+													 mode="aspectFill">
 														<view class="videoIcon" v-if="item.type == 4">
 															<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
 														</view>
