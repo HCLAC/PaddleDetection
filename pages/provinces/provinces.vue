@@ -402,14 +402,14 @@ export default {
 		this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), 
 		this.getCity()
 		// this.getQuestions()
-		this.getAnswersList()
-		this.delbackbtn()
+		// this.getAnswersList()
+		// this.delbackbtn()
 	},
 	methods: {
-		delbackbtn(){
-			var a = document.getElementsByClassName('uni-page-head-hd')[0]
-			a.style.display = 'none';
-		},
+		// delbackbtn(){
+		// 	var a = document.getElementsByClassName('uni-page-head-hd')[0]
+		// 	a.style.display = 'none';
+		// },
 		// 文章瀑布流接口
 		getTour() {
 			uni.request({
@@ -452,23 +452,23 @@ export default {
 			});
 		},
 		// 获取问答列表
-		getAnswersList() {
-			uni.request({
-				url: this.globalUrl + '/questions/random',
-				data: {
-					state_id: this.item.state_id,
-					city_id: this.item.city_id,
-					count: 6
-				},
-				header: {
-					Authorization: uni.getStorageSync('Authorization')
-				},
-				success: res => {
-					console.log('wenda列表',res)
-					this.answersList = res.data.data
-				}
-			});
-		},
+		// getAnswersList() {
+		// 	uni.request({
+		// 		url: this.globalUrl + '/questions/random',
+		// 		data: {
+		// 			state_id: this.item.state_id,
+		// 			city_id: this.item.city_id,
+		// 			count: 6
+		// 		},
+		// 		header: {
+		// 			Authorization: uni.getStorageSync('Authorization')
+		// 		},
+		// 		success: res => {
+		// 			console.log('wenda列表',res)
+		// 			this.answersList = res.data.data
+		// 		}
+		// 	});
+		// },
 		// 随机获取问答
 		// async getRandom(arr) {
 		//     var len = arr.length;
@@ -673,7 +673,7 @@ export default {
 							
 							this.getWeather(),
 							// this.getQuestions(),
-							this.getAnswersList(),
+							// this.getAnswersList(),
 							// 景点
 							uni.request({
 								url: this.globalUrl + '/site/hot',
@@ -715,7 +715,7 @@ export default {
 						console.log('城市信息==', res);
 						(this.item = res.data.data), (this.name = this.name = res.data.data.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(),
 						// this.getQuestions(),
-						this.getAnswersList(),
+						// this.getAnswersList(),
 						(this.show = false);
 						this.mescroll.resetUpScroll()
 					}

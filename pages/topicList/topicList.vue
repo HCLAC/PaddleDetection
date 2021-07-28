@@ -322,7 +322,7 @@
 						<!-- #endif -->
 						<!-- #ifdef MP-TOUTIAO -->
 							<view class="left">
-								<view class="demo-warter" v-for="(item, index) in latestList" :key="index" v-if="index % 2 == 0">
+								<view class="demo-warter" v-for="(item, index) in latestList" :key="index" v-if="index % 2 == 1">
 									<view class="" >
 										<view class="demo-top" @click="onPageJump" :id="item.article_id">
 											<view class="imgBox" >
@@ -362,7 +362,7 @@
 								</view>
 							</view>
 							<view class="right">
-								<view class="demo-warter" v-for="(item, index) in latestList" :key="index" v-if="index % 2 == 1">
+								<view class="demo-warter" v-for="(item, index) in latestList" :key="index" v-if="index % 2 == 0">
 									<view class="">
 										<view class="demo-top"  @click="onPageJump" :id="item.article_id">
 											<view class="imgBox">

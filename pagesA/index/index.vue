@@ -1631,7 +1631,7 @@
 		background: rgba(248, 248, 248, 1);
 		border-radius: 36rpx;
 		flex-wrap: nowrap;
-		margin-left: 52rpx;
+		margin-left: 40rpx;
 		padding-left: 32rpx;
 		.input-uni-icon-Box{
 			width: 28rpx;
@@ -2337,9 +2337,10 @@
 	.demo-title {
 		width: 278rpx;
 		/* max-height: 70rpx; */
+		padding-right: 20rpx;
 		font-size: 28rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
+		// font-family: PingFangSC-Medium, PingFang SC;
+		// font-weight: 500;
 		color: rgba(48, 49, 51, 1);
 		margin-left: 8rpx;
 		line-height: 46rpx;
