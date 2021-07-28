@@ -66,7 +66,7 @@
 				<view class="tips">
 					<view v-for="item in article.data.topics" :key="item.id" @click="toTopic(item.id)">
 						<image class="tipsIcon" src="../../static/images/topicIcon.svg" mode=""></image>
-						<text>{{ item.name }}</text>
+						<text class="tipsText">{{ item.name }}</text>
 					</view>
 					<!-- <view>#<text></text></view> -->
 				</view>
@@ -230,7 +230,7 @@
 				<view class="tipsStrategy">
 					<view v-for="item in article.data.topics" :key="item.id" @click="toTopic(item.id)">
 						<image class="tipsIcon" src="../../static/images/topicIcon.svg" mode=""></image>
-						<text>{{ item.name }}</text>
+						<text class="tipsText">{{ item.name }}</text>
 					</view>
 					<!-- <view>#<text></text></view> -->
 				</view>
@@ -1229,7 +1229,9 @@
 		font-weight: 600;
 		color: rgba(0, 0, 0, 1);
 	}
-
+	.replyText{
+		font-size: 32rpx;
+	}
 	.button-v-line {
 		width: 1px;
 		height: 18px;
@@ -1558,7 +1560,9 @@
 		height: 36rpx;
 		margin-right: 8rpx;
 	}
-
+	.tipsText{
+		font-size: 24rpx;
+	}
 	.tip text {
 		height: 24rpx;
 		font-size: 24rpx;

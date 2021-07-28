@@ -36,7 +36,7 @@
 							@focus="isfocus"
 							@blur="isblur"
 						/>
-						<image src="../../static/images/ic_search_sel@2x.png" mode="" @click="clearphone()" class="searchSel" v-if="phone && isShowphone"></image>
+						<image src="../../static/images/gb.svg" mode="" @click="clearphone()" class="searchSel" v-if="phone && isShowphone"></image>
 					</view>
 					<u-line color="rgba(237, 239, 242, 1)" margin="40rpx 0rpx"></u-line>
 					<view class="login-code">
@@ -52,7 +52,7 @@
 							@focus="isfocus1"
 							@blur="isblur1"
 						/>
-						<image src="../../static/images/ic_search_sel@2x.png" mode="" class="searchSel" v-if="code && isShowcode" @click="clearcode()"></image>
+						<image src="../../static/images/gb.svg" mode="" class="searchSel" v-if="code && isShowcode" @click="clearcode()"></image>
 						<view class="code-sx"></view>
 						<view class="codeimg" @click.stop="getCode()" :style="{ color: codeColor }">{{ getCodeText }}</view>
 					</view>
@@ -538,7 +538,11 @@ export default {
 	margin-left: 32rpx;
 }
 .headerTitle {
+<<<<<<< HEAD
+	width: 370rpx;
+=======
 	width: 360rpx;
+>>>>>>> 3ae938070b2a44d63c3a14d27a49192ac32e07bb
 	height: 48rpx;
 	font-size: 48rpx;
 	font-family: PingFangSC-Semibold, PingFang SC;

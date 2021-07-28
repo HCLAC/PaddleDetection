@@ -39,7 +39,7 @@
 					<image class="moreRight" src="../../static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 			</u-form>
-			<u-button @click="submit" :custom-style="customStyle"  >保存</u-button>
+			<u-button @click="submit" :custom-style="customStyle" class="customStyle" >保存</u-button>
 			<u-action-sheet :list="actionSheetList"   v-model="actionSheetShow" @click="actionSheetCallback"></u-action-sheet>
 			<u-select mode="single-column" :list="selectList" v-model="selectShow" @confirm="selectConfirm"></u-select>
 			<u-picker mode="region" v-model="pickerShow" @confirm="regionConfirm"></u-picker>
