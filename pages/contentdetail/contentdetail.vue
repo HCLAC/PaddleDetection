@@ -386,27 +386,29 @@
 		},
 		onShow() {
 			// 获取当前小程序的页面栈
-			let pages = getCurrentPages();
-			// 数组中索引最大的页面--当前页面
-			let currentPage = pages[pages.length - 1];
-			// 打印出当前页面中的 options
-			console.log('onshow--', currentPage.options);
+			// let pages = getCurrentPages();
+			// // 数组中索引最大的页面--当前页面
+			// let currentPage = pages[pages.length - 1];
+			// // 打印出当前页面中的 options
+			// console.log('onshow--', currentPage.options);
 
 			// console.log('文章id====', e);
-			uni.showLoading({
-				title: '加载中',
-				success: () => {
-					this.flag = uni.getStorageSync('Authorization') ? false : true;
-					console.log(this.flag);
-					this.article_id = currentPage.options.article_id;
-					this.getArticleDetail(currentPage.options);
-					this.getComments(currentPage.options);
-					this.getUserInfo()
-				}
-			});
-
+			// uni.showLoading({
+			// 	title: '加载中',
+			// 	success: () => {
+			// 		console.log(this.flag);
+			// 		this.article_id = currentPage.options.article_id;
+			// 	}
+			// });
+			this.getArticleDetail();
+			this.getComments();
+			this.getUserInfo()
+			this.getArticleseo()
+			this.flag = uni.getStorageSync('Authorization') ? false : true;
 		},
 		onLoad(obj) {
+			console.log(obj,"数据")
+			this.article_id = obj.article_id
 			this.animation = uni.createAnimation()
 			// 创建动画实例
 			uni.getSystemInfo({ //获取设备信息
@@ -438,6 +440,23 @@
 			});
 		},
 		methods: {
+			getArticleseo(){
+				var that = this
+				uni.request({
+					url: this.globalUrl + '/article/seo',
+					data: {
+						article_id: that.article_id
+					},
+					success: res => {
+						console.log(res, "+++++++++++++");
+						swan.setPageInfo({
+							title:res.data.data.title,
+							keywords:res.data.data.keywords,
+							description:res.data.data.description,
+						})
+					},
+				})
+			},
 			mpLinktap(e) {
 				console.log('e', e);
 				if(e['data-url']){
