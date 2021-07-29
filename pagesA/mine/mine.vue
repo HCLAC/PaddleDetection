@@ -86,7 +86,7 @@
 										<view v-if="item.type == 5">推广</view>
 									</view>
 									<view class="videoIcon" v-if="item.type == 4">
-										<image class="playIcon"  src="../../static/images/playIcon.svg" mode="aspectFit"></image>
+										<image class="playIcon"  src="../../static/images/playIcon.svg" mode="aspectFill"></image>
 									</view>
 								</image>
 							</view>
@@ -134,7 +134,7 @@
 										<view v-if="item.type == 5">推广</view>
 									</view>
 									<view class="videoIcon" v-if="item.type == 4">
-										<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+										<image class="playIcon"  src="../../static/images/playIcon.svg" mode="aspectFill"></image>
 									</view>
 								</image>
 							</view>

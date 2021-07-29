@@ -1729,7 +1729,7 @@
 		background: #ffffff;
 		display: flex;
 		align-items: center;
-		padding-bottom: 110rpx;
+		// padding-bottom: 110rpx;
 		.inputK {
 			height: 28rpx;
 			width: 558rpx;
