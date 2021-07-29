@@ -56,7 +56,8 @@
 					<view class="adressText" @click="map()">{{ article.data.location }}</view>
 				</view>
 				<!-- 标题 -->
-				<view class="contentTitle">{{ article.data.title }}</view>
+				<text class="contentTitle" selected=true>{{ article.data.title }}</text>
+				<!-- <view class="contentTitle">{{ article.data.title }}</view> -->
 				<!-- 内容文章 -->
 				<view class="contentText">
 					<!-- <rich-text :nodes="article.data.content | formatRichText"></rich-text> -->
@@ -193,7 +194,8 @@
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<!-- 标题 -->
-				<view class="contentTitle-strategy">{{ article.data.title }}</view>
+				<text class="contentTitle-strategy" selected=true>{{ article.data.title }}</text>
+				<!-- <view class="contentTitle-strategy">{{ article.data.title }}</view> -->
 				<view class="StrategyTip">
 					<image class="StrategyImg" src="../../static/images/Strategy.svg" mode=""></image>
 				</view>
@@ -201,7 +203,8 @@
 				<view class="userMse-strategy">
 					<image class="userHeard" :src="article.data.avatar" @click="tobloggers(article.data.author_id)"></image>
 					<view class="userMse-r">
-						<view class="userNikename-strategy">{{ article.data.author_name }}</view>
+						<text class="userNikename-strategy" selected=true> {{ article.data.author_name }}</text>
+						<!-- <view class="userNikename-strategy">{{ article.data.author_name }}</view> -->
 						<view class="releaseTime-strategy">发布于{{ article.data.update_at.slice(0,10) }}</view>
 					</view>
 					<view class="followBox" @click="follow()" v-if="!article.data.is_follow">
@@ -1185,6 +1188,7 @@
 		padding: 0;
 		font-size: 14px;
 		background-color: #aa557f;
+		margin-bottom: 48rpx;
 	}
 
 	.example-body {
@@ -1469,7 +1473,7 @@
 		margin-top: 20rpx;
 	}
 	.contentTitle-strategy{
-		margin: 40rpx 28rpx 0rpx;
+		margin: 400rpx 28rpx 0rpx;
 		font-size: 38rpx;
 		font-family: PingFangSC-Semibold, PingFang SC;
 		font-weight: 600;
