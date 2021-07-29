@@ -1401,7 +1401,7 @@
 		width: 16rpx;
 		height: 16rpx;
 		margin-right: 4rpx;
-		margin-top: 4rpx;
+		// margin-top: 4rpx;
 	}
 
 	.adress {
