@@ -613,6 +613,7 @@
 				display: flex;
 				align-items: center;
 				justify-content:space-between;
+				width: 590rpx;
 				.authorName{
 					height: 40rpx;
 					font-size: 28rpx;
@@ -682,6 +683,8 @@
 			// width: 610rpx;
 			margin-left: 16rpx;
 			.authorBox{
+				width: 590rpx;
+				
 				display: flex;
 				align-items: center;
 				justify-content:space-between;

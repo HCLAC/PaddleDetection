@@ -78,7 +78,7 @@
 					<view class="" v-for="(item, index) in tipList" :key="index" v-if="favNum != 0">
 						<view class="contentItem" >
 							<view class="left">
-								<image :src="item.main_image" mode="">
+								<image :src="item.main_image" mode="aspectFill">
 									<view class="imgTip">
 										<view v-if="item.type == 1">游记</view>
 										<view v-if="item.type == 2">攻略</view>
@@ -107,7 +107,7 @@
 								</view>
 								<view class="position">
 									<view class="pImg">
-										<image src="../../static/images/iconNewMap.svg" mode="widthFix"></image>
+										<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
 									</view>
 									<view>{{ item.location }}</view>
 								</view>
@@ -126,7 +126,7 @@
 					<view class="" v-for="(item, index) in likeList" :key="index" >
 						<view class="contentItem" >
 							<view class="left">
-								<image :src="item.main_image" mode="">
+								<image :src="item.main_image" mode="aspectFill">
 									<view class="imgTip">
 										<view v-if="item.type == 1">游记</view>
 										<view v-if="item.type == 2">攻略</view>
@@ -155,7 +155,7 @@
 								</view>
 								<view class="position">
 									<view class="pImg">
-										<image src="../../static/images/iconNewMap.svg" mode="widthFix"></image>
+										<image src="../../static/images/iconNewMap.svg" mode="aspectFill"></image>
 									</view>
 									<view>{{ item.location }}</view>
 								</view>
