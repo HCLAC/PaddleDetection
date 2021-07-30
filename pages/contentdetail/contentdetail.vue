@@ -194,7 +194,7 @@
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<!-- 标题 -->
-				<text class="contentTitle-strategy" selected=true>{{ article.data.title }}</text>
+				<text class="contentTitle-strategy" selected='true'>{{ article.data.title }}</text>
 				<!-- <view class="contentTitle-strategy">{{ article.data.title }}</view> -->
 				<view class="StrategyTip">
 					<image class="StrategyImg" src="../../static/images/Strategy.svg" mode=""></image>
@@ -865,20 +865,27 @@
 				this.$refs.comment.toggleMask(type);
 			},
 			commentInput() {
-				this.textareafocus = true
-				console.log(111)
+				const value = uni.getStorageSync('Authorization');
+				if (value == '') {
+					uni.navigateTo({
+						url: '/pagesA/login/login'
+					});
+				}else{
+					this.textareafocus = true
+					console.log(111)
+				}
 			},
 			inputBlur() {
 				this.textareafocus = false
 				this.inputbottom.bottom = 0 + 'px'
+				// this.inputbottom.bottom = e.detail.height + 'px'
+				
 			},
 			inputFocus(e) {
 				console.log(e.detail,'eeee')
 				this.textareafocus = true
 				// console.log('e.detail.height', e.detail.height)
 				this.inputbottom.bottom = e.detail.height + 'px'
-				
-
 				// this.textareaStyle.transform = 'translateY('+e.detail.height+'px'+')'
 
 			},
@@ -1474,12 +1481,13 @@
 		margin-top: 20rpx;
 	}
 	.contentTitle-strategy{
-		margin: 400rpx 28rpx 0rpx;
+		margin: 0rpx 28rpx 0rpx;
 		font-size: 38rpx;
 		font-family: PingFangSC-Semibold, PingFang SC;
 		font-weight: 600;
 		color: #303133;
 		line-height: 52rpx;
+		display: inline-block;
 	}
 	.StrategyTip{
 		margin-top: 8rpx;

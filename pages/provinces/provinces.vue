@@ -316,7 +316,7 @@
 				<u-popup v-model="show" mode="top" height="383px">
 					<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
 						<view slot="left" class="slotleft">
-							<i<!-- #ifndef  MP-BAIDU -->
+							<!-- #ifndef  MP-BAIDU -->
 								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 							<!-- #endif -->						<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 						</view>
