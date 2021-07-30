@@ -316,7 +316,7 @@
 				<u-popup v-model="show" mode="top" height="383px">
 					<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
 						<view slot="left" class="slotleft">
-							<i<!-- #ifndef  MP-BAIDU -->
+							<!-- #ifndef  MP-BAIDU -->
 								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 							<!-- #endif -->						<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 						</view>
@@ -1432,16 +1432,16 @@ export default {
 	align-items: flex-end;
 }
 .demoImage {
-	min-height: 300rpx !important;
-	max-height: 460rpx;
+	// min-height: 300rpx !important;
+	max-height: 800rpx;
 	width: 100%;
 	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 	border-radius: 16rpx 16rpx 0px 0px;
 }
 .demoImage4 {
 	width: 100%;
-	min-height: 272rpx;
-	max-height: 480rpx;
+	// min-height: 272rpx;
+	max-height: 800rpx;
 	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 	border-radius: 16rpx 16rpx 0px 0px;
 }

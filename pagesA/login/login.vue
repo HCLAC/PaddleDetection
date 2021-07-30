@@ -595,8 +595,8 @@ export default {
 }
 // .is-input1::-ms-searchSel{display: none;}
 .searchSel {
-	width: 48rpx;
-	height: 48rpx;
+	width: 44rpx;
+	height: 44rpx;
 	margin-right: 32rpx;
 	// display: none;
 }

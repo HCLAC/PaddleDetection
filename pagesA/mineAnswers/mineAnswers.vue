@@ -500,9 +500,9 @@
 	margin: 0 8px;
 }
 // 问答列表
-.answersList{
-	
-}
+// .answersList{
+// 	background: red;
+// }
 .myCollection {
 	border-radius: 12px 12px 0rpx 0rpx;
 	background-color: #fff;
@@ -511,10 +511,11 @@
 	// font-size: 40rpx;
 	// font-weight: 500;
 	// padding-left: 32rpx;
-	padding-top: 28rpx;
-	padding-left: 40rpx;
-	padding-right: 40rpx;
+	// padding-top: 28rpx;
+	// padding-left: 40rpx;
+	// padding-right: 40rpx;
 	// padding-bottom: 22rpx;
+	padding: 28rpx 108rpx;
 	display: flex;
 	justify-content: space-between;
 	border-bottom: 20rpx solid #F8F8F8;
@@ -560,7 +561,7 @@
 }
 .likeBox{
 	display: flex;
-	margin-left: 56rpx;
+	// margin-left: 56rpx;
 	height: 60rpx;
 }
 .likeBT{
