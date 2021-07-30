@@ -1532,6 +1532,7 @@
 			margin-left: 20rpx;
 			display: flex;
 			align-items: center;
+			height: 64rpx;
 			.nowCityNameText{
 				height: 40rpx;
 				font-size: 28rpx;
@@ -1673,7 +1674,7 @@
 		background-color: #ffffff;
 	}
 	.wave{
-		margin-top: -88rpx;
+		margin-top: -50rpx;
 		width: 100%;
 		height: 90rpx;
 		.waveImg{
@@ -1857,6 +1858,7 @@
 								color: #303133;
 								line-height: 48rpx;
 								text-align: center;
+								z-index: 1;
 							}
 						}
 						
