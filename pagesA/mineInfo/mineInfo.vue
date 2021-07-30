@@ -39,7 +39,10 @@
 					<image class="moreRight" src="../../static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 			</u-form>
-			<u-button @click="submit" :custom-style="customStyle" class="customStyle" >保存</u-button>
+			<!-- <u-button @click="submit" :custom-style="customStyle" class="customStyle" >保存</u-button> -->
+			<view class="customStyle" @click="submit">
+				保存
+			</view>
 			<u-action-sheet :list="actionSheetList"   v-model="actionSheetShow" @click="actionSheetCallback"></u-action-sheet>
 			<u-select mode="single-column" :list="selectList" v-model="selectShow" @confirm="selectConfirm"></u-select>
 			<u-picker mode="region" v-model="pickerShow" @confirm="regionConfirm"></u-picker>
@@ -390,5 +393,18 @@
 	width: 20rpx;
 	height: 20rpx;
 }
-
+.customStyle{
+	width: 694rpx;
+	height: 98rpx;
+	background: #FFE512;
+	border-radius: 53rpx;
+	font-size: 32rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #303133;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 82rpx;
+}
 </style>

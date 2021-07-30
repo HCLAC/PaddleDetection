@@ -307,7 +307,7 @@
 				<chat-input @send-message="send_comment" @blur="blur" :focus="focus" :placeholder="input_placeholder"></chat-input>
 			</view> -->
 			<view class="commentInput" v-if="textareafocus" :style="{bottom : inputbottom.bottom}">
-				<textarea class="inputK" v-model="content" placeholder="快来写下你的评论吧" :show-confirm-bar="false" :focus="textareafocus"
+				<textarea class="inputK" v-model="contentText" placeholder="快来写下你的评论吧" :show-confirm-bar="false" :focus="textareafocus"
 				 @blur="inputBlur" @focus="inputFocus" :auto-height="autoHeight" @input="inputValue" maxlength="140" cursor-spacing="20"
 				 :adjust-position="false"></textarea>
 				<view class="send" @click="pubComment">发送</view>
@@ -374,6 +374,7 @@
 				serviceProvider: '',
 				following: 0,
 				content: '',
+				contentText: '',
 				show: false,
 				value: '',
 				commentsList: [],
@@ -891,12 +892,12 @@
 				}
 			},
 			pubComment() {
-				console.log('发送',this.content)
+				console.log('发送',this.contentText)
 				uni.request({
 					url: this.globalUrl + '/comments',
 					data: {
 						article_id: this.article_id,
-						content: this.content
+						content: this.contentText
 					},
 					method: 'POST',
 					header: {
@@ -904,7 +905,7 @@
 					},
 					success: res => {
 						// this.commentsList = res.data.data.list
-						this.content = ''
+						this.contentText = ''
 						uni.hideKeyboard()
 						// this.$refs.comment.toggleMask('none');
 						this.getComments()
@@ -1727,6 +1728,7 @@
 		width: 100%;
 		position: fixed;
 		background: #ffffff;
+		bottom: 0;
 		display: flex;
 		align-items: center;
 		// padding-bottom: 110rpx;
