@@ -252,7 +252,7 @@
 											<view class="demo-top">
 												<view class="imgBox">
 													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-													 mode="aspectFill">
+													 mode="widthFix">
 														<view class="videoIcon" v-if="item.type == 4">
 															<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
 														</view>
@@ -295,7 +295,7 @@
 											<view class="demo-top">
 												<view class="imgBox">
 													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-													 mode="aspectFill">
+													 mode="widthFix">
 														<view class="videoIcon" v-if="item.type == 4">
 															<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
 														</view>
@@ -2262,8 +2262,8 @@
 
 	.demoImage {
 		width: 100%;
-		min-height: 300rpx;
-		max-height: 460rpx;
+		// min-height: 300rpx;
+		max-height: 800rpx;
 		// box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 		border-radius: 16rpx 16rpx 0px 0px;
 
@@ -2271,8 +2271,8 @@
 
 	.demoImage4 {
 		width: 100%;
-		min-height: 272rpx;
-		max-height: 480rpx;
+		// min-height: 272rpx;
+		max-height: 800rpx;
 		// box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 		border-radius: 16rpx 16rpx 0px 0px;
 		
