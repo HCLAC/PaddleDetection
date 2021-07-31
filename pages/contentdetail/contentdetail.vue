@@ -1825,6 +1825,7 @@
 		margin-left: 28rpx;
 		align-items: center;
 		margin-right: 40rpx;
+		position: relative;
 	}
 
 	.likeBtn {
@@ -1841,12 +1842,15 @@
 		font-weight: 400;
 		color: #909399;
 		line-height: 24rpx;
+		position: absolute;
+		left: 55rpx;
 	}
 
 	.fav {
 		display: flex;
 		align-items: center;
 		margin-right: 40rpx;
+		position: relative;
 	}
 
 	.favBtn {
@@ -1862,12 +1866,14 @@
 		font-weight: 400;
 		color: #909399;
 		line-height: 24rpx;
+		position: absolute;
+		left: 55rpx;
 	}
 
 	.replyIcon {
 		display: flex;
 		align-items: center;
-
+		position: relative;
 		image {
 			width: 52rpx;
 			height: 52rpx;
@@ -1883,6 +1889,8 @@
 		font-weight: 400;
 		color: #909399;
 		line-height: 24rpx;
+		position: absolute;
+		left: 55rpx;
 	}
 
 	.share {
