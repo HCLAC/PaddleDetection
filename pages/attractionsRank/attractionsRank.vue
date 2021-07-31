@@ -108,7 +108,7 @@
 				<view class="cardList">
 					<view class="cards" v-for="(item,index) in  hotsiteslist" :key="index" @click="toAtt(item.id)">
 						<view class="cardsleft">
-							<image class="bigImg" :src="item.images[0]" mode=""></image>
+							<image class="bigImg" :src="item.images[0]" mode="aspectFill"></image>
 							<image class="rankImg " :src="`../../static/images/rank/top-${index+1}.svg`" v-if="index < 6" mode=""></image>
 						</view>
 						<view class="cardsright">
@@ -978,7 +978,7 @@
 		.bigImg {
 			width: 262rpx;
 			height: 198rpx;
-			border-radius: 16rpx;
+			border-radius: 18rpx;
 			position: absolute;
 		}
 
@@ -987,7 +987,7 @@
 			height: 44rpx;
 			position: absolute;
 			top: 0;
-			left: 0;
+			left: -1rpx;
 		}
 	}
 
@@ -1040,7 +1040,6 @@
 		display: flex;
 		align-items: center;
 		margin-right: 8rpx;
-
 		image {
 			width: 28rpx;
 			height: 28rpx;

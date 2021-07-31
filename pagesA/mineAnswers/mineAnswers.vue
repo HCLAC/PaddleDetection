@@ -504,7 +504,7 @@
 // 	background: red;
 // }
 .myCollection {
-	border-radius: 12px 12px 0rpx 0rpx;
+	// border-radius: 12px 12px 0rpx 0rpx;
 	background-color: #fff;
 	color: #303133;
 	width: 100%;
@@ -515,10 +515,11 @@
 	// padding-left: 40rpx;
 	// padding-right: 40rpx;
 	// padding-bottom: 22rpx;
-	padding: 28rpx 108rpx;
+	padding: 35rpx 108rpx 14rpx;
 	display: flex;
 	justify-content: space-between;
 	border-bottom: 20rpx solid #F8F8F8;
+	border-top:2px solid #EDEFF2;
 }
 .favBox{
 	display: flex;
