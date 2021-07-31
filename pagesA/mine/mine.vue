@@ -296,7 +296,6 @@ export default {
 						console.log('个人信息=', res.data);
 						that.userInfo = res.data.data
 						if (res.data.code == 0) {
-							uni.setStorageSync('mobile', res.data);
 							if(res.data.data.nick_name){
 								that.nickName = res.data.data.nick_name
 							}else{

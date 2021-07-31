@@ -88,12 +88,9 @@ export default {
 		},
 		onSelect(item) {
 			this.city = item.name;
-
-			// getApp().globalData.item = item
-			console.log('item', item);
-			var e = JSON.stringify(item);
 			uni.navigateTo({
-				url: '../provinces/provinces?id=' + e
+				url: '/pages/provinces/provinces?state_id=' + 
+				item.state_id+"&city_id="+item.city_id+"&name="+item.name+"&image="+item.image
 			});
 		},
 		back() {
