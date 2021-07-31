@@ -436,7 +436,8 @@
 						city_id: area.city_id
 					};
 					uni.navigateTo({
-						url: '/pages/provinces/provinces?id=' + JSON.stringify(obj)
+						url: '/pages/provinces/provinces?state_id=' + 
+						obj.state_id+"&city_id="+obj.city_id+"&name="+obj.name+"&image="+obj.image
 					});
 				}
 			},

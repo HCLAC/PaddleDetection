@@ -396,9 +396,7 @@ export default {
 		uniNavBar
 	},
 	onLoad(options) {
-		let item = JSON.parse(options.id);
-		console.log('参数', item);
-		(this.item = item), (this.name = item.name);
+		(this.item = options), (this.name = options.name);
 		this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), 
 		this.getCity()
 		// this.getQuestions()

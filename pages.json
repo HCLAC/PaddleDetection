@@ -1,7 +1,9 @@
 {
 	"easycom": {
-		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
-		
+		"autoscan": true,
+		"custom": {
+			"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+		}
 	},
 	"pages": [
 		
