@@ -16,10 +16,10 @@
 				</view>
 				<!-- 头图 -->
 					<view class="headImgBox">
-						<image class="headImg" :src="item.image" mode="scaleToFill"></image>
+						<image class="headImg" :src="querys.image" mode="scaleToFill"></image>
 						<view class="mask"></view>
 						<view class="cityBox">
-							<view class="city">{{ item.name || '全国' }}</view>
+							<view class="city">{{ querys.name || '全国' }}</view>
 							<view class="change" @click="getCity">
 								<view class="changeText" @click="show = true">切换</view>
 								<image class="changeIcon" src="../../static/images/more-down.svg" mode=""></image>
@@ -161,7 +161,7 @@
 								</view>
 							</view>
 							<view class="tripBox">
-								<view class="tripContent" v-for="(item, index) in routeHot" :key="index" @click="getLineDetail(item)">
+								<view class="tripContent" v-for="(item, index) in routeHot" :key="index" @click="toLineDetail(item)">
 									<image class="tripImg" :src="item.image" mode=""></image>
 									<view class="tripText">{{ item.title }}</view>
 								</view>
@@ -211,7 +211,7 @@
 								<view class="left">
 									<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
 										<view class="" v-if="item.type != 6">
-											<view class="demo-top" @click="onPageJump" :id="item.article_id">
+											<view class="demo-top" @click="toArticleDetail" :id="item.article_id">
 												<view class="imgBox" >
 													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
 														<view class="videoIcon" v-if="item.type == 4">
@@ -260,7 +260,7 @@
 								<view class="right">
 									<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
 										<view class="" v-if="item.type != 6">
-											<view class="demo-top"  @click="onPageJump" :id="item.article_id">
+											<view class="demo-top"  @click="toArticleDetail" :id="item.article_id">
 												<view class="imgBox">
 													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
 														<view class="videoIcon" v-if="item.type == 4">
@@ -324,7 +324,7 @@
 					</uni-nav-bar>
 					<!-- 城市 -->
 					<view class="nowcity">
-						<text>{{ name }}</text>
+						<text>{{ querys.name }}</text>
 						<image class="nowcityImg" src="../../static/images/moreDown.svg" mode=""></image>
 					</view>
 					<!-- 城市选择列表 -->
@@ -348,8 +348,8 @@
 										<!-- </view> -->
 										<view class="item-container">
 											<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
-												<!-- <image class="item-menu-image" :src="item1.icon" mode=""></image> -->
-												<view class="item-menu-name" @click="gethotsiteslist1(item1)">{{ item1.name }}</view>
+												<!-- <image class="item-menu-image" :src="item2.icon" mode=""></image> -->
+												<view class="item-menu-name" @click="swichToCity(item1)">{{ item1.name }}</view>
 											</view>
 										</view>
 									</view>
@@ -359,7 +359,6 @@
 					</view>
 				</u-popup>
 			</view>
-			
 	</view>
 </template>
 
@@ -371,13 +370,19 @@ export default {
 	mixins: [MescrollMixin],
 	data() {
 		return {
+			downOption: {
+				auto:false
+			},
+			upOption: {
+				auto:false
+			},
 			scrollTop: 0, //tab标题的滚动条位置
 			current: 0, // 预设当前项的值
 			menuHeight: 0, // 左边菜单的高度
 			menuItemHeight: 0, // 左边菜单item的高度
 			list: [],
 			weather: null,
-			item: null,
+			querys: null,
 			siteHot: [],
 			routeHot: null,
 			show: false,
@@ -389,32 +394,42 @@ export default {
 				bgColor:'#F8F8F8'
 			},
 			questions:null,
-			answersList:{}
+			answersList:[]
 		};
 	},
 	comments: {
 		uniNavBar
 	},
 	onLoad(options) {
-		(this.item = options), (this.name = options.name);
-		this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(), 
-		this.getCity()
-		// this.getQuestions()
-		// this.getAnswersList()
-		// this.delbackbtn()
+		this.querys = options;
+		this.loadData()
+		this.mescroll.resetUpScroll();
 	},
 	methods: {
-		// delbackbtn(){
-		// 	var a = document.getElementsByClassName('uni-page-head-hd')[0]
-		// 	a.style.display = 'none';
-		// },
+		loadData(){
+			uni.showLoading({
+				title: '加载中',
+				mask: true,
+				success: () => {
+					this.getWeather();
+					this.getSiteHot();
+					this.getRouteHot();
+					this.getCity();
+					this.hideLoad();
+					// this.getAnswersList()
+				}
+			});
+		},
+		hideLoad(){
+			uni.hideLoading();
+		},
 		// 文章瀑布流接口
 		getTour() {
 			uni.request({
 				url: this.globalUrl + '/article/list',
 				data: {
-					state_id: this.item.state_id,
-					city_id: this.item.city_id,
+					state_id: this.querys.state_id,
+					city_id: this.querys.city_id,
 					count: 6,
 					page: 1,
 					first_time: new Date().getTime()
@@ -428,8 +443,8 @@ export default {
 						uni.request({
 							url: this.globalUrl + '/article/list',
 							data: {
-								state_id: this.item.state_id,
-								city_id: this.item.city_id,
+								state_id: this.querys.state_id,
+								city_id: this.querys.city_id,
 								count: 6,
 								page: 1,
 								first_time: new Date().getTime()
@@ -450,70 +465,63 @@ export default {
 			});
 		},
 		// 获取问答列表
-		// getAnswersList() {
-		// 	uni.request({
-		// 		url: this.globalUrl + '/questions/random',
-		// 		data: {
-		// 			state_id: this.item.state_id,
-		// 			city_id: this.item.city_id,
-		// 			count: 6
-		// 		},
-		// 		header: {
-		// 			Authorization: uni.getStorageSync('Authorization')
-		// 		},
-		// 		success: res => {
-		// 			console.log('wenda列表',res)
-		// 			this.answersList = res.data.data
-		// 		}
-		// 	});
-		// },
-		// 随机获取问答
-		// async getRandom(arr) {
-		//     var len = arr.length;
-		//     var i = Math.ceil(Math.random() * (len ))%len;
-		//     return arr[i];
-		// },
-		// 跳转文章详情
-		onPageJump(e) {
-			console.log(e);
-			let id = e.currentTarget.id;
-			// debugger
-			// return
-			uni.navigateTo({
-				url: '/pages/contentdetail/contentdetail?article_id=' + id
+		getAnswersList() {
+			uni.request({
+				url: this.globalUrl + '/questions/random',
+				data: {
+					state_id: this.querys.state_id,
+					city_id: this.querys.city_id,
+					count: 6
+				},
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: res => {
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
+					}
+					this.answersList = res.data.data
+				}
 			});
-		},
-		getLineDetail(item) {
-			if (item.uuid) {
-				uni.navigateTo({
-					url: '/pages/lineDetail/lineDetail?id=' + item.uuid
-				});
-			}
 		},
 		// 天气接口
 		getWeather() {
-			
 			uni.request({
 				url: 'https://api.asilu.com/weather/',
 				data: {
-					city: this.item.name
+					city: this.querys.name
 				},
 				success: (res) => {
-					console.log('天气--', res);
+					if (res.statusCode != 200){
+						uni.showToast({
+							title: '获取天气情况失败，待重试',
+							icon: 'none'
+						});
+						return
+					}
 					if (res.data.date == null) {
 						uni.request({
 							url: 'https://api.asilu.com/weather/',
 							data: {
 								city: res.data.id.city
 							},
-							success: res => {
-								this.weather = res.data.weather[0];
-								console.log('当地天气', this.weather);
+							success: res2 => {
+								if (res2.statusCode != 200){
+									uni.showToast({
+										title: '获取天气情况失败，待重试',
+										icon: 'none'
+									});
+									return
+								}
+								this.weather = res2.data.weather[0];
 							}
 						});
 					} else {
 						this.weather = res.data.weather[0];
-						console.log('当地天气', this.weather);
 					}
 				}
 			});
@@ -523,13 +531,19 @@ export default {
 			uni.request({
 				url: this.globalUrl + '/site/hot',
 				data: {
-					state_id: this.item.state_id,
-					city_id: this.item.city_id,
+					state_id: this.querys.state_id,
+					city_id: this.querys.city_id,
 					count: 3,
 					sort_by: 3
 				},
-				success: res => {
-					console.log('景点推荐', res);
+				success: res => {					
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
+					}
 					this.siteHot = res.data.data;
 				}
 			});
@@ -539,32 +553,49 @@ export default {
 			uni.request({
 				url: this.globalUrl + '/route/hot',
 				data: {
-					state_id: this.item.state_id,
-					city_id: this.item.city_id,
+					state_id: this.querys.state_id,
+					city_id: this.querys.city_id,
 					count: 2
 				},
-				success: res => {
-					console.log('热门线路', res);
+				success: res => {					
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
+					}
 					this.routeHot = res.data.data;
 				}
 			});
 		},
+		// 跳转文章详情
+		toArticleDetail(e) {
+			let id = e.currentTarget.id;
+			uni.navigateTo({
+				url: '/pages/contentdetail/contentdetail?article_id=' + id
+			});
+		},
+		toLineDetail(item) {
+			uni.navigateTo({
+				url: '/pages/lineDetail/lineDetail?id=' + item.uuid
+			});
+		},
 		// 跳转景点详情页
 		toAtt(e) {
-			console.log('----------------', e);
 			uni.navigateTo({
 				url: '/pages/positionContent/positionContent?id=' + e
 			});
 		},
 		// 跳转景点榜单页
 		toMore() {
-			if (this.item == null) {
+			if (this.querys == null) {
 				uni.navigateTo({
 					url: '/pages/attractionsRank/attractionsRank'
 				});
 			} else {
-				var state_id = this.item.state_id;
-				var city_id = this.item.city_id;
+				var state_id = this.querys.state_id;
+				var city_id = this.querys.city_id;
 				uni.navigateTo({
 					url: '/pages/attractionsRank/attractionsRank?state_id=' + state_id + '&city_id=' + city_id
 				});
@@ -572,43 +603,20 @@ export default {
 		},
 		// 线路列表
 		toLineMore() {
-			console.log(this.item,'item--')
-			if (this.item == null) {
+			if (this.querys == null) {
 				uni.navigateTo({
 					url: '/pages/lineList/lineList'
 				});
 			} else {
-				var state_id = this.item.state_id;
-				var city_id = this.item.city_id;
+				var state_id = this.querys.state_id;
+				var city_id = this.querys.city_id;
 				uni.navigateTo({
 					url: '/pages/lineList/lineList?state_id=' + state_id + '&city_id=' + city_id
 				});
 			}
 		},
-		// 获取精选问题
-		// getQuestions(){
-		// 	uni.request({
-		// 		url: this.globalUrl + '/questions/selected',
-		// 		data: {
-		// 			state_id: this.item.state_id,
-		// 			city_id: this.item.city_id,
-		// 			count: 2
-		// 		},
-		// 		header: {
-		// 			Authorization: uni.getStorageSync('Authorization')
-		// 		},
-		// 		success: res => {
-		// 			this.questions = res.data.data
-		// 			console.log('获取精选问题', this.questions);
-		// 		}
-		// 	})
-			
-			
-
-		// },
 		// 跳转问题详情
 		toQuestionsDetail(item){
-			console.log(item)
 			var question_id = item.question_id
 			uni.navigateTo({
 				url: '/pages/questionsDetail/questionsDetail?question_id=' + question_id
@@ -616,8 +624,8 @@ export default {
 		},
 		// 跳转问答列表页
 		toMoreQuestions(){
-			var state_id = this.item.state_id;
-			var city_id = this.item.city_id;
+			var state_id = this.querys.state_id;
+			var city_id = this.querys.city_id;
 			uni.navigateTo({
 				url: '/pages/moreQuestions/moreQuestions?state_id=' + state_id + '&city_id=' + city_id
 			});
@@ -627,98 +635,42 @@ export default {
 			uni.request({
 				url: this.globalUrl + '/area/guide',
 				success: res => {
-					console.log('获取全国城市', res);
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
+					}
 					var cityList = res.data.data.areas;
 					this.cityList = cityList.slice(1);
-					console.log('shift--', this.cityList);
 				}
 			});
 		},
-		// 获取
-
-		gethotsiteslist1(item1) {
-			console.log(item1,'点击城市')
-			if (item1.city_id == 0) {
-				uni.request({
-					url: this.globalUrl + '/area',
-					data: {
-						state_id: item1.state_id
-					},
-					success: res => {
-						console.log('省市信息==', res);
-						(this.item = res.data.data),
-							(this.name = this.name = res.data.data.name),
-							// 正在旅行
-							uni.request({
-								url: this.globalUrl + '/article/list',
-								data: {
-									state_id: res.data.data.state_id,
-									city_id: 0,
-									count: 6,
-									page: 1,
-									first_time: new Date().getTime()
-								},
-								header: {
-									Authorization: uni.getStorageSync('Authorization')
-								},
-								success: res => {
-									uni.setStorageSync('article_id', res.data);
-									this.list = res.data.data.list;
-									// this.mescroll.resetUpScroll()
-									console.log('list=====', res.data);
-								}
-							}),
-							
-							this.getWeather(),
-							// this.getQuestions(),
-							// this.getAnswersList(),
-							// 景点
-							uni.request({
-								url: this.globalUrl + '/site/hot',
-								data: {
-									state_id: res.data.data.state_id,
-									city_id: 0,
-									count: 3,
-									sort_by: 3
-								},
-								success: res => {
-									console.log('景点推荐', res);
-									this.siteHot = res.data.data;
-								}
-							});
-						// 线路
-						uni.request({
-							url: this.globalUrl + '/route/hot',
-							data: {
-								state_id: res.data.data.state_id,
-								city_id: 0,
-								count: 2
-							},
-							success: res => {
-								console.log('热门线路', res);
-								this.routeHot = res.data.data;
-							}
-						}),
-							(this.show = false);
+		// 跳转其他省市
+		swichToCity(item1) {
+			var that = this
+			uni.request({
+				url: this.globalUrl + '/area',
+				data: {
+					state_id: item1.state_id,
+					city_id: item1.city_id
+				},
+				success: res => {
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
 					}
-				});
-			} else {
-				uni.request({
-					url: this.globalUrl + '/area',
-					data: {
-						state_id: item1.state_id,
-						city_id: item1.city_id
-					},
-					success: res => {
-						console.log('城市信息==', res);
-						(this.item = res.data.data), (this.name = this.name = res.data.data.name), this.getTour(), this.getWeather(), this.getSiteHot(), this.getRouteHot(),
-						// this.getQuestions(),
-						// this.getAnswersList(),
-						(this.show = false);
-						this.mescroll.resetUpScroll()
-					}
-				});
-			}
+					uni.redirectTo({
+						url: '/pages/provinces/provinces?state_id=' + 
+										res.data.data.state_id+"&city_id="+res.data.data.city_id+
+										"&name="+res.data.data.name+"&image="+res.data.data.image
+					});
+				}
+			});
 		},
 		
 		// 点击左边的栏目切换
@@ -759,8 +711,14 @@ export default {
 		},
 		// 点赞
 		clickLike(e, index) {
-			console.log('qaz', e, index);
-			// debugger
+			let Authorization = uni.getStorageSync('Authorization')
+			if (!Authorization){
+				uni.navigateTo({
+					url: '/pagesA/login/login'
+				});
+				return
+			}
+			
 			let article = e.article_id;
 			var that = this;
 			uni.request({
@@ -775,22 +733,19 @@ export default {
 				},
 				success: res => {
 					if (res.data.code != 0) {
-						// debugger
 						uni.navigateTo({
 							url: '/pagesA/login/login'
 						});
 					}
 
-					that.list[index].liked = e.liked == 1 ? 0 : 1;
-					that.list[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
+					that.list[index].liked = res.data.data.liked;
+					that.list[index].like_count = res.data.data.like_count;
 				}
 			});
 		},
 		// 提问按钮
 		toQuestions(){
-			// console.log()
 			var Authorization = uni.getStorageSync('Authorization')
-			console.log(Authorization)
 			if (!Authorization) {
 				uni.navigateTo({
 					url: '/pagesA/login/login'
@@ -814,6 +769,7 @@ export default {
 		},
 		/*下拉刷新的回调, 有三种处理方式:*/
 		downCallback() {
+			this.loadData()
 			// 第1种: 请求具体接口
 			// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
 			this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
@@ -830,164 +786,84 @@ export default {
 				this.firstTime = new Date().getTime()
 			}
 			var that = this;
-			if (that.item == null) {
-				uni.request({
-					url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					data: {
-						first_time: this.firstTime
-					},
-					success: data => {
-						console.log('data', data);
-						// 接口返回的当前页数据列表 (数组)
-						let curPageData = data.data.data.list;
-
-						console.log('curPageData', curPageData);
-						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-						let curPageLen = curPageData.length;
-						console.log('curPageLen', curPageLen);
-						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-						// let totalPage = data.data.data.total / pageSize;
-						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-						let totalSize = data.data.data.total;
-						console.log('totalSize', totalSize);
-						// 接口返回的是否有下一页 (true/false)
-						// let hasNext = data.data.data.list;
-
-						if(this.answersList.length > 0 ){
-							var answer = this.answersList
-							var sar = Math.floor((Math.random()*answer.length));
-							var addAnswer = answer[sar]
-							let answerArr = [addAnswer]
-							console.log(answerArr,'随机数据')
-							//设置列表数据
-							if (curPageData > 5){
-								if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
-								curPageData = curPageData.concat(answerArr)
-								that.list = that.list.concat(curPageData); //追加新数据
-								console.log('that-list-', that.list);
-							}else{
-								if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
-								that.list = that.list.concat(curPageData); //追加新数据
-								console.log('that-list-', that.list);
-							}
-							
-						}else{
-							// console.log(answerArr,'随机数据')
-							//设置列表数据
-							if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
-							that.list = that.list.concat(curPageData); //追加新数据
-							console.log('that-list-', that.list);
-						}
-						// 请求成功,隐藏加载状态
-						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-						// this.mescroll.endByPage(curPageLen, totalPage);
-
-						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-						this.mescroll.endBySize(curPageLen, totalSize);
-
-						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-						//this.mescroll.endSuccess(curPageLen, hasNext);
-
-						//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-						//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-						//如果传了hasNext,则翻到第二页即可显示无更多数据.
-						//this.mescroll.endSuccess(curPageLen);
-
-						// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-						// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-						// setTimeout(() => {
-						// 	this.mescroll.endSuccess(curPageLen)
-						// }, 20)
-					},
-					fail: () => {
-						//  请求失败,隐藏加载状态
-						this.mescroll.endErr();
-					}
-				});
-			} else {
-				uni.request({
-					url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
-					data: {
-						state_id: that.item.state_id,
-						city_id: that.item.city_id,
-						first_time: that.firstTime
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: data => {
-						console.log('data', data);
-						// 接口返回的当前页数据列表 (数组)
-						let curPageData = data.data.data.list;
-
-						console.log('curPageData', curPageData);
-						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-						let curPageLen = curPageData.length;
-						console.log('curPageLen', curPageLen);
-						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-						let totalPage = data.data.data.total / pageSize;
-						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-						let totalSize = data.data.data.total;
-						console.log('totalSize', totalSize);
-						// 接口返回的是否有下一页 (true/false)
-						// let hasNext = data.data.data.list;
-						console.log(this.answersList)
-						if(this.answersList.length > 0 ){
-							var answer = this.answersList
-							var sar = Math.floor((Math.random()*answer.length));
-							var addAnswer = answer[sar]
-							let answerArr = [addAnswer]
-							console.log(answerArr,'随机数据')
-							//设置列表数据
-							if (curPageData.length > 5){
-								if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
-								curPageData = curPageData.concat(answerArr)
-								that.list = that.list.concat(curPageData); //追加新数据
-								console.log('that-list-', that.list);
-							}else{
-								if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
-								that.list = that.list.concat(curPageData); //追加新数据
-								console.log('that-list-', that.list);
-							}
-							
-						}else{
-							// console.log(answerArr,'随机数据')
-							//设置列表数据
-							if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
-							that.list = that.list.concat(curPageData); //追加新数据
-							console.log('that-list-', that.list);
-						}
-						// that.list = that.list.concat(answerArr)
-						// 请求成功,隐藏加载状态
-						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-						this.mescroll.endByPage(curPageLen, totalPage);
-
-						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-						// this.mescroll.endBySize(curPageLen, totalSize);
-
-						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-						//this.mescroll.endSuccess(curPageLen, hasNext);
-
-						//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-						//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-						//如果传了hasNext,则翻到第二页即可显示无更多数据.
-						//this.mescroll.endSuccess(curPageLen);
-
-						// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-						// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-						// setTimeout(() => {
-						// 	this.mescroll.endSuccess(curPageLen)
-						// }, 20)
-					},
-					fail: () => {
-						//  请求失败,隐藏加载状态
-						this.mescroll.endErr();
-					}
-				});
+			
+			if (that.querys == null) {
+				that.querys.city_id = 0
+				that.querys.state_id = 0
 			}
+			uni.request({
+				url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
+				data: {
+					state_id: that.querys.state_id,
+					city_id: that.querys.city_id,
+					first_time: that.firstTime
+				},
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: data => {
+					if (!data.data.data.list || data.data.data.list.length == 0){
+						return
+					}
+					// 接口返回的当前页数据列表 (数组)
+					let curPageData = data.data.data.list;
+			
+					// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+					let curPageLen = curPageData.length;
+					// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+					let totalPage = data.data.data.total / pageSize;
+					// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+					let totalSize = data.data.data.total;
+					// 接口返回的是否有下一页 (true/false)
+					// let hasNext = data.data.data.list;
+					if(this.answersList.length > 0 ){
+						var answer = this.answersList
+						var sar = Math.floor((Math.random()*answer.length));
+						var addAnswer = answer[sar]
+						let answerArr = [addAnswer]
+						//设置列表数据
+						if (curPageData.length > 5){
+							if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+							curPageData = curPageData.concat(answerArr)
+							that.list = that.list.concat(curPageData); //追加新数据
+						}else{
+							if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+							that.list = that.list.concat(curPageData); //追加新数据
+						}
+					}else{
+						// console.log(answerArr,'随机数据')
+						//设置列表数据
+						if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+						that.list = that.list.concat(curPageData); //追加新数据
+					}
+					console.debug('文章列表', that.list);
+					// that.list = that.list.concat(answerArr)
+					// 请求成功,隐藏加载状态
+					//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+					this.mescroll.endByPage(curPageLen, totalPage);
+			
+					//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+					// this.mescroll.endBySize(curPageLen, totalSize);
+			
+					//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+					//this.mescroll.endSuccess(curPageLen, hasNext);
+			
+					//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+					//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+					//如果传了hasNext,则翻到第二页即可显示无更多数据.
+					//this.mescroll.endSuccess(curPageLen);
+			
+					// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+					// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+					// setTimeout(() => {
+					// 	this.mescroll.endSuccess(curPageLen)
+					// }, 20)
+				},
+				fail: () => {
+					//  请求失败,隐藏加载状态
+					this.mescroll.endErr();
+				}
+			});
 
 			// 此处仍可以继续写其他接口请求...
 			// 调用其他方法...

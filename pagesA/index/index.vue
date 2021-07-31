@@ -169,7 +169,7 @@
 						<u-waterfall v-model="list" ref="uWaterfall">
 							<template v-slot:left="{ leftList }">
 								<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
-									<view class="" @click="onPageJump" :id="item.article_id">
+									<view class="" @click="toArticleDetail" :id="item.article_id">
 										<view class="demo-top">
 											<view class="imgBox">
 												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" lazy-load="true" :src="item.image" :index="index"
@@ -212,7 +212,7 @@
 							</template>
 							<template v-slot:right="{ rightList }">
 								<view class="demo-warter" v-for="(item, index) in rightList" :key="index">
-									<view class="" @click="onPageJump" :id="item.article_id">
+									<view class="" @click="toArticleDetail" :id="item.article_id">
 										<view class="demo-top">
 											<view class="imgBox">
 												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" lazy-load="true" :src="item.image" :index="index"
@@ -462,7 +462,7 @@
 				});
 			},
 			// 跳转文章详情
-			onPageJump(e) {
+			toArticleDetail(e) {
 				let id = e.currentTarget.id;
 				uni.navigateTo({
 					url: '/pages/contentdetail/contentdetail?article_id=' + id
