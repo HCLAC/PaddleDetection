@@ -21,43 +21,14 @@
 					</view>
 					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索" disabled="true" />
 				</view>
-				<!-- <match-media :max-width="360" >
-					
-					<view class="input-view" @click="confirm" style="position:relative; top: -6rpx ; ">
-						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
-						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索" disabled="true" />
-					</view>
-				</match-media>
-				<match-media :max-width="375" :min-width="361" >
-					
-					<view class="input-view" @click="confirm">
-						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
-						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索" disabled="true" />
-					</view>
-				</match-media>
-				<match-media :min-width="376" :max-width="414" >
-					
-					<view class="input-view" @click="confirm" style="position:relative; top: -6rpx ; ">
-						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
-						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索" disabled="true" />
-					</view>
-				</match-media>
-				<match-media :min-width="415" > 
-					
-					<view class="input-view" @click="confirm">
-						<image class="input-uni-icon" src="../../static/images/icon-search.svg" />
-						<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索" disabled="true" />
-					</view>
-				</match-media> -->
 			</uni-nav-bar>
 		</view>
 
 		<!-- 内容 -->
-		<mescroll-uni v-if="bannerList.length != 0" @scroll="uniScroll" class="mescroll" ref="mescrollRef" @init="mescrollInit"
+		<mescroll-uni @scroll="uniScroll" class="mescroll" ref="mescrollRef" @init="mescrollInit"
 		 @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部轮播图 -->
 			<view class="page-section " v-if="bannerList.length != 0">
-
 				<view class="page-section-spacing">
 					<!-- 新版 -->
 					<image class="bannerImg" :src="bannerList[0].image" mode=""></image>
@@ -71,7 +42,7 @@
 					</swiper> -->
 				</view>
 			</view>
-			<view class="cus-sty ">
+			<view class="cus-sty " :style="{'margin-top': cus_sty_top}">
 				<!-- 热门目的地 -->
 				<view class="hot">
 					<view class="wave">
@@ -190,547 +161,99 @@
 							</view>
 						</scroll-view>
 					</view>	
-					<!-- <view class="hot-top">
-						<text class="ht-l">热门目的地</text>
-						<view class="ht-r" @click="showCity">
-							更多
-							<image src="../../static/images/more-right.svg" class="moreIcon" mode=""></image>
-						</view>
-					</view> -->
-
-					<!-- <view class="hot-bot" v-if="areaList && areaList.length">
-						<view class="hotAdress">
-							<view class="dqwz" @click="toProvinces(areaList[0])">
-								<image class="dqwzBg" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
-								<view class="mask1" v-if="areaList[0].image"></view>
-								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
-								<text class="dqwzText">{{ cityName }}</text>
-								<view class="adressBox">
-									<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
-									<text :class="errCode == 0 ? dqwzText1 : dqwzText2" >{{ dqdwText }}</text>
-								</view>
-							</view>
-							<view class="hotCity" @click="toProvinces(areaList[1])" v-if="areaList[1]">
-								<view class="mask"></view>
-								<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
-								<text class="hotCityText">{{ areaList[1].name }}</text>
-							</view>
-							<view class="hotCity" @click="toProvinces(areaList[2])" v-if="areaList[2]">
-								<view class="mask"></view>
-								<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
-								<text class="hotCityText1">{{ areaList[2].name }}</text>
-							</view>
-						</view>
-						<view class="cityRank">
-							<view class="rankText" @click="toProvinces(areaList[3])" v-if="areaList[3]">{{ areaList[3].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[4]"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[4])" v-if="areaList[4]">{{ areaList[4].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[5]"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[5])" v-if="areaList[5]">{{ areaList[5].name }}</view>
-						</view>
-						<view class="cityRank">
-							<view class="rankText" @click="toProvinces(areaList[6])" v-if="areaList[6]">{{ areaList[6].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[7]"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[7])" v-if="areaList[7]">{{ areaList[7].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[7]"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[8])">{{ areaList[8].name }}</view>
-						</view>
-					</view> -->
 				</view>
-
 				<!-- 正在旅行 -->
 				<view class="touring" id="touring">
 					<text class="tourtext">正在旅行</text>
 					<view class="wrap" >
-						<!-- <waterfall-goods :list="list"></waterfall-goods> -->
-						<!-- 非头条可见 -->
-						<!-- #ifdef MP-BAIDU -->
-							<u-waterfall v-model="list" ref="uWaterfall">
-								<template v-slot:left="{ leftList }">
-									<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
-										<view class="" @click="onPageJump" :id="item.article_id">
-											<view class="demo-top">
-												<view class="imgBox">
-													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-													 mode="widthFix">
-														<view class="videoIcon" v-if="item.type == 4">
-															<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
-														</view>
-													</image>
-													<view class="adress">
-														<view class="adreessIcon">
-															<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
-														</view>
-														<view class="adressText">{{ item.location  }}</view>
-													</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
-										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
-											</view>
-											<view class="count" @click="clickLeftLike(item,index) in leftList ">
-												<view class="countImg">
-													<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
-										</view>
-									</view>
-								</template>
-								<template v-slot:right="{ rightList }">
-									<view class="demo-warter" v-for="(item, index) in rightList" :key="index">
-										<view class="" @click="onPageJump" :id="item.article_id">
-											<view class="demo-top">
-												<view class="imgBox">
-													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-													 mode="widthFix">
-														<view class="videoIcon" v-if="item.type == 4">
-															<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
-														</view>
-													</image>
-													<view class="adress">
-														<view class="adreessIcon">
-															<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
-														</view>
-														<view class="adressText">{{ item.location }}</view>
-													</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
-										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
-											</view>
-											<view class="count" @click="clickRightLike(item,index) in rightList">
-												<view class="countImg">
-													<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
-										</view>
-									</view>
-								</template>
-							</u-waterfall>
-						<!-- #endif -->
-						<!-- 头条可见 -->
-						<!-- #ifdef MP-TOUTIAO || MP-WEIXIN -->
-							<view class="left">
-								<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
-									<view class="" >
-										<view class="demo-top" @click="onPageJump" :id="item.article_id">
-											<view class="imgBox" >
-												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="aspectFill">
-													<view class="videoIcon" v-if="item.type == 4">
-														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
-													</view>
-												</image>
-												<view class="adress">
-													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-													<view class="adressText">{{ item.location }}</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
-										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
-											</view>
-											<view class="count" @click="clickLike(item, index)">
-												<view class="countImg">
-													<image mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
-										</view>
-									</view>
-								</view>
-							</view>
-							<view class="right">
-								<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
-									<view class="">
-										<view class="demo-top"  @click="onPageJump" :id="item.article_id">
+						<u-waterfall v-model="list" ref="uWaterfall">
+							<template v-slot:left="{ leftList }">
+								<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
+									<view class="" @click="onPageJump" :id="item.article_id">
+										<view class="demo-top">
 											<view class="imgBox">
-												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="aspectFill">
+												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" lazy-load="true" :src="item.image" :index="index"
+												 mode="widthFix">
 													<view class="videoIcon" v-if="item.type == 4">
-														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+														<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
 													</view>
 												</image>
 												<view class="adress">
-													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-													<view class="adressText">{{ item.location }}</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
-										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
-											</view>
-											<view class="count" @click="clickLike(item, index)">
-												<view class="countImg">
-													<image mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
-										</view>
-									</view>
-								</view>
-							</view>
-						<!-- #endif -->
-					</view>
-				</view>
-			</view>
-		</mescroll-uni>
-		<!-- 无banner时 -->
-		<mescroll-uni v-if="bannerList.length == 0" @scroll="uniScroll" class="mescroll1" ref="mescrollRef" @init="mescrollInit"
-		 @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-
-			<view class="cus-sty1 ">
-				<!-- 热门目的地 -->
-				<view class="hot">
-					<!-- 旧版 -->
-					<!-- <view class="hot-top">
-						<text class="ht-l">热门目的地</text>
-						<view class="ht-r" @click="showCity">
-							更多
-							<image src="../../static/images/more-right.svg" class="moreIcon" mode=""></image>
-						</view>
-					</view> -->
-					<!-- 新版 -->
-					<view class="wave waveNoB">
-						<image class="waveImg" src="../../static/images/wave.png" mode=""></image>
-					</view>
-					<!-- <u-swiper :list="uswiperlist" mode="none" :autoplay="false" ></u-swiper> -->
-					<view class="citysBox">
-						<scroll-view scroll-x="true" class="kite-classify-scroll" v-if="areaList.length != 0">
-							<view class="citysBoxLeft">
-								<view class="cblt">
-									<view class="cbltcBig" @click="toProvinces(areaList[0])" :style="{backgroundImage: 'url('+areaList[0].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[0].image" mode="scaleToFill"></image> -->
-										<view class="cbltcBigTextBox">
-											<view class="cbltcBigText">
-												{{areaList[0].name}}
-											</view>
-										</view>
-									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[1])" :style="{backgroundImage: 'url('+areaList[1].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image> -->
-										<view class="cbltcBigTextBox">
-											<view class="cbltcSmallText">
-												{{areaList[1].name}}
-											</view>
-										</view>
-									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[2])" :style="{backgroundImage: 'url('+areaList[2].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image> -->
-										<view class="cbltcBigTextBox">
-											<view class="cbltcSmallText">
-												{{areaList[2].name}}
-											</view>
-										</view>
-									</view>
-								</view>
-								<view class="cblb">
-									<view class="cblbcSmall" @click="toProvinces(areaList[3])" :style="{backgroundImage: 'url('+areaList[3].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[3].image" mode="scaleToFill"></image> -->
-										<view class="cbltcBigTextBox">
-											<view class="cblbcSmallText">
-												{{areaList[3].name}}
-											</view>
-										</view>
-									</view>
-									<view class="cblbcSmall" @click="toProvinces(areaList[4])" :style="{backgroundImage: 'url('+areaList[4].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[4].image" mode="scaleToFill"></image> -->
-										<view class="cbltcBigTextBox">
-											<view class="cblbcSmallText">
-												{{areaList[4].name}}
-											</view>
-										</view>
-									</view>
-									<view class="cblbcBig" @click="toProvinces(areaList[5])" :style="{backgroundImage: 'url('+areaList[5].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[5].image" mode="scaleToFill"></image> -->
-										<view class="cbltcBigTextBox">
-											<view class="cblbcBigText">
-												{{areaList[5].name}}
-											</view>
-										</view>
-									</view>
-								</view>
-							</view>
-							<view class="citysBoxRight">
-								<view class="cblt">
-									<view class="cbltcBig" @click="toProvinces(areaList[6])" :style="{backgroundImage: 'url('+areaList[6].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[6].image" mode="scaleToFill"></image> -->
-										<view class="cbltcBigTextBox">
-											<view class="cbltcBigText">
-												{{areaList[6].name}}
-											</view>
-										</view>
-									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[7])" :style="{backgroundImage: 'url('+areaList[7].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[7].image" mode="scaleToFill"></image> -->
-										<view class="cbltcBigTextBox">
-											<view class="cbltcSmallText">
-												{{areaList[7].name}}
-											</view>
-										</view>
-									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[8])" :style="{backgroundImage: 'url('+areaList[8].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[8].image" mode="scaleToFill"></image> -->
-										<view class="cbltcBigTextBox">
-											<view class="cbltcSmallText">
-												{{areaList[8].name}}
-											</view>
-										</view>
-									</view>
-								</view>
-								<view class="cblb">
-									<view class="cblbcSmall" @click="toProvinces(areaList[9])" :style="{backgroundImage: 'url('+areaList[9].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[9].image" mode="scaleToFill"></image> -->
-										<view class="cbltcBigTextBox">
-											<view class="cblbcSmallText">
-												{{areaList[9].name}}
-											</view>
-										</view>
-									</view>
-									<view class="cblbcSmall" @click="toProvinces(areaList[10])" :style="{backgroundImage: 'url('+areaList[10].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[10].image" mode="scaleToFill"></image> -->
-										<view class="cbltcBigTextBox">
-											<view class="cblbcSmallText">
-												{{areaList[10].name}}
-											</view>
-										</view>
-									</view>
-									<view class="cblbcBig" @click="toProvinces(areaList[11])" :style="{backgroundImage: 'url('+areaList[11].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[11].image" mode="scaleToFill"></image> -->
-										<view class="cbltcBigTextBox">
-											<view class="cblbcBigText">
-												{{areaList[11].name}}
-											</view>
-										</view>
-									</view>
-								</view>
-							</view>
-						</scroll-view>
-					</view>	
-				</view>
-
-				<!-- 正在旅行 -->
-				<view class="touring" id="touring">
-					<text class="tourtext">正在旅行</text>
-					<view class="wrap">
-						<!-- #ifdef MP-BAIDU -->
-							<u-waterfall v-model="list" ref="uWaterfall">
-								<template v-slot:left="{ leftList }">
-									<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
-										<view class="" @click="onPageJump" :id="item.article_id">
-											<view class="demo-top">
-												<view class="imgBox">
-													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-													 mode="aspectFill">
-														<view class="videoIcon" v-if="item.type == 4">
-															<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
-														</view>
-													</image>
-													<view class="adress">
-														<view class="adreessIcon">
-															<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
-														</view>
-														<view class="adressText">{{ item.location }}</view>
+													<view class="adreessIcon">
+														<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
 													</view>
+													<view class="adressText">{{ item.location  }}</view>
 												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
 											</view>
 										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
+										<view class="titleTip">
+											<view class="demo-tag">
+												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+												<view class="demo-tag-owner" v-else-if="item.type == 2">攻略</view>
+												<view class="demo-tag-owner" v-else-if="item.type == 4">视频</view>
+												<view class="demo-tag-owner" v-else>旅游</view>
 											</view>
-											<view class="count" @click="clickLeftLike(item,index) in leftList ">
-												<view class="countImg">
-													<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
+											<view class="demo-title">{{ item.title }}</view>
 										</view>
 									</view>
-								</template>
-								<template v-slot:right="{ rightList }">
-									<view class="demo-warter" v-for="(item, index) in rightList" :key="index">
-										<view class="" @click="onPageJump" :id="item.article_id">
-											<view class="demo-top">
-												<view class="imgBox">
-													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-													 mode="aspectFill">
-														<view class="videoIcon" v-if="item.type == 4">
-															<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
-														</view>
-													</image>
-													<view class="adress">
-														<view class="adreessIcon">
-															<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
-														</view>
-														<view class="adressText">{{ item.location }}</view>
-													</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
+									<view class="demo-user">
+										<view class="userMessage">
+											<image class="userHeard" :src="item.avatar"></image>
+											<view class="userNikename">{{ item.author_name }}</view>
 										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
+										<view class="count" @click="clickLeftLike(item,index) in leftList ">
+											<view class="countImg">
+												<image class="likeImg" mode="aspectFit" :src="item.liked == 0?'../../static/images/heart.svg':'../../static/images/heart_actived.svg'"></image>
 											</view>
-											<view class="count" @click="clickRightLike(item,index) in rightList">
-												<view class="countImg">
-													<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
-										</view>
-									</view>
-								</template>
-							</u-waterfall>
-						<!-- #endif -->
-						<!-- #ifdef MP-TOUTIAO || MP-WEIXIN -->
-							<view class="left">
-								<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
-									<view class="" >
-										<view class="demo-top" @click="onPageJump" :id="item.article_id">
-											<view class="imgBox" >
-												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="aspectFill">
-													<view class="videoIcon" v-if="item.type == 4">
-														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
-													</view>
-												</image>
-												<view class="adress">
-													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-													<view class="adressText">{{ item.location }}</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
-										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
-											</view>
-											<view class="count" @click="clickLike(item, index)">
-												<view class="countImg">
-													<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
+											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
 									</view>
 								</view>
-							</view>
-							<view class="right">
-								<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
-									<view class="">
-										<view class="demo-top"  @click="onPageJump" :id="item.article_id">
+							</template>
+							<template v-slot:right="{ rightList }">
+								<view class="demo-warter" v-for="(item, index) in rightList" :key="index">
+									<view class="" @click="onPageJump" :id="item.article_id">
+										<view class="demo-top">
 											<view class="imgBox">
-												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="aspectFill">
+												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" lazy-load="true" :src="item.image" :index="index"
+												 mode="widthFix">
 													<view class="videoIcon" v-if="item.type == 4">
-														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
+														<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
 													</view>
 												</image>
 												<view class="adress">
-													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
+													<view class="adreessIcon">
+														<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
+													</view>
 													<view class="adressText">{{ item.location }}</view>
 												</view>
 											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
 										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
+										<view class="titleTip">
+											<view class="demo-tag">
+												<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+												<view class="demo-tag-owner" v-else-if="item.type == 2">攻略</view>
+												<view class="demo-tag-owner" v-else-if="item.type == 4">视频</view>
+												<view class="demo-tag-owner" v-else>旅游</view>
 											</view>
-											<view class="count" @click="clickLike(item, index)">
-												<view class="countImg">
-													<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+											<view class="demo-title">{{ item.title }}</view>
+										</view>
+									</view>
+									<view class="demo-user">
+										<view class="userMessage">
+											<image class="userHeard" :src="item.avatar"></image>
+											<view class="userNikename">{{ item.author_name }}</view>
+										</view>
+										<view class="count" @click="clickRightLike(item,index) in rightList">
+											<view class="countImg">
+												<image class="likeImg" mode="aspectFit" :src="item.liked == 0?'../../static/images/heart.svg':'../../static/images/heart_actived.svg'"}}></image>
 											</view>
+											<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 										</view>
 									</view>
 								</view>
-							</view>
-						<!-- #endif -->
+							</template>
+						</u-waterfall>
 					</view>
 				</view>
 			</view>
@@ -742,7 +265,6 @@
 	import uniIcons from '@/components/uni-icons/uni-icons.vue';
 	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 	import uniSection from '@/components/uni-section/uni-section.vue';
-	import waterfallGoods from '@/components/module/stable_waterfall_goods.vue'
 	// 引入mescroll-mixins.js
 	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 	export default {
@@ -750,15 +272,19 @@
 			uniIcons,
 			uniNavBar,
 			uniSection,
-			waterfallGoods
 		},
 		mixins: [MescrollMixin],
 		data() {
 			return {
+				downOption: {
+					auto:false
+				},
+				upOption: {
+					auto:false
+				},
 				backgroundColor: 'transparent',
 				firstTime: new Date().getTime(),
 				cityName: '',
-				dqdwText: '当前位置',
 				province: '',
 				state_id: '',
 				city_id: '',
@@ -780,7 +306,6 @@
 				isLoadMore: false,
 				item: null,
 				topHotCity: [],
-				errCode: 0,
 				isLike: false,
 				likeNum: 0,
 				bannerList: null,
@@ -788,253 +313,58 @@
 				areaList: [],
 				url: '',
 				serviceProvider: '',
-				e: null,
 				upOption: {
 					bgColor: '#F8F8F8'
-				}
-				
+				},
+				cus_sty_top: '156rpx'
 			};
 		},
-		onReady() {
-			uni.getProvider({
-				service: 'oauth',
-				success: res => {
-					if (res.errMsg == 'getProvider:ok') {
-						this.serviceProvider = res.provider[0];
-					} else {
-						uni.showToast({
-							title: '获取提供商失败',
-							icon: 'none'
-						});
-					}
-				}
-			});
-		},
 		onShow() {
-			this.getAdress();
+			// this.getAdress();
 		},
 		onLoad() {
-			console.log('uni.getSystemInfoSync()', uni.getSystemInfoSync())
-			uni.showLoading({
-				title: '加载中',
-				success: () => {
-					// if (this.item == undefined || null) {
-					this.getBanner();
-					
-					// }
-				}
-			});
-
-			setTimeout(function() {
-				uni.hideLoading();
-			}, 1000);
+			this.serviceProvider = getApp().globalData.serviceProvider
+			this.loadData()
+			this.mescroll.resetUpScroll();
 		},
 
 		methods: {
-			updateWaterFullFunc() {
-				let leftHeight = 0
-				let rightHeight = 0
-				let item = this.list.shift()
-				if (!item) return
-				this.getHeightFunc('left').then(res => {
-					leftHeight = res
-					this.getHeightFunc('right').then(res2 => {
-						rightHeight = res2
-						if (rightHeight >= leftHeight) {
-							this.leftData.push(item)
-						} else {
-							this.rightData.push(item)
-						}
-						this.$nextTick(() => {
-							this.updateWaterFullFunc()
-						})
-					})
-			
-				})
-			},
-			getHeightFunc(el) {
-				return new Promise((resolve, reject) => {
-					let dom = uni.createSelectorQuery().select('#' + el)
-					dom.boundingClientRect(res => {
-						resolve(res.height)
-					}).exec()
-				})
-			},
-			// 获取当前地理位置
-			getAdress() {
-				var that = this;
-				uni.getLocation({
-					type: 'wgs84',
-					success: res => {
-						// console.log(121, res);
-						if (res.city && res.province) {
-							this.cityName = res.city.substr(0, res.city.length - 1);
-							this.city = res.city;
-							this.province = res.province;
-							// console.log('哈哈哈哈哈哈哈哈哈');
-
-							console.log(this.city, this.province);
-							uni.request({
-								url: this.globalUrl + '/area/hot',
-								// data: {
-								// 	state: this.province ? this.province : null,
-								// 	city: this.city ? this.city : null
-								// },
-								success: res => {
-									// console.log(this.areaList);
-									this.areaList = res.data.data;
-
-									console.log('areaList--', this.areaList);
-								}
-							});
-						} else {
-							let arr = [];
-							arr.push(res.latitude);
-							arr.push(res.longitude);
-							console.log(arr);
-							arr = arr.join(',');
-							uni.request({
-								url: 'https://api.map.baidu.com/reverse_geocoding/v3/?ak=NKyWaSnsW6FFEseeCEX18Fpvgzs3jcmd&output=json&coordtype=wgs84ll',
-								data: {
-									location: arr
-								},
-								success: result => {
-									if (result.data.status == 0) {
-										this.cityName = result.data.result.addressComponent.city.substr(0, result.data.result.addressComponent.city
-											.length - 1);
-										this.city = result.data.result.addressComponent.city;
-										this.province = result.data.result.addressComponent.province;
-										// console.log('哈哈哈哈哈哈哈哈哈');
-
-										console.log('当前定位', this.city, this.province);
-										uni.request({
-											url: this.globalUrl + '/area/hot',
-											// data: {
-											// 	state: this.province ? this.province : null,
-											// 	city: this.city ? this.city : null
-											// },
-											success: res => {
-												this.areaList = res.data.data;
-
-												console.log('areaList--', this.areaList);
-											}
-										});
-									} else {
-										uni.showToast({
-											title: result.errMsg
-										});
-									}
-								},
-								fail: () => {
-									un.uni.showToast({
-										title: '网络不给力~,请稍后再试',
-										icon: 'none'
-									});
-								}
-							});
-						}
-					},
-
-					// 未开启定位
-					fail: error => {
-						console.log(111);
-						console.log('未开启定位', error);
-						// uni.setStorageSync('errCode',res.errCode)
-						this.errCode = 1;
-						this.dqdwText = '正在定位...';
-						this.cityName = '未定位'
-						setTimeout(() => {
-							this.dqdwText = '未取得定位';
-						}, 3000);
-
-						uni.request({
-							url: this.globalUrl + '/area/hot',
-							// data: {
-							// 	state: this.province ? this.province : null,
-							// 	city: this.city ? this.city : null
-							// },
-							success: res => {
-								console.log(this.areaList);
-								this.areaList = res.data.data;
-
-								console.log('areaList--', this.areaList);
-							},
-							fail: error => {
-								console.log(error);
-							}
-						});
-
-						// console.log('哈哈哈哈哈哈哈哈哈');
-						// 获取热门目的地
+			loadData(){
+				uni.showLoading({
+					title: '加载中',
+					mask: true,
+					success: () => {
+						this.getBanner();
+						this.getAdress();
+						this.getAreaHot();
 					}
 				});
-				// 获取文章列表
-				console.log('token', uni.getStorageSync('Authorization'));
+			},
+			hideLoad(){
+				uni.hideLoading();
+			},
+			// 获取热门目的地
+			getAreaHot(){
+				var that = this
 				uni.request({
-					url: this.globalUrl + '/article/list',
-					data: {
-						count: 6,
-						page: 1,
-						first_time: new Date().getTime(),
-						source: this.serviceProvider == 'baidu' ? 1 : this.serviceProvider == 'toutiao' ? 2 : this.serviceProvider ==
-							'微信' ? 3 : '',
-
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
+					url: this.globalUrl + '/area/hot',
 					success: res => {
-						// console.log('文章列表', res);
-						if (res.data.data == null) {
-							uni.request({
-								url: this.globalUrl + '/article/list',
-								data: {
-									count: 6,
-									page: 1,
-									first_time: new Date().getTime(),
-									source: this.serviceProvider == 'baidu' ? 1 : this.serviceProvider == 'toutiao' ? 2 : this.serviceProvider ==
-										'微信' ? 3 : '',
-
-								},
-								success: res => {
-									uni.setStorageSync('article_id', res.data);
-									// console.log('存储文章列表==',res.data)
-										// #ifndef MP-TOUTIAO
-										this.$refs.uWaterfall._props.value = res.data.data.list;
-										// #endif
-										// #ifdef MP-TOUTIAO
-										this.list = res.data.data.list;
-										// #endif
-									console.log('list=====', this.list)
-								}
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
 							});
-						} else {
-							uni.setStorageSync('article_id', res.data);
-							// console.log('存储文章列表==',res.data)
-							// console.log(this.$refs)
-								// #ifndef MP-TOUTIAO
-								this.$refs.uWaterfall._props.value = res.data.data.list;
-								// #endif
-								// #ifdef MP-TOUTIAO
-								this.list = res.data.data.list;
-								// #endif
-							console.log('list=====', this.list)
+							return
 						}
+						this.areaList = res.data.data;
+					},
+					fail: error => {
+						console.error(error);
+					},
+					complete: () => {
+						that.hideLoad()
 					}
 				});
-			},
-			// 滚动
-			uniScroll(e) {
-				if (this.bannerList.length == 0) {
-					this.backgroundColor = 'rgba(58, 61, 70, 0.25)';
-				} else {
-					// console.log(e.scrollTop)
-					if (e.scrollTop >= 100) {
-						this.backgroundColor = 'rgba(58, 61, 70, 0.25)';
-					} else {
-						this.backgroundColor = 'transparent';
-					}
-				}
 			},
 			// 获取banner
 			getBanner() {
@@ -1052,265 +382,185 @@
 						// #endif
 					},
 					success: res => {
-						console.log('banner--', res);
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
 						this.bannerList = res.data.data;
-						console.log('------------', this.bannerList.length);
 						if (this.bannerList.length == 0) {
-							this.backgroundColor = 'rgba(58, 61, 70, 0.25)';
+							this.cus_sty_top = '156rpx'
 						} else {
-							this.backgroundColor = 'rgba(58, 61, 70, 0.25)';
+							this.cus_sty_top = '0rpx'
 						}
 					}
 				});
 			},
+			// 获取当前地理位置
+			getAdress() {
+				var that = this;
+				uni.getLocation({
+					type: 'wgs84',
+					success: res => {
+						if (res.city && res.province) {
+							this.cityName = res.city.substr(0, res.city.length - 1);
+							this.city = res.city;
+							this.province = res.province;
+						} else {
+							let arr = [];
+							arr.push(res.latitude);
+							arr.push(res.longitude);
+							arr = arr.join(',');
+							uni.request({
+								url: 'https://api.map.baidu.com/reverse_geocoding/v3/?ak=NKyWaSnsW6FFEseeCEX18Fpvgzs3jcmd&output=json&coordtype=wgs84ll',
+								data: {
+									location: arr
+								},
+								success: result => {
+									if (result.data.status == 0) {
+										this.cityName = result.data.result.addressComponent.city.substr(0, result.data.result.addressComponent.city
+											.length - 1);
+										this.city = result.data.result.addressComponent.city;
+										this.province = result.data.result.addressComponent.province;
+									} else {
+										uni.showToast({
+											title: result.errMsg
+										});
+									}
+								},
+								fail: () => {
+									un.uni.showToast({
+										title: '网络不给力~,请稍后再试',
+										icon: 'none'
+									});
+								}
+							});
+						}
+					},
+					// 未开启定位
+					fail: error => {
+						this.cityName = '未定位'
+					}
+				});
+				
+			},
+			// 滚动
+			uniScroll(e) {
+				if (e.scrollTop >= 100){
+					this.backgroundColor = 'rgba(58, 61, 70, 0.25)';
+				} else {
+					this.backgroundColor = 'transparent';
+				}
+			},
+			
 			// 点击banner
 			towebview(item) {
 				uni.navigateTo({
 					url: `/pages/webview/webview?url=${item.url}`
 				});
 			},
-			// toUrl(item) {
-			// 	console.log(111111);
-			// 	var url = item.url;
-			// },
 			// 跳转文章详情
 			onPageJump(e) {
-				console.log(e,'跳转按钮');
 				let id = e.currentTarget.id;
-				// debugger
-				// return
 				uni.navigateTo({
 					url: '/pages/contentdetail/contentdetail?article_id=' + id
 				});
 			},
 			// 点赞
-			clickRightLike(e, index) {
-				// this.$refs.uWaterfall.clickLike(e);
-				console.log(this.$refs)
-				let article = e.article_id;
-				var that = this;
-				uni.request({
-					url: this.globalUrl + '/user/liked',
-					data: {
-						article_id: article,
-						liked: e.liked == 0 ? 1 : 0
-					},
-					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: res => {
-						if (res.data.code != 0) {
-
-							uni.navigateTo({
-								url: '/pagesA/login/login'
-							});
-						} else {
-							this.$refs.uWaterfall.rightList[index].liked = e.liked == 1 ? 0 : 1
-							this.$refs.uWaterfall.rightList[index].like_count = (e.liked == 1 ? e.like_count - 1 : e.like_count + 1)
-						}
-					}
-				});
-			},
 			clickLeftLike(e, index) {
-				// this.$refs.uWaterfall.clickLike(e);
-				console.log(this.$refs)
+				this.updateLike(e,index,true)
+			},
+			clickRightLike(e, index) {
+				this.updateLike(e,index,false)
+			},
+			updateLike(e, index, left){
+				let Authorization = uni.getStorageSync('Authorization')
+				if (!Authorization){
+					uni.navigateTo({
+						url: '/pagesA/login/login'
+					});
+					return
+				}
+				
 				let article = e.article_id;
+				let liked = e.liked;
 				var that = this;
 				uni.request({
 					url: this.globalUrl + '/user/liked',
 					data: {
 						article_id: article,
-						liked: e.liked == 0 ? 1 : 0
+						liked: liked == 0 ? 1 : 0
 					},
 					method: 'POST',
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						if (res.data.code != 0) {
-
-							uni.navigateTo({
-								url: '/pagesA/login/login'
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
 							});
-						} else {
-							this.$refs.uWaterfall.leftList[index].liked = e.liked == 1 ? 0 : 1
-							this.$refs.uWaterfall.leftList[index].like_count = (e.liked == 1 ? e.like_count - 1 : e.like_count + 1)
+							return
+						}
+						if (left){
+							this.$refs.uWaterfall.leftList[index].liked = res.data.data.liked
+							this.$refs.uWaterfall.leftList[index].like_count = res.data.data.like_count
+						}else{
+							this.$refs.uWaterfall.rightList[index].liked = res.data.data.liked
+							this.$refs.uWaterfall.rightList[index].like_count = res.data.data.like_count
 						}
 					}
-				});
-			},
-			// 点赞
-			clickLike(e, index) {
-				console.log('qaz', e, index);
-				// debugger
-				let article = e.article_id;
-				var that = this;
-				uni.request({
-					url: this.globalUrl + '/user/liked',
-					data: {
-						article_id: article,
-						liked: e.liked == 0 ? 1 : 0
-					},
-					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: res=> {
-						console.log('点赞', res);
-						if (res.data.code != 0) {
-							// debugger
-							uni.navigateTo({
-								url: '/pagesA/login/login'
-							});
-						}
-			
-						this.list[index].liked = e.liked == 1 ? 0 : 1
-						this.list[index].like_count = (e.liked == 1 ? e.like_count + 1 : e.like_count  - 1)
-					}
-				});
-			},
-			lookAll() {
-				if (this.item == undefined || null) {
-					var city = uni.getStorageSync('city_id');
-					console.log('city----', city);
-					if (city.data == null) {
-						uni.navigateTo({
-							url: '/pages/attractionsList/attractionsList'
-						});
-					} else {
-						var state_id = city.data.state_id;
-						var city_id = city.data.city_id;
-						uni.navigateTo({
-							url: '/pages/attractionsList/attractionsList?state_id=' + state_id + '&city_id=' + city_id
-						});
-					}
-				} else {
-					var state_id = this.item.state_id;
-					var city_id = this.item.city_id;
-					uni.navigateTo({
-						url: '/pages/attractionsList/attractionsList?state_id=' + state_id + '&city_id=' + city_id
-					});
-				}
-			},
-			toAtt(e) {
-				console.log('----------------', e);
-				uni.navigateTo({
-					url: '/pages/positionContent/positionContent?id=' + e
-				});
-			},
-			clickLeft() {
-				uni.showToast({
-					title: '左侧按钮'
-				});
-			},
-			search() {
-				uni.showToast({
-					title: '搜索'
-				});
-			},
-
-			showCity() {
-				// uni.showToast({
-				// 	title: '选择城市'
-				// })
-				uni.navigateTo({
-					url: '/pages/city/city'
 				});
 			},
 			// 跳转省市主题页
 			toProvincesNC(){
-				uni.request({
-					url: this.globalUrl + '/area/judge',
-					data: {
-						state: this.province,
-						city: this.city
-				
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: res => {
-						console.log(res)
-						if(res.data.data.city_id == 0){
-							uni.showToast({
-								title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
-								icon: 'none',
-								duration: 3000
-							});
-						} else {
-							var e = JSON.stringify(res.data.data);
-							uni.navigateTo({
-								url: '/pages/provinces/provinces?id=' + e
-							});
-						}
+				var name = this.cityName
+				var obj = this.areaList.find(function(value, index, arr){
+					if (value.name === name){
+						return true
 					}
-				});
+				})
+				if (!obj){
+					uni.showToast({
+						title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
+						icon: 'none',
+						duration: 3000
+					});
+				} else {
+					uni.navigateTo({
+						url: '/pages/provinces/provinces?state_id=' + 
+						obj.state_id+"&city_id="+obj.city_id+"&name="+obj.name+"&image="+obj.image
+					});
+				}
 			},
 			toProvinces(e) {
-				var that = this;
-				this.e = e;
-				console.log('--', e);
-				uni.getSetting({
-					success(res) {
-						console.log(res.authSetting);
-						console.log(res.authSetting['scope.userLocation']);
-						if (res.authSetting['scope.userLocation'] == false) {
-							uni.showModal({
-								// title: '提示',
-								content: '是否前往开启定位服务',
-								success: res => {
-									if (res.confirm) {
-										console.log('用户点击确定');
-
-										uni.openSetting({
-											success: res => {
-												console.log(res.authSetting);
-												that.getAdress();
-												that.dqdwText = '当前位置';
-											}
-										});
-									} else if (res.cancel) {
-										console.log('用户点击取消');
-									}
-								}
-							});
-						} else {
-							if (that.e.state_id == 0) {
-								uni.showToast({
-									title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
-									icon: 'none',
-									duration: 3000
-								});
-							} else {
-								var e = JSON.stringify(that.e);
-								uni.navigateTo({
-									url: '/pages/provinces/provinces?id=' + e
-								});
-							}
-						}
-					}
+				uni.navigateTo({
+					url: '/pages/provinces/provinces?state_id=' + 
+					e.state_id+"&city_id="+e.city_id+"&name="+e.name+"&image="+e.image
 				});
 			},
 			confirm() {
-				// uni.showToast({
-				// 	title: '搜索'
-				// })
 				uni.navigateTo({
 					url: '../../pages/search/search'
 				});
 			},
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {
+				this.loadData()
 				this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
 			},
 			upCallback(page) {
 				let pageNum = page.num;
-
 				let pageSize = page.size;
 				if (pageNum == 1) {
+					this.list = [];
 					this.firstTime = new Date().getTime();
 				}
+				
+				let that = this
 				uni.request({
 					url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
 					header: {
@@ -1322,84 +572,37 @@
 							'微信' ? 3 : '',
 
 					},
-					success: data => {
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						if (!res.data.data.list || res.data.data.list.length == 0){
+							return
+						}
 						
-						// let curPageData = curPageData[index].location.replace(/\（.*?\）/g, '')
-						
-						let curPageData = data.data.data.list;
-						console.log(this.$refs)
-						console.log('curPageData', curPageData);
+						let curPageData = res.data.data.list;
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 						let curPageLen = curPageData.length ? curPageData.length : 0;
-						console.log('curPageLen', curPageLen);
 						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-						let totalPage = data.data.data.total / pageSize;
-
-						let totalSize = data.data.data.total;
-						console.log('totalSize', totalSize);
-
-						if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
+						let totalPage = res.data.data.total / pageSize;
+						let totalSize = res.data.data.total;
+						
 						this.list = this.list.concat(curPageData); //追加新数据
-
 						this.mescroll.endByPage(curPageLen, totalPage);
 
 					},
 					fail: () => {
 						//  请求失败,隐藏加载状态
 						this.mescroll.endErr();
+					},
+					complete() {
 					}
 				});
 			}
-			// 接收切换城市信息，请求数据
-			// getItem() {
-			// 	var that = this;
-			// 	this.errCode = 0;
-			// 	if (this.item != getApp().globalData.item) {
-			// 		(this.item = getApp().globalData.item), console.log('item-------', this.item);
-			// 		this.cityName = this.item.name;
-			// 		uni.request({
-			// 			url: this.globalUrl + '/site/hot',
-			// 			data: {
-			// 				state_id: this.item.state_id,
-			// 				city_id: this.item.city_id,
-			// 				count: 3
-			// 			},
-			// 			header: {
-			// 				Authorization: uni.getStorageSync('Authorization')
-			// 			},
-			// 			success: res => {
-			// 				console.log('跳转热门景点=========', res);
-			// 				// uni.setStorageSync('description',res.data)
-			// 				this.hotAtt = res.data.data;
-			// 			}
-			// 		}),
-			// 			// 清除旧数据
-			// 			// this.$refs.uWaterfall.clear()
-			// 			uni.request({
-			// 				url: this.globalUrl + '/article/list',
-			// 				data: {
-			// 					state_id: this.item.state_id,
-			// 					city_id: this.item.city_id,
-			// 					count: 6,
-			// 					page: 1,
-			// 					source: this.serviceProvider == 'baidu' ? 1 : this.serviceProvider == 'toutiao' ? 2 :this.serviceProvider == '微信' ? 3 : '',
-			// 					first_time: new Date().getTime()
-			// 				},
-			// 				header: {
-			// 					Authorization: uni.getStorageSync('Authorization')
-			// 				},
-			// 				success: res => {
-			// 					console.log('切换文章列表', res);
-			// 					uni.setStorageSync('article_id', res.data);
-			// 					that.list = [];
-			// 					this.mescroll.scrollTo(0, this.mescroll.optUp.toTop.duration);
-			// 					that.list = res.data.data.list;
-			// 					this.downCallback();
-			// 					console.log(that.list, 88888);
-			// 				}
-			// 			});
-			// 	}
-			// },
 		}
 	};
 </script>
