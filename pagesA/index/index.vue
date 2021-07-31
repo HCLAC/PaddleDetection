@@ -78,7 +78,7 @@
 						<image class="waveImg" src="../../static/images/wave.png" mode=""></image>
 					</view>
 					<!-- <u-swiper :list="uswiperlist" mode="none" :autoplay="false" ></u-swiper> -->
-					<view class="citysBox">
+					<view class="citysBox" @down="downCallback" :down="downOption">
 						<scroll-view scroll-x="true" class="kite-classify-scroll" v-if="areaList.length != 0">
 							<view class="citysBoxLeft">
 								<view class="cblt">
@@ -443,7 +443,7 @@
 					<!-- <u-swiper :list="uswiperlist" mode="none" :autoplay="false" ></u-swiper> -->
 					<view class="citysBox">
 						<scroll-view scroll-x="true" class="kite-classify-scroll" v-if="areaList.length != 0">
-							<view class="citysBoxLeft">
+							<view class="citysBoxLeft" >
 								<view class="cblt">
 									<view class="cbltcBig" @click="toProvinces(areaList[0])" :style="{backgroundImage: 'url('+areaList[0].image+')'}">
 										<!-- <image class="hotCityImg" :src="areaList[0].image" mode="scaleToFill"></image> -->
@@ -1303,6 +1303,7 @@
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {
 				this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+				console.log('panda')
 			},
 			upCallback(page) {
 				let pageNum = page.num;

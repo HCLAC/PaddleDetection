@@ -1002,8 +1002,8 @@
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
 		color: #303133;
-		line-height: 32rpx;
-		margin-bottom: 12rpx;
+		line-height: 42rpx;
+		margin-bottom: 2rpx;
 		display: -webkit-box; 
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 1; 
