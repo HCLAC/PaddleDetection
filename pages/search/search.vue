@@ -965,8 +965,8 @@ view {
 }
 /*  #endif  */
 .slottitle {
-	margin-left: 220rpx;
-	font-size: 38rpx;
+	margin-left: 320rpx;
+	font-size: 36rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 600;
 	color: rgba(0, 0, 0, 1);

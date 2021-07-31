@@ -66,7 +66,7 @@
 							</view>
 							<view class="contentImgBox">
 								<view class="contentImg" v-for="(item, index) in siteHot" :key="index" @click="toAtt(item.id)">
-									<image class="attImg" :src="item.image" mode=""></image>
+									<image class="attImg" :src="item.image" mode="aspectFill"></image>
 									<view class="attText">{{ item.name }}</view>
 									<view class="rateBox">
 										<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->

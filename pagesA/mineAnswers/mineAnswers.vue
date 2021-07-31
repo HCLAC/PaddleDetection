@@ -519,7 +519,7 @@
 	display: flex;
 	justify-content: space-between;
 	border-bottom: 20rpx solid #F8F8F8;
-	border-top:2px solid #EDEFF2;
+	border-top:1px solid #EDEFF2;
 }
 .favBox{
 	display: flex;
