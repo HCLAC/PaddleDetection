@@ -303,26 +303,7 @@ export default {
 				this.boxHeight = data.height
 			}).exec();
 		}, 1000);
-		uni.getProvider({
-			service: 'oauth',
-			success: res => {
-				console.log(res)
-				if(res.errMsg == 'getProvider:ok'){
-					this.serviceProvider = res.provider[0]
-					if(this.serviceProvider != 'baidu'){
-						uni.showShareMenu({
-							
-						})
-					}
-				}else{
-					uni.showToast({
-						title: '获取提供商失败',
-						icon: 'none'
-					})
-				}
-			}
-		})
-		
+		this.serviceProvider = getApp().globalData.serviceProvider
 	},
 		
 	

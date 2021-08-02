@@ -241,6 +241,7 @@ export default {
 		(_this = this), _this.getOrder();
 	},
 	onLoad:function(e) {
+		this.serviceProvider = getApp().globalData.serviceProvider
 		console.log('详情id====',e)
 		uni.showLoading({
 			title:'加载中'
@@ -249,25 +250,6 @@ export default {
 		uni.hideLoading();
 	},
 	mounted() {
-		uni.getProvider({
-			service: 'oauth',
-			success: res => {
-				console.log(res,123)
-				if(res.errMsg == 'getProvider:ok'){
-					this.serviceProvider = res.provider[0]
-					if(this.serviceProvider != 'baidu' ){
-						uni.showShareMenu({
-							
-						})
-					}
-				}else{
-					uni.showToast({
-						title: '获取提供商失败',
-						icon: 'none'
-					})
-				}
-			}
-		});
 		// let info = uni.createSelectorQuery().select(".loseText");
 		// 	info.boundingClientRect(function(data) {
 		// 	console.log('节点信息',data);  // 获取元素信息

@@ -411,6 +411,7 @@
 			this.flag = uni.getStorageSync('Authorization') ? false : true;
 		},
 		onLoad(obj) {
+			this.serviceProvider = getApp().globalData.serviceProvider
 			console.log(obj,"数据")
 			this.article_id = obj.article_id
 			this.animation = uni.createAnimation()
@@ -427,22 +428,6 @@
 			_this = this;
 		},
 		mounted() {
-			uni.getProvider({
-				service: 'oauth',
-				success: res => {
-					if (res.errMsg == 'getProvider:ok') {
-						this.serviceProvider = res.provider[0];
-						if (this.serviceProvider != 'baidu') {
-							uni.showShareMenu({});
-						}
-					} else {
-						uni.showToast({
-							title: '获取提供商失败',
-							icon: 'none'
-						});
-					}
-				}
-			});
 		},
 		methods: {
 			getArticleseo(){

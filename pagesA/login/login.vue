@@ -7,9 +7,6 @@
 					<!-- #ifndef MP-BAIDU -->
 					<image  class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
-					<!-- #ifndef MP-BAIDU -->
-					<image v-if="ismine == '1'" class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
@@ -60,19 +57,17 @@
 				</view>
 				<!-- 登录按钮 -->
 				<view class="loginButton"><button class="lb" :disabled="disabled" :style="{ background: styleBtn.background }" @tap="doLogin">登录</button></view>
-				<!-- #ifdef  MP-BAIDU -->
 				<view class="loginButton" v-if="platform!='web'">
 					<button class="badiduBtn" :style="{ background: styleBtn.background }" open-type="getPhoneNumber" @getphonenumber="getPhone">手机号一键登录</button>
 				</view>
-				<!-- #endif -->
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-import httpType from '../../httpType.js';
 export default {
+	components: {},
 	data() {
 		return {
 			phone: '',
@@ -98,33 +93,19 @@ export default {
 			isShowphone: false,
 			isShowcode: false,
 			serviceProvider: null,
+			serviceSource: null,
 			ismine: '',
 			platform: ''
 		};
 	},
 	onLoad(options) {
 		this.ismine = options.ismine;
+		this.serviceProvider = getApp().globalData.serviceProvider;
+		this.serviceSource = this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null;
 		this.platform = uni.getSystemInfoSync().platform
-	},
-	components: {},
-	mounted() {
-		uni.getProvider({
-			service: 'oauth',
-			success: res => {
-				if (res.errMsg == 'getProvider:ok') {
-					this.serviceProvider = res.provider[0];
-				} else {
-					uni.showToast({
-						title: '获取提供商失败',
-						icon: 'none'
-					});
-				}
-			}
-		});
 	},
 	methods: {
 		onInput(e) {
-			console.log(e);
 			if (e.detail.value.length == 11) {
 				this.styleObj.color = '#303133';
 			} else {
@@ -170,7 +151,6 @@ export default {
 		},
 		getCode() {
 			let _this = this;
-			// uni.hideKeyboard();
 			if (_this.getCodeisWaiting) {
 				return;
 			}
@@ -185,32 +165,27 @@ export default {
 			_this.getCodeisWaiting = true;
 			_this.getCodeBtnColor = 'rgba(255,255,255,0.5)';
 
-			// this.$ajax.post({
-			// 	url:'/user/sendcaptcha',
-			// 	param:{
-			// 		'mobile': _this.phone
-			// 	}
-			// }).then((res)=>{
-			// 	console.log(res.data)
-			// 	_this.code = res.data.data.code;
-			// })
-
 			// 获取验证码
-			httpType.request({
-				url: '/user/sendcaptcha',
+			uni.request({
+				url: this.globalUrl + '/user/sendcaptcha',
 				data: {
 					mobile: this.phone
 				},
 				method: 'POST',
 				success: res => {
-					_this.code = res.data.data.code;
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
+					}
+					// 示例用定时器模拟请求效果
+					setTimeout(() => {
+						_this.setTimer();
+					}, 500);
 				}
-			}),
-				//示例用定时器模拟请求效果
-				setTimeout(() => {
-					//uni.showToast({title: '验证码已发送',icon:"none"});
-					_this.setTimer();
-				}, 1000);
+			})
 		},
 		setTimer() {
 			let holdTime = 59,
@@ -229,17 +204,8 @@ export default {
 				holdTime--;
 			}, 1000);
 		},
-		getUserInfo() {
-			uni.getUserInfo({
-				provider: 'baidu',
-				success: res => {
-					console.log('用户信息', res);
-				}
-			});
-		},
 		//一键登录
 		getPhone(res) {
-			console.log('getPhone', res)
 			if (res.detail.errMsg != 'getPhoneNumber:ok') {
 				uni.showToast({
 					title: '用户拒绝授权',
@@ -248,72 +214,59 @@ export default {
 				return;
 			}
 			
+			// 百度小程序直接调用swan.getLoginCode，其他平台调用uni.login
 			if (this.serviceProvider == 'baidu'){
 				swan.getLoginCode({
 					success: result => {
-						console.log('result',result)
-						if (result.code && result.code.length != 0) {
-							this.baiduLogin({
-								code: result.code,
-								source: this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null,
-								data: res.detail.encryptedData,
-								iv: res.detail.iv
-							});
-						} else {
+						if (!result || !result.code || result.code.length == 0) {
 							uni.showToast({
-								title: '获取code失败',
+								title: '一键登录失败',
 								icon: 'none'
 							});
-							return;
+							return
 						}
+						this.baiduLogin({
+							code: result.code,
+							source: this.serviceSource,
+							data: res.detail.encryptedData,
+							iv: res.detail.iv
+						});
 					},
 					fail: err => {
 						console.error('getLoginCode', err)
-						// uni.showToast({
-						// 	title: err.errMsg,
-						// 	icon: 'none'
-						// });
 					}
 				});
-			} else {
-				uni.login({
-					provider: this.serviceProvider,
-					success: result => {
-						console.log('result',result)
-						if (result.code) {
-							this.baiduLogin({
-								code: result.code,
-								source: this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null,
-								data: res.detail.encryptedData,
-								iv: res.detail.iv
-							});
-						} else {
-							uni.showToast({
-								title: '获取code失败',
-								icon: 'none'
-							});
-							return;
-						}
-					},
-					fail: error => {
+				return 
+			}
+			uni.login({
+				provider: this.serviceProvider,
+				success: result => {
+					if (!result || !result.code || result.code.length == 0) {
 						uni.showToast({
-							title: error.errMsg,
+							title: '一键登录失败',
 							icon: 'none'
 						});
+						return;
 					}
-				});
-			}
+					this.baiduLogin({
+						code: result.code,
+						source: this.serviceSource,
+						data: res.detail.encryptedData,
+						iv: res.detail.iv
+					});
+				},
+				fail: err => {
+					console.error('login', err)
+				}
+			});
 		},
 
 		baiduLogin(obj) {
-			// uni.hideKeyboard();
-			console.log(obj.code,'code')
 			uni.request({
 				url: this.globalUrl + '/user/oauth/code2session',
-				// url: 'http://192.168.110.189:4000',
 				data: {
 					code: obj.code,
-					source: this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null
+					source: obj.source
 				},
 				method: 'POST',
 				success: res => {
@@ -345,22 +298,17 @@ export default {
 					data: obj.data,
 					iv: obj.iv,
 					uuid: obj.uuid,
-					source: this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null
+					source: this.serviceSource
 				},
 				method: 'POST',
 				success: res => {
 					if (res.data.code == 0) {
-						console.log(res);
 						uni.showToast({
 							title: '登录成功',
 							icon: 'none'
 						}),
 						uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
-
-						uni.setStorageSync('nickName', res.data.data.mobile);
-						uni.reLaunch({
-							url: '/pagesA/mine/mine'
-						});
+						this.back()
 					} else {
 						uni.showToast({
 							title: res.data.msg,
@@ -376,58 +324,30 @@ export default {
 				}
 			});
 		},
+		// 验证码登录
 		doLogin() {
 			let _this = this;
-			// uni.hideKeyboard();
 			//模板示例部分验证规则
 			if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phone)) {
 				uni.showToast({ title: '请填写正确手机号码', icon: 'none' });
 				return false;
 			}
-			// var nick_name = uni.getStorageSync('nickName')
-
 			uni.request({
-				// url: 'user/login',
 				url: this.globalUrl + '/user/login',
 				data: {
-					// 'key': _this.key,
 					code: _this.code,
 					mobile: _this.phone,
-					source: this.serviceProvider == 'baidu' ? 1 : this.serviceProvider == 'weixin' ? 7 : this.serviceProvider == 'toutiao' ? 3 : null
+					source: this.serviceSource
 				},
 				method: 'POST',
-				// header: {
-				// 	'Content-Type': 'application/x-www-form-urlencoded',
-				// },
 				success: res => {
-					console.log(res,'手机号登录');
 					if (res.data.code == 0) {
-						// _this.login(true, res.data.data, function() {
-						// _this.getRongyToken();
-						// uni.setStorage('Authorization',res.header.Authorization),
-						// // success:function(res){
-						// 	console.log("+++++",res)
-						// }
-						// uni.setStorage({
-						// 	key:'Authorization',
-						// 	data:res.header.Authorization,
-						// 	success:function(res) {
-						// 		console.log("++++++",res)
-						// 	}
-						// }),
 						uni.showToast({
 							title: '登录成功',
 							icon: 'none'
 						}),
 						uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
-						uni.reLaunch({
-							url: '/pagesA/mine/mine'
-						});
-
-						// uni.setStorage({
-						// 	// phone:data.phone
-						// }),
-						// });
+						this.back()
 					} else {
 						uni.showToast({
 							title: '手机验证码错误',
@@ -440,21 +360,12 @@ export default {
 		},
 		// 返回上一页
 		back() {
-			if (this.ismine === '1'){
-				uni.switchTab({
-					url: '/pagesA/index/index'
-				});
-			} else {
-				uni.navigateBack({
-					delta: 1
-				});
-			}
+			uni.navigateBack({
+				delta: 1
+			});
 		},
 		// 返回首页
 		home() {
-			// uni.navigateBack({
-			// 	delta: 1
-			// });
 			uni.switchTab({
 				url: '/pagesA/index/index'
 			});

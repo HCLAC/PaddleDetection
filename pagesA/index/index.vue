@@ -260,16 +260,12 @@
 </template>
 
 <script>
-	import uniIcons from '@/components/uni-icons/uni-icons.vue';
 	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
-	import uniSection from '@/components/uni-section/uni-section.vue';
 	// 引入mescroll-mixins.js
 	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 	export default {
 		components: {
-			uniIcons,
 			uniNavBar,
-			uniSection,
 		},
 		mixins: [MescrollMixin],
 		data() {
@@ -324,6 +320,17 @@
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.loadData()
 			this.mescroll.resetUpScroll();
+		},
+		// 滚动
+		onPageScroll(e) {
+			if (e.scrollTop >= 100){
+				if (e.scrollTop >= 150){
+					return
+				}
+				this.backgroundColor = 'rgba(58, 61, 70, 0.25)';
+			} else {
+				this.backgroundColor = 'transparent';
+			}
 		},
 
 		methods: {
@@ -396,6 +403,12 @@
 						} else {
 							this.cus_sty_top = '0rpx'
 						}
+					},
+					fail: error => {
+						uni.showToast({
+							title: error,
+							icon: 'none'
+						});
 					}
 				});
 			},
@@ -446,14 +459,6 @@
 					}
 				});
 				
-			},
-			// 滚动
-			uniScroll(e) {
-				if (e.scrollTop >= 100){
-					this.backgroundColor = 'rgba(58, 61, 70, 0.25)';
-				} else {
-					this.backgroundColor = 'transparent';
-				}
 			},
 			
 			// 点击banner
