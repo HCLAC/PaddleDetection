@@ -387,11 +387,12 @@
 	color: #909399;
 	line-height: 28rpx;
 	margin-left: 28rpx;
-	margin-right:404rpx ;
+	margin-right:390rpx ;
 }
 .moreRight{
 	width: 20rpx;
 	height: 20rpx;
+	// margin-left: 400rpx;
 }
 .customStyle{
 	width: 694rpx;

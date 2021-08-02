@@ -447,7 +447,8 @@
 	}
 
 	.emptyText {
-		width: 476rpx;
+		// width: 476rpx;
+		width: 100%;
 		height: 30rpx;
 		font-size: 28rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
