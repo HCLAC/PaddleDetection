@@ -1380,6 +1380,7 @@ export default {
 .demo-title {
 	width: 278rpx;
 	/* max-height: 70rpx; */
+	padding-right: 20rpx;
 	font-size: 28rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
