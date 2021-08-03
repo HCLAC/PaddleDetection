@@ -411,7 +411,7 @@ export default {
 	}
 	/*  #endif  */
 	.slottitle{
-		margin-left: 162rpx;
+		margin-left: 182rpx;
 		font-size: 38rpx;
 		font-family:PingFangSC-Medium,PingFang SC;
 		font-weight:600;
