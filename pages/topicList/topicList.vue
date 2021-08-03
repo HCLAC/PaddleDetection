@@ -1093,18 +1093,20 @@ export default {
 	flex-flow: row;
 	flex-wrap: wrap;
 	margin-top: 24rpx;
+	padding-left: 20rpx;
 }
+
 .left,.right {
 	margin-left: 10rpx;
 }
 .demo-warter {
-	width: 360rpx;
+	width: 340rpx;
 	margin-top: 0;
 	margin-bottom: 16rpx;
 	padding-bottom: 16rpx;
 	/* position: relative; */
 	background-color: #ffffff;
-	border-radius: 8rpx 8rpx 0 0;
+	border-radius: 8rpx 8rpx 8rpx 8rpx;
 }
  /* #ifndef MP-TOUTIAO */
 .demo-warter {
@@ -1121,15 +1123,15 @@ export default {
 	align-items: flex-end;
 }
 .demoImage {
-	min-height: 300rpx !important;
-	max-height: 460rpx;
+	// min-height: 300rpx !important;
+	max-height: 800rpx;
 	width: 100%;
 	border-radius: 8rpx 8rpx 0 0;
 }
 .demoImage4 {
 	width: 100%;
-	min-height: 272rpx;
-	max-height: 480rpx;
+	// min-height: 272rpx;
+	max-height: 800rpx;
 	border-radius: 8rpx 8rpx 0 0;
 }
 .videoIcon{
