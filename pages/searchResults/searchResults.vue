@@ -552,8 +552,8 @@
 			},
 
 			init() {
-				this.focus();
 				this.loadDefaultKeyword();
+				this.focus();
 				// this.loadOldKeyword();
 				// this.loadHotKeyword();
 			},
