@@ -5,8 +5,8 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" :border="true">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-							<!-- #endif -->
+						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<view class="slottitle">我的关注</view>
@@ -38,7 +38,7 @@
 					<view class="fllowBox" v-if="item.is_follow" @click="Fllow(item,index)">
 						<text>已关注</text>
 					</view>
-					<view class="unfllowBox" v-if="!item.is_follow" @click="Fllow(item,index)">
+					<view class="unfllowBox" v-else="!item.is_follow" @click="Fllow(item,index)">
 						<text>关注</text>
 					</view>
 				</view>
@@ -70,68 +70,57 @@
 				item:[],
 				index:0,
 				show: false,
-				content: ''
+				content: '',
+				downOption:{
+					auto: false,
+				}
 			};
 		},
 		mixins: [MescrollMixin],
 		onLoad() {
-			this.getFollowList()
 		},
 		methods: {
-			// 获取关注列表
-			getFollowList() {
-				uni.request({
-					url: this.globalUrl + '/user/follow/list',
-					data: {
-						page: 1,
-						count: 10
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					method: 'get',
-					success: (res) => {
-						console.log('关注列表=', res.data);
-						this.followList = res.data.data.list
-					}
-				})
-			},
 			// 跳转博主详情页
 			tobloggers(e){
-				console.log(e)
 				uni.navigateTo({
 					url:'/pages/bloggers/bloggers?author_id=' + e
 				})
 			},
 			// 关注
 			Fllow(item, index) {
-				// console.log('--',item)
-				// console.log('==',index)
 				this.item = item
 				this.index = index
 				var that = this;
-				let msg = item.is_follow ? '确认取消关注?' : '确认关注?'
+				let msg = item.is_follow ? '确认取消关注？' : '确认关注？'
 				let status = item.is_follow ? 0 : 1
+				// 取消关注，二次确认退出
 				if(status == 0){
 					that.show = true
-					that.content = '确认取消关注?'
-				}else{
-					uni.request({
-						url: that.globalUrl + '/user/follow',
-						data: {
-							author_id: this.item.author_id,
-							follow: status
-						},
-						method: 'POST',
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
-						success: (res) => {
-							that.followList[that.index].is_follow = status == 1 ? true : false
-						}
-					})
+					that.content = '确认取消关注？'
+					return 
 				}
-				
+				// 添加关注
+				uni.request({
+					url: that.globalUrl + '/user/follow',
+					data: {
+						author_id: this.item.author_id,
+						follow: status
+					},
+					method: 'POST',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: (res) => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						that.followList[that.index].is_follow = status == 1 ? true : false
+					}
+				})
 			},
 			// 点击确定
 			confirm(){
@@ -148,6 +137,13 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: (res) => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
 						that.followList[that.index].is_follow = status == 1 ? true : false
 					}
 				})
@@ -186,25 +182,31 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: data => {
-						console.log('data', data);
+						if (data.statusCode != 200 || data.data.code != 0){
+							uni.showToast({
+								title: data.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						// 接口返回的当前页数据列表 (数组)
+						if(!data.data.data || !data.data.data.list){
+							return
+						}
 						// 接口返回的当前页数据列表 (数组)
 						let curPageData = data.data.data.list;
-						console.log('curPageData', curPageData);
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 						let curPageLen = curPageData.length;
-						console.log('curPageLen', curPageLen);
 						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
 						// let totalPage = data.data.data.list;
 						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
 						let totalSize = data.data.data.total;
-						console.log('totalSize', totalSize);
 						// 接口返回的是否有下一页 (true/false)
 						// let hasNext = data.data.data.list;
 
 						//设置列表数据
 						if (page.num == 1) this.followList = []; //如果是第一页需手动置空列表
 						this.followList = this.followList.concat(curPageData); //追加新数据
-						console.log('followList', this.followList);
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 						// this.mescroll.endByPage(curPageLen, totalPage);

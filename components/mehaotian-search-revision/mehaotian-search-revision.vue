@@ -94,14 +94,18 @@ export default {
 		blur() {
 			console.log('blur');
 			this.isFocus = false;
-			uni.hideKeyboard()
+			//#ifndef MP-BAIDU
+			uni.hideKeyboard();
+			//#endif
 			if (!this.inputVal) {
 				this.active = true;
 			}
 		},
 		clear() {
 			//HM修改 收起键盘
+			//#ifndef MP-BAIDU
 			uni.hideKeyboard();
+			//#endif
 			this.isFocus = false;
 			this.inputVal = '';
 			this.active = true;
@@ -124,7 +128,9 @@ export default {
 			//HM修改 增加点击取消时候退出输入状态，内容为空时，输入默认关键字
 			if (!this.inputVal) {
 				if (!this.show && this.searchName == '取消') {
+					//#ifndef MP-BAIDU
 					uni.hideKeyboard();
+					//#endif
 					this.isFocus = false;
 					this.active = true;
 					return;

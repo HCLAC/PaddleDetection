@@ -6,7 +6,6 @@
 		}
 	},
 	"pages": [
-		
 		{
 			"path": "pagesA/index/index",
 			"style": {
@@ -31,27 +30,6 @@
 			}
 		},
 		{
-		    "path" : "pagesA/mineConcern/mineConcern",
-		    "style" : {
-				"navigationStyle": "custom",
-				"backgroundColor": "#fff"
-			}
-		},
-		{
-		    "path" : "pagesA/mineInfo/mineInfo",
-		    "style" : {
-				"navigationStyle": "custom"
-			}
-		},
-		{
-		    "path" : "pagesA/mineAnswers/mineAnswers",
-		    "style" :                                                                                    
-		    {
-		        "navigationStyle": "custom"
-		    }
-		    
-		},
-		{
 		    "path" : "pagesA/login/login",
 		    "style" : {
 				"navigationBarBackgroundColor":"#FFFFFF",
@@ -62,215 +40,243 @@
 		}
         
     ],
-	"subPackages": [{
-		"root":"pages",
-		"pages":[
+	"subPackages": [
 		{
-		    "path" : "questionsPage/questionsPage",
-		    "style" :                                                                                    
-		    {
-		        "navigationStyle": "custom"
-		    }
-		    
-		}
-		,
-		{
-			"path": "attractionsRank/attractionsRank",
-			"style": {
-				"navigationStyle": "custom",
-				"backgroundColor": "#000000"
-			}
-		},
-
-		{
-			"path": "provinces/provinces",
-			"style": {
-				"navigationStyle": "custom",
-				"backgroundColor":"#F8F8F8",
-				"app-plus": {
-					"bounce": "none" ,
-					"titleNView": {
-						"autoBackButton": false
+			"root":"pages_mine",
+			"pages":[
+				{
+				    "path" : "mineConcern/mineConcern",
+				    "style" : {
+						"navigationStyle": "custom",
+						"backgroundColor": "#fff"
 					}
 				},
-				"mp-weixin": {
-					"allowsBounceVertical": "NO",
-					"bounce": "none" 
+				{
+				    "path" : "mineInfo/mineInfo",
+				    "style" : {
+						"navigationStyle": "custom"
+					}
 				},
-				"mp-baidu": {
-					"allowsBounceVertical": "NO",
-					"bounce": "none" 
-				},
-				"mp-toutiao": {
-					"allowsBounceVertical": "NO",
-					"bounce": "none" 
+				{
+				    "path" : "mineAnswers/mineAnswers",
+				    "style" :                                                                                    
+				    {
+				        "navigationStyle": "custom"
+				    }
+				}
+			]
+		},
+		{
+			"root":"pages",
+			"pages":[
+			{
+				"path" : "questionsPage/questionsPage",
+				"style" :                                                                                    
+				{
+					"navigationStyle": "custom"
+				}
+				
+			}
+			,
+			{
+				"path": "attractionsRank/attractionsRank",
+				"style": {
+					"navigationStyle": "custom",
+					"backgroundColor": "#000000"
+				}
+			},
+
+			{
+				"path": "provinces/provinces",
+				"style": {
+					"navigationStyle": "custom",
+					"backgroundColor":"#F8F8F8",
+					"app-plus": {
+						"bounce": "none" ,
+						"titleNView": {
+							"autoBackButton": false
+						}
+					},
+					"mp-weixin": {
+						"allowsBounceVertical": "NO",
+						"bounce": "none" 
+					},
+					"mp-baidu": {
+						"allowsBounceVertical": "NO",
+						"bounce": "none" 
+					},
+					"mp-toutiao": {
+						"allowsBounceVertical": "NO",
+						"bounce": "none" 
+					}
+				}
+			},
+			
+			{
+				"path" : "questions/questions",
+				"style" : {
+					"navigationStyle": "custom"
+					
+				}
+			},
+
+			{
+				"path": "city/city",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "contentdetail/contentdetail",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+
+			{
+				"path": "attractionsList/attractionsList",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+
+
+			
+
+			{
+				"path": "searchResults/searchResults",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+
+			{
+				"path": "search/search",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "positionContent/positionContent",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			}, 
+			{
+				"path": "lineList/lineList",
+				"style": {
+					"navigationStyle": "custom",
+					"backgroundColor": "#fff"
+				}
+			}, 
+			{
+				"path": "lineDetail/lineDetail",
+				"style": {
+					"navigationStyle": "custom",
+					"backgroundColor": "#fff"
+				}
+			}, 
+			{
+				"path": "webview/webview",
+				"style": {}
+			},
+			
+			{
+				"path" : "bloggers/bloggers",
+				"style" : {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path" : "topic/topic",
+				"style" : {
+					"navigationStyle": "custom"
+					
+				}
+			},
+			{
+				"path" : "topicList/topicList",
+				"style" : {
+					"navigationStyle": "custom",
+					"backgroundColor":"#F8F8F8"
 				}
 			}
-		},
-		
-		{
-		    "path" : "questions/questions",
-		    "style" : {
-		    	"navigationStyle": "custom"
+		   
+			,{
+				"path" : "hotSearchRank/hotSearchRank",
+				"style" :                                                                                    
+				{
+					"navigationStyle": "custom",
+					"disableScroll": true,
+					"app-plus": {
+						"bounce": "none" 
+					},
+					"mp-alipay": {
+						"allowsBounceVertical": "NO"
+					} 
+				}
 				
-		    }
-		},
-
-		{
-			"path": "city/city",
-			"style": {
-				"navigationStyle": "custom"
 			}
-		},
-		{
-			"path": "contentdetail/contentdetail",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
-
-		{
-			"path": "attractionsList/attractionsList",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
-
-
-		
-
-		{
-			"path": "searchResults/searchResults",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
-
-		{
-			"path": "search/search",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "positionContent/positionContent",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, 
-		{
-			"path": "lineList/lineList",
-			"style": {
-				"navigationStyle": "custom",
-				"backgroundColor": "#fff"
-			}
-		}, 
-		{
-			"path": "lineDetail/lineDetail",
-			"style": {
-				"navigationStyle": "custom",
-				"backgroundColor": "#fff"
-			}
-		}, 
-		{
-			"path": "webview/webview",
-			"style": {}
-		},
-		
-		{
-            "path" : "bloggers/bloggers",
-            "style" : {
-				"navigationStyle": "custom"
-			}
-        },
-		{
-            "path" : "topic/topic",
-            "style" : {
-            	"navigationStyle": "custom"
+			,{
+				"path" : "comments/comments",
+				"style" :                                                                                    
+				{
+					"navigationStyle": "custom"
+				}
 				
-            }
-        },
-		{
-            "path" : "topicList/topicList",
-            "style" : {
-            	"navigationStyle": "custom",
-				"backgroundColor":"#F8F8F8"
-            }
-        }
-       
-        ,{
-            "path" : "hotSearchRank/hotSearchRank",
-            "style" :                                                                                    
-            {
-				"navigationStyle": "custom",
-				"disableScroll": true,
-				"app-plus": {
-					"bounce": "none" 
-				},
-				"mp-alipay": {
-					"allowsBounceVertical": "NO"
-				} 
-            }
-            
-        }
-        ,{
-            "path" : "comments/comments",
-            "style" :                                                                                    
-            {
-				"navigationStyle": "custom"
-            }
-            
-        }
-		,{
-		    "path" : "report/report",
-		    "style" :                                                                                    
-		    {
-				"navigationStyle": "custom"
-		    }
-		    
+			}
+			,{
+				"path" : "report/report",
+				"style" :                                                                                    
+				{
+					"navigationStyle": "custom"
+				}
+				
+			}
+			,{
+				"path" : "cropper-default-old/cropper-default-old",
+				"style" :                                                                                    
+				{
+					"enablePullDownRefresh": false
+				}
+				
+			}
+			
+			,{
+				"path" : "questionsDetail/questionsDetail",
+				"style" :                                                                                    
+				{
+					"navigationStyle": "custom"
+				}
+				
+			}
+			,{
+				"path" : "answersList/answersList",
+				"style" :                                                                                    
+				{
+					"navigationStyle": "custom"
+				}
+				
+			}
+			,{
+				"path" : "moreQuestions/moreQuestions",
+				"style" :                                                                                    
+				{
+					"navigationStyle": "custom"
+				}
+				
+			}
+			,{
+				"path" : "questionsComplete/questionsComplete",
+				"style" :                                                                                    
+				{
+					"navigationStyle": "custom"
+				}
+				
+			}
+			]
 		}
-        ,{
-            "path" : "cropper-default-old/cropper-default-old",
-            "style" :                                                                                    
-            {
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        
-        ,{
-            "path" : "questionsDetail/questionsDetail",
-            "style" :                                                                                    
-            {
-                "navigationStyle": "custom"
-            }
-            
-        }
-        ,{
-            "path" : "answersList/answersList",
-            "style" :                                                                                    
-            {
-                "navigationStyle": "custom"
-            }
-            
-        }
-        ,{
-            "path" : "moreQuestions/moreQuestions",
-            "style" :                                                                                    
-            {
-                "navigationStyle": "custom"
-            }
-            
-        }
-        ,{
-            "path" : "questionsComplete/questionsComplete",
-            "style" :                                                                                    
-            {
-                "navigationStyle": "custom"
-            }
-            
-        }]
-	}],
+	],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",
 		"navigationBarTextStyle": "black",

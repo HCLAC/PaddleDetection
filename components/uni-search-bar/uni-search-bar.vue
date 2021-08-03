@@ -114,7 +114,7 @@
 				this.searchVal = ""
 				this.show = false
 				this.showSync = false
-				// #ifndef APP-PLUS
+				// #ifndef MP-BAIDU
 				uni.hideKeyboard()
 				// #endif
 				// #ifdef APP-PLUS
@@ -122,7 +122,7 @@
 				// #endif
 			},
 			confirm() {
-				// #ifndef APP-PLUS
+				// #ifndef MP-BAIDU
 				uni.hideKeyboard();
 				// #endif
 				// #ifdef APP-PLUS

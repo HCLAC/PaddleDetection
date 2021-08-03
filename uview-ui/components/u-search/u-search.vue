@@ -247,7 +247,9 @@ export default {
 			this.$emit('search', e.detail.value);
 			try{
 				// 收起键盘
+				//#ifndef MP-BAIDU
 				uni.hideKeyboard();
+				//#endif
 			}catch(e){}
 		},
 		// 点击右边自定义按钮的事件
@@ -255,7 +257,9 @@ export default {
 			this.$emit('custom', this.keyword);
 			try{
 				// 收起键盘
+				//#ifndef MP-BAIDU
 				uni.hideKeyboard();
+				//#endif
 			}catch(e){}
 		},
 		// 获取焦点

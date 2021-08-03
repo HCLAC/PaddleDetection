@@ -320,19 +320,19 @@ export default {
 		// 跳转关注页
 		toConcern(){
 			uni.navigateTo({
-				url:'/pagesA/mineConcern/mineConcern'
+				url:'/pages_mine/mineConcern/mineConcern'
 			});
 		},
 		// 跳转个人问答页
 		toAnswers(){
 			uni.navigateTo({
-				url:'../mineAnswers/mineAnswers'
+				url:'/pages_mine/mineAnswers/mineAnswers'
 			})
 		},
 		// 跳转信息修改页
 		toMineInfo(){
 			uni.navigateTo({
-				url:'../mineInfo/mineInfo?avatar='+this.userInfo.avatar+'&name='+this.userInfo.nickName+
+				url:'/pages_mine/mineInfo/mineInfo?avatar='+this.userInfo.avatar+'&name='+this.userInfo.nickName+
 						'&sex='+this.userInfo.sex+'&region='+this.userInfo.location
 			})
 		},

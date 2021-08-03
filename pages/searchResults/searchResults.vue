@@ -552,13 +552,15 @@
 			},
 
 			init() {
-				this.focus();
 				this.loadDefaultKeyword();
+				this.focus();
 				// this.loadOldKeyword();
 				// this.loadHotKeyword();
 			},
 			focus() {
+				//#ifndef MP-BAIDU
 				uni.hideKeyboard();
+				//#endif
 			},
 			//加载默认搜索关键字
 			loadDefaultKeyword() {

@@ -898,7 +898,9 @@
 					success: res => {
 						// this.commentsList = res.data.data.list
 						this.contentText = ''
-						uni.hideKeyboard()
+						//#ifndef MP-BAIDU
+						uni.hideKeyboard();
+						//#endif
 						// this.$refs.comment.toggleMask('none');
 						this.getComments()
 						console.log('pinglun', res.data)
