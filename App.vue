@@ -2,7 +2,8 @@
 export default {
 	globalData: {
 		username: '领途羊',
-		serviceProvider: ''
+		serviceProvider: '',
+		Authorization: ''
 	},
 	onLaunch: function(res) {
 		console.log('App Launch',res);
@@ -33,8 +34,6 @@ export default {
 		uni.getProvider({
 			service: 'oauth',
 			success: res => {
-		
-				console.log('getProvider',res)
 				if (res.errMsg == 'getProvider:ok') {
 					this.globalData.serviceProvider = res.provider[0]
 				} else {
@@ -45,7 +44,7 @@ export default {
 				}
 			}
 		});
-		
+		this.globalData.Authorization = uni.getStorageSync('Authorization')
 	},
 	onShow: function(data) {
 		console.log('App Show',data);

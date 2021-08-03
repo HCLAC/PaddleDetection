@@ -316,7 +316,6 @@
 			};
 		},
 		onShow() {
-			// this.getAdress();
 		},
 		onLoad() {
 			this.serviceProvider = getApp().globalData.serviceProvider
@@ -326,7 +325,7 @@
 		// 滚动
 		onPageScroll(e) {
 			if (e.scrollTop >= 100){
-				if (e.scrollTop >= 150){
+				if (e.scrollTop >= 150 && this.backgroundColor == 'rgba(58, 61, 70, 0.25)'){
 					return
 				}
 				this.backgroundColor = 'rgba(58, 61, 70, 0.25)';

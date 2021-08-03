@@ -5,8 +5,8 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" :border="true">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-							<!-- #endif -->
+						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<view class="slottitle">修改资料</view>
@@ -16,8 +16,8 @@
 		<view class="" style="margin:0 28rpx;" >
 			<u-form :model="model" :rules="rules" ref="uForm" :errorType="errorType" >
 				<!-- 头像 -->
-				<u-form-item class="avatarBox"   prop="photo"  @tap="chooseAvatar">
-					<image :src="avatar" slot="right" style="width: 130rpx; height: 130rpx;border-radius: 50%;margin-left: -10rpx;" ></image>
+				<u-form-item class="avatarBox" prop="avatar"  @tap="chooseAvatar">
+					<image :src="model.avatar" slot="right" style="width: 130rpx; height: 130rpx;border-radius: 50%;margin-left: -10rpx;" ></image>
 					</u-avatar>
 					<view class="avatarText" slot="right">
 						修改头像
@@ -30,21 +30,19 @@
 				</u-form-item>
 				<!-- 性别 -->
 				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" :label-position="labelPosition" label="性　别:" label-width="120" prop="sex">
-					<u-input :customStyle="customStyleinput" :border="border" :disabled="true"  :select-open="actionSheetShow" v-model="model.sex" :placeholder="model.sex" placeholder-style="color:#303133" @click="actionSheetShow = true"></u-input>
+					<u-input :customStyle="customStyleinput" :border="border" :disabled="true"  :select-open="actionSheetShow" v-model="model.sex" @click="actionSheetShow = true"></u-input>
 					<image class="moreRight" src="../../static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 				<!-- 常住地 -->
 				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" :label-position="labelPosition" label="常住地:" prop="region" label-width="120">
-					<u-input :customStyle="customStyleinput" :border="border" :disabled="true"   :select-open="pickerShow" v-model="model.region" :placeholder="region" placeholder-style="color:#303133" @click="pickerShow = true"></u-input>
+					<u-input :customStyle="customStyleinput" :border="border" :disabled="true"   :select-open="pickerShow" v-model="model.region" @click="pickerShow = true"></u-input>
 					<image class="moreRight" src="../../static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 			</u-form>
-			<!-- <u-button @click="submit" :custom-style="customStyle" class="customStyle" >保存</u-button> -->
 			<view class="customStyle" @click="submit">
 				保存
 			</view>
-			<u-action-sheet :list="actionSheetList"   v-model="actionSheetShow" @click="actionSheetCallback"></u-action-sheet>
-			<u-select mode="single-column" :list="selectList" v-model="selectShow" @confirm="selectConfirm"></u-select>
+			<u-action-sheet :list="actionSheetList"  v-model="actionSheetShow" @click="actionSheetCallback"></u-action-sheet>
 			<u-picker mode="region" v-model="pickerShow" @confirm="regionConfirm"></u-picker>
 		</view>
 	</view>
@@ -57,12 +55,12 @@
 			tuiImageCropper
 		},
 		data() {
-			let that = this;
 			return {
 				model: {
+					avatar: '',
 					name: '',
 					sex: '',
-					photo: ''
+					region: ''
 				},
 				rules: {
 					name : [
@@ -118,25 +116,10 @@
 						fontWeight: '400'
 					}
 				],
-				avatar:'',
-				nickName:'',
-				base:'',
-				sex:'',
-				region:'',
 				actionSheetShow: false,
 				pickerShow: false,
 				selectShow: false,
 				errorType: ['message'],
-				customStyle:{
-					background: '#FFE512',
-					fontSize: '32rpx',
-					fontFamily: 'PingFangSC-Medium, PingFang SC',
-					fontWeight: '500',
-					color: '#303133',
-					borderRadius: '26px',
-					margin:'82rpx 0 0 0'
-					
-				},
 				customStyleinput:{
 					margin:'16rpx 0'
 				}
@@ -146,61 +129,16 @@
 			this.$refs.uForm.setRules(this.rules);
 		},
 		created() {
-			
 			// 监听从裁剪页发布的事件，获得裁剪结果
-			// uni.$on('uAvatarCropper', path => {
-				
-			// 	let base ='data:image/png;base64,'+uni.getFileSystemManager().readFileSync(path,'base64')
-			// 	this.avatar = base
 			uni.$on('cropper', e => {
-				console.log('eeee',e)
 				let base ='data:image/png;base64,'+uni.getFileSystemManager().readFileSync(e.url,'base64')
-				console.log('base',base)
-				this.avatar = base	
-				
+				this.model.avatar = base
 			})
 		},
-		
-		onLoad(e) {
-			this.getUserInfo()
-			
-			
+		onLoad(options) {
+			this.model = options
 		},
 		methods:{
-			// 获取用户现存信息
-			getUserInfo(){
-				uni.request({
-					url: this.globalUrl+ '/user/info',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					method: 'get',
-					success: (res)=> {
-						console.log('个人信息=', res.data);
-						// 获取头像
-						if(res.data.data.avatar){
-							this.avatar = res.data.data.avatar
-						}else{
-							this.avatar = '../../static/images/userImg.svg'
-						}
-						// 获取昵称
-						if(res.data.data.nick_name){
-							this.model.name = res.data.data.nick_name
-						}else{
-							this.model.name = res.data.data.mobile
-						}
-						// 获取性别
-						this.model.sex = res.data.data.gender == 0 ? '保密' : res.data.data.gender == 2 ? '女' : '男'
-						// 获取地区
-						if(res.data.data.location){
-							this.region = res.data.data.location
-						}else{
-							this.region = '北京'
-						}
-						
-					}
-				})
-			},
 			// 头像裁剪
 			chooseAvatar() {
 				// 新上传头像方法
@@ -215,80 +153,41 @@
 						})
 					}
 				})
-				// 旧上传头像方法
-				// this.$u.route({
-				// 	url: '/uview-ui/components/u-avatar-cropper/u-avatar-cropper',
-				// 	// 内部已设置以下默认参数值，可不传这些参数
-				// 	params: {
-				// 		// 输出图片宽度，高等于宽，单位px
-				// 		destWidth: 300,
-				// 		// 裁剪框宽度，高等于宽，单位px
-				// 		rectWidth: 200,
-				// 		// 输出的图片类型，如果'png'类型发现裁剪的图片太大，改成"jpg"即可
-				// 		fileType: 'jpg',
-				// 	}
-				// })
 			},
 			// 点击actionSheet回调
 			actionSheetCallback(index) {
-				uni.hideKeyboard();
 				this.model.sex = this.actionSheetList[index].text;
 			},
 			// 保存
 			submit() {
 				this.$refs.uForm.validate(valid => {
-					if (valid) {
-						console.log('验证通过');
-						uni.request({
-							url: this.globalUrl + '/user/info',
-							data: {
-								nick_name: this.model.name  ? this.model.name : this.nickName ,
-								avatar:this.avatar,
-								gender: this.model.sex == '男' ? 1 : this.model.sex == '女' ? 2 : 0,
-								location: this.model.region ? this.model.region : this.region
-								
-							},
-							method: 'POST',
-							header: {
-								Authorization: uni.getStorageSync('Authorization')
-							},
-							success: res => {
-								console.log('修改信息',res)
-								if(res.data.code == 10108){
-									uni.showToast({
-										title: res.data.msg,
-										icon:'none',
-										duration: 2000
-									})
-								}else{
-									uni.showToast({
-										title: res.data.msg,
-										icon:'none',
-										duration: 2000
-									})
-									uni.reLaunch({
-										url:'/pagesA/mine/mine'
-									})
-								}
-								
-							}
-						});
-						// uni.request({
-						// 	url:this.globalUrl + '/user/avatar',
-						// 	data:{
-						// 		avator:this.base
-						// 	},
-						// 	method: 'POST',
-						// 	header: {
-						// 		Authorization: uni.getStorageSync('Authorization')
-						// 	},
-						// 	success: (res) => {
-						// 		console.log('上传头像',res)
-						// 	}
-						// })
-					} else {
+					if (!valid) {
 						console.log('验证失败');
 					}
+					uni.request({
+						url: this.globalUrl + '/user/info',
+						data: {
+							nick_name: this.model.name,
+							avatar: this.model.avatar,
+							gender: this.model.sex == '男' ? 1 : this.model.sex == '女' ? 2 : 0,
+							location: this.model.region ? this.model.region : '北京'
+							
+						},
+						method: 'POST',
+						header: {
+							Authorization: uni.getStorageSync('Authorization')
+						},
+						success: res => {
+							uni.showToast({
+								title: res.data.msg,
+								icon:'none',
+								duration: 2000
+							})
+							if(res.data.code == 0){
+								this.back()
+							}
+						}
+					});
 				});
 			},
 			// 选择地区回调

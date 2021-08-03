@@ -4,10 +4,12 @@
 		<view class="example-body" v-if="isFixed">
 			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" >
 				<view slot="left" class="slotleft">
+					<!-- #ifndef  MP-BAIDU -->
 					<image class="fanhui" src=""  />
+					<!-- #endif -->
 					<image class="fhsy" src=""  />
 				</view>
-				<view class="slottitle">领途羊</view>
+				<view class="slottitle">个人主页</view>
 			</uni-nav-bar>
 		</view>
 		<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption"  >
@@ -17,21 +19,19 @@
 						<image src="../../static/images/mineBack.png" class="backImg"></image>
 						<!-- 用户信息 -->
 						<view class="usermes">
-							<!-- <image class="userAva" :src="avatarUrl" v-if="avatarUrl"></image> -->
-
 							<image src="../../static/images/userImg.svg" class="userAva" v-if="!userInfo.avatar" mode=""></image>
 							<image :src="userInfo.avatar" class="userAva" v-if="userInfo.avatar" mode=""></image>
 							<view class="userR">
-								<view class="userName" @click="toMineInfo">{{ nickName }}
+								<view class="userName" @click="toMineInfo">{{ userInfo.nickName }}
 									<image src="../../static/images/iconExit.svg" mode=""></image>
 								</view>
 								<view class="fa">
-									<view class="fllow" @click="toConcern()">
-										<view class="fllowNum">{{fllowNum>10000?((fllowNum-(fllowNum%1000))/10000+'w'):fllowNum}}</view>
+									<view class="fllow" @click="toConcern">
+										<view class="fllowNum">{{ userInfo.fllowNum }}</view>
 										<text>关注</text>
 									</view>
-									<view class="answers" @click="toAnswers()">
-										<view class="answersNum">{{answersNum>10000?((answersNum-(answersNum%1000))/10000+'w'):answersNum}}</view>
+									<view class="answers" @click="toAnswers">
+										<view class="answersNum">{{ userInfo.answersNum }}</view>
 										<text>问答</text>
 									</view>
 								</view>
@@ -52,8 +52,8 @@
 								<view class="favLine" v-if="tabCurrent == 0">
 								</view>
 							</view>
-							<view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" v-if="favNum != 0" >
-								{{favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum}}
+							<view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" >
+								{{userInfo.favNum}}
 							</view>
 						</view>
 						<view class="likeBox" @click="change1">
@@ -64,17 +64,14 @@
 								<view class="likeLine" v-if="tabCurrent == 1">
 								</view>
 							</view>
-							<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" v-if="likeNum != 0" >
-								{{likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum}}
+							<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" >
+								{{userInfo.likeNum}}
 							</view>
 						</view>
-						
-						
 					</view>
 				</view>
 				<!-- 收藏 -->
 				<view style="margin-top: 64%; padding: 0 28rpx;" v-if="tabCurrent == 0 ">
-					
 					<view class="" v-for="(item, index) in tipList" :key="index" v-if="favNum != 0">
 						<view class="contentItem" >
 							<view class="left">
@@ -115,12 +112,7 @@
 						</view>
 						<view class="line"></view>
 					</view>
-					
-						
-					
-					
 				</view>
-				
 				<!-- 点赞 -->
 				<view style="margin-top: 64%; padding: 0 24rpx;" v-if="tabCurrent == 1 ">
 					<view class="" v-for="(item, index) in likeList" :key="index" >
@@ -163,11 +155,7 @@
 						</view>
 						<view class="line"></view>
 					</view>
-					
-					
-					
 				</view>
-				
 			</view>
 		</mescroll-body>
 		<!-- 收藏列表为空时 -->
@@ -193,23 +181,18 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import httpType from '@/httpType.js';
 import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 export default {
 	data() {
 		return {
-			userInfo:[],
-			nickName: uni.getStorageSync('nickName'),
+			userInfo: {},
+			nickName: '',
 			avatarUrl: '',
 			tipList: [],
-			likeList:[],
-			upOption:{
+			likeList: [],
+			upOption: {
 				bgColor:'#ffffff'
 			},
-			fllowNum:0,
-			answersNum:0,
-			favNum:0,
-			likeNum:0,
 			current: 0,
 			tablist: ['收藏','已赞'],
 			tabCurrent: 0,
@@ -219,164 +202,100 @@ export default {
 			likenumcolor:{
 				color: '#909399'
 			},
-			cardheight:0,
+			cardheight: 200,
 			isFixed:false,
 			downOption:{
-				use:false
-			}
+				use: false,
+				auto: false,
+			},
+			upOption: {
+				auto:false
+			},
 		};
 	},
 	mixins: [MescrollMixin],
-	computed: mapState(['forcedLogin', 'hasLogin', 'phone']),
 	onShow() {
-		var auth = uni.getStorageSync('Authorization')
+		var auth =  uni.getStorageSync('Authorization')
 		if (!auth){
 			uni.navigateTo({
 				url: '/pagesA/login/login?ismine=1'
 			});
 			return
 		}
-		this.getUserMsg();
-		this.downCallback()
+		this.loadData()
+		this.mescroll.resetUpScroll()
 	},
 	onLoad() {
-		var auth = uni.getStorageSync('Authorization')
+		var auth =  uni.getStorageSync('Authorization')
 		if (!auth){
 			return
 		}
-		this.getlist()
-		this.getAnswers()
-	},
-	mounted() {
-		const query = uni.createSelectorQuery().in(this);
-		query.select('#selectcard').boundingClientRect(data => {
-		console.log("得到布局位置信息" + JSON.stringify(data));
-		console.log("节点离页面顶部的距离为" + data.top);
-		 
-		if(data.top == 0 ){
-			this.cardheight = 200
-		}else{
-			this.cardheight = data.top
-		}
-		}).exec();
+		// this.loadData()
 	},
 	onPageScroll(e) {
 		if (e.scrollTop >  this.cardheight) {
+			if (e.scrollTop > this.cardheight+20 && this.isFixed){
+				return
+			}
 			this.isFixed = true;
 		} else {
 			this.isFixed = false;
 		}
 	},
 	methods: {
+		loadData(){
+			uni.showLoading({
+				title: '加载中',
+				mask: true,
+				success: () => {
+					this.getUserMsg();
+					this.hideLoad();
+				}
+			});
+		},
+		hideLoad(){
+			uni.hideLoading();
+		},
 		// 获取用户信息
 		getUserMsg() {
 			var that = this;
-			uni.getStorage({
-				key: 'Authorization',
+			uni.request({
+				url: this.globalUrl+ '/user/info',
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				method: 'get',
 				success: function(res) {
-					console.log('token===>', res.data);
-					// uni.request({
-					// 	url:this.globalUrl+ '/user/info',
-					// 	header:{
-					// 		'Authorization':res.data
-					// 	},
-					// 	success:function(res){
-					// 			console.log('个人信息',res)
-					// 	}
-					// })
-				}
-			}),
-				uni.request({
-					url: this.globalUrl+ '/user/info',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					method: 'get',
-					success: function(res) {
-						console.log('个人信息=', res.data);
-						that.userInfo = res.data.data
-						if (res.data.code == 0) {
-							if(res.data.data.nick_name){
-								that.nickName = res.data.data.nick_name
-							}else{
-								that.nickName = res.data.data.mobile
-							}
-							that.fllowNum = res.data.data.following
-							that.favNum = res.data.data.fav_count
-							that.likeNum = res.data.data.like_count
-						} else{
-							uni.removeStorageSync('Authorization')
-							uni.navigateTo({
-								url: '/pagesA/login/login?ismine=1'
-							});
-						}
-					}
-				})
-				
-		},
-		getlist(){
-			uni.request({
-				url: this.globalUrl+ '/user/favorite/list',
-				data: {
-					count: 6,
-					page: 1
-				},
-				header: {
-					Authorization: uni.getStorageSync('Authorization')
-				},
-				method: 'get',
-				success: (res)=> {
-					console.log('收藏列表', res.data);
-					if(res.data.data != null){
-						this.tipList = res.data.data.list;
-						console.log('1111111', this.tipList);
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
 					}
 					
-				}
-			});
-			uni.request({
-				url: this.globalUrl+ '/user/liked/list',
-				data: {
-					count: 6,
-					page: 1
-				},
-				header: {
-					Authorization: uni.getStorageSync('Authorization')
-				},
-				method: 'get',
-				success: (res)=> {
-					console.log('点赞列表', res.data);
-					if(res.data.data != null ){
-						this.likeList = res.data.data.list;
-						console.log('likelist', this.likeList);
+					that.userInfo = res.data.data
+					that.userInfo.nickName = res.data.data.mobile
+					if(res.data.data.nick_name){
+						that.userInfo.nickName = res.data.data.nick_name
 					}
 					
-				}
-			});
-		},
-		// 获取问答
-		getAnswers(){
-			uni.request({
-				url: this.globalUrl+ '/user/followquestion/list',
-				data: {
-					page:1,
-					count:10
-				},
-				header: {
-					Authorization: uni.getStorageSync('Authorization')
-				},
-				method: 'get',
-				success: (res)=> {
-					console.log('问答=', res.data);
-					this.answersNum = res.data.data.total
-						
+					let gender = res.data.data.gender
+					that.userInfo.sex = gender == 0 ? '保密' : gender == 2 ? '女' : '男'
 					
+					let fllowNum = res.data.data.following
+					that.userInfo.fllowNum = fllowNum>10000?((fllowNum-(fllowNum%1000))/10000+'w'):fllowNum
 					
+					let favNum = res.data.data.fav_count 
+					that.userInfo.favNum = favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum
+					let likeNum = res.data.data.like_count
+					that.userInfo.likeNum = likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum
+					let answersNum = res.data.data.question_count
+					that.userInfo.answersNum = answersNum>10000?((answersNum-(answersNum%1000))/10000+'w'):answersNum
 				}
 			})
 		},
 		// 切换
-		
 		change(){
 			this.tabCurrent = 0
 			this.favnumcolor.color = '#303133'
@@ -391,24 +310,9 @@ export default {
 			this.mescroll.resetUpScroll()
 			this.mescroll.scrollTo(0)
 		},
-		// tabChange(index) {
-		// 	this.tabCurrent = index;
-		// 	if(index == 1 ){
-		// 		this.favnumcolor.color = '#909399'
-		// 		this.likenumcolor.color = '#303133'
-		// 		this.downCallback()
-		// 	}else{
-		// 		this.favnumcolor.color = '#303133'
-		// 		this.likenumcolor.color = '#909399'
-		// 		this.downCallback()
-		// 	}
-		// },
 		// 跳转文章详情
 		onPageJump(e) {
-			console.log(e);
 			let id = e.currentTarget.id;
-			// debugger
-			// return
 			uni.navigateTo({
 				url: '/pages/contentdetail/contentdetail?article_id=' + id
 			});
@@ -428,7 +332,8 @@ export default {
 		// 跳转信息修改页
 		toMineInfo(){
 			uni.navigateTo({
-				url:'../mineInfo/mineInfo'
+				url:'../mineInfo/mineInfo?avatar='+this.userInfo.avatar+'&name='+this.userInfo.nickName+
+						'&sex='+this.userInfo.sex+'&region='+this.userInfo.location
 			})
 		},
 		// 客服电话
@@ -461,44 +366,47 @@ export default {
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: data => {
-						console.log('data', data);
-						// 接口返回的当前页数据列表 (数组)
-						if(data.data.data != null){
-							let curPageData = data.data.data.list;
-							console.log('curPageData', curPageData);
-							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-							let curPageLen = curPageData.length;
-							console.log('curPageLen', curPageLen);
-							// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-							// let totalPage = data.data.data.list;
-							// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-							let totalSize = data.data.data.total;
-							console.log('totalSize', totalSize);
-							// 接口返回的是否有下一页 (true/false)
-							// let hasNext = data.data.data.list;
-											
-							//设置列表数据
-							if (page.num == 1) this.tipList = []; //如果是第一页需手动置空列表
-							this.tipList = this.tipList.concat(curPageData); //追加新数据
-							console.log('tipList', this.tipList);
-							// 请求成功,隐藏加载状态
-							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-							// this.mescroll.endByPage(curPageLen, totalPage);
-											
-							//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-							this.mescroll.endBySize(curPageLen, totalSize);
-											
-							//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-							//this.mescroll.endSuccess(curPageLen, hasNext);
-											
-							//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-							//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-							//如果传了hasNext,则翻到第二页即可显示无更多数据.
-							//this.mescroll.endSuccess(curPageLen);
-											
-							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+						if (data.statusCode != 200 || data.data.code != 0){
+							uni.showToast({
+								title: data.data.msg,
+								icon: 'none'
+							});
+							return
 						}
+						// 接口返回的当前页数据列表 (数组)
+						if(!data.data.data || !data.data.data.list){
+							return
+						}
+						let curPageData = data.data.data.list;
+						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+						let curPageLen = curPageData.length;
+						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+						// let totalPage = data.data.data.list;
+						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+						let totalSize = data.data.data.total;
+						// 接口返回的是否有下一页 (true/false)
+						// let hasNext = data.data.data.list;
+										
+						//设置列表数据
+						if (page.num == 1) this.tipList = []; //如果是第一页需手动置空列表
+						this.tipList = this.tipList.concat(curPageData); //追加新数据
+						// 请求成功,隐藏加载状态
+						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+						// this.mescroll.endByPage(curPageLen, totalPage);
+										
+						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+						this.mescroll.endBySize(curPageLen, totalSize);
+										
+						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+						//this.mescroll.endSuccess(curPageLen, hasNext);
+										
+						//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+						//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+						//如果传了hasNext,则翻到第二页即可显示无更多数据.
+						//this.mescroll.endSuccess(curPageLen);
+										
+						// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+						// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
 						
 					},
 					fail: () => {
@@ -506,32 +414,38 @@ export default {
 						this.mescroll.endErr();
 					}
 				});
-			}else{
+			} else {
 				uni.request({
 					url: this.globalUrl+ '/user/liked/list?page=' + pageNum + '&count=' + pageSize,
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: data => {
-						console.log('data', data);
+						if (data.statusCode != 200 || data.data.code != 0){
+							uni.showToast({
+								title: data.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						// 接口返回的当前页数据列表 (数组)
+						if(!data.data.data || !data.data.data.list){
+							return
+						}
 						// 接口返回的当前页数据列表 (数组)
 						let curPageData = data.data.data.list;
-						console.log('curPageData', curPageData);
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 						let curPageLen = curPageData.length;
-						console.log('curPageLen', curPageLen);
 						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
 						// let totalPage = data.data.data.list;
 						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
 						let totalSize = data.data.data.total;
-						console.log('totalSize', totalSize);
 						// 接口返回的是否有下一页 (true/false)
 						// let hasNext = data.data.data.list;
 				
 						//设置列表数据
 						if (page.num == 1) this.likeList = []; //如果是第一页需手动置空列表
 						this.likeList = this.likeList.concat(curPageData); //追加新数据
-						console.log('likeList', this.likeList);
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 						// this.mescroll.endByPage(curPageLen, totalPage);
@@ -556,13 +470,9 @@ export default {
 					}
 				});
 			}
-			
-
-			
 			// 此处仍可以继续写其他接口请求...
 			// 调用其他方法...
 		},
-		...mapMutations(['login'])
 	}
 };
 </script>
@@ -597,7 +507,7 @@ export default {
 		width: 40rpx;
 		height: 40rpx;
 		margin-left: 42rpx;
-		
+		margin-right: 20rpx;
 	}
 	.fhsy {
 		width: 40rpx;
