@@ -362,7 +362,7 @@ export default {
 					icon: 'none'
 				});
 				uni.navigateTo({
-					url: '/pagesA/login/login'
+					url: '/pages_mine/login/login'
 				});
 			} else {
 				uni.request({
@@ -436,7 +436,7 @@ export default {
 		},
 		login() {
 			uni.navigateTo({
-				url: '/pagesA/login/login'
+				url: '/pages_mine/login/login'
 			});
 		},
 		tell(){

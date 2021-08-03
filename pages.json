@@ -28,22 +28,21 @@
 				"navigationStyle": "custom"
 		
 			}
-		},
-		{
-		    "path" : "pagesA/login/login",
-		    "style" : {
-				"navigationBarBackgroundColor":"#FFFFFF",
-				"backgroundColor":"#fff",
-				"navigationStyle": "custom",
-				"disableScroll":true
-			}
 		}
-        
     ],
 	"subPackages": [
 		{
 			"root":"pages_mine",
 			"pages":[
+				{
+				    "path" : "login/login",
+				    "style" : {
+						"navigationBarBackgroundColor":"#FFFFFF",
+						"backgroundColor":"#fff",
+						"navigationStyle": "custom",
+						"disableScroll":true
+					}
+				},
 				{
 				    "path" : "mineConcern/mineConcern",
 				    "style" : {
@@ -277,6 +276,12 @@
 			]
 		}
 	],
+	"preloadRule":{
+        "pagesA/mine/mine": {
+            "network": "all",
+            "packages": ["pages_mine"]
+        }
+    },
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",
 		"navigationBarTextStyle": "black",

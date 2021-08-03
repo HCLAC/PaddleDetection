@@ -279,7 +279,7 @@
 				console.log(Authorization)
 				if (!Authorization) {
 					uni.navigateTo({
-						url: '/pagesA/login/login'
+						url: '/pages_mine/login/login'
 					});
 				}else{
 					uni.navigateTo({

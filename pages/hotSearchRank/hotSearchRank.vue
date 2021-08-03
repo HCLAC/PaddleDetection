@@ -116,26 +116,26 @@
 			//保存关键字到历史记录
 			saveKeyword(keyword) {
 				
-				var hisKey = uni.getStorageSync('OldKeys');
+				var hisKey = uni.getStorageSync('searchHistory');
 				if (!hisKey) {
-					var OldKeys = [keyword];
-					uni.setStorageSync('OldKeys',JSON.stringify(OldKeys));
-					this.oldKeywordList = OldKeys;
+					var searchHistory = [keyword];
+					uni.setStorageSync('searchHistory',JSON.stringify(searchHistory));
+					this.oldKeywordList = searchHistory;
 			
 				} else {
-					var OldKeys = JSON.parse(hisKey);
+					var searchHistory = JSON.parse(hisKey);
 					
-					// var OldKeys = res.data;
-					var findIndex = OldKeys.indexOf(keyword);
+					// var searchHistory = res.data;
+					var findIndex = searchHistory.indexOf(keyword);
 					if (findIndex == -1) {
-						OldKeys.unshift(keyword);
+						searchHistory.unshift(keyword);
 					} else {
-						OldKeys.splice(findIndex, 1);
-						OldKeys.unshift(keyword);
+						searchHistory.splice(findIndex, 1);
+						searchHistory.unshift(keyword);
 					}
-					OldKeys.length > 10 && OldKeys.pop();
-					uni.setStorageSync('OldKeys',JSON.stringify(OldKeys));
-					this.oldKeywordList = OldKeys;
+					searchHistory.length > 10 && searchHistory.pop();
+					uni.setStorageSync('searchHistory',JSON.stringify(searchHistory));
+					this.oldKeywordList = searchHistory;
 				
 				}
 			},

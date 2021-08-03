@@ -781,7 +781,7 @@
 						success: res => {
 							if (res.data.code != 0) {
 								uni.navigateTo({
-									url: '/pagesA/login/login'
+									url: '/pages_mine/login/login'
 								});
 							} else {
 								that.article.data.is_follow = status == 1 ? true : false;
@@ -808,7 +808,7 @@
 					success: res => {
 						if (res.data.code != 0) {
 							uni.navigateTo({
-								url: '/pagesA/login/login'
+								url: '/pages_mine/login/login'
 							});
 						} else {
 							that.article.data.is_follow = status == 1 ? true : false;
@@ -836,7 +836,7 @@
 				// console.log('tttt',token)
 				if (!token) {
 					uni.navigateTo({
-						url: '/pagesA/login/login'
+						url: '/pages_mine/login/login'
 					});
 				} else {
 					uni.navigateTo({
@@ -853,7 +853,7 @@
 				const value = uni.getStorageSync('Authorization');
 				if (value == '') {
 					uni.navigateTo({
-						url: '/pagesA/login/login'
+						url: '/pages_mine/login/login'
 					});
 				}else{
 					this.textareafocus = true
@@ -906,7 +906,7 @@
 						console.log('pinglun', res.data)
 						if (res.data.code == 10502 || res.data.code == 10501) {
 							uni.navigateTo({
-								url: '/pagesA/login/login'
+								url: '/pages_mine/login/login'
 							});
 						} else {
 
@@ -990,7 +990,7 @@
 						console.log('点赞', res)
 						if (res.data.code == 10501) {
 							uni.navigateTo({
-								url: '/pagesA/login/login'
+								url: '/pages_mine/login/login'
 							});
 						} else {
 							this.getComments()
@@ -1033,7 +1033,7 @@
 						console.log('点赞', res);
 						if (res.data.code != 0) {
 							uni.navigateTo({
-								url: '/pagesA/login/login'
+								url: '/pages_mine/login/login'
 							});
 						} else {
 							that.article.data.liked = res.data.data.liked
@@ -1060,7 +1060,7 @@
 						console.log('收藏', res);
 						if (res.data.code != 0) {
 							uni.navigateTo({
-								url: '/pagesA/login/login'
+								url: '/pages_mine/login/login'
 							});
 						} else {
 							that.article.data.fav = res.data.data.fav
@@ -1073,7 +1073,7 @@
 			// 登录
 			login() {
 				uni.navigateTo({
-					url: '/pagesA/login/login'
+					url: '/pages_mine/login/login'
 				});
 			},
 			change(e) {

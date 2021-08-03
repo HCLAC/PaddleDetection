@@ -486,7 +486,7 @@
 				let Authorization = uni.getStorageSync('Authorization')
 				if (!Authorization){
 					uni.navigateTo({
-						url: '/pagesA/login/login'
+						url: '/pages_mine/login/login'
 					});
 					return
 				}

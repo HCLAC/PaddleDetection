@@ -3,10 +3,11 @@
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
 			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
-				<view slot="left" class="slotleft"><!-- #ifndef  MP-BAIDU -->
-								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-							<!-- #endif --></view>
-				<view class="slottitle">领途羊</view>
+				<view slot="left" class="slotleft">
+				<!-- #ifndef  MP-BAIDU -->
+					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+				<!-- #endif --></view>
+				<view class="slottitle">搜索</view>
 			</uni-nav-bar>
 		</view>
 		<view class="search-box">
@@ -16,11 +17,10 @@
 				:mode="2"
 				button="inside"
 				:placeholder="defaultKeyword"
-				
 				@search="doSearch(keyword)"
 				@input="inputChange"
 				confirm-type="search"
-				@confirm="Toresults()"
+				@confirm="toSearchResults()"
 				v-model="keyValue"
 			></mSearch>
 		</view>
@@ -38,7 +38,7 @@
 						<view class="otherText" v-if="row.keyword.type">{{ row.keyword.type == 'site' ? '景点' : '目的地' }}</view>
 					</view>
 				</block>
-				<view class="search-bottom" @click="Toresults(keyword)">
+				<view class="search-bottom" @click="toSearchResults()">
 					搜索更多关于“
 					<veiw>{{ keyValue }}</veiw>
 					”的结果
@@ -76,7 +76,7 @@
 				</view>
 			</scroll-view>
 		</view>
-		<view v-if="noResult == '暂无结果'">
+		<view v-if="isShowArticlieList">
 			<view class="noResult">
 				没找到“
 				<veiw>{{ keyValue }}</veiw>
@@ -173,19 +173,18 @@
 //引用mSearch组件，如不需要删除即可
 import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
-import httpType from '../../httpType.js';
 
 import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 export default {
 	data() {
 		return {
-			defaultKeyword: '',
+			defaultKeyword: '搜索热门目的地/景点',
 			keyValue: '',
 			keywordList: [],
 			oldKeywordList: [],
 			hotKeywordList: [],
 			forbid: '',
-			noResult: null,
+			isShowArticlieList: false,
 			isShowKeywordList: false,
 			isShowHt: true,
 			list: [],
@@ -197,8 +196,11 @@ export default {
 		};
 	},
 	onLoad() {
-		this.init(); 
-		this.getResults();
+		let res = uni.getStorageSync('searchHistory')
+		if(res){
+			this.oldKeywordList = JSON.parse(res) || JSON.parse(res.value) ;
+		}
+		this.getHotKeyword()
 	},
 	components: {
 		//引用mSearch组件，如不需要删除即可
@@ -207,7 +209,25 @@ export default {
 	},
 	mixins: [MescrollMixin],
 	methods: {
-		getResults() {
+		//加载热门搜索
+		getHotKeyword() {
+			//定义热门搜索关键字，可以自己实现ajax请求数据再赋值
+			uni.request({
+				url: this.globalUrl + '/search/hot',
+				method: 'get',
+				success: res => {
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
+					}
+					this.hotKeywordList = res.data.data.list;
+				}
+			});
+		},
+		getArticleList() {
 			uni.request({
 				url: this.globalUrl + '/article/list',
 				data: {
@@ -219,142 +239,51 @@ export default {
 					Authorization: uni.getStorageSync('Authorization')
 				},
 				success: res => {
-					console.log('未定位时获取的文章列表', res);
-					if(res.data.data == null ){
-						uni.request({
-							url: this.globalUrl + '/article/list',
-							data: {
-								count: 6,
-								page: 1,
-								first_time: new Date().getTime()	
-							},success: (res) => {
-								uni.setStorageSync('article_id', res.data);
-								// console.log('存储文章列表==',res.data)
-								this.list = res.data.data.list;
-								// console.log('list=====',this.list)
-							}
-						})
-					}else{
-						uni.setStorageSync('article_id', res.data);
-						// console.log('存储文章列表==',res.data)
-						console.log(this.$refs)
-						this.list = res.data.data.list;
-						// console.log('list=====',this.list)
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
 					}
+					uni.setStorageSync('article_list', res.data);
+					this.list = res.data.data.list;
 				}
-			});
-		},
-
-		// 跳转热搜榜单
-		toHotRank(){
-			uni.navigateTo({
-				url:'../hotSearchRank/hotSearchRank'
-			})
-		},
-		// 跳转文章详情
-		onPageJump(e) {
-			console.log(e);
-			let id = e.currentTarget.id;
-			// debugger
-			// return
-			uni.navigateTo({
-				url: '/pages/contentdetail/contentdetail?article_id=' + id
 			});
 		},
 		// 点赞
 		clickLike(e, index) {
-			console.log('qaz', e, index);
-			// debugger
-			let article = e.article_id;
-			var that = this;
-			uni.request({
-				url: this.globalUrl + '/user/liked',
-				data: {
-					article_id: article,
-					liked: e.liked == 0 ? 1 : 0
-				},
-				method: 'POST',
-				header: {
-					Authorization: uni.getStorageSync('Authorization')
-				},
-				success: res=> {
-					console.log('点赞', res);
-					if (res.data.code != 0) {
-						// debugger
-						uni.navigateTo({
-							url: '/pagesA/login/login'
-						});
-					}
-
-					this.list[index].liked = e.liked == 1 ? 0 : 1
-					this.list[index].like_count = (e.liked == 1 ? e.like_count + 1 : e.like_count  - 1)
-				}
-			});
-		},
-		clickLeftLike(e, index) {
-			console.log('qaz', e, index);
-			// debugger
-			let article = e.article_id;
-			var that = this;
-			uni.request({
-				url: this.globalUrl + '/user/liked',
-				data: {
-					article_id: article,
-					liked: e.liked == 0 ? 1 : 0
-				},
-				method: 'POST',
-				header: {
-					Authorization: uni.getStorageSync('Authorization')
-				},
-				success: res=> {
-					console.log('点赞', res);
-					if (res.data.code != 0) {
-						// debugger
-						uni.navigateTo({
-							url: '/pagesA/login/login'
-						});
-					}
-		
-					this.list[index].liked = e.liked == 1 ? 0 : 1
-					this.list[index].like_count = (e.liked == 1 ? e.like_count - 1 : e.like_count  + 1)
-				}
-			});
-		},
-		init() {
-			this.loadDefaultKeyword();
-			this.loadOldKeyword();
-			this.loadHotKeyword();
-		},
-		back() {
-			uni.navigateBack({
-				delta: 1
-			});
-		},
-		focus() {
-			this.active = true;
-			//HM修改 增加获取焦点判断
-			if (this.inputVal) {
-				this.isDelShow = true;
+			let Authorization = uni.getStorageSync('Authorization')
+			if (!Authorization){
+				uni.navigateTo({
+					url: '/pages_mine/login/login'
+				});
+				return
 			}
-		},
-		blur() {
-			uni.hideKeyboard();
-		},
-		//加载默认搜索关键字
-		loadDefaultKeyword() {
-			//定义默认搜索关键字，可以自己实现ajax请求数据再赋值,用户未输入时，以水印方式显示在输入框，直接不输入内容搜索会搜索默认关键字
-			this.defaultKeyword = '搜索热门目的地/景点';
-		},
-
-		//加载热门搜索
-		loadHotKeyword() {
-			//定义热门搜索关键字，可以自己实现ajax请求数据再赋值
+			
+			let article = e.article_id;
+			var that = this;
 			uni.request({
-				url: this.globalUrl + '/search/hot',
-				method: 'get',
-				success: res => {
-					console.log('hotres',res);
-					this.hotKeywordList = res.data.data.list;
+				url: this.globalUrl + '/user/liked',
+				data: {
+					article_id: article,
+					liked: e.liked == 0 ? 1 : 0
+				},
+				method: 'POST',
+				header: {
+					Authorization: uni.getStorageSync('Authorization')
+				},
+				success: res=> {
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
+					}
+
+					this.list[index].liked = res.data.data.liked
+					this.list[index].like_count = res.data.data.like_count
 				}
 			});
 		},
@@ -364,7 +293,7 @@ export default {
 			var keyword = event.detail ? event.detail.value : event;
 			if (!keyword) {
 				this.keywordList = [];
-				this.noResult = '无数据';
+				this.isShowArticlieList = false;
 				this.isShowKeywordList = false;
 				this.isShowHt = true;
 				return;
@@ -378,46 +307,45 @@ export default {
 				},
 				// type:"GET",
 				success: res => {
-					console.log('请求', res);
-					if (res.data.code == 0) {
-						if ((res.data.data.list && res.data.data.list.length) || res.data.data.special) {
-							this.keywordList = [];
-							let arr = [];
-							if (res.data.data.special) {
-								arr.push({ ...res.data.data.special });
-							}
-							if (res.data.data.list && res.data.data.list.length) {
-								res.data.data.list.forEach(item => {
-									arr.push({ ...item });
-								});
-							}
-
-							this.noResult = '有结果';
-							this.keywordList = this.drawCorrelativeKeyword(arr, keyword);
-							this.isShowKeywordList = true;
-							this.isShowHt = false;
-						} else {
-							this.keywordList = [];
-							this.noResult = '暂无结果';
-							this.isShowKeywordList = false;
-							this.isShowHt = false;
-						}
-					} else {
+					if (res.statusCode != 200 || res.data.code != 0){
 						uni.showToast({
 							title: res.data.msg,
 							icon: 'none'
 						});
+						return
+					}
+					
+					this.isShowHt = false;
+					this.keywordList = [];
+					let arr = [];
+					if (res.data.data.special) {
+						arr.push({ ...res.data.data.special });
+					}
+					if (res.data.data.list && res.data.data.list.length) {
+						res.data.data.list.forEach(item => {
+							arr.push({ ...item });
+						});
+					}
+					
+					this.keywordList = this.drawCorrelativeKeyword(arr, keyword);
+					if (this.keywordList && this.keywordList.length > 0){
+						this.isShowArticlieList = false;
+						this.isShowKeywordList = true;
+					} else {
+						this.isShowArticlieList = true;
+						this.isShowKeywordList = false;
 					}
 				}
 			});
 		},
+		
 		//高亮关键字
 		drawCorrelativeKeyword(keywords, keyword) {
 			var len = keywords.length;
 			var keywordArr = [];
 			for (var i = 0; i < len; i++) {
 				var row = keywords[i].name;
-				console.log(row, 1);
+				
 				//定义高亮#9f9f9f
 				var html = row.replace(keyword, "<span style='color: #A86B13;font-weight:bold'>" + keyword + '</span>');
 				html = '<div>' + html + '</div>';
@@ -427,40 +355,13 @@ export default {
 				};
 				keywordArr.push(tmpObj);
 			}
-
 			return keywordArr;
 		},
-		Toresults() {
-			var keyword = this.keyValue;
-			this.keyword = keyword;
-			// this.defaultKeyword = keyword;
-			this.saveKeyword(keyword); //保存为历史
-			// uni.showToast({
-			// 	title: keyword,
-			// 	icon: 'none',
-			// 	duration: 2000
-			// });
-			uni.request({
-				url: this.globalUrl + '/search',
-				data: {
-					query: keyword,
-					hit: 8
-				},
-				success: res => {
-					console.log('搜素数据', res);
-					uni.setStorageSync('article_id', res.data);
-					console.log('存储数据', res.data);
-					if(res.data.code == 0){
-						uni.navigateTo({
-							url: '../searchResults/searchResults'
-						});
-					}
-				}
+		
+		toSearchResults() {
+			uni.navigateTo({
+				url: '../searchResults/searchResults?keyword='+this.keyValue
 			});
-		},
-		//顶置关键字
-		setKeyword(index) {
-			this.keyword = this.keywordList[index].keyword;
 		},
 		//清除历史搜索
 		oldDelete() {
@@ -468,13 +369,10 @@ export default {
 				content: '确定清除历史搜索记录？',
 				success: res => {
 					if (res.confirm) {
-						console.log('用户点击确定');
 						this.oldKeywordList = [];
 						uni.removeStorage({
-							key: 'OldKeys'
+							key: 'searchHistory'
 						});
-					} else if (res.cancel) {
-						console.log('用户点击取消');
 					}
 				}
 			});
@@ -487,48 +385,15 @@ export default {
 		doSearch(keyword) {
 			if (!keyword) return false;
 
-			keyword = keyword === false ? this.keyword : keyword;
-			this.keyword = keyword;
-			// this.defaultKeyword = keyword;
+			keyword = keyword;
+			uni.navigateTo({
+				url: '../searchResults/searchResults?keyword='+keyword
+			});
 			this.saveKeyword(keyword); //保存为历史
-			// uni.showToast({
-			// 	title: keyword,
-			// 	icon: 'none',
-			// 	duration: 2000
-			// });
-			uni.request({
-				url: this.globalUrl + '/search',
-				data: {
-					query: keyword,
-					hit: 8
-				},
-				success: res => {
-					console.log('搜素数据', res);
-					uni.setStorageSync('article_id', res.data);
-					if(res.data.code == 0){
-						uni.navigateTo({
-							url: '../searchResults/searchResults'
-						});
-					}
-					
-				}
-			})
-			
-			//以下是示例跳转淘宝搜索，可自己实现搜索逻辑
-			/*
-				//#ifdef APP-PLUS
-				plus.runtime.openURL(encodeURI('taobao://s.taobao.com/search?q=' + keyword));
-				//#endif
-				//#ifdef H5
-				window.location.href = 'taobao://s.taobao.com/search?q=' + keyword
-				//#endif
-				*/
 		},
 		goSearch(keyword) {
-			console.log(keyword);
-
-			if (keyword.type) {
-				if (keyword.type == 'area') {
+			switch(keyword.type){
+				case 'area':
 					let obj = {
 						state_id: keyword.state_id,
 						name: keyword.name,
@@ -539,103 +404,59 @@ export default {
 						url: '/pages/provinces/provinces?state_id=' + 
 						obj.state_id+"&city_id="+obj.city_id+"&name="+obj.name+"&image="+obj.image
 					});
-				}
-				if (keyword.type == 'site') {
+					break;
+				case 'site':
 					uni.navigateTo({
 						url: '/pages/positionContent/positionContent?id=' + keyword.id
 					});
-				}
-			} else {
-				this.defaultKeyword = keyword.name;
-				this.saveKeyword(keyword.name); //保存为历史
-				// uni.showToast({
-				// 	title: keyword.name,
-				// 	icon: 'none',
-				// 	duration: 2000
-				// });
-				uni.request({
-					url: this.globalUrl + '/search',
-					data: {
-						query: keyword.name,
-						hit: 8
-					},
-					success: res => {
-						console.log('搜素数据', res);
-						uni.setStorageSync('article_id', res.data);
-						if(res.data.code == 0){
-							uni.navigateTo({
-								url: '../searchResults/searchResults'
-							});
-						}
-					}
-				});
+					break
+				default:
+					uni.navigateTo({
+						url: '../searchResults/searchResults?keyword='+keyword.name
+					});
 			}
-			//以下是示例跳转淘宝搜索，可自己实现搜索逻辑
-			/*
-				//#ifdef APP-PLUS
-				plus.runtime.openURL(encodeURI('taobao://s.taobao.com/search?q=' + keyword));
-				//#endif
-				//#ifdef H5
-				window.location.href = 'taobao://s.taobao.com/search?q=' + keyword
-				//#endif
-				*/
 		},
 		//保存关键字到历史记录
 		saveKeyword(keyword) {
-			
-			var hisKey = uni.getStorageSync('OldKeys');
+			var hisKey = uni.getStorageSync('searchHistory');
 			if (!hisKey) {
-				var OldKeys = [keyword];
-				uni.setStorageSync('OldKeys',JSON.stringify(OldKeys));
-				this.oldKeywordList = OldKeys;
-
+				var searchHistory = [keyword];
+				uni.setStorageSync('searchHistory', JSON.stringify(searchHistory));
+				this.oldKeywordList = searchHistory;
+				return 
+			}
+			var searchHistory = JSON.parse(hisKey);
+			
+			// var searchHistory = res.data;
+			var findIndex = searchHistory.indexOf(keyword);
+			if (findIndex == -1) {
+				searchHistory.unshift(keyword);
 			} else {
-				var OldKeys = JSON.parse(hisKey);
-				
-				// var OldKeys = res.data;
-				var findIndex = OldKeys.indexOf(keyword);
-				if (findIndex == -1) {
-					OldKeys.unshift(keyword);
-				} else {
-					OldKeys.splice(findIndex, 1);
-					OldKeys.unshift(keyword);
-				}
-				OldKeys.length > 10 && OldKeys.pop();
-				uni.setStorageSync('OldKeys',JSON.stringify(OldKeys));
-				this.oldKeywordList = OldKeys;
-			
+				searchHistory.splice(findIndex, 1);
+				searchHistory.unshift(keyword);
 			}
+			searchHistory.length > 10 && searchHistory.pop();
+			uni.setStorageSync('searchHistory',JSON.stringify(searchHistory));
+			this.oldKeywordList = searchHistory;
 		},
-		//加载历史搜索,自动读取本地Storage
-		loadOldKeyword() {
-			let res = uni.getStorageSync('OldKeys')
-			console.log('---',res)
-			if(res){
-				this.oldKeywordList = JSON.parse(res) || JSON.parse(res.value) ;
-				console.log('oldkeywordlist--',this.oldKeywordList)
-			}else{
-				this.oldKeywordList = [] ;
-			}
-			
+		
+		// 跳转热搜榜单
+		toHotRank(){
+			uni.navigateTo({
+				url:'../hotSearchRank/hotSearchRank'
+			})
 		},
-		/*下拉刷新的回调, 有三种处理方式:*/
-		downCallback() {
-			// 第1种: 请求具体接口
-			// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
-			this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
-			// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
-			// this.mescroll.endSuccess()
-			// 此处仍可以继续写其他接口请求...
-			// 调用其他方法...
+		// 跳转文章详情
+		onPageJump(e) {
+			let id = e.currentTarget.id;
+			uni.navigateTo({
+				url: '/pages/contentdetail/contentdetail?article_id=' + id
+			});
 		},
-		/*上拉加载的回调*/
-		upCallback(page) {
-			// mescroll.setPageSize(6)
-			// console.log('上拉刷新数据', city)
-			let pageNum = page.num; // 页码, 默认从1开始
-			console.log('pagem=num----', pageNum);
-			let pageSize = 8; // 页长, 默认每页10条
-			var that = this;
+		back() {
+			uni.navigateBack({
+				delta: 1
+			});
 		}
 	}
 };
@@ -1047,15 +868,15 @@ view {
 }
 .demoImage {
 	width: 100%;
-	min-height: 300rpx;
-	max-height: 460rpx;
+	// min-height: 300rpx;
+	max-height: 800rpx;
 	border-radius: 8rpx 8rpx 0 0;
 	
 }
 .demoImage4 {
 	width: 100%;
-	min-height: 272rpx;
-	max-height: 480rpx;
+	// min-height: 272rpx;
+	max-height: 800rpx;
 	border-radius: 8rpx 8rpx 0 0;
 }
 .adress {

@@ -120,7 +120,6 @@
 </template>
 
 <script>
-	import httpType from '@/httpType.js';
 	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 	export default {
 		data() {
@@ -252,8 +251,8 @@
 							if (res.data.code != 0) {
 								// debugger
 								uni.navigateTo({
-									// url: '../pagesA/login/login'
-									url: '/pagesA/login/login'
+									// url: '../pages_mine/login/login'
+									url: '/pages_mine/login/login'
 								});
 							} else {
 								that.authorMsg.is_follow = status == 1 ? true : false
@@ -281,7 +280,7 @@
 						if (res.data.code != 0) {
 							// debugger
 							uni.navigateTo({
-								url: '/pagesA/login/login'
+								url: '/pages_mine/login/login'
 							});
 						} else {
 							that.authorMsg.is_follow = status == 1 ? true : false

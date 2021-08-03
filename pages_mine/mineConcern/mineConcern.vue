@@ -181,28 +181,28 @@
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
-					success: data => {
-						if (data.statusCode != 200 || data.data.code != 0){
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
-								title: data.data.msg,
+								title: res.data.msg,
 								icon: 'none'
 							});
 							return
 						}
 						// 接口返回的当前页数据列表 (数组)
-						if(!data.data.data || !data.data.data.list){
+						if(!res.data.data || !res.data.data.list){
 							return
 						}
 						// 接口返回的当前页数据列表 (数组)
-						let curPageData = data.data.data.list;
+						let curPageData = res.data.data.list;
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 						let curPageLen = curPageData.length;
 						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-						// let totalPage = data.data.data.list;
+						// let totalPage = res.data.data.list;
 						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-						let totalSize = data.data.data.total;
+						let totalSize = res.data.data.total;
 						// 接口返回的是否有下一页 (true/false)
-						// let hasNext = data.data.data.list;
+						// let hasNext = res.data.data.list;
 
 						//设置列表数据
 						if (page.num == 1) this.followList = []; //如果是第一页需手动置空列表

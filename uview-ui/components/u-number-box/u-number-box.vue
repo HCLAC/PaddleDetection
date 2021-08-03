@@ -254,7 +254,9 @@
 				return ((num1 * baseNum - num2 * baseNum) / baseNum).toFixed(precision);
 			},
 			computeVal(type) {
+				//#ifndef MP-BAIDU
 				uni.hideKeyboard();
+				//#endif
 				if (this.disabled) return;
 				let value = 0;
 				// 减

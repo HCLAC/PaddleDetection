@@ -714,7 +714,7 @@ export default {
 			let Authorization = uni.getStorageSync('Authorization')
 			if (!Authorization){
 				uni.navigateTo({
-					url: '/pagesA/login/login'
+					url: '/pages_mine/login/login'
 				});
 				return
 			}
@@ -734,7 +734,7 @@ export default {
 				success: res => {
 					if (res.data.code != 0) {
 						uni.navigateTo({
-							url: '/pagesA/login/login'
+							url: '/pages_mine/login/login'
 						});
 					}
 
@@ -748,7 +748,7 @@ export default {
 			var Authorization = uni.getStorageSync('Authorization')
 			if (!Authorization) {
 				uni.navigateTo({
-					url: '/pagesA/login/login'
+					url: '/pages_mine/login/login'
 				});
 			}else{
 				uni.navigateTo({

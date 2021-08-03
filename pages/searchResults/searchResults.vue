@@ -352,7 +352,7 @@
 		// 方法
 		methods: {
 			getResults() {
-				let keyList  = uni.getStorageSync('OldKeys')
+				let keyList  = uni.getStorageSync('searchHistory')
 				var keyword
 				if(keyList&&keyList.length){
 					keyList = JSON.parse(keyList)
@@ -473,7 +473,7 @@
 						if (res.data.code != 0) {
 							// debugger
 							uni.navigateTo({
-								url: '/pagesA/login/login'
+								url: '/pages_mine/login/login'
 							});
 						}
 			
@@ -502,7 +502,7 @@
 						if (res.data.code != 0) {
 							// debugger
 							uni.navigateTo({
-								url: '/pagesA/login/login'
+								url: '/pages_mine/login/login'
 							});
 						}
 			
@@ -531,7 +531,7 @@
 						if (res.data.code != 0) {
 							// debugger
 							uni.navigateTo({
-								url: '/pagesA/login/login'
+								url: '/pages_mine/login/login'
 							});
 						}
 			
@@ -567,12 +567,12 @@
 				//定义默认搜索关键字，可以自己实现ajax请求数据再赋值,用户未输入时，以水印方式显示在输入框，直接不输入内容搜索会搜索默认关键字
 				// this.defaultKeyword = "云南旅游";
 				uni.getStorage({
-					key: 'OldKeys',
+					key: 'searchHistory',
 					success: res => {
-						var OldKeys = JSON.parse(res.data);
-						console.log('关键字', OldKeys);
-						var OldKeys = OldKeys[0];
-						this.defaultKeyword = OldKeys;
+						var searchHistory = JSON.parse(res.data);
+						console.log('关键字', searchHistory);
+						var searchHistory = searchHistory[0];
+						this.defaultKeyword = searchHistory;
 					}
 				});
 			}
