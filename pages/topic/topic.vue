@@ -65,7 +65,7 @@
 					<view class="conttentBox">
 						<view class="contentImgBox">
 							<view class="contentImg" v-for="(item1,index) in item.list" :key="index" @click="onPageJump" :id="item1.article_id">
-								<image class="attImg" :src="item1.image" mode="">
+								<image class="attImg" :src="item1.image" mode="aspectFill">
 									<view class="videoIcon" v-if="item1.type == 4">
 										<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
 									</view>
@@ -465,11 +465,12 @@
 .attText {
 	// height: 28rpx;
 	font-size: 28rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 500;
+	// font-family: PingFangSC-Medium, PingFang SC;
+	// font-weight: 500;
 	color: #303133;
 	// line-height: 28rpx;
-	margin: 4rpx 0 2rpx 6rpx;
+	margin: 4rpx 0 2rpx 10rpx;
+	// margin: 0 auto
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
 	text-overflow: ellipsis;
