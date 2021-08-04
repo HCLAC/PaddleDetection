@@ -92,7 +92,6 @@ export default {
 			}
 		},
 		blur() {
-			console.log('blur');
 			this.isFocus = false;
 			//#ifndef MP-BAIDU
 			uni.hideKeyboard();

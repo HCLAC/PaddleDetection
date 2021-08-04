@@ -13,13 +13,7 @@
 				"backgroundColorBottom": "#F8F8F8",
 				"backgroundColorTop": "#FFFFFF",
 				"backgroundColor":"#F8F8F8",
-				"disableScroll": false,
-				"app-plus": {
-					"bounce": "none" 
-				},
-				"mp-alipay": {
-					"allowsBounceVertical": "NO"
-				} 
+				"disableScroll": false
 			}
 		},
 		{
@@ -90,24 +84,7 @@
 				"style": {
 					"navigationStyle": "custom",
 					"backgroundColor":"#F8F8F8",
-					"app-plus": {
-						"bounce": "none" ,
-						"titleNView": {
-							"autoBackButton": false
-						}
-					},
-					"mp-weixin": {
-						"allowsBounceVertical": "NO",
-						"bounce": "none" 
-					},
-					"mp-baidu": {
-						"allowsBounceVertical": "NO",
-						"bounce": "none" 
-					},
-					"mp-toutiao": {
-						"allowsBounceVertical": "NO",
-						"bounce": "none" 
-					}
+					"disableScroll": false
 				}
 			},
 			
@@ -115,7 +92,6 @@
 				"path" : "questions/questions",
 				"style" : {
 					"navigationStyle": "custom"
-					
 				}
 			},
 

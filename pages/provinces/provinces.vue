@@ -1,18 +1,19 @@
 <template>
 <view>
-		<view >
-			<!-- 自定义导航栏 -->
-			<view class="example-body">
-				<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
-					<view slot="left" class="slotleft">
-						<!-- #ifndef  MP-BAIDU -->
-							<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-						<!-- #endif -->
-						<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
-					</view>
-					<view class="slottitle">领途羊</view>
-				</uni-nav-bar>
-			</view>
+	<view >
+		<!-- 自定义导航栏 -->
+		<view class="example-body">
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
+				<view slot="left" class="slotleft">
+					<!-- #ifndef  MP-BAIDU -->
+						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->
+					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+				</view>
+				<view class="slottitle">领途羊</view>
+			</uni-nav-bar>
+		</view>
+		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头图 -->
 			<view class="headImgBox">
 				<image class="headImg" :src="querys.image" mode="scaleToFill"></image>
@@ -202,112 +203,14 @@
 					</view>
 				</view> -->
 				<!-- 正在旅行 -->
-				<mescroll-body v-if="list" class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-					<view class="touring" id="touring" >
-						<text class="tourtext">正在旅行</text>
-						<view class="wrap">
-							<view class="left">
-								<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 0">
-									<view class="" v-if="item.type != 6">
-										<view class="demo-top" @click="toArticleDetail" :id="item.article_id">
-											<view class="imgBox" >
-												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-													<view class="videoIcon" v-if="item.type == 4">
-														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
-													</view>
-												</image>
-												<view class="adress">
-													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-													<view class="adressText">{{ item.location.replace(/\（.*?\）/g, '') }}</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
-										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
-											</view>
-											<view class="count" @click="clickLike(item, index)">
-												<view class="countImg">
-													<image mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
-										</view>
-									</view>
-									<view class="answersBox" v-if="item.type == 6 && item.type" @click="toQuestionsDetail(item)">
-										<image src="../../static/images/yh.svg" mode=""></image>
-										<view class="answersTitle">
-											{{item.title}}
-										</view>
-										<view class="answersNum">
-											{{item.reply_count}}回答
-										</view>
-									</view>
-								</view>
-							</view>
-							<view class="right">
-								<view class="demo-warter" v-for="(item, index) in list" :key="index" v-if="index % 2 == 1">
-									<view class="" v-if="item.type != 6">
-										<view class="demo-top"  @click="toArticleDetail" :id="item.article_id">
-											<view class="imgBox">
-												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-													<view class="videoIcon" v-if="item.type == 4">
-														<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
-													</view>
-												</image>
-												<view class="adress">
-													<view class="adreessIcon"><image class="" src="../../static/images/iconMap3.svg" mode=""></image></view>
-													<view class="adressText">{{ item.location.replace(/\（.*?\）/g, '' ) }}</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
-										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
-											</view>
-											<view class="count" @click="clickLike(item, index)">
-												<view class="countImg">
-													<image mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
-										</view>
-									</view>
-									<view class="answersBoxR" v-if="item.type == 6" @click="toQuestionsDetail(item)">
-										<image src="../../static/images/yh.svg" mode=""></image>
-										<view class="answersTitle">
-											{{item.title}}
-										</view>
-										<view class="answersNum">
-											{{item.reply_count}}回答
-										</view>
-									</view>
-								</view>
-							</view>
-						</view>
+				<view class="touring" >
+					<text class="tourtext">正在旅行</text>
+					<view class="wrap">
+						<articleWaterfall :list="list"></articleWaterfall>
 					</view>
-				</mescroll-body>
+				</view>
 			</view>
+		</mescroll-body>
 			
 			<!-- 城市选择弹窗 -->
 			<u-popup v-model="show" mode="top" height="383px">
@@ -315,7 +218,8 @@
 					<view slot="left" class="slotleft">
 						<!-- #ifndef  MP-BAIDU -->
 							<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-						<!-- #endif -->						<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+						<!-- #endif -->						
+						<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 					</view>
 					<view class="slottitle">领途羊</view>
 				</uni-nav-bar>
@@ -361,6 +265,7 @@
 
 <script>
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
+import articleWaterfall from '@/components/article-waterfall/article-waterfall.vue';
 // 引入mescroll-mixins.js
 import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 export default {
@@ -394,8 +299,9 @@ export default {
 			answersList:[]
 		};
 	},
-	comments: {
-		uniNavBar
+	components: {
+		uniNavBar,
+		articleWaterfall
 	},
 	onLoad(options) {
 		this.querys = options;
