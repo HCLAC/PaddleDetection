@@ -9,7 +9,6 @@
 					<!-- #endif -->
 					<image class="fhsy" src=""  />
 				</view>
-				<!-- <view class="slottitle">个人主页</view> -->
 			</uni-nav-bar>
 		</view>
 		<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption"  >

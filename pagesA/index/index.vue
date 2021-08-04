@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor" title="">
+			<uni-nav-bar :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor" title="''">
 				<view class="headerL" slot="left">
 					<view class="world" >
 						<view class="worldText">全世界</view>

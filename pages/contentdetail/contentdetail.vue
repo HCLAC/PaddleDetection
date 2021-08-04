@@ -3,17 +3,13 @@
 		
 		<!-- 游记文章 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true" title="">
+			<uni-nav-bar :fixed="true" :status-bar="true" :title="article.data.title">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="Title" slot="center">
-					{{ article.data.title }}
-				</view>
-				<!-- <view class="slottitle">领途羊</view> -->
 			</uni-nav-bar>
 		</view>
 		<view class="" v-if="swiperHeight && article.data.type != 2">

@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" :border="true" title="我的关注">
+			<uni-nav-bar :fixed="true" :status-bar="true" :border="true" title="我的关注">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />

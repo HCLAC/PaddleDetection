@@ -3,17 +3,13 @@
 		<view >
 			<!-- 自定义导航栏 -->
 			<view class="example-body">
-				<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" title="">
+				<uni-nav-bar :fixed="true" :status-bar="true" :title="querys.name">
 					<view slot="left" class="slotleft">
 						<!-- #ifndef  MP-BAIDU -->
 							<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 						<!-- #endif -->
 						<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 					</view>
-					<view class="Title" slot="center">
-						{{ querys.name}}
-					</view>
-					<!-- <view class="slottitle">领途羊</view> -->
 				</uni-nav-bar>
 			</view>
 			<!-- 头图 -->

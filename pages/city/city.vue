@@ -2,11 +2,12 @@
 	<view class="">
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
-				<view slot="left" class="slotleft"><!-- #ifndef  MP-BAIDU -->
-								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-							<!-- #endif --></view>
-				<!-- <view class="slottitle">领途羊</view> -->
+			<uni-nav-bar :fixed="true" :status-bar="true">
+				<view slot="left" class="slotleft">
+					<!-- #ifndef  MP-BAIDU -->
+						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->
+				</view>
 			</uni-nav-bar>
 		</view>
 		<!-- 定位选择 -->
