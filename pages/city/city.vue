@@ -6,7 +6,7 @@
 				<view slot="left" class="slotleft"><!-- #ifndef  MP-BAIDU -->
 								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 							<!-- #endif --></view>
-				<view class="slottitle">领途羊</view>
+				<!-- <view class="slottitle">领途羊</view> -->
 			</uni-nav-bar>
 		</view>
 		<!-- 定位选择 -->

@@ -3,7 +3,7 @@
 		<view :class="{ 'uni-navbar--fixed': fixed, 'uni-navbar--shadow': shadow, 'uni-navbar--border': border }" :style="{ 'background-color': backgroundColor }"
 		 class="uni-navbar__content">
 			<uni-status-bar v-if="statusBar" />
-			<view :style="{ color: color,backgroundColor: 'transparent' }" class="uni-navbar__header uni-navbar__content_view">
+			<view :style="{ color: color,backgroundColor: backgroundColor }" class="uni-navbar__header uni-navbar__content_view">
 				<view @tap="onClickLeft" class="uni-navbar__header-btns uni-navbar__header-btns-left uni-navbar__content_view">
 					<view class="uni-navbar__content_view" v-if="leftIcon.length">
 						<uni-icons :color="color" :type="leftIcon" size="24" />
@@ -19,7 +19,7 @@
 						<text class="uni-nav-bar-text" :style="{color: color }">{{ title }}</text>
 					</view>
 					<!-- 标题插槽 -->
-					<slot />
+					<slot name="center" />
 				</view>
 				<view :class="title.length ? 'uni-navbar__header-btns-right' : ''" @tap="onClickRight" class="uni-navbar__header-btns uni-navbar__content_view">
 					<view class="uni-navbar__content_view" v-if="rightIcon.length">
@@ -53,7 +53,7 @@
 		props: {
 			title: {
 				type: String,
-				default: ""
+				default: "领途羊"
 			},
 			leftText: {
 				type: String,
@@ -81,7 +81,7 @@
 			},
 			backgroundColor: {
 				type: String,
-				default: "#ffffff"
+				default: "#FFFFFF"
 			},
 			statusBar: {
 				type: [Boolean, String],
@@ -163,8 +163,8 @@
 		display: flex;
 		/* #endif */
 		flex-wrap: nowrap;
-		// width: 120rpx;
-		// padding: 0 6px;
+		width: 120rpx;
+		padding: 0 6px;
 		justify-content: center;
 		align-items: center;
 	}
@@ -173,7 +173,7 @@
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
-		// width: 150rpx;
+		width: 150rpx;
 		justify-content: flex-start;
 	}
 
@@ -182,12 +182,12 @@
 		display: flex;
 		/* #endif */
 		width: 150rpx;
-		// padding-right: 30rpx;
+		padding-right: 30rpx;
 		justify-content: flex-end;
 	}
 
 	.uni-navbar__header-container {
-		// flex: 1;
+		flex: 1;
 	}
 
 	.uni-navbar__header-container-inner {
@@ -212,13 +212,13 @@
 
 	.uni-navbar--shadow {
 		/* #ifndef APP-NVUE */
-		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+		box-shadow: 0 1px 6px #ccc;
 		/* #endif */
 	}
 
-	.uni-navbar--border {
-		// border-bottom-width: 1rpx;
-		// border-bottom-style: solid;
-		// border-bottom-color: $uni-border-color;
-	}
+	// .uni-navbar--border {
+	// 	border-bottom-width: 1rpx;
+	// 	border-bottom-style: solid;
+	// 	border-bottom-color: $uni-border-color;
+	// }
 </style>

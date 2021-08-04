@@ -9,7 +9,7 @@
 							<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="slottitle">领途羊</view>
+				<!-- <view class="slottitle">领途羊</view> -->
 			</uni-nav-bar>
 		</view>
 		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
@@ -431,7 +431,6 @@ export default {
 				upOption:{
 					bgColor:'#F8F8F8'
 				}
-				
 			};
 		},
 		mixins: [MescrollMixin],
@@ -1094,6 +1093,7 @@ export default {
 	flex-wrap: wrap;
 	margin-top: 24rpx;
 	padding-left: 20rpx;
+	min-height: 1470rpx;
 }
 
 .left,.right {

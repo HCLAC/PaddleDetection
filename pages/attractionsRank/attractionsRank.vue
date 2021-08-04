@@ -23,7 +23,7 @@
 					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="slottitle">领途羊</view>
+				<!-- <view class="slottitle">领途羊</view> -->
 			</uni-nav-bar>
 		</view>
 		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption"
@@ -36,7 +36,7 @@
 								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 							<!-- #endif -->					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 					</view>
-					<view class="slottitle">领途羊</view>
+					<!-- <view class="slottitle">领途羊</view> -->
 				</uni-nav-bar>
 				<!-- 城市 -->
 				<view class="nowcity">

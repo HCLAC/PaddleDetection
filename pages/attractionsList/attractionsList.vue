@@ -9,7 +9,7 @@
 							<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="slottitle">热门景点</view>
+				<!-- <view class="slottitle">热门景点</view> -->
 			</uni-nav-bar>
 		</view>
 		<!-- 卡片列表 -->

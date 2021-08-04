@@ -9,7 +9,7 @@
 							<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="slottitle"></view>
+				<!-- <view class="slottitle"></view> -->
 			</uni-nav-bar>
 		</view>
 		<!-- 博主信息 -->

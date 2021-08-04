@@ -2,15 +2,18 @@
 	<view>
 		
 		<!-- 游记文章 -->
-		<view class="example-body" v-if="article.data.type != 2">
-			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
+		<view class="example-body">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="slottitle">领途羊</view>
+				<view class="Title" slot="center">
+					{{ article.data.title }}
+				</view>
+				<!-- <view class="slottitle">领途羊</view> -->
 			</uni-nav-bar>
 		</view>
 		<view class="" v-if="swiperHeight && article.data.type != 2">
@@ -180,16 +183,6 @@
 			</view>
 		</view>
 		<!-- 攻略文章 -->
-		<view class="example-body " v-if="article.data.type == 2">
-			<uni-nav-bar :fixed="true" :status-bar="true" :shadow="true" class="navbar ">
-				<view slot="left" class="slotleft">
-					<i<!-- #ifndef  MP-BAIDU -->
-								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-							<!-- #endif -->				<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
-				</view>
-				<view class="slottitle">领途羊</view>
-			</uni-nav-bar>
-		</view>
 		<view class="" v-if="article && article.data.type == 2">
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
@@ -1172,7 +1165,13 @@
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 	}
-
+	.Title{
+		// width: 280rpx;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		margin: 0 auto;
+	}
 	/* 自定义导航栏样式 */
 	.example-body {
 		flex-direction: row;
@@ -1197,6 +1196,8 @@
 
 	.navBar {
 		display: flex;
+		// width: 100%;
+		// position: relative;
 	}
 
 	.slotleft {
@@ -1222,6 +1223,11 @@
 	/*  #endif  */
 	.slottitle {
 		margin-left: 182rpx;
+		// position: absolute;
+		// display: inline-block;
+		// top: 50%;
+		// left: 50%;
+		// transform: translate(-50%,-50%);
 		font-size: 38rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 600;
