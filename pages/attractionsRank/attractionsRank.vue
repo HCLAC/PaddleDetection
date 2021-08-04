@@ -16,27 +16,26 @@
 		</view>
 		<!-- 自定义导航栏 黑色-->
 		<view class="example-body" v-if="isFixed == true">
-			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
+			<uni-nav-bar :fixed="true" :status-bar="true">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<!-- <view class="slottitle">领途羊</view> -->
 			</uni-nav-bar>
 		</view>
 		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption"
 		 :up="upOption">
 			<!-- 城市选择弹窗 -->
-			<u-popup v-model="show" mode="top" height="383px" style="z-index: 9999999;">
+			<u-popup v-model="show" mode="top" height="383px" style="z-index: 9999999;" title="选择城市">
 				<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
 					<view slot="left" class="slotleft">
-						<i<!-- #ifndef  MP-BAIDU -->
-								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-							<!-- #endif -->					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+						<!-- #ifndef  MP-BAIDU -->
+							<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+						<!-- #endif -->					
+						<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 					</view>
-					<!-- <view class="slottitle">领途羊</view> -->
 				</uni-nav-bar>
 				<!-- 城市 -->
 				<view class="nowcity">

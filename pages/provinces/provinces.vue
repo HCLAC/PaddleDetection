@@ -13,6 +13,7 @@
 				</uni-nav-bar>
 			</view>
 			<!-- 头图 -->
+		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"> 
 			<view class="headImgBox">
 				<image class="headImg" :src="querys.image" mode="scaleToFill"></image>
 				<view class="mask"></view>
@@ -212,14 +213,13 @@
 			
 			<!-- 城市选择弹窗 -->
 			<u-popup v-model="show" mode="top" height="383px">
-				<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
+				<uni-nav-bar :fixed="true" :status-bar="true" title="选择城市">
 					<view slot="left" class="slotleft">
 						<!-- #ifndef  MP-BAIDU -->
 							<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 						<!-- #endif -->						
 						<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 					</view>
-					<view class="slottitle">领途羊</view>
 				</uni-nav-bar>
 				<!-- 城市 -->
 				<view class="nowcity">

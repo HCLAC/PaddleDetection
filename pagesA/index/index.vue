@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor" title="''">
+			<uni-nav-bar :title="false" :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor">
 				<view class="headerL" slot="left">
 					<view class="world" >
 						<view class="worldText">全世界</view>
@@ -467,7 +467,7 @@
 			},
 			toSearch() {
 				uni.navigateTo({
-					url: '/pages/search/search'
+					url: '/pages_search/search/search'
 				});
 			},
 			/*下拉刷新的回调, 有三种处理方式:*/
