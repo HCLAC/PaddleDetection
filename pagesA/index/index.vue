@@ -638,8 +638,8 @@
 		height: 76rpx;
 		// width: 260rpx;
 		.world{
-			
 			.worldText{
+				width: 110rpx;
 				height: 48rpx;
 				font-size: 34rpx;
 				font-family: PingFangSC-Medium, PingFang SC;
@@ -655,6 +655,7 @@
 			}
 		}
 		.nowCityName{
+			z-index: 100;
 			margin-left: 20rpx;
 			display: flex;
 			align-items: center;
