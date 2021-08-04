@@ -1166,7 +1166,7 @@
 		padding-bottom: env(safe-area-inset-bottom);
 	}
 	.Title{
-		// width: 280rpx;
+		width: 280rpx;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
