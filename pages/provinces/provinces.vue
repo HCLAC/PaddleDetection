@@ -319,54 +319,14 @@ export default {
 					this.getRouteHot();
 					this.getCity();
 					this.hideLoad();
-					this.getQuestionList()
+					// this.getQuestionList()
 				}
 			});
 		},
 		hideLoad(){
 			uni.hideLoading();
 		},
-		// 文章瀑布流接口
-		getTour() {
-			uni.request({
-				url: this.globalUrl + '/article/list',
-				data: {
-					state_id: this.querys.state_id,
-					city_id: this.querys.city_id,
-					count: 6,
-					page: 1,
-					first_time: new Date().getTime()
-				},
-				header: {
-					Authorization: uni.getStorageSync('Authorization')
-				},
-				success: res => {
-					console.log('文章列表',res)
-					if(res.data.data == null){
-						uni.request({
-							url: this.globalUrl + '/article/list',
-							data: {
-								state_id: this.querys.state_id,
-								city_id: this.querys.city_id,
-								count: 6,
-								page: 1,
-								first_time: new Date().getTime()
-							},
-							success: (res) => {
-								uni.setStorageSync('article_id', res.data);
-								this.list = res.data.data.list;
-								console.log('token失效list=====', this.list);
-							}
-						})
-					}else{
-						uni.setStorageSync('article_id', res.data);
-						this.list = res.data.data.list;
-						console.log('list=====', this.list);
-					}
-					
-				}
-			});
-		},
+		
 		// 获取问答列表
 		getQuestionList() {
 			uni.request({
@@ -518,13 +478,6 @@ export default {
 				});
 			}
 		},
-		// 跳转问题详情
-		toQuestionsDetail(item){
-			var question_id = item.question_id
-			uni.navigateTo({
-				url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + question_id
-			});
-		},
 		// 跳转问答列表页
 		toMoreQuestions(){
 			var state_id = this.querys.state_id;
@@ -649,16 +602,13 @@ export default {
 		// 提问按钮
 		toQuestions(){
 			var Authorization = uni.getStorageSync('Authorization')
+			let url = '/pages_questions/questions/questions'
 			if (!Authorization) {
-				uni.navigateTo({
-					url: '/pages_mine/login/login'
-				});
-			}else{
-				uni.navigateTo({
-					url:'/pages_questions/questions/questions'
-				})
+				url = '/pages_mine/login/login'
 			}
-			
+			uni.navigateTo({
+				url: url
+			})
 		},
 		back() {
 			uni.navigateBack({
@@ -1118,268 +1068,7 @@ export default {
 	margin-top: 24rpx;
 	padding: 0 14rpx 0 28rpx;
 }
-.left {
-	// margin-left: 10rpx;
-}
-.demo-warter {
-	width: 340rpx;
-	margin-top: 0;
-	margin-right: 14rpx;
-	margin-bottom: 16rpx;
-	// padding-bottom: 16rpx;
-	/* position: relative; */
-	background-color: #ffffff;
-	border-radius: 16rpx 16rpx;
-	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
-}
-.answersBox{
-	background: linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);
-	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
-	border-radius: 16rpx;
-	padding: 80rpx 32rpx 40rpx;
-	position: relative;
-	image{
-		width: 76rpx;
-		height: 54rpx;
-		position: absolute;
-		top: 48rpx;
-		left: 32rpx;
-	}
-	.answersTitle{
-		// width: 276rpx;
-		font-size: 36rpx;
-		letter-spacing: 2rpx;
-		font-family: PingFangSC-Semibold, PingFang SC;
-		font-weight: 600;
-		color: #FFFFFF;
-		line-height: 50rpx;
-		margin-top: -8rpx;
-		line-height: 50rpx;
 
-	}
-	.answersNum{
-		// height: 34rpx;
-		font-size: 24rpx;
-		font-family: PingFangSC-Light, PingFang SC;
-		font-weight: 300;
-		color: #FFFFFF;
-		line-height: 34rpx;
-		margin-top: 40rpx;
-
-	}
-
-}
-.answersBoxR{
-	background: linear-gradient(270deg, #FFE512 0%, #FFB64D 100%);
-	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
-	border-radius: 16rpx;
-	padding: 80rpx 32rpx 40rpx;
-	position: relative;
-	image{
-		position: absolute;
-		top: 48rpx;
-		left: 32rpx;
-		width: 76rpx;
-		height: 54rpx;
-		
-	}
-	.answersTitle{
-		// width: 276rpx;
-		font-size: 36rpx;
-		letter-spacing: 2rpx;
-		font-family: PingFangSC-Semibold, PingFang SC;
-		font-weight: 600;
-		color: #FFFFFF;
-		line-height: 50rpx;
-
-	}
-	.answersNum{
-		// height: 34rpx;
-		font-size: 24rpx;
-		font-family: PingFangSC-Light, PingFang SC;
-		font-weight: 300;
-		color: #FFFFFF;
-		line-height: 34rpx;
-		margin-top: 40rpx;
-
-	}
-
-}
-
-.demo-top {
-	position: relative;
-}
-.imgBox{
-	position: relative;
-	display: flex;
-	align-items: flex-end;
-}
-.demoImage {
-	// min-height: 300rpx !important;
-	max-height: 800rpx;
-	width: 100%;
-	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
-	border-radius: 16rpx 16rpx 0px 0px;
-}
-.demoImage4 {
-	width: 100%;
-	// min-height: 272rpx;
-	max-height: 800rpx;
-	box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
-	border-radius: 16rpx 16rpx 0px 0px;
-}
-.videoIcon{
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -30rpx;
-	margin-left: -30rpx;
-	width: 60rpx;
-	height: 60rpx;
-}
-.playIcon{
-	width: 100%;
-	height: 100%;
-}
-.adress {
-	position: absolute;
-	left: 0;
-	bottom:0;
-	display: flex;
-	align-items: center;
-	max-width: 240rpx;
-	height: 40rpx;
-	padding-right: 16rpx;
-	background: rgba(0, 0, 0, 0.6);
-	border-radius: 0px 14rpx 0px 0px;
-}
-
-.adreessIcon {
-	width: 24rpx;
-	height: 24rpx;
-	margin: 0 4rpx;
-	display: flex;
-}
-
-.adreessIcon image {
-	width: 100%;
-	height: 100%;
-}
-
-.adressText {
-	max-width: 192rpx;
-	font-size: 24rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 500;
-	color: rgba(255, 255, 255, 1);
-	/* line-height:24px; */
-	/* margin-right: 16rpx; */
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-.titleTip {
-	display: flex;
-	margin-top: 10rpx;
-	margin-left: 8rpx;
-}
-
-.demo-title {
-	width: 278rpx;
-	/* max-height: 70rpx; */
-	padding-right: 20rpx;
-	font-size: 28rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 500;
-	color: rgba(48, 49, 51, 1);
-	margin-left: 8rpx;
-	line-height: 46rpx;
-	display: -webkit-box;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	word-wrap: break-word;
-	white-space: normal !important;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-}
-
-.demo-tag {
-	margin-top: 9rpx;
-}
-
-.demo-tag-owner {
-	width: 52rpx;
-	height: 28rpx;
-	text-align: center;
-	align-items: center;
-	color: #0091ff;
-	border: 2rpx solid rgba(0, 145, 255, 1);
-	border-radius: 14rpx;
-	font-size: 16rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: rgba(0, 145, 255, 1);
-	/* margin-top: 6rpx; */
-}
-
-.demo-user {
-	font-size: 10rpx;
-	margin-top: 24rpx;
-	/* margin-bottom: 16rpx; */
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding-bottom: 16rpx;
-}
-
-.userMessage {
-	font-size: 10px;
-	font-weight: 900;
-	color: #464646;
-	display: flex;
-	align-items: center;
-}
-
-.userHeard {
-	width: 40rpx;
-	height: 40rpx;
-	border-radius: 50%;
-	margin-left: 14rpx;
-}
-
-.userNikename {
-	font-size: 24rpx;
-	margin-left: 16rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: rgba(96, 98, 102, 1);
-}
-
-.count {
-	display: flex;
-	align-items: center;
-	margin-right: 20rpx;
-}
-
-.countImg {
-	width: 26rpx;
-	height: 26rpx;
-	margin-right: 8rpx;
-	display: flex;
-	align-items: center;
-}
-.countImg image {
-	width: 100%;
-	height: 100%;
-}
-.likeCount {
-	font-size: 22rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: rgba(96, 98, 102, 1);
-	/* line-height:20rpx; */
-}
 // 弹窗
 .navtitle {
 	font-size: 38rpx;

@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="问答列表">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
@@ -120,8 +120,9 @@
 			return {
 				keyword:'',
 				tabCurrent: 0,
-				downOption:{
-					use:false
+				downOption: {
+					use: false,
+					auto:false
 				},
 				state_id:'',
 				city_id:'',
@@ -139,10 +140,8 @@
 			mSearch
 		},
 		onLoad(option) {
-			console.log(option)
 			this.state_id = option.state_id
 			this.city_id = option.city_id
-			this.getAnswersList()
 		},
 		mounted() {
 			const query = uni.createSelectorQuery().in(this);
@@ -165,43 +164,6 @@
 			}
 		},
 		methods:{
-			// 获取问答列表
-			getAnswersList(){
-				uni.request({
-					url: this.globalUrl + '/questions/seemore',
-					data: {
-						state_id: this.state_id,
-						city_id: this.city_id,
-						type:'selected',
-						page:1,
-						count:10
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: res => {
-						console.log('精选列表',res)
-						this.selectedList = res.data.data.list
-					}
-				});
-				uni.request({
-					url: this.globalUrl + '/questions/seemore',
-					data: {
-						state_id: this.state_id,
-						city_id:this.city_id,
-						type:'newest',
-						page:1,
-						count:10
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: res => {
-						console.log('最新列表',res)
-						this.newestList = res.data.data.list
-					}
-				});
-			},
 			// 切换
 			change(){
 				this.tabCurrent = 0
@@ -217,48 +179,40 @@
 			},
 			// 搜索问题
 			search(value){
-				console.log(value)
-				console.log(this.tabCurrent)
+				this.mescroll.scrollTo(0)
+				let t = 'newest'
+				
 				if(this.tabCurrent == 0){
-					uni.request({
-						url: this.globalUrl + '/questions/seemore',
-						data: {
-							state_id: this.state_id,
-							city_id: this.city_id,
-							type:'selected',
-							title: value,
-							page:1,
-							count:10
-						},
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
-						success: res => {
-							console.log('精选列表',res)
-							this.selectedList = res.data.data.list
-						}
-					});
-				}else{
-					uni.request({
-						url: this.globalUrl + '/questions/seemore',
-						data: {
-							state_id: this.state_id,
-							city_id: this.city_id,
-							type:'newest',
-							title: value,
-							page:1,
-							count:10
-						},
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
-						success: res => {
-							console.log('最新列表',res)
-							this.newestList = res.data.data.list
-							
-						}
-					});
+					t = 'selected'
 				}
+				uni.request({
+					url: this.globalUrl + '/questions/seemore',
+					data: {
+						state_id: this.state_id,
+						city_id: this.city_id,
+						type: t,
+						title: value,
+						page:1,
+						count:10
+					},
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						if(this.tabCurrent == 0){
+							this.selectedList = res.data.data.list
+						} else {
+							this.newestList = res.data.data.list
+						}
+					}
+				});
 			},
 			// 取消搜索
 			custom(){
@@ -266,7 +220,6 @@
 			},
 			// 跳转问题详情
 			toQuestionsDetail(item){
-				console.log(item)
 				var question_id = item.question_id
 				uni.navigateTo({
 					url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + question_id
@@ -275,7 +228,6 @@
 			// 提问按钮
 			toQuestions(){
 				var Authorization = uni.getStorageSync('Authorization')
-				console.log(Authorization)
 				if (!Authorization) {
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
@@ -314,120 +266,76 @@
 				// mescroll.setPageSize(6)
 				let pageNum = page.num; // 页码, 默认从1开始
 				let pageSize = page.size; // 页长, 默认每页10条
+				
+				let t = 'newest'
 				if(this.tabCurrent == 0){
-					uni.request({
-						url: this.globalUrl+ '/questions/seemore?page=' + pageNum + '&count=' + pageSize,
-						data: {
-							state_id: this.state_id,
-							city_id: this.city_id,
-							type:'selected'
-						},
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
-						success: data => {
-							console.log('data', data);
-							// 接口返回的当前页数据列表 (数组)
-							if(data.data.data != null){
-								let curPageData = data.data.data.list;
-								console.log('curPageData', curPageData);
-								// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-								let curPageLen = curPageData.length;
-								console.log('curPageLen', curPageLen);
-								// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-								// let totalPage = data.data.data.list;
-								// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-								let totalSize = data.data.data.total;
-								console.log('totalSize', totalSize);
-								// 接口返回的是否有下一页 (true/false)
-								// let hasNext = data.data.data.list;
-												
-								//设置列表数据
-								if (page.num == 1) this.selectedList = []; //如果是第一页需手动置空列表
-								this.selectedList = this.selectedList.concat(curPageData); //追加新数据
-								console.log('selectedList', this.selectedList);
-								// 请求成功,隐藏加载状态
-								//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-								// this.mescroll.endByPage(curPageLen, totalPage);
-												
-								//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-								this.mescroll.endBySize(curPageLen, totalSize);
-												
-								//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-								//this.mescroll.endSuccess(curPageLen, hasNext);
-												
-								//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-								//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-								//如果传了hasNext,则翻到第二页即可显示无更多数据.
-								//this.mescroll.endSuccess(curPageLen);
-												
-								// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-								// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-							}
-							
-						},
-						fail: () => {
-							//  请求失败,隐藏加载状态
-							this.mescroll.endErr();
+					t ='selected'
+				}
+				uni.request({
+					url: this.globalUrl+ '/questions/seemore?page=' + pageNum + '&count=' + pageSize,
+					data: {
+						state_id: this.state_id,
+						city_id: this.city_id,
+						type: t
+					},
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
 						}
-					});
-				}else{
-					uni.request({
-						url: this.globalUrl+ '/questions/seemore?page=' + pageNum + '&count=' + pageSize,
-						data: {
-							state_id: this.state_id,
-							city_id:this.city_id,
-							type:'newest'
-						},
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
-						success: data => {
-							console.log('data', data);
-							// 接口返回的当前页数据列表 (数组)
-							let curPageData = data.data.data.list;
-							console.log('curPageData', curPageData);
-							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-							let curPageLen = curPageData.length;
-							console.log('curPageLen', curPageLen);
-							// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-							// let totalPage = data.data.data.list;
-							// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-							let totalSize = data.data.data.total;
-							console.log('totalSize', totalSize);
-							// 接口返回的是否有下一页 (true/false)
-							// let hasNext = data.data.data.list;
-					
-							//设置列表数据
+						if (!res.data.data.list || res.data.data.list.length == 0){
+							return
+						}
+						// 接口返回的当前页数据列表 (数组)
+						let curPageData = res.data.data.list;
+						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+						let curPageLen = curPageData.length;
+						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+						// let totalPage = res.data.data.list;
+						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+						let totalSize = res.data.data.total;
+						// 接口返回的是否有下一页 (true/false)
+						// let hasNext = res.data.data.list;
+										
+						//设置列表数据
+						if(this.tabCurrent == 0){
+							if (page.num == 1) this.selectedList = []; //如果是第一页需手动置空列表
+							this.selectedList = this.selectedList.concat(curPageData); //追加新数据
+						} else {
 							if (page.num == 1) this.newestList = []; //如果是第一页需手动置空列表
 							this.newestList = this.newestList.concat(curPageData); //追加新数据
-							console.log('newestList', this.newestList);
-							// 请求成功,隐藏加载状态
-							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-							// this.mescroll.endByPage(curPageLen, totalPage);
-					
-							//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-							this.mescroll.endBySize(curPageLen, totalSize);
-					
-							//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-							//this.mescroll.endSuccess(curPageLen, hasNext);
-					
-							//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-							//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-							//如果传了hasNext,则翻到第二页即可显示无更多数据.
-							//this.mescroll.endSuccess(curPageLen);
-					
-							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-						},
-						fail: () => {
-							//  请求失败,隐藏加载状态
-							this.mescroll.endErr();
 						}
-					});
-				}
+						// 请求成功,隐藏加载状态
+						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+						// this.mescroll.endByPage(curPageLen, totalPage);
+										
+						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+						this.mescroll.endBySize(curPageLen, totalSize);
+										
+						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+						//this.mescroll.endSuccess(curPageLen, hasNext);
+										
+						//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+						//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+						//如果传了hasNext,则翻到第二页即可显示无更多数据.
+						//this.mescroll.endSuccess(curPageLen);
+										
+						// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+						// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+						
+					},
+					fail: () => {
+						//  请求失败,隐藏加载状态
+						this.mescroll.endErr();
+					}
+				});
 				
-			
 				
 				// 此处仍可以继续写其他接口请求...
 				// 调用其他方法...

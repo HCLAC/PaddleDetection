@@ -86,21 +86,13 @@
 			"root":"pages_questions",
 			"pages":[
 				{
-					"path" : "questionsPage/questionsPage",
-					"style" :                                                                                    
-					{
-						"navigationStyle": "custom"
-					}
-					
-				},
-				{
 					"path" : "questions/questions",
 					"style" : {
 						"navigationStyle": "custom"
 					}
 				},
 				{
-					"path" : "answersList/answersList",
+					"path" : "questionsPage/questionsPage",
 					"style" :                                                                                    
 					{
 						"navigationStyle": "custom"
@@ -125,6 +117,14 @@
 				},
 				{
 					"path" : "questionsDetail/questionsDetail",
+					"style" :                                                                                    
+					{
+						"navigationStyle": "custom"
+					}
+					
+				},
+				{
+					"path" : "answersList/answersList",
 					"style" :                                                                                    
 					{
 						"navigationStyle": "custom"

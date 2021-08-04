@@ -2,11 +2,11 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="问题标题">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-							<!-- #endif -->
+						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
@@ -46,7 +46,7 @@
 							<image v-if="row.keyword.type == 'site'" src="../../static/images/attIcon.svg" ></image>
 							<image v-if="row.keyword.type == 'area'" src="../../static/images/adressIcon.svg" mode=""></image>
 						</veiw> -->
-						<view class="keyword-text" @tap.stop="goSearch(row.keyword)">
+						<view class="keyword-text" @tap.stop="goQuestionDetail(row.keyword)">
 							<rich-text :nodes="row.htmlStr"></rich-text>
 							<view class="kTB">
 								{{row.keyword.city}}'· <text>{{row.keyword.read}}</text>人看过 · <text>{{row.keyword.reply_count}}</text>回答
@@ -57,7 +57,6 @@
 				</block>
 			</scroll-view>
 		</view>
-		
 		<view class="tipsBox">
 			<view class="tipsTitle">
 			 	<text>提示</text>
@@ -81,9 +80,6 @@
 				defaultKeyword: '',
 				keyValue: '',
 				keywordList: [],
-				oldKeywordList: [],
-				hotKeywordList: [],
-				noResult: null,
 				isShowKeywordList: false,
 				questionsValue:'',
 				inputStyle:{
@@ -99,22 +95,21 @@
 			mSearch
 		},
 		onLoad() {
-			this.init()
+			this.defaultKeyword = '清晰描述您的疑问';
 		},
 		methods: {
-			init() {
-				this.loadDefaultKeyword();
-			},
 			toQuestions(){
 				var title = this.questionsValue
+				if (!title || title.length == 0){
+					uni.showToast({
+						title: "请输入问题标题",
+						icon: 'none'
+					});
+					return
+				}
 				uni.navigateTo({
 					url:'/pages_questions/questionsPage/questionsPage?title=' +  title
 				})
-			},
-			//加载默认搜索关键字
-			loadDefaultKeyword() {
-				//定义默认搜索关键字，可以自己实现ajax请求数据再赋值,用户未输入时，以水印方式显示在输入框，直接不输入内容搜索会搜索默认关键字
-				this.defaultKeyword = '清晰描述您的疑问';
 			},
 			//监听输入
 			inputChange(event) {
@@ -122,9 +117,7 @@
 				var keyword = event.detail ? event.detail.value : event;
 				if (!keyword) {
 					this.keywordList = [];
-					this.noResult = '无数据';
 					this.isShowKeywordList = false;
-					this.isShowHt = true;
 					return;
 				}
 				this.isShowKeywordList = true;
@@ -140,30 +133,21 @@
 					},
 					// type:"GET",
 					success: res => {
-						console.log('请求', res);
 						if (res.data.code == 0) {
-							if ((res.data.data.list && res.data.data.list.length) || res.data.data.special) {
+							if (res.data.data.list && res.data.data.list.length) {
 								this.keywordList = [];
 								let arr = [];
-								if (res.data.data.special) {
-									arr.push({ ...res.data.data.special });
-								}
 								if (res.data.data.list && res.data.data.list.length) {
 									res.data.data.list.forEach(item => {
 										arr.push({ ...item });
 									});
 								}
 			
-								this.noResult = '有结果';
 								this.keywordList = this.drawCorrelativeKeyword(arr, keyword);
-								console.log(this.keywordList)
 								this.isShowKeywordList = true;
-								this.isShowHt = false;
 							} else {
 								this.keywordList = [];
-								this.noResult = '暂无结果';
 								this.isShowKeywordList = false;
-								this.isShowHt = false;
 							}
 						} else {
 							uni.showToast({
@@ -180,7 +164,7 @@
 				var keywordArr = [];
 				for (var i = 0; i < len; i++) {
 					var row = keywords[i].title;
-					console.log(row, 1);
+					
 					//定义高亮#9f9f9f
 					var html = row.replace(keyword, "<span style='background: rgba(255, 229, 18, 0.3);'>" + keyword + '</span>');
 					html = '<div>' + html + '</div>';
@@ -194,8 +178,7 @@
 				return keywordArr;
 			},
 			// 点击搜索列表跳转
-			goSearch(keyword) {
-				console.log(keyword);
+			goQuestionDetail(keyword) {
 				var question_id = keyword.question_id
 				uni.navigateTo({
 					url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + question_id

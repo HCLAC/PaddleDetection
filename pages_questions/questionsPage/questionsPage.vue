@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="问题描述">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
@@ -35,7 +35,7 @@
 					<image src="../../static/images/iconMapt.svg" mode=""></image>
 					<text>问题目的地</text>
 				</view>
-				<view class="change" @click="getCity">
+				<view class="change" >
 					<view class="changeText" @click="show = true">{{name}}</view>
 					<image class="changeIcon" src="../../static/images/more-right.svg" mode=""></image>
 				</view>
@@ -107,7 +107,7 @@
 								<view class="item-container">
 									<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
 										<!-- <image class="item-menu-image" :src="item1.icon" mode=""></image> -->
-										<view class="item-menu-name" @click="gethotsiteslist1(item1)">{{ item1.name }}</view>
+										<view class="item-menu-name" @click="selectCity(item1)">{{ item1.name }}</view>
 									</view>
 								</view>
 							</view>
@@ -141,7 +141,6 @@
 				number:0,
 				customStyleInput:{
 					background: '#f8f8f8',
-					
 				},
 				customStyle:{
 					width: '694rpx',
@@ -156,7 +155,6 @@
 			};
 		},
 		onLoad(options) {
-			console.log(options)
 			this.title = options.title
 			this.getCity()
 			this.getAdress()
@@ -164,7 +162,6 @@
 		},
 		watch:{
 			questionsContent(val){
-				console.log(val.length)
 				this.number = val.length
 			}
 		},
@@ -174,10 +171,15 @@
 				uni.request({
 					url: this.globalUrl + '/area/guide',
 					success: res => {
-						console.log('获取全国城市', res);
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
 						var cityList = res.data.data.areas;
 						this.cityList = cityList.slice(1);
-						console.log('shift--', this.cityList);
 					}
 				});
 			},
@@ -192,7 +194,13 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						console.log('获取标签', res);
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
 						this.tips = res.data.data
 					}
 				});
@@ -203,7 +211,6 @@
 				uni.getLocation({
 					type: 'wgs84',
 					success: res => {
-						console.log(111, res);
 						this.name = res.city.substr(0, res.city.length - 1);
 						var city = res.city
 						var state = res.province
@@ -218,7 +225,6 @@
 							},
 							method: 'POST',
 							success: res => {
-								console.log('城市信息=', res);
 								this.state_id = res.data.data.state_id
 								this.city_id = res.data.data.city_id
 								
@@ -228,39 +234,11 @@
 				})
 			},
 			// 获取
-			gethotsiteslist1(item1) {
-				if (item1.city_id == 0) {
-					uni.request({
-						url: this.globalUrl + '/area',
-						data: {
-							state_id: item1.state_id
-						},
-						success: res => {
-							console.log('城市信息=', res);
-							(this.name = res.data.data.name),
-							this.state_id = res.data.data.state_id
-							this.city_id = res.data.data.city_id
-							
-							(this.show = false);
-						}
-					});
-				} else {
-					uni.request({
-						url: this.globalUrl + '/area',
-						data: {
-							state_id: item1.state_id,
-							city_id: item1.city_id
-						},
-						success: res => {
-							console.log('城市信息==', res);
-							this.item = res.data.data 
-							this.name  = res.data.data.name
-							this.state_id = res.data.data.state_id
-							this.city_id = res.data.data.city_id
-							this.show = false
-						}
-					});
-				}
+			selectCity(item1) {
+				this.name  = item1.name
+				this.state_id = item1.state_id
+				this.city_id = item1.city_id
+				this.show = false
 			},
 			
 			// 点击左边的栏目切换
@@ -312,12 +290,10 @@
 						}
 					}
 					this.tipsCheckId.push(item.label_id)
-					console.log(this.tipsCheckId)
 				}else{
 					// this.tipsCheck.shift()
 					
 					var tip = this.tipsCheck.shift()
-					console.log(tip)
 					this.tips.push(tip)
 					
 					this.tipsCheck.push(item)
@@ -332,7 +308,6 @@
 					this.tipsCheckId.shift()
 					
 					this.tipsCheckId.push(item.label_id)
-					console.log(this.tipsCheckId)
 				}
 				
 			},
@@ -353,7 +328,6 @@
 						listA[i].splice(i, 1)
 					}
 				}
-				console.log(this.tipsCheckId)
 			},
 			// 提交
 			buttonUp(){
@@ -372,7 +346,6 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						console.log('提交', res);
 						var question_id = res.data.data.question_id
 						uni.navigateTo({
 							url: '/pages_questions/questionsComplete/questionsComplete?question_id=' + question_id

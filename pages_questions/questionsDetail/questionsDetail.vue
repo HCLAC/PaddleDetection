@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true">
+			<uni-nav-bar :fixed="true" :status-bar="true" :title="detail.title">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
@@ -236,10 +236,8 @@
 				groupId:''
 			};
 		},
-		onLoad(question_id) {
-			console.log(question_id)
-			this.question_id = question_id.question_id
-			console.log(this.question_id)
+		onLoad(options) {
+			this.question_id = options.question_id
 			this.getQuestionsDetail()
 			// this.getanswersList()
 			this.getQuestionsRelated()
@@ -257,7 +255,13 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						console.log('问题详情',res)
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
 						this.detail = res.data.data
 						this.create_at = res.data.data.create_at.slice(0,10)
 						this.answersNum = res.data.data.reply_count
@@ -276,7 +280,13 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						console.log('相关问题',res)
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
 						this.questions = res.data.data
 					}
 				});
@@ -293,17 +303,19 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: async function(res) {
-						
-						// that.answersNum = res.data.data.total
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
 						
 						let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
-						console.log(strIndex,'strIndex')
 						if(strIndex != null){
 							let strIdarr = strIndex[0].match(/\d+/g);
 							let strId = strIdarr.join('')
-							console.log(strId,'strId')
 							let resCode =  await that.getTemplate(strId);
-							console.log(resCode,'resCode')
 							let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
 							let wechat_name = resCode.data.data.wechat_name.replace(/\s*/g, '');
 							that.wechat = wechat_id
@@ -320,7 +332,6 @@
 							// res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 							that.answersList = res.data.data
 							that.answersDate = res.data.data.create_at.slice(0.10)
-							console.log('官方回复',that.answersList)
 						}else{
 							uni.request({
 								url: that.globalUrl + '/answers/list',
@@ -333,7 +344,13 @@
 									Authorization: uni.getStorageSync('Authorization')
 								},
 								success: async function(res) {
-									console.log('无官方回答时',res)
+									if (res.statusCode != 200 || res.data.code != 0){
+										uni.showToast({
+											title: res.data.msg,
+											icon: 'none'
+										});
+										return
+									}
 									that.answersList = res.data.data.list[0]
 									that.answersDate = res.data.data.list[0].create_at.slice(0.10)
 								}
@@ -405,7 +422,6 @@
 							Authorization: uni.getStorageSync('Authorization')
 						},
 						success: res => {
-							console.log(res,'复制微信')
 							uni.hideToast()
 							if (res.data.code == 0) {
 								uni.setClipboardData({
@@ -434,14 +450,12 @@
 			},
 			// 查看全部回答
 			moreAnswers(){
-				
 				uni.navigateTo({
 					url: '/pages_questions/answersList/answersList?question_id=' + this.question_id
 				});
 			},
 			// 跳转问题详情
 			toQuestionsDetail(item){
-				console.log(item)
 				var question_id = item.question_id
 				uni.navigateTo({
 					url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + question_id
@@ -456,13 +470,11 @@
 				this.inputbottom.bottom = 0 + 'px'
 			},
 			inputFocus(e) {
-				console.log(e.detail,'eeee')
 				this.textareafocus = true
 				this.inputbottom.bottom = e.detail.height + 'px'
 			
 			},
 			inputValue(e) {
-				console.log('eeeee', e.detail.value.length)
 				if (e.detail.value.length > 18) {
 					this.autoHeight = true
 				} else {
@@ -470,7 +482,13 @@
 				}
 			},
 			pubComment() {
-				console.log('发送',this.content)
+				let Authorization = uni.getStorageSync('Authorization')
+				if (!Authorization){
+					uni.navigateTo({
+						url: '/pages_mine/login/login'
+					});
+					return
+				}
 				uni.request({
 					url: this.globalUrl + '/answers',
 					data: {
@@ -482,38 +500,23 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						// this.commentsList = res.data.data.list
-						console.log('pinglun', res.data)
-						if (res.data.code == 10502) {
-							uni.navigateTo({
-								url: '/pages_mine/login/login'
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
 							});
-						} else {
-			
-							if (res.data.code == 16002) {
-								uni.showToast({
-									title: res.data.msg,
-									icon: 'none',
-									duration: 2000
-								})
-							} else {
-								if (res.data.code == 500) {
-									uni.showToast({
-										title: '回答不能为空',
-										icon: 'none',
-										duration: 2000
-									})
-								} else {
-									uni.showToast({
-										title: '回答成功',
-										icon: 'none',
-										duration: 2000
-									})
-								}
-							}
+							return
 						}
+						uni.showToast({
+							title: '回答成功',
+							icon: 'none',
+							duration: 2000
+						})
 						this.content = ''
-						uni.hideKeyboard()
+						
+						//#ifndef MP-BAIDU
+						uni.hideKeyboard();
+						//#endif
 						// this.$refs.comment.toggleMask('none');
 						// this.getanswersList()
 						this.getQuestionsDetail()
@@ -525,13 +528,19 @@
 			},
 			// 关注
 			Fllow() {
+				let Authorization = uni.getStorageSync('Authorization')
+				if (!Authorization){
+					uni.navigateTo({
+						url: '/pages_mine/login/login'
+					});
+					return
+				}
 				// console.log(item, index)
 				var that = this;
 				let msg = this.detail.is_follow ? '确认取消关注?' : '确认关注?'
 				let status = this.detail.is_follow ? 0 : 1
 			
 				if (status == 0) {
-			
 					that.show = true
 					that.contentp = '确认取消关注?'
 				} else {
@@ -545,21 +554,27 @@
 							Authorization: uni.getStorageSync('Authorization')
 						},
 						success: (res) => {
-							if (res.data.code != 0) {
-								// debugger
-								uni.navigateTo({
-									url: '/pages_mine/login/login'
+							if (res.statusCode != 200 || res.data.code != 0){
+								uni.showToast({
+									title: res.data.msg,
+									icon: 'none'
 								});
-							} else {
-								console.log(res)
-								that.detail.is_follow = status == 1 ? true : false
+								return
 							}
+							that.detail.is_follow = status == 1 ? true : false
 						}
 					})
 				}
 			},
 			// 点击确认
 			confirm() {
+				let Authorization = uni.getStorageSync('Authorization')
+				if (!Authorization){
+					uni.navigateTo({
+						url: '/pages_mine/login/login'
+					});
+					return
+				}
 				var that = this;
 				let msg = this.detail.is_follow ? '确认取消关注?' : '确认关注?'
 				let status = this.detail.is_follow ? 0 : 1
@@ -573,23 +588,27 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: (res) => {
-						if (res.data.code != 0) {
-							// debugger
-							uni.navigateTo({
-								url: '/pages_mine/login/login'
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
 							});
-						} else {
-							console.log(res)
-							that.detail.is_follow = status == 1 ? true : false
+							return
 						}
+						that.detail.is_follow = status == 1 ? true : false
 					}
 				})
 			},
 			// 点赞
 			like(e,index){
-				console.log(e)
+				let Authorization = uni.getStorageSync('Authorization')
+				if (!Authorization){
+					uni.navigateTo({
+						url: '/pages_mine/login/login'
+					});
+					return
+				}
 				var answer_id = e.answer_id
-				console.log(answer_id)
 				uni.request({
 					url: this.globalUrl + '/answers/like',
 					data: {
@@ -600,24 +619,27 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						if (res.data.code != 0) {
-				
-							uni.navigateTo({
-								url: '/pages_mine/login/login'
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
 							});
-						} else {
-							console.log(res)
-							this.getanswersOfficial()
-							// this.answersList[index].option = e.$orig.option == 1 ? 0 : 1
+							return
 						}
+						this.getanswersOfficial()
 					}
 				});
 			},
 			// 点踩
 			disLike(e,index){
-				console.log(e)
+				let Authorization = uni.getStorageSync('Authorization')
+				if (!Authorization){
+					uni.navigateTo({
+						url: '/pages_mine/login/login'
+					});
+					return
+				}
 				var answer_id = e.answer_id
-				console.log(answer_id)
 				uni.request({
 					url: this.globalUrl + '/answers/dislike',
 					data: {
@@ -628,16 +650,14 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						if (res.data.code != 0) {
-				
-							uni.navigateTo({
-								url: '/pages_mine/login/login'
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
 							});
-						} else {
-							console.log(res)
-							this.getanswersOfficial()
-							// this.answersList[index].option = e.$orig.option == 1 ? 0 : 1
+							return
 						}
+						this.getanswersOfficial()
 					}
 				});
 			},

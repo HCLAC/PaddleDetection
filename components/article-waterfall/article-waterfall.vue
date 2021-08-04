@@ -2,88 +2,110 @@
 	<u-waterfall v-model="list" ref="uWaterfall">
 		<template v-slot:left="{ leftList }">
 			<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
-				<view class="" @click="toArticleDetail" :id="item.article_id">
-					<view class="demo-top">
-						<view class="imgBox">
-							<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-							 mode="widthFix">
-								<view class="videoIcon" v-if="item.type == 4">
-									<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
+				<view class="" v-if="item.type != 6">
+					<view class="" @click="toArticleDetail" :id="item.article_id">
+						<view class="demo-top">
+							<view class="imgBox">
+								<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
+								 mode="widthFix">
+									<view class="videoIcon" v-if="item.type == 4">
+										<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
+									</view>
+								</image>
+								<view class="adress">
+									<view class="adreessIcon">
+										<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
+									</view>
+									<view class="adressText">{{ item.location }}</view>
 								</view>
-							</image>
-							<view class="adress">
-								<view class="adreessIcon">
-									<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
-								</view>
-								<view class="adressText">{{ item.location }}</view>
 							</view>
 						</view>
-					</view>
-					<view class="titleTip">
-						<view class="demo-tag">
-							<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-							<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-							<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+						<view class="titleTip">
+							<view class="demo-tag">
+								<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+								<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+								<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+							</view>
+							<view class="demo-title">{{ item.title }}</view>
 						</view>
-						<view class="demo-title">{{ item.title }}</view>
+					</view>
+					<view class="demo-user">
+						<view class="userMessage">
+							<image class="userHeard" :src="item.avatar"></image>
+							<view class="userNikename">{{ item.author_name }}</view>
+						</view>
+						<view class="count" @click="clickLeftLike(item,index) in leftList ">
+							<view class="countImg">
+								<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+								<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+							</view>
+							<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+						</view>
 					</view>
 				</view>
-				<view class="demo-user">
-					<view class="userMessage">
-						<image class="userHeard" :src="item.avatar"></image>
-						<view class="userNikename">{{ item.author_name }}</view>
-					</view>
-					<view class="count" @click="clickLeftLike(item,index) in leftList ">
-						<view class="countImg">
-							<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-							<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-						</view>
-						<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-					</view>
-				</view>
+				<view class="answersBox" v-else-if="item.type == 6" @click="toQuestionsDetail" :id="item.question_id"> 
+					<image src="../../static/images/yh.svg" mode=""></image> 
+					<view class="answersTitle">
+						{{item.title}} 
+					</view> 
+					<view class="answersNum"> 
+						{{item.reply_count}} 回答 
+					</view> 
+				</view> 
 			</view>
 		</template>
 		<template v-slot:right="{ rightList }">
 			<view class="demo-warter" v-for="(item, index) in rightList" :key="index">
-				<view class="" @click="toArticleDetail" :id="item.article_id">
-					<view class="demo-top">
-						<view class="imgBox">
-							<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-							 mode="widthFix">
-								<view class="videoIcon" v-if="item.type == 4">
-									<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
+				<view class="" v-if="item.type != 6"> 
+					<view class="" @click="toArticleDetail" :id="item.article_id">
+						<view class="demo-top">
+							<view class="imgBox">
+								<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
+								 mode="widthFix">
+									<view class="videoIcon" v-if="item.type == 4">
+										<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
+									</view>
+								</image>
+								<view class="adress">
+									<view class="adreessIcon">
+										<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
+									</view>
+									<view class="adressText">{{ item.location }}</view>
 								</view>
-							</image>
-							<view class="adress">
-								<view class="adreessIcon">
-									<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
-								</view>
-								<view class="adressText">{{ item.location }}</view>
 							</view>
 						</view>
-					</view>
-					<view class="titleTip">
-						<view class="demo-tag">
-							<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-							<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-							<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+						<view class="titleTip">
+							<view class="demo-tag">
+								<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
+								<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
+								<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+							</view>
+							<view class="demo-title">{{ item.title }}</view>
 						</view>
-						<view class="demo-title">{{ item.title }}</view>
+					</view>
+					<view class="demo-user">
+						<view class="userMessage">
+							<image class="userHeard" :src="item.avatar"></image>
+							<view class="userNikename">{{ item.author_name }}</view>
+						</view>
+						<view class="count" @click="clickRightLike(item,index) in rightList">
+							<view class="countImg">
+								<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
+								<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+							</view>
+							<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
+						</view>
 					</view>
 				</view>
-				<view class="demo-user">
-					<view class="userMessage">
-						<image class="userHeard" :src="item.avatar"></image>
-						<view class="userNikename">{{ item.author_name }}</view>
-					</view>
-					<view class="count" @click="clickRightLike(item,index) in rightList">
-						<view class="countImg">
-							<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-							<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-						</view>
-						<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-					</view>
-				</view>
+				<view class="answersBoxR" v-else-if="item.type == 6" @click="toQuestionsDetail" :id="item.question_id"> 
+					<image src="../../static/images/yh.svg" mode=""></image> 
+					<view class="answersTitle"> 
+						{{item.title}} 
+					</view> 
+					<view class="answersNum"> 
+						{{item.reply_count}} 回答 
+					</view> 
+				</view> 
 			</view>
 		</template>
 	</u-waterfall>
@@ -113,6 +135,15 @@
 		},
 		methods:{
 			// 发出组件高度信息，在此处可以区分正确和错误的加载，给予错误的提示图片
+			
+			// 跳转问题详情
+			toQuestionsDetail(item){
+				console.log("itme", item)
+				var question_id = item.currentTarget.id
+				uni.navigateTo({
+					url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + question_id
+				});
+			},
 			// 跳转文章详情
 			toArticleDetail(e) {
 				let id = e.currentTarget.id;
@@ -393,4 +424,79 @@
 		color: rgba(96, 98, 102, 1);
 		/* line-height:20rpx; */
 	}
+	
+	.answersBox{
+		background: linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);
+		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+		border-radius: 16rpx;
+		padding: 80rpx 32rpx 40rpx;
+		position: relative;
+		image{
+			width: 76rpx;
+			height: 54rpx;
+			position: absolute;
+			top: 48rpx;
+			left: 32rpx;
+		}
+		.answersTitle{
+			// width: 276rpx;
+			font-size: 36rpx;
+			letter-spacing: 2rpx;
+			font-family: PingFangSC-Semibold, PingFang SC;
+			font-weight: 600;
+			color: #FFFFFF;
+			line-height: 50rpx;
+			margin-top: -8rpx;
+			line-height: 50rpx;
+	
+		}
+		.answersNum{
+			// height: 34rpx;
+			font-size: 24rpx;
+			font-family: PingFangSC-Light, PingFang SC;
+			font-weight: 300;
+			color: #FFFFFF;
+			line-height: 34rpx;
+			margin-top: 40rpx;
+	
+		}
+	
+	}
+	.answersBoxR{
+		background: linear-gradient(270deg, #FFE512 0%, #FFB64D 100%);
+		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
+		border-radius: 16rpx;
+		padding: 80rpx 32rpx 40rpx;
+		position: relative;
+		image{
+			position: absolute;
+			top: 48rpx;
+			left: 32rpx;
+			width: 76rpx;
+			height: 54rpx;
+			
+		}
+		.answersTitle{
+			// width: 276rpx;
+			font-size: 36rpx;
+			letter-spacing: 2rpx;
+			font-family: PingFangSC-Semibold, PingFang SC;
+			font-weight: 600;
+			color: #FFFFFF;
+			line-height: 50rpx;
+	
+		}
+		.answersNum{
+			// height: 34rpx;
+			font-size: 24rpx;
+			font-family: PingFangSC-Light, PingFang SC;
+			font-weight: 300;
+			color: #FFFFFF;
+			line-height: 34rpx;
+			margin-top: 40rpx;
+	
+		}
+	
+	}
+	
 </style>

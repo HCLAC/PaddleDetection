@@ -2,11 +2,11 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true" title="我要提问">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="问题详情">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-							<!-- #endif -->
+						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
@@ -51,9 +51,8 @@
 				create_at:''
 			};
 		},
-		onLoad(question_id) {
-			console.log(question_id)
-			this.question_id = question_id.question_id
+		onLoad(options) {
+			this.question_id = options.question_id
 			this.getquestions()
 		},
 		methods:{
@@ -67,7 +66,6 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						console.log('问题详情',res)
 						this.detail = res.data.data
 						this.create_at = res.data.data.create_at.slice(0,10)
 					}

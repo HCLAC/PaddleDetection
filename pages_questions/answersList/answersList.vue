@@ -71,34 +71,12 @@
 		},
 		mixins: [MescrollMixin],
 		onLoad(question_id) {
-			console.log(question_id)
 			this.question_id = question_id.question_id
-			this.getanswersList()
 		},
 		methods:{
-			// 获取回答列表
-			getanswersList(){
-				uni.request({
-					url: this.globalUrl + '/answers/list',
-					data: {
-						question_id: this.question_id,
-						page:1,
-						count:10
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: res => {
-						console.log('回复列表',res)
-						this.answersList = res.data.data.list
-					}
-				});
-			},
 			// 点赞
 			like(e,index){
-				console.log(e)
 				var answer_id = e.$orig.answer_id
-				console.log(answer_id)
 				uni.request({
 					url: this.globalUrl + '/answers/like',
 					data: {
@@ -109,23 +87,20 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						if (res.data.code != 0) {
-							uni.navigateTo({
-								url: '/pages_mine/login/login'
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
 							});
-						} else {
-							console.log(res)
-							this.getanswersList()
-							// this.answersList[index].option = e.$orig.option == 1 ? 0 : 1
+							return
 						}
+						this.getanswersList()
 					}
 				});
 			},
 			// 点踩
 			disLike(e,index){
-				console.log(e)
 				var answer_id = e.$orig.answer_id
-				console.log(answer_id)
 				uni.request({
 					url: this.globalUrl + '/answers/dislike',
 					data: {
@@ -136,16 +111,14 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						if (res.data.code != 0) {
-				
-							uni.navigateTo({
-								url: '/pages_mine/login/login'
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
 							});
-						} else {
-							console.log(res)
-							this.getanswersList()
-							// this.answersList[index].option = e.$orig.option == 1 ? 0 : 1
+							return
 						}
+						this.getanswersList()
 					}
 				});
 			},
@@ -186,46 +159,48 @@
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
-					success: data => {
-						console.log('data', data);
-						// 接口返回的当前页数据列表 (数组)
-						if(data.data.data != null){
-							let curPageData = data.data.data.list;
-							console.log('curPageData', curPageData);
-							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-							let curPageLen = curPageData.length;
-							console.log('curPageLen', curPageLen);
-							// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-							// let totalPage = data.data.data.list;
-							// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-							let totalSize = data.data.data.total;
-							console.log('totalSize', totalSize);
-							// 接口返回的是否有下一页 (true/false)
-							// let hasNext = data.data.data.list;
-											
-							//设置列表数据
-							if (page.num == 1) this.answersList = []; //如果是第一页需手动置空列表
-							this.answersList = this.answersList.concat(curPageData); //追加新数据
-							console.log('answersList', this.answersList);
-							// 请求成功,隐藏加载状态
-							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-							// this.mescroll.endByPage(curPageLen, totalPage);
-											
-							//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-							this.mescroll.endBySize(curPageLen, totalSize);
-											
-							//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-							//this.mescroll.endSuccess(curPageLen, hasNext);
-											
-							//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-							//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-							//如果传了hasNext,则翻到第二页即可显示无更多数据.
-							//this.mescroll.endSuccess(curPageLen);
-											
-							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
 						}
-						
+						if (!res.data.data.list || res.data.data.list.length == 0){
+							return
+						}
+						// 接口返回的当前页数据列表 (数组)
+						let curPageData = res.data.data.list;
+						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+						let curPageLen = curPageData.length;
+						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+						// let totalPage = res.data.data.list;
+						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+						let totalSize = res.data.data.total;
+						// 接口返回的是否有下一页 (true/false)
+						// let hasNext = res.data.data.list;
+										
+						//设置列表数据
+						if (page.num == 1) this.answersList = []; //如果是第一页需手动置空列表
+						this.answersList = this.answersList.concat(curPageData); //追加新数据
+						// 请求成功,隐藏加载状态
+						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+						// this.mescroll.endByPage(curPageLen, totalPage);
+										
+						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+						this.mescroll.endBySize(curPageLen, totalSize);
+										
+						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+						//this.mescroll.endSuccess(curPageLen, hasNext);
+										
+						//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+						//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+						//如果传了hasNext,则翻到第二页即可显示无更多数据.
+						//this.mescroll.endSuccess(curPageLen);
+										
+						// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+						// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
 					},
 					fail: () => {
 						//  请求失败,隐藏加载状态
