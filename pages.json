@@ -60,6 +60,23 @@
 			]
 		},
 		{
+			"root":"pages_search",
+			"pages":[
+				{
+					"path": "search/search",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "searchResults/searchResults",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				}
+			]
+		},
+		{
 			"root":"pages",
 			"pages":[
 			{
@@ -110,23 +127,6 @@
 
 			{
 				"path": "attractionsList/attractionsList",
-				"style": {
-					"navigationStyle": "custom"
-				}
-			},
-
-
-			
-
-			{
-				"path": "searchResults/searchResults",
-				"style": {
-					"navigationStyle": "custom"
-				}
-			},
-
-			{
-				"path": "search/search",
 				"style": {
 					"navigationStyle": "custom"
 				}

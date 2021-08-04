@@ -213,14 +213,13 @@
 			
 			<!-- 城市选择弹窗 -->
 			<u-popup v-model="show" mode="top" height="383px">
-				<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
+				<uni-nav-bar :fixed="true" :status-bar="true" title="选择城市">
 					<view slot="left" class="slotleft">
 						<!-- #ifndef  MP-BAIDU -->
 							<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 						<!-- #endif -->						
 						<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 					</view>
-					<view class="slottitle">领途羊</view>
 				</uni-nav-bar>
 				<!-- 城市 -->
 				<view class="nowcity">

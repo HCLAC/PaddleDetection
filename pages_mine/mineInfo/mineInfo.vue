@@ -9,7 +9,6 @@
 					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<!-- <view class="slottitle">修改资料</view> -->
 			</uni-nav-bar>
 		</view>
 		<!-- 信息表单 -->

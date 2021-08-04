@@ -278,7 +278,7 @@ export default {
 		
 		toSearchResults() {
 			uni.navigateTo({
-				url: '../searchResults/searchResults?keyword='+this.keyValue
+				url: '/pages_search/searchResults/searchResults?keyword='+this.keyValue
 			});
 		},
 		//清除历史搜索
@@ -305,7 +305,7 @@ export default {
 
 			keyword = keyword;
 			uni.navigateTo({
-				url: '../searchResults/searchResults?keyword='+keyword
+				url: '/pages_search/searchResults/searchResults?keyword='+keyword
 			});
 			this.saveKeyword(keyword); //保存为历史
 		},
@@ -330,7 +330,7 @@ export default {
 					break
 				default:
 					uni.navigateTo({
-						url: '../searchResults/searchResults?keyword='+keyword.name
+						url: '/pages_search/searchResults/searchResults?keyword='+keyword.name
 					});
 			}
 		},

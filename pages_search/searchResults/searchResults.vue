@@ -203,7 +203,6 @@
 						that.site = res.data.data.site;
 						that.list = res.data.data.article_list;
 						that.route_list = res.data.data.route_list;
-						console.log(that.area)
 						// let list1 = this.drawCorrelativeKeyword(arr, keyword);
 					} 
 				}); 
@@ -266,7 +265,7 @@
 			},
 			toSearch(){
 				uni.redirectTo({
-					url: '/pages/search/search'
+					url: '/pages_search/search/search'
 				})
 			},
 			back() {

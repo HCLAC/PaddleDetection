@@ -2,7 +2,7 @@
 	<view v-if="userInfo">
 		<!-- 自定义导航栏 -->
 		<view class="example-body" v-if="isFixed">
-			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" title="个人主页">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="个人主页">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 					<image class="fanhui" src=""  />

@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body" v-if="isFixed == false">
-			<uni-nav-bar :fixed="true" :status-bar="true" background-color="transparent" style="z-index: 999999;">
+			<uni-nav-bar  title="热门搜索排行榜" :fixed="true" :status-bar="true" background-color="transparent" style="z-index: 999999;">
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui-white.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy-white.svg" @click="home" />
@@ -10,14 +10,13 @@
 			</uni-nav-bar>
 		</view>
 		<view class="example-body" v-if="isFixed == true">
-			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="热门搜索排行榜">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-							<!-- #endif -->
+						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<!-- <view class="slottitle">领途羊</view> -->
 			</uni-nav-bar>
 		</view>
 		<mescroll-uni @scroll="uniScroll" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
@@ -105,7 +104,7 @@
 						uni.setStorageSync('article_id', res.data);
 						if(res.data.code == 0){
 							uni.navigateTo({
-								url: '../searchResults/searchResults'
+								url: '/pages_search/searchResults/searchResults'
 							});
 						}
 						
