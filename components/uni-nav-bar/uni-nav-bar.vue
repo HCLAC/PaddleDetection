@@ -15,7 +15,7 @@
 					<slot name="left" />
 				</view>
 				<view class="uni-navbar__header-container uni-navbar__content_view">
-					<view class="uni-navbar__header-container-inner uni-navbar__content_view" v-if="title.length">
+					<view class="uni-navbar__header-container-inner uni-navbar__content_view" v-if="title">
 						<text class="uni-nav-bar-text" :style="{color: color }">{{ title }}</text>
 					</view>
 					<!-- 标题插槽 -->
@@ -52,7 +52,7 @@
 		},
 		props: {
 			title: {
-				type: String,
+				type: [Boolean, String],
 				default: "领途羊"
 			},
 			leftText: {

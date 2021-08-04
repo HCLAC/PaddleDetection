@@ -1163,13 +1163,7 @@
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 	}
-	.Title{
-		width: 280rpx;
-		overflow: hidden;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		margin: 0 auto;
-	}
+	
 	/* 自定义导航栏样式 */
 	.example-body {
 		flex-direction: row;
