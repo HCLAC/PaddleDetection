@@ -108,7 +108,7 @@
 			toQuestions(){
 				var title = this.questionsValue
 				uni.navigateTo({
-					url:'/pages/questionsPage/questionsPage?title=' +  title
+					url:'/pages_questions/questionsPage/questionsPage?title=' +  title
 				})
 			},
 			//加载默认搜索关键字
@@ -198,7 +198,7 @@
 				console.log(keyword);
 				var question_id = keyword.question_id
 				uni.navigateTo({
-					url: '/pages/questionsDetail/questionsDetail?question_id=' + question_id
+					url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + question_id
 				});
 			},
 			back() {

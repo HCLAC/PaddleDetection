@@ -375,7 +375,7 @@
 						console.log('提交', res);
 						var question_id = res.data.data.question_id
 						uni.navigateTo({
-							url: '/pages/questionsComplete/questionsComplete?question_id=' + question_id
+							url: '/pages_questions/questionsComplete/questionsComplete?question_id=' + question_id
 						});
 					}
 				});

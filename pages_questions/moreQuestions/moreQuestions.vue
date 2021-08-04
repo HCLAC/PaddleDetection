@@ -269,7 +269,7 @@
 				console.log(item)
 				var question_id = item.question_id
 				uni.navigateTo({
-					url: '/pages/questionsDetail/questionsDetail?question_id=' + question_id
+					url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + question_id
 				});
 			},
 			// 提问按钮
@@ -282,7 +282,7 @@
 					});
 				}else{
 					uni.navigateTo({
-						url:'/pages/questions/questions'
+						url:'/pages_questions/questions/questions'
 					})
 				}
 			},

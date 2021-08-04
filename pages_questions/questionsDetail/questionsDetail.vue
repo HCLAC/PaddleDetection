@@ -436,7 +436,7 @@
 			moreAnswers(){
 				
 				uni.navigateTo({
-					url: '/pages/answersList/answersList?question_id=' + this.question_id
+					url: '/pages_questions/answersList/answersList?question_id=' + this.question_id
 				});
 			},
 			// 跳转问题详情
@@ -444,7 +444,7 @@
 				console.log(item)
 				var question_id = item.question_id
 				uni.navigateTo({
-					url: '/pages/questionsDetail/questionsDetail?question_id=' + question_id
+					url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + question_id
 				});
 			},
 			// 提问按钮

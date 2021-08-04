@@ -148,7 +148,7 @@
 					success: res => {
 						const tempFilePaths = res.tempFilePaths[0];
 						uni.navigateTo({
-							url:'../../pages/cropper-default-old/cropper-default-old?src=' + tempFilePaths
+							url:'/pages_mine/pages/cropper-default/cropper-default?src=' + tempFilePaths
 						})
 					}
 				})

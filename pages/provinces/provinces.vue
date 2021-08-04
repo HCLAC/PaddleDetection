@@ -210,7 +210,6 @@
 				</view>
 			</view>
 		</mescroll-body>
-			
 			<!-- 城市选择弹窗 -->
 			<u-popup v-model="show" mode="top" height="383px">
 				<uni-nav-bar :fixed="true" :status-bar="true" title="选择城市">
@@ -293,7 +292,7 @@ export default {
 				use:false,
 				bgColor:'#F8F8F8'
 			},
-			questions:null,
+			questions: [],
 			answersList:[]
 		};
 	},
@@ -320,7 +319,7 @@ export default {
 					this.getRouteHot();
 					this.getCity();
 					this.hideLoad();
-					// this.getAnswersList()
+					this.getQuestionList()
 				}
 			});
 		},
@@ -369,7 +368,7 @@ export default {
 			});
 		},
 		// 获取问答列表
-		getAnswersList() {
+		getQuestionList() {
 			uni.request({
 				url: this.globalUrl + '/questions/random',
 				data: {
@@ -523,7 +522,7 @@ export default {
 		toQuestionsDetail(item){
 			var question_id = item.question_id
 			uni.navigateTo({
-				url: '/pages/questionsDetail/questionsDetail?question_id=' + question_id
+				url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + question_id
 			});
 		},
 		// 跳转问答列表页
@@ -531,7 +530,7 @@ export default {
 			var state_id = this.querys.state_id;
 			var city_id = this.querys.city_id;
 			uni.navigateTo({
-				url: '/pages/moreQuestions/moreQuestions?state_id=' + state_id + '&city_id=' + city_id
+				url: '/pages_questions/moreQuestions/moreQuestions?state_id=' + state_id + '&city_id=' + city_id
 			});
 		},
 		// 获取全国城市
@@ -656,7 +655,7 @@ export default {
 				});
 			}else{
 				uni.navigateTo({
-					url:'/pages/questions/questions'
+					url:'/pages_questions/questions/questions'
 				})
 			}
 			

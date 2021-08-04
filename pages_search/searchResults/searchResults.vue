@@ -190,7 +190,7 @@
 					data: { 
 						query: keyword, 
 						hit: 8 
-					}, 
+					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({

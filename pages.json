@@ -56,6 +56,12 @@
 				    {
 				        "navigationStyle": "custom"
 				    }
+				},
+				{
+					"path" : "cropper-default/cropper-default",
+					"style" :                                                                                    
+					{
+					}
 				}
 			]
 		},
@@ -77,17 +83,59 @@
 			]
 		},
 		{
+			"root":"pages_questions",
+			"pages":[
+				{
+					"path" : "questionsPage/questionsPage",
+					"style" :                                                                                    
+					{
+						"navigationStyle": "custom"
+					}
+					
+				},
+				{
+					"path" : "questions/questions",
+					"style" : {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "answersList/answersList",
+					"style" :                                                                                    
+					{
+						"navigationStyle": "custom"
+					}
+					
+				},
+				{
+					"path" : "moreQuestions/moreQuestions",
+					"style" :                                                                                    
+					{
+						"navigationStyle": "custom"
+					}
+					
+				},
+				{
+					"path" : "questionsComplete/questionsComplete",
+					"style" :                                                                                    
+					{
+						"navigationStyle": "custom"
+					}
+					
+				},
+				{
+					"path" : "questionsDetail/questionsDetail",
+					"style" :                                                                                    
+					{
+						"navigationStyle": "custom"
+					}
+					
+				}
+			]
+		},
+		{
 			"root":"pages",
 			"pages":[
-			{
-				"path" : "questionsPage/questionsPage",
-				"style" :                                                                                    
-				{
-					"navigationStyle": "custom"
-				}
-				
-			}
-			,
 			{
 				"path": "attractionsRank/attractionsRank",
 				"style": {
@@ -105,12 +153,6 @@
 				}
 			},
 			
-			{
-				"path" : "questions/questions",
-				"style" : {
-					"navigationStyle": "custom"
-				}
-			},
 
 			{
 				"path": "city/city",
@@ -202,47 +244,6 @@
 			}
 			,{
 				"path" : "report/report",
-				"style" :                                                                                    
-				{
-					"navigationStyle": "custom"
-				}
-				
-			}
-			,{
-				"path" : "cropper-default-old/cropper-default-old",
-				"style" :                                                                                    
-				{
-					"enablePullDownRefresh": false
-				}
-				
-			}
-			
-			,{
-				"path" : "questionsDetail/questionsDetail",
-				"style" :                                                                                    
-				{
-					"navigationStyle": "custom"
-				}
-				
-			}
-			,{
-				"path" : "answersList/answersList",
-				"style" :                                                                                    
-				{
-					"navigationStyle": "custom"
-				}
-				
-			}
-			,{
-				"path" : "moreQuestions/moreQuestions",
-				"style" :                                                                                    
-				{
-					"navigationStyle": "custom"
-				}
-				
-			}
-			,{
-				"path" : "questionsComplete/questionsComplete",
 				"style" :                                                                                    
 				{
 					"navigationStyle": "custom"
