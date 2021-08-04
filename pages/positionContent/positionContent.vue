@@ -2,14 +2,13 @@
 	<view> 
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" >
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" :title="attDetail.data.name">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-							<!-- #endif -->
+						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
 		<!-- 用户信息 -->
@@ -372,6 +371,13 @@ export default {
 </script>
 
 <style lang="scss">
+	.Title{
+		// width: 280rpx;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		margin: 0 auto;
+	}
 // 自定义导航栏样式
 	.example-body {
 		flex-direction: row;
@@ -411,7 +417,7 @@ export default {
 	}
 	/*  #endif  */
 	.slottitle{
-		margin-left: 162rpx;
+		margin-left: 182rpx;
 		font-size: 38rpx;
 		font-family:PingFangSC-Medium,PingFang SC;
 		font-weight:600;

@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 白色-->
 		<view class="example-body" v-if="isFixed == false">
-			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" background-color="transparent" style="z-index: 999999;">
+			<uni-nav-bar :fixed="true" :status-bar="true" background-color="transparent" style="z-index: 999999;">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 					<image class="fanhui" src="../../static/images/icon-fanhui-white.svg" @click="back" />
@@ -23,7 +23,7 @@
 					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="slottitle">领途羊</view>
+				<!-- <view class="slottitle">领途羊</view> -->
 			</uni-nav-bar>
 		</view>
 		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption"
@@ -36,7 +36,7 @@
 								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 							<!-- #endif -->					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 					</view>
-					<view class="slottitle">领途羊</view>
+					<!-- <view class="slottitle">领途羊</view> -->
 				</uni-nav-bar>
 				<!-- 城市 -->
 				<view class="nowcity">
@@ -755,7 +755,7 @@
 	}
 	/*  #endif  */
 	.slottitle {
-		margin-left: 162rpx;
+		margin-left: 182rpx;
 		font-size: 38rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 600;

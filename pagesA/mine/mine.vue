@@ -2,14 +2,13 @@
 	<view v-if="userInfo">
 		<!-- 自定义导航栏 -->
 		<view class="example-body" v-if="isFixed">
-			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" >
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" title="个人主页">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 					<image class="fanhui" src=""  />
 					<!-- #endif -->
 					<image class="fhsy" src=""  />
 				</view>
-				<view class="slottitle">个人主页</view>
 			</uni-nav-bar>
 		</view>
 		<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption"  >

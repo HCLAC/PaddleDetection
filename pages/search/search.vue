@@ -2,12 +2,12 @@
 	<view class="content">
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
+			<uni-nav-bar :fixed="true" :status-bar="true">
 				<view slot="left" class="slotleft">
-				<!-- #ifndef  MP-BAIDU -->
-					<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-				<!-- #endif --></view>
-				<view class="slottitle">搜索</view>
+					<!-- #ifndef  MP-BAIDU -->
+						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->
+				</view>
 			</uni-nav-bar>
 		</view>
 		<view class="search-box">

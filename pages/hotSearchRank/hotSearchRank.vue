@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body" v-if="isFixed == false">
-			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" background-color="transparent" style="z-index: 999999;">
+			<uni-nav-bar :fixed="true" :status-bar="true" background-color="transparent" style="z-index: 999999;">
 				<view slot="left" class="slotleft">
 					<image class="fanhui" src="../../static/images/icon-fanhui-white.svg" @click="back" />
 					<image class="fhsy" src="../../static/images/icon-fhsy-white.svg" @click="home" />
@@ -17,7 +17,7 @@
 							<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="slottitle">领途羊</view>
+				<!-- <view class="slottitle">领途羊</view> -->
 			</uni-nav-bar>
 		</view>
 		<mescroll-uni @scroll="uniScroll" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
@@ -268,7 +268,7 @@
 	}
 	/*  #endif  */
 	.slottitle {
-		margin-left: 162rpx;
+		margin-left: 182rpx;
 		font-size: 38rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 600;

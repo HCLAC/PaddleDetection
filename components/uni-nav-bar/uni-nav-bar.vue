@@ -19,7 +19,7 @@
 						<text class="uni-nav-bar-text" :style="{color: color }">{{ title }}</text>
 					</view>
 					<!-- 标题插槽 -->
-					<slot name="center"/>
+					<slot name="center" />
 				</view>
 				<view :class="title.length ? 'uni-navbar__header-btns-right' : ''" @tap="onClickRight" class="uni-navbar__header-btns uni-navbar__content_view">
 					<view class="uni-navbar__content_view" v-if="rightIcon.length">
@@ -53,7 +53,7 @@
 		props: {
 			title: {
 				type: String,
-				default: ""
+				default: "领途羊"
 			},
 			leftText: {
 				type: String,
@@ -216,9 +216,9 @@
 		/* #endif */
 	}
 
-	.uni-navbar--border {
-		border-bottom-width: 1rpx;
-		border-bottom-style: solid;
-		border-bottom-color: $uni-border-color;
-	}
+	// .uni-navbar--border {
+	// 	border-bottom-width: 1rpx;
+	// 	border-bottom-style: solid;
+	// 	border-bottom-color: $uni-border-color;
+	// }
 </style>

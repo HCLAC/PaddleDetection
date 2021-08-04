@@ -2,14 +2,13 @@
 	<view >
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" >
+			<uni-nav-bar :fixed="true" :status-bar="true" >
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-							<!-- #endif -->
+						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
 		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
@@ -431,7 +430,6 @@ export default {
 				upOption:{
 					bgColor:'#F8F8F8'
 				}
-				
 			};
 		},
 		mixins: [MescrollMixin],
@@ -1094,6 +1092,7 @@ export default {
 	flex-wrap: wrap;
 	margin-top: 24rpx;
 	padding-left: 20rpx;
+	min-height: 1470rpx;
 }
 
 .left,.right {

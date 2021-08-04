@@ -2,9 +2,9 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor">
-				<view slot="left" class="headerL">
-					<view class="world">
+			<uni-nav-bar :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor" title="''">
+				<view class="headerL" slot="left">
+					<view class="world" >
 						<view class="worldText">全世界</view>
 						<view class="worldLine"></view>
 					</view>
@@ -660,6 +660,7 @@
 			align-items: center;
 			height: 64rpx;
 			.nowCityNameText{
+				width: 65rpx;
 				height: 40rpx;
 				font-size: 28rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
@@ -759,7 +760,7 @@
 		background: rgba(248, 248, 248, 1);
 		border-radius: 36rpx;
 		flex-wrap: nowrap;
-		margin-left: 40rpx;
+		margin: 0 auto;
 		padding-left: 32rpx;
 		.input-uni-icon-Box{
 			width: 28rpx;
@@ -770,8 +771,6 @@
 				height: 28rpx;
 			}
 		}
-		
-		
 	}
 	
 

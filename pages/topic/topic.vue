@@ -2,14 +2,13 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body"  >
-			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" :border="true" >
+			<uni-nav-bar :fixed="true" :status-bar="true" :border="true" >
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="slottitle">领途羊</view>
 			</uni-nav-bar>
 		</view>
 		
@@ -65,7 +64,7 @@
 					<view class="conttentBox">
 						<view class="contentImgBox">
 							<view class="contentImg" v-for="(item1,index) in item.list" :key="index" @click="onPageJump" :id="item1.article_id">
-								<image class="attImg" :src="item1.image" mode="">
+								<image class="attImg" :src="item1.image" mode="aspectFill">
 									<view class="videoIcon" v-if="item1.type == 4">
 										<image class="playIcon"  src="../../static/images/playIcon.svg" mode=""></image>
 									</view>
@@ -465,11 +464,12 @@
 .attText {
 	// height: 28rpx;
 	font-size: 28rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 500;
+	// font-family: PingFangSC-Medium, PingFang SC;
+	// font-weight: 500;
 	color: #303133;
 	// line-height: 28rpx;
-	margin: 4rpx 0 2rpx 6rpx;
+	margin: 4rpx 0 2rpx 10rpx;
+	// margin: 0 auto
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
 	text-overflow: ellipsis;

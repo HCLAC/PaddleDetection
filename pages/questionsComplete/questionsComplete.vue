@@ -2,14 +2,13 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar" >
+			<uni-nav-bar :fixed="true" :status-bar="true" title="我要提问">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 								<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 							<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
-				<view class="slottitle">我要提问</view>
 			</uni-nav-bar>
 		</view>
 		<view class="title">
@@ -128,7 +127,7 @@
 }
 /*  #endif  */
 .slottitle{
-	margin-left: 162rpx;
+	margin-left: 182rpx;
 	font-size: 38rpx;
 	font-family:PingFangSC-Medium,PingFang SC;
 	font-weight:600;
