@@ -115,6 +115,17 @@
 <style lang="scss" scoped>
 	$nav-height: 44px;
 	.uni-nav-bar-text {
+		// width: 100%;
+		// margin: 0 auto;
+		text-align: center;
+		overflow:hidden;         
+		text-overflow:ellipsis;
+		white-space:nowrap;      
+		width:120px;
+		font-size: 37rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #303133;
 		/* #ifdef APP-PLUS */
 		font-size: 34rpx;
 		/* #endif */
