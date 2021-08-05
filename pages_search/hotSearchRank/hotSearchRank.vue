@@ -1,16 +1,8 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<view class="example-body" v-if="isFixed == false">
-			<uni-nav-bar  title="热门搜索排行榜" :fixed="true" :status-bar="true" background-color="transparent" style="z-index: 999999;">
-				<view slot="left" class="slotleft">
-					<image class="fanhui" src="../../static/images/icon-fanhui-white.svg" @click="back" />
-					<image class="fhsy" src="../../static/images/icon-fhsy-white.svg" @click="home" />
-				</view>
-			</uni-nav-bar>
-		</view>
-		<view class="example-body" v-if="isFixed == true">
-			<uni-nav-bar :fixed="true" :status-bar="true" title="热门搜索排行榜">
+		<view class="example-body">
+			<uni-nav-bar  :title="title" :fixed="true" :status-bar="true" :backgroundColor="background" style="z-index: 999999;">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
@@ -19,23 +11,22 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<mescroll-uni @scroll="uniScroll" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-body @scroll="uniScroll" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部背景 -->
 			<view class="bgBox">
 				<image src="../../static/images/rankBanner.png" mode="" class="bannerImg"></image>
 				<image src="../../static/images/hotRank.png" mode="" class="bannerText"></image>
 			</view>
-			<view class="content">
-				<view class="hotList" v-for="(keyword,index) in  hotKeywordList" :key="index" @tap="doSearch(keyword)">
+			<view class="content" id="selectcard">
+				<view class="hotList" v-for="(keyword,index) in hotKeywordList" :key="index" @tap="doSearch(keyword)">
 					<view class="hotImg">
 						<image class=" " :src="`../../static/images/icon-${index + 1}.svg`"  mode="aspectFit"></image>
 						<text class="rankNum">{{ index + 1 }}</text>
 					</view>
 					<view class="hotContent">{{ keyword }}</view>
 				</view>
-				
 			</view>
-		</mescroll-uni>
+		</mescroll-body>
 	</view>
 </template>
 
@@ -45,76 +36,53 @@
 	export default {
 		data() {
 			return {
+				downOption: {
+					auto: false
+				},
 				hotKeywordList:'',
-				isFixed:false,
 				keyword:'',
-				
+				cardheight: 0,
+				title: '',
+				background: 'transparent'
 			};
 		},
 		mixins: [MescrollMixin],
 		onLoad() {
-			this.loadHotKeyword()
+			this.calcCardHeight()
 		},
 		
+		onPageScroll(e) {
+			if (e.scrollTop > this.cardheight) {
+				this.background = '#FFFFFF'
+				this.title = "热搜排行榜"
+			} else {
+				this.background = 'transparent'
+				this.title = ""
+			}
+		},
 		methods:{
-			//加载热门搜索
-			loadHotKeyword() {
-				//定义热门搜索关键字，可以自己实现ajax请求数据再赋值
-				uni.request({
-					url: this.globalUrl + '/search/hot',
-					method: 'get',
-					data:{
-						page:1,
-						count:30
-					},
-					success: res => {
-						console.log('-----hotres',res);
-						this.hotKeywordList = res.data.data.list;
+			calcCardHeight(){
+				const query = uni.createSelectorQuery().in(this);
+				query.select('#selectcard').boundingClientRect(data => {
+					console.log("得到布局位置信息" + JSON.stringify(data));
+					console.log("节点离页面顶部的距离为" + data.top);
+					if (data.top == 0) {
+						this.cardheight = 200
+					} else {
+						this.cardheight = data.top
 					}
-				});
-			},
-			uniScroll(e){
-				if (e.scrollTop >  190) {
-					this.isFixed = true;
-				} else {
-					this.isFixed = false;
-				}
+				}).exec();
 			},
 			//执行搜索
 			doSearch(keyword) {
 				if (!keyword) return false;
-			
-				keyword = keyword === false ? this.keyword : keyword;
-				this.keyword = keyword;
-				// this.defaultKeyword = keyword;
-				this.saveKeyword(keyword); //保存为历史
-				// uni.showToast({
-				// 	title: keyword,
-				// 	icon: 'none',
-				// 	duration: 2000
-				// });
-				uni.request({
-					url: this.globalUrl + '/search',
-					data: {
-						query: keyword,
-						hit: 8
-					},
-					success: res => {
-						console.log('搜素数据', res);
-						uni.setStorageSync('article_id', res.data);
-						if(res.data.code == 0){
-							uni.navigateTo({
-								url: '/pages_search/searchResults/searchResults'
-							});
-						}
-						
-					}
-				})
+				uni.navigateTo({
+					url: '/pages_search/searchResults/searchResults+keyword='+keyword
+				});
 				
 			},
 			//保存关键字到历史记录
 			saveKeyword(keyword) {
-				
 				var hisKey = uni.getStorageSync('searchHistory');
 				if (!hisKey) {
 					var searchHistory = [keyword];
@@ -165,27 +133,33 @@
 				var that = this;
 					uni.request({
 						url: this.globalUrl + '/search/hot?page=' + pageNum + '&count=' + pageSize,
-						success: data => {
-							console.log('data', data);
+						success: res => {
+							if (res.statusCode != 200 || res.data.code != 0){
+								uni.showToast({
+									title: res.data.msg,
+									icon: 'none'
+								});
+								return
+							}
 							// 接口返回的当前页数据列表 (数组)
-							let curPageData = data.data.data.list;
+							if(!res.data.data || !res.data.data.list){
+								return
+							}
+							// 接口返回的当前页数据列表 (数组)
+							let curPageData = res.data.data.list;
 			
-							console.log('curPageData', curPageData);
 							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 							let curPageLen = curPageData.length;
-							console.log('curPageLen', curPageLen);
 							// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-							let totalPage = data.data.data.total / pageSize;
+							let totalPage = res.data.data.total / pageSize;
 							// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-							let totalSize = data.data.data.total;
-							console.log('totalSize', totalSize);
+							let totalSize = res.data.data.total;
 							// 接口返回的是否有下一页 (true/false)
-							// let hasNext = data.data.data.list;
+							// let hasNext = res.data.data.list;
 			
 							//设置列表数据
 							if (page.num == 1) this.hotKeywordList = []; //如果是第一页需手动置空列表
 							this.hotKeywordList = this.hotKeywordList.concat(curPageData); //追加新数据
-							console.log('hotKeywordList', this.hotKeywordList);
 							// 请求成功,隐藏加载状态
 							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 							this.mescroll.endByPage(curPageLen, totalPage);

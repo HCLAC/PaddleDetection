@@ -91,7 +91,6 @@
 				this.item = item
 				this.index = index
 				var that = this;
-				let msg = item.is_follow ? '确认取消关注？' : '确认关注？'
 				let status = item.is_follow ? 0 : 1
 				// 取消关注，二次确认退出
 				if(status == 0){
@@ -118,7 +117,7 @@
 							});
 							return
 						}
-						that.followList[that.index].is_follow = status == 1 ? true : false
+						that.followList[that.index].is_follow = res.data.data
 					}
 				})
 			},
@@ -144,7 +143,7 @@
 							});
 							return
 						}
-						that.followList[that.index].is_follow = status == 1 ? true : false
+						that.followList[that.index].is_follow = res.data.data
 					}
 				})
 			},

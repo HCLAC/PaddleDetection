@@ -79,7 +79,40 @@
 					"style": {
 						"navigationStyle": "custom"
 					}
+				},
+				{
+					"path" : "hotSearchRank/hotSearchRank",
+					"style" :                                                                                    
+					{
+						"navigationStyle": "custom",
+						"disableScroll": false
+					}
 				}
+			]
+		},
+		{
+			"root":"pages_content",
+			"pages":[
+				{
+					"path": "provinces/provinces",
+					"style": {
+						"navigationStyle": "custom",
+						"backgroundColor":"#F8F8F8",
+						"disableScroll": false
+					}
+				},
+				{
+					"path": "contentdetail/contentdetail",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				}
+				// ,{
+				// 	"path": "city/city",
+				// 	"style": {
+				// 		"navigationStyle": "custom"
+				// 	}
+				// }
 			]
 		},
 		// {
@@ -144,22 +177,9 @@
 				}
 			},
 
-			{
-				"path": "provinces/provinces",
-				"style": {
-					"navigationStyle": "custom",
-					"backgroundColor":"#F8F8F8",
-					"disableScroll": false
-				}
-			},
 			
 
-			// {
-			// 	"path": "city/city",
-			// 	"style": {
-			// 		"navigationStyle": "custom"
-			// 	}
-			// },
+			
 
 			// {
 			// 	"path": "attractionsList/attractionsList",
@@ -167,12 +187,7 @@
 			// 		"navigationStyle": "custom"
 			// 	}
 			// },
-			{
-				"path": "contentdetail/contentdetail",
-				"style": {
-					"navigationStyle": "custom"
-				}
-			},
+			
 			{
 				"path": "positionContent/positionContent",
 				"style": {
@@ -220,21 +235,6 @@
 			}
 		   
 			,{
-				"path" : "hotSearchRank/hotSearchRank",
-				"style" :                                                                                    
-				{
-					"navigationStyle": "custom",
-					"disableScroll": true,
-					"app-plus": {
-						"bounce": "none" 
-					},
-					"mp-alipay": {
-						"allowsBounceVertical": "NO"
-					} 
-				}
-				
-			}
-			,{
 				"path" : "comments/comments",
 				"style" :                                                                                    
 				{
@@ -248,12 +248,15 @@
 				{
 					"navigationStyle": "custom"
 				}
-				
 			}
 			]
 		}
 	],
 	"preloadRule":{
+		"pagesA/index/index": {
+		    "network": "all",
+		    "packages": ["pages_content"]
+		},
         "pagesA/mine/mine": {
             "network": "all",
             "packages": ["pages_mine"]

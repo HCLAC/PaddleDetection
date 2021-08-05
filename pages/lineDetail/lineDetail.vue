@@ -278,30 +278,8 @@ export default {
 	},
 	
 	
-	mounted() {
-		const query = uni.createSelectorQuery().in(this);
-		query.select('#selectcard').boundingClientRect(data => {
-		  console.log("得到布局位置信息" + JSON.stringify(data));
-		  console.log("节点离页面顶部的距离为" + data.top);
-		  if(data.top == 0 ){
-			  this.cardheight = 220
-			  this.styleFix.top =  125 +'rpx'
-		  }else{
-			  this.cardheight = data.top
-			  this.styleFix.top = (data.top)-30 + 'rpx'
-		  }
-		  
-		}).exec();
-		setTimeout(() => {
-			let view = uni.createSelectorQuery().select("#planContent");
-			view.fields({
-				size: true,
-			}, data => {
-				console.log("得到节点信息" + JSON.stringify(data));
-				console.log("节点的高为" + data.height);
-				this.boxHeight = data.height
-			}).exec();
-		}, 1000);
+	onLoad() {
+		this.calcHeight()
 		this.serviceProvider = getApp().globalData.serviceProvider
 	},
 		
@@ -325,6 +303,31 @@ export default {
 		
 	// },
 	methods: {
+		calcHeight(){
+			const query = uni.createSelectorQuery().in(this);
+			query.select('#selectcard').boundingClientRect(data => {
+			  console.log("得到布局位置信息" + JSON.stringify(data));
+			  console.log("节点离页面顶部的距离为" + data.top);
+			  if(data.top == 0 ){
+				  this.cardheight = 220
+				  this.styleFix.top =  125 +'rpx'
+			  }else{
+				  this.cardheight = data.top
+				  this.styleFix.top = (data.top)-30 + 'rpx'
+			  }
+			  
+			}).exec();
+			setTimeout(() => {
+				let view = uni.createSelectorQuery().select("#planContent");
+				view.fields({
+					size: true,
+				}, data => {
+					console.log("得到节点信息" + JSON.stringify(data));
+					console.log("节点的高为" + data.height);
+					this.boxHeight = data.height
+				}).exec();
+			}, 1000);
+		},
 		// 切换
 		tripChange(){
 			this.tabCurrent = 0

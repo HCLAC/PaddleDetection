@@ -313,7 +313,7 @@ export default {
 		onPageJump(e) {
 			let id = e.currentTarget.id;
 			uni.navigateTo({
-				url: '/pages/contentdetail/contentdetail?article_id=' + id
+				url: '/pages_content/contentdetail/contentdetail?article_id=' + id
 			});
 		},
 		// 跳转关注页

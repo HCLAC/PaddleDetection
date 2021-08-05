@@ -773,7 +773,7 @@
 									url: '/pages_mine/login/login'
 								});
 							} else {
-								that.article.data.is_follow = status == 1 ? true : false;
+								that.article.data.is_follow = res.data.data
 							}
 						}
 					});
@@ -800,7 +800,7 @@
 								url: '/pages_mine/login/login'
 							});
 						} else {
-							that.article.data.is_follow = status == 1 ? true : false;
+							that.article.data.is_follow = res.data.data
 						}
 					}
 				});

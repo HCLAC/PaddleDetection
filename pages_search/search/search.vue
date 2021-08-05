@@ -319,7 +319,7 @@ export default {
 						city_id: keyword.city_id
 					};
 					uni.navigateTo({
-						url: '/pages/provinces/provinces?state_id=' + 
+						url: '/pages_content/provinces/provinces?state_id=' + 
 						obj.state_id+"&city_id="+obj.city_id+"&name="+obj.name+"&image="+obj.image
 					});
 					break;
@@ -361,14 +361,14 @@ export default {
 		// 跳转热搜榜单
 		toHotRank(){
 			uni.navigateTo({
-				url:'../hotSearchRank/hotSearchRank'
+				url:'/pages_search/hotSearchRank/hotSearchRank'
 			})
 		},
 		// 跳转文章详情
 		onPageJump(e) {
 			let id = e.currentTarget.id;
 			uni.navigateTo({
-				url: '/pages/contentdetail/contentdetail?article_id=' + id
+				url: '/pages_content/contentdetail/contentdetail?article_id=' + id
 			});
 		},
 		back() {

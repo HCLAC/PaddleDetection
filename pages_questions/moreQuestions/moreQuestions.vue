@@ -142,19 +142,7 @@
 		onLoad(option) {
 			this.state_id = option.state_id
 			this.city_id = option.city_id
-		},
-		mounted() {
-			const query = uni.createSelectorQuery().in(this);
-			query.select('#selectcard').boundingClientRect(data => {
-			console.log("得到布局位置信息" + JSON.stringify(data));
-			console.log("节点离页面顶部的距离为" + data.top);
-			 
-			if(data.top == 0 ){
-				this.cardheight = 200
-			}else{
-				this.cardheight = data.top
-			}
-			}).exec();
+			this.calcCardHeight()
 		},
 		onPageScroll(e) {
 			if (e.scrollTop >  this.cardheight) {
@@ -164,6 +152,18 @@
 			}
 		},
 		methods:{
+			calcCardHeight(){
+				const query = uni.createSelectorQuery().in(this);
+				query.select('#selectcard').boundingClientRect(data => {
+					console.log("得到布局位置信息" + JSON.stringify(data));
+					console.log("节点离页面顶部的距离为" + data.top);
+					if (data.top == 0) {
+						this.cardheight = 200
+					} else {
+						this.cardheight = data.top
+					}
+				}).exec();
+			},
 			// 切换
 			change(){
 				this.tabCurrent = 0

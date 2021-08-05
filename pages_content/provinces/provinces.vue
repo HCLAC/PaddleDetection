@@ -436,7 +436,7 @@ export default {
 		toArticleDetail(e) {
 			let id = e.currentTarget.id;
 			uni.navigateTo({
-				url: '/pages/contentdetail/contentdetail?article_id=' + id
+				url: '/pages_content/contentdetail/contentdetail?article_id=' + id
 			});
 		},
 		toLineDetail(item) {
@@ -512,7 +512,7 @@ export default {
 				name = item1.name
 			}
 			uni.redirectTo({
-				url: '/pages/provinces/provinces?state_id=' +
+				url: '/pages_content/provinces/provinces?state_id=' +
 								item1.state_id+"&city_id="+item1.city_id+
 								"&name="+name+"&image="+item1.image
 			});

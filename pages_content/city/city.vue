@@ -86,7 +86,7 @@ export default {
 		onSelect(item) {
 			this.city = item.name;
 			uni.navigateTo({
-				url: '/pages/provinces/provinces?state_id=' + 
+				url: '/pages_content/provinces/provinces?state_id=' + 
 				item.state_id+"&city_id="+item.city_id+"&name="+item.name+"&image="+item.image
 			});
 		},

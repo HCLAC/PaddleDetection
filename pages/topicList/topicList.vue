@@ -439,18 +439,7 @@ export default {
 			this.getRecommend()
 			this.getlatest()
 			this.getTopic()
-		},
-		mounted() {
-			const query = uni.createSelectorQuery().in(this);
-			query.select('#selectcard').boundingClientRect(data => {
-			  console.log("得到布局位置信息" + JSON.stringify(data));
-			  console.log("节点离页面顶部的距离为" + data.top);
-			  if(data.top == 0 ){
-				  this.cardheight = 220
-			  }else{
-				  this.cardheight = data.top
-			  }
-			}).exec();
+			this.calcCardHeight()
 		},
 		
 		onPageScroll(e) {
@@ -462,8 +451,19 @@ export default {
 			}
 		},
 		
-		methods: {
-			
+		methods: {			
+			calcCardHeight(){
+				const query = uni.createSelectorQuery().in(this);
+				query.select('#selectcard').boundingClientRect(data => {
+					console.log("得到布局位置信息" + JSON.stringify(data));
+					console.log("节点离页面顶部的距离为" + data.top);
+					if (data.top == 0) {
+						this.cardheight = 200
+					} else {
+						this.cardheight = data.top
+					}
+				}).exec();
+			},
 			// 推荐列表
 			getRecommend(){
 				uni.request({
@@ -569,7 +569,7 @@ export default {
 				// debugger
 				// return
 				uni.navigateTo({
-					url: '/pages/contentdetail/contentdetail?article_id=' + id
+					url: '/pages_content/contentdetail/contentdetail?article_id=' + id
 				});
 			},
 			// 跳转话题广场

@@ -387,7 +387,7 @@
 			toArticleDetail(e) {
 				let id = e.currentTarget.id;
 				uni.navigateTo({
-					url: '/pages/contentdetail/contentdetail?article_id=' + id
+					url: '/pages_content/contentdetail/contentdetail?article_id=' + id
 				});
 			},
 			// 点赞 
@@ -454,14 +454,14 @@
 					});
 				} else {
 					uni.navigateTo({
-						url: '/pages/provinces/provinces?state_id=' + 
+						url: '/pages_content/provinces/provinces?state_id=' + 
 						obj.state_id+"&city_id="+obj.city_id+"&name="+obj.name+"&image="+obj.image
 					});
 				}
 			},
 			toProvinces(e) {
 				uni.navigateTo({
-					url: '/pages/provinces/provinces?state_id=' + 
+					url: '/pages_content/provinces/provinces?state_id=' + 
 					e.state_id+"&city_id="+e.city_id+"&name="+e.name+"&image="+e.image
 				});
 			},

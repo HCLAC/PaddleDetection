@@ -12,7 +12,6 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 博主信息 -->
-
 		<view class="contentBox" style="height: 100%;">
 			<view style="position: absolute; width: 100%; top: 0; z-index: 400;">
 				<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
@@ -35,28 +34,16 @@
 								</view>
 								<!-- <view class="logout">退出登录</view> -->
 							</view>
-							<view class="follow" v-if="authorMsg.is_follow" @click="Fllow()">
+							<view class="follow" v-if="authorMsg.is_follow" @click="Fllow(false)">
 								<text>已关注</text>
 							</view>
-							<view class="unfollow" v-if="!authorMsg.is_follow" @click="Fllow()">
+							<view class="unfollow" v-else="!authorMsg.is_follow" @click="Fllow(true)">
 								<text>关注</text>
 							</view>
 						</view>
 					</view>
-					<!-- 弹窗 -->
-					<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 					<!-- 作品 -->
 					<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard">
-						<!-- <v-tabs
-								lineHeight="22rpx"
-								lineColor="#FFE512"
-								fontSize="36rpx"
-								activeColor="#303133"
-								:lineScale="0.55"
-								paddingItem="0  18rpx"
-								:tabs="tablist"
-								:is-scroll="false"
-							></v-tabs> -->
 						<view class="worksBox">
 							<view class="worksText">
 								作品
@@ -67,18 +54,17 @@
 						<view class="articleNum">
 							{{authorMsg.article_count>10000?((authorMsg.article_count-(authorMsg.article_count%1000))/10000+'w'):authorMsg.article_count}}
 						</view>
-
 					</view>
 					<view style="margin-top: 18%; padding-left:28rpx;" v-if="workslist">
 						<view class="" v-for="(item, index) in workslist" :key="index">
 							<view class="contentItem">
 								<view class="left">
-									<image :src="item.image" mode="">
+									<image :src="item.image" mode="aspectFill">
 										<view class="imgTip">
 											<view v-if="item.type == 1">游记</view>
-											<view v-if="item.type == 2">攻略</view>
-											<view v-if="item.type == 4">视频</view>
-											<view v-if="item.type == 5">推广</view>
+											<view v-else-if="item.type == 2">攻略</view>
+											<view v-else-if="item.type == 4">视频</view>
+											<view v-else-if="item.type == 5">推广</view>
 										</view>
 										<view class="videoIcon" v-if="item.type == 4">
 											<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
@@ -87,7 +73,6 @@
 								</view>
 								<view class="right" @click="onPageJump" :id="item.article_id">
 									<view class="title">
-
 										<text class="titleText">{{ item.title }}</text>
 									</view>
 									<view class="content">
@@ -111,13 +96,12 @@
 						</view>
 					</view>
 				</mescroll-body>
+				<!-- 弹窗 -->
+				<u-modal v-model="show" :content="content" :z-index=9999 :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 			</view>
-
 		</view>
-
 	</view>
 </template>
-
 <script>
 	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 	export default {
@@ -128,9 +112,9 @@
 				workslist: [],
 				show: false,
 				content: '',
-				tablist: ['作品'],
 				downOption: {
-					use: false
+					use: false,
+					auto: false
 				},
 				cardheight: 0,
 				isFixed: false,
@@ -138,46 +122,10 @@
 			};
 		},
 		mixins: [MescrollMixin],
-		onShow() {
-			// 获取当前小程序的页面栈
-			let pages = getCurrentPages();
-			// 数组中索引最大的页面--当前页面
-			let currentPage = pages[pages.length - 1];
-			// 打印出当前页面中的 options
-			console.log('onshow--', currentPage.options)
-			this.author_id = currentPage.options.author_id
-			console.log(this.author_id, '....')
+		onLoad(options) {
+			this.author_id = options.author_id
 			this.getBloggerMsg()
-			uni.showLoading({
-				title: '加载中',
-				success: () => {
-
-				}
-			})
-			setTimeout(function() {
-				uni.hideLoading()
-			}, 1000)
-
-		},
-		onLoad(e) {
-			// console.log('博主id',e)
-			// this.author_id = e.author_id
-			// console.log(this.author_id,'....')
-			// this.getBloggerMsg(),
-			this.getlist()
-			// this.getlist()
-		},
-		mounted() {
-			const query = uni.createSelectorQuery().in(this);
-			query.select('#selectcard').boundingClientRect(data => {
-				console.log("得到布局位置信息" + JSON.stringify(data));
-				console.log("节点离页面顶部的距离为" + data.top);
-				if (data.top == 0) {
-					this.cardheight = 200
-				} else {
-					this.cardheight = data.top
-				}
-			}).exec();
+			this.calcCardHeight()
 		},
 		onPageScroll(e) {
 			if (e.scrollTop > this.cardheight) {
@@ -189,6 +137,18 @@
 			}
 		},
 		methods: {
+			calcCardHeight(){
+				const query = uni.createSelectorQuery().in(this);
+				query.select('#selectcard').boundingClientRect(data => {
+					console.log("得到布局位置信息" + JSON.stringify(data));
+					console.log("节点离页面顶部的距离为" + data.top);
+					if (data.top == 0) {
+						this.cardheight = 200
+					} else {
+						this.cardheight = data.top
+					}
+				}).exec();
+			},
 			getBloggerMsg() {
 				uni.request({
 					url: this.globalUrl + '/author',
@@ -200,70 +160,62 @@
 					},
 					method: 'get',
 					success: (res) => {
-						console.log('博主信息=', res.data);
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
 						this.authorMsg = res.data.data
-					}
-				})
-
-			},
-			getlist() {
-				uni.request({
-					url: this.globalUrl + '/author/workslist',
-					data: {
-						author_id: this.author_id,
-						page: 1,
-						count: 6
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					method: 'get',
-					success: (res) => {
-						console.log('作品列表=', res.data);
-						this.workslist = res.data.data.list
 					}
 				})
 			},
 			// 关注
 			Fllow() {
-				// console.log(item, index)
+				let Authorization = uni.getStorageSync('Authorization')
+				if (!Authorization){
+					uni.navigateTo({
+						url: '/pages_mine/login/login'
+					});
+					return
+				}
+				
 				var that = this;
-				let msg = this.authorMsg.is_follow ? '确认取消关注?' : '确认关注?'
 				let status = this.authorMsg.is_follow ? 0 : 1
 
+				// 取消关注，弹出模态框二次确认
 				if (status == 0) {
-
 					that.show = true
 					that.content = '确认取消关注?'
-				} else {
-					uni.request({
-						url: that.globalUrl + '/user/follow',
-						data: {
-							author_id: that.authorMsg.author_id,
-							follow: status
-						},
-						method: 'POST',
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
-						success: (res) => {
-							if (res.data.code != 0) {
-								// debugger
-								uni.navigateTo({
-									// url: '../pages_mine/login/login'
-									url: '/pages_mine/login/login'
-								});
-							} else {
-								that.authorMsg.is_follow = status == 1 ? true : false
-							}
-						}
-					})
+					return 
 				}
+				// 关注直接调用接口
+				uni.request({
+					url: that.globalUrl + '/user/follow',
+					data: {
+						author_id: that.authorMsg.author_id,
+						follow: status
+					},
+					method: 'POST',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: (res) => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						that.authorMsg.is_follow = res.data.data
+					}
+				})
 			},
 			// 点击确认
 			confirm() {
 				var that = this;
-				let msg = this.authorMsg.is_follow ? '确认取消关注?' : '确认关注?'
 				let status = this.authorMsg.is_follow ? 0 : 1
 				uni.request({
 					url: that.globalUrl + '/user/follow',
@@ -276,25 +228,22 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: (res) => {
-						if (res.data.code != 0) {
-							// debugger
-							uni.navigateTo({
-								url: '/pages_mine/login/login'
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
 							});
-						} else {
-							that.authorMsg.is_follow = status == 1 ? true : false
+							return
 						}
+						that.authorMsg.is_follow = res.data.data
 					}
 				})
 			},
 			// 跳转文章详情
 			onPageJump(e) {
-				console.log(e);
 				let id = e.currentTarget.id;
-				// debugger
-				// return
 				uni.navigateTo({
-					url: '/pages/contentdetail/contentdetail?article_id=' + id
+					url: '/pages_content/contentdetail/contentdetail?article_id=' + id
 				});
 			},
 			back() {
@@ -303,10 +252,7 @@
 				});
 			},
 			home() {
-				// uni.switchTab({
-				// 	url: '/pagesA/index/index'
-				// });
-				uni.reLaunch({
+				uni.switchTab({
 					url: '/pagesA/index/index'
 				});
 			},
@@ -336,27 +282,33 @@
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
-					success: data => {
-						console.log('data', data);
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
 						// 接口返回的当前页数据列表 (数组)
-						let curPageData = data.data.data.list;
-						console.log('curPageData', curPageData);
+						if(!res.data.data || !res.data.data.list){
+							return
+						}
+						// 接口返回的当前页数据列表 (数组)
+						let curPageData = res.data.data.list;
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 						let curPageLen = curPageData.length;
-						console.log('curPageLen', curPageLen);
 						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-						// let totalPage = data.data.data.list;
+						// let totalPage = res.data.data.list;
 						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-						let totalSize = data.data.data.total;
-						console.log('totalSize', totalSize);
+						let totalSize = res.data.data.total;
 						that.likeNum = totalSize;
 						// 接口返回的是否有下一页 (true/false)
-						// let hasNext = data.data.data.list;
+						// let hasNext = res.data.data.list;
 
 						//设置列表数据
 						if (page.num == 1) this.workslist = []; //如果是第一页需手动置空列表
 						this.workslist = this.workslist.concat(curPageData); //追加新数据
-						console.log('workslist', this.workslist);
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 						// this.mescroll.endByPage(curPageLen, totalPage);
@@ -380,9 +332,6 @@
 						this.mescroll.endErr();
 					}
 				});
-
-
-
 
 				// 此处仍可以继续写其他接口请求...
 				// 调用其他方法...

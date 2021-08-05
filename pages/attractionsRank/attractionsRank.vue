@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 白色-->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true" style="z-index: 999999;" :title="querys.name">
+			<uni-nav-bar :fixed="true" :status-bar="true" style="z-index: 999999;" :title="querys.name+'热门景点'">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 					<image class="fanhui" src="../../static/images/icon-fanhui-white.svg" @click="back" />
@@ -139,8 +139,8 @@
 			</view>
 		</mescroll-body>
 		<!-- 城市选择弹窗 -->
-		<u-popup v-model="show" mode="top" height="383px" style="z-index: 9999999;" title="选择城市" :title="querys.name">
-			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
+		<u-popup v-model="show" mode="top" height="383px" style="z-index: 9999999;">
+			<uni-nav-bar :fixed="true" :status-bar="true"  :title="querys.name">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />

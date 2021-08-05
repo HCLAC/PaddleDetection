@@ -286,7 +286,7 @@ export default {
 			// debugger
 			// return
 			uni.navigateTo({
-				url: "/pages/contentdetail/contentdetail?article_id="+id
+				url: "/pages_content/contentdetail/contentdetail?article_id="+id
 			})
 		},
 		// 调用拨打手机
