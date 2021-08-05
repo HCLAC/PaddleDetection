@@ -2,7 +2,7 @@
 	<view class="">
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="热门城市">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
@@ -55,9 +55,6 @@ export default {
 			state_id: '',
 			city_id: '',
 			cityData: {},
-			//搜索历史记录
-			historyListShow: true,
-			historyList: [],
 			hotCityDate: []
 		};
 	},
@@ -75,17 +72,16 @@ export default {
 				},
 				method: 'GET',
 				success: res => {
-					console.log(res);
-					this.hotCityDate = res.data.data;
-					console.log('热门城市===>', res.data.data), uni.setStorageSync('state_id', res.data.data);
-				}
-			}),
-				uni.getStorage({
-					key: 'state_id',
-					success: function(res) {
-						console.log('city===>', res.data);
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
 					}
-				});
+					this.hotCityDate = res.data.data;
+				}
+			})
 		},
 		onSelect(item) {
 			this.city = item.name;
@@ -110,7 +106,6 @@ export default {
 				success: res => {
 					if (res.city) {
 						this.city = res.city.substr(0, res.city.length - 1);
-						console.log('ccccccc', this.city);
 						uni.request({
 							url: this.globalUrl + '/user/location',
 							data: {
@@ -119,7 +114,6 @@ export default {
 							},
 							method: 'POST',
 							success: res => {
-								console.log('判断是否开放', res);
 								// 地址未定义
 								if (res.data.data.city_id == 0) {
 									this.showText = '暂未开放,请选择以下热门城市';
@@ -130,7 +124,6 @@ export default {
 						let arr = [];
 						arr.push(res.latitude);
 						arr.push(res.longitude);
-						console.log(arr);
 						arr = arr.join(',');
 						uni.request({
 							url: 'http://api.map.baidu.com/reverse_geocoding/v3/?ak=NKyWaSnsW6FFEseeCEX18Fpvgzs3jcmd&output=json&coordtype=wgs84ll',
@@ -149,7 +142,6 @@ export default {
 										},
 										method: 'POST',
 										success: res => {
-											console.log('判断是否开放', res);
 											// 地址未定义
 											if (res.data.data.city_id == 0) {
 												this.showText = '暂未开放,请选择以下热门城市';
@@ -172,21 +164,17 @@ export default {
 					}
 				},
 				fail: res => {
-					console.log('city未开启定位', res);
 					this.showText = '正在获取当前位置...';
 				}
 			});
 		},
 		resetAd() {
-			console.log('1111111111111');
 			uni.authorize({
 				scope: 'scope.userLocation',
 				success(res) {
-					console.log('成功', res);
-					uni.getLocation();
+					this.getAdress()
 				},
 				fail(res) {
-					console.log('失败', res);
 					uni.openSetting({
 						success(res) {
 							console.log(res.authSetting);

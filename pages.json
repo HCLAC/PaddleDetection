@@ -82,57 +82,57 @@
 				}
 			]
 		},
-		{
-			"root":"pages_questions",
-			"pages":[
-				{
-					"path" : "questions/questions",
-					"style" : {
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path" : "questionsPage/questionsPage",
-					"style" :                                                                                    
-					{
-						"navigationStyle": "custom"
-					}
+		// {
+		// 	"root":"pages_questions",
+		// 	"pages":[
+		// 		{
+		// 			"path" : "questions/questions",
+		// 			"style" : {
+		// 				"navigationStyle": "custom"
+		// 			}
+		// 		},
+		// 		{
+		// 			"path" : "questionsPage/questionsPage",
+		// 			"style" :                                                                                    
+		// 			{
+		// 				"navigationStyle": "custom"
+		// 			}
 					
-				},
-				{
-					"path" : "moreQuestions/moreQuestions",
-					"style" :                                                                                    
-					{
-						"navigationStyle": "custom"
-					}
+		// 		},
+		// 		{
+		// 			"path" : "moreQuestions/moreQuestions",
+		// 			"style" :                                                                                    
+		// 			{
+		// 				"navigationStyle": "custom"
+		// 			}
 					
-				},
-				{
-					"path" : "questionsComplete/questionsComplete",
-					"style" :                                                                                    
-					{
-						"navigationStyle": "custom"
-					}
+		// 		},
+		// 		{
+		// 			"path" : "questionsComplete/questionsComplete",
+		// 			"style" :                                                                                    
+		// 			{
+		// 				"navigationStyle": "custom"
+		// 			}
 					
-				},
-				{
-					"path" : "questionsDetail/questionsDetail",
-					"style" :                                                                                    
-					{
-						"navigationStyle": "custom"
-					}
+		// 		},
+		// 		{
+		// 			"path" : "questionsDetail/questionsDetail",
+		// 			"style" :                                                                                    
+		// 			{
+		// 				"navigationStyle": "custom"
+		// 			}
 					
-				},
-				{
-					"path" : "answersList/answersList",
-					"style" :                                                                                    
-					{
-						"navigationStyle": "custom"
-					}
+		// 		},
+		// 		{
+		// 			"path" : "answersList/answersList",
+		// 			"style" :                                                                                    
+		// 			{
+		// 				"navigationStyle": "custom"
+		// 			}
 					
-				}
-			]
-		},
+		// 		}
+		// 	]
+		// },
 		{
 			"root":"pages",
 			"pages":[
@@ -154,21 +154,21 @@
 			},
 			
 
-			{
-				"path": "city/city",
-				"style": {
-					"navigationStyle": "custom"
-				}
-			},
+			// {
+			// 	"path": "city/city",
+			// 	"style": {
+			// 		"navigationStyle": "custom"
+			// 	}
+			// },
+
+			// {
+			// 	"path": "attractionsList/attractionsList",
+			// 	"style": {
+			// 		"navigationStyle": "custom"
+			// 	}
+			// },
 			{
 				"path": "contentdetail/contentdetail",
-				"style": {
-					"navigationStyle": "custom"
-				}
-			},
-
-			{
-				"path": "attractionsList/attractionsList",
 				"style": {
 					"navigationStyle": "custom"
 				}
