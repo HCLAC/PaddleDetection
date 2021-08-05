@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" :border="true" title="我的关注">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
-					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 				<!-- <view class="slottitle">我的关注</view> -->
 			</uni-nav-bar>
@@ -49,7 +49,7 @@
 		<!-- 关注列表为空时 -->
 		<view class="empty" v-if="!followList || !followList.length">
 			<view class="emptyImg">
-				<image src="../../static/images/empty.svg" mode=""></image>
+				<image src="/static/images/empty.svg" mode=""></image>
 			</view>
 			<view class="emptyText">
 				您还没有关注任何人，去首页看看吧～
@@ -83,7 +83,7 @@
 			// 跳转博主详情页
 			tobloggers(e){
 				uni.navigateTo({
-					url:'/pages/bloggers/bloggers?author_id=' + e
+					url:'/pages_article/bloggers/bloggers?author_id=' + e
 				})
 			},
 			// 关注
@@ -155,7 +155,7 @@
 			},
 			home() {
 				uni.switchTab({
-					url: '/pagesA/index/index'
+					url: '/pages/index/index'
 				});
 			},
 			/*下拉刷新的回调, 有三种处理方式:*/

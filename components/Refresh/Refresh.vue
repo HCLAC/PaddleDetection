@@ -4,7 +4,7 @@
 			<view class='refresh-layout' :style="{height: refreshHeight + 'rpx'}">
 				<view class="refresh-loading" v-show="0 == pullState">
 					<text class="refresh-tips flex-center" v-if="pullState==0">刷新成功,可自定义</text>
-					<!-- <image src="../../static/images/img_avatar.png" v-if="pullState==0" style="width: 20px;" mode="widthFix"></image> -->
+					<!-- <image src="/static/images/img_avatar.png" v-if="pullState==0" style="width: 20px;" mode="widthFix"></image> -->
 				</view>
 			</view>
 		</view>

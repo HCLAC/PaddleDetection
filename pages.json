@@ -2,12 +2,13 @@
 	"easycom": {
 		"autoscan": true,
 		"custom": {
+			// "^uni-(.*)": "@/components/uni-$1.vue", // 匹配components目录内的vue文件
 			"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 		}
 	},
 	"pages": [
 		{
-			"path": "pagesA/index/index",
+			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom",
 				"backgroundColorBottom": "#F8F8F8",
@@ -17,7 +18,7 @@
 			}
 		},
 		{
-			"path": "pagesA/mine/mine",
+			"path": "pages/mine/mine",
 			"style": {
 				"navigationStyle": "custom"
 		
@@ -102,7 +103,7 @@
 					}
 				},
 				{
-					"path": "contentdetail/contentdetail",
+					"path": "article/article",
 					"style": {
 						"navigationStyle": "custom"
 					}
@@ -115,6 +116,86 @@
 				// }
 			]
 		},
+		{
+			"root":"pages_province",
+			"pages":[
+				{
+					"path": "attractionsRank/attractionsRank",
+					"style": {
+						"navigationStyle": "custom",
+						"backgroundColor": "#000000"
+					}
+				},
+				{
+					"path": "positionContent/positionContent",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				}, 
+				{
+					"path": "lineList/lineList",
+					"style": {
+						"navigationStyle": "custom",
+						"backgroundColor": "#fff"
+					}
+				}, 
+				{
+					"path": "lineDetail/lineDetail",
+					"style": {
+						"navigationStyle": "custom",
+						"backgroundColor": "#fff"
+					}
+				}
+				// {
+				// 	"path": "attractionsList/attractionsList",
+				// 	"style": {
+				// 		"navigationStyle": "custom"
+				// 	}
+				// },
+			]
+		},
+		{
+			"root":"pages_article",
+			"pages":[
+				{
+					"path" : "bloggers/bloggers",
+					"style" : {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "topic/topic",
+					"style" : {
+						"navigationStyle": "custom"
+						
+					}
+				},
+				{
+					"path" : "topicList/topicList",
+					"style" : {
+						"navigationStyle": "custom",
+						"backgroundColor":"#F8F8F8"
+					}
+				}
+				,{
+					"path" : "comments/comments",
+					"style" :                                                                                    
+					{
+						"navigationStyle": "custom"
+					}
+				}
+				,{
+					"path" : "report/report",
+					"style" :                                                                                    
+					{
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "webview/webview"
+				}
+			]
+		}
 		// {
 		// 	"root":"pages_questions",
 		// 	"pages":[
@@ -166,98 +247,13 @@
 		// 		}
 		// 	]
 		// },
-		{
-			"root":"pages",
-			"pages":[
-			{
-				"path": "attractionsRank/attractionsRank",
-				"style": {
-					"navigationStyle": "custom",
-					"backgroundColor": "#000000"
-				}
-			},
-
-			
-
-			
-
-			// {
-			// 	"path": "attractionsList/attractionsList",
-			// 	"style": {
-			// 		"navigationStyle": "custom"
-			// 	}
-			// },
-			
-			{
-				"path": "positionContent/positionContent",
-				"style": {
-					"navigationStyle": "custom"
-				}
-			}, 
-			{
-				"path": "lineList/lineList",
-				"style": {
-					"navigationStyle": "custom",
-					"backgroundColor": "#fff"
-				}
-			}, 
-			{
-				"path": "lineDetail/lineDetail",
-				"style": {
-					"navigationStyle": "custom",
-					"backgroundColor": "#fff"
-				}
-			}, 
-			{
-				"path": "webview/webview",
-				"style": {}
-			},
-			
-			{
-				"path" : "bloggers/bloggers",
-				"style" : {
-					"navigationStyle": "custom"
-				}
-			},
-			{
-				"path" : "topic/topic",
-				"style" : {
-					"navigationStyle": "custom"
-					
-				}
-			},
-			{
-				"path" : "topicList/topicList",
-				"style" : {
-					"navigationStyle": "custom",
-					"backgroundColor":"#F8F8F8"
-				}
-			}
-		   
-			,{
-				"path" : "comments/comments",
-				"style" :                                                                                    
-				{
-					"navigationStyle": "custom"
-				}
-				
-			}
-			,{
-				"path" : "report/report",
-				"style" :                                                                                    
-				{
-					"navigationStyle": "custom"
-				}
-			}
-			]
-		}
 	],
 	"preloadRule":{
-		"pagesA/index/index": {
+		"pages/index/index": {
 		    "network": "all",
 		    "packages": ["pages_content"]
 		},
-        "pagesA/mine/mine": {
+        "pages/mine/mine": {
             "network": "all",
             "packages": ["pages_mine"]
         }
@@ -270,13 +266,13 @@
 	},
 	"tabBar": {
 		"list": [{
-				"pagePath": "pagesA/index/index",
+				"pagePath": "pages/index/index",
 				"text": "首页",
 				"iconPath": "/static/images/index.png",
 				"selectedIconPath": "/static/images/index_active.png"
 			},
 			{
-				"pagePath": "pagesA/mine/mine",
+				"pagePath": "pages/mine/mine",
 				"text": "我的",
 				"iconPath": "/static/images/mine.png",
 				"selectedIconPath": "/static/images/mine_active.png"

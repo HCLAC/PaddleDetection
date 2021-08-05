@@ -5,7 +5,7 @@
 			<uni-nav-bar :fixed="true" :status-bar="true">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
 				</view>
 			</uni-nav-bar>
@@ -31,8 +31,8 @@
 						<view class="liIcon" v-if="!row.keyword.type"></view>
 						<!-- <veiw v-if="row.keyword.type" class="otherIcon"><u-icon size="32" :name="row.keyword.type == 'site' ? 'photo' : row.keyword.type ? 'map-fill' : ''"></u-icon></veiw> -->
 						<veiw v-if="row.keyword.type" :class=" row.keyword.type == 'site' ? 'otherIcon' : 'otherIcon1'">
-							<image v-if="row.keyword.type == 'site'" src="../../static/images/attIcon.svg" ></image>
-							<image v-if="row.keyword.type == 'area'" src="../../static/images/adressIcon.svg" mode=""></image>
+							<image v-if="row.keyword.type == 'site'" src="/static/images/attIcon.svg" ></image>
+							<image v-if="row.keyword.type == 'area'" src="/static/images/adressIcon.svg" mode=""></image>
 						</veiw>
 						<view class="keyword-text" @tap.stop="goSearch(row.keyword)"><rich-text :nodes="row.htmlStr"></rich-text></view>
 						<view class="otherText" v-if="row.keyword.type">{{ row.keyword.type == 'site' ? '景点' : '目的地' }}</view>
@@ -61,9 +61,9 @@
 					</view>
 					<view class="hotList" >
 						<view class="hotItem" v-for="(keyword, index) in hotKeywordList" @tap="doSearch(keyword)" :key="index" v-if="index < 10" >
-							<!-- <image class="hotImg " :src="`../../static/images/icon-${index+1>=3?3:index+1}.png`" mode=""></image> -->
+							<!-- <image class="hotImg " :src="`/static/images/icon-${index+1>=3?3:index+1}.png`" mode=""></image> -->
 							<view class="hotImg" >
-								<image class=" " :src="`../../static/images/icon-${index + 1}.svg`"  mode="aspectFit"></image>
+								<image class=" " :src="`/static/images/icon-${index + 1}.svg`"  mode="aspectFit"></image>
 								<text class="rankNum" >{{ index + 1 }}</text>
 							</view>
 							<view class="hotContent" >{{ keyword}}</view>
@@ -71,7 +71,7 @@
 					</view>
 					<view class="hide-hot-tis" v-if="hotKeywordList.length >= 10" @click="toHotRank">
 						<view>点击查看更多热搜</view>
-						<image class="moreRight" src="../../static/images/moreR.svg" mode=""></image>
+						<image class="moreRight" src="/static/images/moreR.svg" mode=""></image>
 					</view>
 				</view>
 			</scroll-view>
@@ -94,7 +94,7 @@
 //引用mSearch组件，如不需要删除即可
 import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
-import articleWaterfall from '@/components/article-waterfall/article-waterfall.vue';
+import articleWaterfall from '@/common/article-waterfall/article-waterfall.vue';
 
 import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 export default {
@@ -325,7 +325,7 @@ export default {
 					break;
 				case 'site':
 					uni.navigateTo({
-						url: '/pages/positionContent/positionContent?id=' + keyword.id
+						url: '/pages_province/positionContent/positionContent?id=' + keyword.id
 					});
 					break
 				default:
@@ -368,7 +368,7 @@ export default {
 		onPageJump(e) {
 			let id = e.currentTarget.id;
 			uni.navigateTo({
-				url: '/pages_content/contentdetail/contentdetail?article_id=' + id
+				url: '/pages_content/article/article?article_id=' + id
 			});
 		},
 		back() {

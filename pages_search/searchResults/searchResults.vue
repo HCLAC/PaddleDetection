@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
-					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -26,7 +26,7 @@
 							查看省市主题页
 						</view>
 					</view>
-					<image class="iconRight" src="../../static/images/more-right.svg" mode=""></image>
+					<image class="iconRight" src="/static/images/more-right.svg" mode=""></image>
 				</view>
 				<view class="line">
 					
@@ -43,74 +43,74 @@
 							<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
 							<!-- 评分图标 -->
 							<view class="rateStart" v-if="site.rate == 5">
-								<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star4.svg" mode=""></image>
+								<image src="/static/images/star_svg/star4.svg" mode=""></image>
+								<image src="/static/images/star_svg/star4.svg" mode=""></image>
+								<image src="/static/images/star_svg/star4.svg" mode=""></image>
+								<image src="/static/images/star_svg/star4.svg" mode=""></image>
+								<image src="/static/images/star_svg/star4.svg" mode=""></image>
 							</view>
 							<view class="rateStart" v-else-if="site.rate == 4">
-								<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star3.svg" mode=""></image>
+								<image src="/static/images/star_svg/star3.svg" mode=""></image>
+								<image src="/static/images/star_svg/star3.svg" mode=""></image>
+								<image src="/static/images/star_svg/star3.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
 							</view>
 							<view class="rateStart" v-else-if="site.rate == 3">
-								<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star2.svg" mode=""></image>
+								<image src="/static/images/star_svg/star2.svg" mode=""></image>
+								<image src="/static/images/star_svg/star2.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
 							</view>
 							<view class="rateStart" v-else-if="site.rate == 2">
-								<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star1.svg" mode=""></image>
+								<image src="/static/images/star_svg/star1.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
 							</view>
 							<view class="rateStart" v-else-if="site.rate == 1">
-								<image src="../../static/images/star_svg/star11.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star11.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
 							</view>
 							<view class="rateStart" v-else-if="site.rate == 4.5">
-								<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-								<image src="../../static/images/star_svg/starCopy13.svg" mode=""></image>
+								<image src="/static/images/star_svg/star3.svg" mode=""></image>
+								<image src="/static/images/star_svg/star3.svg" mode=""></image>
+								<image src="/static/images/star_svg/star3.svg" mode=""></image>
+								<image src="/static/images/star_svg/star3.svg" mode=""></image>
+								<image src="/static/images/star_svg/starCopy13.svg" mode=""></image>
 							</view>
 							<view class="rateStart" v-else-if="site.rate == 3.5">
-								<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-								<image src="../../static/images/star_svg/starCopy12.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star2.svg" mode=""></image>
+								<image src="/static/images/star_svg/star2.svg" mode=""></image>
+								<image src="/static/images/star_svg/star2.svg" mode=""></image>
+								<image src="/static/images/star_svg/starCopy12.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
 							</view>
 							<view class="rateStart" v-else-if="site.rate == 2.5">
-								<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-								<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star1.svg" mode=""></image>
+								<image src="/static/images/star_svg/star1.svg" mode=""></image>
+								<image src="/static/images/star_svg/starCopy1.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
 							</view>
 							<view class="rateStart" v-else-if="site.rate == 1.5">
-								<image src="../../static/images/star_svg/star11.svg" mode=""></image>
-								<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star11.svg" mode=""></image>
+								<image src="/static/images/star_svg/starCopy1.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
 							</view>
 							<view class="rateStart" v-else-if="site.rate == 0.5">
-								<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								<image src="../../static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/starCopy1.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
+								<image src="/static/images/star_svg/star5.svg" mode=""></image>
 							</view>
 							<view class="rate">{{ site.rate }} 星</view>
 						</view>
@@ -126,7 +126,7 @@
 					<veiw class="contentTitle">行程线路</veiw>
 					<view class="moreBox" @click="toLineMore()">
 						更多
-						<image src="../../static/images/more-right.svg" mode=""></image>
+						<image src="/static/images/more-right.svg" mode=""></image>
 					</view>
 				</view>
 				<view style="padding-left: 4%; padding-top: 30rpx;">
@@ -158,7 +158,7 @@
 	//引用mSearch组件，如不需要删除即可
 	import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision.vue';
 	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
-	import articleWaterfall from '@/components/article-waterfall/article-waterfall.vue';
+	import articleWaterfall from '@/common/article-waterfall/article-waterfall.vue';
 	export default {
 		data() {
 			return {
@@ -232,20 +232,20 @@
 				var state_id = this.area.state_id;
 				var city_id = this.area.city_id;
 				uni.navigateTo({
-					url: '/pages/lineList/lineList?state_id=' + state_id + '&city_id=' + city_id
+					url: '/pages_province/lineList/lineList?state_id=' + state_id + '&city_id=' + city_id
 				});
 			},
 			getSite(id) {
 				if (id) {
 					uni.navigateTo({
-						url: '/pages/positionContent/positionContent?id=' + id
+						url: '/pages_province/positionContent/positionContent?id=' + id
 					});
 				}
 			},
 			getRoute(id) {
 				if (id) {
 					uni.navigateTo({
-						url: '/pages/lineDetail/lineDetail?id=' + id
+						url: '/pages_province/lineDetail/lineDetail?id=' + id
 					});
 				}
 			},
@@ -275,7 +275,7 @@
 			},
 			home() {
 				uni.switchTab({
-					url: '/pagesA/index/index'
+					url: '/pages/index/index'
 				});
 			},
 			focus() {

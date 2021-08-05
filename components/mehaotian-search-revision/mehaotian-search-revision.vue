@@ -3,7 +3,7 @@
 		<view class="content" :style="{ 'border-radius': radius + 'px' }">
 			<!-- HM修改 增加进入输入状态的点击范围 -->
 			<view class="content-box" :class="{ center: mode === 2 }">
-				<image class=" icon-serach" mode="aspectFit" src="../../static/images/icon-search.svg"></image>
+				<image class=" icon-serach" mode="aspectFit" src="/static/images/icon-search.svg"></image>
 				<!-- HM修改 增加placeholder input confirm-type confirm-->
 				<input
 					:placeholder="placeholder"
@@ -20,7 +20,7 @@
 				/>
 				<!-- <view v-if="!active && mode === 2" class="input sub" @click="getFocus">请输入搜索内容</view> -->
 				<!-- HM修改 @click换成@click.stop阻止冒泡 -->
-				<image @click.stop="clear" v-if="inputVal" class="iconImg" src="../../static/images/ic_search_sel.svg"></image>
+				<image @click.stop="clear" v-if="inputVal" class="iconImg" src="/static/images/ic_search_sel.svg"></image>
 			</view>
 			<!-- <view v-show="(active&&show&&button === 'inside')||(isDelShow && button === 'inside')" class="serachBtn" @click="search">
 				搜索

@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" title="问答列表">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
-					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -63,7 +63,7 @@
 					<view class="authorBox">
 						<view class="author">
 							<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-							<image src="../../static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
+							<image src="/static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
 							<text>{{item.account_name}}</text>
 						</view>
 						<view class="lookAnswers">
@@ -90,7 +90,7 @@
 					<view class="authorBox">
 						<view class="author">
 							<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-							<image src="../../static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
+							<image src="/static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
 							<text>{{item.account_name}}</text>
 						</view>
 						<view class="lookAnswers">
@@ -107,7 +107,7 @@
 		</mescroll-body>
 		<!-- 提问按钮 -->
 		<view class="questionsBtn" @click="toQuestions">
-			<image src="../../static/images/twIcon.svg" mode=""></image>
+			<image src="/static/images/twIcon.svg" mode=""></image>
 		</view>
 	</view>
 </template>
@@ -247,7 +247,7 @@
 			// 返回首页
 			home() {
 				uni.switchTab({
-					url: '/pagesA/index/index'
+					url: '/pages/index/index'
 				});
 			},
 			/*下拉刷新的回调, 有三种处理方式:*/

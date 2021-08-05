@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" title="问题标题">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
-					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -43,8 +43,8 @@
 					<view class="keyword-entry" hover-class="keyword-entry-tap">
 						<!-- <view class="liIcon" v-if="!row.keyword.type"></view> -->
 						<!-- <veiw v-if="row.keyword.type" :class=" row.keyword.type == 'site' ? 'otherIcon' : 'otherIcon1'">
-							<image v-if="row.keyword.type == 'site'" src="../../static/images/attIcon.svg" ></image>
-							<image v-if="row.keyword.type == 'area'" src="../../static/images/adressIcon.svg" mode=""></image>
+							<image v-if="row.keyword.type == 'site'" src="/static/images/attIcon.svg" ></image>
+							<image v-if="row.keyword.type == 'area'" src="/static/images/adressIcon.svg" mode=""></image>
 						</veiw> -->
 						<view class="keyword-text" @tap.stop="goQuestionDetail(row.keyword)">
 							<rich-text :nodes="row.htmlStr"></rich-text>
@@ -191,7 +191,7 @@
 			},
 			home() {
 				uni.switchTab({
-					url: '/pagesA/index/index'
+					url: '/pages/index/index'
 				});
 			},
 		}

@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" :border="true" title="修改资料">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
-					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -21,7 +21,7 @@
 					<view class="avatarText" slot="right">
 						修改头像
 					</view>
-					<image class="moreRight" src="../../static/images/moreR.svg" slot="right" mode=""></image>
+					<image class="moreRight" src="/static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 				<!-- 昵称 -->
 				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}"   :label-position="labelPosition" label="昵　称:" label-width="120" prop="name">
@@ -30,12 +30,12 @@
 				<!-- 性别 -->
 				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" :label-position="labelPosition" label="性　别:" label-width="120" prop="sex">
 					<u-input :customStyle="customStyleinput" :border="border" :disabled="true"  :select-open="actionSheetShow" v-model="model.sex" @click="actionSheetShow = true"></u-input>
-					<image class="moreRight" src="../../static/images/moreR.svg" slot="right" mode=""></image>
+					<image class="moreRight" src="/static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 				<!-- 常住地 -->
 				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" :label-position="labelPosition" label="常住地:" prop="region" label-width="120">
 					<u-input :customStyle="customStyleinput" :border="border" :disabled="true"   :select-open="pickerShow" v-model="model.region" @click="pickerShow = true"></u-input>
-					<image class="moreRight" src="../../static/images/moreR.svg" slot="right" mode=""></image>
+					<image class="moreRight" src="/static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 			</u-form>
 			<view class="customStyle" @click="submit">
@@ -202,7 +202,7 @@
 			// 返回首页
 			home() {
 				uni.switchTab({
-					url: '/pagesA/index/index'
+					url: '/pages/index/index'
 				});
 			},
 		}

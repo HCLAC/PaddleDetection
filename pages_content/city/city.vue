@@ -5,7 +5,7 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" title="热门城市">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
 				</view>
 			</uni-nav-bar>
@@ -97,7 +97,7 @@ export default {
 		},
 		home() {
 			uni.switchTab({
-				url: '/pagesA/index/index'
+				url: '/pages/index/index'
 			});
 		},
 		getAdress() {

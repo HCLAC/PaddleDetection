@@ -5,22 +5,22 @@
 			<uni-nav-bar  :title="title" :fixed="true" :status-bar="true" :backgroundColor="background" style="z-index: 999999;">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
-					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
 		</view>
 		<mescroll-body @scroll="uniScroll" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部背景 -->
 			<view class="bgBox">
-				<image src="../../static/images/rankBanner.png" mode="" class="bannerImg"></image>
-				<image src="../../static/images/hotRank.png" mode="" class="bannerText"></image>
+				<image src="/static/images/rankBanner.png" mode="" class="bannerImg"></image>
+				<image src="/static/images/hotRank.png" mode="" class="bannerText"></image>
 			</view>
 			<view class="content" id="selectcard">
 				<view class="hotList" v-for="(keyword,index) in hotKeywordList" :key="index" @tap="doSearch(keyword)">
 					<view class="hotImg">
-						<image class=" " :src="`../../static/images/icon-${index + 1}.svg`"  mode="aspectFit"></image>
+						<image class=" " :src="`/static/images/icon-${index + 1}.svg`"  mode="aspectFit"></image>
 						<text class="rankNum">{{ index + 1 }}</text>
 					</view>
 					<view class="hotContent">{{ keyword }}</view>
@@ -113,7 +113,7 @@
 			},
 			home() {
 				uni.switchTab({
-					url: '/pagesA/index/index'
+					url: '/pages/index/index'
 				});
 			},
 			/*下拉刷新的回调, 有三种处理方式:*/

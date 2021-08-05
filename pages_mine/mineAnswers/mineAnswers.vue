@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" title="我的回答">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
-					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -51,7 +51,7 @@
 				<view class="card" v-for="(item,index) in selectedList" :key="index" @click="toQuestionsDetail(item)">
 					<view class="avatar">
 						<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-						<image src="../../static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
+						<image src="/static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
 					</view>
 					
 					<view class="cradR">
@@ -77,7 +77,7 @@
 				<view class="card" v-for="(item,index) in newestList" :key="index" @click="toQuestionsDetail(item)">
 					<view class="avatar">
 						<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-						<image src="../../static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
+						<image src="/static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
 					</view>
 					
 					<view class="cradR">
@@ -104,7 +104,7 @@
 				<view class="card" v-for="(item,index) in answersList" :key="index" @click="toQuestionsDetail(item)">
 					<view class="avatar">
 						<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-						<image src="../../static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
+						<image src="/static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
 					</view>
 					
 					<view class="cradR">
@@ -207,7 +207,7 @@
 			// 返回首页
 			home() {
 				uni.switchTab({
-					url: '/pagesA/index/index'
+					url: '/pages/index/index'
 				});
 			},
 			/*下拉刷新的回调, 有三种处理方式:*/

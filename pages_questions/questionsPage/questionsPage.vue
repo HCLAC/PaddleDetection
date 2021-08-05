@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" title="问题描述">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
-					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -32,29 +32,29 @@
 			<!-- 问题目的地 -->
 			<view class="adressBox">
 				<view class="adressText">
-					<image src="../../static/images/iconMapt.svg" mode=""></image>
+					<image src="/static/images/iconMapt.svg" mode=""></image>
 					<text>问题目的地</text>
 				</view>
 				<view class="change" >
 					<view class="changeText" @click="show = true">{{name}}</view>
-					<image class="changeIcon" src="../../static/images/more-right.svg" mode=""></image>
+					<image class="changeIcon" src="/static/images/more-right.svg" mode=""></image>
 				</view>
 			</view>
 			<!-- 兴趣标签 -->
 			<view class="intTipBox">
 				<view class="intTipText">
-					<image src="../../static/images/iconMapt.svg" mode=""></image>
+					<image src="/static/images/iconMapt.svg" mode=""></image>
 					<text>兴趣标签</text>
 				</view>
 				<view class="tipsCheck">
 					<view class="tip" v-for="(item,index) in tipsCheck" :key="index" @click="clickTipsCheck(item)">
-						<image src="../../static/images/aTip.svg" mode=""></image>
+						<image src="/static/images/aTip.svg" mode=""></image>
 						<text>{{item.name}}</text>
 					</view>
 				</view>
 				<view class="tipsBox">
 					<view class="tip" v-for="(item,index) in tips" :key="index" @click="clickTip(item)">
-						<image src="../../static/images/aTip.svg" mode=""></image>
+						<image src="/static/images/aTip.svg" mode=""></image>
 						<text>{{item.name}}</text>	
 					</view>
 				</view>
@@ -73,15 +73,15 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" title="选择城市">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->				
-					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
 			<!-- 城市 -->
 			<view class="nowcity">
 				<text>{{ name }}</text>
-				<image class="nowcityImg" src="../../static/images/moreDown.svg" mode=""></image>
+				<image class="nowcityImg" src="/static/images/moreDown.svg" mode=""></image>
 			</view>
 			<!-- 城市选择列表 -->
 			<view class="u-menu-wrap">
@@ -360,7 +360,7 @@
 			},
 			home() {
 				uni.switchTab({
-					url: '/pagesA/index/index'
+					url: '/pages/index/index'
 				});
 			},
 		}

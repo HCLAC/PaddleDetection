@@ -8,12 +8,12 @@
 						<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
 						 mode="widthFix">
 							<view class="videoIcon" v-if="item.type == 4">
-								<image class="playIcon" src="../../static/images/playIcon.svg" mode=""></image>
+								<image class="playIcon" src="/static/images/playIcon.svg" mode=""></image>
 							</view>
 						</image>
 						<view class="adress">
 							<view class="adreessIcon">
-								<image class="" src="../../static/images/iconMap3.svg" mode=""></image>
+								<image class="" src="/static/images/iconMap3.svg" mode=""></image>
 							</view>
 							<view class="adressText">{{ item.location }}</view>
 						</view>
@@ -35,8 +35,8 @@
 				</view>
 				<view class="count" @click="clickLeftLike(item,index) in newList ">
 					<view class="countImg">
-						<image class="likeImg" mode="aspectFit" src="../../static/images/heart.svg" v-if="item.liked == 0"></image>
-						<image class="likeImg" mode="aspectFit" src="../../static/images/heart_actived.svg" v-if="item.liked == 1"></image>
+						<image class="likeImg" mode="aspectFit" src="/static/images/heart.svg" v-if="item.liked == 0"></image>
+						<image class="likeImg" mode="aspectFit" src="/static/images/heart_actived.svg" v-if="item.liked == 1"></image>
 					</view>
 					<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 				</view>

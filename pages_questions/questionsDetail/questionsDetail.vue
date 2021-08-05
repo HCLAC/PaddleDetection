@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="detail.title">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
-					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -39,13 +39,13 @@
 						{{detail.account_name}}问于{{create_at}}
 					</view>
 				</view>
-				<image class="answersIcon" src="../../static/images/answersIcon.png" mode=""></image>
+				<image class="answersIcon" src="/static/images/answersIcon.png" mode=""></image>
 			</view>
 			<!-- <view class="cardBottomBox">
 				
 				<view class="cardAuthorBox">
 					<view class="author">
-						<image class="userImg" src="../../static/images/userImg.svg" v-if="!detail.avatar" mode="" ></image>
+						<image class="userImg" src="/static/images/userImg.svg" v-if="!detail.avatar" mode="" ></image>
 						<image class="userImg" :src="detail.avatar" v-if="detail.avatar" mode="" ></image>
 						<view class="authorName">
 							{{detail.account_name}}
@@ -70,12 +70,12 @@
 							
 						</view>
 						<image class="avatarImg" :src="answersList.avatar" mode="" v-if="answersList.avatar"></image>
-						<image class="avatarImg" src="../../static/images/userImg.svg" v-if="!answersList.avatar" mode=""></image>
+						<image class="avatarImg" src="/static/images/userImg.svg" v-if="!answersList.avatar" mode=""></image>
 						
 						<view class="userName">
 							{{answersList.account_id}}
 						</view>
-						<image class="gficon" src="../../static/images/gficon.svg" mode="" v-if="answersList.account_type == 1"></image>
+						<image class="gficon" src="/static/images/gficon.svg" mode="" v-if="answersList.account_type == 1"></image>
 					</view>
 					<view class="answersDate">
 						{{answersDate.slice(0,10) }}
@@ -89,14 +89,14 @@
 				<view class="answersCardBottom">
 					<view class="acbr">
 						<view class="answersLike" @click="like(answersList)">
-							<image src="../../static/images/aLike.svg" v-if="answersList.option == 0 || answersList.option == 2" mode=""></image>
-							<image src="../../static/images/aLikeActive.svg" v-if="answersList.option == 1" mode=""></image>
+							<image src="/static/images/aLike.svg" v-if="answersList.option == 0 || answersList.option == 2" mode=""></image>
+							<image src="/static/images/aLikeActive.svg" v-if="answersList.option == 1" mode=""></image>
 							<text>{{answersList.like == 0 ? '赞同' : answersList.like}}</text> 
 						</view>
 						
 						<view class="answersDisLike" @click="disLike(answersList)">
-							<image src="../../static/images/aDisLike.svg" v-if="answersList.option == 0 || answersList.option == 1" mode=""></image>
-							<image src="../../static/images/aDisLikeActive.svg" v-if="answersList.option == 2" mode=""></image>
+							<image src="/static/images/aDisLike.svg" v-if="answersList.option == 0 || answersList.option == 1" mode=""></image>
+							<image src="/static/images/aDisLikeActive.svg" v-if="answersList.option == 2" mode=""></image>
 							<text>{{answersList.dislike == 0 ? '踩' : answersList.dislike}}</text>
 						</view>
 					</view>
@@ -113,7 +113,7 @@
 		</view>
 		
 		<!-- <view class="myAnswersBtn" @click="commentInput" v-if="!textareafocus">
-			<image src="../../static/images/followIcon.svg" mode=""></image>
+			<image src="/static/images/followIcon.svg" mode=""></image>
 			<view class="mabt">
 				我来回答
 			</view>
@@ -154,7 +154,7 @@
 						<view class="authorBox">
 							<view class="author">
 								<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-								<image src="../../static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
+								<image src="/static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
 								<text>{{item.account_name}}</text>
 							</view>
 							<view class="lookAnswers">
@@ -177,14 +177,14 @@
 		<view class="answersFollow" >
 			<view class="addBox" @click="commentInput" v-if="!textareafocus">
 				<view class="midBox">
-					<image src="../../static/images/addQ.svg" mode=""></image>
+					<image src="/static/images/addQ.svg" mode=""></image>
 					<text>添加问答</text>
 				</view>
 			</view>
 			<view class="aFLine"></view>
 			<view class="followBox"  @click="Fllow()">
 				<view class="midBox">
-					<image src="../../static/images/followQ.svg" mode=""></image>
+					<image src="/static/images/followQ.svg" mode=""></image>
 					<text v-if="detail.is_follow == 0">关注问题</text>
 					<text v-if="detail.is_follow == 1">已关注</text>
 				</view>
@@ -194,10 +194,10 @@
 		<u-modal v-model="show" :content="contentp" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 		<u-modal v-model="weshow" width="670rpx" :show-title="false"  :mask-close-able="true" :show-confirm-button="false" :show-cancel-button="false" >
 			<view class="slot-content">
-				<image class="sucIcon" src="../../static/images/sucIcon.svg" mode=""></image>
+				<image class="sucIcon" src="/static/images/sucIcon.svg" mode=""></image>
 				<view class="text">微信已复制</view>
 				<rich-text :nodes="wecontent"></rich-text>
-				<image class="wechatImg" src="../../static/images/wechatimg.png" mode=""></image>
+				<image class="wechatImg" src="/static/images/wechatimg.png" mode=""></image>
 			</view>
 		</u-modal>
 	</view>
@@ -323,7 +323,7 @@
 							that.groupId = strId
 							// let str =
 							// 	`<div>
-							// 		<image src="../../static/images/userImg.svg" style="width:68rpx;height:68rpx;" mode=""></image>
+							// 		<image src="/static/images/userImg.svg" style="width:68rpx;height:68rpx;" mode=""></image>
 							// 		<span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
 							// 			详情请加VX：${wechat_id}
 							// 		</span><a groupId="${strId}"   group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
@@ -670,7 +670,7 @@
 			// 返回首页
 			home() {
 				uni.switchTab({
-					url: '/pagesA/index/index'
+					url: '/pages/index/index'
 				});
 			}
 			

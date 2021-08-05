@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
-					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -18,7 +18,7 @@
 					<view class="answersCardTop">
 						<view class="answersAuthor">
 							<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-							<image src="../../static/images/userImg.svg" v-if="!item.avatar" mode=""></image>
+							<image src="/static/images/userImg.svg" v-if="!item.avatar" mode=""></image>
 							<view class="userName">
 								{{item.account_id}}
 							</view>
@@ -34,14 +34,14 @@
 					<view class="answersCardBottom">
 						<view class="acbr">
 							<view class="answersLike" @click="like(item,index) in answersList">
-								<image src="../../static/images/aLike.svg" v-if="item.option == 0 || item.option == 2" mode=""></image>
-								<image src="../../static/images/aLikeActive.svg" v-if="item.option == 1" mode=""></image>
+								<image src="/static/images/aLike.svg" v-if="item.option == 0 || item.option == 2" mode=""></image>
+								<image src="/static/images/aLikeActive.svg" v-if="item.option == 1" mode=""></image>
 								<text>{{item.like == 0 ? '赞同' : item.like}}</text> 
 							</view>
 							
 							<view class="answersDisLike" @click="disLike(item,index) in answersList">
-								<image src="../../static/images/aDisLike.svg" v-if="item.option == 0 || item.option == 1" mode=""></image>
-								<image src="../../static/images/aDisLikeActive.svg" v-if="item.option == 2" mode=""></image>
+								<image src="/static/images/aDisLike.svg" v-if="item.option == 0 || item.option == 1" mode=""></image>
+								<image src="/static/images/aDisLikeActive.svg" v-if="item.option == 2" mode=""></image>
 								<text>{{item.dislike == 0 ? '踩' : item.dislike}}</text>
 							</view>
 						</view>
@@ -131,7 +131,7 @@
 			// 返回首页
 			home() {
 				uni.switchTab({
-					url: '/pagesA/index/index'
+					url: '/pages/index/index'
 				});
 			},
 			/*下拉刷新的回调, 有三种处理方式:*/
