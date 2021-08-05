@@ -123,63 +123,63 @@
 														<image src="../../static/images/star_svg/star4.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star4.svg" mode=""></image>
 													</view>
-													<view class="rateStart" v-if="pos.rate == 4">
+													<view class="rateStart" v-else-if="pos.rate == 4">
 														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
-													<view class="rateStart" v-if="pos.rate == 3">
+													<view class="rateStart" v-else-if="pos.rate == 3">
 														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
-													<view class="rateStart" v-if="pos.rate == 2">
+													<view class="rateStart" v-else-if="pos.rate == 2">
 														<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
-													<view class="rateStart" v-if="pos.rate == 1">
+													<view class="rateStart" v-else-if="pos.rate == 1">
 														<image src="../../static/images/star_svg/star11.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
-													<view class="rateStart" v-if="pos.rate == 4.5">
+													<view class="rateStart" v-else-if="pos.rate == 4.5">
 														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 														<image src="../../static/images/star_svg/starCopy13.svg" mode=""></image>
 													</view>
-													<view class="rateStart" v-if="pos.rate == 3.5">
+													<view class="rateStart" v-else-if="pos.rate == 3.5">
 														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 														<image src="../../static/images/star_svg/starCopy12.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
-													<view class="rateStart" v-if="pos.rate == 2.5">
+													<view class="rateStart" v-else-if="pos.rate == 2.5">
 														<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 														<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
-													<view class="rateStart" v-if="pos.rate == 1.5">
+													<view class="rateStart" v-else-if="pos.rate == 1.5">
 														<image src="../../static/images/star_svg/star11.svg" mode=""></image>
 														<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 													</view>
-													<view class="rateStart" v-if="pos.rate == 0.5">
+													<view class="rateStart" v-else-if="pos.rate == 0.5">
 														<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 														<image src="../../static/images/star_svg/star5.svg" mode=""></image>

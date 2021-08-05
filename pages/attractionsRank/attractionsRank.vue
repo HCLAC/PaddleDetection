@@ -1,25 +1,11 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 白色-->
-		<view class="example-body" v-if="isFixed == false">
-			<uni-nav-bar :fixed="true" :status-bar="true" background-color="transparent" style="z-index: 999999;">
+		<view class="example-body">
+			<uni-nav-bar :fixed="true" :status-bar="true" style="z-index: 999999;" :title="querys.name">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 					<image class="fanhui" src="../../static/images/icon-fanhui-white.svg" @click="back" />
-					<image class="fhsy" src="../../static/images/icon-fhsy-white.svg" @click="home" />
-					<!-- #endif -->
-					<!-- #ifdef MP-BAIDU -->
-					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
-					<!-- #endif -->
-				</view>
-			</uni-nav-bar>
-		</view>
-		<!-- 自定义导航栏 黑色-->
-		<view class="example-body" v-if="isFixed == true">
-			<uni-nav-bar :fixed="true" :status-bar="true">
-				<view slot="left" class="slotleft">
-					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
 					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
 				</view>
@@ -27,59 +13,14 @@
 		</view>
 		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption"
 		 :up="upOption">
-			<!-- 城市选择弹窗 -->
-			<u-popup v-model="show" mode="top" height="383px" style="z-index: 9999999;" title="选择城市">
-				<uni-nav-bar fixed="true" :status-bar="true" class="navbar">
-					<view slot="left" class="slotleft">
-						<!-- #ifndef  MP-BAIDU -->
-							<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
-						<!-- #endif -->					
-						<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
-					</view>
-				</uni-nav-bar>
-				<!-- 城市 -->
-				<view class="nowcity">
-					<text>{{name}}</text>
-					<image src="../../static/images/moreDown.svg" mode=""></image>
-				</view>
-				<!-- 城市选择列表 -->
-				<view class="u-menu-wrap">
-					<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
-						<view v-for="(item,index) in cityList" :key="index" class="u-tab-item" :class="[current==index ? 'u-tab-item-active' : '']"
-						 :data-current="index" @tap.stop="swichMenu(index)">
-							<text class="u-line-1">{{item.name}}</text>
-						</view>
-					</scroll-view>
-					<block v-for="(item,index) in cityList" :key="index">
-						<scroll-view scroll-y class="right-box" v-if="current==index">
-							<view class="page-view">
-								<view class="class-item">
-									<!-- <view class="item-title" @click="gethotsiteslist2(item)"> -->
-									<!-- <text>{{item.name}}</text> -->
-									<!-- </view> -->
-									<view class="item-container">
-										<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
-											<view class="item-menu-name" @click="gethotsiteslist1(item1)">{{item1.name}}</view>
-										</view>
-										<view class="thumb-box" v-if="item.city_list == null">
-											<view class="item-menu-name" @click="gethotsiteslist1()">全国</view>
-										</view>
-									</view>
-								</view>
-							</view>
-						</scroll-view>
-					</block>
-				</view>
-			</u-popup>
-
 			<view class="bgBox">
-				<image :src="banner" mode="" class="bannerImg"></image>
+				<image :src="querys.image" mode="" class="bannerImg"></image>
 				<view class="mask">
 					<view class="content">
 						<!-- <image class="travel" src="../../static/images/TRAVEL.png" mode=""></image> -->
 						<view class="atthotbox">
 							<image src="../../static/images/leftleaves.svg" mode=""></image>
-							<text class="atthottext">{{name}}热门景点</text>
+							<text class="atthottext">{{querys.name}}热门景点</text>
 							<image src="../../static/images/rightleaves.svg" mode=""></image>
 						</view>
 					</view>
@@ -89,23 +30,19 @@
 					<view class="boxshow">
 					</view>
 				</view>
-
 			</view>
-
 			<!-- 排行 -->
-
-
 			<view class="rankContent" :style="{'height': (hotsiteslist.length < 6 ? '1604rpx' : '')}">
 				<view class="cityBox">
 					<view class="city" @click="show = true">
-						<view class="" @click="getCity">
-							<text class="cityname">{{name}}</text>
+						<view class="">
+							<text class="cityname">{{querys.name}}</text>
 							<image src="../../static/images/more-down.svg" mode=""></image>
 						</view>
 					</view>
 				</view>
 				<view class="cardList">
-					<view class="cards" v-for="(item,index) in  hotsiteslist" :key="index" @click="toAtt(item.id)">
+					<view class="cards" v-for="(item,index) in hotsiteslist" :key="index" @click="toSiteDetail(item.id)">
 						<view class="cardsleft">
 							<image class="bigImg" :src="item.images[0]" mode="aspectFill"></image>
 							<image class="rankImg " :src="`../../static/images/rank/top-${index+1}.svg`" v-if="index < 6" mode=""></image>
@@ -127,63 +64,63 @@
 									<image src="../../static/images/star_svg/star4.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star4.svg" mode=""></image>
 								</view>
-								<view class="rateStart" v-if="item.rate == 4">
+								<view class="rateStart" v-else-if="item.rate == 4">
 									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 								</view>
-								<view class="rateStart" v-if="item.rate == 3">
+								<view class="rateStart" v-else-if="item.rate == 3">
 									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 								</view>
-								<view class="rateStart" v-if="item.rate == 2">
+								<view class="rateStart" v-else-if="item.rate == 2">
 									<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 								</view>
-								<view class="rateStart" v-if="item.rate == 1">
+								<view class="rateStart" v-else-if="item.rate == 1">
 									<image src="../../static/images/star_svg/star11.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 								</view>
-								<view class="rateStart" v-if="item.rate >= 4.1 && item.rate < 5">
+								<view class="rateStart" v-else-if="item.rate >= 4.1 && item.rate < 5">
 									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star3.svg" mode=""></image>
 									<image src="../../static/images/star_svg/starCopy13.svg" mode=""></image>
 								</view>
-								<view class="rateStart" v-if="item.rate >= 3.5 && item.rate < 4">
+								<view class="rateStart" v-else-if="item.rate >= 3.5 && item.rate < 4">
 									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star2.svg" mode=""></image>
 									<image src="../../static/images/star_svg/starCopy12.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 								</view>
-								<view class="rateStart" v-if="item.rate >= 2.1 && item.rate < 3">
+								<view class="rateStart" v-else-if="item.rate >= 2.1 && item.rate < 3">
 									<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star1.svg" mode=""></image>
 									<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 								</view>
-								<view class="rateStart" v-if="item.rate >= 1.1 && item.rate < 2 ">
+								<view class="rateStart" v-else-if="item.rate >= 1.1 && item.rate < 2 ">
 									<image src="../../static/images/star_svg/star11.svg" mode=""></image>
 									<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 								</view>
-								<view class="rateStart" v-if="item.rate >= 0.1 && item.rate < 1">
+								<view class="rateStart" v-else-if="item.rate >= 0.1 && item.rate < 1">
 									<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
@@ -201,7 +138,47 @@
 				<image src="../../static/images/icon-share.svg" mode=""></image>
 			</view>
 		</mescroll-body>
-
+		<!-- 城市选择弹窗 -->
+		<u-popup v-model="show" mode="top" height="383px" style="z-index: 9999999;" title="选择城市" :title="querys.name">
+			<uni-nav-bar :fixed="true" :status-bar="true" class="navbar">
+				<view slot="left" class="slotleft">
+					<!-- #ifndef  MP-BAIDU -->
+						<image class="fanhui" src="../../static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->					
+					<image class="fhsy" src="../../static/images/icon-fhsy.svg" @click="home" />
+				</view>
+			</uni-nav-bar>
+			<!-- 城市 -->
+			<view class="nowcity">
+				<text>{{querys.name}}</text>
+				<image src="../../static/images/moreDown.svg" mode=""></image>
+			</view>
+			<!-- 城市选择列表 -->
+			<view class="u-menu-wrap">
+				<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
+					<view v-for="(item,index) in cityList" :key="index" class="u-tab-item" :class="[current==index ? 'u-tab-item-active' : '']"
+					 :data-current="index" @tap.stop="swichMenu(index)">
+						<text class="u-line-1">{{item.name}}</text>
+					</view>
+				</scroll-view>
+				<block v-for="(item,index) in cityList" :key="index">
+					<scroll-view scroll-y class="right-box" v-if="current==index">
+						<view class="page-view">
+							<view class="class-item">
+								<!-- <view class="item-title" @click="gethotsiteslist2(item)"> -->
+								<!-- <text>{{item.name}}</text> -->
+								<!-- </view> -->
+								<view class="item-container">
+									<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
+										<view class="item-menu-name" @click="swichToCity(item1, item.name)">{{item1.name}}</view>
+									</view>
+								</view>
+							</view>
+						</view>
+					</scroll-view>
+				</block>
+			</view>
+		</u-popup>
 	</view>
 
 </template>
@@ -217,185 +194,74 @@
 					backgroundColor: '',
 				},
 				show: false,
-				banner: '',
 				scrollTop: 0, //tab标题的滚动条位置
 				current: 0, // 预设当前项的值
 				menuHeight: 0, // 左边菜单的高度
 				menuItemHeight: 0, // 左边菜单item的高度
-				name: null,
 				month: new Date().getMonth() + 1,
 				day: new Date().getDate(),
-				item: null,
-				area: null,
+				querys: null,
 				hotsiteslist: null,
 				cityList: null,
 				serviceProvider: '',
 				downOption: {
-					use: false
-				},
-				upOption: {
-					bgColor: '#ffffff'
-				},
-				isFixed: false
+					use: false,
+					auto: false
+				}
 			}
 		},
 		onLoad: function(option) {
-			if (option.state_id == undefined) {
-				this.name = "全国"
-			}
-			console.log('option', option)
-			console.log('stateid---', option.state_id)
-			console.log('cityid----', option.city_id)
-			this.item = option
-			this.getArea(),
-				this.gethotsiteslist(),
-				this.getCity()
-		},
-		mounted() {
 			this.serviceProvider = getApp().globalData.serviceProvider
+			this.querys = option
+			if (!this.querys.name) {
+				this.querys.name = "全国"
+			}
+			this.getCity()
 		},
 		onPageScroll(e) {
-			if (e.scrollTop > 200) {
-				this.isFixed = true;
-			} else {
-				this.isFixed = false;
-			}
+			
 		},
 		methods: {
-			getImg() {
-				return Math.floor(Math.random() * 35);
-			},
-			// 获取省市信息
-			getArea() {
-				uni.request({
-					url: this.globalUrl + '/area',
-					data: {
-						state_id: this.item.state_id,
-						city_id: this.item.city_id
-					},
-					success: (res) => {
-						console.log('省市信息', res)
-						this.area = res.data.data
-						this.name = this.area.name
-						console.log(this.imageUrl)
-						console.log(this.background)
-						this.banner = res.data.data.image
-					}
-				})
-			},
 			// 获取全国城市
 			getCity() {
 				uni.request({
 					url: this.globalUrl + '/area/guide',
-					success: (res) => {
-						console.log('获取全国城市', res)
-						this.cityList = res.data.data.areas
+					success: (res) => {				
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						var cityList = res.data.data.areas;
+						this.cityList = cityList.slice(1);
 					}
 				})
 			},
-			// 获取热门景点
-			gethotsiteslist() {
-				if (this.item.state_id == 0) {
-					uni.request({
-						url: this.globalUrl + '/site/hotsiteslist',
-						data: {
-							state_id: this.item.city_id,
-							page: 1
-						},
-						success: (res) => {
-							console.log('省热门景点', res)
-							this.hotsiteslist = res.data.data.list
-						}
-					})
-				} else {
-					uni.request({
-						url: this.globalUrl + '/site/hotsiteslist',
-						data: {
-							state_id: this.item.state_id,
-							city_id: this.item.city_id,
-							page: 1
-						},
-						success: (res) => {
-							console.log('热门景点==', res)
-							this.hotsiteslist = res.data.data.list
-						}
-					})
+			swichToCity(item1, name) {
+				if (item1.name != '全省'){
+					name = item1.name
 				}
-			},
-			gethotsiteslist1(item1) {
-				console.log('item1', item1)
-				this.item = item1
-				console.log('this.item', this.item)
-				if (this.item == undefined) {
-					uni.request({
-						url: this.globalUrl + '/site/hotsiteslist',
-						data: {
-							page: 1
-						},
-						success: (res) => {
-							console.log('全国热门景点==', res)
-							this.hotsiteslist = null
-							this.hotsiteslist = res.data.data.list
-							this.name = res.data.data.name
-							this.banner = res.data.data.banner
-							this.show = false
-							this.downCallback()
-							this.mescroll.scrollTo(0)
-						}
-					})
-				} else {
-					uni.request({
-						url: this.globalUrl + '/site/hotsiteslist',
-						data: {
-							state_id: item1.state_id,
-							city_id: item1.city_id,
-							page: 1
-						},
-						success: (res) => {
-							console.log('切换热门景点==', res)
-							this.hotsiteslist = null
-							this.hotsiteslist = res.data.data.list
-							this.name = res.data.data.name
-							this.banner = res.data.data.banner
-							this.show = false
-							this.downCallback()
-							this.mescroll.scrollTo(0)
-						}
-					})
-				}
-			},
-			// gethotsiteslist2(item){
-			// 	uni.request({
-			// 		url:this.globalUrl + '/site/hotsiteslist',
-			// 		data:{
-			// 			state_id: item.state_id,
-			// 			city_id: item.city_id,
-			// 			page:1
-			// 		},
-			// 		success: (res) => {
-			// 			console.log('切换热门景点==',res)
-			// 			this.hotsiteslist = null
-			// 			this.hotsiteslist = res.data.data.list
-			// 			this.name = item.name
-			// 			this.banner = res.data.data.banner
-			// 			this.show = false
-			// 		}
-			// 	})
-			// },
-			// 跳转景点详情页
-			toAtt(e) {
-				console.log('----------------', e);
-				uni.navigateTo({
-					url: '/pages/positionContent/positionContent?id=' + e
+				uni.redirectTo({
+					url: '/pages/attractionsRank/attractionsRank?state_id=' +
+									item1.state_id+"&city_id="+item1.city_id+
+									"&name="+name+"&image="+item1.image
 				});
 			},
-			// onPageScroll(e) {
-			// 	if(e.scrollTop >= 100){
-			// 		this.background.backgroundColor = '#ffffff'
-			// 	}else{
-			// 		this.background.backgroundColor = ''
-			// 	}
-			// },
+			// gethotsiteslist2(item){
+			// 	uni.redirectTo({
+			// 		url: '/pages/attractionRank/attractionRank?state_id=' +
+			// 						item.state_id+"&city_id="+item.city_id+
+			// 						"&name="+item.name+"&image="+item.image
+			// 	});
+			// // },
+			// 跳转景点详情页
+			toSiteDetail(id) {
+				uni.navigateTo({
+					url: '/pages/positionContent/positionContent?id=' + id
+				});
+			},
 			// 点击左边的栏目切换
 			async swichMenu(index) {
 				if (index == this.current) return;
@@ -436,247 +302,82 @@
 				// this.mescroll.endDownScroll()
 				// 此处仍可以继续写其他接口请求...
 				// 调用其他方法...
-				console.log('下拉下拉')
 			},
 			/*上拉加载的回调*/
 			upCallback(page) {
-				// mescroll.setPageSize(6)
-				// var city = uni.getStorageSync('city_id');
-				// console.log('上拉刷新数据', city)
+				let state_id = 0
+				if (this.querys.state_id){
+					state_id = this.querys.state_id
+				}
+				let city_id = 0
+				if (this.querys.city_id){
+					city_id = this.querys.city_id
+				}
 				let pageNum = page.num; // 页码, 默认从1开始
-				console.log('pagem=num----', pageNum);
 				let pageSize = page.size; // 页长, 默认每页6条
 				var that = this;
-				if (that.item == null) {
-					uni.request({
-						url: this.globalUrl + '/site/hotsiteslist?page=' + pageNum + '&count=' + pageSize,
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
-						success: data => {
-							console.log('data=', data);
-							// 接口返回的当前页数据列表 (数组)
-							let curPageData = data.data.data.list;
-
-							console.log('curPageData', curPageData);
-							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-							let curPageLen = curPageData.length;
-							console.log('curPageLen', curPageLen);
-							// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-							let totalPage = data.data.data.total / pageSize;
-							// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-							let totalSize = data.data.data.total;
-							console.log('totalSize', totalSize);
-							// 接口返回的是否有下一页 (true/false)
-							// let hasNext = data.data.data.list;
-
-							//设置列表数据
-							if (page.num == 1) this.hotsiteslist = []; //如果是第一页需手动置空列表
-							this.hotsiteslist = this.hotsiteslist.concat(curPageData); //追加新数据
-							console.log('hotsiteslist', this.hotsiteslist);
-							// 请求成功,隐藏加载状态
-							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-							this.mescroll.endByPage(curPageLen, totalPage);
-
-							//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-							// this.mescroll.endBySize(curPageLen, totalSize);
-
-							//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-							//this.mescroll.endSuccess(curPageLen, hasNext);
-
-							//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-							//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-							//如果传了hasNext,则翻到第二页即可显示无更多数据.
-							//this.mescroll.endSuccess(curPageLen);
-
-							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-							// setTimeout(() => {
-							// 	this.mescroll.endSuccess(curPageLen)
-							// }, 20)
-						},
-						fail: () => {
-							//  请求失败,隐藏加载状态
-							this.mescroll.endErr();
-						}
-					});
-				} else {
-					if (that.item.city_id == 0) {
-						uni.request({
-							url: this.globalUrl + '/site/hotsiteslist?page=' + pageNum + '&count=' + pageSize,
-							data: {
-								state_id: that.item.state_id,
-							},
-							header: {
-								Authorization: uni.getStorageSync('Authorization')
-							},
-							success: data => {
-								console.log('data-', data);
-								// 接口返回的当前页数据列表 (数组)
-								let curPageData = data.data.data.list;
-
-								console.log('curPageData', curPageData);
-								// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-								let curPageLen = curPageData.length;
-								console.log('curPageLen', curPageLen);
-								// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-								let totalPage = data.data.data.total / pageSize;
-								// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-								let totalSize = data.data.data.total;
-								console.log('totalSize', totalSize);
-								// 接口返回的是否有下一页 (true/false)
-								// let hasNext = data.data.data.list;
-
-								//设置列表数据
-								if (page.num == 1) this.hotsiteslist = []; //如果是第一页需手动置空列表
-								this.hotsiteslist = this.hotsiteslist.concat(curPageData); //追加新数据
-								console.log('hotsiteslist', this.hotsiteslist);
-								// 请求成功,隐藏加载状态
-								//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-								this.mescroll.endByPage(curPageLen, totalPage);
-
-								//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-								// this.mescroll.endBySize(curPageLen, totalSize);
-
-								//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-								//this.mescroll.endSuccess(curPageLen, hasNext);
-
-								//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-								//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-								//如果传了hasNext,则翻到第二页即可显示无更多数据.
-								//this.mescroll.endSuccess(curPageLen);
-
-								// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-								// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-								// setTimeout(() => {
-								// 	this.mescroll.endSuccess(curPageLen)
-								// }, 20)
-							},
-							fail: () => {
-								//  请求失败,隐藏加载状态
-								this.mescroll.endErr();
-							}
-						});
-					} else {
-						if (that.item.state_id == 0) {
-							uni.request({
-								url: this.globalUrl + '/site/hotsiteslist?page=' + pageNum + '&count=' + pageSize,
-								data: {
-									state_id: that.item.city_id,
-								},
-								header: {
-									Authorization: uni.getStorageSync('Authorization')
-								},
-								success: data => {
-									console.log('data+', data);
-									// 接口返回的当前页数据列表 (数组)
-									let curPageData = data.data.data.list;
-
-									console.log('curPageData', curPageData);
-									// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-									let curPageLen = curPageData.length;
-									console.log('curPageLen', curPageLen);
-									// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-									let totalPage = data.data.data.total / pageSize;
-									// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-									let totalSize = data.data.data.total;
-									console.log('totalSize', totalSize);
-									// 接口返回的是否有下一页 (true/false)
-									// let hasNext = data.data.data.list;
-
-									//设置列表数据
-									if (page.num == 1) this.hotsiteslist = []; //如果是第一页需手动置空列表
-									this.hotsiteslist = this.hotsiteslist.concat(curPageData); //追加新数据
-									console.log('hotsiteslist', this.hotsiteslist);
-									// 请求成功,隐藏加载状态
-									//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-									this.mescroll.endByPage(curPageLen, totalPage);
-
-									//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-									// this.mescroll.endBySize(curPageLen, totalSize);
-
-									//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-									//this.mescroll.endSuccess(curPageLen, hasNext);
-
-									//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-									//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-									//如果传了hasNext,则翻到第二页即可显示无更多数据.
-									//this.mescroll.endSuccess(curPageLen);
-
-									// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-									// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-									// setTimeout(() => {
-									// 	this.mescroll.endSuccess(curPageLen)
-									// }, 20)
-								},
-								fail: () => {
-									//  请求失败,隐藏加载状态
-									this.mescroll.endErr();
-								}
+				uni.request({
+					url: this.globalUrl + '/site/hotsiteslist?page=' + pageNum + '&count=' + pageSize,
+					data: {
+						state_id: state_id,
+						city_id: city_id,
+					},
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
 							});
-						} else {
-							uni.request({
-								url: this.globalUrl + '/site/hotsiteslist?page=' + pageNum + '&count=' + pageSize,
-								data: {
-									state_id: that.item.state_id,
-									city_id: that.item.city_id,
-								},
-								header: {
-									Authorization: uni.getStorageSync('Authorization')
-								},
-								success: data => {
-									console.log('data+', data);
-									// 接口返回的当前页数据列表 (数组)
-									let curPageData = data.data.data.list;
-
-									console.log('curPageData', curPageData);
-									// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-									let curPageLen = curPageData.length;
-									console.log('curPageLen', curPageLen);
-									// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-									let totalPage = data.data.data.total / pageSize;
-									// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-									let totalSize = data.data.data.total;
-									console.log('totalSize', totalSize);
-									// 接口返回的是否有下一页 (true/false)
-									// let hasNext = data.data.data.list;
-
-									//设置列表数据
-									if (page.num == 1) this.hotsiteslist = []; //如果是第一页需手动置空列表
-									this.hotsiteslist = this.hotsiteslist.concat(curPageData); //追加新数据
-									console.log('hotsiteslist', this.hotsiteslist);
-									// 请求成功,隐藏加载状态
-									//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-									this.mescroll.endByPage(curPageLen, totalPage);
-
-									//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-									// this.mescroll.endBySize(curPageLen, totalSize);
-
-									//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-									//this.mescroll.endSuccess(curPageLen, hasNext);
-
-									//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-									//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-									//如果传了hasNext,则翻到第二页即可显示无更多数据.
-									//this.mescroll.endSuccess(curPageLen);
-
-									// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-									// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-									// setTimeout(() => {
-									// 	this.mescroll.endSuccess(curPageLen)
-									// }, 20)
-								},
-								fail: () => {
-									//  请求失败,隐藏加载状态
-									this.mescroll.endErr();
-								}
-							});
+							return
 						}
-
+						// 接口返回的当前页数据列表 (数组)
+						if(!res.data.data || !res.data.data.list){
+							return
+						}
+						// 接口返回的当前页数据列表 (数组)
+						let curPageData = res.data.data.list;
+				
+						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+						let curPageLen = curPageData.length;
+						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+						let totalPage = res.data.data.total / pageSize;
+						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+						let totalSize = res.data.data.total;
+						// 接口返回的是否有下一页 (true/false)
+						// let hasNext = res.data.data.list;
+				
+						//设置列表数据
+						if (page.num == 1) this.hotsiteslist = []; //如果是第一页需手动置空列表
+						this.hotsiteslist = this.hotsiteslist.concat(curPageData); //追加新数据
+						// 请求成功,隐藏加载状态
+						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+						this.mescroll.endByPage(curPageLen, totalPage);
+				
+						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+						// this.mescroll.endBySize(curPageLen, totalSize);
+				
+						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+						//this.mescroll.endSuccess(curPageLen, hasNext);
+				
+						//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+						//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+						//如果传了hasNext,则翻到第二页即可显示无更多数据.
+						//this.mescroll.endSuccess(curPageLen);
+				
+						// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+						// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+						// setTimeout(() => {
+						// 	this.mescroll.endSuccess(curPageLen)
+						// }, 20)
+					},
+					fail: () => {
+						//  请求失败,隐藏加载状态
+						this.mescroll.endErr();
 					}
-
-				}
-
+				});
 
 				// 此处仍可以继续写其他接口请求...
 				// 调用其他方法...
