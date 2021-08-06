@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" title="问题描述">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -73,9 +73,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" title="选择城市">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->				
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 			<!-- 城市 -->
@@ -168,8 +168,8 @@
 		methods: {
 			// 获取全国城市
 			getCity() {
-				uni.request({
-					url: this.globalUrl + '/area/guide',
+				this.HTTP.request({
+					url: '/area/guide',
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -185,8 +185,8 @@
 			},
 			// 获取标签
 			getTips(){
-				uni.request({
-					url: this.globalUrl + '/questions/labels',
+				this.HTTP.request({
+					url: '/questions/labels',
 					data:{
 						count:10
 					},
@@ -214,8 +214,8 @@
 						this.name = res.city.substr(0, res.city.length - 1);
 						var city = res.city
 						var state = res.province
-						uni.request({
-							url: this.globalUrl + '/user/location',
+						this.HTTP.request({
+							url: '/user/location',
 							data: {
 								state: state,
 								city: city
@@ -331,8 +331,8 @@
 			},
 			// 提交
 			buttonUp(){
-				uni.request({
-					url: this.globalUrl + '/questions',
+				this.HTTP.request({
+					url: '/questions',
 					data:{
 						title:this.title,
 						state_id: this.state_id,
@@ -352,17 +352,7 @@
 						});
 					}
 				});
-			},
-			back() {
-				uni.navigateBack({
-					delta: 1
-				});
-			},
-			home() {
-				uni.switchTab({
-					url: '/pages/index/index'
-				});
-			},
+			}
 		}
 	}
 </script>

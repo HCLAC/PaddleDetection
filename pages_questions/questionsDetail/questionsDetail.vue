@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="detail.title">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -246,8 +246,8 @@
 		methods:{
 			// 获取问题详情
 			getQuestionsDetail(){
-				uni.request({
-					url: this.globalUrl + '/questions/info',
+				this.HTTP.request({
+					url: '/questions/info',
 					data: {
 						question_id: this.question_id
 					},
@@ -270,8 +270,8 @@
 			},
 			// 获取相关问题
 			getQuestionsRelated(){
-				uni.request({
-					url: this.globalUrl + '/questions/related',
+				this.HTTP.request({
+					url: '/questions/related',
 					data: {
 						question_id: this.question_id,
 						count:6
@@ -294,8 +294,8 @@
 			// 获取回复列表
 			getanswersOfficial(){
 				var that = this
-				uni.request({
-					url: this.globalUrl + '/answers/official',
+				this.HTTP.request({
+					url: '/answers/official',
 					data: {
 						question_id: this.question_id
 					},
@@ -333,7 +333,7 @@
 							that.answersList = res.data.data
 							that.answersDate = res.data.data.create_at.slice(0.10)
 						}else{
-							uni.request({
+							this.HTTP.request({
 								url: that.globalUrl + '/answers/list',
 								data: {
 									question_id: that.question_id,
@@ -362,8 +362,8 @@
 			},
 			// getanswersList(){
 			// 	var that = this
-			// 	uni.request({
-			// 		url: this.globalUrl + '/answers/list',
+			// 	this.HTTP.request({
+			// 		url: '/answers/list',
 			// 		data: {
 			// 			question_id: this.question_id,
 			// 			count:10,
@@ -385,9 +385,9 @@
 			getTemplate(id) {
 				if (id) {
 					return new Promise((resolve, reject) => {
-						uni.request({
+						this.HTTP.request({
 							// url:'article',
-							url: this.globalUrl + '/marketing/unit',
+							url: '/marketing/unit',
 							method: 'get',
 							data: {
 								group_id: id,
@@ -412,8 +412,8 @@
 				// console.log('e', e);
 				var that = this
 				// if (e.group && e.groupid) {
-					uni.request({
-						url: this.globalUrl + '/marketing/copy',
+					this.HTTP.request({
+						url: '/marketing/copy',
 						data: {
 							id: this.groupId
 						},
@@ -489,8 +489,8 @@
 					});
 					return
 				}
-				uni.request({
-					url: this.globalUrl + '/answers',
+				this.HTTP.request({
+					url: '/answers',
 					data: {
 						question_id: this.question_id,
 						content: this.content
@@ -544,7 +544,7 @@
 					that.show = true
 					that.contentp = '确认取消关注?'
 				} else {
-					uni.request({
+					this.HTTP.request({
 						url: that.globalUrl + '/questions/follow',
 						data: {
 							question_id: that.question_id
@@ -578,7 +578,7 @@
 				var that = this;
 				let msg = this.detail.is_follow ? '确认取消关注?' : '确认关注?'
 				let status = this.detail.is_follow ? 0 : 1
-				uni.request({
+				this.HTTP.request({
 					url: that.globalUrl + '/questions/follow',
 					data: {
 						question_id: that.question_id
@@ -609,8 +609,8 @@
 					return
 				}
 				var answer_id = e.answer_id
-				uni.request({
-					url: this.globalUrl + '/answers/like',
+				this.HTTP.request({
+					url: '/answers/like',
 					data: {
 						answer_id: answer_id,
 					},
@@ -640,8 +640,8 @@
 					return
 				}
 				var answer_id = e.answer_id
-				uni.request({
-					url: this.globalUrl + '/answers/dislike',
+				this.HTTP.request({
+					url: '/answers/dislike',
 					data: {
 						answer_id: answer_id,
 					},
@@ -660,21 +660,7 @@
 						this.getanswersOfficial()
 					}
 				});
-			},
-			// 返回上一页
-			back() {
-				uni.navigateBack({
-					delta: 1
-				});
-			},
-			// 返回首页
-			home() {
-				uni.switchTab({
-					url: '/pages/index/index'
-				});
 			}
-			
-			
 		}
 	}
 </script>

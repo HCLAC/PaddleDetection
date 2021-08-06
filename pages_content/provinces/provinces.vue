@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="querys.name">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -188,9 +188,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" title="选择城市">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->						
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 			<!-- 城市 -->
@@ -301,8 +301,8 @@ export default {
 		
 		// 获取问答列表
 		getQuestionList() {
-			uni.request({
-				url: this.globalUrl + '/questions/random',
+			this.HTTP.request({
+				url: '/questions/random',
 				data: {
 					state_id: this.querys.state_id,
 					city_id: this.querys.city_id,
@@ -325,7 +325,7 @@ export default {
 		},
 		// 天气接口
 		getWeather() {
-			uni.request({
+			this.HTTP.request({
 				url: 'https://query.asilu.com/weather/baidu',
 				data: {
 					city: this.querys.name
@@ -344,8 +344,8 @@ export default {
 		},
 		// 推荐景点接口
 		getSiteHot() {
-			uni.request({
-				url: this.globalUrl + '/site/hot',
+			this.HTTP.request({
+				url: '/site/hot',
 				data: {
 					state_id: this.querys.state_id,
 					city_id: this.querys.city_id,
@@ -366,8 +366,8 @@ export default {
 		},
 		// 热门线路接口
 		getRouteHot() {
-			uni.request({
-				url: this.globalUrl + '/route/hot',
+			this.HTTP.request({
+				url: '/route/hot',
 				data: {
 					state_id: this.querys.state_id,
 					city_id: this.querys.city_id,
@@ -444,8 +444,8 @@ export default {
 		},
 		// 获取全国城市
 		getCity() {
-			uni.request({
-				url: this.globalUrl + '/area/guide',
+			this.HTTP.request({
+				url: '/area/guide',
 				success: res => {
 					if (res.statusCode != 200 || res.data.code != 0){
 						uni.showToast({
@@ -518,16 +518,6 @@ export default {
 				url: url
 			})
 		},
-		back() {
-			uni.navigateBack({
-				delta: 1
-			});
-		},
-		home() {
-			uni.switchTab({
-				url: '/pages/index/index'
-			});
-		},
 		/*下拉刷新的回调, 有三种处理方式:*/
 		downCallback() {
 			// this.loadData()
@@ -552,8 +542,8 @@ export default {
 				that.querys.city_id = 0
 				that.querys.state_id = 0
 			}
-			uni.request({
-				url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
+			this.HTTP.request({
+				url: '/article/list?page=' + pageNum + '&count=' + pageSize,
 				data: {
 					state_id: that.querys.state_id,
 					city_id: that.querys.city_id,

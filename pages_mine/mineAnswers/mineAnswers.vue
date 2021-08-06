@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" title="我的回答">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -198,18 +198,6 @@
 					url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + question_id
 				});
 			},
-			// 返回上一页
-			back() {
-				uni.navigateBack({
-					delta: 1
-				});
-			},
-			// 返回首页
-			home() {
-				uni.switchTab({
-					url: '/pages/index/index'
-				});
-			},
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {
 				// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
@@ -227,8 +215,8 @@
 				let pageNum = page.num; // 页码, 默认从1开始
 				let pageSize = page.size; // 页长, 默认每页10条
 				if(this.tabCurrent == 0){
-					uni.request({
-						url: this.globalUrl+ '/user/askquestion/list?page=' + pageNum + '&count=' + pageSize,
+					this.HTTP.request({
+						url: '/user/askquestion/list?page=' + pageNum + '&count=' + pageSize,
 						
 						header: {
 							Authorization: uni.getStorageSync('Authorization')
@@ -284,8 +272,8 @@
 					});
 				}
 				if(this.tabCurrent == 1){
-					uni.request({
-						url: this.globalUrl+ '/user/followquestion/list?page=' + pageNum + '&count=' + pageSize,
+					this.HTTP.request({
+						url: '/user/followquestion/list?page=' + pageNum + '&count=' + pageSize,
 						header: {
 							Authorization: uni.getStorageSync('Authorization')
 						},
@@ -340,8 +328,8 @@
 					});
 				}
 				if(this.tabCurrent == 2){
-					uni.request({
-						url: this.globalUrl+ '/user/answerquestion/list?page=' + pageNum + '&count=' + pageSize,
+					this.HTTP.request({
+						url: '/user/answerquestion/list?page=' + pageNum + '&count=' + pageSize,
 						header: {
 							Authorization: uni.getStorageSync('Authorization')
 						},

@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="siteInfo.data.name">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -218,8 +218,8 @@ export default {
 	methods: {
 		getArticleDetail(){
 			var that = this
-			uni.request({
-				url:this.globalUrl+ '/site',
+			this.HTTP.request({
+				url:'/site',
 				data:{
 					id: this.id
 				},
@@ -268,8 +268,8 @@ export default {
 		toRank(){
 			var state_id = this.siteInfo.data.state_id;
 			var city_id = this.siteInfo.data.city_id;
-			uni.request({ 
-				url: this.globalUrl + '/area', 
+			this.HTTP.request({ 
+				url: '/area', 
 				data: { 
 					state_id: state_id, 
 					city_id: city_id 
@@ -288,16 +288,6 @@ export default {
 										"&name="+res.data.data.name+"&image="+res.data.data.image 
 					}); 
 				} 
-			});
-		},
-		back() {
-			uni.navigateBack({
-				delta: 1
-			});
-		},
-		home() {
-			uni.switchTab({
-				url: '/pages/index/index'
 			});
 		},
 		showMore() {

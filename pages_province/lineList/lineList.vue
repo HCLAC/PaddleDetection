@@ -4,9 +4,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" title="行程路线">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -54,8 +54,8 @@ export default {
 		upCallback(page) {
 			let pageNum = page.num; // 页码, 默认从1开始
 			let pageSize = page.size;
-			uni.request({
-				url: this.globalUrl + '/route/list',
+			this.HTTP.request({
+				url: '/route/list',
 				method: 'GET',
 				data: {
 					count: pageSize,
@@ -84,21 +84,7 @@ export default {
 				},
 				fail: error => {
 					this.mescroll.endErr();
-					uni.showToast({
-						title: '网络不给力，请稍后再试...',
-						icon: 'none'
-					});
 				}
-			});
-		},
-		back() {
-			uni.navigateBack({
-				delta: 1
-			});
-		},
-		home() {
-			uni.switchTab({
-				url: '/pages/index/index'
 			});
 		},
 		getDetail(id) {

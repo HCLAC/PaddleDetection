@@ -170,8 +170,8 @@
 				let article = e.article_id;
 				let liked = e.liked;
 				var that = this;
-				uni.request({
-					url: this.globalUrl + '/user/liked',
+				this.HTTP.request({
+					url: '/user/liked',
 					data: {
 						article_id: article,
 						liked: liked == 0 ? 1 : 0

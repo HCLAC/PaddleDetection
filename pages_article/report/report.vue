@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" :border="true" title="举报">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -40,7 +40,7 @@
 			<view class="textNum">
 				{{number}}/140
 			</view>
-			<button class="bbutton" @click="submit" :disabled="disabled" :style="{background: customStyle.background}"  >提交举报</button>
+			<button class="bbutton" @click="submit" :style="{background: customStyle.background}"  >提交举报</button>
 			<u-modal v-model="show" :content="content" @confirm="confirm" z-index="999999" :show-title="false" :show-cancel-button="false" confirm-text="OK" confirm-color="#007AFF" ></u-modal>
 		</view>
 	</view>
@@ -65,7 +65,6 @@
 							message: '原因不能少于5个字', 
 							trigger: 'change'
 						},
-						
 					],
 					payType: [
 						{
@@ -143,10 +142,17 @@
 		},
 		methods: {
 			submit() {
+				let token = uni.getStorageSync('Authorization')
+				if (!token) {
+					uni.navigateTo({
+						url: '/pages_mine/login/login'
+					});
+					return
+				}
 				let introLength = this.modelIntro.length
 				if (introLength >= 5) {
-					uni.request({
-						url: this.globalUrl + '/comments/report',
+					this.HTTP.request({
+						url: '/comments/report',
 						data: {
 							id: this.id,
 							behavior:this.model.payType,
@@ -176,26 +182,11 @@
 				}
 			},
 			confirm(){
-				uni.navigateBack({
-					delta: 1
-				});
+				this.Utils.back()
 			},
 			// radio选择发生变化
 			radioGroupChange(e) {
 				this.model.payType = e;
-			},
-			
-			// 返回上一页
-			back() {
-				uni.navigateBack({
-					delta: 1
-				});
-			},
-			// 返回首页
-			home() {
-				uni.switchTab({
-					url: '/pages/index/index'
-				});
 			},
 		}
 	}

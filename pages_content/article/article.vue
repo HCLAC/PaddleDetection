@@ -4,9 +4,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="article.data.title">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -14,9 +14,9 @@
 		<view class="" v-if="swiperHeight && article.data.type != 2">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap" >
-				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="articleList.data.type != 4 && articleList.data.type != 5">
+				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="article.data.type != 4 && article.data.type != 5">
 					<swiper @change="change" class="swiper" :autoplay="true" circular='true' :indicator-dots="false">
-						<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
+						<swiper-item v-for="(item, index) in article.data.images" :key="index">
 							<image class="itemImg" :style="{ width: index == 0 ? '100%' : '' }" lazy-load :mode="index == 0 ? 'widthFix' : 'aspectFit'"
 							 :src="item"></image>
 						</swiper-item>
@@ -52,8 +52,7 @@
 					<view class="adressText" @click="map()">{{ article.data.location }}</view>
 				</view>
 				<!-- 标题 -->
-				<text class="contentTitle" selected=true>{{ article.data.title }}</text>
-				<!-- <view class="contentTitle">{{ article.data.title }}</view> -->
+				<!-- <text class="contentTitle" selected=true>{{ article.data.title }}</text> -->
 				<!-- 内容文章 -->
 				<view class="contentText">
 					<!-- <rich-text :nodes="article.data.content | formatRichText"></rich-text> -->
@@ -265,8 +264,8 @@
 			},
 			getArticleseo(){
 				var that = this
-				uni.request({
-					url: this.globalUrl + '/article/seo',
+				this.HTTP.request({
+					url: '/article/seo',
 					data: {
 						article_id: that.article_id
 					},
@@ -307,8 +306,8 @@
 			// 获取文章详情
 			getArticleDetail() {
 				var that = this;
-				uni.request({
-					url: this.globalUrl + '/article',
+				this.HTTP.request({
+					url: '/article',
 					data: {
 						article_id: that.article_id
 					},
@@ -393,14 +392,15 @@
 						});
 					},
 					fail: error => {
-						uni.hideLoading();
+						//  请求失败,隐藏加载状态
+						this.mescroll.endErr();
 					}
 				});
 			},
 			async asyncGetComponentInfo(url, data){
 				return new Promise((resolve, reject) => {
-					uni.request({
-						url: this.globalUrl + url,
+					this.HTTP.request({
+						url: url,
 						method: 'get',
 						data: data,
 						header: {
@@ -610,7 +610,7 @@
 					that.content = '确认取消关注?';
 					return
 				}
-				uni.request({
+				this.HTTP.request({
 					url: that.globalUrl + '/user/follow',
 					data: {
 						author_id: that.article.data.author_id,
@@ -636,7 +636,7 @@
 			confirm() {
 				var that = this;
 				let status = this.article.data.is_follow ? 0 : 1;
-				uni.request({
+				this.HTTP.request({
 					url: that.globalUrl + '/user/follow',
 					data: {
 						author_id: that.article.data.author_id,
@@ -712,8 +712,8 @@
 					});
 					return
 				}
-				uni.request({
-					url: this.globalUrl + '/comments',
+				this.HTTP.request({
+					url: '/comments',
 					data: {
 						article_id: this.article_id,
 						content: this.contentText
@@ -745,8 +745,8 @@
 			},
 			// 获取评论列表
 			getComments() {
-				uni.request({
-					url: this.globalUrl + '/comments/list',
+				this.HTTP.request({
+					url: '/comments/list',
 					data: {
 						article_id: this.article_id,
 						page: 1,
@@ -777,8 +777,8 @@
 					});
 					return
 				}
-				uni.request({
-					url: this.globalUrl + '/comments/likes',
+				this.HTTP.request({
+					url: '/comments/likes',
 					data: {
 						id: item.id,
 						like: item.like == 0 ? 1 : 0
@@ -816,8 +816,8 @@
 					});
 					return
 				}
-				uni.request({
-					url: this.globalUrl + '/user/liked',
+				this.HTTP.request({
+					url: '/user/liked',
 					data: {
 						article_id: that.article_id,
 						liked: that.article.data.liked == 0 ? 1 : 0
@@ -850,8 +850,8 @@
 					});
 					return
 				}
-				uni.request({
-					url: this.globalUrl + '/user/favorite',
+				this.HTTP.request({
+					url: '/user/favorite',
 					data: {
 						article_id: that.article_id,
 						favorite: that.article.data.fav == 1 ? 0 : 1
@@ -875,16 +875,6 @@
 			},
 			change(e) {
 				this.current = e.detail.current;
-			},
-			back() {
-				uni.navigateBack({
-					delta: 1
-				});
-			},
-			home() {
-				uni.switchTab({
-					url: '/pages/index/index'
-				});
 			},
 			map() {
 				var that = this;

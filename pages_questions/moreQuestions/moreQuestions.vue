@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" title="问答列表">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -185,8 +185,8 @@
 				if(this.tabCurrent == 0){
 					t = 'selected'
 				}
-				uni.request({
-					url: this.globalUrl + '/questions/seemore',
+				this.HTTP.request({
+					url: '/questions/seemore',
 					data: {
 						state_id: this.state_id,
 						city_id: this.city_id,
@@ -238,18 +238,6 @@
 					})
 				}
 			},
-			// 返回上一页
-			back() {
-				uni.navigateBack({
-					delta: 1
-				});
-			},
-			// 返回首页
-			home() {
-				uni.switchTab({
-					url: '/pages/index/index'
-				});
-			},
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {
 				// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
@@ -271,8 +259,8 @@
 				if(this.tabCurrent == 0){
 					t ='selected'
 				}
-				uni.request({
-					url: this.globalUrl+ '/questions/seemore?page=' + pageNum + '&count=' + pageSize,
+				this.HTTP.request({
+					url: '/questions/seemore?page=' + pageNum + '&count=' + pageSize,
 					data: {
 						state_id: this.state_id,
 						city_id: this.city_id,

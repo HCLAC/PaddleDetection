@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef MP-BAIDU -->
-					<image  class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+					<image  class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -166,8 +166,8 @@ export default {
 			_this.getCodeBtnColor = 'rgba(255,255,255,0.5)';
 
 			// 获取验证码
-			uni.request({
-				url: this.globalUrl + '/user/sendcaptcha',
+			this.HTTP.request({
+				url: '/user/sendcaptcha',
 				data: {
 					mobile: this.phone
 				},
@@ -262,8 +262,8 @@ export default {
 		},
 
 		baiduLogin(obj) {
-			uni.request({
-				url: this.globalUrl + '/user/oauth/code2session',
+			this.HTTP.request({
+				url: '/user/oauth/code2session',
 				data: {
 					code: obj.code,
 					source: obj.source
@@ -282,18 +282,12 @@ export default {
 							icon: 'none'
 						});
 					}
-				},
-				fail: error => {
-					uni.showToast({
-						title: error,
-						icon: 'none'
-					});
 				}
 			});
 		},
 		getSessionKey(obj) {
-			uni.request({
-				url: this.globalUrl + '/user/oauth/login',
+			this.HTTP.request({
+				url: '/user/oauth/login',
 				data: {
 					data: obj.data,
 					iv: obj.iv,
@@ -309,19 +303,13 @@ export default {
 						}),
 						uni.setStorageSync('userinfo', res.data.data)
 						uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
-						this.back()
+						this.Utils.back()
 					} else {
 						uni.showToast({
 							title: res.data.msg,
 							icon: 'none'
 						});
 					}
-				},
-				fail: error => {
-					uni.showToast({
-						title: error,
-						icon: 'none'
-					});
 				}
 			});
 		},
@@ -333,8 +321,8 @@ export default {
 				uni.showToast({ title: '请填写正确手机号码', icon: 'none' });
 				return false;
 			}
-			uni.request({
-				url: this.globalUrl + '/user/login',
+			this.HTTP.request({
+				url: '/user/login',
 				data: {
 					code: _this.code,
 					mobile: _this.phone,
@@ -349,7 +337,7 @@ export default {
 						}),
 						uni.setStorageSync('userinfo', res.data.data)
 						uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
-						this.back()
+						this.Utils.back()
 					} else {
 						uni.showToast({
 							title: '手机验证码错误',
@@ -360,18 +348,6 @@ export default {
 				}
 			});
 		},
-		// 返回上一页
-		back() {
-			uni.navigateBack({
-				delta: 1
-			});
-		},
-		// 返回首页
-		home() {
-			uni.switchTab({
-				url: '/pages/index/index'
-			});
-		}
 	}
 };
 </script>

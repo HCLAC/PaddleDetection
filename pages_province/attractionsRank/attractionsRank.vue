@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" style="z-index: 999999;" :title="querys.name+'热门景点'">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-					<image class="fanhui" src="/static/images/icon-fanhui-white.svg" @click="back" />
+					<image class="fanhui" src="/static/images/icon-fanhui-white.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -143,9 +143,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true"  :title="querys.name">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->					
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 			<!-- 城市 -->
@@ -221,8 +221,8 @@
 		methods: {
 			// 获取全国城市
 			getCity() {
-				uni.request({
-					url: this.globalUrl + '/area/guide',
+				this.HTTP.request({
+					url: '/area/guide',
 					success: (res) => {				
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -313,8 +313,8 @@
 				let pageNum = page.num; // 页码, 默认从1开始
 				let pageSize = page.size; // 页长, 默认每页6条
 				var that = this;
-				uni.request({
-					url: this.globalUrl + '/site/hotsiteslist?page=' + pageNum + '&count=' + pageSize,
+				this.HTTP.request({
+					url: '/site/hotsiteslist?page=' + pageNum + '&count=' + pageSize,
 					data: {
 						state_id: state_id,
 						city_id: city_id,
@@ -378,16 +378,6 @@
 
 				// 此处仍可以继续写其他接口请求...
 				// 调用其他方法...
-			},
-			back() {
-				uni.navigateBack({
-					delta: 1
-				})
-			},
-			home() {
-				uni.switchTab({
-					url: "/pages/index/index"
-				})
 			},
 			// 分享
 			share() {

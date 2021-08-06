@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" :border="true" title="修改资料">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -163,8 +163,8 @@
 					if (!valid) {
 						console.log('验证失败');
 					}
-					uni.request({
-						url: this.globalUrl + '/user/info',
+					this.HTTP.request({
+						url: '/user/info',
 						data: {
 							nick_name: this.model.name,
 							avatar: this.model.avatar,
@@ -177,13 +177,8 @@
 							Authorization: uni.getStorageSync('Authorization')
 						},
 						success: res => {
-							uni.showToast({
-								title: res.data.msg,
-								icon:'none',
-								duration: 2000
-							})
 							if(res.data.code == 0){
-								this.back()
+								this.Utils.back()
 							}
 						}
 					});
@@ -192,19 +187,7 @@
 			// 选择地区回调
 			regionConfirm(e) {
 				this.model.region = e.province.label + '-' + e.city.label + '-' + e.area.label;
-			},
-			// 返回上一页
-			back() {
-				uni.navigateBack({
-					delta: 1
-				});
-			},
-			// 返回首页
-			home() {
-				uni.switchTab({
-					url: '/pages/index/index'
-				});
-			},
+			}
 		}
 	}
 </script>

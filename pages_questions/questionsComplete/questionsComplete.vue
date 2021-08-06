@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" title="问题详情">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -57,8 +57,8 @@
 		},
 		methods:{
 			getquestions(){
-				uni.request({
-					url: this.globalUrl + '/questions/info',
+				this.HTTP.request({
+					url: '/questions/info',
 					data: {
 						question_id: this.question_id
 					},
@@ -70,17 +70,7 @@
 						this.create_at = res.data.data.create_at.slice(0,10)
 					}
 				});
-			},
-			back() {
-				uni.navigateBack({
-					delta: 1
-				});
-			},
-			home() {
-				uni.switchTab({
-					url: '/pages/index/index'
-				});
-			},
+			}
 		}
 	}
 </script>

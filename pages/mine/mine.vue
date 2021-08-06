@@ -258,8 +258,8 @@ export default {
 		// 获取用户信息
 		getUserMsg() {
 			var that = this;
-			uni.request({
-				url: this.globalUrl+ '/user/info',
+			this.HTTP.request({
+				url: '/user/info',
 				header: {
 					Authorization: uni.getStorageSync('Authorization')
 				},
@@ -359,8 +359,8 @@ export default {
 			let pageNum = page.num; // 页码, 默认从1开始
 			let pageSize = page.size; // 页长, 默认每页10条
 			if(this.tabCurrent == 0){
-				uni.request({
-					url: this.globalUrl+ '/user/favorite/list?page=' + pageNum + '&count=' + pageSize,
+				this.HTTP.request({
+					url: '/user/favorite/list?page=' + pageNum + '&count=' + pageSize,
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
@@ -414,8 +414,8 @@ export default {
 					}
 				});
 			} else {
-				uni.request({
-					url: this.globalUrl+ '/user/liked/list?page=' + pageNum + '&count=' + pageSize,
+				this.HTTP.request({
+					url: '/user/liked/list?page=' + pageNum + '&count=' + pageSize,
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},

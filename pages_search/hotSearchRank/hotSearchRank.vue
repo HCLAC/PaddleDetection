@@ -5,9 +5,9 @@
 			<uni-nav-bar  :title="title" :fixed="true" :status-bar="true" :backgroundColor="background" style="z-index: 999999;">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -106,16 +106,6 @@
 				
 				}
 			},
-			back() {
-				uni.navigateBack({
-					delta: 1
-				});
-			},
-			home() {
-				uni.switchTab({
-					url: '/pages/index/index'
-				});
-			},
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {
 				// 第1种: 请求具体接口
@@ -131,66 +121,66 @@
 				let pageNum = page.num
 				let pageSize = 30; // 页长, 默认每页10条
 				var that = this;
-					uni.request({
-						url: this.globalUrl + '/search/hot?page=' + pageNum + '&count=' + pageSize,
-						success: res => {
-							if (res.statusCode != 200 || res.data.code != 0){
-								uni.showToast({
-									title: res.data.msg,
-									icon: 'none'
-								});
-								return
-							}
-							// 接口返回的当前页数据列表 (数组)
-							if(!res.data.data || !res.data.data.list){
-								return
-							}
-							// 接口返回的当前页数据列表 (数组)
-							let curPageData = res.data.data.list;
-			
-							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-							let curPageLen = curPageData.length;
-							// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-							let totalPage = res.data.data.total / pageSize;
-							// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-							let totalSize = res.data.data.total;
-							// 接口返回的是否有下一页 (true/false)
-							// let hasNext = res.data.data.list;
-			
-							//设置列表数据
-							if (page.num == 1) this.hotKeywordList = []; //如果是第一页需手动置空列表
-							this.hotKeywordList = this.hotKeywordList.concat(curPageData); //追加新数据
-							// 请求成功,隐藏加载状态
-							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-							this.mescroll.endByPage(curPageLen, totalPage);
-			
-							//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-							// this.mescroll.endBySize(curPageLen, totalSize);
-			
-							//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-							//this.mescroll.endSuccess(curPageLen, hasNext);
-			
-							//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-							//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-							//如果传了hasNext,则翻到第二页即可显示无更多数据.
-							//this.mescroll.endSuccess(curPageLen);
-			
-							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-							// setTimeout(() => {
-							// 	this.mescroll.endSuccess(curPageLen)
-							// }, 20)
-						},
-						fail: () => {
-							//  请求失败,隐藏加载状态
-							this.mescroll.endErr();
+				this.HTTP.request({
+					url: '/search/hot?page=' + pageNum + '&count=' + pageSize,
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
 						}
-					});
-				}
-			
-				// 此处仍可以继续写其他接口请求...
-				// 调用其他方法...
+						// 接口返回的当前页数据列表 (数组)
+						if(!res.data.data || !res.data.data.list){
+							return
+						}
+						// 接口返回的当前页数据列表 (数组)
+						let curPageData = res.data.data.list;
+		
+						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+						let curPageLen = curPageData.length;
+						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+						let totalPage = res.data.data.total / pageSize;
+						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+						let totalSize = res.data.data.total;
+						// 接口返回的是否有下一页 (true/false)
+						// let hasNext = res.data.data.list;
+		
+						//设置列表数据
+						if (page.num == 1) this.hotKeywordList = []; //如果是第一页需手动置空列表
+						this.hotKeywordList = this.hotKeywordList.concat(curPageData); //追加新数据
+						// 请求成功,隐藏加载状态
+						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+						this.mescroll.endByPage(curPageLen, totalPage);
+		
+						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+						// this.mescroll.endBySize(curPageLen, totalSize);
+		
+						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+						//this.mescroll.endSuccess(curPageLen, hasNext);
+		
+						//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+						//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+						//如果传了hasNext,则翻到第二页即可显示无更多数据.
+						//this.mescroll.endSuccess(curPageLen);
+		
+						// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+						// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+						// setTimeout(() => {
+						// 	this.mescroll.endSuccess(curPageLen)
+						// }, 20)
+					},
+					fail: () => {
+						//  请求失败,隐藏加载状态
+						this.mescroll.endErr();
+					}
+				});
 			}
+		
+			// 此处仍可以继续写其他接口请求...
+			// 调用其他方法...
+		}
 	}
 </script>
 

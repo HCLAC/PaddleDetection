@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" title="问题标题">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -121,8 +121,8 @@
 					return;
 				}
 				this.isShowKeywordList = true;
-				uni.request({
-					url: this.globalUrl + '/questions/matchtitle',
+				this.HTTP.request({
+					url: '/questions/matchtitle',
 					data: {
 						title: keyword,
 						page:1,
@@ -183,17 +183,7 @@
 				uni.navigateTo({
 					url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + question_id
 				});
-			},
-			back() {
-				uni.navigateBack({
-					delta: 1
-				});
-			},
-			home() {
-				uni.switchTab({
-					url: '/pages/index/index'
-				});
-			},
+			}
 		}
 	}
 </script>

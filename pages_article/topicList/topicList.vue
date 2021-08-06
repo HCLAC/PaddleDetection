@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="info.name">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -133,8 +133,8 @@ export default {
 				
 			},
 			getTopic(){
-				uni.request({
-					url: this.globalUrl + '/topics',
+				this.HTTP.request({
+					url: '/topics',
 					data: {
 						topic_id: this.id
 					},
@@ -167,18 +167,6 @@ export default {
 				this.mescroll.resetUpScroll()
 				this.mescroll.scrollTo(0)
 			},
-			// 返回上一页
-			back() {
-				uni.navigateBack({
-					delta: 1
-				});
-			},
-			// 返回首页
-			home() {
-				uni.switchTab({
-					url: '/pages/index/index'
-				});
-			},
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {
 				// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
@@ -197,11 +185,11 @@ export default {
 				let pageSize = page.size; // 页长, 默认每页10条
 				let url = ''
 				if(this.tabCurrent == 0){
-					url = this.globalUrl+ '/topics/articles/recommend?page=' + pageNum + '&count=' + pageSize
+					url = '/topics/articles/recommend?page=' + pageNum + '&count=' + pageSize
 				} else {
-					url = this.globalUrl+ '/topics/articles/latest?page=' + pageNum + '&count=' + pageSize
+					url = '/topics/articles/latest?page=' + pageNum + '&count=' + pageSize
 				}
-				uni.request({
+				this.HTTP.request({
 					url: url,
 					data: {
 						topic_id:this.id,

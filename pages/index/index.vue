@@ -259,6 +259,7 @@
 						this.getBanner();
 						this.getAdress();
 						this.getAreaHot();
+						this.hideLoad()
 					}
 				});
 			},
@@ -268,8 +269,8 @@
 			// 获取热门目的地
 			getAreaHot(){
 				var that = this
-				uni.request({
-					url: this.globalUrl + '/area/hot',
+				this.HTTP.request({
+					url: '/area/hot',
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -279,29 +280,16 @@
 							return
 						}
 						this.areaList = res.data.data;
-					},
-					fail: error => {
-						console.error(error);
-					},
-					complete: () => {
-						that.hideLoad()
 					}
 				});
 			},
 			// 获取banner
 			getBanner() {
-				uni.request({
-					url: this.globalUrl + '/banner',
+				this.HTTP.request({
+					url: '/banner',
 					data: {
-						// #ifdef MP-WEIXIN
-						source: 3,
-						// #endif
-						// #ifdef MP-BAIDU
-						source: 1,
-						// #endif
-						// #ifdef MP-TOUTIAO
-						source: 2
-						// #endif
+						source: this.serviceProvider == 'baidu' ? 1 : this.serviceProvider == 'toutiao' ? 2 : this.serviceProvider ==
+							'微信' ? 3 : ''
 					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
@@ -317,12 +305,6 @@
 						} else {
 							this.cus_sty_top = '0rpx'
 						}
-					},
-					fail: error => {
-						uni.showToast({
-							title: error,
-							icon: 'none'
-						});
 					}
 				});
 			},
@@ -341,7 +323,7 @@
 							arr.push(res.latitude);
 							arr.push(res.longitude);
 							arr = arr.join(',');
-							uni.request({
+							this.HTTP.request({
 								url: 'https://api.map.baidu.com/reverse_geocoding/v3/?ak=NKyWaSnsW6FFEseeCEX18Fpvgzs3jcmd&output=json&coordtype=wgs84ll',
 								data: {
 									location: arr
@@ -357,12 +339,6 @@
 											title: result.errMsg
 										});
 									}
-								},
-								fail: () => {
-									un.uni.showToast({
-										title: '网络不给力~,请稍后再试',
-										icon: 'none'
-									});
 								}
 							});
 						}
@@ -407,8 +383,8 @@
 				let article = e.article_id;
 				let liked = e.liked;
 				var that = this;
-				uni.request({
-					url: this.globalUrl + '/user/liked',
+				this.HTTP.request({
+					url: '/user/liked',
 					data: {
 						article_id: article,
 						liked: liked == 0 ? 1 : 0
@@ -482,8 +458,8 @@
 				}
 				
 				let that = this
-				uni.request({
-					url: this.globalUrl + '/article/list?page=' + pageNum + '&count=' + pageSize,
+				this.HTTP.request({
+					url: '/article/list?page=' + pageNum + '&count=' + pageSize,
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},

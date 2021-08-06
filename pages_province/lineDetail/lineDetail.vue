@@ -4,9 +4,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" style="z-index: 99999 !important;">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -260,8 +260,8 @@ export default {
 	methods: {
 		getDetail(id) {
 			var that = this
-			uni.request({
-				url: this.globalUrl + '/route',
+			this.HTTP.request({
+				url: '/route',
 				method: 'GET',
 				data: {
 					uuid: id
@@ -278,12 +278,6 @@ export default {
 					this.butler_mobile = res.data.data.butler_mobile;
 					this.lineContent = res.data.data;
 					this.calcHeight()
-				},
-				fail: error => {
-					uni.showToast({
-						title: '网络不给力，请稍后再试...',
-						icon: 'none'
-					});
 				}
 			});
 		},
@@ -323,8 +317,8 @@ export default {
 				this.login()
 				return
 			}
-			uni.request({
-				url: this.globalUrl + '/user/favorite',
+			this.HTTP.request({
+				url: '/user/favorite',
 				method: 'POST',
 				header: {},
 				data: {
@@ -338,13 +332,6 @@ export default {
 						});
 						return
 					}
-				},
-				fail: error => {
-					uni.showToast({
-						title: '网络不给力，请稍后再试...',
-						icon: 'none'
-					});
-					// TODO
 				}
 			});
 		},
@@ -364,16 +351,6 @@ export default {
 			uni.makePhoneCall({
 				phoneNumber:this.butler_mobile
 			})
-		},
-		back() {
-			uni.navigateBack({
-				delta: 1
-			});
-		},
-		home() {
-			uni.switchTab({
-				url: '/pages/index/index'
-			});
 		},
 		share() {
 			uni.showShareMenu({

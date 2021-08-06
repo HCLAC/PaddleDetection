@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -185,8 +185,8 @@
 		methods: {
 			getSearchResults(keyword) {
 				var that = this
-				uni.request({ 
-					url: this.globalUrl + '/search', 
+				this.HTTP.request({ 
+					url: '/search', 
 					data: { 
 						query: keyword, 
 						hit: 8 
@@ -267,16 +267,6 @@
 				uni.redirectTo({
 					url: '/pages_search/search/search'
 				})
-			},
-			back() {
-				uni.navigateBack({
-					delta: 1
-				});
-			},
-			home() {
-				uni.switchTab({
-					url: '/pages/index/index'
-				});
 			},
 			focus() {
 				//#ifndef MP-BAIDU

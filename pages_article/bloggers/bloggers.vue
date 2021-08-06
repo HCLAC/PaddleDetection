@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" :backgroundColor="background">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -150,8 +150,8 @@
 				}).exec();
 			},
 			getBloggerMsg() {
-				uni.request({
-					url: this.globalUrl + '/author',
+				this.HTTP.request({
+					url: '/author',
 					data: {
 						author_id: this.author_id
 					},
@@ -191,7 +191,7 @@
 					return 
 				}
 				// 关注直接调用接口
-				uni.request({
+				this.HTTP.request({
 					url: that.globalUrl + '/user/follow',
 					data: {
 						author_id: that.authorMsg.author_id,
@@ -217,7 +217,7 @@
 			confirm() {
 				var that = this;
 				let status = this.authorMsg.is_follow ? 0 : 1
-				uni.request({
+				this.HTTP.request({
 					url: that.globalUrl + '/user/follow',
 					data: {
 						author_id: that.authorMsg.author_id,
@@ -246,16 +246,6 @@
 					url: '/pages_content/article/article?article_id=' + id
 				});
 			},
-			back() {
-				uni.navigateBack({
-					delta: 1
-				});
-			},
-			home() {
-				uni.switchTab({
-					url: '/pages/index/index'
-				});
-			},
 
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {
@@ -274,8 +264,8 @@
 				let pageNum = page.num; // 页码, 默认从1开始
 				let pageSize = page.size; // 页长, 默认每页10条
 
-				uni.request({
-					url: this.globalUrl + '/author/workslist?page=' + pageNum + '&count=' + pageSize,
+				this.HTTP.request({
+					url: '/author/workslist?page=' + pageNum + '&count=' + pageSize,
 					data: {
 						author_id: this.author_id,
 					},

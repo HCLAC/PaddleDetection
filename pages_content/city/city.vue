@@ -5,7 +5,7 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" title="热门城市">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
 				</view>
 			</uni-nav-bar>
@@ -64,8 +64,8 @@ export default {
 	},
 	methods: {
 		getHotCity() {
-			uni.request({
-				url: this.globalUrl + '/area/list',
+			this.HTTP.request({
+				url: '/area/list',
 				data: {
 					page: 1,
 					count: 20
@@ -90,24 +90,14 @@ export default {
 				item.state_id+"&city_id="+item.city_id+"&name="+item.name+"&image="+item.image
 			});
 		},
-		back() {
-			uni.navigateBack({
-				delta: 1
-			});
-		},
-		home() {
-			uni.switchTab({
-				url: '/pages/index/index'
-			});
-		},
 		getAdress() {
 			uni.getLocation({
 				type: 'wgs84',
 				success: res => {
 					if (res.city) {
 						this.city = res.city.substr(0, res.city.length - 1);
-						uni.request({
-							url: this.globalUrl + '/user/location',
+						this.HTTP.request({
+							url: '/user/location',
 							data: {
 								state: res.province,
 								city: res.city
@@ -125,7 +115,7 @@ export default {
 						arr.push(res.latitude);
 						arr.push(res.longitude);
 						arr = arr.join(',');
-						uni.request({
+						this.HTTP.request({
 							url: 'http://api.map.baidu.com/reverse_geocoding/v3/?ak=NKyWaSnsW6FFEseeCEX18Fpvgzs3jcmd&output=json&coordtype=wgs84ll',
 							data: {
 								location: arr
@@ -134,8 +124,8 @@ export default {
 								if (result.data.status == 0) {
 									this.city = result.data.result.addressComponent.city.substr(0, result.data.result.addressComponent.city.length - 1);
 									
-									uni.request({
-										url: this.globalUrl + '/user/location',
+									this.HTTP.request({
+										url: '/user/location',
 										data: {
 											state: res.province,
 											city: res.city
@@ -153,12 +143,6 @@ export default {
 										title: result.errMsg
 									});
 								}
-							},
-							fail: () => {
-								un.uni.showToast({
-									title: '网络不给力~,请稍后再试',
-									icon: 'none'
-								});
 							}
 						});
 					}

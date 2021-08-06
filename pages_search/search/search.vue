@@ -5,7 +5,7 @@
 			<uni-nav-bar :fixed="true" :status-bar="true">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
 				</view>
 			</uni-nav-bar>
@@ -130,8 +130,8 @@ export default {
 		//加载热门搜索
 		getHotKeyword() {
 			//定义热门搜索关键字，可以自己实现ajax请求数据再赋值
-			uni.request({
-				url: this.globalUrl + '/search/hot',
+			this.HTTP.request({
+				url: '/search/hot',
 				method: 'get',
 				success: res => {
 					if (res.statusCode != 200 || res.data.code != 0){
@@ -146,8 +146,8 @@ export default {
 			});
 		},
 		getArticleList() {
-			uni.request({
-				url: this.globalUrl + '/article/list',
+			this.HTTP.request({
+				url: '/article/list',
 				data: {
 					count: 6,
 					page: 1,
@@ -180,8 +180,8 @@ export default {
 			
 			let article = e.article_id;
 			var that = this;
-			uni.request({
-				url: this.globalUrl + '/user/liked',
+			this.HTTP.request({
+				url: '/user/liked',
 				data: {
 					article_id: article,
 					liked: e.liked == 0 ? 1 : 0
@@ -216,8 +216,8 @@ export default {
 				return;
 			}
 			this.isShowKeywordList = true;
-			uni.request({
-				url: this.globalUrl + '/search/suggest',
+			this.HTTP.request({
+				url: '/search/suggest',
 				data: {
 					query: keyword,
 					hit: 8
@@ -369,11 +369,6 @@ export default {
 			let id = e.currentTarget.id;
 			uni.navigateTo({
 				url: '/pages_content/article/article?article_id=' + id
-			});
-		},
-		back() {
-			uni.navigateBack({
-				delta: 1
 			});
 		}
 	}
