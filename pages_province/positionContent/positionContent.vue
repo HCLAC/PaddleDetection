@@ -2,7 +2,7 @@
 	<view> 
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true" :title="attDetail.data.name">
+			<uni-nav-bar :fixed="true" :status-bar="true" :title="siteInfo.data.name">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
@@ -11,21 +11,19 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<!-- 用户信息 -->
-		
 		<!-- 内容详情轮播图 -->
-		<view class="" v-show="attDetail != null">
+		<view class="" v-show="siteInfo != null">
 			<view class="uni-padding-wrap">
 				<view class="page-section" >
 					<view class="page-section-spacing" >
-						<swiper @change="change" :autoplay="true" class="swiper"  :indicator-dots="false" circular='true'>
-							<swiper-item v-for="item in attDetail.data.images" :key="item.id" class="swiper-item" > 
-								<image :src="item" id="itemImg" class="itemImg" mode="aspectFit" ></image>
+						<swiper @change="change" :autoplay="true" class="swiper" :indicator-dots="false" circular='true'>
+							<swiper-item v-for="item in siteInfo.data.images" :key="item.id" class="swiper-item" > 
+								<image :src="item" class="itemImg" :lazy-load="true" mode="aspectFi" ></image>
 							</swiper-item>
 						</swiper>
-						<view class="imageCount">{{ current + 1 }}/{{ attDetail.data.images.length }}</view>
+						<view class="imageCount">{{ current + 1 }}/{{ siteInfo.data.images.length }}</view>
 						<view class="dots">
-							<block v-for="(item, index) in attDetail.data.images" :key="index">
+							<block v-for="(item, index) in siteInfo.data.images" :key="index">
 								<view :class="[index == current ? 'activieDot' : 'dot']"></view>
 							</block>
 						</view>
@@ -37,12 +35,12 @@
 					<view class="">
 						<view class="contentTitle">
 							<view class="contentHeader">
-								<view class="title">{{attDetail.data.name}}</view>
+								<view class="title">{{siteInfo.data.name}}</view>
 							</view>
 						</view>
 						<view class="tips">
-							<view class="tipHot" v-for="(item,index) in attDetail.data.tags" :key="index" >{{item}}</view>
-							<view class="tip">{{attDetail.data.city}}</view>
+							<view class="tipHot" v-for="(item,index) in siteInfo.data.tags" :key="index" >{{item}}</view>
+							<view class="tip">{{siteInfo.data.city}}</view>
 						</view>
 					</view>
 					<view class="shareBox" @click="share" v-if="serviceProvider =='baidu' ">
@@ -51,80 +49,79 @@
 				</view>
 				<view class="contentRank" @click="toRank()">
 					<view class="rankText">
-						{{attDetail.data.city}}市景点榜单·第{{attDetail.data.rank}}名
+						{{siteInfo.data.city}}市景点榜单·第{{siteInfo.data.rank}}名
 					</view>
 					<view class="rankimgbox">
 						<image class="rankImg" src="/static/images/icon-next.svg" mode="aspectFit"></image>
 					</view>
-					
 				</view>
 				<view class="rateBox" >
-					<!-- <uni-rate  :readonly="true" allow-half :value="attDetail.data.rate" /> -->
+					<!-- <uni-rate  :readonly="true" allow-half :value="siteInfo.data.rate" /> -->
 					<!-- 评分图标 -->
-					<view class="rateStart" v-if="attDetail.data.rate == 5">
+					<view class="rateStart" v-if="siteInfo.data.rate == 5">
 						<image src="/static/images/star_svg/star4.svg" mode=""></image>
 						<image src="/static/images/star_svg/star4.svg" mode=""></image>
 						<image src="/static/images/star_svg/star4.svg" mode=""></image>
 						<image src="/static/images/star_svg/star4.svg" mode=""></image>
 						<image src="/static/images/star_svg/star4.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-else-if="attDetail.data.rate == 4">
+					<view class="rateStart" v-else-if="siteInfo.data.rate == 4">
 						<image src="/static/images/star_svg/star3.svg" mode=""></image>
 						<image src="/static/images/star_svg/star3.svg" mode=""></image>
 						<image src="/static/images/star_svg/star3.svg" mode=""></image>
 						<image src="/static/images/star_svg/star3.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-else-if="attDetail.data.rate == 3">
+					<view class="rateStart" v-else-if="siteInfo.data.rate == 3">
 						<image src="/static/images/star_svg/star2.svg" mode=""></image>
 						<image src="/static/images/star_svg/star2.svg" mode=""></image>
 						<image src="/static/images/star_svg/star2.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-else-if="attDetail.data.rate == 2">
+					<view class="rateStart" v-else-if="siteInfo.data.rate == 2">
 						<image src="/static/images/star_svg/star1.svg" mode=""></image>
 						<image src="/static/images/star_svg/star1.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-else-if="attDetail.data.rate == 1">
+					<view class="rateStart" v-else-if="siteInfo.data.rate == 1">
 						<image src="/static/images/star_svg/star11.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-else-if="attDetail.data.rate >= 4.1 && attDetail.data.rate < 5">
+					<view class="rateStart" v-else-if="siteInfo.data.rate >= 4.1 && siteInfo.data.rate < 5">
 						<image src="/static/images/star_svg/star3.svg" mode=""></image>
 						<image src="/static/images/star_svg/star3.svg" mode=""></image>
 						<image src="/static/images/star_svg/star3.svg" mode=""></image>
 						<image src="/static/images/star_svg/star3.svg" mode=""></image>
 						<image src="/static/images/star_svg/starCopy13.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-else-if="attDetail.data.rate >= 3.1 && attDetail.data.rate < 4">
+					<view class="rateStart" v-else-if="siteInfo.data.rate >= 3.1 && siteInfo.data.rate < 4">
 						<image src="/static/images/star_svg/star2.svg" mode=""></image>
 						<image src="/static/images/star_svg/star2.svg" mode=""></image>
 						<image src="/static/images/star_svg/star2.svg" mode=""></image>
 						<image src="/static/images/star_svg/starCopy12.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-else-if="attDetail.data.rate >= 2.1 && attDetail.data.rate < 3">
+					<view class="rateStart" v-else-if="siteInfo.data.rate >= 2.1 && siteInfo.data.rate < 3">
 						<image src="/static/images/star_svg/star1.svg" mode=""></image>
 						<image src="/static/images/star_svg/star1.svg" mode=""></image>
 						<image src="/static/images/star_svg/starCopy1.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-else-if="attDetail.data.rate >= 1.1 && attDetail.data.rate < 2">
+					<view class="rateStart" v-else-if="siteInfo.data.rate >= 1.1 && siteInfo.data.rate < 2">
 						<image src="/static/images/star_svg/star11.svg" mode=""></image>
 						<image src="/static/images/star_svg/starCopy1.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 					</view>
-					<view class="rateStart" v-else-if="attDetail.data.rate >= 0.1 && attDetail.data.rate < 1">
+					<view class="rateStart" v-else-if="siteInfo.data.rate >= 0.1 && siteInfo.data.rate < 1">
 						<image src="/static/images/star_svg/starCopy1.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
@@ -132,12 +129,12 @@
 						<image src="/static/images/star_svg/star5.svg" mode=""></image>
 					</view>
 					<!-- <u-rate :disabled="true" current="4"></u-rate> -->
-					<view class="rate">{{attDetail.data.rate}} 星</view>
-					<view class="goTo">{{attDetail.data.visited}}人去过</view>
+					<view class="rate">{{siteInfo.data.rate}} 星</view>
+					<view class="goTo">{{siteInfo.data.visited}}人去过</view>
 				</view>
 				<view class="contentText">
 					<view :class="isShow ? 'loseText' : 'moreText'" id="moreText">
-						简介：{{attDetail.data.description}}
+						简介：{{siteInfo.data.description}}
 					</view>
 					<view class="btnBox" @click="showMore" v-if="!isShow && more">
 						<text>收起</text>
@@ -158,8 +155,7 @@
 						<view class="adreessIcon">
 							<image class="" src="/static/images/attmap.svg" mode=""></image>
 						</view>
-						
-						<view class="adressText">{{attDetail.data.pos}}</view>
+						<view class="adressText">{{siteInfo.data.pos}}</view>
 					</view>
 					<view class="right" @click="map()">
 						<image src="/static/images/mapBack.png" mode=""></image>
@@ -169,42 +165,21 @@
 						</view>
 					</view>
 				</view>
-				<view class="phone" v-if="attDetail.data.butler_mobile" @click="phoneCall">
+				<view class="phone" v-if="siteInfo.data.butler_mobile" @click="phoneCall">
 					<image src="/static/images/dianhua.png"></image>
-					<text>旅行管家：{{attDetail.data.butler_mobile}}</text>
+					<text>旅行管家：{{siteInfo.data.butler_mobile}}</text>
 				</view>
 			</view>
-			<view class="magrinBck" v-show="attDetail.data.articles"></view>
-			<view class="gonglueBox" v-if="attDetail.data.articles.length != 0 && attDetail.data.articles != null">
+			<view class="magrinBck" v-show="siteInfo.data.articles"></view>
+			<view class="gonglueBox" v-if="siteInfo.data.articles && siteInfo.data.articles.length != 0">
 				<view class="title">热门攻略</view>
 				<view class="contentBox">
-					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[0].article_id" v-show="attDetail.data.articles[0]">
-						<image class="topHot" src="/static/images/top.svg" mode=""></image>
-						<view class="top">{{attDetail.data.articles[0].title}}</view>
+					<view class="contentItem" @click="toArticle(item.article_id)" v-for="(item, index) in siteInfo.data.articles" :key="index">
+						<image class="topHot" v-if="index==0" src="/static/images/top.svg" mode=""></image>
+						<view class="top">{{item.title}}</view>
 						<view class="bottom">
 							<image src="/static/images/liulan.svg" mode=""></image>
-							<text>{{attDetail.data.articles[0].visit_count}}</text>
-						</view>
-					</view>
-					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[1].article_id" v-show="attDetail.data.articles[1]">
-						<view class="top">{{attDetail.data.articles[1].title}}</view>
-						<view class="bottom">
-							<image src="/static/images/liulan.svg" mode=""></image>
-							<text>{{attDetail.data.articles[1].visit_count}}</text>
-						</view>
-					</view>
-					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[2].article_id" v-show="attDetail.data.articles[2]">
-						<view class="top">{{attDetail.data.articles[2].title}}</view>
-						<view class="bottom">
-							<image src="/static/images/liulan.svg" mode=""></image>
-							<text>{{attDetail.data.articles[2].visit_count}}</text>
-						</view>
-					</view>
-					<view class="contentItem" @click="onPageJump" :id= "attDetail.data.articles[3].article_id" v-show="attDetail.data.articles[3]">
-						<view class="top">{{attDetail.data.articles[3].title}}</view>
-						<view class="bottom">
-							<image src="/static/images/liulan.svg" mode=""></image>
-							<text>{{attDetail.data.articles[3].visit_count}}</text>
+							<text>{{item.visit_count}}</text>
 						</view>
 					</view>
 				</view>
@@ -215,7 +190,6 @@
 </template>
 
 <script>
-var _this;
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import uniIcons from '@/components/uni-icons/uni-icons.vue';
 // import uniFav from '@/components/uni-fav/uni-fav.vue';
@@ -226,53 +200,39 @@ export default {
 	},
 	data() {
 		return {
+			id: 0,
 			indicatorDots: true,
 			current: 0,
-			list: [],
 			isShow: true,
-			attDetail:null,
+			siteInfo:null,
 			serviceProvider: '',
 			more:true,
 			rate:0
 		};
 	},
-	created() {
-		(_this = this), _this.getOrder();
-	},
 	onLoad:function(e) {
+		this.id = e.id
 		this.serviceProvider = getApp().globalData.serviceProvider
-		console.log('详情id====',e)
-		uni.showLoading({
-			title:'加载中'
-		})
-		this.getAttDetail(e)
-		uni.hideLoading();
-	},
-	mounted() {
-		// let info = uni.createSelectorQuery().select(".loseText");
-		// 	info.boundingClientRect(function(data) {
-		// 	console.log('节点信息',data);  // 获取元素信息
-		// }).exec()
+		this.getArticleDetail()
 	},
 	methods: {
-		getAttDetail(e){
-			
+		getArticleDetail(){
 			var that = this
 			uni.request({
 				url:this.globalUrl+ '/site',
 				data:{
-					id:e.id
+					id: this.id
 				},
 				success:function(res){
-					console.log('eeeeeeeeeeeeeeee',e)
-					console.log('景点详情====',res.data)
-					uni.setStorageSync('id',res.data)
-					that.attDetail = res.data
-					// that.rate =  (res.data.data.rate ).toFixed(1);
-					// console.log('评分',that.rate)
-					var length = that.attDetail.data.description.length
-					console.log('attDetail--',length)
-					if(length < 50){
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
+					}
+					that.siteInfo = res.data
+					if(that.siteInfo.data.description.length < 50){
 						that.more = false
 					}
 				}
@@ -280,19 +240,15 @@ export default {
 			
 		},
 		// 跳转文章详情
-		onPageJump(e) {
-			console.log(e)
-			let id = e.currentTarget.id
-			// debugger
-			// return
+		toArticle(article_id) {
 			uni.navigateTo({
-				url: "/pages_content/article/article?article_id="+id
+				url: "/pages_content/article/article?article_id="+article_id
 			})
 		},
 		// 调用拨打手机
 		phoneCall(){
 			uni.makePhoneCall({
-				phoneNumber:this.attDetail.data.butler_mobile
+				phoneNumber:this.siteInfo.data.butler_mobile
 			})
 		},
 		// 分享
@@ -307,25 +263,31 @@ export default {
 			})
 		},
 		change(e) {
-			_this.current = e.detail.current;
-		},
-		getOrder() {
-			_this.swiperlength,
-				(_this.list = [
-					{ key: '1', title: 'A' },
-					{ key: '2', title: 'B' },
-					{ key: '3', title: 'C' },
-					{ key: '4', title: 'D' },
-					{ key: '6', title: 'E' },
-					{ key: '7', title: 'F' }
-				]);
+			this.current = e.detail.current;
 		},
 		toRank(){
-			var state_id = this.attDetail.data.state_id;
-			var city_id = this.attDetail.data.city_id;
-			// console.log('----',city_id)
-			uni.navigateTo({
-				url: '/pages_province/attractionsRank/attractionsRank?state_id=' + state_id + '&city_id=' + city_id
+			var state_id = this.siteInfo.data.state_id;
+			var city_id = this.siteInfo.data.city_id;
+			uni.request({ 
+				url: this.globalUrl + '/area', 
+				data: { 
+					state_id: state_id, 
+					city_id: city_id 
+				}, 
+				success: res => { 
+					if (res.statusCode != 200 || res.data.code != 0){ 
+						uni.showToast({ 
+							title: res.data.msg, 
+							icon: 'none' 
+						}); 
+						return 
+					} 
+					uni.redirectTo({ 
+						url: '/pages_province/attractionsRank/attractionsRank?state_id=' +  
+										res.data.data.state_id+"&city_id="+res.data.data.city_id+ 
+										"&name="+res.data.data.name+"&image="+res.data.data.image 
+					}); 
+				} 
 			});
 		},
 		back() {
@@ -338,31 +300,24 @@ export default {
 				url: '/pages/index/index'
 			});
 		},
-		likeclick() {
-			// console.log("cccccccccccc")
-			this.likemessage++;
-		},
-		favclick() {
-			// console.log("cccccccccccc")
-			this.favmessage++;
-		},
 		showMore() {
 			this.isShow = !this.isShow;
 		},
-		// favClick() {
-		// 	this.checked = !this.checked
-		//  this.$forceUpdate()
-		// }
 		map(){
 			var that = this
-			
-			const latitude = that.attDetail.data.latitude;
-			const longitude = that.attDetail.data.longitude;
+			const latitude = that.siteInfo.data.latitude;
+			const longitude = that.siteInfo.data.longitude;
 			uni.openLocation({
 				latitude: latitude,
 				longitude: longitude,
 				success: function () {
 					console.log('success');
+				},
+				fail() {
+					uni.showToast({
+						title: "打开地图失败",
+						icon: 'none'
+					});
 				}
 			});
 		}
@@ -704,7 +659,7 @@ export default {
 		justify-content: space-between;
 		.left {
 			display: flex;
-			width: 50%;
+			width: 60%;
 			.adreessIcon {
 				height: 34rpx;
 				width: 34rpx;
@@ -720,7 +675,7 @@ export default {
 				font-weight: 400;
 				color: rgba(96, 98, 102, 1);
 				line-height: 36rpx;
-				width:308rpx;
+				width:320rpx;
 				max-height:70rpx;
 				display: -webkit-box;
 				-webkit-box-orient: vertical;

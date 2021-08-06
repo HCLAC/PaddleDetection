@@ -213,9 +213,6 @@
 		onLoad: function(option) {
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.querys = option
-			if (!this.querys.name) {
-				this.querys.name = "全国"
-			}
 			this.getCity()
 		},
 		onPageScroll(e) {
