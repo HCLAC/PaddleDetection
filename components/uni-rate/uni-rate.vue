@@ -13,7 +13,7 @@
 			    @touchmove.stop="touchmove"
 			>
 				<uni-icons
-				    :color="color"
+				    :color="star.activeColor"
 				    :size="size"
 				    :type="isFill ? 'star-filled' : 'star'"
 				/>
@@ -24,7 +24,7 @@
 				>
 					<uni-icons
 					    style="text-align: left;"
-					    :color="disabled?'#ccc':activeColor"
+					    :color="disabled?'#ccc':star.activeColor"
 					    :size="size"
 					    type="star-filled"
 					/>
@@ -36,7 +36,7 @@
 				    class="uni-rate__icon-on"
 				>
 					<uni-icons
-					    :color="disabled?disabledColor:activeColor"
+					    :color="disabled?disabledColor:star.activeColor"
 					    :size="size"
 					    type="star-filled"
 					/>
@@ -152,6 +152,7 @@
 			stars() {
 				const value = this.valueSync ? this.valueSync : 0;
 				const starList = [];
+				const starColor = ['#FFE58F','#FFD666','#FFC53D','#FAAD14','#FA8C16']
 				const floorValue = Math.floor(value);
 				const ceilValue = Math.ceil(value);
 				for (let i = 0; i < this.max; i++) {
@@ -168,6 +169,18 @@
 							activeWitch: "0"
 						});
 					}
+				}
+				if(this.valueSync){
+					starList.forEach((val,index,arr)=>{
+						console.log(val,index,arr);
+						if(val.activeWitch != 0){
+							val.activeColor = starColor[index]
+						}else{
+							val.activeColor = '#c0c0c0'
+						}
+					});
+				}else{
+					console.log(11)
 				}
 				return starList;
 			}

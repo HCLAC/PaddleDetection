@@ -1092,7 +1092,7 @@ export default {
 	flex-wrap: wrap;
 	margin-top: 24rpx;
 	padding-left: 20rpx;
-	min-height: 1470rpx;
+	// min-height: 1470rpx;
 }
 
 .left,.right {

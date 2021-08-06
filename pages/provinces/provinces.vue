@@ -70,7 +70,9 @@
 							<view class="rateBox">
 								<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
 								<!-- 评分图标 -->
-								<view class="rateStart" v-if="item.rate == 5">
+								<uni-rate :readonly="true" :value="item.rate" :size='12' margin="1" :allowHalf="true"/>
+								<!-- <u-rate :current="item.rate" :disabled="true" :gutter="3" :size="24" active-color="#FFC53D"></u-rate> -->
+								<!-- <view class="rateStart" v-if="item.rate == 5">
 									<image src="../../static/images/star_svg/star4.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star4.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star4.svg" mode=""></image>
@@ -139,7 +141,7 @@
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 									<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-								</view>
+								</view> -->
 								<!-- <u-rate :disabled="true" current="4"></u-rate> -->
 								<view class="rate">{{ item.rate }} 星</view>
 							</view>
@@ -1727,6 +1729,12 @@ export default {
 		color: #909399;
 		line-height: 28rpx;
 		text-align: center;
+	}
+	.rateBox{
+		.uni-icons{
+				color: red !important
+			}
+		
 	}
 }
 </style>
