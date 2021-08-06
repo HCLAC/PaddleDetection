@@ -116,76 +116,9 @@
 											<view class="right">
 												<view class="title">{{ pos.name }}</view>
 												<view class="rateBox">
-													<view class="rateStart" v-if="pos.rate == 5">
-														<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star4.svg" mode=""></image>
-													</view>
-													<view class="rateStart" v-if="pos.rate == 4">
-														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-													</view>
-													<view class="rateStart" v-if="pos.rate == 3">
-														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-													</view>
-													<view class="rateStart" v-if="pos.rate == 2">
-														<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-													</view>
-													<view class="rateStart" v-if="pos.rate == 1">
-														<image src="../../static/images/star_svg/star11.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-													</view>
-													<view class="rateStart" v-if="pos.rate == 4.5">
-														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star3.svg" mode=""></image>
-														<image src="../../static/images/star_svg/starCopy13.svg" mode=""></image>
-													</view>
-													<view class="rateStart" v-if="pos.rate == 3.5">
-														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star2.svg" mode=""></image>
-														<image src="../../static/images/star_svg/starCopy12.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-													</view>
-													<view class="rateStart" v-if="pos.rate == 2.5">
-														<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star1.svg" mode=""></image>
-														<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-													</view>
-													<view class="rateStart" v-if="pos.rate == 1.5">
-														<image src="../../static/images/star_svg/star11.svg" mode=""></image>
-														<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-													</view>
-													<view class="rateStart" v-if="pos.rate == 0.5">
-														<image src="../../static/images/star_svg/starCopy1.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-														<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-													</view>
+													<uni-rate :readonly="true" :value="pos.rate" :size='12' margin="1" :allowHalf="true"/>
+													
+													
 													<view class="rate" >{{ pos.rate }} 星</view>
 												</view>
 												<text class="content">{{ pos.description }}</text>
