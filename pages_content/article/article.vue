@@ -1,7 +1,5 @@
 <template>
 	<view>
-		
-		<!-- 游记文章 -->
 		<view class="example-body">
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="article.data.title">
 				<view slot="left" class="slotleft">
@@ -12,13 +10,14 @@
 				</view>
 			</uni-nav-bar>
 		</view>
+		<!-- 游记文章 -->
 		<view class="" v-if="swiperHeight && article.data.type != 2">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap" >
-				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="articleList.data.type != 4 && articleList.data.type != 5 ">
+				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="articleList.data.type != 4 && articleList.data.type != 5">
 					<swiper @change="change" class="swiper" :autoplay="true" circular='true' :indicator-dots="false">
 						<swiper-item v-for="(item, index) in articleList.data.images" :key="index">
-							<image class="itemImg" :style="{ width: index == 0 ? '100%' : '' }" :mode="index == 0 ? 'widthFix' : 'aspectFit'"
+							<image class="itemImg" :style="{ width: index == 0 ? '100%' : '' }" lazy-load :mode="index == 0 ? 'widthFix' : 'aspectFit'"
 							 :src="item"></image>
 						</swiper-item>
 					</swiper>
@@ -29,7 +28,7 @@
 						</block>
 					</view>
 				</view>
-				<view class="page-section-spacing" width="100%" v-if="article.data.type == 4">
+				<view class="page-section-spacing" width="100%" v-else-if="article.data.type == 4">
 					<video class="videobox" :style="{ height: swiperHeight }" :src="article.data.images[1]" object-fit="contain"
 					 :poster="article.data.images[0]" controls></video>
 				</view>
@@ -45,10 +44,8 @@
 						<image class="followImg" src="/static/images/followIcon.svg" mode=""></image>
 						关注
 					</view>
-					<view class="isfollowBox" @click="follow()" v-if="article.data.is_follow">已关注</view>
+					<view class="isfollowBox" @click="follow()" v-else-if="article.data.is_follow">已关注</view>
 				</view>
-				<!-- 弹窗 -->
-				<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 				<!-- 地址 -->
 				<view class="adress">
 					<image src="/static/images/iconMap.svg" mode="" class="adreessIcon"></image>
@@ -68,123 +65,16 @@
 						<image class="tipsIcon" src="/static/images/topicIcon.svg" mode=""></image>
 						<text class="tipsText">{{ item.name }}</text>
 					</view>
-					<!-- <view>#<text></text></view> -->
 				</view>
 				<view class="releaseTime">发布于{{ article.data.update_at }}</view>
-				<view class="replyLine"></view>
-				<view class="replyBox">
-
-					<!-- start 输入框 -->
-					<!-- end 输入框 -->
-					<view class="replyText">
-						回复
-					</view>
-					<view class="replyContent">
-						<view class="myReply">
-							<image class="userImg" src="/static/images/userImg.svg" mode="" v-if="userInfo == null"></image>
-							<image class="userImg" :src="userInfo.avatar" mode="" v-if="userInfo != null"></image>
-							<!-- <comment 
-								ref="comment" 
-								:placeholder="'快来写下你的评论吧'" 
-								@pubComment="pubComment">
-							</comment>
-							<u-input 
-								class="replyInput"
-								placeholder="写个回复走个心" 
-								placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
-								confirmType="send"
-								:clearable="false"
-								:disabled="true"
-								@click="toggleMask('show')"
-							>
-							</u-input> -->
-							<u-input class="replyInput" placeholder="写个回复走个心" placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;"
-							 confirmType="send" :clearable="false" :disabled="true" @click="commentInput">
-							</u-input>
-						</view>
-
-						<view class="reply" v-for="(item,index) in commentsList" :key="index">
-							<view class="replyTop">
-								<image class="userImg" v-if="!item.avatar" src="/static/images/userImg.svg" mode=""></image>
-								<image class="userImg" v-if="item.avatar" :src="item.avatar" mode=""></image>
-								<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
-									<view class="" style="display: flex;align-items: center;">
-										<view class="userName">{{item.account_name}}</view>
-										<view class="replyTime">
-											{{item.create_at.slice(0,10)}}
-										</view>
-									</view>
-									<view class="">
-										<image class="replyLike" src="/static/images/attLike.svg" v-if="item.like == 0" @click="replyLike(item)"></image>
-										<image class="replyLike" src="/static/images/attLikeA.svg" mode="" v-if="item.like == 1" @click="replyLike(item)"></image>
-										<image class="report" src="/static/images/report.svg" mode="" @click="toReport(item)"></image>
-									</view>
-
-								</view>
-
-							</view>
-							<view class="replyBottom">
-								{{item.content}}
-							</view>
-						</view>
-					</view>
-					<view class="moreReply" v-if="total > 3" @click="toMoreReply">
-						查看全部{{total}}条回复
-					</view>
-
-				</view>
-
-				<view class="safeBox"></view>
-			</view>
-			<!-- <view class="foot" v-show="showInput">
-				<chat-input @send-message="send_comment" @blur="blur" :focus="focus" :placeholder="input_placeholder"></chat-input>
-			</view> -->
-			<view class="commentInput" v-if="textareafocus" :style="{bottom : inputbottom.bottom}">
-				<textarea class="inputK" v-model="content" placeholder="快来写下你的评论吧" :show-confirm-bar="false" :focus="textareafocus"
-				 @blur="inputBlur" @focus="inputFocus" :auto-height="autoHeight" @input="inputValue" maxlength="140" cursor-spacing="20"
-				 :adjust-position="false"></textarea>
-				<view class="send" @click="pubComment">发送</view>
-			</view>
-			<view class="bottom">
-				<!-- 分割线 -->
-				<!-- <view class="bottomLine">
-					
-				</view> -->
-				<view class="line"></view>
-				<!-- 登录 -->
-				<view class="contentBottom savepadding">
-					<view style="display: flex;">
-						<view class="like" @click="clickLike">
-							<image class="likeBtn" src="/static/images/attheart.svg" v-if="article.data.liked == 0"></image>
-							<image class="likeBtn" src="/static/images/attHeartActive.svg" v-if="article.data.liked == 1"></image>
-							<view class="likeNum" v-model="likemessage" v-if="article.data.like_count != 0">{{ article.data.like_count }}</view>
-						</view>
-						<view class="fav" @click="clickFav">
-							<image class="favBtn" src="/static/images/attFav.svg" v-if="article.data.fav == 0"></image>
-							<image class="favBtn" src="/static/images/attFavA.svg" v-if="article.data.fav == 1"></image>
-							<view class="favNum" v-if="article.data.fav_count != 0">{{ article.data.fav_count }}</view>
-						</view>
-						<view class="replyIcon" @click="commentInput">
-							<image src="/static/images/replyIcon.svg" mode=""></image>
-							<view class="replyNum">
-								{{total}}
-							</view>
-						</view>
-						<!-- <view class="share" v-if="serviceProvider == 'baidu'" @click="share"><image src="/static/images/shareIcon.svg"></image></view> -->
-					</view>
-					<view class="">
-						<view class="loginButton" @click="login" v-if="flag">登录</view>
-					</view>
-				</view>
 			</view>
 		</view>
 		<!-- 攻略文章 -->
-		<view class="" v-if="article && article.data.type == 2">
+		<view class="" v-else-if="article && article.data.type == 2">
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<!-- 标题 -->
 				<text class="contentTitle-strategy" selected='true'>{{ article.data.title }}</text>
-				<!-- <view class="contentTitle-strategy">{{ article.data.title }}</view> -->
 				<view class="StrategyTip">
 					<image class="StrategyImg" src="/static/images/Strategy.svg" mode=""></image>
 				</view>
@@ -193,22 +83,16 @@
 					<image class="userHeard" :src="article.data.avatar" @click="tobloggers(article.data.author_id)"></image>
 					<view class="userMse-r">
 						<text class="userNikename-strategy" selected=true> {{ article.data.author_name }}</text>
-						<!-- <view class="userNikename-strategy">{{ article.data.author_name }}</view> -->
 						<view class="releaseTime-strategy">发布于{{ article.data.update_at.slice(0,10) }}</view>
 					</view>
 					<view class="followBox" @click="follow()" v-if="!article.data.is_follow">
 						<image class="followImg" src="/static/images/followIcon.svg" mode=""></image>
 						关注
 					</view>
-					<view class="isfollowBox" @click="follow()" v-if="article.data.is_follow">已关注</view>
+					<view class="isfollowBox" @click="follow()" v-else>已关注</view>
 				</view>
-				<!-- 弹窗 -->
-				<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
-				
-				
 				<!-- 内容文章 -->
 				<view class="contentText-strategy">
-					<!-- <rich-text :nodes="article.data.content | formatRichText"></rich-text> -->
 					<mp-html ref="parse" v-if="article" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
 					 :content="article.data.content | formatRichText"></mp-html>
 				</view>
@@ -217,128 +101,96 @@
 					<image src="/static/images/iconMap.svg" mode="" class="adreessIcon"></image>
 					<view class="adressText" @click="map()">{{ article.data.location }}</view>
 				</view>
-				<view class="strategyLine"></view>
-				<!-- 话题 -->
+			</view>
+			<!-- 话题 -->
+			<view>
 				<view class="tipsStrategy">
 					<view v-for="item in article.data.topics" :key="item.id" @click="toTopic(item.id)">
 						<image class="tipsIcon" src="/static/images/topicIcon.svg" mode=""></image>
 						<text class="tipsText">{{ item.name }}</text>
 					</view>
-					<!-- <view>#<text></text></view> -->
-				</view>
-				
-				<view class="replyLine"></view>
-				<view class="replyBox">
-		
-					<!-- start 输入框 -->
-					<!-- end 输入框 -->
-					<view class="replyText">
-						回复
-					</view>
-					<view class="replyContent">
-						<view class="myReply">
-							<image class="userImg" src="/static/images/userImg.svg" mode="" v-if="userInfo == null"></image>
-							<image class="userImg" :src="userInfo.avatar" mode="" v-if="userInfo != null"></image>
-							<!-- <comment 
-								ref="comment" 
-								:placeholder="'快来写下你的评论吧'" 
-								@pubComment="pubComment">
-							</comment>
-							<u-input 
-								class="replyInput"
-								placeholder="写个回复走个心" 
-								placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;" 
-								confirmType="send"
-								:clearable="false"
-								:disabled="true"
-								@click="toggleMask('show')"
-							>
-							</u-input> -->
-							<u-input class="replyInput" placeholder="写个回复走个心" placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;"
-							 confirmType="send" :clearable="false" :disabled="true" @click="commentInput">
-							</u-input>
-						</view>
-		
-						<view class="reply" v-for="(item,index) in commentsList" :key="index">
-							<view class="replyTop">
-								<image class="userImg" v-if="!item.avatar" src="/static/images/userImg.svg" mode=""></image>
-								<image class="userImg" v-if="item.avatar" :src="item.avatar" mode=""></image>
-								<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
-									<view class="" style="display: flex;align-items: center;">
-										<view class="userName">{{item.account_name}}</view>
-										<view class="replyTime">
-											{{item.create_at.slice(0,10)}}
-										</view>
-									</view>
-									<view class="">
-										<image class="replyLike" src="/static/images/attLike.svg" v-if="item.like == 0" @click="replyLike(item)"></image>
-										<image class="replyLike" src="/static/images/attLikeA.svg" mode="" v-if="item.like == 1" @click="replyLike(item)"></image>
-										<image class="report" src="/static/images/report.svg" mode="" @click="toReport(item)"></image>
-									</view>
-		
-								</view>
-		
-							</view>
-							<view class="replyBottom">
-								{{item.content}}
-							</view>
-						</view>
-					</view>
-					<view class="moreReply" v-if="total > 3" @click="toMoreReply">
-						查看全部{{total}}条回复
-					</view>
-		
-				</view>
-		
-				<view class="safeBox"></view>
-			</view>
-			<!-- <view class="foot" v-show="showInput">
-				<chat-input @send-message="send_comment" @blur="blur" :focus="focus" :placeholder="input_placeholder"></chat-input>
-			</view> -->
-			<view class="commentInput" v-if="textareafocus" :style="{bottom : inputbottom.bottom}">
-				<textarea class="inputK" v-model="contentText" placeholder="快来写下你的评论吧" :show-confirm-bar="false" :focus="textareafocus"
-				 @blur="inputBlur" @focus="inputFocus" :auto-height="autoHeight" @input="inputValue" maxlength="140" cursor-spacing="20"
-				 :adjust-position="false"></textarea>
-				<view class="send" @click="pubComment">发送</view>
-			</view>
-			<view class="bottom">
-				<!-- 分割线 -->
-				<!-- <view class="bottomLine">
-					
-				</view> -->
-				<view class="line"></view>
-				<!-- 登录 -->
-				<view class="contentBottom savepadding">
-					<view style="display: flex;">
-						<view class="like" @click="clickLike">
-							<image class="likeBtn" src="/static/images/attheart.svg" v-if="article.data.liked == 0"></image>
-							<image class="likeBtn" src="/static/images/attHeartActive.svg" v-if="article.data.liked == 1"></image>
-							<view class="likeNum" v-model="likemessage" v-if="article.data.like_count != 0">{{ article.data.like_count }}</view>
-						</view>
-						<view class="fav" @click="clickFav">
-							<image class="favBtn" src="/static/images/attFav.svg" v-if="article.data.fav == 0"></image>
-							<image class="favBtn" src="/static/images/attFavA.svg" v-if="article.data.fav == 1"></image>
-							<view class="favNum" v-if="article.data.fav_count != 0">{{ article.data.fav_count }}</view>
-						</view>
-						<view class="replyIcon" @click="commentInput">
-							<image src="/static/images/replyIcon.svg" mode=""></image>
-							<view class="replyNum">
-								{{total}}
-							</view>
-						</view>
-						<!-- <view class="share" v-if="serviceProvider == 'baidu'" @click="share"><image src="/static/images/shareIcon.svg"></image></view> -->
-					</view>
-					<view class="">
-						<view class="loginButton" @click="login" v-if="flag">登录</view>
-					</view>
 				</view>
 			</view>
 		</view>
+		<u-loading v-else :show="true" class="loading"></u-loading>
+		<!-- 评论区 -->
+		<view>
+			<view class="replyLine"></view>
+			<view class="replyBox">
+				<view class="replyText">
+					回复
+				</view>
+				<view class="replyContent">
+					<view class="myReply">
+						<image class="userImg" :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'" mode=""></image>
+						<u-input class="replyInput" placeholder="写个回复走个心" placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;"
+						 confirmType="send" :clearable="false" :disabled="true" @click="commentInput">
+						</u-input>
+					</view>
+					<view class="reply" v-for="(item,index) in commentsList" :key="index">
+						<view class="replyTop">
+							<image class="userImg" :src="item.avatar?item.avatar:'/static/images/userImg.svg'" mode=""></image>
+							<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
+								<view class="" style="display: flex;align-items: center;">
+									<view class="userName">{{item.account_name}}</view>
+									<view class="replyTime">
+										{{item.create_at.slice(0,10)}}
+									</view>
+								</view>
+								<view class="">
+									<image class="replyLike" :src="item.like == 1?'/static/images/attLikeA.svg':'/static/images/attLike.svg'" mode="" @click="replyLike(item,index)"></image>
+									<image class="report" src="/static/images/report.svg" mode="" @click="toReport(item.id)"></image>
+								</view>
+							</view>
+						</view>
+						<view class="replyBottom">
+							{{item.content}}
+						</view>
+					</view>
+				</view>
+				<view class="moreReply" v-if="comment_count > 3" @click="toMoreReply">
+					查看全部{{comment_count}}条回复
+				</view>
+			</view>
+			<view class="safeBox"></view>
+		</view>
+		<!-- 登录 -->
+		<view class="bottom">
+			<view class="line"></view>
+			<view class="contentBottom savepadding">
+				<view style="display: flex;">
+					<view class="like" @click="clickLike">
+						<image class="likeBtn" :src="article.data.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image>
+						<view class="likeNum" v-if="article.data.like_count != 0">{{ article.data.like_count }}</view>
+					</view>
+					<view class="fav" @click="clickFav">
+						<image class="favBtn" :src="article.data.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
+						<view class="favNum" v-if="article.data.fav_count != 0">{{ article.data.fav_count }}</view>
+					</view>
+					<view class="replyIcon" @click="commentInput">
+						<image src="/static/images/replyIcon.svg" mode=""></image>
+						<view class="replyNum">{{comment_count}}</view>
+					</view>
+					<!-- <view class="share" v-if="serviceProvider == 'baidu'" @click="share"><image src="/static/images/shareIcon.svg"></image></view> -->
+				</view>
+				<view class="">
+					<view class="loginButton" @click="login" v-if="!hasLogin">登录</view>
+				</view>
+			</view>
+		</view>
+		<!-- 评论输入框 -->
+		<view class="commentInput" v-if="textareafocus" :style="{bottom : inputbottom.bottom}">
+			<textarea class="inputK" v-model="contentText" placeholder="快来写下你的评论吧" :show-confirm-bar="false" :focus="textareafocus"
+			 @blur="inputBlur" @focus="inputFocus" :auto-height="autoHeight" @input="inputValue" maxlength="140" cursor-spacing="20"
+			 :adjust-position="false"></textarea>
+			<view class="send" @click="pubComment">发送</view>
+		</view>
+		<!-- 弹窗 -->
+		<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 	</view>
 </template>
 
 <script>
-	var _this;
 	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 	import uniIcons from '@/components/uni-icons/uni-icons.vue';
 	import chatInput from '@/components/comment/chatinput.vue';
@@ -357,7 +209,7 @@
 				article: null,
 				token: '',
 				article_id: '',
-				flag: true,
+				hasLogin: true,
 				wechat_id: null,
 				swiperHeight: '',
 				serviceProvider: '',
@@ -367,8 +219,8 @@
 				show: false,
 				value: '',
 				commentsList: [],
-				total: '',
-				userInfo: [],
+				comment_count: '',
+				userInfo: {},
 				focus: false,
 				autoHeight: false,
 				inputbottom: {
@@ -378,30 +230,11 @@
 			};
 		},
 		onShow() {
-			// 获取当前小程序的页面栈
-			// let pages = getCurrentPages();
-			// // 数组中索引最大的页面--当前页面
-			// let currentPage = pages[pages.length - 1];
-			// // 打印出当前页面中的 options
-			// console.log('onshow--', currentPage.options);
-
-			// console.log('文章id====', e);
-			// uni.showLoading({
-			// 	title: '加载中',
-			// 	success: () => {
-			// 		console.log(this.flag);
-			// 		this.article_id = currentPage.options.article_id;
-			// 	}
-			// });
-			this.getArticleDetail();
-			this.getComments();
-			this.getUserInfo()
-			this.getArticleseo()
-			this.flag = uni.getStorageSync('Authorization') ? false : true;
+			this.loadData()
 		},
 		onLoad(obj) {
+			this.hasLogin = uni.getStorageSync('Authorization') ? true : false;
 			this.serviceProvider = getApp().globalData.serviceProvider
-			console.log(obj,"数据")
 			this.article_id = obj.article_id
 			this.animation = uni.createAnimation()
 			// 创建动画实例
@@ -412,13 +245,24 @@
 				}
 			});
 		},
-		
-		created() {
-			_this = this;
-		},
-		mounted() {
-		},
 		methods: {
+			loadData(){
+				uni.showLoading({
+					title: '加载中',
+					mask: true,
+					success: () => {
+						this.getArticleDetail();
+						this.getArticleseo()
+						this.getComments();
+						this.getUserInfo()
+						
+						this.hideLoad()
+					}
+				});
+			},
+			hideLoad(){
+				uni.hideLoading();
+			},
 			getArticleseo(){
 				var that = this
 				uni.request({
@@ -427,7 +271,14 @@
 						article_id: that.article_id
 					},
 					success: res => {
-						console.log(res, "+++++++++++++");
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						
 						swan.setPageInfo({
 							title:res.data.data.title,
 							keywords:res.data.data.keywords,
@@ -437,7 +288,6 @@
 				})
 			},
 			mpLinktap(e) {
-				console.log('e', e);
 				if(e['data-url']){
 					uni.navigateTo({
 						url: '../webview/webview?url=' + encodeURIComponent(e['data-url'])
@@ -458,7 +308,6 @@
 			getArticleDetail() {
 				var that = this;
 				uni.request({
-					// url:'article',
 					url: this.globalUrl + '/article',
 					data: {
 						article_id: that.article_id
@@ -467,8 +316,13 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: async function(res) {
-						uni.hideLoading();
-						uni.setStorageSync('id', res.data);
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
 
 						let inputComponets = res.data.data.content.match(/<input[^>]*\/>/gi);
 						if (inputComponets != null && inputComponets.length > 0){
@@ -523,7 +377,6 @@
 						}
 						
 						that.article = res.data;
-						console.log('文章详情=', that.article);
 						that.following = that.article.data.follow;
 						that.$nextTick(() => {
 							uni.getImageInfo({
@@ -534,7 +387,7 @@
 									that.swiperHeight = 100 / caseRes + 'vw';
 								},
 								fail: error => {
-									console.log(1111, error);
+									console.error(error);
 								}
 							});
 						});
@@ -547,7 +400,6 @@
 			async asyncGetComponentInfo(url, data){
 				return new Promise((resolve, reject) => {
 					uni.request({
-						// url:'article',
 						url: this.globalUrl + url,
 						method: 'get',
 						data: data,
@@ -728,61 +580,61 @@
 			  </div>`
 			},
 			imgTap(e) {
-				console.log('imgTap', e);
-
 				return false;
 			},
 			// 跳转博主详情页
-			tobloggers(e) {
-				console.log(e);
+			tobloggers(id) {
 				uni.navigateTo({
-					url: '../bloggers/bloggers?author_id=' + e
+					url: '../bloggers/bloggers?author_id=' + id
 				});
 			},
 			// 跳转话题页
-			toTopic(e) {
-				console.log(e);
+			toTopic(id) {
 				uni.navigateTo({
-					url: '/pages_article/topicList/topicList?id=' + e
+					url: '/pages_article/topicList/topicList?id=' + id
 				});
 			},
 			// 关注
 			follow() {
-				// console.log(item, index)
+				let token = uni.getStorageSync('Authorization')
+				if(!token){
+					uni.navigateTo({
+						url: '/pages_mine/login/login'
+					});
+				}
 				var that = this;
-				let msg = this.article.data.is_follow ? '确认取消关注?' : '确认关注?';
 				let status = this.article.data.is_follow ? 0 : 1;
 
 				if (status == 0) {
 					that.show = true;
 					that.content = '确认取消关注?';
-				} else {
-					uni.request({
-						url: that.globalUrl + '/user/follow',
-						data: {
-							author_id: that.article.data.author_id,
-							follow: status
-						},
-						method: 'POST',
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
-						success: res => {
-							if (res.data.code != 0) {
-								uni.navigateTo({
-									url: '/pages_mine/login/login'
-								});
-							} else {
-								that.article.data.is_follow = res.data.data
-							}
-						}
-					});
+					return
 				}
+				uni.request({
+					url: that.globalUrl + '/user/follow',
+					data: {
+						author_id: that.article.data.author_id,
+						follow: status
+					},
+					method: 'POST',
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						that.article.data.is_follow = res.data.data
+					}
+				});
 			},
 			// 点击确认
 			confirm() {
 				var that = this;
-				let msg = this.article.data.is_follow ? '确认取消关注?' : '确认关注?';
 				let status = this.article.data.is_follow ? 0 : 1;
 				uni.request({
 					url: that.globalUrl + '/user/follow',
@@ -795,59 +647,44 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						if (res.data.code != 0) {
-							uni.navigateTo({
-								url: '/pages_mine/login/login'
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
 							});
-						} else {
-							that.article.data.is_follow = res.data.data
+							return
 						}
+						that.article.data.is_follow = res.data.data
 					}
 				});
 			},
 			// 用户信息
 			getUserInfo() {
-				uni.request({
-					url: this.globalUrl + '/user/info',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					method: 'get',
-					success: (res) => {
-						console.log('个人信息=', res.data);
-						this.userInfo = res.data.data
-					}
-				})
+				this.userInfo = uni.getStorageSync('userinfo')
+				console.log('this.userInfo',this.userInfo)
 			},
 			// 举报
-			toReport(e) {
+			toReport(id) {
 				let token = uni.getStorageSync('Authorization')
-				// console.log('tttt',token)
 				if (!token) {
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
 					});
-				} else {
-					uni.navigateTo({
-						url: '/pages_article/report/report?id=' + e.id
-					})
+					return
 				}
-
-			},
-			// 评论
-			toggleMask(type) {
-				this.$refs.comment.toggleMask(type);
+				uni.navigateTo({
+					url: '/pages_article/report/report?id=' + id
+				})
 			},
 			commentInput() {
-				const value = uni.getStorageSync('Authorization');
-				if (value == '') {
+				let token = uni.getStorageSync('Authorization')
+				if (!token) {
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
 					});
-				}else{
-					this.textareafocus = true
-					console.log(111)
+					return
 				}
+				this.textareafocus = true
 			},
 			inputBlur() {
 				this.textareafocus = false
@@ -856,16 +693,11 @@
 				
 			},
 			inputFocus(e) {
-				console.log(e.detail,'eeee')
 				this.textareafocus = true
-				// console.log('e.detail.height', e.detail.height)
 				this.inputbottom.bottom = e.detail.height + 'px'
-				// this.textareaStyle.transform = 'translateY('+e.detail.height+'px'+')'
-
 			},
 
 			inputValue(e) {
-				console.log('eeeee', e.detail.value.length)
 				if (e.detail.value.length > 18) {
 					this.autoHeight = true
 				} else {
@@ -873,7 +705,13 @@
 				}
 			},
 			pubComment() {
-				console.log('发送',this.contentText)
+				let token = uni.getStorageSync('Authorization')
+				if (!token) {
+					uni.navigateTo({
+						url: '/pages_mine/login/login'
+					});
+					return
+				}
 				uni.request({
 					url: this.globalUrl + '/comments',
 					data: {
@@ -885,44 +723,23 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						// this.commentsList = res.data.data.list
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
 						this.contentText = ''
 						//#ifndef MP-BAIDU
 						uni.hideKeyboard();
 						//#endif
-						// this.$refs.comment.toggleMask('none');
 						this.getComments()
-						console.log('pinglun', res.data)
-						if (res.data.code == 10502 || res.data.code == 10501) {
-							uni.navigateTo({
-								url: '/pages_mine/login/login'
-							});
-						} else {
-
-							if (res.data.code == 15001) {
-								uni.showToast({
-									title: res.data.msg,
-									icon: 'none',
-									duration: 2000
-								})
-							} else {
-								if (res.data.code != 0) {
-									uni.showToast({
-										title: '评论不能为空',
-										icon: 'none',
-										duration: 2000
-									})
-								} else {
-									uni.showToast({
-										title: '评论成功',
-										icon: 'none',
-										duration: 2000
-									})
-								}
-							}
-						}
-
-
+						uni.showToast({
+							title: '评论成功',
+							icon: 'none',
+							duration: 2000
+						})
 					}
 				})
 			},
@@ -939,75 +756,66 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						console.log(res)
-						if (res.data.data == null) {
-							uni.request({
-								url: this.globalUrl + '/comments/list',
-								data: {
-									article_id: this.article_id,
-									page: 1,
-									count: 3
-								},
-								success: res => {
-									this.commentsList = res.data.data.list
-									this.total = res.data.data.total
-									console.log('不带tokencomments', res.data)
-								}
-							})
-						} else {
-							this.commentsList = res.data.data.list
-							this.total = res.data.data.total
-							console.log('comments', res.data)
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
 						}
-
+						this.commentsList = res.data.data.list
+						this.comment_count = res.data.data.total
 					}
 				});
 			},
 			// 评论点赞
-			replyLike(e) {
+			replyLike(item, index) {
+				let token = uni.getStorageSync('Authorization')
+				if (!token) {
+					uni.navigateTo({
+						url: '/pages_mine/login/login'
+					});
+					return
+				}
 				uni.request({
 					url: this.globalUrl + '/comments/likes',
 					data: {
-						id: e.id,
-						like: e.like == 0 ? 1 : 0
+						id: item.id,
+						like: item.like == 0 ? 1 : 0
 					},
 					method: 'POST',
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						console.log('点赞', res)
-						if (res.data.code == 10501) {
-							uni.navigateTo({
-								url: '/pages_mine/login/login'
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
 							});
-						} else {
-							this.getComments()
+							return
 						}
-
+						this.commentsList[index] = item.like == 0 ? 1 : 0
 					}
 				});
 			},
-			// likeBtn(){
-			// 	this.$u.debounce(this.replyLike, 1000)
-			// },
-			// replyBtn(){
-			// 	this.focus = true
-			// },
-			// isfocus(){
-			// 	this.focus = false
-			// },
 			// 查看更多评论
 			toMoreReply() {
-				let e = this.article_id
 				uni.navigateTo({
-					url: '/pages_article/comments/comments?article_id=' + e
+					url: '/pages_article/comments/comments?article_id=' + this.article_id
 				})
 			},
 			// 点赞
 			clickLike() {
 				var that = this;
 
+				let token = uni.getStorageSync('Authorization')
+				if (!token) {
+					uni.navigateTo({
+						url: '/pages_mine/login/login'
+					});
+					return
+				}
 				uni.request({
 					url: this.globalUrl + '/user/liked',
 					data: {
@@ -1019,15 +827,15 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						console.log('点赞', res);
-						if (res.data.code != 0) {
-							uni.navigateTo({
-								url: '/pages_mine/login/login'
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
 							});
-						} else {
-							that.article.data.liked = res.data.data.liked
-							that.article.data.like_count = res.data.data.like_count
+							return
 						}
+						that.article.data.liked = res.data.data.liked
+						that.article.data.like_count = res.data.data.like_count
 					}
 				});
 			},
@@ -1035,6 +843,13 @@
 			clickFav() {
 				var that = this;
 
+				let token = uni.getStorageSync('Authorization')
+				if (!token) {
+					uni.navigateTo({
+						url: '/pages_mine/login/login'
+					});
+					return
+				}
 				uni.request({
 					url: this.globalUrl + '/user/favorite',
 					data: {
@@ -1046,27 +861,20 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						console.log('收藏', res);
-						if (res.data.code != 0) {
-							uni.navigateTo({
-								url: '/pages_mine/login/login'
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
 							});
-						} else {
-							that.article.data.fav = res.data.data.fav
-							that.article.data.fav_count = res.data.data.fav_count
+							return
 						}
+						that.article.data.fav = res.data.data.fav
+						that.article.data.fav_count = res.data.data.fav_count
 					}
 				});
 			},
-			
-			// 登录
-			login() {
-				uni.navigateTo({
-					url: '/pages_mine/login/login'
-				});
-			},
 			change(e) {
-				_this.current = e.detail.current;
+				this.current = e.detail.current;
 			},
 			back() {
 				uni.navigateBack({
@@ -1078,7 +886,6 @@
 					url: '/pages/index/index'
 				});
 			},
-
 			map() {
 				var that = this;
 
@@ -1089,23 +896,6 @@
 					longitude: longitude,
 					success: function() {
 						console.log('success');
-					}
-				});
-			},
-			copy() {
-				uni.setClipboardData({
-					data: _this.VX,
-					success: function() {
-						// console.log('success');
-						uni.showToast({
-							title: '复制成功',
-							icon: 'none'
-						});
-					}
-				});
-				uni.getClipboardData({
-					success: function(res) {
-						console.log(res.data);
 					}
 				});
 			},
@@ -1885,5 +1675,13 @@
 	.share image {
 		width: 52rpx;
 		height: 52rpx;
+	}
+	
+	
+	.loading{
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%,-50%);
 	}
 </style>

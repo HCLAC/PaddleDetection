@@ -307,6 +307,7 @@ export default {
 							title: '登录成功',
 							icon: 'none'
 						}),
+						uni.setStorageSync('userinfo', res.data.data)
 						uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
 						this.back()
 					} else {
@@ -346,6 +347,7 @@ export default {
 							title: '登录成功',
 							icon: 'none'
 						}),
+						uni.setStorageSync('userinfo', res.data.data)
 						uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
 						this.back()
 					} else {

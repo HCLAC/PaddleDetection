@@ -249,13 +249,6 @@
 	margin: 0 8px;
 }
 
-.loading{
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
-}
-
 .replyList{
 	.replyContent{
 		margin: 0 28rpx;
