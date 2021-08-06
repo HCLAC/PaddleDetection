@@ -13,7 +13,7 @@
 			    @touchmove.stop="touchmove"
 			>
 				<uni-icons
-				    :color="star.activeColor"
+				    :color="color"
 				    :size="size"
 				    :type="isFill ? 'star-filled' : 'star'"
 				/>
@@ -162,7 +162,7 @@
 						});
 					} else if (ceilValue - 1 === i) {
 						starList.push({
-							activeWitch: (value - floorValue) * 100 + "%"
+							activeWitch: 50 + "%"
 						});
 					} else {
 						starList.push({

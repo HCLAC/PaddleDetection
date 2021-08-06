@@ -1730,11 +1730,5 @@ export default {
 		line-height: 28rpx;
 		text-align: center;
 	}
-	.rateBox{
-		.uni-icons{
-				color: red !important
-			}
-		
-	}
 }
 </style>

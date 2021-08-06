@@ -44,7 +44,7 @@ export default {
 	'close-filled': '\ue434',
 	'clear': '\ue434',
 	'refresh-filled': '\ue437',
-	'star-filled': '\ue438',
+	'star-filled': '\ue602',
 	'plus-filled': '\ue439',
 	'minus-filled': '\ue440',
 	'circle-filled': '\ue441',
