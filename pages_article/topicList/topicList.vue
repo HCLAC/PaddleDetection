@@ -2,7 +2,7 @@
 	<view >
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true">
+			<uni-nav-bar :fixed="true" :status-bar="true" :title="info.name">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
@@ -12,7 +12,7 @@
 			</uni-nav-bar>
 		</view>
 		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-		<!-- 头图 -->
+			<!-- 头图 -->
 			<view class="headImgBox" v-if="info">
 				<image class="headImg" :src="info.image" mode="scaleToFill"></image>
 				<view class="mask"></view>
@@ -53,502 +53,84 @@
 				<view class="touring" id="touring">
 					<!-- 推荐 -->
 					<view class="wrap" v-if="tabCurrent == 0 ">
-						<!-- #ifndef MP-TOUTIAO -->
-							<u-waterfall v-model="recommendList" ref="uWaterfall">
-								<template v-slot:left="{ leftList }">
-									<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
-										<view class="" @click="onPageJump" :id="item.article_id">
-											<view class="demo-top">
-												<view class="imgBox">
-													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-													 mode="widthFix">
-														<view class="videoIcon" v-if="item.type == 4">
-															<image class="playIcon" src="/static/images/playIcon.svg" mode=""></image>
-														</view>
-													</image>
-													<view class="adress">
-														<view class="adreessIcon">
-															<image class="" src="/static/images/iconMap3.svg" mode=""></image>
-														</view>
-														<view class="adressText">{{ item.location }}</view>
-													</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
-										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
-											</view>
-											<view class="count" @click="clickLeftLike(item,index) in leftList ">
-												<view class="countImg">
-													<image class="likeImg" mode="aspectFit" src="/static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image class="likeImg" mode="aspectFit" src="/static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
-										</view>
-									</view>
-								</template>
-								<template v-slot:right="{ rightList }">
-									<view class="demo-warter" v-for="(item, index) in rightList" :key="index">
-										<view class="" @click="onPageJump" :id="item.article_id">
-											<view class="demo-top">
-												<view class="imgBox">
-													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-													 mode="widthFix">
-														<view class="videoIcon" v-if="item.type == 4">
-															<image class="playIcon" src="/static/images/playIcon.svg" mode=""></image>
-														</view>
-													</image>
-													<view class="adress">
-														<view class="adreessIcon">
-															<image class="" src="/static/images/iconMap3.svg" mode=""></image>
-														</view>
-														<view class="adressText">{{ item.location }}</view>
-													</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
-										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
-											</view>
-											<view class="count" @click="clickRightLike(item,index) in rightList">
-												<view class="countImg">
-													<image class="likeImg" mode="aspectFit" src="/static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image class="likeImg" mode="aspectFit" src="/static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
-										</view>
-									</view>
-								</template>
-							</u-waterfall>
-						<!-- #endif -->
-						<!-- #ifdef MP-TOUTIAO -->
-							<view class="left">
-								<view class="demo-warter" v-for="(item, index) in recommendList" :key="index" v-if="index % 2 == 1">
-									<view class="" >
-										<view class="demo-top" @click="onPageJump" :id="item.article_id">
-											<view class="imgBox" >
-												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-													<view class="videoIcon" v-if="item.type == 4">
-														<image class="playIcon"  src="/static/images/playIcon.svg" mode=""></image>
-													</view>
-												</image>
-												<view class="adress">
-													<view class="adreessIcon"><image class="" src="/static/images/iconMap3.svg" mode=""></image></view>
-													<view class="adressText">{{ item.location }}</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
-										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
-											</view>
-											<view class="count" @click="clickLike(item, index)">
-												<view class="countImg">
-													<image class="likeImg" mode="aspectFit" src="/static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image class="likeImg" mode="aspectFit" src="/static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
-										</view>
-									</view>
-								</view>
-							</view>
-							<view class="right">
-								<view class="demo-warter" v-for="(item, index) in recommendList" :key="index" v-if="index % 2 == 0">
-									<view class="">
-										<view class="demo-top"  @click="onPageJump" :id="item.article_id">
-											<view class="imgBox">
-												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-													<view class="videoIcon" v-if="item.type == 4">
-														<image class="playIcon"  src="/static/images/playIcon.svg" mode=""></image>
-													</view>
-												</image>
-												<view class="adress">
-													<view class="adreessIcon"><image class="" src="/static/images/iconMap3.svg" mode=""></image></view>
-													<view class="adressText">{{ item.location }}</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
-										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
-											</view>
-											<view class="count" @click="clickLike(item, index)">
-												<view class="countImg">
-													<image class="likeImg" mode="aspectFit" src="/static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image class="likeImg" mode="aspectFit" src="/static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
-										</view>
-									</view>
-								</view>
-							</view>
-						<!-- #endif -->
-						
+						<articleWaterfall :list="recommendList"></articleWaterfall>
 					</view>
 					<!-- 最新 -->
 					<view class="wrap" v-if="tabCurrent == 1 ">
-						<!-- #ifndef MP-TOUTIAO -->
-							<u-waterfall v-model="latestList" ref="uWaterfall">
-								<template v-slot:left="{ leftList }">
-									<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
-										<view class="" @click="onPageJump" :id="item.article_id">
-											<view class="demo-top">
-												<view class="imgBox">
-													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-													 mode="widthFix">
-														<view class="videoIcon" v-if="item.type == 4">
-															<image class="playIcon" src="/static/images/playIcon.svg" mode=""></image>
-														</view>
-													</image>
-													<view class="adress">
-														<view class="adreessIcon">
-															<image class="" src="/static/images/iconMap3.svg" mode=""></image>
-														</view>
-														<view class="adressText">{{ item.location }}</view>
-													</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
-										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
-											</view>
-											<view class="count" @click="clickLeftLike(item,index) in leftList ">
-												<view class="countImg">
-													<image class="likeImg" mode="aspectFit" src="/static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image class="likeImg" mode="aspectFit" src="/static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
-										</view>
-									</view>
-								</template>
-								<template v-slot:right="{ rightList }">
-									<view class="demo-warter" v-for="(item, index) in rightList" :key="index">
-										<view class="" @click="onPageJump" :id="item.article_id">
-											<view class="demo-top">
-												<view class="imgBox">
-													<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
-													 mode="widthFix">
-														<view class="videoIcon" v-if="item.type == 4">
-															<image class="playIcon" src="/static/images/playIcon.svg" mode=""></image>
-														</view>
-													</image>
-													<view class="adress">
-														<view class="adreessIcon">
-															<image class="" src="/static/images/iconMap3.svg" mode=""></image>
-														</view>
-														<view class="adressText">{{ item.location }}</view>
-													</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
-										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
-											</view>
-											<view class="count" @click="clickRightLike(item,index) in rightList">
-												<view class="countImg">
-													<image class="likeImg" mode="aspectFit" src="/static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image class="likeImg" mode="aspectFit" src="/static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
-										</view>
-									</view>
-								</template>
-							</u-waterfall>
-						<!-- #endif -->
-						<!-- #ifdef MP-TOUTIAO -->
-							<view class="left">
-								<view class="demo-warter" v-for="(item, index) in latestList" :key="index" v-if="index % 2 == 1">
-									<view class="" >
-										<view class="demo-top" @click="onPageJump" :id="item.article_id">
-											<view class="imgBox" >
-												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-													<view class="videoIcon" v-if="item.type == 4">
-														<image class="playIcon"  src="/static/images/playIcon.svg" mode=""></image>
-													</view>
-												</image>
-												<view class="adress">
-													<view class="adreessIcon"><image class="" src="/static/images/iconMap3.svg" mode=""></image></view>
-													<view class="adressText">{{ item.location }}</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
-										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
-											</view>
-											<view class="count" @click="clickLike(item, index)">
-												<view class="countImg">
-													<image class="likeImg" mode="aspectFit" src="/static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image class="likeImg" mode="aspectFit" src="/static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
-										</view>
-									</view>
-								</view>
-							</view>
-							<view class="right">
-								<view class="demo-warter" v-for="(item, index) in latestList" :key="index" v-if="index % 2 == 0">
-									<view class="">
-										<view class="demo-top"  @click="onPageJump" :id="item.article_id">
-											<view class="imgBox">
-												<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :src="item.image" :index="index" lazy-load="true" mode="widthFix">
-													<view class="videoIcon" v-if="item.type == 4">
-														<image class="playIcon"  src="/static/images/playIcon.svg" mode=""></image>
-													</view>
-												</image>
-												<view class="adress">
-													<view class="adreessIcon"><image class="" src="/static/images/iconMap3.svg" mode=""></image></view>
-													<view class="adressText">{{ item.location }}</view>
-												</view>
-											</view>
-											<view class="titleTip">
-												<view class="demo-tag">
-													<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-													<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-													<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
-												</view>
-												<view class="demo-title">{{ item.title }}</view>
-											</view>
-										</view>
-										<view class="demo-user">
-											<view class="userMessage">
-												<image class="userHeard" :src="item.avatar"></image>
-												<view class="userNikename">{{ item.author_name }}</view>
-											</view>
-											<view class="count" @click="clickLike(item, index)">
-												<view class="countImg">
-													<image class="likeImg" mode="aspectFit" src="/static/images/heart.svg" v-if="item.liked == 0"></image>
-													<image class="likeImg" mode="aspectFit" src="/static/images/heart_actived.svg" v-if="item.liked == 1"></image>
-												</view>
-												<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
-											</view>
-										</view>
-									</view>
-								</view>
-							</view>
-						<!-- #endif -->
+						<articleWaterfall :list="latestList"></articleWaterfall>
 					</view>
 				</view>
-		
 			</view>
 		</mescroll-body>	
 	</view>
 </template>
 <script>
 import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
+import articleWaterfall from '@/common/article-waterfall/article-waterfall.vue';
+
 export default {
-		
+		components: {
+			articleWaterfall
+		},
 		data() {
 			return {
-				scrollTop: 0, //tab标题的滚动条位置
+				downOption: {
+					auto:false
+				},
+				upOption: {
+					bgColor: '#F8F8F8'
+				},
 				current: 0, // 预设当前项的值
 				recommendList: [],
 				latestList:[],
-				tablist:['推荐','最新'],
-				item: null,
-				current: 0,
 				tabCurrent: 0,
-				firstTime: new Date().getTime(),
 				isFixed: false,
 				cardheight:0,
 				id:'',
-				info:'',
-				upOption:{
-					bgColor:'#F8F8F8'
-				}
+				info:''
 			};
 		},
 		mixins: [MescrollMixin],
 		onLoad(e) {
-			console.log('---',e)
 			this.id = e.id
-			this.getRecommend()
-			this.getlatest()
-			this.getTopic()
-			this.calcCardHeight()
+			this.loadData()
 		},
-		
 		onPageScroll(e) {
-			// console.log(e)
-			if (e.scrollTop >  220) {
+			if (e.scrollTop > this.cardheight) {
 				this.isFixed = true;
 			} else {
 				this.isFixed = false;
 			}
 		},
 		
-		methods: {			
+		methods: {	
+			loadData(){
+				uni.showLoading({
+					title: '加载中',
+					mask: true,
+					success: () => {
+						this.getTopic()
+						// this.getRecommend()
+						// this.getlatest()
+						this.calcCardHeight()
+						this.hideLoad()
+					}
+				});
+			},
+			hideLoad(){
+				uni.hideLoading();
+			},
 			calcCardHeight(){
 				const query = uni.createSelectorQuery().in(this);
 				query.select('#selectcard').boundingClientRect(data => {
 					console.log("得到布局位置信息" + JSON.stringify(data));
-					console.log("节点离页面顶部的距离为" + data.top);
 					if (data.top == 0) {
 						this.cardheight = 200
 					} else {
 						this.cardheight = data.top
 					}
 				}).exec();
-			},
-			// 推荐列表
-			getRecommend(){
-				uni.request({
-					url: this.globalUrl + '/topics/articles/recommend',
-					data: {
-						topic_id:this.id,
-						count: 6,
-						page: 1
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: res => {
-						if(res.data.data == null){
-							uni.request({
-								url: this.globalUrl + '/topics/articles/recommend',
-								data: {
-									topic_id:this.id,
-									count: 6,
-									page: 1
-								},
-								success: (res) => {
-									uni.setStorageSync('article_id', res.data);
-									console.log('无token推荐',res)
-									// #ifndef MP-TOUTIAO
-									this.$refs.uWaterfall._props.value = res.data.data.list;
-									// #endif
-									// #ifdef MP-TOUTIAO
-									this.list = res.data.data.list;
-									// #endif
-									console.log('recommendList=====', this.recommendList);
-								}
-							})
-						}else{
-							uni.setStorageSync('article_id', res.data);
-							console.log('推荐',res)
-							// #ifndef MP-TOUTIAO
-							this.$refs.uWaterfall._props.value = res.data.data.list;
-							// #endif
-							// #ifdef MP-TOUTIAO
-							this.list = res.data.data.list;
-							// #endif
-							console.log('recommendList=====', this.recommendList);
-						}
-						
-					}
-				});
-			},
-			// 最新列表
-			getlatest(){
-				uni.request({
-					url: this.globalUrl + '/topics/articles/latest',
-					data: {
-						topic_id:this.id,
-						count: 6,
-						page: 1
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: res => {
-						if(res.data.data == null){
-							uni.request({
-								url: this.globalUrl + '/topics/articles/latest',
-								data: {
-									topic_id:this.id,
-									count: 6,
-									page: 1
-								},
-								success: (res) => {
-									uni.setStorageSync('article_id', res.data);
-									console.log('无token最新',res)
-									this.latestList = res.data.data.list;
-									console.log('latestList=====', this.latestList);
-								}
-							})
-						}else{
-							uni.setStorageSync('article_id', res.data);
-							console.log('最新',res)
-							this.latestList = res.data.data.list;
-							console.log('latestList=====', this.latestList);
-						}
-						
-					}
-				});
+				
 			},
 			getTopic(){
 				uni.request({
@@ -557,20 +139,16 @@ export default {
 						topic_id: this.id
 					},
 					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
 						this.info = res.data.data;
-						console.log('info=====', this.info);
 					}
 				})
-			},
-			// 跳转文章详情
-			onPageJump(e) {
-				console.log(e);
-				let id = e.currentTarget.id;
-				// debugger
-				// return
-				uni.navigateTo({
-					url: '/pages_content/article/article?article_id=' + id
-				});
 			},
 			// 跳转话题广场
 			toTopic(){
@@ -580,129 +158,14 @@ export default {
 			},
 			// 选项卡切换
 			recommendedChange(){
-				
-				// this.getRecommend()
-				// this.getlatest()
 				this.tabCurrent = 0
-				// this.mescroll.scrollTo(0)
+				this.mescroll.resetUpScroll()
+				this.mescroll.scrollTo(0)
 			},
 			latestChange(){
-				
-				// this.getlatest()
-				// this.getRecommend()
 				this.tabCurrent = 1
-				// this.mescroll.scrollTo(0)
-			},
-				
-			// tabChange(index) {
-			// 	this.tabCurrent = index;
-			// 	this.downCallback()
-			// 	this.mescroll.scrollTo(0)
-			// },
-			// 点赞
-			clickLeftLike(e, index) {
-				console.log('qaz', e, index);
-				// debugger
-				let article = e.article_id;
-				var that = this;
-				uni.request({
-					url: this.globalUrl + '/user/liked',
-					data: {
-						article_id: article,
-						liked: e.liked == 0 ? 1 : 0
-					},
-					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: res => {
-						console.log(res)
-						if (res.data.code != 0) {
-							// debugger
-							uni.navigateTo({
-								url: '/pages_mine/login/login'
-							});
-						}else{
-							if(this.tabCurrent == 0){
-								this.$refs.uWaterfall.leftList[index].liked = e.liked == 1 ? 0 : 1;
-								this.$refs.uWaterfall.leftList[index].like_count = e.liked == 1 ? e.like_count - 1 : e.like_count + 1;
-							}else{
-								this.$refs.uWaterfall.leftList[index].liked = e.liked == 1 ? 0 : 1;
-								this.$refs.uWaterfall.leftList[index].like_count = e.liked == 1 ? e.like_count - 1 : e.like_count + 1;
-							}
-						}
-						
-						
-						
-					}
-				});
-			},
-			clickRightLike(e,index) {
-				// this.$refs.uWaterfall.clickLike(e);
-				console.log(this.$refs)
-				let article = e.article_id;
-				var that = this;
-				uni.request({
-					url: this.globalUrl + '/user/liked',
-					data: {
-						article_id: article,
-						liked: e.liked == 0 ? 1 : 0
-					},
-					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: res => {
-						if (res.data.code != 0) {
-			
-							uni.navigateTo({
-								url: '/pages_mine/login/login'
-							});
-						} else {
-							if(this.tabCurrent == 0){
-								this.$refs.uWaterfall.rightList[index].liked = e.liked == 1 ? 0 : 1;
-								this.$refs.uWaterfall.rightList[index].like_count = e.liked == 1 ? e.like_count - 1 : e.like_count + 1;
-							}else{
-								this.$refs.uWaterfall.rightList[index].liked = e.liked == 1 ? 0 : 1;
-								this.$refs.uWaterfall.rightList[index].like_count = e.liked == 1 ? e.like_count - 1 : e.like_count + 1;
-							}
-						}
-					}
-				});
-			},
-			clickLike(e, index) {
-				console.log('qaz', e, index);
-				// debugger
-				let article = e.article_id;
-				var that = this;
-				uni.request({
-					url: this.globalUrl + '/user/liked',
-					data: {
-						article_id: article,
-						liked: e.liked == 0 ? 1 : 0
-					},
-					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: res=> {
-						console.log('点赞', res);
-						if (res.data.code != 0) {
-							// debugger
-							uni.navigateTo({
-								url: '/pages_mine/login/login'
-							});
-						}
-						if(this.tabCurrent == 0){
-							this.recommendList[index].liked = e.liked == 1 ? 0 : 1
-							this.recommendList[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
-						}else{
-							this.latestList[index].liked = e.liked == 1 ? 0 : 1;
-							this.latestList[index].like_count = e.liked == 1 ? e.like_count + 1 : e.like_count - 1;
-						}
-						
-					}
-				});
+				this.mescroll.resetUpScroll()
+				this.mescroll.scrollTo(0)
 			},
 			// 返回上一页
 			back() {
@@ -732,117 +195,80 @@ export default {
 				// mescroll.setPageSize(6)
 				let pageNum = page.num; // 页码, 默认从1开始
 				let pageSize = page.size; // 页长, 默认每页10条
+				let url = ''
 				if(this.tabCurrent == 0){
-					uni.request({
-						url: this.globalUrl+ '/topics/articles/recommend?page=' + pageNum + '&count=' + pageSize,
-						data: {
-							topic_id:this.id,
-						},
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
-						success: data => {
-							console.log('data', data);
-							// 接口返回的当前页数据列表 (数组)
-							if(data.data.data != null){
-								let curPageData = data.data.data.list;
-								console.log('curPageData', curPageData);
-								// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-								let curPageLen = curPageData.length;
-								console.log('curPageLen', curPageLen);
-								// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-								// let totalPage = data.data.data.list;
-								// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-								let totalSize = data.data.data.total;
-								console.log('totalSize', totalSize);
-								// 接口返回的是否有下一页 (true/false)
-								// let hasNext = data.data.data.list;
-												
-								//设置列表数据
-								if (page.num == 1) this.recommendList = []; //如果是第一页需手动置空列表
-								this.recommendList = this.recommendList.concat(curPageData); //追加新数据
-								console.log('recommendList', this.recommendList);
-								// 请求成功,隐藏加载状态
-								//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-								// this.mescroll.endByPage(curPageLen, totalPage);
-												
-								//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-								this.mescroll.endBySize(curPageLen, totalSize);
-												
-								//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-								//this.mescroll.endSuccess(curPageLen, hasNext);
-												
-								//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-								//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-								//如果传了hasNext,则翻到第二页即可显示无更多数据.
-								//this.mescroll.endSuccess(curPageLen);
-												
-								// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-								// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-							}
-							
-						},
-						fail: () => {
-							//  请求失败,隐藏加载状态
-							this.mescroll.endErr();
+					url = this.globalUrl+ '/topics/articles/recommend?page=' + pageNum + '&count=' + pageSize
+				} else {
+					url = this.globalUrl+ '/topics/articles/latest?page=' + pageNum + '&count=' + pageSize
+				}
+				uni.request({
+					url: url,
+					data: {
+						topic_id:this.id,
+					},
+					header: {
+						Authorization: uni.getStorageSync('Authorization')
+					},
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
 						}
-					});
-				}else{
-					uni.request({
-						url: this.globalUrl+ '/topics/articles/latest?page=' + pageNum + '&count=' + pageSize,
-						data: {
-							topic_id:this.id,
-						},
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
-						success: data => {
-							console.log('data', data);
-							// 接口返回的当前页数据列表 (数组)
-							let curPageData = data.data.data.list;
-							console.log('curPageData', curPageData);
+						if (!res.data.data.list || res.data.data.list.length == 0){
+							return
+						}
+						// 接口返回的当前页数据列表 (数组)
+						if(res.data.data != null){
+							let curPageData = res.data.data.list;
 							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 							let curPageLen = curPageData.length;
-							console.log('curPageLen', curPageLen);
 							// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-							// let totalPage = data.data.data.list;
+							// let totalPage = res.data.data.list;
 							// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-							let totalSize = data.data.data.total;
-							console.log('totalSize', totalSize);
+							let totalSize = res.data.data.total;
 							// 接口返回的是否有下一页 (true/false)
-							// let hasNext = data.data.data.list;
-					
+							// let hasNext = res.data.data.list;
+											
 							//设置列表数据
-							if (page.num == 1) this.latestList = []; //如果是第一页需手动置空列表
-							this.latestList = this.latestList.concat(curPageData); //追加新数据
-							console.log('latestList', this.latestList);
+							if(this.tabCurrent == 0){
+								if (page.num == 1) this.recommendList = []; //如果是第一页需手动置空列表
+								this.recommendList = this.recommendList.concat(curPageData); //追加新数据
+							} else {
+								if (page.num == 1) this.latestList = []; //如果是第一页需手动置空列表
+								this.latestList = this.latestList.concat(curPageData); //追加新数据	
+							}
+							console.log('recommendList', this.recommendList, curPageLen, totalSize)
+							
 							// 请求成功,隐藏加载状态
 							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 							// this.mescroll.endByPage(curPageLen, totalPage);
-					
+											
 							//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
 							this.mescroll.endBySize(curPageLen, totalSize);
-					
+											
 							//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
 							//this.mescroll.endSuccess(curPageLen, hasNext);
-					
+											
 							//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
 							//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
 							//如果传了hasNext,则翻到第二页即可显示无更多数据.
 							//this.mescroll.endSuccess(curPageLen);
-					
+											
 							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
 							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-						},
-						fail: () => {
-							//  请求失败,隐藏加载状态
-							this.mescroll.endErr();
 						}
-					});
-				}
+						
+					},
+					fail: () => {
+						//  请求失败,隐藏加载状态
+						this.mescroll.endErr();
+					}
+				});
 				
 			
-				
 				// 此处仍可以继续写其他接口请求...
 				// 调用其他方法...
 			},
@@ -1011,7 +437,7 @@ export default {
 	width: 100%;
 	padding-left: 26rpx;
 	position: fixed;
-	top: 126rpx;
+	top: 110rpx;
 	padding-top: 38rpx;
 	z-index: 2;
 	display: flex;

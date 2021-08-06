@@ -25,10 +25,8 @@
 				</u-form-item>
 				<!-- 内容 -->
 				<u-form-item class="formItem" :label-position="labelPosition" :border-bottom="false" prop="intro">
-					
 					<textarea
 						class="textArea"
-						
 						:clearable="false"  
 						placeholder="为帮助审核人员更加快速处理，请补充违规内容出现位置等详细信息" 
 						placeholder-style="font-size:28rpx;line-height:42rpx"
@@ -37,13 +35,12 @@
 						v-model="modelIntro" 
 					>
 					</textarea>
-					
 				</u-form-item>
 			</u-form>
 			<view class="textNum">
 				{{number}}/140
 			</view>
-			<button class="bbutton" @click="submit" :style="{background: customStyle.background}"  >提交举报</button>
+			<button class="bbutton" @click="submit" :disabled="disabled" :style="{background: customStyle.background}"  >提交举报</button>
 			<u-modal v-model="show" :content="content" @confirm="confirm" z-index="999999" :show-title="false" :show-cancel-button="false" confirm-text="OK" confirm-color="#007AFF" ></u-modal>
 		</view>
 	</view>
@@ -118,14 +115,10 @@
 				labelPosition: 'left',
 				errorType: ['message'],
 				customStyle:{
-					
 					background: '#EDEFF2'
-					
-					
 				},
 				customStyleInput:{
 					background: '#f8f8f8',
-					
 				},
 				disabled:true,
 				show: false,
@@ -136,12 +129,10 @@
 			this.$refs.uForm.setRules(this.rules);
 		},
 		onLoad(e) {
-			console.log('---',e)
 			this.id = e.id
 		},
 		watch:{
 			modelIntro(val){
-				console.log(val.length)
 				this.number = val.length
 				if(val.length && val.length > 0 ){
 						this.customStyle.background = '#FFE512';
@@ -151,28 +142,13 @@
 			}
 		},
 		methods: {
-			
-			// inputvalue(e){
-			// 	// let introLength = this.model.intro.length
-			// 	console.log('字数',e.detail.value.length)
-			// 	let introLength = e.detail.value.length
-			// 	// console.log('字数',introLength)
-			// 	if(introLength > 4){
-			// 		console.log('ok')
-			// 		this.customStyle.background = '#FFE512'
-			// 	}else {
-			// 		this.customStyle.background = '#EDEFF2'
-			// 	}
-			// },
-			// 保存
 			submit() {
 				let introLength = this.modelIntro.length
 				if (introLength >= 5) {
-					// console.log('验证通过'); 
 					uni.request({
 						url: this.globalUrl + '/comments/report',
 						data: {
-							id:this.id,
+							id: this.id,
 							behavior:this.model.payType,
 							content:this.modelIntro
 						},
@@ -181,27 +157,17 @@
 							Authorization: uni.getStorageSync('Authorization')
 						},
 						success: res => {
-							if(this.model.payType == ''){
+							if (res.statusCode != 200 || res.data.code != 0){
 								uni.showToast({
-									title: '请选择一种举报类型',
-									icon:'none',
-									duration: 2000
-								})
+									title: res.data.msg,
+									icon: 'none'
+								});
 								return
 							}
-							console.log('举报信息',res)
-							// uni.showToast({
-							// 	title: '举报成功',
-							// 	icon:'none',
-							// 	duration: 2000
-							// })
 							this.show = true
-							
 						}
 					});
-					
 				} else {
-					console.log('验证失败');
 					uni.showToast({
 						title: '原因不能少于5个字',
 						icon:'none',

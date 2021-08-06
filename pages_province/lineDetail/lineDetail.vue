@@ -38,7 +38,7 @@
 			<view class="lineTitle">{{ lineContent.title }}</view>
 		</view>
 		<view class="lineDriver"></view>
-		<view  :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard">
+		<view  :class="isFixed ? 'fixTabs' : 'noFix'">
 			<view style="width: 60%;display: flex;">
 				<view class="tripBox" @click="tripChange">
 					<view :class="tabCurrent == 0 ? 'tripText' : 'tripText1'">

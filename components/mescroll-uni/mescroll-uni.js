@@ -601,7 +601,7 @@ MeScroll.prototype.endBySize = function(dataSize, totalSize, systime) {
 	let hasNext;
 	if (this.optUp.use && totalSize != null) {
 		let loadSize = (this.optUp.page.num - 1) * this.optUp.page.size + dataSize; // 已加载的数据总数
-		hasNext = loadSize <= totalSize; // 是否还有下一页
+		hasNext = loadSize < totalSize; // 是否还有下一页
 		
 	}
 	this.endSuccess(dataSize, hasNext, systime);

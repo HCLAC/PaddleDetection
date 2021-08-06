@@ -11,14 +11,12 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<u-loading :show="show" class="loading"></u-loading>
-		<mescroll-uni v-if='!show' ref="mescrollRef"  @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="replyList">
 				<view class="replyContent">
 					<view class="reply" v-for="(item,index) in commentsList" :key="index">
 						<view class="replyTop">
-							<image class="userImg" v-if="!item.avatar" src="/static/images/userImg.svg" mode=""></image>
-							<image class="userImg" v-if="item.avatar" :src="item.avatar" mode=""></image>
+							<image class="userImg" :src="item.avatar?item.avatar:'/static/images/userImg.svg'" mode=""></image>
 							<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
 								<view class="" style="display: flex;align-items: center;">
 									<view class="userName">{{item.account_name}}</view>
@@ -27,13 +25,10 @@
 									</view>
 								</view>
 								<view class="">
-									<image class="replyLike" src="/static/images/attLike.svg" v-if="item.like == 0" @click="replyLike(item)"></image>
-									<image class="replyLike" src="/static/images/attLikeA.svg" mode="" v-if="item.like == 1" @click="replyLike(item)"></image>
+									<image class="replyLike" :src="item.like == 1?'/static/images/attLikeA.svg':'/static/images/attLike.svg'" mode="" @click="replyLike(item, index)"></image>
 									<image class="report" src="/static/images/report.svg" mode="" @click="toReport(item)"></image>
 								</view>
-								
 							</view>
-							
 						</view>
 						<view class="replyBottom">
 							{{item.content}}
@@ -41,7 +36,7 @@
 					</view>
 				</view>
 			</view>
-		</mescroll-uni>
+		</mescroll-body>
 	</view>
 </template>
 
@@ -54,78 +49,56 @@
 				article_id:'',
 				commentsList:[],
 				downOption:{
-					use: false
-				},
-				show:false
+					use: false,
+					auto:false
+				}
 			};
 		},
-		onLoad(e) {
-			console.log('===',e)
-			this.article_id = e.article_id
-			this.getComments()
+		onLoad(options) {
+			this.article_id = options.article_id
 		},
 		methods:{
-			// 获取评论列表
-			getComments(){
-				uni.request({
-					url: this.globalUrl + '/comments/list',
-					data: {
-						article_id: this.article_id,
-						page:1,
-						count:8
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: res => {
-						this.commentsList = res.data.data.list
-						console.log('comments',res)
-					}
-				});
-			},
 			// 评论点赞
-			replyLike(e){
+			replyLike(item, index){
+				let token = uni.getStorageSync('Authorization')
+				if(!token){
+					uni.navigateTo({
+						url: '/pages_mine/login/login'
+					});
+				}
 				uni.request({
 					url: this.globalUrl + '/comments/likes',
 					data: {
-						id: e.id,
-						like:e.like == 0 ? 1 : 0
+						id: item.id,
+						like: item.like == 0 ? 1 : 0
 					},
 					method: 'POST',
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						console.log('点赞',res)
-						if(res.data.code == 10501){
-							uni.navigateTo({
-								url: '/pages_mine/login/login'
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
 							});
-						}else{
-							this.show = true
-							setTimeout(()=>{
-								this.getComments()
-								this.show = false
-							},30)
-							
-							
+							return
 						}
+						this.commentsList[index].like = item.like == 0 ? 1 : 0
 					}
 				});
 			},
 			// 举报
 			toReport(e) {
 				let token = uni.getStorageSync('Authorization')
-				// console.log('tttt',token)
 				if(!token){
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
 					});
-				}else{
-					uni.navigateTo({
-						url:'/pages_article/report/report?id=' + e.id
-					})
 				}
+				uni.navigateTo({
+					url:'/pages_article/report/report?id=' + e.id
+				})
 			},
 			// 返回上一页
 			back() {
@@ -163,21 +136,23 @@
 					header: {
 						Authorization: uni.getStorageSync('Authorization')
 					},
-					success: data => {
-						console.log('data', data);
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						if (!res.data.data.list || res.data.data.list.length == 0){
+							return
+						}
 						// 接口返回的当前页数据列表 (数组)
-						let curPageData = data.data.data.list;
-						console.log('curPageData', curPageData);
+						let curPageData = res.data.data.list;
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 						let curPageLen = curPageData.length;
-						console.log('curPageLen', curPageLen);
-						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-						let totalPage = data.data.data.total / pageSize;
 						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-						let totalSize = data.data.data.total;
-						console.log('totalSize', totalSize);
-						// 接口返回的是否有下一页 (true/false)
-						let hasNext = data.data.data.list;
+						let totalSize = res.data.data.total;
 				
 						//设置列表数据
 						if (page.num == 1) this.commentsList = []; //如果是第一页需手动置空列表
@@ -185,10 +160,10 @@
 						console.log('commentsList', this.commentsList);
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-						this.mescroll.endByPage(curPageLen, totalPage);
+						// this.mescroll.endByPage(curPageLen, totalPage);
 				
 						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-						// this.mescroll.endBySize(curPageLen, totalSize);
+						this.mescroll.endBySize(curPageLen, totalSize);
 				
 						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
 						// this.mescroll.endSuccess(curPageLen, hasNext);
@@ -206,12 +181,7 @@
 						this.mescroll.endErr();
 					}
 				});
-				
-			},
-				
-				
-			// 此处仍可以继续写其他接口请求...
-			// 调用其他方法...
+			}
 		}
 	}
 </script>
@@ -287,7 +257,6 @@
 }
 
 .replyList{
-	margin-top: 208rpx;
 	.replyContent{
 		margin: 0 28rpx;
 		.myReply{

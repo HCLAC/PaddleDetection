@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="example-body"  >
-			<uni-nav-bar :fixed="true" :status-bar="true" :border="true" >
+			<uni-nav-bar :fixed="true" :status-bar="true" :border="true" title="热门话题">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
@@ -11,7 +11,6 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		
 		<!-- 热门话题 -->
 		<view class="hotTopic">
 			<view class="hotTopicTop">
@@ -20,22 +19,18 @@
 				</view>
 				<view class="topLine"></view>
 			</view>
-			
 			<view class="topicRankBox">
 				<view class="topicTips" @click="toTopicList(item.topic_id)" v-for="(item,index) in hotTopic " :key="index" >
 					<!-- <image class="rankImg" src="/static/images/topic-1.png" mode=""></image> -->
 					<image class="rankImg" :src="`/static/images/topic-${index+1}.png`" mode=""></image>
-					
 					<view class="tipsText" >
 						{{item.name}}
 					</view>
 				</view>
-				
 			</view>
 		</view>
-		
 		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-		<!-- 推荐 -->
+			<!-- 推荐 -->
 			<view class="recommended">
 				<view class="recommendedTop">
 					<view class="recommendedTitle">
@@ -71,15 +66,10 @@
 								</image>
 								<view class="attText">{{ item1.title }}</view>
 							</view>
-							
 						</view>
-						<view class="line">
-							
-						</view>
+						<view class="line"></view>
 					</view>
 				</view>
-				
-				
 			</view>
 		</mescroll-body>
 	</view>
@@ -91,60 +81,43 @@
 		mixins: [MescrollMixin],
 		data() {
 			return {
-				current: 0,
-				tablist: ['热门话题'],
-				tablist1:['推荐'],
-				tabCurrent: 0,
-				siteHot:'',
 				hotTopic:'',
 				recommList:'',
 				downOption:{
-					use:false
+					use:false,
+					auto:false
 				}
 			};
 		},
 		onLoad() {
 			this.getSquare()
-			this.getRecomm()
 		},
 		methods:{
-			
 			// 热门话题
 			getSquare() {
 				uni.request({
 					url: this.globalUrl + '/topics/hot',
 					success: res => {
-						console.log('热门话题', res);
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
 						this.hotTopic = res.data.data;
 					}
 				})
 			},
-			getRecomm(){
-				uni.request({
-					url: this.globalUrl + '/topics/square_recommend',
-					data:{
-						page:1,
-						count:3
-					},
-					success: res => {
-						console.log('推荐话题', res);
-						this.recommList = res.data.data.recomm_list
-					}
-				})
-			},
 			// 跳转话题列表页
-			toTopicList(e){
-				console.log('eeeeee',e)
+			toTopicList(id){
 				uni.navigateTo({
-					url:'/pages_article/topicList/topicList?id=' + e
+					url:'/pages_article/topicList/topicList?id=' + id
 				})
 			},
 			// 跳转文章详情
 			onPageJump(e) {
-				console.log(e);
 				let id = e.currentTarget.id;
-				// debugger
-				// return
 				uni.navigateTo({
 					url: '/pages_content/article/article?article_id=' + id
 				});
@@ -174,60 +147,65 @@
 			/*上拉加载的回调*/
 			upCallback(page) {
 				var that = this
-				// mescroll.setPageSize(6)
 				let pageNum = page.num; // 页码, 默认从1开始
 				let pageSize = page.size; // 页长, 默认每页10条
-					uni.request({
-						url: this.globalUrl + '/topics/square_recommend?page=' + pageNum + '&count=' + pageSize,
-						success: data => {
-							console.log('data', data);
-							// 接口返回的当前页数据列表 (数组)
-							let curPageData = data.data.data.recomm_list;
-							console.log('curPageData', curPageData);
-							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-							let curPageLen = curPageData.length;
-							console.log('curPageLen', curPageLen);
-							// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-							// let totalPage = data.data.data.list;
-							// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-							let totalSize = data.data.data.total;
-							console.log('totalSize', totalSize);
-							// 接口返回的是否有下一页 (true/false)
-							// let hasNext = data.data.data.list;
-					
-							//设置列表数据
-							if (page.num == 1) this.recommList = []; //如果是第一页需手动置空列表
-							this.recommList = this.recommList.concat(curPageData); //追加新数据
-							console.log('recommList', this.recommList);
-							// 请求成功,隐藏加载状态
-							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-							// this.mescroll.endByPage(curPageLen, totalPage);
-					
-							//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-							this.mescroll.endBySize(curPageLen, totalSize);
-					
-							//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-							//this.mescroll.endSuccess(curPageLen, hasNext);
-					
-							//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-							//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-							//如果传了hasNext,则翻到第二页即可显示无更多数据.
-							//this.mescroll.endSuccess(curPageLen);
-					
-							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-						},
-						fail: () => {
-							//  请求失败,隐藏加载状态
-							this.mescroll.endErr();
+				uni.request({
+					url: this.globalUrl + '/topics/square_recommend?page=' + pageNum + '&count=' + pageSize,
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
 						}
-					});
-					
-				},
+						if (!res.data.data.recomm_list || res.data.data.recomm_list.length == 0){
+							return
+						}
+						// 接口返回的当前页数据列表 (数组)
+						let curPageData = res.data.data.recomm_list;
+						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+						let curPageLen = curPageData.length;
+						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+						// let totalPage = res.data.data.list;
+						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+						let totalSize = res.data.data.total;
+						// 接口返回的是否有下一页 (true/false)
+						// let hasNext = res.data.data.list;
+				
+						//设置列表数据
+						if (page.num == 1) this.recommList = []; //如果是第一页需手动置空列表
+						this.recommList = this.recommList.concat(curPageData); //追加新数据
+						console.log('recommList', this.recommList, curPageLen, totalSize)
+						// 请求成功,隐藏加载状态
+						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+						// this.mescroll.endByPage(curPageLen, totalPage);
+				
+						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+						this.mescroll.endBySize(curPageLen, totalSize);
+				
+						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+						//this.mescroll.endSuccess(curPageLen, hasNext);
+				
+						//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+						//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+						//如果传了hasNext,则翻到第二页即可显示无更多数据.
+						//this.mescroll.endSuccess(curPageLen);
+				
+						// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+						// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+					},
+					fail: () => {
+						//  请求失败,隐藏加载状态
+						this.mescroll.endErr();
+					}
+				});
 				
 				
 				// 此处仍可以继续写其他接口请求...
 				// 调用其他方法...
+					
+			}
 		}
 	}
 </script>

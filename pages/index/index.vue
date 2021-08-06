@@ -191,7 +191,8 @@
 					auto:false
 				},
 				upOption: {
-					auto:false
+					auto:false,
+					bgColor: '#F8F8F8'
 				},
 				backgroundColor: 'transparent',
 				firstTime: new Date().getTime(),
@@ -224,9 +225,6 @@
 				areaList: [],
 				url: '',
 				serviceProvider: '',
-				upOption: {
-					bgColor: '#F8F8F8'
-				},
 				cus_sty_top: '156rpx'
 			};
 		},
