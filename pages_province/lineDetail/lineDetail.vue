@@ -1,5 +1,5 @@
 <template>
-	<view id="bigBox">
+	<view >
 		<view class="example-body" >
 			<uni-nav-bar :fixed="true" :status-bar="true" style="z-index: 99999 !important;">
 				<view slot="left" class="slotleft">
@@ -38,7 +38,7 @@
 			<view class="lineTitle">{{ lineContent.title }}</view>
 		</view>
 		<view class="lineDriver"></view>
-		<view  :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" :style="{top: styleFix.top}">
+		<view  :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard">
 			<view style="width: 60%;display: flex;">
 				<view class="tripBox" @click="tripChange">
 					<view :class="tabCurrent == 0 ? 'tripText' : 'tripText1'">
@@ -54,7 +54,6 @@
 					<view class="serviceLine" v-if="tabCurrent == 1">
 					</view>
 				</view>
-				
 			</view>
 		</view>
 		<view class="linePlan">
@@ -108,7 +107,7 @@
 											<text class="stitle">{{ eve.title }}</text>
 										</view>
 										<view class="u-order-desc">{{ eve.description }}</view>
-										<view class="position" v-for="(pos, posIndex) in eve.position" :key="posIndex" @click="getPosition(pos)">
+										<view class="position" v-for="(pos, posIndex) in eve.position" :key="posIndex" @click="toPosition(pos)">
 											<view class="left">
 												<image :src="pos.cover_url" class="positionImg" mode=""></image>
 												<view class="imgTag">景点</view>
@@ -197,8 +196,7 @@
 						</view>
 					</view>
 				</u-time-line>
-				
-				<view class="serverInfo" v-if="lineContent.content" >
+				<view class="serverInfo" v-if="lineContent.content">
 					<view class="title">服务说明</view>
 					<view class="content">{{ lineContent.description }}</view>
 					<view class="phone" @click="tell" ><image src="/static/images/serverCall.svg"></image></view>
@@ -220,7 +218,7 @@
 						<view class="favNum">{{ lineContent.fav_count }}</view>
 					</view> -->
 					<view><view class="share" v-if="serviceProvider =='baidu'"  @click="share"><image src="/static/images/shareIcon.svg"></image></view></view>
-					<view class=""><view class="loginButton" v-if="hasLogin" @click="login">登录</view></view>
+					<view class=""><view class="loginButton" v-if="!hasLogin" @click="login">登录</view></view>
 				</view>
 			</view>
 		</view>
@@ -228,66 +226,28 @@
 </template>
 
 <script>
-import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 export default {
-	comments: {
-		uniNavBar
-	},
 	data() {
 		return {
 			lineContent: null,
 			current: 0,
 			tablist: ['参考行程', '服务说明'],
 			tabCurrent: 0,
-			hasLogin: true,
+			hasLogin: false,
 			isFixed: false,
 			serviceProvider: '',
-			cardheight:0,
-			styleFix:{
-				top:0
-			},
-			boxHeight:0
+			cardheight:200,
+			boxHeight: 2000
 		};
 	},
-	onShow() {
-		// 获取当前小程序的页面栈
-		let pages = getCurrentPages();
-		// 数组中索引最大的页面--当前页面
-		let currentPage = pages[pages.length - 1];
-		// 打印出当前页面中的 options
-		console.log('onshow--',currentPage.options)
-		let id = currentPage.options.id
-		uni.showLoading({
-			title:'加载中',
-			success:()=> {
-				this.hasLogin = uni.getStorageSync('Authorization') ? false : true;
-				if (id) {
-					this.getDetail(id);
-				}
-			}
-		}),
-		// uni.getSystemInfo({
-		//     success:  (res)=> {
-		//         console.log(res.windowHeight);
-		// 		this.boxHeight = res.windowHeight
-		//     }
-		// });
-		setTimeout(function() {
-			uni.hideLoading();
-		}, 1000);
-	},
-	
-	
-	onLoad() {
-		this.calcHeight()
+	onLoad(options) {
+		let id = options.id
+		this.hasLogin = uni.getStorageSync('Authorization') ? true : false;
 		this.serviceProvider = getApp().globalData.serviceProvider
+		this.getDetail(id);
 	},
-		
-	
 	onPageScroll(e) {
-		// console.log(e)
-		// console.log(this.boxHeight)
-		if (e.scrollTop >  this.cardheight) {
+		if (e.scrollTop >=  this.cardheight) {
 			this.isFixed = true;
 			if(e.scrollTop > (this.boxHeight - 432)){
 				this.tabCurrent = 1
@@ -296,37 +256,50 @@ export default {
 			this.isFixed = false;
 			this.tabCurrent = 0
 		}
-		
 	},
-	// onReachBottom() {
-	// 	this.tabCurrent = 1
-		
-	// },
 	methods: {
+		getDetail(id) {
+			var that = this
+			uni.request({
+				url: this.globalUrl + '/route',
+				method: 'GET',
+				data: {
+					uuid: id
+				},
+				success: res => {
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
+					}
+					res.data.data.content = res.data.data.content && res.data.data.content.length ? JSON.parse(res.data.data.content) : [];
+					this.butler_mobile = res.data.data.butler_mobile;
+					this.lineContent = res.data.data;
+					this.calcHeight()
+				},
+				fail: error => {
+					uni.showToast({
+						title: '网络不给力，请稍后再试...',
+						icon: 'none'
+					});
+				}
+			});
+		},
 		calcHeight(){
-			const query = uni.createSelectorQuery().in(this);
-			query.select('#selectcard').boundingClientRect(data => {
-			  console.log("得到布局位置信息" + JSON.stringify(data));
-			  console.log("节点离页面顶部的距离为" + data.top);
-			  if(data.top == 0 ){
-				  this.cardheight = 220
-				  this.styleFix.top =  125 +'rpx'
-			  }else{
-				  this.cardheight = data.top
-				  this.styleFix.top = (data.top)-30 + 'rpx'
-			  }
-			  
-			}).exec();
 			setTimeout(() => {
 				let view = uni.createSelectorQuery().select("#planContent");
 				view.fields({
+					rect: true,
 					size: true,
 				}, data => {
 					console.log("得到节点信息" + JSON.stringify(data));
 					console.log("节点的高为" + data.height);
 					this.boxHeight = data.height
+					this.cardheight = data.top
 				}).exec();
-			}, 1000);
+			}, 500);
 		},
 		// 切换
 		tripChange(){
@@ -338,94 +311,32 @@ export default {
 		serviceChange(){
 			this.tabCurrent = 1
 			uni.pageScrollTo({
-				scrollTop: 999999,
+				scrollTop: this.boxHeight,
+				// selector:"serverInfo"
 			})
 		},
-		// tabChange(index) {
-		// 	console.log(index,'---index')
-		// 	this.tabCurrent = index;
-		// 	if(this.tabCurrent ===1){
-		// 		uni.pageScrollTo({
-		// 		    scrollTop: 999999,
-		// 		})
-		// 	}else{
-		// 		uni.pageScrollTo({
-		// 		    scrollTop: 0,
-		// 		})
-		// 	}
-		// },
 		change(e) {
 			this.current = e.detail.current;
 		},
 		lineFav(id) {
 			if (!this.hasLogin) {
-				uni.showToast({
-					title: '请先登录',
-					icon: 'none'
-				});
-				uni.navigateTo({
-					url: '/pages_mine/login/login'
-				});
-			} else {
-				uni.request({
-					url: this.globalUrl + '/user/favorite',
-					method: 'POST',
-					header: {},
-					data: {
-						uuid: id
-					},
-
-					success: res => {
-						if (res.data.code == 0) {
-							console.log(res.data.data);
-							res.data.data.content = res.data.data.content && res.data.data.content.length ? JSON.parse(res.data.data.content) : [];
-							console.log(res.data.data.content);
-							this.lineContent = res.data.data;
-						} else {
-							uni.showToast({
-								title: res.data.msg,
-								icon: 'none'
-							});
-						}
-					},
-					fail: error => {
-						uni.showToast({
-							title: '网络不给力，请稍后再试...',
-							icon: 'none'
-						});
-					}
-				});
+				this.login()
+				return
 			}
-		},
-		getPosition(pos) {
-			if (pos.id) {
-				uni.navigateTo({
-					url: '/pages_province/positionContent/positionContent?id=' + pos.id
-				});
-			}
-		},
-		getDetail(id) {
-			var that = this
 			uni.request({
-				url: this.globalUrl + '/route',
-				method: 'GET',
+				url: this.globalUrl + '/user/favorite',
+				method: 'POST',
+				header: {},
 				data: {
 					uuid: id
 				},
-
 				success: res => {
-					if (res.data.code == 0) {
-						
-						res.data.data.content = res.data.data.content && res.data.data.content.length ? JSON.parse(res.data.data.content) : [];
-						console.log(res.data);
-						this.butler_mobile = res.data.data.butler_mobile;
-						this.lineContent = res.data.data;
-					
-					} else {
+					if (res.statusCode != 200 || res.data.code != 0){
 						uni.showToast({
 							title: res.data.msg,
 							icon: 'none'
 						});
+						return
 					}
 				},
 				fail: error => {
@@ -433,8 +344,16 @@ export default {
 						title: '网络不给力，请稍后再试...',
 						icon: 'none'
 					});
+					// TODO
 				}
 			});
+		},
+		toPosition(pos) {
+			if (pos.id) {
+				uni.navigateTo({
+					url: '/pages_province/positionContent/positionContent?id=' + pos.id
+				});
+			}
 		},
 		login() {
 			uni.navigateTo({
@@ -445,7 +364,6 @@ export default {
 			uni.makePhoneCall({
 				phoneNumber:this.butler_mobile
 			})
-			
 		},
 		back() {
 			uni.navigateBack({
@@ -462,8 +380,6 @@ export default {
 			});
 		}
 	}
-
-	
 };
 </script>
 
@@ -921,7 +837,7 @@ export default {
 }
 .fixTabs {
 	position: fixed;
-	// top: 140rpx;
+	top: 110rpx;
 	padding-left: 10rpx;
 	padding-top: 20rpx;
 	left: 0;

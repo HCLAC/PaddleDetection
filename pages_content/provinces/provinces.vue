@@ -562,21 +562,28 @@ export default {
 				header: {
 					Authorization: uni.getStorageSync('Authorization')
 				},
-				success: data => {
-					if (!data.data.data.list || data.data.data.list.length == 0){
+				success: res => {
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
+					}
+					if (!res.data.data.list || res.data.data.list.length == 0){
 						return
 					}
 					// 接口返回的当前页数据列表 (数组)
-					let curPageData = data.data.data.list;
+					let curPageData = res.data.data.list;
 			
 					// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 					let curPageLen = curPageData.length;
 					// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-					let totalPage = data.data.data.total / pageSize;
+					let totalPage = res.data.data.total / pageSize;
 					// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-					let totalSize = data.data.data.total;
+					let totalSize = res.data.data.total;
 					// 接口返回的是否有下一页 (true/false)
-					// let hasNext = data.data.data.list;
+					// let hasNext = res.data.data.list;
 					if(this.answersList.length > 0 ){
 						var answer = this.answersList
 						var sar = Math.floor((Math.random()*answer.length));

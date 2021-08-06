@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="行程路线">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
@@ -11,7 +11,7 @@
 			</uni-nav-bar>
 		</view>
 		<view class="container">
-			<mescroll-body   ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+			<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 				<view class="lineItem" @click="getDetail(item.uuid)" v-for="(item, index) in lineList" :key="index">
 					<image :src="item.image" mode=""></image>
 					<view class="lineText" >{{ item.title }}</view>
@@ -22,21 +22,8 @@
 </template>
 
 <script>
-import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 export default {
-	comments: {
-		uniNavBar
-	},
-	onLoad(option){
-		
-		if(option.state_id == 0){
-			this.state_id = option.city_id ? option.city_id : null
-		}else{
-			this.state_id = option.state_id ? option.state_id : null
-			this.city_id = option.city_id ? option.city_id : null
-		}
-	},
 	mixins: [MescrollMixin],
 	data() {
 		return {
@@ -46,12 +33,22 @@ export default {
 			upOption:{
 				textNoMore:'我也是有底线的～',
 				bgColor:'rgba(0,0,0,0~1)'
+			},
+			downOption:{
+				auto: false,
 			}
 		};
 	},
+	onLoad(option){
+		if(option.state_id == 0){
+			this.state_id = option.city_id ? option.city_id : null
+		}else{
+			this.state_id = option.state_id ? option.state_id : null
+			this.city_id = option.city_id ? option.city_id : null
+		}
+	},
 	methods: {
 		downCallback() {
-			
 			this.mescroll.resetUpScroll();
 		},
 		upCallback(page) {
@@ -63,24 +60,27 @@ export default {
 				data: {
 					count: pageSize,
 					page: pageNum,
-					city_Id: this.city_id ? this.city_id : null,
-					state_id: this.state_id? this.state_id : null
+					city_Id: this.city_id,
+					state_id: this.state_id
 				},
 
 				success: res => {
-					if (res.data.code == 0) {
-						let curPageData = res.data.data.list;
-						let curPageLen = curPageData.length ? curPageData.length : 0;
-						let totalPage = res.data.data.total;
-						if (page.num == 1) this.lineList = [];
-						this.lineList = this.lineList.concat(curPageData);
-						this.mescroll.endByPage(curPageLen, totalPage);
-					} else {
+					if (res.statusCode != 200 || res.data.code != 0){
 						uni.showToast({
 							title: res.data.msg,
 							icon: 'none'
 						});
+						return
 					}
+					if (!res.data.data.list || res.data.data.list.length == 0){
+						return
+					}
+					let curPageData = res.data.data.list;
+					let curPageLen = curPageData.length ? curPageData.length : 0;
+					let totalPage = res.data.data.total;
+					if (page.num == 1) this.lineList = [];
+					this.lineList = this.lineList.concat(curPageData);
+					this.mescroll.endBySize(curPageLen, totalPage);
 				},
 				fail: error => {
 					this.mescroll.endErr();
