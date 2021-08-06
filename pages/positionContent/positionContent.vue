@@ -61,7 +61,9 @@
 				<view class="rateBox" >
 					<!-- <uni-rate  :readonly="true" allow-half :value="attDetail.data.rate" /> -->
 					<!-- 评分图标 -->
-					<view class="rateStart" v-if="attDetail.data.rate == 5">
+					<uni-rate :readonly="true" :value="attDetail.data.rate" :size='20' margin="3" :allowHalf="true"/>
+					
+					<!-- <view class="rateStart" v-if="attDetail.data.rate == 5">
 						<image src="../../static/images/star_svg/star4.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star4.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star4.svg" mode=""></image>
@@ -130,7 +132,7 @@
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
 						<image src="../../static/images/star_svg/star5.svg" mode=""></image>
-					</view>
+					</view> -->
 					<!-- <u-rate :disabled="true" current="4"></u-rate> -->
 					<view class="rate">{{attDetail.data.rate}} 星</view>
 					<view class="goTo">{{attDetail.data.visited}}人去过</view>
