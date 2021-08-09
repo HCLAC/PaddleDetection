@@ -40,11 +40,8 @@
 						<view class="title">{{ site.name }}</view>
 						<view class="areacontent">{{ site.description }}</view>
 						<view class="rateBox">
-							<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
 							<!-- 评分图标 -->
 							<uni-rate :readonly="true" :value="site.rate" :size='16' margin="1" :allowHalf="true"/>
-							
-							
 							<view class="rate">{{ site.rate }} 星</view>
 						</view>
 					</view>

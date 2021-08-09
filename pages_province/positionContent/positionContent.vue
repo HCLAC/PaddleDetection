@@ -56,79 +56,8 @@
 					</view>
 				</view>
 				<view class="rateBox" >
-					<!-- <uni-rate  :readonly="true" allow-half :value="siteInfo.data.rate" /> -->
 					<!-- 评分图标 -->
-					<view class="rateStart" v-if="siteInfo.data.rate == 5">
-						<image src="/static/images/star_svg/star4.svg" mode=""></image>
-						<image src="/static/images/star_svg/star4.svg" mode=""></image>
-						<image src="/static/images/star_svg/star4.svg" mode=""></image>
-						<image src="/static/images/star_svg/star4.svg" mode=""></image>
-						<image src="/static/images/star_svg/star4.svg" mode=""></image>
-					</view>
-					<view class="rateStart" v-else-if="siteInfo.data.rate == 4">
-						<image src="/static/images/star_svg/star3.svg" mode=""></image>
-						<image src="/static/images/star_svg/star3.svg" mode=""></image>
-						<image src="/static/images/star_svg/star3.svg" mode=""></image>
-						<image src="/static/images/star_svg/star3.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-					</view>
-					<view class="rateStart" v-else-if="siteInfo.data.rate == 3">
-						<image src="/static/images/star_svg/star2.svg" mode=""></image>
-						<image src="/static/images/star_svg/star2.svg" mode=""></image>
-						<image src="/static/images/star_svg/star2.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-					</view>
-					<view class="rateStart" v-else-if="siteInfo.data.rate == 2">
-						<image src="/static/images/star_svg/star1.svg" mode=""></image>
-						<image src="/static/images/star_svg/star1.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-					</view>
-					<view class="rateStart" v-else-if="siteInfo.data.rate == 1">
-						<image src="/static/images/star_svg/star11.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-					</view>
-					<view class="rateStart" v-else-if="siteInfo.data.rate >= 4.1 && siteInfo.data.rate < 5">
-						<image src="/static/images/star_svg/star3.svg" mode=""></image>
-						<image src="/static/images/star_svg/star3.svg" mode=""></image>
-						<image src="/static/images/star_svg/star3.svg" mode=""></image>
-						<image src="/static/images/star_svg/star3.svg" mode=""></image>
-						<image src="/static/images/star_svg/starCopy13.svg" mode=""></image>
-					</view>
-					<view class="rateStart" v-else-if="siteInfo.data.rate >= 3.1 && siteInfo.data.rate < 4">
-						<image src="/static/images/star_svg/star2.svg" mode=""></image>
-						<image src="/static/images/star_svg/star2.svg" mode=""></image>
-						<image src="/static/images/star_svg/star2.svg" mode=""></image>
-						<image src="/static/images/star_svg/starCopy12.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-					</view>
-					<view class="rateStart" v-else-if="siteInfo.data.rate >= 2.1 && siteInfo.data.rate < 3">
-						<image src="/static/images/star_svg/star1.svg" mode=""></image>
-						<image src="/static/images/star_svg/star1.svg" mode=""></image>
-						<image src="/static/images/star_svg/starCopy1.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-					</view>
-					<view class="rateStart" v-else-if="siteInfo.data.rate >= 1.1 && siteInfo.data.rate < 2">
-						<image src="/static/images/star_svg/star11.svg" mode=""></image>
-						<image src="/static/images/star_svg/starCopy1.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-					</view>
-					<view class="rateStart" v-else-if="siteInfo.data.rate >= 0.1 && siteInfo.data.rate < 1">
-						<image src="/static/images/star_svg/starCopy1.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-						<image src="/static/images/star_svg/star5.svg" mode=""></image>
-					</view>
-					<!-- <u-rate :disabled="true" current="4"></u-rate> -->
+					<uni-rate :readonly="true" :value="attDetail.data.rate" :size='20' margin="3" :allowHalf="true"/>
 					<view class="rate">{{siteInfo.data.rate}} 星</view>
 					<view class="goTo">{{siteInfo.data.visited}}人去过</view>
 				</view>
