@@ -11,63 +11,63 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<mescroll-body  ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption"  >
-			<view class="content" style="height: 100%;">
-				<view  style="position: absolute; width: 100%; top: 0; z-index: 400;">
-					<view class="contentTop">
-						<image src="/static/images/mineBack.png" class="backImg"></image>
-						<!-- 用户信息 -->
-						<view class="usermes">
-							<image :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'" class="userAva" v-if="userInfo.avatar" mode=""></image>
-							<view class="userR">
-								<view class="userName" @click="toMineInfo">{{ userInfo.nickName }}
-									<image src="/static/images/iconExit.svg" mode=""></image>
-								</view>
-								<view class="fa">
-									<view class="fllow" @click="toConcern">
-										<view class="fllowNum">{{ userInfo.fllowNum }}</view>
-										<text>关注</text>
-									</view>
-									<view class="answers" @click="toAnswers">
-										<view class="answersNum">{{ userInfo.answersNum }}</view>
-										<text>问答</text>
-									</view>
-								</view>
-								
-								<!-- <view class="logout">退出登录</view> -->
+		<view class="mineHeader" style="position: absolute; width: 100%; top: 0; z-index: 400;">
+			<view class="contentTop">
+				<image src="/static/images/mineBack.png" class="backImg"></image>
+				<!-- 用户信息 -->
+				<view class="usermes">
+					<image :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'" class="userAva" v-if="userInfo.avatar" mode=""></image>
+					<view class="userR">
+						<view class="userName" @click="toMineInfo">{{ userInfo.nickName }}
+							<image src="/static/images/iconExit.svg" mode=""></image>
+						</view>
+						<view class="fa">
+							<view class="fllow" @click="toConcern">
+								<view class="fllowNum">{{ userInfo.fllowNum }}</view>
+								<text>关注</text>
+							</view>
+							<view class="answers" @click="toAnswers">
+								<view class="answersNum">{{ userInfo.answersNum }}</view>
+								<text>问答</text>
 							</view>
 						</view>
-					</view>
-					<!-- 客服 -->
-					<!-- <view class="phone" @click="tell"><image class="phoneImg" src="/static/images/minephone.svg" mode=""></image></view> -->
-					<!-- 我的收藏 -->
-					<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
-						<view class="favBox" @click="change" >
-							<view class="favBT">
-								<view :class="tabCurrent == 0 ?'favText' : 'favText1 '" >
-									收藏
-								</view>
-								<view class="favLine" v-if="tabCurrent == 0">
-								</view>
-							</view>
-							<view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" >
-								{{userInfo.favNum}}
-							</view>
-						</view>
-						<view class="likeBox" @click="change1">
-							<view class="likeBT">
-								<view :class="tabCurrent == 1 ?'favText' : 'favText1 '">
-									已赞
-								</view>
-								<view class="likeLine" v-if="tabCurrent == 1">
-								</view>
-							</view>
-							<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" >
-								{{userInfo.likeNum}}
-							</view>
-						</view>
+						
+						<!-- <view class="logout">退出登录</view> -->
 					</view>
 				</view>
+			</view>
+			<!-- 客服 -->
+			<!-- <view class="phone" @click="tell"><image class="phoneImg" src="/static/images/minephone.svg" mode=""></image></view> -->
+			<!-- 我的收藏 -->
+			<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
+				<view class="favBox" @click="change" >
+					<view class="favBT">
+						<view :class="tabCurrent == 0 ?'favText' : 'favText1 '" >
+							收藏
+						</view>
+						<view class="favLine" v-if="tabCurrent == 0">
+						</view>
+					</view>
+					<view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" >
+						{{userInfo.favNum}}
+					</view>
+				</view>
+				<view class="likeBox" @click="change1">
+					<view class="likeBT">
+						<view :class="tabCurrent == 1 ?'favText' : 'favText1 '">
+							已赞
+						</view>
+						<view class="likeLine" v-if="tabCurrent == 1">
+						</view>
+					</view>
+					<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" >
+						{{userInfo.likeNum}}
+					</view>
+				</view>
+			</view>
+		</view>
+		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption"  >
+			<view class="content" style="height: 100%;">
 				<!-- 收藏 -->
 				<view style="margin-top: 64%; padding: 0 28rpx;" v-if="tabCurrent == 0 ">
 					<view class="" v-for="(item, index) in tipList" :key="index" v-if="favNum != 0">
@@ -292,8 +292,21 @@ export default {
 					that.userInfo.likeNum = likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum
 					let answersNum = res.data.data.question_count
 					that.userInfo.answersNum = answersNum>10000?((answersNum-(answersNum%1000))/10000+'w'):answersNum
+					that.calcCardHeight()
 				}
 			})
+		},
+		calcCardHeight(){
+			setTimeout(() => {
+				let view = uni.createSelectorQuery().select("#selectcard");
+				view.fields({
+					rect: true,
+					size: true,
+				}, data => {
+					console.log("得到节点信息" + JSON.stringify(data));
+					this.cardheight = data.top-data.height
+				}).exec();
+			}, 500);
 		},
 		// 切换
 		change(){
@@ -626,19 +639,6 @@ export default {
 	width: 124rpx;
 	height: 124rpx;
 }
-.myCollection {
-	border-radius: 12px 12px 0rpx 0rpx;
-	background-color: #fff;
-	color: #303133;
-	width: 100%;
-	// font-size: 40rpx;
-	// font-weight: 500;
-	// padding-left: 32rpx;
-	padding-top: 48rpx;
-	display: flex;
-	position: absolute;
-	top: 360rpx;
-}
 .favBox{
 	display: flex;
 	height: 60rpx;
@@ -698,12 +698,25 @@ export default {
 	position: fixed;
 	top: 126rpx;
 	z-index: 2;
-	height: 98rpx;
-	padding-top: 48rpx;
+	padding-top: 20rpx;
 	display: flex;
+	background-color: #fff;
+	width: 100%;
+	height:110rpx;
 }
 .noFix {
 	z-index: 1000;
+	border-radius: 12px 12px 0rpx 0rpx;
+	background-color: #fff;
+	color: #303133;
+	width: 100%;
+	// font-size: 40rpx;
+	// font-weight: 500;
+	// padding-left: 32rpx;
+	padding-top: 48rpx;
+	display: flex;
+	position: absolute;
+	top: 360rpx;
 }
 .favNum{
 	height: 24rpx;

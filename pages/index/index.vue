@@ -264,7 +264,9 @@
 				});
 			},
 			hideLoad(){
-				uni.hideLoading();
+				setTimeout(() => {
+					uni.hideLoading();
+				}, 600);
 			},
 			// 获取热门目的地
 			getAreaHot(){

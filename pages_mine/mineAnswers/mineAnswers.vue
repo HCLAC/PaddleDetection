@@ -59,8 +59,8 @@
 							<text class="date">{{item.create_at.slice(0,10)}}</text>
 						</view>
 						<view class="content">
-							<u-parse ref="parse"  style="overflow: hidden;" lazy-load
-							 :html="item.content"></u-parse>
+							<mp-html ref="parse"  style="overflow: hidden;" lazy-load
+							 :html="item.content"></mp-html>
 						</view>
 						<view class="lookAnswers">
 							{{item.reply_count>10000?((item.reply_count-(item.reply_count%1000))/10000+'w'):item.reply_count}}
@@ -84,8 +84,8 @@
 							<text class="date">{{item.create_at.slice(0,10)}}</text>
 						</view>
 						<view class="content">
-							<!-- <u-parse ref="parse"  style="overflow: hidden;" lazy-load
-							 :html="item.content"></u-parse> -->
+							<!-- <mp-html ref="parse"  style="overflow: hidden;" lazy-load
+							 :html="item.content"></mp-html> -->
 							 {{item.title}}
 						</view>
 						<view class="lookAnswers">
@@ -110,8 +110,8 @@
 							<text class="date">{{item.create_at.slice(0,10)}}</text>
 						</view>
 						<view class="content">
-							<!-- <u-parse ref="parse"  style="overflow: hidden;" lazy-load
-							 :html="item.content"></u-parse> -->
+							<!-- <mp-html ref="parse"  style="overflow: hidden;" lazy-load
+							 :html="item.content"></mp-html> -->
 							 {{item.title}}
 						</view>
 						<view class="lookAnswers">

@@ -97,6 +97,9 @@ export default {
 		},
 		onPageScroll(e) {
 			if (e.scrollTop > this.cardheight) {
+				if (e.scrollTop > this.cardheight+20 && this.isFixed){
+					return
+				}
 				this.isFixed = true;
 			} else {
 				this.isFixed = false;
@@ -112,7 +115,6 @@ export default {
 						this.getTopic()
 						// this.getRecommend()
 						// this.getlatest()
-						this.calcCardHeight()
 						this.hideLoad()
 					}
 				});
@@ -121,16 +123,16 @@ export default {
 				uni.hideLoading();
 			},
 			calcCardHeight(){
-				const query = uni.createSelectorQuery().in(this);
-				query.select('#selectcard').boundingClientRect(data => {
-					console.log("得到布局位置信息" + JSON.stringify(data));
-					if (data.top == 0) {
-						this.cardheight = 200
-					} else {
-						this.cardheight = data.top
-					}
-				}).exec();
-				
+				setTimeout(() => {
+					let view = uni.createSelectorQuery().select("#selectcard");
+					view.fields({
+						rect: true,
+						size: true,
+					}, data => {
+						console.log("得到节点信息" + JSON.stringify(data));
+						this.cardheight = data.top-data.height
+					}).exec();
+				}, 500);
 			},
 			getTopic(){
 				this.HTTP.request({
@@ -147,6 +149,7 @@ export default {
 							return
 						}
 						this.info = res.data.data;
+						this.calcCardHeight()
 					}
 				})
 			},
@@ -426,7 +429,7 @@ export default {
 	padding-left: 26rpx;
 	position: fixed;
 	top: 110rpx;
-	padding-top: 38rpx;
+	// padding-top: 38rpx;
 	z-index: 2;
 	display: flex;
 	align-items: center;

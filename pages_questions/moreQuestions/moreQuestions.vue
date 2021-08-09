@@ -57,8 +57,8 @@
 						{{item.title}}
 					</view>
 					<view class="content">
-						<u-parse ref="parse"  style="overflow: hidden;" lazy-load :tag-style="style"
-						 :html="item.content"></u-parse>
+						<mp-html ref="parse"  style="overflow: hidden;" lazy-load :tag-style="style"
+						 :html="item.content"></mp-html>
 					</view>
 					<view class="authorBox">
 						<view class="author">
@@ -83,8 +83,8 @@
 						{{item.title}}
 					</view>
 					<view class="content">
-						<u-parse ref="parse"  style="overflow: hidden;" lazy-load :tag-style="style"
-						 :html="item.content"></u-parse>
+						<mp-html ref="parse"  style="overflow: hidden;" lazy-load :tag-style="style"
+						 :html="item.content"><mp-html>
 					</view>
 					<view class="authorBox">
 						<view class="author">

@@ -38,26 +38,27 @@
 			<view class="lineTitle">{{ lineContent.title }}</view>
 		</view>
 		<view class="lineDriver"></view>
-		<view  :class="isFixed ? 'fixTabs' : 'noFix'">
+		<view  id="tabs" :class="isFixed ? 'fixTabs' : 'noFix'">
+			<!-- <meTabs v-model="tabIndex" :tabs="tabs" @change="tabChange"></meTabs> -->
 			<view style="width: 60%;display: flex;">
 				<view class="tripBox" @click="tripChange">
-					<view :class="tabCurrent == 0 ? 'tripText' : 'tripText1'">
+					<view :class="tabIndex == 0 ? 'tripText' : 'tripText1'">
 						参考行程
 					</view>
-					<view class="tripLine" v-if="tabCurrent == 0">
+					<view class="tripLine" v-if="tabIndex == 0">
 					</view>
 				</view>
 				<view class="serviceBox" @click="serviceChange">
-					<view :class="tabCurrent == 1 ? 'tripText' : 'tripText1'">
+					<view :class="tabIndex == 1 ? 'tripText' : 'tripText1'">
 						服务说明
 					</view>
-					<view class="serviceLine" v-if="tabCurrent == 1">
+					<view class="serviceLine" v-if="tabIndex == 1">
 					</view>
 				</view>
 			</view>
 		</view>
 		<view class="linePlan">
-			<view class="planContent" id="planContent">
+			<view class="planContent">
 				<u-time-line >
 					<view v-for="(item, index) in lineContent.content" :key="index">
 						<u-time-line-item nodeTop="2">
@@ -157,18 +158,22 @@
 </template>
 
 <script>
+	import meTabs from '@/common/me-tabs/me-tabs.vue';
 export default {
+	components: {
+		meTabs
+	},
 	data() {
 		return {
 			lineContent: null,
 			current: 0,
-			tablist: ['参考行程', '服务说明'],
-			tabCurrent: 0,
 			hasLogin: false,
 			isFixed: false,
 			serviceProvider: '',
 			cardheight:200,
-			boxHeight: 2000
+			boxHeight: 2000,
+			tabs: ['参考行程', '服务说明'],
+			tabIndex: 0 // 当前tab下标,必须与mescroll-more.js对应,所以tabIndex是固定变量,不可以改为其他的名字
 		};
 	},
 	onLoad(options) {
@@ -179,13 +184,16 @@ export default {
 	},
 	onPageScroll(e) {
 		if (e.scrollTop >=  this.cardheight) {
-			this.isFixed = true;
 			if(e.scrollTop > (this.boxHeight - 432)){
-				this.tabCurrent = 1
+				this.tabIndex = 1
 			}
+			if (e.scrollTop > this.cardheight+20 && this.isFixed){
+				return
+			}
+			this.isFixed = true;
 		} else {
 			this.isFixed = false;
-			this.tabCurrent = 0
+			this.tabIndex = 0
 		}
 	},
 	methods: {
@@ -214,15 +222,21 @@ export default {
 		},
 		calcHeight(){
 			setTimeout(() => {
-				let view = uni.createSelectorQuery().select("#planContent");
+				let view = uni.createSelectorQuery().select("#tabs");
 				view.fields({
 					rect: true,
 					size: true,
 				}, data => {
 					console.log("得到节点信息" + JSON.stringify(data));
-					console.log("节点的高为" + data.height);
+					this.cardheight = data.top-data.height
+				}).exec();
+				view = uni.createSelectorQuery().select(".linePlan");
+				view.fields({
+					rect: true,
+					size: true,
+				}, data => {
+					console.log("得到节点信息" + JSON.stringify(data));
 					this.boxHeight = data.height
-					this.cardheight = data.top
 				}).exec();
 			}, 500);
 		},
@@ -233,8 +247,22 @@ export default {
 				scrollTop: 0,
 			})
 		},
+		// tabChange(e){
+		// 	console.log('tabChange',e)
+		// 	this.tabIndex = e
+		// 	if (e == 0){
+		// 		uni.pageScrollTo({
+		// 			scrollTop: 0,
+		// 		})
+		// 	} else {
+		// 		uni.pageScrollTo({
+		// 			scrollTop: this.boxHeight,
+		// 			// selector:"serverInfo"
+		// 		})
+		// 	}
+		// },
 		serviceChange(){
-			this.tabCurrent = 1
+			this.tabIndex = 1
 			uni.pageScrollTo({
 				scrollTop: this.boxHeight,
 				// selector:"serverInfo"
