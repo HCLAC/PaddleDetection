@@ -42,76 +42,9 @@
 						<view class="rateBox">
 							<!-- <uni-rate  :readonly="true" allow-half :value="rate" /> -->
 							<!-- 评分图标 -->
-							<view class="rateStart" v-if="site.rate == 5">
-								<image src="/static/images/star_svg/star4.svg" mode=""></image>
-								<image src="/static/images/star_svg/star4.svg" mode=""></image>
-								<image src="/static/images/star_svg/star4.svg" mode=""></image>
-								<image src="/static/images/star_svg/star4.svg" mode=""></image>
-								<image src="/static/images/star_svg/star4.svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-else-if="site.rate == 4">
-								<image src="/static/images/star_svg/star3.svg" mode=""></image>
-								<image src="/static/images/star_svg/star3.svg" mode=""></image>
-								<image src="/static/images/star_svg/star3.svg" mode=""></image>
-								<image src="/static/images/star_svg/star3.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-else-if="site.rate == 3">
-								<image src="/static/images/star_svg/star2.svg" mode=""></image>
-								<image src="/static/images/star_svg/star2.svg" mode=""></image>
-								<image src="/static/images/star_svg/star2.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-else-if="site.rate == 2">
-								<image src="/static/images/star_svg/star1.svg" mode=""></image>
-								<image src="/static/images/star_svg/star1.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-else-if="site.rate == 1">
-								<image src="/static/images/star_svg/star11.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-else-if="site.rate == 4.5">
-								<image src="/static/images/star_svg/star3.svg" mode=""></image>
-								<image src="/static/images/star_svg/star3.svg" mode=""></image>
-								<image src="/static/images/star_svg/star3.svg" mode=""></image>
-								<image src="/static/images/star_svg/star3.svg" mode=""></image>
-								<image src="/static/images/star_svg/starCopy13.svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-else-if="site.rate == 3.5">
-								<image src="/static/images/star_svg/star2.svg" mode=""></image>
-								<image src="/static/images/star_svg/star2.svg" mode=""></image>
-								<image src="/static/images/star_svg/star2.svg" mode=""></image>
-								<image src="/static/images/star_svg/starCopy12.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-else-if="site.rate == 2.5">
-								<image src="/static/images/star_svg/star1.svg" mode=""></image>
-								<image src="/static/images/star_svg/star1.svg" mode=""></image>
-								<image src="/static/images/star_svg/starCopy1.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-else-if="site.rate == 1.5">
-								<image src="/static/images/star_svg/star11.svg" mode=""></image>
-								<image src="/static/images/star_svg/starCopy1.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-							</view>
-							<view class="rateStart" v-else-if="site.rate == 0.5">
-								<image src="/static/images/star_svg/starCopy1.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-								<image src="/static/images/star_svg/star5.svg" mode=""></image>
-							</view>
+							<uni-rate :readonly="true" :value="site.rate" :size='16' margin="1" :allowHalf="true"/>
+							
+							
 							<view class="rate">{{ site.rate }} 星</view>
 						</view>
 					</view>
