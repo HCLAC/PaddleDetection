@@ -137,7 +137,7 @@
 									</view>
 								</view>
 								<view class="">
-									<image class="replyLike" :src="item.like == 1?'/static/images/attLikeA.svg':'/static/images/attLike.svg'" mode="" @click="replyLike(item,index)"></image>
+									<image class="replyLike" :src="item.like == 1?'/static/images/attLikeA.svg':'/static/images/attLike.svg'" mode="" @click="replyLike(item, index)"></image>
 									<image class="report" src="/static/images/report.svg" mode="" @click="toReport(item.id)"></image>
 								</view>
 							</view>
@@ -777,6 +777,7 @@
 					});
 					return
 				}
+				var that = this
 				this.HTTP.request({
 					url: '/comments/likes',
 					data: {
@@ -795,7 +796,7 @@
 							});
 							return
 						}
-						this.commentsList[index] = item.like == 0 ? 1 : 0
+						that.commentsList[index].like = item.like == 0 ? 1 : 0
 					}
 				});
 			},

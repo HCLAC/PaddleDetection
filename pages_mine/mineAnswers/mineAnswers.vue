@@ -50,8 +50,7 @@
 			<!-- <view class="selectedList" v-if="tabCurrent == 0">
 				<view class="card" v-for="(item,index) in selectedList" :key="index" @click="toQuestionsDetail(item)">
 					<view class="avatar">
-						<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-						<image src="/static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
+						<image :src="item.avatar?item.avatar:'/static/images/userImg.svg'" mode=""></image>
 					</view>
 					
 					<view class="cradR">
@@ -76,8 +75,7 @@
 			<view class="newestList" v-if="tabCurrent == 1">
 				<view class="card" v-for="(item,index) in newestList" :key="index" @click="toQuestionsDetail(item)">
 					<view class="avatar">
-						<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-						<image src="/static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
+						<image :src="item.avatar?item.avatar:'/static/images/userImg.svg'" mode=""></image>
 					</view>
 					
 					<view class="cradR">
@@ -103,8 +101,7 @@
 			<view class="newestList" v-if="tabCurrent == 2">
 				<view class="card" v-for="(item,index) in answersList" :key="index" @click="toQuestionsDetail(item)">
 					<view class="avatar">
-						<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-						<image src="/static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
+						<image :src="item.avatar?item.avatar:'/static/images/userImg.svg'" mode=""></image>
 					</view>
 					
 					<view class="cradR">

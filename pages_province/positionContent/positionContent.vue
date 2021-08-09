@@ -57,7 +57,7 @@
 				</view>
 				<view class="rateBox" >
 					<!-- 评分图标 -->
-					<uni-rate :readonly="true" :value="attDetail.data.rate" :size='20' margin="3" :allowHalf="true"/>
+					<uni-rate :readonly="true" :value="siteInfo.data.rate" :size='20' margin="3" :allowHalf="true"/>
 					<view class="rate">{{siteInfo.data.rate}} 星</view>
 					<view class="goTo">{{siteInfo.data.visited}}人去过</view>
 				</view>
@@ -69,7 +69,7 @@
 						<text>收起</text>
 						<image class="iconImg" src="/static/images/zhankaiIcon.png" mode=""></image>
 					</view>
-					<view class="btnBox" @click="showMore" v-if="isShow && more">
+					<view class="btnBox" @click="showMore" v-else-if="isShow && more">
 						<view class="mask"></view>
 						<text>展开</text>
 						<image class="iconImg" src="/static/images/shouqiIcon.png" mode=""></image>

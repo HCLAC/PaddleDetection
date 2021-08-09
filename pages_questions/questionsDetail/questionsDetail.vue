@@ -21,7 +21,7 @@
 					<!-- <view class="cardFollow" v-if="!detail.is_follow" @click="Fllow()">
 						关注
 					</view>
-					<view class="cardIsFollow" v-if="detail.is_follow" @click="Fllow()">
+					<view class="cardIsFollow" v-else="detail.is_follow" @click="Fllow()">
 						已关注
 					</view> -->
 				</view>
@@ -45,8 +45,7 @@
 				
 				<view class="cardAuthorBox">
 					<view class="author">
-						<image class="userImg" src="/static/images/userImg.svg" v-if="!detail.avatar" mode="" ></image>
-						<image class="userImg" :src="detail.avatar" v-if="detail.avatar" mode="" ></image>
+						<image class="userImg" :src="detail.avatar?detail.avatar:'/static/images/userImg.svg'"></image>
 						<view class="authorName">
 							{{detail.account_name}}
 						</view>
@@ -66,12 +65,8 @@
 			<view class="answersCardBox" >
 				<view class="answersCardTop">
 					<view class="answersAuthor" onclick="popup('zoom-in')">
-						<view class="avatar ldx infinite ldx-zoom-in" >
-							
-						</view>
-						<image class="avatarImg" :src="answersList.avatar" mode="" v-if="answersList.avatar"></image>
-						<image class="avatarImg" src="/static/images/userImg.svg" v-if="!answersList.avatar" mode=""></image>
-						
+						<view class="avatar ldx infinite ldx-zoom-in" ></view>
+						<image class="avatarImg" :src="answersList.avatar?answersList.avatar:'/static/images/userImg.svg'"></image>
 						<view class="userName">
 							{{answersList.account_id}}
 						</view>
@@ -82,21 +77,21 @@
 					</view>
 				</view>
 				<view class="answersCardContent">
-					<u-parse ref="parse" v-if="answersList" style="overflow: hidden;" lazy-load :tag-style="style" 
-					 :html="answersList.content "></u-parse>
+					<mp-html ref="parse" v-if="answersList" style="overflow: hidden;" lazy-load :tag-style="style" 
+					 :html="answersList.content "></mp-html>
 				</view>
 				
 				<view class="answersCardBottom">
 					<view class="acbr">
 						<view class="answersLike" @click="like(answersList)">
 							<image src="/static/images/aLike.svg" v-if="answersList.option == 0 || answersList.option == 2" mode=""></image>
-							<image src="/static/images/aLikeActive.svg" v-if="answersList.option == 1" mode=""></image>
+							<image src="/static/images/aLikeActive.svg" v-else-if="answersList.option == 1" mode=""></image>
 							<text>{{answersList.like == 0 ? '赞同' : answersList.like}}</text> 
 						</view>
 						
 						<view class="answersDisLike" @click="disLike(answersList)">
 							<image src="/static/images/aDisLike.svg" v-if="answersList.option == 0 || answersList.option == 1" mode=""></image>
-							<image src="/static/images/aDisLikeActive.svg" v-if="answersList.option == 2" mode=""></image>
+							<image src="/static/images/aDisLikeActive.svg" v-else-if="answersList.option == 2" mode=""></image>
 							<text>{{answersList.dislike == 0 ? '踩' : answersList.dislike}}</text>
 						</view>
 					</view>
@@ -153,8 +148,7 @@
 						</view>
 						<view class="authorBox">
 							<view class="author">
-								<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-								<image src="/static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
+								<image :src="item.avatar?item.avatar:'/static/images/userImg.svg'" mode=""></image>
 								<text>{{item.account_name}}</text>
 							</view>
 							<view class="lookAnswers">
@@ -185,8 +179,7 @@
 			<view class="followBox"  @click="Fllow()">
 				<view class="midBox">
 					<image src="/static/images/followQ.svg" mode=""></image>
-					<text v-if="detail.is_follow == 0">关注问题</text>
-					<text v-if="detail.is_follow == 1">已关注</text>
+					<text >{{detail.is_follow == 0?'关注问题':'已关注'}}</text>
 				</view>
 			</view>
 		</view>

@@ -62,8 +62,7 @@
 					</view>
 					<view class="authorBox">
 						<view class="author">
-							<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-							<image src="/static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
+							<image :src="item.avatar?item.avatar:'/static/images/userImg.svg'"></image>
 							<text>{{item.account_name}}</text>
 						</view>
 						<view class="lookAnswers">
@@ -89,8 +88,7 @@
 					</view>
 					<view class="authorBox">
 						<view class="author">
-							<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-							<image src="/static/images/userImg.svg" mode="" v-if="!item.avatar"></image>
+							<image :src="item.avatar?item.avatar:'/static/images/userImg.svg'"></image>
 							<text>{{item.account_name}}</text>
 						</view>
 						<view class="lookAnswers">

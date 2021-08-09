@@ -28,9 +28,7 @@
 					</view>
 					<image class="iconRight" src="/static/images/more-right.svg" mode=""></image>
 				</view>
-				<view class="line">
-					
-				</view>
+				<view class="line"></view>
 			</block>
 			<!-- 景点 -->
 			<block v-if="site">

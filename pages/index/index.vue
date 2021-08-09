@@ -323,7 +323,7 @@
 							arr.push(res.latitude);
 							arr.push(res.longitude);
 							arr = arr.join(',');
-							this.HTTP.request({
+							uni.request({
 								url: 'https://api.map.baidu.com/reverse_geocoding/v3/?ak=NKyWaSnsW6FFEseeCEX18Fpvgzs3jcmd&output=json&coordtype=wgs84ll',
 								data: {
 									location: arr

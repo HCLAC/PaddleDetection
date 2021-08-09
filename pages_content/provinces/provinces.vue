@@ -254,7 +254,7 @@ export default {
 		},
 		// 天气接口
 		getWeather() {
-			this.HTTP.request({
+			uni.request({
 				url: 'https://query.asilu.com/weather/baidu',
 				data: {
 					city: this.querys.name

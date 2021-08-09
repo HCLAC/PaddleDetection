@@ -38,7 +38,7 @@
 					<view class="fllowBox" v-if="item.is_follow" @click="Fllow(item,index)">
 						<text>已关注</text>
 					</view>
-					<view class="unfllowBox" v-else="!item.is_follow" @click="Fllow(item,index)">
+					<view class="unfllowBox" v-else @click="Fllow(item,index)">
 						<text>关注</text>
 					</view>
 				</view>

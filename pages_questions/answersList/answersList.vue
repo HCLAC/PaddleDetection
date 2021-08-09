@@ -17,8 +17,7 @@
 				<view class="answersCardBox" v-for=" (item,index) in answersList" :key="index" >
 					<view class="answersCardTop">
 						<view class="answersAuthor">
-							<image :src="item.avatar" mode="" v-if="item.avatar"></image>
-							<image src="/static/images/userImg.svg" v-if="!item.avatar" mode=""></image>
+							<image :src="item.avatar?item.avatar:'/static/images/userImg.svg'" mode=""></image>
 							<view class="userName">
 								{{item.account_id}}
 							</view>
@@ -28,8 +27,8 @@
 						</view>
 					</view>
 					<view class="answersCardContent">
-						<u-parse ref="parse" v-if="answersList" style="overflow: hidden;" lazy-load :tag-style="style"
-						 :html="item.content "></u-parse>
+						<mp-html ref="parse" v-if="answersList" style="overflow: hidden;" lazy-load :tag-style="style"
+						 :html="item.content "></mp-html>
 					</view>
 					<view class="answersCardBottom">
 						<view class="acbr">

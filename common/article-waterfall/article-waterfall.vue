@@ -23,8 +23,9 @@
 						<view class="titleTip">
 							<view class="demo-tag">
 								<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-								<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-								<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+								<view class="demo-tag-owner" v-else-if="item.type == 2">攻略</view>
+								<view class="demo-tag-owner" v-else-if="item.type == 4">视频</view>
+								<view class="demo-tag-owner" v-else>文章</view>
 							</view>
 							<view class="demo-title">{{ item.title }}</view>
 						</view>
@@ -77,8 +78,9 @@
 						<view class="titleTip">
 							<view class="demo-tag">
 								<view class="demo-tag-owner" v-if="item.type == 1">游记</view>
-								<view class="demo-tag-owner" v-if="item.type == 2">攻略</view>
-								<view class="demo-tag-owner" v-if="item.type == 4">视频</view>
+								<view class="demo-tag-owner" v-else-if="item.type == 2">攻略</view>
+								<view class="demo-tag-owner" v-else-if="item.type == 4">视频</view>
+								<view class="demo-tag-owner" v-else>文章</view>
 							</view>
 							<view class="demo-title">{{ item.title }}</view>
 						</view>

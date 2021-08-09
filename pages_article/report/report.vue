@@ -155,8 +155,8 @@
 						url: '/comments/report',
 						data: {
 							id: this.id,
-							behavior:this.model.payType,
-							content:this.modelIntro
+							behavior: this.model.payType,
+							content: this.modelIntro
 						},
 						method: 'POST',
 						header: {

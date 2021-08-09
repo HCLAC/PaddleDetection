@@ -1,5 +1,5 @@
 <template>
-	<view v-if="userInfo">
+	<view >
 		<!-- 自定义导航栏 -->
 		<view class="example-body" v-if="isFixed">
 			<uni-nav-bar :fixed="true" :status-bar="true" title="个人主页">
@@ -18,8 +18,7 @@
 						<image src="/static/images/mineBack.png" class="backImg"></image>
 						<!-- 用户信息 -->
 						<view class="usermes">
-							<image src="/static/images/userImg.svg" class="userAva" v-if="!userInfo.avatar" mode=""></image>
-							<image :src="userInfo.avatar" class="userAva" v-if="userInfo.avatar" mode=""></image>
+							<image :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'" class="userAva" v-if="userInfo.avatar" mode=""></image>
 							<view class="userR">
 								<view class="userName" @click="toMineInfo">{{ userInfo.nickName }}
 									<image src="/static/images/iconExit.svg" mode=""></image>
@@ -77,9 +76,10 @@
 								<image :src="item.main_image" mode="aspectFill">
 									<view class="imgTip">
 										<view v-if="item.type == 1">游记</view>
-										<view v-if="item.type == 2">攻略</view>
-										<view v-if="item.type == 4">视频</view>
-										<view v-if="item.type == 5">推广</view>
+										<view v-else-if="item.type == 2">攻略</view>
+										<view v-else-if="item.type == 4">视频</view>
+										<view v-else-if="item.type == 5">推广</view>
+										<view v-else>文章</view>
 									</view>
 									<view class="videoIcon" v-if="item.type == 4">
 										<image class="playIcon"  src="/static/images/playIcon.svg" mode="aspectFill"></image>
@@ -120,9 +120,10 @@
 								<image :src="item.main_image" mode="aspectFill">
 									<view class="imgTip">
 										<view v-if="item.type == 1">游记</view>
-										<view v-if="item.type == 2">攻略</view>
-										<view v-if="item.type == 4">视频</view>
-										<view v-if="item.type == 5">推广</view>
+										<view v-else-if="item.type == 2">攻略</view>
+										<view v-else-if="item.type == 4">视频</view>
+										<view v-else-if="item.type == 5">推广</view>
+										<view v-else>文章</view>
 									</view>
 									<view class="videoIcon" v-if="item.type == 4">
 										<image class="playIcon"  src="/static/images/playIcon.svg" mode="aspectFill"></image>

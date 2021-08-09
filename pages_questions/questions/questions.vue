@@ -41,11 +41,10 @@
 			<scroll-view class="keyword-list-box" scroll-y scroll-x="false" v-if="isShowKeywordList">
 				<block v-for="(row, index) in keywordList" :key="index">
 					<view class="keyword-entry" hover-class="keyword-entry-tap">
-						<!-- <view class="liIcon" v-if="!row.keyword.type"></view> -->
 						<!-- <veiw v-if="row.keyword.type" :class=" row.keyword.type == 'site' ? 'otherIcon' : 'otherIcon1'">
-							<image v-if="row.keyword.type == 'site'" src="/static/images/attIcon.svg" ></image>
-							<image v-if="row.keyword.type == 'area'" src="/static/images/adressIcon.svg" mode=""></image>
+							<image :src="row.keyword.type == 'site'?'/static/images/attIcon.svg':'/static/images/adressIcon.svg'" ></image>
 						</veiw> -->
+						<!-- <view class="liIcon" v-else></view> -->
 						<view class="keyword-text" @tap.stop="goQuestionDetail(row.keyword)">
 							<rich-text :nodes="row.htmlStr"></rich-text>
 							<view class="kTB">
