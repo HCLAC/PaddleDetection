@@ -172,7 +172,7 @@
 				}
 				if(this.valueSync){
 					starList.forEach((val,index,arr)=>{
-						console.log(val,index,arr);
+						// console.log(val,index,arr);
 						if(val.activeWitch != 0){
 							val.activeColor = starColor[index]
 						}else{
@@ -180,7 +180,7 @@
 						}
 					});
 				}else{
-					console.log(11)
+					// console.log(11)
 				}
 				return starList;
 			}
