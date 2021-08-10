@@ -158,11 +158,7 @@
 </template>
 
 <script>
-	import meTabs from '@/common/me-tabs/me-tabs.vue';
 export default {
-	components: {
-		meTabs
-	},
 	data() {
 		return {
 			lineContent: null,
