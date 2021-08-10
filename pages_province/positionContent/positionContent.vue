@@ -2,7 +2,7 @@
 	<view> 
 		<!-- 自定义导航栏 -->
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true" :title="siteInfo.data.name">
+			<uni-nav-bar :fixed="true" :status-bar="true" :title="siteInfo.name">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
@@ -17,13 +17,13 @@
 				<view class="page-section" >
 					<view class="page-section-spacing" >
 						<swiper @change="change" :autoplay="true" class="swiper" :indicator-dots="false" circular='true'>
-							<swiper-item v-for="item in siteInfo.data.images" :key="item.id" class="swiper-item" > 
+							<swiper-item v-for="item in siteInfo.images" :key="item.id" class="swiper-item" > 
 								<image :src="item" class="itemImg" :lazy-load="true" mode="aspectFi" ></image>
 							</swiper-item>
 						</swiper>
-						<view class="imageCount">{{ current + 1 }}/{{ siteInfo.data.images.length }}</view>
+						<view class="imageCount">{{ current + 1 }}/{{ siteInfo.images.length }}</view>
 						<view class="dots">
-							<block v-for="(item, index) in siteInfo.data.images" :key="index">
+							<block v-for="(item, index) in siteInfo.images" :key="index">
 								<view :class="[index == current ? 'activieDot' : 'dot']"></view>
 							</block>
 						</view>
@@ -35,12 +35,12 @@
 					<view class="">
 						<view class="contentTitle">
 							<view class="contentHeader">
-								<view class="title">{{siteInfo.data.name}}</view>
+								<view class="title">{{siteInfo.name}}</view>
 							</view>
 						</view>
 						<view class="tips">
-							<view class="tipHot" v-for="(item,index) in siteInfo.data.tags" :key="index" >{{item}}</view>
-							<view class="tip">{{siteInfo.data.city}}</view>
+							<view class="tipHot" v-for="(item,index) in siteInfo.tags" :key="index" >{{item}}</view>
+							<view class="tip">{{siteInfo.city}}</view>
 						</view>
 					</view>
 					<view class="shareBox" @click="share" v-if="serviceProvider =='baidu' ">
@@ -49,7 +49,7 @@
 				</view>
 				<view class="contentRank" @click="toRank()">
 					<view class="rankText">
-						{{siteInfo.data.city}}市景点榜单·第{{siteInfo.data.rank}}名
+						{{siteInfo.city}}市景点榜单·第{{siteInfo.rank}}名
 					</view>
 					<view class="rankimgbox">
 						<image class="rankImg" src="/static/images/icon-next.svg" mode="aspectFit"></image>
@@ -57,13 +57,13 @@
 				</view>
 				<view class="rateBox" >
 					<!-- 评分图标 -->
-					<uni-rate :readonly="true" :value="siteInfo.data.rate" :size='20' margin="3" :allowHalf="true"/>
-					<view class="rate">{{siteInfo.data.rate}} 星</view>
-					<view class="goTo">{{siteInfo.data.visited}}人去过</view>
+					<uni-rate :readonly="true" :value="siteInfo.rate" :size='20' margin="3" :allowHalf="true"/>
+					<view class="rate">{{siteInfo.rate}} 星</view>
+					<view class="goTo">{{siteInfo.visited}}人去过</view>
 				</view>
 				<view class="contentText">
 					<view :class="isShow ? 'loseText' : 'moreText'" id="moreText">
-						简介：{{siteInfo.data.description}}
+						简介：{{siteInfo.description}}
 					</view>
 					<view class="btnBox" @click="showMore" v-if="!isShow && more">
 						<text>收起</text>
@@ -84,7 +84,7 @@
 						<view class="adreessIcon">
 							<image class="" src="/static/images/attmap.svg" mode=""></image>
 						</view>
-						<view class="adressText">{{siteInfo.data.pos}}</view>
+						<view class="adressText">{{siteInfo.pos}}</view>
 					</view>
 					<view class="right" @click="map()">
 						<image src="/static/images/mapBack.png" mode=""></image>
@@ -94,16 +94,16 @@
 						</view>
 					</view>
 				</view>
-				<view class="phone" v-if="siteInfo.data.butler_mobile" @click="phoneCall">
+				<view class="phone" v-if="siteInfo.butler_mobile" @click="phoneCall">
 					<image src="/static/images/dianhua.png"></image>
-					<text>旅行管家：{{siteInfo.data.butler_mobile}}</text>
+					<text>旅行管家：{{siteInfo.butler_mobile}}</text>
 				</view>
 			</view>
-			<view class="magrinBck" v-show="siteInfo.data.articles"></view>
-			<view class="gonglueBox" v-if="siteInfo.data.articles && siteInfo.data.articles.length != 0">
+			<view class="magrinBck" v-show="siteInfo.articles"></view>
+			<view class="gonglueBox" v-if="siteInfo.articles && siteInfo.articles.length != 0">
 				<view class="title">热门攻略</view>
 				<view class="contentBox">
-					<view class="contentItem" @click="toArticle(item.article_id)" v-for="(item, index) in siteInfo.data.articles" :key="index">
+					<view class="contentItem" @click="toArticle(item.article_id)" v-for="(item, index) in siteInfo.articles" :key="index">
 						<image class="topHot" v-if="index==0" src="/static/images/top.svg" mode=""></image>
 						<view class="top">{{item.title}}</view>
 						<view class="bottom">
@@ -142,10 +142,10 @@ export default {
 	onLoad:function(e) {
 		this.id = e.id
 		this.serviceProvider = getApp().globalData.serviceProvider
-		this.getArticleDetail()
+		this.getSiteDetail()
 	},
 	methods: {
-		getArticleDetail(){
+		getSiteDetail(){
 			var that = this
 			this.HTTP.request({
 				url:'/site',
@@ -160,10 +160,16 @@ export default {
 						});
 						return
 					}
-					that.siteInfo = res.data
-					if(that.siteInfo.data.description.length < 50){
+					that.siteInfo = res.data.data
+					if(that.siteInfo.description.length < 50){
 						that.more = false
 					}
+					
+					swan.setPageInfo({
+						title: that.siteInfo.name+"景点介绍-领途羊",
+						keywords: that.siteInfo.name+","+that.siteInfo.city+"旅游攻略,"+that.siteInfo.pos+",领途羊",
+						description: that.siteInfo.description,
+					})
 				}
 			})
 			
@@ -177,7 +183,7 @@ export default {
 		// 调用拨打手机
 		phoneCall(){
 			uni.makePhoneCall({
-				phoneNumber:this.siteInfo.data.butler_mobile
+				phoneNumber:this.siteInfo.butler_mobile
 			})
 		},
 		// 分享
@@ -195,8 +201,8 @@ export default {
 			this.current = e.detail.current;
 		},
 		toRank(){
-			var state_id = this.siteInfo.data.state_id;
-			var city_id = this.siteInfo.data.city_id;
+			var state_id = this.siteInfo.state_id;
+			var city_id = this.siteInfo.city_id;
 			this.HTTP.request({ 
 				url: '/area', 
 				data: { 
@@ -224,8 +230,8 @@ export default {
 		},
 		map(){
 			var that = this
-			const latitude = that.siteInfo.data.latitude;
-			const longitude = that.siteInfo.data.longitude;
+			const latitude = that.siteInfo.latitude;
+			const longitude = that.siteInfo.longitude;
 			uni.openLocation({
 				latitude: latitude,
 				longitude: longitude,

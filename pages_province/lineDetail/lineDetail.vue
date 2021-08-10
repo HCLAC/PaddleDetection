@@ -212,6 +212,11 @@ export default {
 					res.data.data.content = res.data.data.content && res.data.data.content.length ? JSON.parse(res.data.data.content) : [];
 					this.butler_mobile = res.data.data.butler_mobile;
 					this.lineContent = res.data.data;
+					swan.setPageInfo({
+						title: that.lineContent.title+"-领途羊",
+						keywords: that.lineContent.title+",行程路线,领途羊",
+						description: that.lineContent.description,
+					})
 					this.calcHeight()
 				}
 			});
