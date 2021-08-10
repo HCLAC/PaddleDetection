@@ -122,9 +122,12 @@
 				<view class="replyContent">
 					<view class="myReply">
 						<image class="userImg" :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'" mode=""></image>
-						<u-input class="replyInput" placeholder="写个回复走个心" placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;"
+						<!-- <u-input class="replyInput" placeholder="写个回复走个心" placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;"
 						 confirmType="send" :clearable="false" :disabled="true" @click="commentInput">
-						</u-input>
+						</u-input> -->
+						<view class="replyInput" @click="commentInput">
+							写个回复走个心
+						</view>
 					</view>
 					<view class="reply" v-for="(item,index) in commentsList" :key="index">
 						<view class="replyTop">
@@ -229,7 +232,15 @@
 			};
 		},
 		onShow() {
-			this.loadData()
+			this.loadData(),
+			swan.onKeyboardHeightChange(res => {
+				this.inputbottom = res.height
+				
+				this.animation.translateY(-res.height).step()
+				// this.animation.translateY(- 490 + 'rpx').step()
+				this.animationInputC = this.animation.export()
+				console.log('onKeyboardHeightChange',res);
+			});
 		},
 		onLoad(obj) {
 			this.hasLogin = uni.getStorageSync('Authorization') ? true : false;
@@ -237,7 +248,7 @@
 			this.article_id = obj.article_id
 			this.animation = uni.createAnimation({
 				  transformOrigin: "50% 50%",
-				  duration: 700,
+				  duration: 280,
 				  timingFunction: "ease-in-out",
 				  delay: 0
 				}
@@ -1434,10 +1445,16 @@
 
 				.replyInput {
 					width: 598rpx;
-					// height: 68rpx;
+					height: 68rpx;
 					background: #F8F8F8;
 					border-radius: 17px;
 					padding-left: 32rpx;
+					display: flex;
+					align-items: center;
+					font-size: 28rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #C9CAD1;
 				}
 			}
 
