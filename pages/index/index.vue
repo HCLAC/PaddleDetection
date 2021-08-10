@@ -53,24 +53,24 @@
 						<scroll-view scroll-x="true" class="kite-classify-scroll" v-if="areaList.length != 0">
 							<view class="citysBoxLeft">
 								<view class="cblt">
-									<view class="cbltcBig" @click="toProvinces(areaList[0])" :style="{backgroundImage: 'url('+areaList[0].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[0].image" mode="scaleToFill"></image> -->
+									<view class="cbltcBig" @click="toProvinces(areaList[0])" >
+										<image class="hotCityImg" :src="areaList[0].image" mode="scaleToFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cbltcBigText">
 												{{areaList[0].name}}
 											</view>
 										</view>
 									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[1])" :style="{backgroundImage: 'url('+areaList[1].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image> -->
+									<view class="cbltcSmall" @click="toProvinces(areaList[1])">
+										<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cbltcSmallText">
 												{{areaList[1].name}}
 											</view>
 										</view>
 									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[2])" :style="{backgroundImage: 'url('+areaList[2].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image> -->
+									<view class="cbltcSmall" @click="toProvinces(areaList[2])" >
+										<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cbltcSmallText">
 												{{areaList[2].name}}
@@ -79,24 +79,24 @@
 									</view>
 								</view>
 								<view class="cblb">
-									<view class="cblbcSmall" @click="toProvinces(areaList[3])" :style="{backgroundImage: 'url('+areaList[3].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[3].image" mode="scaleToFill"></image> -->
+									<view class="cblbcSmall" @click="toProvinces(areaList[3])" >
+										<image class="hotCityImg" :src="areaList[3].image" mode="scaleToFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cblbcSmallText">
 												{{areaList[3].name}}
 											</view>
 										</view>
 									</view>
-									<view class="cblbcSmall" @click="toProvinces(areaList[4])" :style="{backgroundImage: 'url('+areaList[4].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[4].image" mode="scaleToFill"></image> -->
+									<view class="cblbcSmall" @click="toProvinces(areaList[4])">
+										<image class="hotCityImg" :src="areaList[4].image" mode="scaleToFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cblbcSmallText">
 												{{areaList[4].name}}
 											</view>
 										</view>
 									</view>
-									<view class="cblbcBig" @click="toProvinces(areaList[5])" :style="{backgroundImage: 'url('+areaList[5].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[5].image" mode="scaleToFill"></image> -->
+									<view class="cblbcBig" @click="toProvinces(areaList[5])" >
+										<image class="hotCityImg" :src="areaList[5].image" mode="scaleToFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cblbcBigText">
 												{{areaList[5].name}}
@@ -107,24 +107,24 @@
 							</view>
 							<view class="citysBoxRight">
 								<view class="cblt">
-									<view class="cbltcBig" @click="toProvinces(areaList[6])" :style="{backgroundImage: 'url('+areaList[6].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[6].image" mode="scaleToFill"></image> -->
+									<view class="cbltcBig" @click="toProvinces(areaList[6])" >
+										<image class="hotCityImg" :src="areaList[6].image" mode="scaleToFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cbltcBigText">
 												{{areaList[6].name}}
 											</view>
 										</view>
 									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[7])" :style="{backgroundImage: 'url('+areaList[7].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[7].image" mode="scaleToFill"></image> -->
+									<view class="cbltcSmall" @click="toProvinces(areaList[7])" >
+										<image class="hotCityImg" :src="areaList[7].image" mode="scaleToFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cbltcSmallText">
 												{{areaList[7].name}}
 											</view>
 										</view>
 									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[8])" :style="{backgroundImage: 'url('+areaList[8].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[8].image" mode="scaleToFill"></image> -->
+									<view class="cbltcSmall" @click="toProvinces(areaList[8])" >
+										<image class="hotCityImg" :src="areaList[8].image" mode="scaleToFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cbltcSmallText">
 												{{areaList[8].name}}
@@ -133,24 +133,24 @@
 									</view>
 								</view>
 								<view class="cblb">
-									<view class="cblbcSmall" @click="toProvinces(areaList[9])" :style="{backgroundImage: 'url('+areaList[9].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[9].image" mode="scaleToFill"></image> -->
+									<view class="cblbcSmall" @click="toProvinces(areaList[9])" >
+										<image class="hotCityImg" :src="areaList[9].image" mode="scaleToFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cblbcSmallText">
 												{{areaList[9].name}}
 											</view>
 										</view>
 									</view>
-									<view class="cblbcSmall" @click="toProvinces(areaList[10])" :style="{backgroundImage: 'url('+areaList[10].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[10].image" mode="scaleToFill"></image> -->
+									<view class="cblbcSmall" @click="toProvinces(areaList[10])" >
+										<image class="hotCityImg" :src="areaList[10].image" mode="scaleToFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cblbcSmallText">
 												{{areaList[10].name}}
 											</view>
 										</view>
 									</view>
-									<view class="cblbcBig" @click="toProvinces(areaList[11])" :style="{backgroundImage: 'url('+areaList[11].image+')'}">
-										<!-- <image class="hotCityImg" :src="areaList[11].image" mode="scaleToFill"></image> -->
+									<view class="cblbcBig" @click="toProvinces(areaList[11])" >
+										<image class="hotCityImg" :src="areaList[11].image" mode="scaleToFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cblbcBigText">
 												{{areaList[11].name}}
@@ -811,6 +811,10 @@
 						background-repeat: no-repeat;
 						background-size: cover;
 						background-position: center center;
+						position: relative;
+						image{
+							position: absolute;
+						}
 						.cbltcBigText{
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
@@ -839,6 +843,10 @@
 						background-repeat: no-repeat;
 						background-size: cover;
 						background-position: center center;
+						position: relative;
+						image{
+							position: absolute;
+						}
 						.cbltcSmallText{
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
@@ -867,6 +875,10 @@
 						background-repeat: no-repeat;
 						background-size: cover;
 						background-position: center center;
+						position: relative;
+						image{
+							position: absolute;
+						}
 						.cblbcBigText{
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
@@ -891,6 +903,10 @@
 						background-repeat: no-repeat;
 						background-size: cover;
 						background-position: center center;
+						position: relative;
+						image{
+							position: absolute;
+						}
 						.cblbcSmallText{
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
@@ -922,6 +938,10 @@
 						background-repeat: no-repeat;
 						background-size: cover;
 						background-position: center center;
+						position: relative;
+						image{
+							position: absolute;
+						}
 						.cbltcBigTextBox{
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
@@ -948,6 +968,10 @@
 						background-repeat: no-repeat;
 						background-size: cover;
 						background-position: center center;
+						position: relative;
+						image{
+							position: absolute;
+						}
 						.cbltcBigTextBox{
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
@@ -980,6 +1004,10 @@
 						background-repeat: no-repeat;
 						background-size: cover;
 						background-position: center center;
+						position: relative;
+						image{
+							position: absolute;
+						}
 						.cbltcBigTextBox{
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
@@ -1007,6 +1035,10 @@
 						background-repeat: no-repeat;
 						background-size: cover;
 						background-position: center center;
+						position: relative;
+						image{
+							position: absolute;
+						}
 						.cbltcBigTextBox{
 							padding: 2rpx 14.6rpx 4rpx 16rpx;
 							background: #FFFFFF;
