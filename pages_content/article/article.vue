@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="example-body">
-			<uni-nav-bar :fixed="true" :status-bar="true" :title="article.data.title">
+			<uni-nav-bar :fixed="true" :status-bar="true" :title="articleInfo.title">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
@@ -11,80 +11,80 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 游记文章 -->
-		<view class="" v-if="swiperHeight && article.data.type != 2">
+		<view class="" v-if="swiperHeight && articleInfo.type != 2">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap" >
-				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="article.data.type != 4 && article.data.type != 5">
+				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="articleInfo.type != 4 && articleInfo.type != 5">
 					<swiper @change="change" class="swiper" :autoplay="true" circular='true' :indicator-dots="false">
-						<swiper-item v-for="(item, index) in article.data.images" :key="index">
+						<swiper-item v-for="(item, index) in articleInfo.images" :key="index">
 							<image class="itemImg" :style="{ width: index == 0 ? '100%' : '' }" lazy-load :mode="index == 0 ? 'widthFix' : 'aspectFit'"
 							 :src="item"></image>
 						</swiper-item>
 					</swiper>
-					<view class="imageCount">{{ current + 1 }}/{{ article.data.images.length }}</view>
+					<view class="imageCount">{{ current + 1 }}/{{ articleInfo.images.length }}</view>
 					<view class="dots">
-						<block v-for="(item, index) in article.data.images" :key="index">
+						<block v-for="(item, index) in articleInfo.images" :key="index">
 							<view :class="[index == current ? 'activieDot' : 'dot']"></view>
 						</block>
 					</view>
 				</view>
-				<view class="page-section-spacing" width="100%" v-else-if="article.data.type == 4">
-					<video class="videobox" :style="{ height: swiperHeight }" :src="article.data.images[1]" object-fit="contain"
-					 :poster="article.data.images[0]" controls></video>
+				<view class="page-section-spacing" width="100%" v-else-if="articleInfo.type == 4">
+					<video class="videobox" :style="{ height: swiperHeight }" :src="articleInfo.images[1]" object-fit="contain"
+					 :poster="articleInfo.images[0]" controls></video>
 				</view>
 			</view>
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<view class="userMse">
-					<image class="userHeard" :src="article.data.avatar" @click="tobloggers(article.data.author_id)"></image>
+					<image class="userHeard" :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
 					<view class="userMse-r">
-						<view class="userNikename">{{ article.data.author_name }}</view>
+						<view class="userNikename">{{ articleInfo.author_name }}</view>
 					</view>
-					<view class="followBox" @click="follow()" v-if="!article.data.is_follow">
+					<view class="followBox" @click="follow()" v-if="!articleInfo.is_follow">
 						<image class="followImg" src="/static/images/followIcon.svg" mode=""></image>
 						关注
 					</view>
-					<view class="isfollowBox" @click="follow()" v-else-if="article.data.is_follow">已关注</view>
+					<view class="isfollowBox" @click="follow()" v-else-if="articleInfo.is_follow">已关注</view>
 				</view>
 				<!-- 地址 -->
 				<view class="adress">
 					<image src="/static/images/iconMap.svg" mode="" class="adreessIcon"></image>
-					<view class="adressText" @click="map()">{{ article.data.location }}</view>
+					<view class="adressText" @click="map()">{{ articleInfo.location }}</view>
 				</view>
 				<!-- 标题 -->
-				<!-- <text class="contentTitle" selected=true>{{ article.data.title }}</text> -->
+				<!-- <text class="contentTitle" selected=true>{{ articleInfo.title }}</text> -->
 				<!-- 内容文章 -->
 				<view class="contentText">
-					<!-- <rich-text :nodes="article.data.content | formatRichText"></rich-text> -->
-					<mp-html ref="parse" v-if="article" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
-					 :content="article.data.content | formatRichText"></mp-html>
+					<!-- <rich-text :nodes="articleInfo.content | formatRichText"></rich-text> -->
+					<mp-html ref="parse" v-if="articleInfo" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
+					 :content="articleInfo.content | formatRichText"></mp-html>
 				</view>
 				<view class="tips">
-					<view v-for="item in article.data.topics" :key="item.id" @click="toTopic(item.id)">
+					<view v-for="item in articleInfo.topics" :key="item.id" @click="toTopic(item.id)">
 						<image class="tipsIcon" src="/static/images/topicIcon.svg" mode=""></image>
 						<text class="tipsText">{{ item.name }}</text>
 					</view>
 				</view>
-				<view class="releaseTime">发布于{{ article.data.update_at }}</view>
+				<view class="releaseTime">发布于{{ articleInfo.update_at }}</view>
 			</view>
 		</view>
 		<!-- 攻略文章 -->
-		<view class="" v-else-if="article && article.data.type == 2">
+		<view class="" v-else-if="articleInfo && articleInfo.type == 2">
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<!-- 标题 -->
-				<text class="contentTitle-strategy" selected='true'>{{ article.data.title }}</text>
+				<text class="contentTitle-strategy" selected='true'>{{ articleInfo.title }}</text>
 				<view class="StrategyTip">
 					<image class="StrategyImg" src="/static/images/Strategy.svg" mode=""></image>
 				</view>
 				<!-- 作者信息 -->
 				<view class="userMse-strategy">
-					<image class="userHeard" :src="article.data.avatar" @click="tobloggers(article.data.author_id)"></image>
+					<image class="userHeard" :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
 					<view class="userMse-r">
-						<text class="userNikename-strategy" selected=true> {{ article.data.author_name }}</text>
-						<view class="releaseTime-strategy">发布于{{ article.data.update_at.slice(0,10) }}</view>
+						<text class="userNikename-strategy" selected=true> {{ articleInfo.author_name }}</text>
+						<view class="releaseTime-strategy">发布于{{ articleInfo.update_at.slice(0,10) }}</view>
 					</view>
-					<view class="followBox" @click="follow()" v-if="!article.data.is_follow">
+					<view class="followBox" @click="follow()" v-if="!articleInfo.is_follow">
 						<image class="followImg" src="/static/images/followIcon.svg" mode=""></image>
 						关注
 					</view>
@@ -92,19 +92,19 @@
 				</view>
 				<!-- 内容文章 -->
 				<view class="contentText-strategy">
-					<mp-html ref="parse" v-if="article" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
-					 :content="article.data.content | formatRichText"></mp-html>
+					<mp-html ref="parse" v-if="articleInfo" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
+					 :content="articleInfo.content | formatRichText"></mp-html>
 				</view>
 				<!-- 地址 -->
 				<view class="adress-strategy">
 					<image src="/static/images/iconMap.svg" mode="" class="adreessIcon"></image>
-					<view class="adressText" @click="map()">{{ article.data.location }}</view>
+					<view class="adressText" @click="map()">{{ articleInfo.location }}</view>
 				</view>
 			</view>
 			<!-- 话题 -->
 			<view>
 				<view class="tipsStrategy">
-					<view v-for="item in article.data.topics" :key="item.id" @click="toTopic(item.id)">
+					<view v-for="item in articleInfo.topics" :key="item.id" @click="toTopic(item.id)">
 						<image class="tipsIcon" src="/static/images/topicIcon.svg" mode=""></image>
 						<text class="tipsText">{{ item.name }}</text>
 					</view>
@@ -159,12 +159,12 @@
 			<view class="contentBottom savepadding">
 				<view style="display: flex;">
 					<view class="like" @click="clickLike">
-						<image class="likeBtn" :src="article.data.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image>
-						<view class="likeNum" v-if="article.data.like_count != 0">{{ article.data.like_count }}</view>
+						<image class="likeBtn" :src="articleInfo.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image>
+						<view class="likeNum" v-if="articleInfo.like_count != 0">{{ articleInfo.like_count }}</view>
 					</view>
 					<view class="fav" @click="clickFav">
-						<image class="favBtn" :src="article.data.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
-						<view class="favNum" v-if="article.data.fav_count != 0">{{ article.data.fav_count }}</view>
+						<image class="favBtn" :src="articleInfo.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
+						<view class="favNum" v-if="articleInfo.fav_count != 0">{{ articleInfo.fav_count }}</view>
 					</view>
 					<view class="replyIcon" @click="commentInput">
 						<image src="/static/images/replyIcon.svg" mode=""></image>
@@ -204,7 +204,8 @@
 				indicatorDots: true,
 				current: 0,
 				list: [],
-				article: null,
+				VX: 17827277778,
+				articleInfo: null,
 				token: '',
 				article_id: '',
 				hasLogin: true,
@@ -383,21 +384,24 @@
 							}
 						}
 						
-						that.article = res.data;
-						that.following = that.article.data.follow;
-						that.$nextTick(() => {
-							uni.getImageInfo({
-								src: that.article.data.images[0],
-								success: function(image) {
-									console.log('图片高度--', image.height);
-									let caseRes = image.width / image.height;
-									that.swiperHeight = 100 / caseRes + 'vw';
-								},
-								fail: error => {
-									console.error(error);
-								}
+						that.articleInfo = res.data.data;
+						that.following = that.articleInfo.follow;
+						// 除了攻略文章，其他计算轮播图高度
+						if (that.articleInfo.type != 2){
+							that.$nextTick(() => {
+								uni.getImageInfo({
+									src: that.articleInfo.images[0],
+									success: function(image) {
+										console.log('图片高度--', image.height);
+										let caseRes = image.width / image.height;
+										that.swiperHeight = 100 / caseRes + 'vw';
+									},
+									fail: error => {
+										console.error(error);
+									}
+								});
 							});
-						});
+						}
 					},
 					fail: error => {
 						//  请求失败,隐藏加载状态
@@ -611,7 +615,7 @@
 					});
 				}
 				var that = this;
-				let status = this.article.data.is_follow ? 0 : 1;
+				let status = this.articleInfo.is_follow ? 0 : 1;
 
 				if (status == 0) {
 					that.show = true;
@@ -621,7 +625,7 @@
 				this.HTTP.request({
 					url: '/user/follow',
 					data: {
-						author_id: that.article.data.author_id,
+						author_id: that.articleInfo.author_id,
 						follow: status
 					},
 					method: 'POST',
@@ -636,18 +640,18 @@
 							});
 							return
 						}
-						that.article.data.is_follow = res.data.data
+						that.articleInfo.is_follow = res.data.data
 					}
 				});
 			},
 			// 点击确认
 			confirm() {
 				var that = this;
-				let status = this.article.data.is_follow ? 0 : 1;
+				let status = this.articleInfo.is_follow ? 0 : 1;
 				this.HTTP.request({
 					url: '/user/follow',
 					data: {
-						author_id: that.article.data.author_id,
+						author_id: that.articleInfo.author_id,
 						follow: status
 					},
 					method: 'POST',
@@ -662,7 +666,7 @@
 							});
 							return
 						}
-						that.article.data.is_follow = res.data.data
+						that.articleInfo.is_follow = res.data.data
 					}
 				});
 			},
@@ -834,7 +838,7 @@
 					url: '/user/liked',
 					data: {
 						article_id: that.article_id,
-						liked: that.article.data.liked == 0 ? 1 : 0
+						liked: that.articleInfo.liked == 0 ? 1 : 0
 					},
 					method: 'POST',
 					header: {
@@ -848,8 +852,8 @@
 							});
 							return
 						}
-						that.article.data.liked = res.data.data.liked
-						that.article.data.like_count = res.data.data.like_count
+						that.articleInfo.liked = res.data.data.liked
+						that.articleInfo.like_count = res.data.data.like_count
 					}
 				});
 			},
@@ -868,7 +872,7 @@
 					url: '/user/favorite',
 					data: {
 						article_id: that.article_id,
-						favorite: that.article.data.fav == 1 ? 0 : 1
+						favorite: that.articleInfo.fav == 1 ? 0 : 1
 					},
 					method: 'POST',
 					header: {
@@ -882,8 +886,8 @@
 							});
 							return
 						}
-						that.article.data.fav = res.data.data.fav
-						that.article.data.fav_count = res.data.data.fav_count
+						that.articleInfo.fav = res.data.data.fav
+						that.articleInfo.fav_count = res.data.data.fav_count
 					}
 				});
 			},
@@ -893,8 +897,8 @@
 			map() {
 				var that = this;
 
-				const latitude = that.article.data.latitude;
-				const longitude = that.article.data.longitude;
+				const latitude = that.articleInfo.latitude;
+				const longitude = that.articleInfo.longitude;
 				uni.openLocation({
 					latitude: latitude,
 					longitude: longitude,
