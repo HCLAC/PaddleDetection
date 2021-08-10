@@ -222,7 +222,7 @@
 				userInfo: {},
 				focus: false,
 				autoHeight: false,
-				inputbottom: 400,
+				inputbottom: 270,
 				textareafocus: false,
 				animation: null,
 				animationInputC: {}
@@ -237,8 +237,8 @@
 			this.article_id = obj.article_id
 			this.animation = uni.createAnimation({
 				  transformOrigin: "50% 50%",
-				  duration: 200,
-				  timingFunction: "ease",
+				  duration: 700,
+				  timingFunction: "ease-in-out",
 				  delay: 0
 				}
 			)
@@ -700,6 +700,7 @@
 				console.log('commentInput')
 				
 				this.animation.translateY(-this.inputbottom).step()
+				// this.animation.translateY(- 490 + 'rpx').step()
 				this.animationInputC = this.animation.export()
 			},
 			inputBlur() {
