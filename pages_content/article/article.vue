@@ -178,7 +178,7 @@
 			</view>
 		</view>
 		<!-- 评论输入框 -->
-		<view class="commentInput" v-if="textareafocus" :style="{bottom : inputbottom.bottom}">
+		<view :animation="animationInputC" class="commentInput" >
 			<textarea class="inputK" v-model="contentText" placeholder="快来写下你的评论吧" :show-confirm-bar="false" :focus="textareafocus"
 			 @blur="inputBlur" @focus="inputFocus" :auto-height="autoHeight" @input="inputValue" maxlength="140" cursor-spacing="20"
 			 :adjust-position="false"></textarea>
@@ -204,7 +204,6 @@
 				indicatorDots: true,
 				current: 0,
 				list: [],
-				VX: 17827277778,
 				article: null,
 				token: '',
 				article_id: '',
@@ -222,10 +221,10 @@
 				userInfo: {},
 				focus: false,
 				autoHeight: false,
-				inputbottom: {
-					bottom: ''
-				},
+				inputbottom: 400,
 				textareafocus: false,
+				animation: null,
+				animationInputC: {}
 			};
 		},
 		onShow() {
@@ -235,7 +234,13 @@
 			this.hasLogin = uni.getStorageSync('Authorization') ? true : false;
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.article_id = obj.article_id
-			this.animation = uni.createAnimation()
+			this.animation = uni.createAnimation({
+				  transformOrigin: "50% 50%",
+				  duration: 200,
+				  timingFunction: "ease",
+				  delay: 0
+				}
+			)
 			// 创建动画实例
 			uni.getSystemInfo({ //获取设备信息
 				success: (res) => {
@@ -251,16 +256,19 @@
 					mask: true,
 					success: () => {
 						this.getArticleDetail();
-						this.getArticleseo()
-						this.getComments();
+						this.getArticleseo();
 						this.getUserInfo()
-						
-						this.hideLoad()
+						setTimeout(() => {
+							this.getComments();
+							this.hideLoad()
+						}, 300);
 					}
 				});
 			},
 			hideLoad(){
-				uni.hideLoading();
+				setTimeout(() => {
+					uni.hideLoading();
+				}, 500);
 			},
 			getArticleseo(){
 				var that = this
@@ -585,7 +593,7 @@
 			// 跳转博主详情页
 			tobloggers(id) {
 				uni.navigateTo({
-					url: '../bloggers/bloggers?author_id=' + id
+					url: '/pages_article/bloggers/bloggers?author_id=' + id
 				});
 			},
 			// 跳转话题页
@@ -611,7 +619,7 @@
 					return
 				}
 				this.HTTP.request({
-					url: that.globalUrl + '/user/follow',
+					url: '/user/follow',
 					data: {
 						author_id: that.article.data.author_id,
 						follow: status
@@ -637,7 +645,7 @@
 				var that = this;
 				let status = this.article.data.is_follow ? 0 : 1;
 				this.HTTP.request({
-					url: that.globalUrl + '/user/follow',
+					url: '/user/follow',
 					data: {
 						author_id: that.article.data.author_id,
 						follow: status
@@ -685,16 +693,21 @@
 					return
 				}
 				this.textareafocus = true
+				console.log('commentInput')
+				
+				this.animation.translateY(-this.inputbottom).step()
+				this.animationInputC = this.animation.export()
 			},
 			inputBlur() {
+				console.log('inputBlur')
 				this.textareafocus = false
-				this.inputbottom.bottom = 0 + 'px'
-				// this.inputbottom.bottom = e.detail.height + 'px'
 				
+				this.animation.translateY(this.inputbottom).step()
+				this.animationInputC = this.animation.export()
 			},
 			inputFocus(e) {
-				this.textareafocus = true
-				this.inputbottom.bottom = e.detail.height + 'px'
+				console.log('inputFocus')
+				this.inputbottom = e.detail.height
 			},
 
 			inputValue(e) {

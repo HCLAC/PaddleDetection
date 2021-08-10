@@ -192,7 +192,7 @@
 				}
 				// 关注直接调用接口
 				this.HTTP.request({
-					url: that.globalUrl + '/user/follow',
+					url: '/user/follow',
 					data: {
 						author_id: that.authorMsg.author_id,
 						follow: status
@@ -218,7 +218,7 @@
 				var that = this;
 				let status = this.authorMsg.is_follow ? 0 : 1
 				this.HTTP.request({
-					url: that.globalUrl + '/user/follow',
+					url: '/user/follow',
 					data: {
 						author_id: that.authorMsg.author_id,
 						follow: status

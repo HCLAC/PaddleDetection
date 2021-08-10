@@ -100,7 +100,7 @@
 				}
 				// 添加关注
 				this.HTTP.request({
-					url: that.globalUrl + '/user/follow',
+					url: '/user/follow',
 					data: {
 						author_id: this.item.author_id,
 						follow: status
@@ -126,7 +126,7 @@
 				var that = this
 				let status = this.item.is_follow ? 0 : 1
 				this.HTTP.request({
-					url: that.globalUrl + '/user/follow',
+					url: '/user/follow',
 					data: {
 						author_id: this.item.author_id,
 						follow: status

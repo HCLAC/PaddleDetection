@@ -216,16 +216,25 @@ export default {
 				mask: true,
 				success: () => {
 					this.getWeather();
-					this.getCity();
-					this.getSiteHot();
-					this.getRouteHot();
-					this.hideLoad();
+					
+					setTimeout(() => {
+						this.getSiteHot();
+					}, 100);
+					setTimeout(() => {
+						this.getRouteHot();
+					}, 300);
+					setTimeout(() => {
+						this.getCity();
+						this.hideLoad();
+					}, 500);
 					// this.getQuestionList()
 				}
 			});
 		},
 		hideLoad(){
-			uni.hideLoading();
+			setTimeout(() => {
+				uni.hideLoading();
+			}, 500);
 		},
 		
 		// 获取问答列表

@@ -233,7 +233,10 @@
 		onLoad() {
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.loadData()
-			this.mescroll.resetUpScroll();
+			setTimeout(() => {
+				this.mescroll.resetUpScroll();
+				this.hideLoad()
+			}, 500);
 		},
 		// 滚动
 		onPageScroll(e) {
@@ -259,14 +262,13 @@
 						this.getBanner();
 						this.getAdress();
 						this.getAreaHot();
-						this.hideLoad()
 					}
 				});
 			},
 			hideLoad(){
 				setTimeout(() => {
 					uni.hideLoading();
-				}, 600);
+				}, 500);
 			},
 			// 获取热门目的地
 			getAreaHot(){
@@ -533,11 +535,6 @@
 	view {
 		font-size: 14px;
 		line-height: inherit;
-	}
-
-	/* 自定义导航栏 */
-	#navbarbox {
-		background-color: #007aff !important;
 	}
 
 	.search-box {

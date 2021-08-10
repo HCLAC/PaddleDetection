@@ -39,6 +39,8 @@
 			<!-- 客服 -->
 			<!-- <view class="phone" @click="tell"><image class="phoneImg" src="/static/images/minephone.svg" mode=""></image></view> -->
 			<!-- 我的收藏 -->
+			<!-- <u-tabs ref="tablist" :list="list" active-color="#2979ff" inactive-color="#606266" font-size="30" :current="tabCurrent"></u-tabs> -->
+
 			<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
 				<view class="favBox" @click="change" >
 					<view class="favBT">
@@ -303,6 +305,10 @@ export default {
 					rect: true,
 					size: true,
 				}, data => {
+					if (!data){
+						console.error("mine得到节点信息失败")
+						return
+					}
 					console.log("得到节点信息" + JSON.stringify(data));
 					this.cardheight = data.top-data.height
 				}).exec();

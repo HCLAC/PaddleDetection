@@ -77,7 +77,7 @@
 			doSearch(keyword) {
 				if (!keyword) return false;
 				uni.navigateTo({
-					url: '/pages_search/searchResults/searchResults+keyword='+keyword
+					url: '/pages_search/searchResults/searchResults?keyword='+keyword
 				});
 				
 			},

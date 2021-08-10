@@ -327,7 +327,7 @@
 							that.answersDate = res.data.data.create_at.slice(0.10)
 						}else{
 							this.HTTP.request({
-								url: that.globalUrl + '/answers/list',
+								url: '/answers/list',
 								data: {
 									question_id: that.question_id,
 									count:10,
@@ -538,7 +538,7 @@
 					that.contentp = '确认取消关注?'
 				} else {
 					this.HTTP.request({
-						url: that.globalUrl + '/questions/follow',
+						url: '/questions/follow',
 						data: {
 							question_id: that.question_id
 						},
@@ -572,7 +572,7 @@
 				let msg = this.detail.is_follow ? '确认取消关注?' : '确认关注?'
 				let status = this.detail.is_follow ? 0 : 1
 				this.HTTP.request({
-					url: that.globalUrl + '/questions/follow',
+					url: '/questions/follow',
 					data: {
 						question_id: that.question_id
 					},
