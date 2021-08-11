@@ -36,7 +36,7 @@
 					<text>问题目的地</text>
 				</view>
 				<view class="change" >
-					<view class="changeText" @click="show = true">{{name}}</view>
+					<view class="changeText" @click="showCityPicker = true">{{name}}</view>
 					<image class="changeIcon" src="/static/images/more-right.svg" mode=""></image>
 				</view>
 			</view>
@@ -69,53 +69,7 @@
 			<u-button :custom-style="customStyle" @click="buttonUp">发布问题</u-button>
 		</view>
 		<!-- 城市选择弹窗 -->
-		<u-popup v-model="show" mode="top" height="383px">
-			<uni-nav-bar :fixed="true" :status-bar="true" title="选择城市">
-				<view slot="left" class="slotleft">
-					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
-					<!-- #endif -->				
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
-				</view>
-			</uni-nav-bar>
-			<!-- 城市 -->
-			<view class="nowcity">
-				<text>{{ name }}</text>
-				<image class="nowcityImg" src="/static/images/moreDown.svg" mode=""></image>
-			</view>
-			<!-- 城市选择列表 -->
-			<view class="u-menu-wrap">
-				<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
-					<view
-						v-for="(item, index) in cityList"
-						:key="index"
-						class="u-tab-item"
-						:class="[current == index ? 'u-tab-item-active' : '']"
-						:data-current="index"
-						@tap.stop="swichMenu(index)"
-					>
-						<text class="u-line-1">{{ item.name }}</text>
-					</view>
-				</scroll-view>
-				<block v-for="(item, index) in cityList" :key="index">
-					<scroll-view scroll-y class="right-box" v-if="current == index">
-						<view class="page-view">
-							<view class="class-item">
-								<!-- <view class="item-title" @click="gethotsiteslist2(item)"> -->
-								<!-- <text>全省</text> -->
-								<!-- </view> -->
-								<view class="item-container">
-									<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
-										<!-- <image class="item-menu-image" :src="item1.icon" mode=""></image> -->
-										<view class="item-menu-name" @click="selectCity(item1)">{{ item1.name }}</view>
-									</view>
-								</view>
-							</view>
-						</view>
-					</scroll-view>
-				</block>
-			</view>
-		</u-popup>
+		<cityPicker :show="showCityPicker" :name="querys.name" :cityList="cityList" @onclose="cityPickerClose"></cityPicker>
 	</view>
 </template>
 
@@ -131,7 +85,7 @@
 				menuItemHeight: 0, // 左边菜单item的高度
 				cityList: null,
 				name: '',
-				show: false,
+				showCityPicker: false,
 				state_id:0,
 				city_id:0,
 				tips:{},
@@ -166,6 +120,9 @@
 			}
 		},
 		methods: {
+			cityPickerClose(){
+				this.showCityPicker = false
+			},
 			// 获取全国城市
 			getCity() {
 				this.HTTP.request({
@@ -232,50 +189,6 @@
 						});
 					},
 				})
-			},
-			// 获取
-			selectCity(item1) {
-				this.name  = item1.name
-				this.state_id = item1.state_id
-				this.city_id = item1.city_id
-				this.show = false
-			},
-			
-			// 点击左边的栏目切换
-			async swichMenu(index) {
-				if (index == this.current) return;
-				this.current = index;
-				// 如果为0，意味着尚未初始化
-				if (this.menuHeight == 0 || this.menuItemHeight == 0) {
-					await this.getElRect('menu-scroll-view', 'menuHeight');
-					await this.getElRect('u-tab-item', 'menuItemHeight');
-				}
-				// 将菜单菜单活动item垂直居中
-				this.scrollTop = index * this.menuItemHeight + this.menuItemHeight / 2 - this.menuHeight / 2;
-			},
-			// 获取一个目标元素的高度
-			getElRect(elClass, dataVal) {
-				new Promise((resolve, reject) => {
-					const query = uni.createSelectorQuery().in(this);
-					query
-						.select('.' + elClass)
-						.fields(
-							{
-								size: true
-							},
-							res => {
-								// 如果节点尚未生成，res值为null，循环调用执行
-								if (!res) {
-									setTimeout(() => {
-										this.getElRect(elClass);
-									}, 10);
-									return;
-								}
-								this[dataVal] = res.height;
-							}
-						)
-						.exec();
-				});
 			},
 			// 点击标签
 			clickTip(item){

@@ -183,7 +183,7 @@
 		<!-- 评论输入框 -->
 		<view :animation="animationInputC" class="commentInput" >
 			<textarea class="inputK" v-model="contentText" placeholder="快来写下你的评论吧" :show-confirm-bar="false" :focus="textareafocus"
-			 @blur="inputBlur" @focus="inputFocus" :auto-height="autoHeight" @input="inputValue" maxlength="140" cursor-spacing="20"
+			 @blur="inputBlur" :auto-height="autoHeight" @input="inputValue" maxlength="140" cursor-spacing="20"
 			 :adjust-position="false"></textarea>
 			<view class="send" @click="pubComment">发送</view>
 		</view>
@@ -232,14 +232,10 @@
 			};
 		},
 		onShow() {
-			this.loadData(),
 			swan.onKeyboardHeightChange(res => {
 				this.inputbottom = res.height
-				
 				this.animation.translateY(-res.height).step()
-				// this.animation.translateY(- 490 + 'rpx').step()
 				this.animationInputC = this.animation.export()
-				console.log('onKeyboardHeightChange',res);
 			});
 		},
 		onLoad(obj) {
@@ -253,6 +249,7 @@
 				  delay: 0
 				}
 			)
+			this.loadData()
 			// 创建动画实例
 			uni.getSystemInfo({ //获取设备信息
 				success: (res) => {
@@ -708,24 +705,11 @@
 					return
 				}
 				this.textareafocus = true
-				console.log('commentInput')
-				
-				this.animation.translateY(-this.inputbottom).step()
-				// this.animation.translateY(- 490 + 'rpx').step()
-				this.animationInputC = this.animation.export()
 			},
 			inputBlur() {
 				console.log('inputBlur')
 				this.textareafocus = false
-				
-				this.animation.translateY(this.inputbottom).step()
-				this.animationInputC = this.animation.export()
 			},
-			inputFocus(e) {
-				console.log('inputFocus')
-				this.inputbottom = e.detail.height
-			},
-
 			inputValue(e) {
 				if (e.detail.value.length > 18) {
 					this.autoHeight = true

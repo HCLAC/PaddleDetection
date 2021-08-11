@@ -18,8 +18,8 @@
 				<view class="mask"></view>
 				<view class="cityBox">
 					<view class="city">{{ querys.name || '全国' }}</view>
-					<view class="change">
-						<view class="changeText" @click="show = true">切换</view>
+					<view class="change" @click="showCityPicker = true">
+						<view class="changeText" >切换</view>
 						<image class="changeIcon" src="/static/images/more-down.svg" mode=""></image>
 					</view>
 				</view>
@@ -113,51 +113,7 @@
 			</view>
 		</mescroll-body>
 		<!-- 城市选择弹窗 -->
-		<u-popup v-model="show" mode="top" height="383px">
-			<uni-nav-bar :fixed="true" :status-bar="true" title="选择城市">
-				<view slot="left" class="slotleft">
-					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
-					<!-- #endif -->						
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
-				</view>
-			</uni-nav-bar>
-			<!-- 城市 -->
-			<view class="nowcity">
-				<text>{{ querys.name }}</text>
-				<image class="nowcityImg" src="/static/images/moreDown.svg" mode=""></image>
-			</view>
-			<!-- 城市选择列表 -->
-			<view class="u-menu-wrap">
-				<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
-					<view
-						v-for="(item, index) in cityList"
-						:key="index"
-						class="u-tab-item"
-						:class="[current == index ? 'u-tab-item-active' : '']"
-						:data-current="index"
-						@tap.stop="swichMenu(index)"
-					>
-						<text class="u-line-1">{{ item.name }}</text>
-					</view>
-				</scroll-view>
-				<block v-for="(item, index) in cityList" :key="index">
-					<scroll-view scroll-y class="right-box" v-if="current == index">
-						<view class="page-view">
-							<view class="class-item">
-								<!-- </view> -->
-								<view class="item-container">
-									<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
-										<!-- <image class="item-menu-image" :src="item2.icon" mode=""></image> -->
-										<view class="item-menu-name" @click="swichToCity(item1, item.name)">{{ item1.name }}</view>
-									</view>
-								</view>
-							</view>
-						</view>
-					</scroll-view>
-				</block>
-			</view>
-		</u-popup>
+		<cityPicker :show="showCityPicker" :name="querys.name" :cityList="cityList" @onclose="cityPickerClose"></cityPicker>
 	</view>
 </template>
 
@@ -165,6 +121,7 @@
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import articleWaterfall from '@/common/article-waterfall/article-waterfall.vue';
 import weather from '@/common/weather/weather.vue';
+import cityPicker from '@/common/city-picker/city-picker.vue';
 // 引入mescroll-mixins.js
 import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 export default {
@@ -179,16 +136,12 @@ export default {
 			upOption: {
 				auto:false
 			},
-			scrollTop: 0, //tab标题的滚动条位置
-			current: 0, // 预设当前项的值
-			menuHeight: 0, // 左边菜单的高度
-			menuItemHeight: 0, // 左边菜单item的高度
 			list: [],
 			weather: null,
 			querys: null,
 			siteHot: [],
 			routeHot: null,
-			show: false,
+			showCityPicker: false,
 			cityList: null,
 			name: null,
 			firstTime: new Date().getTime(),
@@ -199,7 +152,8 @@ export default {
 	components: {
 		uniNavBar,
 		articleWaterfall,
-		weather
+		weather,
+		cityPicker
 	},
 	onLoad(options) {
 		this.querys = options;
@@ -212,6 +166,9 @@ export default {
 		this.mescroll.resetUpScroll();
 	},
 	methods: {
+		cityPickerClose(){
+			this.showCityPicker = false
+		},
 		mescrollInit(mescroll) {
 			this.mescroll = mescroll;
 		},
@@ -400,54 +357,6 @@ export default {
 					var cityList = res.data.data.areas;
 					this.cityList = cityList.slice(1);
 				}
-			});
-		},
-		// 跳转其他省市
-		swichToCity(item1, name) {
-			if (item1.name != '全省'){
-				name = item1.name
-			}
-			uni.redirectTo({
-				url: '/pages_content/provinces/provinces?state_id=' +
-								item1.state_id+"&city_id="+item1.city_id+
-								"&name="+name+"&image="+item1.image
-			});
-		},
-		
-		// 点击左边的栏目切换
-		async swichMenu(index) {
-			if (index == this.current) return;
-			this.current = index;
-			// 如果为0，意味着尚未初始化
-			if (this.menuHeight == 0 || this.menuItemHeight == 0) {
-				await this.getElRect('menu-scroll-view', 'menuHeight');
-				await this.getElRect('u-tab-item', 'menuItemHeight');
-			}
-			// 将菜单菜单活动item垂直居中
-			this.scrollTop = index * this.menuItemHeight + this.menuItemHeight / 2 - this.menuHeight / 2;
-		},
-		// 获取一个目标元素的高度
-		getElRect(elClass, dataVal) {
-			new Promise((resolve, reject) => {
-				const query = uni.createSelectorQuery().in(this);
-				query
-					.select('.' + elClass)
-					.fields(
-						{
-							size: true
-						},
-						res => {
-							// 如果节点尚未生成，res值为null，循环调用执行
-							if (!res) {
-								setTimeout(() => {
-									this.getElRect(elClass);
-								}, 10);
-								return;
-							}
-							this[dataVal] = res.height;
-						}
-					)
-					.exec();
 			});
 		},
 		// 提问按钮
@@ -895,231 +804,6 @@ export default {
 	margin-left: 180rpx;
 }
 
-.nowcity {
-	margin: 40rpx 40rpx 32rpx 40rpx;
-	display: flex;
-	align-items: center;
-	// height: 28rpx;
-	text {
-		font-size: 28rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		line-height: 28rpx;
-		margin: 16rpx 12rpx 8rpx 6rpx;
-	}
-	.nowcityImg {
-		width: 16rpx;
-		height: 16rpx;
-		margin-top: 6rpx;
-	}
-
-	.rateBox {
-		display: flex;
-		align-items: center;
-		margin-left: 6rpx;
-		.rateStart{
-			display: flex;
-		}
-		.rateStart image{
-			width: 22.4rpx;
-			height: 22.4rpx;
-			margin-right: 6rpx;
-		}
-		.rate {
-			margin-left: 12rpx;
-			font-size: 20rpx;
-			font-family: PingFangSC-Medium, PingFang SC;
-			font-weight: 500;
-			color: #606266;
-			line-height: 20rpx;
-		}
-	
-	}
-	// 行程推荐
-	.trip{
-		margin-top: 44rpx;
-		margin-left: 28rpx;
-	}
-	.tripHeader{
-		display: flex;
-		align-items: center;
-		margin-top: 32rpx;
-		background: #F8F8F8;
-	}
-	.tripTitle{
-		// width: 144rpx;
-		height: 36rpx;
-		font-size: 36rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		line-height: 36rpx;
-		margin-right: 456rpx;
-	}
-	.tripMore{
-		width: 94rpx;
-		height: 42rpx;
-		background: #EDEFF2;
-		border-radius: 24rpx;
-		font-size: 22rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #606266;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-	.moreIcon{
-		width: 14rpx;
-		height: 14rpx;
-		margin-left: 4rpx;
-	}
-	.tripBox{
-		margin-top: 30rpx;
-		display: flex;
-	}
-	.tripContent{
-		width: 338rpx;
-		margin-right: 18rpx;
-	}
-	.tripImg{
-		width: 100%;
-		height: 180rpx;
-		border-radius: 8px;
-	}
-	.tripText{
-		// height: 28rpx;
-		margin-top: 4rpx;
-		font-size: 28rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		// line-height: 28rpx;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-	
-	
-
-	image {
-		width: 11.4rpx;
-		height: 11.4rpx;
-	}
-}
-
-// 列表
-.u-menu-wrap {
-	height: 574rpx;
-	flex: 1;
-	display: flex;
-	overflow: hidden;
-	border-top: 1rpx solid #EDEFF2;
-}
-
-.u-search-inner {
-	background-color: rgb(234, 234, 234);
-	border-radius: 100rpx;
-	display: flex;
-	align-items: center;
-	padding: 10rpx 16rpx;
-}
-
-.u-search-text {
-	font-size: 26rpx;
-	color: $u-tips-color;
-	margin-left: 10rpx;
-}
-
-.u-tab-view {
-	width: 200rpx;
-	height: 100%;
-}
-
-.u-tab-item {
-	height: 80rpx;
-	background: #ffffff;
-	box-sizing: border-box;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 26rpx;
-	color: #303133;
-	font-weight: 400;
-	line-height: 1;
-}
-
-.u-tab-item-active {
-	position: relative;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 500;
-	color: #fa8c16;
-	font-size: 28rpx;
-	background: #f8f8f8;
-}
-
-.u-tab-item-active::before {
-	content: '';
-	position: absolute;
-	border-left: 4rpx solid #fa8c16;
-	height: 80rpx;
-	left: 0;
-	top: 0;
-}
-
-.u-tab-view {
-	height: 100%;
-}
-
-.right-box {
-	background-color:#f8f8f8;
-}
-
-.page-view {
-	// padding: 16rpx;
-}
-
-.class-item {
-	margin-bottom: 30rpx;
-	background-color: #f8f8f8;
-	// padding: 16rpx;
-	border-radius: 8rpx;
-}
-
-.item-title {
-	font-size: 26rpx;
-	color: $u-main-color;
-	font-weight: bold;
-}
-
-.item-menu-name {
-	font-size: 28rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: #303133;
-	margin-bottom: 40rpx;
-	margin-left: 28rpx;
-}
-
-.item-container {
-	// display: flex;
-	// flex-wrap: wrap;
-}
-
-.thumb-box {
-	width: 33.333333%;
-	// display: flex;
-	// align-items: center;
-	// justify-content: center;
-	// flex-direction: column;
-	margin-top: 20rpx;
-}
-
-.item-menu-image {
-	width: 120rpx;
-	height: 120rpx;
-}
 .line{
 	width: 100%;
 	height: 20rpx;

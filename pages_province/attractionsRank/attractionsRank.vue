@@ -34,7 +34,7 @@
 			<!-- 排行 -->
 			<view class="rankContent" :style="{'height': (hotsiteslist.length < 6 ? '1604rpx' : '')}">
 				<view class="cityBox">
-					<view class="city" @click="show = true">
+					<view class="city" @click="showCityPicker = true">
 						<view class="">
 							<text class="cityname">{{querys.name}}</text>
 							<image src="/static/images/more-down.svg" mode=""></image>
@@ -68,46 +68,7 @@
 			</view>
 		</mescroll-body>
 		<!-- 城市选择弹窗 -->
-		<u-popup v-model="show" mode="top" height="383px" style="z-index: 9999999;">
-			<uni-nav-bar :fixed="true" :status-bar="true"  :title="querys.name">
-				<view slot="left" class="slotleft">
-					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
-					<!-- #endif -->					
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
-				</view>
-			</uni-nav-bar>
-			<!-- 城市 -->
-			<view class="nowcity">
-				<text>{{querys.name}}</text>
-				<image src="/static/images/moreDown.svg" mode=""></image>
-			</view>
-			<!-- 城市选择列表 -->
-			<view class="u-menu-wrap">
-				<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
-					<view v-for="(item,index) in cityList" :key="index" class="u-tab-item" :class="[current==index ? 'u-tab-item-active' : '']"
-					 :data-current="index" @tap.stop="swichMenu(index)">
-						<text class="u-line-1">{{item.name}}</text>
-					</view>
-				</scroll-view>
-				<block v-for="(item,index) in cityList" :key="index">
-					<scroll-view scroll-y class="right-box" v-if="current==index">
-						<view class="page-view">
-							<view class="class-item">
-								<!-- <view class="item-title" @click="gethotsiteslist2(item)"> -->
-								<!-- <text>{{item.name}}</text> -->
-								<!-- </view> -->
-								<view class="item-container">
-									<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
-										<view class="item-menu-name" @click="swichToCity(item1, item.name)">{{item1.name}}</view>
-									</view>
-								</view>
-							</view>
-						</view>
-					</scroll-view>
-				</block>
-			</view>
-		</u-popup>
+		<cityPicker :show="showCityPicker" :name="querys.name" :cityList="cityList" @onclose="cityPickerClose"></cityPicker>
 	</view>
 
 </template>
@@ -115,14 +76,18 @@
 <script>
 	// 引入mescroll-mixins.js
 	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
+	import cityPicker from '@/common/city-picker/city-picker.vue';
 	export default {
+		components: {
+			cityPicker
+		},
 		mixins: [MescrollMixin],
 		data() {
 			return {
 				background: {
 					backgroundColor: '',
 				},
-				show: false,
+				showCityPicker: false,
 				scrollTop: 0, //tab标题的滚动条位置
 				current: 0, // 预设当前项的值
 				menuHeight: 0, // 左边菜单的高度
@@ -148,6 +113,9 @@
 			
 		},
 		methods: {
+			cityPickerClose(){
+				this.showCityPicker = false
+			},
 			// 获取全国城市
 			getCity() {
 				this.HTTP.request({
@@ -165,59 +133,14 @@
 					}
 				})
 			},
-			swichToCity(item1, name) {
-				if (item1.name != '全省'){
-					name = item1.name
-				}
-				uni.redirectTo({
-					url: '/pages_province/attractionsRank/attractionsRank?state_id=' +
-									item1.state_id+"&city_id="+item1.city_id+
-									"&name="+name+"&image="+item1.image
-				});
-			},
-			// gethotsiteslist2(item){
-			// 	uni.redirectTo({
-			// 		url: '/pages/attractionRank/attractionRank?state_id=' +
-			// 						item.state_id+"&city_id="+item.city_id+
-			// 						"&name="+item.name+"&image="+item.image
-			// 	});
-			// // },
+			
 			// 跳转景点详情页
 			toSiteDetail(id) {
 				uni.navigateTo({
 					url: '/pages_province/positionContent/positionContent?id=' + id
 				});
 			},
-			// 点击左边的栏目切换
-			async swichMenu(index) {
-				if (index == this.current) return;
-				this.current = index;
-				// 如果为0，意味着尚未初始化
-				if (this.menuHeight == 0 || this.menuItemHeight == 0) {
-					await this.getElRect('menu-scroll-view', 'menuHeight');
-					await this.getElRect('u-tab-item', 'menuItemHeight');
-				}
-				// 将菜单菜单活动item垂直居中
-				this.scrollTop = index * this.menuItemHeight + this.menuItemHeight / 2 - this.menuHeight / 2;
-			},
-			// 获取一个目标元素的高度
-			getElRect(elClass, dataVal) {
-				new Promise((resolve, reject) => {
-					const query = uni.createSelectorQuery().in(this);
-					query.select('.' + elClass).fields({
-						size: true
-					}, res => {
-						// 如果节点尚未生成，res值为null，循环调用执行
-						if (!res) {
-							setTimeout(() => {
-								this.getElRect(elClass);
-							}, 10);
-							return;
-						}
-						this[dataVal] = res.height;
-					}).exec();
-				})
-			},
+			
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {
 				// 第1种: 请求具体接口
@@ -633,18 +556,6 @@
 		display: flex;
 		align-items: center;
 	}
-
-	.rateStart {
-		display: flex;
-		align-items: center;
-		margin-right: 8rpx;
-		image {
-			width: 28rpx;
-			height: 28rpx;
-			margin-right: 8rpx;
-		}
-	}
-
 	.rate {
 		font-size: 24rpx;
 		font-family: HelveticaNeue;
@@ -670,147 +581,5 @@
 			width: 38rpx;
 			height: 38rpx;
 		}
-	}
-
-	// 弹窗
-	.navtitle {
-		font-size: 38rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #000000;
-		line-height: 38rpx;
-		margin-left: 180rpx;
-	}
-
-	.nowcity {
-		margin: 40rpx 40rpx 32rpx 40rpx;
-		display: flex;
-		align-items: center;
-
-		text {
-			font-size: 28rpx;
-			font-family: PingFangSC-Medium, PingFang SC;
-			font-weight: 500;
-			color: #303133;
-			line-height: 28rpx;
-			margin: 16rpx 12rpx 8rpx 6rpx;
-		}
-
-		image {
-			width: 16rpx;
-			height: 16rpx;
-			margin-top: 6rpx;
-		}
-	}
-
-	// 列表
-	.u-menu-wrap {
-		height: 574rpx;
-		flex: 1;
-		display: flex;
-		overflow: hidden;
-	}
-
-	.u-search-inner {
-		background-color: rgb(234, 234, 234);
-		border-radius: 100rpx;
-		display: flex;
-		align-items: center;
-		padding: 10rpx 16rpx;
-	}
-
-	.u-search-text {
-		font-size: 26rpx;
-		color: $u-tips-color;
-		margin-left: 10rpx;
-	}
-
-	.u-tab-view {
-		width: 200rpx;
-		height: 100%;
-	}
-
-	.u-tab-item {
-		height: 80rpx;
-		background: #ffffff;
-		box-sizing: border-box;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 26rpx;
-		color: #303133;
-		font-weight: 400;
-		line-height: 1;
-	}
-
-	.u-tab-item-active {
-		position: relative;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #FA8C16;
-		font-size: 28rpx;
-		background: #F8F8F8;
-	}
-
-	.u-tab-item-active::before {
-		content: "";
-		position: absolute;
-		border-left: 4rpx solid #FA8C16;
-		height: 80rpx;
-		left: 0;
-		top: 0;
-	}
-
-	.u-tab-view {
-		height: 100%;
-	}
-
-	.right-box {
-		background-color: #f8f8f8;
-	}
-
-	.page-view {
-		// padding: 16rpx;
-	}
-
-	.class-item {
-		margin-bottom: 30rpx;
-		background-color: #F8F8F8;
-		// padding: 16rpx;
-		border-radius: 8rpx;
-	}
-
-	.item-title {
-		font-size: 26rpx;
-		color: $u-main-color;
-		font-weight: bold;
-	}
-
-	.item-menu-name {
-		font-size: 28rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: #303133;
-		margin-bottom: 40rpx;
-		margin-left: 28rpx;
-	}
-
-	.item-container {
-		// display: flex;
-		// flex-wrap: wrap;
-	}
-
-	.thumb-box {
-		width: 33.333333%;
-		// display: flex;
-		// align-items: center;
-		// justify-content: center;
-		// flex-direction: column;
-		margin-top: 20rpx;
-	}
-
-	.item-menu-image {
-		width: 120rpx;
-		height: 120rpx;
 	}
 </style>
