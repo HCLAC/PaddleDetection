@@ -326,7 +326,7 @@
 							that.answersList = res.data.data
 							that.answersDate = res.data.data.create_at.slice(0.10)
 						}else{
-							this.HTTP.request({
+							that.HTTP.request({
 								url: '/answers/list',
 								data: {
 									question_id: that.question_id,

@@ -11,88 +11,74 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			<!-- 头图 -->
-			<view class="headImgBox" v-if="info">
-				<image class="headImg" :src="info.image" mode="scaleToFill"></image>
-				<view class="mask"></view>
-				<view class="topicBox" >
-					<view class="bigTitle">
-						#{{info.name}}
+		<!-- 头图 -->
+		<view class="headImgBox" >
+			<image class="headImg" :src="info.image" mode="scaleToFill"></image>
+			<view class="mask"></view>
+			<view class="topicBox" >
+				<view class="bigTitle">
+					#{{info.name}}
+				</view>
+				<view class="number">
+					{{info.article_count>10000?((info.article_count-(info.article_count%1000))/10000+'w'):info.article_count}}篇文章
+				</view>
+				<view class="topicSquare" @click="toTopic">
+					<view class="squareText">
+						话题广场
 					</view>
-					<view class="number">
-						{{info.article_count>10000?((info.article_count-(info.article_count%1000))/10000+'w'):info.article_count}}篇文章
-					</view>
-					<view class="topicSquare" @click="toTopic">
-						<view class="squareText">
-							话题广场
-						</view>
-						<image class="more" src="/static/images/more1.svg" mode=""></image>
-					</view>
+					<image class="more" src="/static/images/more1.svg" mode=""></image>
 				</view>
 			</view>
-			<view class="contentBox" >
-				<!-- 景点推荐 -->
-				<view  :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
-					<view class="recommendedBox" @click="recommendedChange">
-						<view :class="tabCurrent == 0 ? 'recommendedText' : 'recommendedText1' ">
-							推荐
-						</view>
-						<view class="recommendedLine" v-if="tabCurrent==0">
-						</view>
-					</view>
-					<view class="latestBox" @click="latestChange">
-						<view :class="tabCurrent == 1 ? 'recommendedText' : 'recommendedText1' ">
-							最新
-						</view>
-						<view class="latestLine" v-if="tabCurrent==1">
-						</view>
-					</view>
+		</view>
+		<!-- 景点推荐 -->
+		<!-- <view  :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
+			<view class="recommendedBox" @click="recommendedChange">
+				<view :class="tabIndex == 0 ? 'recommendedText' : 'recommendedText1' ">
+					推荐
 				</view>
-				<!-- 正在旅行 -->
-				<view class="touring" id="touring">
-					<!-- 推荐 -->
-					<view class="wrap" v-if="tabCurrent == 0 ">
-						<articleWaterfall :list="recommendList"></articleWaterfall>
-					</view>
-					<!-- 最新 -->
-					<view class="wrap" v-if="tabCurrent == 1 ">
-						<articleWaterfall :list="latestList"></articleWaterfall>
-					</view>
+				<view class="recommendedLine" v-if="tabIndex==0">
 				</view>
 			</view>
-		</mescroll-body>	
+			<view class="latestBox" @click="latestChange">
+				<view :class="tabIndex == 1 ? 'recommendedText' : 'recommendedText1' ">
+					最新
+				</view>
+				<view class="latestLine" v-if="tabIndex==1">
+				</view>
+			</view>
+		</view> -->
+		<meTabs class="topicTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="tabsTop" :tab-width="80"></meTabs>
+		<articleList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :topicID="topic_id"></articleList>
 	</view>
 </template>
 <script>
-import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
-import articleWaterfall from '@/common/article-waterfall/article-waterfall.vue';
+import MescrollMoreMixin from '@/components/mescroll-uni/mixins/mescroll-more.js';
+import meTabs from '@/common/me-tabs/me-tabs.vue';
+import articleList from '@/common/article-mescroll-item/topiclist-article-waterfall.vue';
 
 export default {
+		mixins: [MescrollMoreMixin],
 		components: {
-			articleWaterfall
+			meTabs,
+			articleList
 		},
 		data() {
 			return {
-				downOption: {
-					auto:false
-				},
-				upOption: {
-					bgColor: '#F8F8F8'
-				},
-				current: 0, // 预设当前项的值
-				recommendList: [],
-				latestList:[],
-				tabCurrent: 0,
+				tabList: [{
+					name: '推荐'
+				}, {
+					name: '最新'
+				}],
+				tabIndex: 0,
 				isFixed: false,
 				cardheight:0,
-				id:'',
+				tabsTop: 0,
+				topic_id: 0,
 				info:''
 			};
 		},
-		mixins: [MescrollMixin],
 		onLoad(e) {
-			this.id = e.id
+			this.topic_id = e.id
 			this.loadData()
 		},
 		onPageScroll(e) {
@@ -124,13 +110,28 @@ export default {
 			},
 			calcCardHeight(){
 				setTimeout(() => {
-					let view = uni.createSelectorQuery().select("#selectcard");
+					let view = uni.createSelectorQuery().select(".topicTabs");
 					view.fields({
 						rect: true,
 						size: true,
 					}, data => {
+						if (!data){
+							console.error("mine得到节点信息失败")
+							return
+						}
 						console.log("得到节点信息" + JSON.stringify(data));
 						this.cardheight = data.top-data.height
+					}).exec();
+					view = uni.createSelectorQuery().select(".example-body");
+					view.fields({
+						size: true,
+					}, data => {
+						if (!data){
+							console.error("example-body得到节点信息失败")
+							return
+						}
+						console.log("得到节点信息" + JSON.stringify(data));
+						this.tabsTop = data.height
 					}).exec();
 				}, 500);
 			},
@@ -138,7 +139,7 @@ export default {
 				this.HTTP.request({
 					url: '/topics',
 					data: {
-						topic_id: this.id
+						topic_id: this.topic_id
 					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
@@ -159,109 +160,9 @@ export default {
 					url:'/pages_article/topic/topic'
 				})
 			},
-			// 选项卡切换
-			recommendedChange(){
-				this.tabCurrent = 0
-				this.mescroll.resetUpScroll()
-				this.mescroll.scrollTo(0)
-			},
-			latestChange(){
-				this.tabCurrent = 1
-				this.mescroll.resetUpScroll()
-				this.mescroll.scrollTo(0)
-			},
-			/*下拉刷新的回调, 有三种处理方式:*/
-			downCallback() {
-				// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
-				this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
-				// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
-				// this.mescroll.endSuccess()
-			
-				// 此处仍可以继续写其他接口请求...
-				// 调用其他方法...
-			},
-			/*上拉加载的回调*/
-			upCallback(page) {
-				var that = this
-				// mescroll.setPageSize(6)
-				let pageNum = page.num; // 页码, 默认从1开始
-				let pageSize = page.size; // 页长, 默认每页10条
-				let url = ''
-				if(this.tabCurrent == 0){
-					url = '/topics/articles/recommend?page=' + pageNum + '&count=' + pageSize
-				} else {
-					url = '/topics/articles/latest?page=' + pageNum + '&count=' + pageSize
-				}
-				this.HTTP.request({
-					url: url,
-					data: {
-						topic_id:this.id,
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: res => {
-						if (res.statusCode != 200 || res.data.code != 0){
-							uni.showToast({
-								title: res.data.msg,
-								icon: 'none'
-							});
-							return
-						}
-						if (!res.data.data.list || res.data.data.list.length == 0){
-							return
-						}
-						// 接口返回的当前页数据列表 (数组)
-						if(res.data.data != null){
-							let curPageData = res.data.data.list;
-							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-							let curPageLen = curPageData.length;
-							// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-							// let totalPage = res.data.data.list;
-							// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-							let totalSize = res.data.data.total;
-							// 接口返回的是否有下一页 (true/false)
-							// let hasNext = res.data.data.list;
-											
-							//设置列表数据
-							if(this.tabCurrent == 0){
-								if (page.num == 1) this.recommendList = []; //如果是第一页需手动置空列表
-								this.recommendList = this.recommendList.concat(curPageData); //追加新数据
-							} else {
-								if (page.num == 1) this.latestList = []; //如果是第一页需手动置空列表
-								this.latestList = this.latestList.concat(curPageData); //追加新数据	
-							}
-							console.log('recommendList', this.recommendList, curPageLen, totalSize)
-							
-							// 请求成功,隐藏加载状态
-							//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-							// this.mescroll.endByPage(curPageLen, totalPage);
-											
-							//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-							this.mescroll.endBySize(curPageLen, totalSize);
-											
-							//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-							//this.mescroll.endSuccess(curPageLen, hasNext);
-											
-							//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-							//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-							//如果传了hasNext,则翻到第二页即可显示无更多数据.
-							//this.mescroll.endSuccess(curPageLen);
-											
-							// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-							// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-						}
-						
-					},
-					fail: () => {
-						//  请求失败,隐藏加载状态
-						this.mescroll.endErr();
-					}
-				});
-				
-			
-				// 此处仍可以继续写其他接口请求...
-				// 调用其他方法...
+			// 切换
+			tabChange(index){
+				this.tabIndex = index
 			},
 		}
 	}
@@ -395,33 +296,8 @@ export default {
 	width: 14rpx;
 	height: 14rpx;
 }
-// 
-.contentBox {
-	width: 750rpx;
-	background: #f8f8f8;
-	border-radius: 8px 8px 0px 0px;
-	position: relative;
-	top: -10rpx;
-	left: 0;
-}
-.myCollection {
-	height: 88rpx;
-	border-radius: 8px 8px 0rpx 0rpx;
-	background-color: #fff;
-	color: #303133;
-	width: 100%;
-	padding-left: 26rpx;
-	// font-size: 40rpx;
-	// font-weight: 500;
-	// padding-left: 32rpx;
-	// padding-top: 20rpx;
-	display: flex;
-	align-items: center;
-	// position: absolute;
-	// top: 360rpx;
-}
 .fixTabs {
-	height: 98rpx;
+	height: 88rpx;
 	border-radius: 8px 8px 0rpx 0rpx;
 	background-color: #fff;
 	color: #303133;

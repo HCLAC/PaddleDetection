@@ -38,8 +38,8 @@
 			<view class="lineTitle">{{ lineContent.title }}</view>
 		</view>
 		<view class="lineDriver"></view>
-		<view  id="tabs" :class="isFixed ? 'fixTabs' : 'noFix'">
-			<!-- <meTabs v-model="tabIndex" :tabs="tabs" @change="tabChange"></meTabs> -->
+		<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="tabsTop" :tab-width="80"></meTabs>
+		<!-- <view  id="tabs" :class="isFixed ? 'fixTabs' : 'noFix'">
 			<view style="width: 60%;display: flex;">
 				<view class="tripBox" @click="tripChange">
 					<view :class="tabIndex == 0 ? 'tripText' : 'tripText1'">
@@ -56,7 +56,7 @@
 					</view>
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<view class="linePlan">
 			<view class="planContent">
 				<u-time-line >
@@ -158,7 +158,11 @@
 </template>
 
 <script>
+import meTabs from '@/common/me-tabs/me-tabs.vue';
 export default {
+	components: {
+		meTabs
+	},
 	data() {
 		return {
 			lineContent: null,
@@ -167,8 +171,9 @@ export default {
 			isFixed: false,
 			serviceProvider: '',
 			cardheight:200,
+			tabsTop: 0,
 			boxHeight: 2000,
-			tabs: ['参考行程', '服务说明'],
+			tabList: ['参考行程', '服务说明'],
 			tabIndex: 0 // 当前tab下标,必须与mescroll-more.js对应,所以tabIndex是固定变量,不可以改为其他的名字
 		};
 	},
@@ -179,16 +184,15 @@ export default {
 		this.getDetail(id);
 	},
 	onPageScroll(e) {
-		if (e.scrollTop >=  this.cardheight) {
-			if(e.scrollTop > (this.boxHeight - 432)){
-				this.tabIndex = 1
-			}
-			if (e.scrollTop > this.cardheight+20 && this.isFixed){
-				return
-			}
+		if (e.scrollTop > this.cardheight-2) {
 			this.isFixed = true;
 		} else {
 			this.isFixed = false;
+		}
+		
+		if(e.scrollTop > (this.boxHeight - 432)){
+			this.tabIndex = 1
+		} else {
 			this.tabIndex = 0
 		}
 	},
@@ -223,50 +227,42 @@ export default {
 		},
 		calcHeight(){
 			setTimeout(() => {
-				let view = uni.createSelectorQuery().select("#tabs");
+				let view = uni.createSelectorQuery().select(".lineDetailTabs");
 				view.fields({
 					rect: true,
 					size: true,
 				}, data => {
 					console.log("得到节点信息" + JSON.stringify(data));
 					this.cardheight = data.top-data.height
+					this.boxTop = data.top-data.height
 				}).exec();
 				view = uni.createSelectorQuery().select(".linePlan");
 				view.fields({
-					rect: true,
 					size: true,
 				}, data => {
 					console.log("得到节点信息" + JSON.stringify(data));
 					this.boxHeight = data.height
 				}).exec();
+				
+				view = uni.createSelectorQuery().select(".example-body");
+				view.fields({
+					size: true,
+				}, data => {
+					console.log("得到节点信息" + JSON.stringify(data));
+					this.tabsTop = data.height
+				}).exec();
 			}, 500);
 		},
 		// 切换
-		tripChange(){
-			this.tabCurrent = 0
+		tabChange(index){
+			this.tabIndex = index
+			let scrollTop = this.boxHeight
+			if (index == 0){
+				scrollTop = this.boxTop
+			}
 			uni.pageScrollTo({
-				scrollTop: 0,
-			})
-		},
-		// tabChange(e){
-		// 	console.log('tabChange',e)
-		// 	this.tabIndex = e
-		// 	if (e == 0){
-		// 		uni.pageScrollTo({
-		// 			scrollTop: 0,
-		// 		})
-		// 	} else {
-		// 		uni.pageScrollTo({
-		// 			scrollTop: this.boxHeight,
-		// 			// selector:"serverInfo"
-		// 		})
-		// 	}
-		// },
-		serviceChange(){
-			this.tabIndex = 1
-			uni.pageScrollTo({
-				scrollTop: this.boxHeight,
-				// selector:"serverInfo"
+				scrollTop: scrollTop,
+				duration: 10,
 			})
 		},
 		change(e) {

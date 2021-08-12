@@ -84,8 +84,8 @@
 							</view>
 						</view>
 					</view>
-					<view class="tQContent" v-if="questions.length != 0 || questions != undefined">
-						<view class="tQCard" v-for="(item,index) in questions " :key="index" @click="toQuestionsDetail(item)">
+					<view class="tQContent" v-if="answersList.length != 0 || answersList != undefined">
+						<view class="tQCard" v-for="(item,index) in answersList " :key="index" @click="toQuestionsDetail(item)">
 							<view class="tQCRight">
 								<view class="tQCTitle">
 									{{item.title}}
@@ -95,11 +95,11 @@
 								</view>
 							</view>
 						</view>
-						<view class="tQToMore" @click="toMoreQuestions"  v-if="questions.length >= 2">
+						<view class="tQToMore" @click="toMoreQuestions"  v-if="answersList.length >= 2">
 							查看更多
 						</view>
 					</view>
-					<view class="tQContentNull" v-if="questions.length == 0">
+					<view class="tQContentNull" v-if="answersList.length == 0">
 						还没有问答，快来做第一个提问者吧~
 					</view>
 				</view> -->

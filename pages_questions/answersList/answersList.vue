@@ -75,6 +75,7 @@
 		methods:{
 			// 点赞
 			like(e,index){
+				var that = this
 				var answer_id = e.$orig.answer_id
 				this.HTTP.request({
 					url: '/answers/like',
@@ -93,13 +94,14 @@
 							});
 							return
 						}
-						this.getanswersList()
+						that.answersList[index].like++
 					}
 				});
 			},
 			// 点踩
 			disLike(e,index){
 				var answer_id = e.$orig.answer_id
+				var that = this
 				this.HTTP.request({
 					url: '/answers/dislike',
 					data: {
@@ -117,7 +119,7 @@
 							});
 							return
 						}
-						this.getanswersList()
+						that.answersList[index].disLike++
 					}
 				});
 			},

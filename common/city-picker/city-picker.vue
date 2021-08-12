@@ -79,11 +79,25 @@
 		},
 		watch: {
 			show(newVal) {
-				console.log(newVal)
 				this.show = newVal
 				if (!newVal){
 					this.$emit("onclose", newVal)
 				}
+			},
+			cityList(newVal){
+				this.cityList = newVal
+				this.cityList.findIndex((item, index) => {
+					if (item.name == this.name){
+						this.current = index
+						return true
+					}
+					item.city_list.forEach((item1, index1) => {
+						if (item1.name == this.name){
+							this.current = index
+							return true
+						}
+					})
+				})
 			}
 		},
 		methods:{

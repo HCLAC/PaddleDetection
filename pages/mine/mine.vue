@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" title="个人主页">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-					<image class="fanhui" src=""  />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src=""  />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -26,10 +26,10 @@
 								<view class="fllowNum">{{ userInfo.fllowNum }}</view>
 								<text>关注</text>
 							</view>
-							<view class="answers" @click="toAnswers">
+							<!-- <view class="answers" @click="toAnswers">
 								<view class="answersNum">{{ userInfo.answersNum }}</view>
 								<text>问答</text>
-							</view>
+							</view> -->
 						</view>
 						
 						<!-- <view class="logout">退出登录</view> -->
@@ -39,165 +39,61 @@
 			<!-- 客服 -->
 			<!-- <view class="phone" @click="tell"><image class="phoneImg" src="/static/images/minephone.svg" mode=""></image></view> -->
 			<!-- 我的收藏 -->
-			<!-- <u-tabs ref="tablist" :list="list" active-color="#2979ff" inactive-color="#606266" font-size="30" :current="tabCurrent"></u-tabs> -->
+			<meTabs class="mineTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="tabsTop" :tab-width="80"></meTabs>
 
-			<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
+			<!-- <view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
 				<view class="favBox" @click="change" >
 					<view class="favBT">
-						<view :class="tabCurrent == 0 ?'favText' : 'favText1 '" >
+						<view :class="tabIndex == 0 ?'favText' : 'favText1 '" >
 							收藏
 						</view>
-						<view class="favLine" v-if="tabCurrent == 0">
+						<view class="favLine" v-if="tabIndex == 0">
 						</view>
 					</view>
-					<view :class="tabCurrent == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" >
+					<view :class="tabIndex == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" >
 						{{userInfo.favNum}}
 					</view>
 				</view>
 				<view class="likeBox" @click="change1">
 					<view class="likeBT">
-						<view :class="tabCurrent == 1 ?'favText' : 'favText1 '">
+						<view :class="tabIndex == 1 ?'favText' : 'favText1 '">
 							已赞
 						</view>
-						<view class="likeLine" v-if="tabCurrent == 1">
+						<view class="likeLine" v-if="tabIndex == 1">
 						</view>
 					</view>
-					<view :class="tabCurrent == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" >
+					<view :class="tabIndex == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" >
 						{{userInfo.likeNum}}
 					</view>
 				</view>
-			</view>
+			</view> -->
 		</view>
-		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption"  >
-			<view class="content" style="height: 100%;">
-				<!-- 收藏 -->
-				<view style="margin-top: 64%; padding: 0 28rpx;" v-if="tabCurrent == 0 ">
-					<view class="" v-for="(item, index) in tipList" :key="index" v-if="favNum != 0">
-						<view class="contentItem" >
-							<view class="left">
-								<image :src="item.main_image" mode="aspectFill">
-									<view class="imgTip">
-										<view v-if="item.type == 1">游记</view>
-										<view v-else-if="item.type == 2">攻略</view>
-										<view v-else-if="item.type == 4">视频</view>
-										<view v-else-if="item.type == 5">推广</view>
-										<view v-else>文章</view>
-									</view>
-									<view class="videoIcon" v-if="item.type == 4">
-										<image class="playIcon"  src="/static/images/playIcon.svg" mode="aspectFill"></image>
-									</view>
-								</image>
-							</view>
-							<view class="right" @click="onPageJump" :id="item.article_id">
-								<view class="title">
-									<text class="titleText">{{ item.title }}</text>
-								</view>
-								<view class="content">
-									<rich-text class="richText" :nodes="item.content"></rich-text>
-								</view>
-								<view class="favandlikebox">
-									<view class="fav">
-										{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}收藏
-									</view>
-									<view class="like">
-										{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}点赞
-									</view>
-								</view>
-								<view class="position">
-									<view class="pImg">
-										<image src="/static/images/iconNewMap.svg" mode="aspectFill"></image>
-									</view>
-									<view>{{ item.location }}</view>
-								</view>
-							</view>
-						</view>
-						<view class="line"></view>
-					</view>
-				</view>
-				<!-- 点赞 -->
-				<view style="margin-top: 64%; padding: 0 24rpx;" v-if="tabCurrent == 1 ">
-					<view class="" v-for="(item, index) in likeList" :key="index" >
-						<view class="contentItem" >
-							<view class="left">
-								<image :src="item.main_image" mode="aspectFill">
-									<view class="imgTip">
-										<view v-if="item.type == 1">游记</view>
-										<view v-else-if="item.type == 2">攻略</view>
-										<view v-else-if="item.type == 4">视频</view>
-										<view v-else-if="item.type == 5">推广</view>
-										<view v-else>文章</view>
-									</view>
-									<view class="videoIcon" v-if="item.type == 4">
-										<image class="playIcon"  src="/static/images/playIcon.svg" mode="aspectFill"></image>
-									</view>
-								</image>
-							</view>
-							<view class="right" @click="onPageJump" :id="item.article_id">
-								<view class="title">
-									<text class="titleText">{{ item.title }}</text>
-								</view>
-								<view class="content">
-									<rich-text class="richText" :nodes="item.content"></rich-text>
-								</view>
-								<view class="favandlikebox">
-									<view class="fav">
-										{{item.fav_count}}收藏
-									</view>
-									<view class="like">
-										{{item.like_count}}点赞
-									</view>
-								</view>
-								<view class="position">
-									<view class="pImg">
-										<image src="/static/images/iconNewMap.svg" mode="aspectFill"></image>
-									</view>
-									<view>{{ item.location }}</view>
-								</view>
-							</view>
-						</view>
-						<view class="line"></view>
-					</view>
-				</view>
-			</view>
-		</mescroll-body>
-		<!-- 收藏列表为空时 -->
-		<view class="empty" v-if="!tipList || !tipList.length && tabCurrent == 0 ">
-			<view class="emptyImg">
-				<image src="/static/images/emptyfav.svg" mode=""></image>
-			</view>
-			<view class="emptyText">
-				您的收藏夹空空如也～
-			</view>
-		</view>
-		<!-- 点赞列表为空时 -->
-		<view class="empty" v-if="!likeList || !likeList.length && tabCurrent == 1">
-			<view class="emptyImg">
-				<image src="/static/images/emptylike.svg" mode=""></image>
-			</view>
-			<view class="emptyText">
-				您还没有赞过任何文章哦～
-			</view>
-		</view>
+		<articleList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex"></articleList>
 	</view>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
-import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
+import MescrollMoreMixin from '@/components/mescroll-uni/mixins/mescroll-more.js';
+import meTabs from '@/common/me-tabs/me-tabs.vue';
+import articleList from '@/common/article-mescroll-item/mine-article-list.vue';
+
 export default {
+	mixins: [MescrollMoreMixin],
+	components: {
+		meTabs,
+		articleList
+	},
 	data() {
 		return {
 			userInfo: {},
-			nickName: '',
-			avatarUrl: '',
-			tipList: [],
+			favList: [],
 			likeList: [],
-			upOption: {
-				bgColor:'#ffffff'
-			},
-			current: 0,
-			tablist: ['收藏','已赞'],
-			tabCurrent: 0,
+			tabList: [{
+					name: '收藏'
+				}, {
+					name: '已赞'
+				}],
+			tabIndex: 0,
 			favnumcolor:{
 				color: '#303133'
 			},
@@ -205,17 +101,10 @@ export default {
 				color: '#909399'
 			},
 			cardheight: 200,
+			tabsTop: 0,
 			isFixed:false,
-			downOption:{
-				use: false,
-				auto: false,
-			},
-			upOption: {
-				auto:false
-			},
 		};
 	},
-	mixins: [MescrollMixin],
 	onShow() {
 		var auth =  uni.getStorageSync('Authorization')
 		if (!auth){
@@ -225,7 +114,6 @@ export default {
 			return
 		}
 		this.loadData()
-		this.mescroll.resetUpScroll()
 	},
 	onLoad() {
 		var auth =  uni.getStorageSync('Authorization')
@@ -240,6 +128,19 @@ export default {
 				return
 			}
 			this.isFixed = true;
+			this.$nextTick(() => {
+			  let view = uni.createSelectorQuery().select(".example-body");
+			  view.fields({
+			  	size: true,
+			  }, data => {
+			  	if (!data){
+			  		console.error("mine得到节点信息失败")
+			  		return
+			  	}
+			  	console.log("得到节点信息" + JSON.stringify(data));
+			  	this.tabsTop = data.height
+			  }).exec();
+			})
 		} else {
 			this.isFixed = false;
 		}
@@ -300,7 +201,7 @@ export default {
 		},
 		calcCardHeight(){
 			setTimeout(() => {
-				let view = uni.createSelectorQuery().select("#selectcard");
+				let view = uni.createSelectorQuery().select(".mineTabs");
 				view.fields({
 					rect: true,
 					size: true,
@@ -315,26 +216,8 @@ export default {
 			}, 500);
 		},
 		// 切换
-		change(){
-			this.tabCurrent = 0
-			this.favnumcolor.color = '#303133'
-			this.likenumcolor.color = '#909399'
-			this.mescroll.resetUpScroll()
-			this.mescroll.scrollTo(0)
-		},
-		change1(){
-			this.tabCurrent = 1
-			this.favnumcolor.color = '#909399'
-			this.likenumcolor.color = '#303133'
-			this.mescroll.resetUpScroll()
-			this.mescroll.scrollTo(0)
-		},
-		// 跳转文章详情
-		onPageJump(e) {
-			let id = e.currentTarget.id;
-			uni.navigateTo({
-				url: '/pages_content/article/article?article_id=' + id
-			});
+		tabChange(index){
+			this.tabIndex = index
 		},
 		// 跳转关注页
 		toConcern(){
@@ -362,161 +245,22 @@ export default {
 			})
 			
 		},
-		/*下拉刷新的回调, 有三种处理方式:*/
-		downCallback() {
-			// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
-			this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
-			// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
-			// this.mescroll.endSuccess()
-
-			// 此处仍可以继续写其他接口请求...
-			// 调用其他方法...
-		},
-		/*上拉加载的回调*/
-		upCallback(page) {
-			var that = this
-			// mescroll.setPageSize(6)
-			let pageNum = page.num; // 页码, 默认从1开始
-			let pageSize = page.size; // 页长, 默认每页10条
-			if(this.tabCurrent == 0){
-				this.HTTP.request({
-					url: '/user/favorite/list?page=' + pageNum + '&count=' + pageSize,
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: res => {
-						if (res.statusCode != 200 || res.data.code != 0){
-							uni.showToast({
-								title: res.data.msg,
-								icon: 'none'
-							});
-							return
-						}
-						// 接口返回的当前页数据列表 (数组)
-						if(!res.data.data || !res.data.data.list){
-							return
-						}
-						let curPageData = res.data.data.list;
-						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-						let curPageLen = curPageData.length;
-						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-						// let totalPage = res.data.data.list;
-						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-						let totalSize = res.data.data.total;
-						// 接口返回的是否有下一页 (true/false)
-						// let hasNext = res.data.data.list;
-										
-						//设置列表数据
-						if (page.num == 1) this.tipList = []; //如果是第一页需手动置空列表
-						this.tipList = this.tipList.concat(curPageData); //追加新数据
-						// 请求成功,隐藏加载状态
-						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-						// this.mescroll.endByPage(curPageLen, totalPage);
-										
-						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-						this.mescroll.endBySize(curPageLen, totalSize);
-										
-						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-						//this.mescroll.endSuccess(curPageLen, hasNext);
-										
-						//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-						//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-						//如果传了hasNext,则翻到第二页即可显示无更多数据.
-						//this.mescroll.endSuccess(curPageLen);
-										
-						// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-						// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-						
-					},
-					fail: () => {
-						//  请求失败,隐藏加载状态
-						this.mescroll.endErr();
-					}
-				});
-			} else {
-				this.HTTP.request({
-					url: '/user/liked/list?page=' + pageNum + '&count=' + pageSize,
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
-					success: res => {
-						if (res.statusCode != 200 || res.data.code != 0){
-							uni.showToast({
-								title: res.data.msg,
-								icon: 'none'
-							});
-							return
-						}
-						// 接口返回的当前页数据列表 (数组)
-						if(!res.data.data || !res.data.data.list){
-							return
-						}
-						// 接口返回的当前页数据列表 (数组)
-						let curPageData = res.data.data.list;
-						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-						let curPageLen = curPageData.length;
-						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-						// let totalPage = res.data.data.list;
-						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
-						let totalSize = res.data.data.total;
-						// 接口返回的是否有下一页 (true/false)
-						// let hasNext = res.data.data.list;
-				
-						//设置列表数据
-						if (page.num == 1) this.likeList = []; //如果是第一页需手动置空列表
-						this.likeList = this.likeList.concat(curPageData); //追加新数据
-						// 请求成功,隐藏加载状态
-						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-						// this.mescroll.endByPage(curPageLen, totalPage);
-				
-						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-						this.mescroll.endBySize(curPageLen, totalSize);
-				
-						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
-						//this.mescroll.endSuccess(curPageLen, hasNext);
-				
-						//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
-						//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
-						//如果传了hasNext,则翻到第二页即可显示无更多数据.
-						//this.mescroll.endSuccess(curPageLen);
-				
-						// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
-						// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
-					},
-					fail: () => {
-						//  请求失败,隐藏加载状态
-						this.mescroll.endErr();
-					}
-				});
-			}
-			// 此处仍可以继续写其他接口请求...
-			// 调用其他方法...
-		},
 	}
 };
 </script>
 
 <style lang="scss" scoped>
 	.example-body {
-		flex-direction: row;
+		z-index: 999;
+		position: fixed;
+		top:0px;
 		flex-wrap: wrap;
 		justify-content: center;
 		padding: 0;
 		font-size: 14px;
-		background-color: #aa557f;
-		// transition: background-color 2s;
-	}
-	.example-body {
 		flex-direction: column;
-		padding: 15px;
 		background-color: #ffffff;
-		
-	}
-	.example-body {
-		padding: 0;
-	}
-	.navBar {
-		display: flex;
+		// transition: background-color 2s;
 	}
 	.slotleft {
 		display: flex;
@@ -939,37 +683,5 @@ export default {
 	background: #EDEFF2;
 	margin-bottom: 20rpx;
 }
-// 列表为空时
-	.empty {
-		position: absolute;
-		left: 50%; 
-		top: 810rpx;
-		transform: translate(-50%, -50%); 
-		-webkit-transform: translate(-50%, -50%);
-		text-align: center;
-		// margin-top: 350rpx;
-		// margin-left: 138rpx;
-	}
 
-	.emptyImg {
-		width: 148rpx;
-		height: 148rpx;
-		margin-left: 164rpx;
-		margin-bottom: 40rpx;
-
-		image {
-			width: 100%;
-			height: 100%;
-		}
-	}
-
-	.emptyText {
-		width: 476rpx;
-		height: 30rpx;
-		font-size: 28rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: #909399;
-		line-height: 30rpx;
-	}
 </style>

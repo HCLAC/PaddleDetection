@@ -196,7 +196,7 @@
 				}
 			]
 		}
-		// {
+		// ,{
 		// 	"root":"pages_questions",
 		// 	"pages":[
 		// 		{
@@ -246,7 +246,7 @@
 					
 		// 		}
 		// 	]
-		// },
+		// }
 	],
 	"preloadRule":{
 		"pages/index/index": {
