@@ -51,13 +51,13 @@
 						"navigationStyle": "custom"
 					}
 				},
-				{
-				    "path" : "mineAnswers/mineAnswers",
-				    "style" :                                                                                    
-				    {
-				        "navigationStyle": "custom"
-				    }
-				},
+				// {
+				//     "path" : "mineAnswers/mineAnswers",
+				//     "style" :                                                                                    
+				//     {
+				//         "navigationStyle": "custom"
+				//     }
+				// },
 				{
 					"path" : "cropper-default/cropper-default",
 					"style" :                                                                                    

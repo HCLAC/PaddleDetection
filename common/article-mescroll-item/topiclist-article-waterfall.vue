@@ -80,7 +80,7 @@
 			/*上拉加载的回调*/
 			upCallback(page) {
 				if (this.topicID == 0){
-					this.mescroll.endBySize(0,0)
+					this.mescroll.endSuccess()
 					return
 				}
 				

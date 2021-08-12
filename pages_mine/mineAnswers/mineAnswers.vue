@@ -81,16 +81,20 @@ import answerList from '@/common/article-mescroll-item/mine-answer-list.vue';
 		},
 		methods:{
 			calcCardHeight(){
-				const query = uni.createSelectorQuery().in(this);
-				query.select('.mineAnswerTabs').boundingClientRect(data => {
-					console.log("得到布局位置信息" + JSON.stringify(data));
-					console.log("节点离页面顶部的距离为" + data.top);
-					if (data.top == 0) {
-						this.cardheight = 200
-					} else {
-						this.cardheight = data.top
-					}
-				}).exec();
+				setTimeout(() => {
+					let view = uni.createSelectorQuery().select(".mineAnswerTabs");
+					view.fields({
+						rect: true,
+						size: true,
+					}, data => {
+						if (!data){
+							console.error("mine得到节点信息失败")
+							return
+						}
+						console.log("得到节点信息" + JSON.stringify(data));
+						this.cardheight = data.top-data.height
+					}).exec();
+				}, 500);
 			},
 			// 切换
 			tabChange(index){
