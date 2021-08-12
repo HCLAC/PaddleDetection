@@ -21,7 +21,6 @@
 			</view>
 			<view class="topicRankBox">
 				<view class="topicTips" @click="toTopicList(item.topic_id)" v-for="(item,index) in hotTopic " :key="index" >
-					<!-- <image class="rankImg" src="/static/images/topic-1.png" mode=""></image> -->
 					<image class="rankImg" :src="`/static/images/topic-${index+1}.png`" mode=""></image>
 					<view class="tipsText" >
 						{{item.name}}

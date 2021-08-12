@@ -60,9 +60,8 @@
 					</view>
 					<view class="hotList" >
 						<view class="hotItem" v-for="(keyword, index) in hotKeywordList" @tap="doSearch(keyword)" :key="index" v-if="index < 10" >
-							<!-- <image class="hotImg " :src="`/static/images/icon-${index+1>=3?3:index+1}.png`" mode=""></image> -->
 							<view class="hotImg" >
-								<image class=" " :src="`/static/images/icon-${index + 1}.svg`"  mode="aspectFit"></image>
+								<image class=" " :src="`/static/images/icon-${index + 1>4?4:index + 1}.svg`"  mode="aspectFit"></image>
 								<text class="rankNum" >{{ index + 1 }}</text>
 							</view>
 							<view class="hotContent" >{{ keyword}}</view>

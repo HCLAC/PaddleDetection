@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>icon-two</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#FFD5A2" offset="0%"></stop>
+            <stop stop-color="#F98480" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="icon-two" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(1.000000, 1.000000)" fill="url(#linearGradient-1)" id="形状结合">
+            <path d="M1,14 C0.44771525,14 6.76353751e-17,13.5522847 0,13 L0,7 L0.0040590183,6.75935025 C0.130901317,3.00478338 3.21454828,0 7,0 C10.8659932,0 14,3.13400675 14,7 C14,10.8659932 10.8659932,14 7,14 L7,14 L1,14 Z"></path>
+        </g>
+    </g>
+</svg>
