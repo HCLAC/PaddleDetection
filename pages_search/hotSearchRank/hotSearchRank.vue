@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<view class="example-body">
+		<view class="nav-bar">
 			<uni-nav-bar  :title="title" :fixed="true" :status-bar="true" :backgroundColor="background" style="z-index: 999999;">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -64,8 +64,6 @@
 			calcCardHeight(){
 				const query = uni.createSelectorQuery().in(this);
 				query.select('#selectcard').boundingClientRect(data => {
-					console.log("得到布局位置信息" + JSON.stringify(data));
-					console.log("节点离页面顶部的距离为" + data.top);
 					if (data.top == 0) {
 						this.cardheight = 200
 					} else {
@@ -186,7 +184,7 @@
 
 <style lang="scss" scoped>
 	/* 自定义导航栏样式 */
-	.example-body {
+	.nav-bar {
 		flex-direction: row;
 		flex-wrap: wrap;
 		justify-content: center;
@@ -195,12 +193,12 @@
 		z-index: 999999;
 	}
 	
-	.example-body {
+	.nav-bar {
 		flex-direction: column;
 		padding: 15px;
 	}
 	
-	.example-body {
+	.nav-bar {
 		padding: 0;
 	}
 	

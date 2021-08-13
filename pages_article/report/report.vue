@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<view class="example-body"  >
+		<view class="nav-bar"  >
 			<uni-nav-bar :fixed="true" :status-bar="true" :border="true" title="举报">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->

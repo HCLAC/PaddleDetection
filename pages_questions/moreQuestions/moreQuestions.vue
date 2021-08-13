@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<view class="example-body">
+		<view class="nav-bar">
 			<uni-nav-bar :fixed="true" :status-bar="true" title="问答列表">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -15,33 +15,8 @@
 		<view class="searchBox">
 			<u-search v-model="keyword" @search="search" @custom="custom" :show-action="true" search-icon-color="#c9cad1" placeholder="输入搜索内容" placeholder-color="#c9cad1" action-text="取消" :animation="true"></u-search>
 		</view>
-		<meTabs class="mineAnswerTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :tab-width="120"></meTabs>
+		<meTabs class="mineQuestionTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :tab-width="120"></meTabs>
 		<questionList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :keyword="keyword"></questionList>
-		<!-- 问答列表 -->
-		<!-- <view class="answersList">
-			<view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
-				<view class="favBox" @click="change" >
-					<view class="favBT">
-						<view :class="tabIndex == 0 ?'favText' : 'favText1 '" >
-							精选问答
-						</view>
-						<view class="favLine" v-if="tabIndex == 0">
-						</view>
-					</view>
-					
-				</view>
-				<view class="likeBox" @click="change1">
-					<view class="likeBT">
-						<view :class="tabIndex == 1 ?'favText' : 'favText1 '">
-							最新问答
-						</view>
-						<view class="likeLine" v-if="tabIndex == 1">
-						</view>
-					</view>
-					
-				</view>
-			</view>
-		</view> -->
 		<!-- 提问按钮 -->
 		<view class="questionsBtn" @click="toQuestions">
 			<image src="/static/images/twIcon.svg" mode=""></image>
@@ -85,15 +60,11 @@ import questionList from '@/common/article-mescroll-item/mine-answer-list.vue';
 		methods:{
 			calcCardHeight(){
 				const query = uni.createSelectorQuery().in(this);
-				query.select('#selectcard').boundingClientRect(data => {
-					console.log("得到布局位置信息" + JSON.stringify(data));
-					console.log("节点离页面顶部的距离为" + data.top);
-					if (data.top == 0) {
-						this.cardheight = 200
-					} else {
-						this.cardheight = data.top
-					}
-				}).exec();
+				setTimeout(() => {
+					query.select('.mineQuestionTabs').boundingClientRect(data => {
+						this.cardheight = data.top-data.height
+					}).exec();
+				}, 500);
 			},
 			// 切换
 			tabChange(index){
@@ -127,7 +98,7 @@ import questionList from '@/common/article-mescroll-item/mine-answer-list.vue';
 
 <style lang="scss" scoped>
 // 自定义导航栏样式
-.example-body {
+.nav-bar {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -135,12 +106,12 @@ import questionList from '@/common/article-mescroll-item/mine-answer-list.vue';
 	font-size: 14px;
 	background-color: #aa557f;
 }
-.example-body {
+.nav-bar {
 	flex-direction: column;
 	padding: 15px;
 	background-color: #ffffff;
 }
-.example-body {
+.nav-bar {
 	padding: 0;
 }
 .navBar{

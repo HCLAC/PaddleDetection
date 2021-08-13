@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="example-body">
+		<view class="nav-bar">
 			<uni-nav-bar :fixed="true" :status-bar="true" title="行程路线">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -99,7 +99,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.example-body {
+.nav-bar {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -107,12 +107,12 @@ export default {
 	font-size: 14px;
 	background-color: #aa557f;
 }
-.example-body {
+.nav-bar {
 	flex-direction: column;
 	padding: 15px;
 	background-color: #ffffff;
 }
-.example-body {
+.nav-bar {
 	padding: 0;
 }
 .navBar {

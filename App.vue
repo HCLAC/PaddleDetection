@@ -61,7 +61,7 @@ export default {
 @import 'uview-ui/index.scss';
 uni-rich-text img{ max-width: 100% !important;}
 
-.example-body {
+.nav-bar {
 	z-index: 9999;
 	flex-wrap: wrap;
 	justify-content: center;

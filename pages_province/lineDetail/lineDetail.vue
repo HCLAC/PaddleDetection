@@ -1,6 +1,6 @@
 <template>
 	<view >
-		<view class="example-body" >
+		<view class="nav-bar" >
 			<uni-nav-bar :fixed="true" :status-bar="true" style="z-index: 99999 !important;">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -10,53 +10,39 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<view class="" v-show="lineContent">
-			<!-- 内容详情轮播图 -->
-			<view class="uni-padding-wrap">
-				<view class="page-section" >
-					<view class="page-section-spacing" >
-						<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false" circular='true'>
-							<swiper-item v-for="(item, index) in lineContent.images" :key="index">
-								<image class="itemImg" mode="scaleToFill" :src="item"></image>
-							</swiper-item>
-						</swiper>
-						<view class="imageCount">{{ current + 1 }}/{{ lineContent.images.length }}</view>
-						<view class="dots">
-							<block v-for="(item, index) in lineContent.images" :key="index"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+		<view class="lineHeader">
+			<view class="lineImageWrap" v-show="lineContent">
+				<!-- 内容详情轮播图 -->
+				<view class="uni-padding-wrap">
+					<view class="page-section" >
+						<view class="page-section-spacing" >
+							<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false" circular='true'>
+								<swiper-item v-for="(item, index) in lineContent.images" :key="index">
+									<image class="itemImg" mode="scaleToFill" :src="item"></image>
+								</swiper-item>
+							</swiper>
+							<view class="imageCount">{{ current + 1 }}/{{ lineContent.images.length }}</view>
+							<view class="dots">
+								<block v-for="(item, index) in lineContent.images" :key="index"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+							</view>
 						</view>
 					</view>
 				</view>
 			</view>
-		</view>
-		<view class="container">
-			<view class="linePrice">
-				<text>参考价格</text>
-				<text class="price" style="font-size:28rpx; ">￥</text>
-				<text class="price">{{ lineContent.money }}</text>
-				<text>起</text>
-			</view>
-			<view class="lineTitle">{{ lineContent.title }}</view>
-		</view>
-		<view class="lineDriver"></view>
-		<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="tabsTop" :line-width="150" :tab-width="80"></meTabs>
-		<!-- <view  id="tabs" :class="isFixed ? 'fixTabs' : 'noFix'">
-			<view style="width: 60%;display: flex;">
-				<view class="tripBox" @click="tripChange">
-					<view :class="tabIndex == 0 ? 'tripText' : 'tripText1'">
-						参考行程
-					</view>
-					<view class="tripLine" v-if="tabIndex == 0">
-					</view>
+			<view class="container">
+				<view class="linePrice">
+					<text>参考价格</text>
+					<text class="price" style="font-size:28rpx; ">￥</text>
+					<text class="price">{{ lineContent.money }}</text>
+					<text>起</text>
 				</view>
-				<view class="serviceBox" @click="serviceChange">
-					<view :class="tabIndex == 1 ? 'tripText' : 'tripText1'">
-						服务说明
-					</view>
-					<view class="serviceLine" v-if="tabIndex == 1">
-					</view>
-				</view>
+				<view class="lineTitle">{{ lineContent.title }}</view>
 			</view>
-		</view> -->
+			<view class="lineDriver"></view>
+		</view>
+		<view style="height: 120rpx;">
+			<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :line-width="150" :tab-width="80"></meTabs>
+		</view>
 		<view class="linePlan">
 			<view class="planContent">
 				<u-time-line >
@@ -170,9 +156,9 @@ export default {
 			hasLogin: false,
 			isFixed: false,
 			serviceProvider: '',
-			cardheight:200,
-			tabsTop: 0,
-			boxHeight: 2000,
+			headerHeight:200,
+			navbarHeight: 0,
+			planHeight: 2000,
 			tabList: ['参考行程', '服务说明'],
 			tabIndex: 0 // 当前tab下标,必须与mescroll-more.js对应,所以tabIndex是固定变量,不可以改为其他的名字
 		};
@@ -184,13 +170,16 @@ export default {
 		this.getDetail(id);
 	},
 	onPageScroll(e) {
-		if (e.scrollTop > this.cardheight-2) {
-			this.isFixed = true;
+		if (e.scrollTop > this.headerHeight) {
+			if (e.scrollTop > this.headerHeight+20 && this.isFixed){
+			} else {
+				this.isFixed = true;
+			}
 		} else {
 			this.isFixed = false;
 		}
 		
-		if(e.scrollTop > (this.boxHeight - 432)){
+		if(e.scrollTop >= this.planHeight){
 			this.tabIndex = 1
 		} else {
 			this.tabIndex = 0
@@ -226,39 +215,24 @@ export default {
 			});
 		},
 		calcHeight(){
+			const query = uni.createSelectorQuery().in(this);
 			setTimeout(() => {
-				let view = uni.createSelectorQuery().select(".lineDetailTabs");
-				view.fields({
-					rect: true,
-					size: true,
-				}, data => {
-					console.log("得到节点信息" + JSON.stringify(data));
-					this.cardheight = data.top-data.height
-					this.boxTop = data.top-data.height
+				query.select('.lineHeader').boundingClientRect(data => {
+					this.navbarHeight = data.top
+					this.headerHeight = data.height
 				}).exec();
-				view = uni.createSelectorQuery().select(".linePlan");
-				view.fields({
-					size: true,
-				}, data => {
-					console.log("得到节点信息" + JSON.stringify(data));
-					this.boxHeight = data.height
-				}).exec();
-				
-				view = uni.createSelectorQuery().select(".example-body");
-				view.fields({
-					size: true,
-				}, data => {
-					console.log("得到节点信息" + JSON.stringify(data));
-					this.tabsTop = data.height
+				query.select('.linePlan').boundingClientRect(data => {
+					this.planHeight = data.height-data.top
+					console.log(data)
 				}).exec();
 			}, 500);
 		},
 		// 切换
 		tabChange(index){
 			this.tabIndex = index
-			let scrollTop = this.boxHeight
+			let scrollTop = this.planHeight*2
 			if (index == 0){
-				scrollTop = this.boxTop
+				scrollTop = this.headerHeight
 			}
 			uni.pageScrollTo({
 				scrollTop: scrollTop,
@@ -317,7 +291,7 @@ export default {
 </script>
 
 <style lang="scss">
-.example-body {
+.nav-bar {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -326,12 +300,12 @@ export default {
 	background-color: #aa557f;
 	
 }
-.example-body {
+.nav-bar {
 	flex-direction: column;
 	padding: 15px;
 	background-color: #ffffff;
 }
-.example-body {
+.nav-bar {
 	padding: 0;
 }
 .navBar {
@@ -460,7 +434,8 @@ export default {
 	background: #f8f8f8;
 }
 .linePlan {
-	padding: 10rpx 30rpx;
+	position: absolute; 
+	padding: 10rpx 10rpx;
 	padding-bottom: 105rpx;
 	.planContent {
 		padding: 20rpx 30rpx 30rpx 20rpx;

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<view class="example-body" v-if="isFixed">
+		<view class="nav-bar" v-if="isFixed">
 			<uni-nav-bar :fixed="true" :status-bar="true">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -36,20 +36,8 @@
 					<text>关注</text>
 				</view>
 			</view>
-			<meTabs class="bloggerTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="tabsTop" :tab-width="120"></meTabs>
+			<meTabs class="bloggerTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :tab-width="120"></meTabs>
 		</view>
-		<!-- <view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard">
-			<view class="worksBox">
-				<view class="worksText">
-					作品
-				</view>
-				<view class="worksLine">
-				</view>
-			</view>
-			<view class="articleNum">
-				{{authorMsg.article_count>10000?((authorMsg.article_count-(authorMsg.article_count%1000))/10000+'w'):authorMsg.article_count}}
-			</view>
-		</view> -->
 		<bloggerArticleList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :authorID="author_id"></bloggerArticleList>
 		<u-modal v-model="show" :content="content" :z-index=9999 :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 	</view>
@@ -73,7 +61,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 				show: false,
 				content: '',
 				cardheight: 0,
-				tabsTop: 0,
+				navbarHeight: 0,
 				isFixed: false,
 			};
 		},
@@ -89,36 +77,23 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 				}
 				this.isFixed = true;
 				
-				this.$nextTick(() => {
-				  let view = uni.createSelectorQuery().select(".example-body");
-				  view.fields({
-				  	size: true,
-				  }, data => {
-				  	if (!data){
-				  		console.error("mine得到节点信息失败")
-				  		return
-				  	}
-				  	console.log("得到节点信息" + JSON.stringify(data));
-				  	this.tabsTop = data.height
-				  }).exec();
-				})
+				if (this.navbarHeight == 0){
+					this.$nextTick(() => {
+						const query = uni.createSelectorQuery().in(this);
+						query.select('.nav-bar').boundingClientRect(data => {
+							this.navbarHeight = data.height
+						}).exec();
+					})
+				}
 			} else {
 				this.isFixed = false;
 			}
 		},
 		methods: {
 			calcCardHeight(){
+				const query = uni.createSelectorQuery().in(this);
 				setTimeout(() => {
-					let view = uni.createSelectorQuery().select(".bloggerTabs");
-					view.fields({
-						rect: true,
-						size: true,
-					}, data => {
-						if (!data){
-							console.error("mine得到节点信息失败")
-							return
-						}
-						console.log("得到节点信息" + JSON.stringify(data));
+					query.select('.bloggerTabs').boundingClientRect(data => {
 						this.cardheight = data.top-data.height
 					}).exec();
 				}, 500);
@@ -223,7 +198,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 
 <style lang="scss" scoped>
 	
-.example-body {
+.nav-bar {
 	z-index: 999;
 	position: fixed;
 	top:0px;
@@ -334,67 +309,5 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 	}
 }
 
-.myCollection {
-	border-radius: 24rpx 24rpx 0rpx 0rpx;
-	background-color: #fff;
-	color: #303133;
-	height: 84rpx;
-	width: 100%;
-	font-size: 40rpx;
-	font-weight: 500;
-	padding-left: 10rpx;
-	padding-top: 48rpx;
-	display: flex;
-	position: absolute;
-	top: 360rpx;
-}
-
-.fixTabs {
-	position: fixed;
-	top: 126rpx;
-	z-index: 2;
-	height: 98rpx;
-	padding-top: 52rpx;
-}
-
-.noFix {}
-
-.worksBox {
-	// display: flex;
-	margin-left: 18rpx;
-}
-
-.worksText {
-	height: 36rpx;
-	font-size: 36rpx;
-	font-family: PingFangSC-Semibold, PingFang SC;
-	font-weight: 600;
-	color: #303133;
-	line-height: 36rpx;
-
-}
-
-.worksLine {
-	width: 72rpx;
-	height: 24rpx;
-	background: #FFE512;
-	border-radius: 2rpx 12rpx 2rpx 2rpx;
-	margin-top: -20rpx;
-}
-
-.articleNum {
-	// position: absolute;
-	// top: 50rpx;
-	// left: 114rpx;
-	margin-top: 12rpx;
-	margin-left: 8rpx;
-	height: 24rpx;
-	font-size: 24rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: #303133;
-	line-height: 24rpx;
-	z-index: 11111;
-}
 
 </style>

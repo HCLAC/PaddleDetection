@@ -1,7 +1,7 @@
 <template>
 	<view >
 		<!-- 自定义导航栏 -->
-		<view class="example-body">
+		<view class="nav-bar">
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="querys.name">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -490,7 +490,7 @@ export default {
 		margin: 0 auto;
 	}
 // 自定义导航栏样式
-.example-body {
+.nav-bar {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -498,12 +498,12 @@ export default {
 	font-size: 14px;
 	background-color: #aa557f;
 }
-.example-body {
+.nav-bar {
 	flex-direction: column;
 	padding: 15px;
 	background-color: #ffffff;
 }
-.example-body {
+.nav-bar {
 	padding: 0;
 }
 .navBar {

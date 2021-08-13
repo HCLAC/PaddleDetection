@@ -130,9 +130,7 @@
 			getElRect(elClass, dataVal) {
 				new Promise((resolve, reject) => {
 					const query = uni.createSelectorQuery().in(this);
-					query
-						.select('.' + elClass)
-						.fields(
+					query.select('.' + elClass).fields(
 							{
 								size: true
 							},

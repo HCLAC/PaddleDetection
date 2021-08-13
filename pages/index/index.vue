@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<view class="example-body">
+		<view class="nav-bar">
 			<uni-nav-bar :title="false" :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor">
 				<view class="headerL" slot="left">
 					<view class="world" >
@@ -543,7 +543,7 @@
 		}
 	}
 
-	.example-body {
+	.nav-bar {
 		flex-wrap: wrap;
 		justify-content: center;
 		font-size: 14px;

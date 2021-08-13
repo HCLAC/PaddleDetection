@@ -1,7 +1,7 @@
 <template>
 	<view >
 		<!-- 自定义导航栏 -->
-		<view class="example-body" v-if="isFixed">
+		<view class="nav-bar" v-if="isFixed">
 			<uni-nav-bar :fixed="true" :status-bar="true" title="个人主页">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -39,7 +39,7 @@
 			<!-- 客服 -->
 			<!-- <view class="phone" @click="tell"><image class="phoneImg" src="/static/images/minephone.svg" mode=""></image></view> -->
 			<!-- 我的收藏 -->
-			<meTabs class="mineTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="tabsTop" :tab-width="80"></meTabs>
+			<meTabs class="mineTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :tab-width="80"></meTabs>
 
 			<!-- <view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
 				<view class="favBox" @click="change" >
@@ -101,7 +101,7 @@ export default {
 				color: '#909399'
 			},
 			cardheight: 200,
-			tabsTop: 0,
+			navbarHeight: 0,
 			isFixed:false,
 		};
 	},
@@ -128,19 +128,15 @@ export default {
 				return
 			}
 			this.isFixed = true;
-			this.$nextTick(() => {
-			  let view = uni.createSelectorQuery().select(".example-body");
-			  view.fields({
-			  	size: true,
-			  }, data => {
-			  	if (!data){
-			  		console.error("mine得到节点信息失败")
-			  		return
-			  	}
-			  	console.log("得到节点信息" + JSON.stringify(data));
-			  	this.tabsTop = data.height
-			  }).exec();
-			})
+			
+			if (this.navbarHeight == 0){
+				this.$nextTick(() => {
+					const query = uni.createSelectorQuery().in(this);
+					query.select('.nav-bar').boundingClientRect(data => {
+						this.navbarHeight = data.height
+					}).exec();
+				})
+			}
 		} else {
 			this.isFixed = false;
 		}
@@ -200,17 +196,9 @@ export default {
 			})
 		},
 		calcCardHeight(){
+			const query = uni.createSelectorQuery().in(this);
 			setTimeout(() => {
-				let view = uni.createSelectorQuery().select(".mineTabs");
-				view.fields({
-					rect: true,
-					size: true,
-				}, data => {
-					if (!data){
-						console.error("mine得到节点信息失败")
-						return
-					}
-					console.log("得到节点信息" + JSON.stringify(data));
+				query.select('.mineTabs').boundingClientRect(data => {
 					this.cardheight = data.top-data.height
 				}).exec();
 			}, 500);
@@ -250,7 +238,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.example-body {
+.nav-bar {
 	z-index: 999;
 	position: fixed;
 	top:0px;

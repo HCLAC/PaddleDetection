@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="example-body">
+		<view class="nav-bar">
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="articleInfo.title">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -11,7 +11,7 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 游记文章 -->
-		<view class="" v-if="swiperHeight && articleInfo.type != 2">
+		<view class="" v-if="articleInfo && articleInfo.type != 2">
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap" >
 				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="articleInfo.type != 4 && articleInfo.type != 5">
@@ -73,15 +73,15 @@
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<!-- 标题 -->
-				<text class="contentTitle-strategy" selected='true'>{{ articleInfo.title }}</text>
+				<text class="contentTitle" selected='true'>{{ articleInfo.title }}</text>
 				<view class="StrategyTip">
 					<image class="StrategyImg" src="/static/images/Strategy.svg" mode=""></image>
 				</view>
 				<!-- 作者信息 -->
-				<view class="userMse-strategy">
+				<view class="userMse">
 					<image class="userHeard" :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
 					<view class="userMse-r">
-						<text class="userNikename-strategy" selected=true> {{ articleInfo.author_name }}</text>
+						<text class="userNikename" selected=true> {{ articleInfo.author_name }}</text>
 						<view class="releaseTime-strategy">发布于{{ articleInfo.update_at.slice(0,10) }}</view>
 					</view>
 					<view class="followBox" @click="follow()" v-if="!articleInfo.is_follow">
@@ -91,19 +91,19 @@
 					<view class="isfollowBox" @click="follow()" v-else>已关注</view>
 				</view>
 				<!-- 内容文章 -->
-				<view class="contentText-strategy">
+				<view class="contentText">
 					<mp-html ref="parse" v-if="articleInfo" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
 					 :content="articleInfo.content | formatRichText"></mp-html>
 				</view>
 				<!-- 地址 -->
-				<view class="adress-strategy">
+				<view class="adress">
 					<image src="/static/images/iconMap.svg" mode="" class="adreessIcon"></image>
 					<view class="adressText" @click="map()">{{ articleInfo.location }}</view>
 				</view>
 			</view>
 			<!-- 话题 -->
 			<view>
-				<view class="tipsStrategy">
+				<view class="tips">
 					<view v-for="item in articleInfo.topics" :key="item.id" @click="toTopic(item.id)">
 						<image class="tipsIcon" src="/static/images/topicIcon.svg" mode=""></image>
 						<text class="tipsText">{{ item.name }}</text>
@@ -707,7 +707,6 @@
 				this.textareafocus = true
 			},
 			inputBlur() {
-				console.log('inputBlur')
 				this.textareafocus = false
 			},
 			inputValue(e) {
@@ -958,147 +957,76 @@
 		padding-bottom: env(safe-area-inset-bottom);
 	}
 	
-	/* 自定义导航栏样式 */
-	.example-body {
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
-		padding: 0;
-		font-size: 14px;
-		background-color: #aa557f;
-		margin-bottom: 48rpx;
-	}
-
-	.example-body {
-		flex-direction: column;
-		background-color: #ffffff;
-		
-	}
-	.strategy{
-		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
-	}
-
-	
-
-	.navBar {
-		display: flex;
-		// width: 100%;
-		// position: relative;
-	}
-
-	.slotleft {
-		display: flex;
-		align-items: center;
-	}
-
-	.fanhui {
-		width: 40rpx;
-		height: 40rpx;
-		margin-left: 42rpx;
-		margin-right: 20rpx;
-	}
-
-	.fhsy {
-		width: 40rpx;
-		height: 40rpx;
-	}
-	/* #ifdef  MP-BAIDU*/
-	.fhsy {
-		margin-left: 100rpx;
-	}
-	/*  #endif  */
-	.slottitle {
-		margin-left: 182rpx;
-		// position: absolute;
-		// display: inline-block;
-		// top: 50%;
-		// left: 50%;
-		// transform: translate(-50%,-50%);
-		font-size: 38rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 600;
-		color: rgba(0, 0, 0, 1);
-	}
-	.replyText{
-		font-size: 32rpx;
-	}
-	.button-v-line {
-		width: 1px;
-		height: 18px;
-		background-color: #2f2f2f;
-		margin: 0 8px;
-	}
-
 	/* 轮播图 */
-
 	.page-section-spacing {
 		position: relative;
-		// min-height: 580rpx;
-		// max-height: 978rpx;
 		width: 100%;
-	}
+		
+		.swiper {
+			width: 100%;
+			height: 100%;
 
-	.swiper {
-		width: 100%;
-		height: 100%;
-	}
-
-	.videobox {
-		width: 100%;
-		// height: auto;
-		min-height: 420rpx;
-		max-height: 1000rpx;
-	}
-
-	.itemImg {
-		width: 100%;
-		height: 100%;
-	}
-
-	.imageCount {
-		// width: 90rpx;
-		height: 40rpx;
-		background-color: rgba(0, 0, 0, 0.6);
-		border-radius: 20rpx;
-		text-align: center;
-		line-height: 40rpx;
-		font-size: 22rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: rgba(255, 255, 255, 1);
-		position: absolute;
-		right: 28rpx;
-		bottom: 28rpx;
-		padding: 0 12rpx;
-	}
-
-	//标记点样式
-	.dots {
-		width: 100%;
-		height: 10rpx;
-		display: flex;
-		justify-content: center;
-		position: absolute;
-		/* left: 320rpx; */
-		background: #ffff;
-		bottom: -20rpx;
-
-		.dot {
-			width: 10rpx;
-			height: 10rpx;
-			border-radius: 50%;
-			background: rgba(221, 221, 221, 1);
-			margin-right: 8rpx;
+			.itemImg {
+				width: 100%;
+				height: 100%;
+			}
 		}
-
-		.activieDot {
-			width: 20rpx;
+		
+		.videobox {
+			width: 100%;
+			// height: auto;
+			min-height: 420rpx;
+			max-height: 1000rpx;
+		}
+		
+		.imageCount {
+			// width: 90rpx;
+			height: 40rpx;
+			background-color: rgba(0, 0, 0, 0.6);
+			border-radius: 20rpx;
+			text-align: center;
+			line-height: 40rpx;
+			font-size: 22rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: rgba(255, 255, 255, 1);
+			position: absolute;
+			right: 28rpx;
+			bottom: 28rpx;
+			padding: 0 12rpx;
+		}
+		//标记点样式
+		.dots {
+			width: 100%;
 			height: 10rpx;
-			background: rgba(48, 49, 51, 1);
-			border-radius: 3px;
-			margin-right: 8rpx;
+			display: flex;
+			justify-content: center;
+			position: absolute;
+			/* left: 320rpx; */
+			background: #ffff;
+			bottom: -20rpx;
+		
+			.dot {
+				width: 10rpx;
+				height: 10rpx;
+				border-radius: 50%;
+				background: rgba(221, 221, 221, 1);
+				margin-right: 8rpx;
+			}
+		
+			.activieDot {
+				width: 20rpx;
+				height: 10rpx;
+				background: rgba(48, 49, 51, 1);
+				border-radius: 3px;
+				margin-right: 8rpx;
+			}
 		}
 	}
+
+
+
+	
 
 	/* 内容详情 */
 
@@ -1121,76 +1049,57 @@
 		align-items: center;
 		margin-left: 28rpx;
 		margin-top: 50rpx;
-	}
-	.userMse-strategy{
-		display: flex;
-		align-items: center;
-		margin-left: 28rpx;
-		margin-top: 40rpx;
-	}
-
-	.userHeard {
-		width: 80rpx;
-		height: 80rpx;
-		border-radius: 50%;
-	}
-
-	.userMse-r {
-		margin-left: 20rpx;
-		flex: 1;
-	}
-
-	.userNikename {
-		font-size: 28rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: rgba(48, 49, 51, 1);
-		line-height: 28rpx;
-	}
-	.userNikename-strategy {
-		height: 28rpx;
-		font-size: 28rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		line-height: 28rpx;
-	}
-
-	.isfollowBox {
-		width: 124rpx;
-		height: 48rpx;
-		background: #f8f8f8;
-		border-radius: 24rpx;
-		margin-right: 28rpx;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 24rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 400;
-		color: #c9cad1;
-	}
-
-	.followBox {
-		width: 124rpx;
-		height: 48rpx;
-		background: #ffe512;
-		border-radius: 24rpx;
-		margin-right: 28rpx;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 24rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-	}
-
-	.followImg {
-		width: 16rpx;
-		height: 16rpx;
-		margin-right: 4rpx;
-		// margin-top: 4rpx;
+		.userHeard {
+			width: 80rpx;
+			height: 80rpx;
+			border-radius: 50%;
+		}
+		
+		.userMse-r {
+			margin-left: 20rpx;
+			flex: 1;
+			.userNikename {
+				font-size: 28rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
+				color: rgba(48, 49, 51, 1);
+				line-height: 28rpx;
+			}
+		}
+		.isfollowBox {
+			width: 124rpx;
+			height: 48rpx;
+			background: #f8f8f8;
+			border-radius: 24rpx;
+			margin-right: 28rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 24rpx;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 400;
+			color: #c9cad1;
+		}
+		.followBox {
+			width: 124rpx;
+			height: 48rpx;
+			background: #ffe512;
+			border-radius: 24rpx;
+			margin-right: 28rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 24rpx;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 500;
+			color: #303133;
+			.followImg {
+				width: 16rpx;
+				height: 16rpx;
+				margin-right: 4rpx;
+				// margin-top: 4rpx;
+			}
+		}
 	}
 
 	.adress {
@@ -1206,58 +1115,29 @@
 		padding: 0 14rpx;
 		// display: flex;
 		// align-items: center;
-	}
-	.adress-strategy{
-		height: 40rpx;
-		margin: 20rpx 28rpx;
-		background: rgba(0, 145, 255, 0.1);
-		border-radius: 20rpx;
-		display: inline-block;
-		line-height: 40rpx;
-		padding: 0 14rpx;
-	}
-
-	.adreessIcon {
-		width: 24rpx;
-		height: 24rpx;
-		margin-top: 8rpx;
-		float: left;
-		
-	}
-
-	/*  #ifdef  MP-TOUTIAO  */
-	.adreessIcon {
-		width: 24rpx;
-		height: 24rpx;
-		margin-top: 12rpx;
-		float: left;
+		.adreessIcon {
+			width: 24rpx;
+			height: 24rpx;
+			margin-top: 8rpx;
+			float: left;
+		}
+		.adressText {
+			max-width: 400rpx;
+			font-size: 22rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: rgba(0, 145, 255, 1);
+			float: right;
+			overflow: hidden;
+			white-space: nowrap; 
+			text-overflow: ellipsis; 
+		}
 	}
 
-	/*  #endif  */
-
-	.adressText {
-		max-width: 400rpx;
-		font-size: 22rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: rgba(0, 145, 255, 1);
-		float: right;
-		overflow: hidden;
-		white-space: nowrap; 
-		text-overflow: ellipsis; 
-	}
+	
 
 	// 内容
-	.contentTitle {
-		font-size: 32rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 600;
-		color: rgba(48, 49, 51, 1);
-		line-height: 48rpx;
-		margin-left: 28rpx;
-		margin-top: 20rpx;
-	}
-	.contentTitle-strategy{
+	.contentTitle{
 		margin: 0rpx 28rpx 0rpx;
 		font-size: 38rpx;
 		font-family: PingFangSC-Semibold, PingFang SC;
@@ -1285,54 +1165,22 @@
 		line-height: 56rpx;
 		margin: 28rpx;
 	}
-	.contentText-strategy{
-		font-size: 28rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: rgba(96, 98, 102, 1);
-		line-height: 56rpx;
-		margin: 40rpx 28rpx 0rpx;
-	}
 
-	.copy {
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 600;
-		color: rgba(48, 49, 51, 1);
-	}
-
-	.clcopy {
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: rgba(0, 145, 255, 1);
-		margin-left: 36rpx;
-	}
-	.strategyLine{
-		width: 750rpx;
-		height: 1rpx;
-		background: #EDEFF2;
-	}
 	.tips {
 		margin-top: 28rpx;
 		margin-left: 28rpx;
 		display: flex;
 		flex-wrap: wrap;
-	}
-	.tipsStrategy{
-		margin-top: 20rpx;
-		margin-left: 28rpx;
-		display: flex;
-		flex-wrap: wrap;
-	}
-	.tipsStrategy view{
-		height: 48rpx;
-		background: #f8f8f8;
-		border-radius: 12px;
-		margin-right: 38rpx;
-		display: flex;
-		align-items: center;
-		padding-left: 8rpx;
-		padding-right: 16rpx;
-		margin-bottom: 16rpx;
+		
+		
+		.tipsIcon {
+			width: 36rpx;
+			height: 36rpx;
+			margin-right: 8rpx;
+		}
+		.tipsText{
+			font-size: 24rpx;
+		}
 	}
 	.tips view {
 		height: 48rpx;
@@ -1345,15 +1193,6 @@
 		padding-right: 16rpx;
 		margin-bottom: 16rpx;
 	}
-
-	.tipsIcon {
-		width: 36rpx;
-		height: 36rpx;
-		margin-right: 8rpx;
-	}
-	.tipsText{
-		font-size: 24rpx;
-	}
 	.tip text {
 		height: 24rpx;
 		font-size: 24rpx;
@@ -1362,12 +1201,6 @@
 		color: #303133;
 		line-height: 24rpx;
 	}
-
-	// .tipImg{
-	// 	width: 30rpx;
-	// 	height: 30rpx;
-	// 	margin-right: 6rpx;
-	// }
 
 	.releaseTime {
 		font-size: 22rpx;
@@ -1544,11 +1377,6 @@
 		}
 	}
 
-	.bottomLine {
-		width: 100%;
-		height: 20rpx;
-		background: #F8F8F8;
-	}
 
 	.safeBox {
 		height: 142rpx;
@@ -1568,24 +1396,23 @@
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 		box-sizing: content-box;
-	}
-
-	.line {
-		height: 0.5rpx;
-		background: rgba(221, 221, 221, 1);
-		// margin-top: 84rpx;
-	}
-
-	.contentBottom {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-top: 16rpx;
-		font-size: 24rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: rgba(48, 49, 51, 1);
-		line-height: 24rpx;
+		.line {
+			height: 0.5rpx;
+			background: rgba(221, 221, 221, 1);
+			// margin-top: 84rpx;
+		}
+		.contentBottom {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-top: 16rpx;
+			font-size: 24rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: rgba(48, 49, 51, 1);
+			line-height: 24rpx;
+		}
+		
 	}
 
 	.loginButton {

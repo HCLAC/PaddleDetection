@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<view class="example-body">
+		<view class="nav-bar">
 			<uni-nav-bar :fixed="true" :status-bar="true" title="我的回答">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -81,17 +81,9 @@ import answerList from '@/common/article-mescroll-item/mine-answer-list.vue';
 		},
 		methods:{
 			calcCardHeight(){
+				const query = uni.createSelectorQuery().in(this);
 				setTimeout(() => {
-					let view = uni.createSelectorQuery().select(".mineAnswerTabs");
-					view.fields({
-						rect: true,
-						size: true,
-					}, data => {
-						if (!data){
-							console.error("mine得到节点信息失败")
-							return
-						}
-						console.log("得到节点信息" + JSON.stringify(data));
+					query.select('.mineAnswerTabs').boundingClientRect(data => {
 						this.cardheight = data.top-data.height
 					}).exec();
 				}, 500);
@@ -106,7 +98,7 @@ import answerList from '@/common/article-mescroll-item/mine-answer-list.vue';
 
 <style lang="scss" scoped>
 // 自定义导航栏样式
-.example-body {
+.nav-bar {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -114,12 +106,12 @@ import answerList from '@/common/article-mescroll-item/mine-answer-list.vue';
 	font-size: 14px;
 	background-color: #aa557f;
 }
-.example-body {
+.nav-bar {
 	flex-direction: column;
 	padding: 15px;
 	background-color: #ffffff;
 }
-.example-body {
+.nav-bar {
 	padding: 0;
 }
 .navBar{

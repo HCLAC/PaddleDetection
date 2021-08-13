@@ -1,7 +1,7 @@
 <template>
 	<view >
 		<!-- 自定义导航栏 -->
-		<view class="example-body">
+		<view class="nav-bar">
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="info.name">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -30,7 +30,9 @@
 				</view>
 			</view>
 		</view>
-		<meTabs class="topicTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="tabsTop" :tab-width="80"></meTabs>
+		<view style="height: 120rpx;">
+			<meTabs class="topicTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :tab-width="80"></meTabs>
+		</view>
 		<articleList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :topicID="topic_id"></articleList>
 	</view>
 </template>
@@ -54,8 +56,8 @@ export default {
 				}],
 				tabIndex: 0,
 				isFixed: false,
-				cardheight:0,
-				tabsTop: 0,
+				navbarHeight:0,
+				headerHeight: 0,
 				topic_id: 0,
 				info:''
 			};
@@ -65,8 +67,8 @@ export default {
 			this.loadData()
 		},
 		onPageScroll(e) {
-			if (e.scrollTop > this.cardheight) {
-				if (e.scrollTop > this.cardheight+20 && this.isFixed){
+			if (e.scrollTop > this.headerHeight) {
+				if (e.scrollTop > this.headerHeight+20 && this.isFixed){
 					return
 				}
 				this.isFixed = true;
@@ -91,30 +93,12 @@ export default {
 			hideLoad(){
 				uni.hideLoading();
 			},
-			calcCardHeight(){
+			calcHeight(){
+				const query = uni.createSelectorQuery().in(this);
 				setTimeout(() => {
-					let view = uni.createSelectorQuery().select(".topicTabs");
-					view.fields({
-						rect: true,
-						size: true,
-					}, data => {
-						if (!data){
-							console.error("mine得到节点信息失败")
-							return
-						}
-						console.log("得到节点信息" + JSON.stringify(data));
-						this.cardheight = data.top-data.height
-					}).exec();
-					view = uni.createSelectorQuery().select(".example-body");
-					view.fields({
-						size: true,
-					}, data => {
-						if (!data){
-							console.error("example-body得到节点信息失败")
-							return
-						}
-						console.log("得到节点信息" + JSON.stringify(data));
-						this.tabsTop = data.height
+					query.select('.headImgBox').boundingClientRect(data => {
+						this.navbarHeight = data.top
+						this.headerHeight = data.height
 					}).exec();
 				}, 500);
 			},
@@ -133,7 +117,7 @@ export default {
 							return
 						}
 						this.info = res.data.data;
-						this.calcCardHeight()
+						this.calcHeight()
 					}
 				})
 			},

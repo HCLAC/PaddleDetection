@@ -1,7 +1,7 @@
 <template>
 	<view class="">
 		<!-- 自定义导航栏 -->
-		<view class="example-body">
+		<view class="nav-bar">
 			<uni-nav-bar :fixed="true" :status-bar="true" title="热门城市">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -174,7 +174,7 @@ export default {
 
 <style scoped>
 /*  自定义导航栏样式 */
-.example-body {
+.nav-bar {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -183,13 +183,13 @@ export default {
 	background-color: #aa557f;
 }
 
-.example-body {
+.nav-bar {
 	flex-direction: column;
 	padding: 15px;
 	background-color: #ffffff;
 }
 
-.example-body {
+.nav-bar {
 	padding: 0;
 }
 
