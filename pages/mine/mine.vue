@@ -199,6 +199,10 @@ export default {
 			const query = uni.createSelectorQuery().in(this);
 			setTimeout(() => {
 				query.select('.mineTabs').boundingClientRect(data => {
+					if (!data){
+						this.calcCardHeight()
+						return
+					}
 					this.cardheight = data.top-data.height
 				}).exec();
 			}, 500);

@@ -183,58 +183,6 @@
 </script>
 
 <style lang="scss" scoped>
-	/* 自定义导航栏样式 */
-	.nav-bar {
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
-		padding: 0;
-		font-size: 14px;
-		z-index: 999999;
-	}
-	
-	.nav-bar {
-		flex-direction: column;
-		padding: 15px;
-	}
-	
-	.nav-bar {
-		padding: 0;
-	}
-	
-	.navBar {
-		display: flex;
-		z-index: 999999;
-	}
-	
-	.slotleft {
-		display: flex;
-		align-items: center;
-	}
-	
-	.fanhui {
-		width: 40rpx;
-		height: 40rpx;
-		margin-left: 42rpx;
-		margin-right: 20rpx;
-	}
-	
-	.fhsy {
-		width: 40rpx;
-		height: 40rpx;
-	}
-	/* #ifdef  MP-BAIDU*/
-	.fhsy {
-		margin-left: 100rpx;
-	}
-	/*  #endif  */
-	.slottitle {
-		margin-left: 182rpx;
-		font-size: 38rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 600;
-		color: rgba(0, 0, 0, 1);
-	}
 	.mescroll {
 		position: relative;
 		top: -184rpx;
@@ -242,22 +190,21 @@
 	}
 	// 头部背景
 	.bgBox{
-		
 		width: 100%;
 		height: 440rpx;
 		
-	}
-	.bannerImg{
-		width: 100%;
-		height: 100%;
-		
-	}
-	.bannerText{
-		width: 448rpx;
-		height: 114rpx;
-		position: absolute;
-		top: 200rpx;
-		left: 132rpx;
+		.bannerImg{
+			width: 100%;
+			height: 100%;
+			
+		}
+		.bannerText{
+			width: 448rpx;
+			height: 114rpx;
+			position: absolute;
+			top: 200rpx;
+			left: 132rpx;
+		}
 	}
 	// 
 	.content{
@@ -268,44 +215,45 @@
 		position: relative;
 		margin-top: -20rpx;
 		padding-left: 28rpx;
-	}
-	.hotList{
-		width: 100%;
-		height: 94rpx;
-		display: flex;
-		align-items: center;
-		border-bottom:0.5px solid #EDEFF2;
-	}
-	.hotImg {
-		width: 36rpx;
-		height: 36rpx;
-		line-height: 36rpx;
-		align-self: center;
-		position: relative;
-		image {
+		
+		.hotList{
 			width: 100%;
-			height: 100%;
+			height: 94rpx;
+			display: flex;
+			align-items: center;
+			border-bottom:0.5px solid #EDEFF2;
+			.hotImg {
+				width: 36rpx;
+				height: 36rpx;
+				line-height: 36rpx;
+				align-self: center;
+				position: relative;
+				image {
+					width: 100%;
+					height: 100%;
+				}
+				.rankNum {
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					transform: translate(-50%, -50%);
+					font-size: 20rpx;
+					font-family: HelveticaNeue-Bold, HelveticaNeue;
+					font-weight: 600;
+					color: rgba(255, 255, 255, 1);
+					line-height: 20rpx;
+				}
+			}
+			
+			.hotContent {
+				margin-left: 16rpx;
+				height: 32rpx;
+				font-size: 32rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #303133;
+				line-height: 32rpx;
+			}
 		}
-		.rankNum {
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			transform: translate(-50%, -50%);
-			font-size: 20rpx;
-			font-family: HelveticaNeue-Bold, HelveticaNeue;
-			font-weight: 600;
-			color: rgba(255, 255, 255, 1);
-			line-height: 20rpx;
-		}
-	}
-	
-	.hotContent {
-		margin-left: 16rpx;
-		height: 32rpx;
-		font-size: 32rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: #303133;
-		line-height: 32rpx;
 	}
 </style>

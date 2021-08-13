@@ -404,89 +404,9 @@
 		width: 100%;
 	}
 
-	// 自定义导航栏样式
-	.nav-bar {
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
-		padding: 0;
-		font-size: 14px;
-		background-color: #aa557f;
-	}
-
-	.nav-bar {
-		flex-direction: column;
-		padding: 15px;
-		background-color: #ffffff;
-	}
-
-	.nav-bar {
-		padding: 0;
-	}
-
-	.navBar {
-		display: flex;
-	}
-
-	.slotleft {
-		display: flex;
-		align-items: center;
-	}
-
-	.fanhui {
-		width: 40rpx;
-		height: 40rpx;
-		margin-left: 42rpx;
-		margin-right: 20rpx;
-	}
-
-	.fhsy {
-		width: 40rpx;
-		height: 40rpx;
-	}
-	/* #ifdef  MP-BAIDU*/
-	.fhsy {
-		margin-left: 100rpx;
-	}
-	/*  #endif  */
-	.slottitle {
-		margin-left: 182rpx;
-		font-size: 38rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 600;
-		color: rgba(0, 0, 0, 1);
-	}
-
-	.button-v-line {
-		width: 1px;
-		height: 18px;
-		background-color: #2f2f2f;
-		margin: 0 8px;
-	}
-
-	// 瀑布流
-	/* 正在旅行 */
-	.left,
-	.right {
-		display: inline-block;
-		margin-left: 20rpx;
-		vertical-align: top;
-		width: 46%;
-	}
-
+	
 	.touring {
 		margin-top: 24rpx;
-	}
-
-	.touring .tourtext {
-		width: 160rpx;
-		height: 104rpx;
-		line-height: 104rpx;
-		font-size: 40rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		margin-left: 32rpx;
 	}
 
 	.wrap {

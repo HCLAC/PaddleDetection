@@ -232,6 +232,7 @@
 			};
 		},
 		onShow() {
+			this.hasLogin = uni.getStorageSync('Authorization') ? true : false;
 			swan.onKeyboardHeightChange(res => {
 				this.inputbottom = res.height
 				this.animation.translateY(-res.height).step()
@@ -239,7 +240,6 @@
 			});
 		},
 		onLoad(obj) {
-			this.hasLogin = uni.getStorageSync('Authorization') ? true : false;
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.article_id = obj.article_id
 			this.animation = uni.createAnimation({

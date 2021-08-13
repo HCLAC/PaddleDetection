@@ -165,9 +165,11 @@ export default {
 	},
 	onLoad(options) {
 		let id = options.id
-		this.hasLogin = uni.getStorageSync('Authorization') ? true : false;
 		this.serviceProvider = getApp().globalData.serviceProvider
 		this.getDetail(id);
+	},
+	onShow() {
+		this.hasLogin = uni.getStorageSync('Authorization') ? true : false;
 	},
 	onPageScroll(e) {
 		if (e.scrollTop > this.headerHeight) {
@@ -291,59 +293,6 @@ export default {
 </script>
 
 <style lang="scss">
-.nav-bar {
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: center;
-	padding: 0;
-	font-size: 14px;
-	background-color: #aa557f;
-	
-}
-.nav-bar {
-	flex-direction: column;
-	padding: 15px;
-	background-color: #ffffff;
-}
-.nav-bar {
-	padding: 0;
-}
-.navBar {
-	display: flex;
-}
-.slotleft {
-	display: flex;
-	align-items: center;
-}
-.fanhui {
-	width: 40rpx;
-	height: 40rpx;
-	margin-left: 42rpx;
-	margin-right: 20rpx;
-}
-.fhsy {
-	width: 40rpx;
-	height: 40rpx;
-}
-/* #ifdef  MP-BAIDU*/
-.fhsy {
-	margin-left: 100rpx;
-}
-/*  #endif  */
-.slottitle {
-	margin-left: 182rpx;
-	font-size: 38rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 600;
-	color: rgba(0, 0, 0, 1);
-}
-.button-v-line {
-	width: 1px;
-	height: 18px;
-	background-color: #2f2f2f;
-	margin: 0 8px;
-}
-//导航栏样式end
 .page-section-spacing {
 	position: relative;
 	width: 100%;
@@ -742,69 +691,5 @@ export default {
 			height: 46rpx;
 		}
 	}
-}
-.fixTabs {
-	position: fixed;
-	top: 110rpx;
-	padding-left: 10rpx;
-	padding-top: 20rpx;
-	left: 0;
-	z-index: 2;
-	width: 100%;
-	height:110rpx;
-	background: #ffffff;
-	// border-bottom: 2rpx solid #eeeeee;
-	// box-shadow: 0px 0px 12rpx 0rpx #eeeeee;
-}
-.noFix {
-	padding-left: 10rpx;
-	left: 0;
-	z-index: 1000;
-	width: 100%;
-	height: 110rpx;
-	padding-top: 15rpx;
-	background: #ffffff;
-}
-.tripBox{
-	margin-top: 28rpx;
-	margin-left: 38rpx;
-}
-.tripText{
-	// width: 128rpx;
-	height: 32rpx;
-	font-size: 32rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 500;
-	color: #303133;
-	line-height: 32rpx;
-
-}
-.tripText1{
-	// width: 104rpx;
-	height: 26rpx;
-	font-size: 26rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: #909399;
-	line-height: 26rpx;
-
-}
-.tripLine{
-	width: 128rpx;
-	height: 12rpx;
-	background: #FFE512;
-	border-radius: 6px;
-	margin-top: -6rpx;
-}
-.serviceBox{
-	margin-top: 28rpx;
-	margin-left: 64rpx;
-}
-.serviceLine{
-	width: 128rpx;
-	height: 12rpx;
-	background: #FFE512;
-	border-radius: 6px;
-	margin-top: -6rpx;
 }
 </style>
