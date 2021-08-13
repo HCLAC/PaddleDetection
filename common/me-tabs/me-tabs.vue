@@ -4,11 +4,14 @@
 		<scroll-view v-if="tabs.length" :id="viewId" :scroll-left="scrollLeft" scroll-x scroll-with-animation :scroll-animation-duration="300">
 			<view class="tabs-item" :class="{'tabs-flex':!isScroll, 'tabs-scroll':isScroll}">
 				<!-- tab -->
-				<view class="tab-item-info" v-for="(tab, i) in tabs" :style="{width: tabWidthVal, height: tabHeightVal, 'line-height':tabHeightVal}" :class="{'active': value===i}" :key="i" @click="tabClick(i)">
+				<view class="tab-item-info" v-for="(tab, i) in tabs" :style="{width: tabWidthVal, height: tabHeightVal, }" :class="{'active': value===i}" :key="i" @click="tabClick(i)">
+					 
 					<view class="name">
 						{{getTabName(tab)}}
 					</view>
-					<view class="count" >
+					<!-- class="count"
+					:class="['inv-h',Inv==0?'inv-h-se':'']" -->
+					<view :class="['count',value===i?'count1':'']" :key="i" >
 						{{tab.count?tab.count:''}}
 					</view>
 				</view>
@@ -168,21 +171,28 @@
 		}
 		
 		.tabs-item{
+			display: flex;
 			position: relative;
 			white-space: nowrap;
 			padding-bottom: 30rpx; // 撑开高度,再配合me-tabs的overflow-y: hidden,以达到隐藏滚动条的目的
 			box-sizing: border-box;
+			padding-left:4%;
 			.tab-item-info{
 				z-index: 1;
 				position: relative;
 				text-align: center;
 				box-sizing: border-box;
+				display: flex;
+				align-items: center;
+				color:#909399;
+				// margin-left: 24rpx;
 				&.active{
 					height: 36rpx;
 					font-size: 36rpx;
 					font-family: PingFangSC-Medium, PingFang SC;
 					font-weight: 500;
 					color: #303133;
+					// color: red;
 					line-height: 36rpx;
 				}
 				
@@ -192,28 +202,35 @@
 				.count{
 					// width: 30%;
 					// height: 24rpx;
-					// font-size: 24rpx;
-					// font-family: PingFangSC-Regular, PingFang SC;
-					// font-weight: 400;
-					// color: #303133;
-					// margin-left: -158rpx;
+					font-size: 24rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #909399;
+					margin-left: 8rpx;
+				}
+				.count1{
+					font-size: 24rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #303133;
+					margin-left: 8rpx;
 				}
 			}
 		}
 		
-		// 平分的方式显示item
-		.tabs-flex{
-			display: flex;
-			.tab-item-info{
-				flex: 1;
-			}
-		}
-		// 居左显示item,支持水平滑动
-		.tabs-scroll{
-			.tab-item-info{
-				display: inline-block;
-			}
-		}
+		// // 平分的方式显示item
+		// .tabs-flex{
+		// 	display: flex;
+		// 	.tab-item-info{
+		// 		flex: 1;
+		// 	}
+		// }
+		// // 居左显示item,支持水平滑动
+		// .tabs-scroll{
+		// 	.tab-item-info{
+		// 		display: inline-block;
+		// 	}
+		// }
 		
 		// 选中tab的线
 		.tabs-line{
@@ -222,6 +239,7 @@
 			bottom: 60rpx; // 至少与.tabs-item的padding-bottom一致,才能保证在底部边缘
 			width: 68rpx;
 			height: 40rpx;
+			left: 20rpx;
 			transform: translateX(-50%);
 			border-radius: 6px;
 			transition: left .3s;

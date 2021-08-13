@@ -89,9 +89,12 @@ export default {
 			favList: [],
 			likeList: [],
 			tabList: [{
-					name: '收藏'
-				}, {
-					name: '已赞'
+					name: '收藏',
+					count:'',
+				}, 
+				{
+					name: '已赞',
+					count:'',
 				}],
 			tabIndex: 0,
 			favnumcolor:{
@@ -168,7 +171,7 @@ export default {
 					Authorization: uni.getStorageSync('Authorization')
 				},
 				method: 'get',
-				success: function(res) {
+				success: (res) =>{
 					if (res.statusCode != 200 || res.data.code != 0){
 						uni.showToast({
 							title: res.data.msg,
@@ -178,6 +181,10 @@ export default {
 					}
 					
 					that.userInfo = res.data.data
+					that.tabList[0].count = res.data.data.fav_count
+					that.tabList[1].count = res.data.data.like_count
+					console.log(that.tabList[0])
+					console.log(that.userInfo,'++++++')
 					that.userInfo.nickName = res.data.data.mobile
 					if(res.data.data.nick_name){
 						that.userInfo.nickName = res.data.data.nick_name
@@ -261,7 +268,6 @@ export default {
 	width: 100%;
 	z-index: -11;
 }
-
 // /* 用户信息 */
 .usermes {
 	padding-top: 154rpx;

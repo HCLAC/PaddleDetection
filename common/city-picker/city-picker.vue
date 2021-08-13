@@ -154,7 +154,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	// 导航栏
 	
 	.slotleft {
@@ -294,27 +294,22 @@
 		width: 120rpx;
 		height: 120rpx;
 	}
-	.nowcity {
-		margin: 40rpx 40rpx 32rpx 40rpx;
+	.nowcity{
+		// background: red;
+		height: 104rpx;
+		padding-left: 40rpx;
 		display: flex;
 		align-items: center;
-		height: 28rpx;
-		text {
+		.nowcityImg{
+			width: 16rpx;
+			height: 16rpx;
+			margin-left: 8rpx;
+		}
+		text{
 			font-size: 28rpx;
 			font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 500;
 			color: #303133;
-			line-height: 28rpx;
-			margin: 16rpx 12rpx 8rpx 6rpx;
 		}
-		.nowcityImg {
-			width: 16rpx;
-			height: 16rpx;
-			margin-top: 6rpx;
-		}
-		image { 
-			width: 11.4rpx; 
-			height: 11.4rpx; 
-		} 
 	}
 </style>
