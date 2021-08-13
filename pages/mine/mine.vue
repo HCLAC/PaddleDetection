@@ -62,9 +62,11 @@ export default {
 			favList: [],
 			likeList: [],
 			tabList: [{
-					name: '收藏'
+					name: '收藏',
+					count: '',
 				}, {
-					name: '已赞'
+					name: '已赞',
+					count: ''
 				}],
 			tabIndex: 0,
 			favnumcolor:{
@@ -147,6 +149,8 @@ export default {
 					}
 					
 					that.userInfo = res.data.data
+					that.tabList[0].count = res.data.data.fav_count
+					that.tabList[1].count = res.data.data.like_count
 					that.userInfo.nickName = res.data.data.mobile
 					if(res.data.data.nick_name){
 						that.userInfo.nickName = res.data.data.nick_name

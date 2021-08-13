@@ -133,7 +133,7 @@
 							
 							if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
 							this.list = this.list.concat(curPageData); //追加新数据	
-							console.log('topicArticleList', this.recommendList, curPageLen, totalSize)
+							console.log('topicArticleList', this.list)
 							
 							// 请求成功,隐藏加载状态
 							//方法一(推荐): 后台接口有返回列表的总页数 totalPage

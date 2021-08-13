@@ -58,7 +58,7 @@
 					<view class="conttentBox">
 						<view class="contentImgBox">
 							<view class="contentImg" v-for="(item1,index) in item.list" :key="index" @click="onPageJump" :id="item1.article_id">
-								<image class="attImg" :src="item1.image" mode="aspectFill">
+								<image class="attImg" lazy-load	:src="item1.image" mode="aspectFill">
 									<view class="videoIcon" v-if="item1.type == 4">
 										<image class="playIcon"  src="/static/images/playIcon.svg" mode=""></image>
 									</view>

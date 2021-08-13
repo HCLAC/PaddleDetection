@@ -97,7 +97,7 @@
 			}
 		},
         mounted() {
-          if(uni.report && this.title !== '') {
+          if(uni.report && (this.title && this.title !== '')) {
               uni.report('title', this.title)
           }
         },

@@ -11,7 +11,7 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<meTabs class="mineAnswerTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :tab-width="120"></meTabs>
+		<meTabs class="mineAnswerTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :tab-width="220"></meTabs>
 		<answerList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex"></answerList>
 	</view>
 </template>

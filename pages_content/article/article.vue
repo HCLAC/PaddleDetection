@@ -642,25 +642,28 @@
 					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
+							if (res.data.code == 10303){
+								that.articleInfo.is_follow = true
+								return
+							}
 							uni.showToast({
 								title: res.data.msg,
 								icon: 'none'
 							});
 							return
 						}
-						that.articleInfo.is_follow = res.data.data
+						that.articleInfo.is_follow = true
 					}
 				});
 			},
 			// 点击确认
 			confirm() {
 				var that = this;
-				let status = this.articleInfo.is_follow ? 0 : 1;
 				this.HTTP.request({
 					url: '/user/follow',
 					data: {
 						author_id: that.articleInfo.author_id,
-						follow: status
+						follow: 0
 					},
 					method: 'POST',
 					header: {
@@ -668,13 +671,17 @@
 					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
+							if (res.data.code == 10304){
+								that.articleInfo.is_follow = false
+								return
+							}
 							uni.showToast({
 								title: res.data.msg,
 								icon: 'none'
 							});
 							return
 						}
-						that.articleInfo.is_follow = res.data.data
+						that.articleInfo.is_follow = false
 					}
 				});
 			},
