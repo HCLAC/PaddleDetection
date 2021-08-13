@@ -1,8 +1,8 @@
 <template>
 	<view v-show="i === index" style="margin-top: 70%; padding: 0 28rpx;">
 		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption"  >
-			<view >
-				<view class="contentItem" v-for="(item, index) in list" :key="index" @click="onPageJump" :id="item.article_id">
+			<view v-for="(item, index) in list" :key="index" @click="onPageJump" :id="item.article_id">
+				<view class="contentItem">
 					<view class="left">
 						<image :src="item.main_image" mode="aspectFill">
 							<view class="imgTip">
@@ -40,6 +40,7 @@
 						</view>
 					</view>
 				</view>
+				<view class="line"></view> 
 			</view>
 		</mescroll-body>
 	</view>
@@ -327,37 +328,10 @@
 		}
 	}
 }
-	// 列表为空时
-	.empty {
-		position: absolute;
-		left: 50%; 
-		top: 810rpx;
-		transform: translate(-50%, -50%); 
-		-webkit-transform: translate(-50%, -50%);
-		text-align: center;
-		// margin-top: 350rpx;
-		// margin-left: 138rpx;
-	}
-	
-	.emptyImg {
-		width: 148rpx;
-		height: 148rpx;
-		margin-left: 164rpx;
-		margin-bottom: 40rpx;
-	
-		image {
-			width: 100%;
-			height: 100%;
-		}
-	}
-	
-	.emptyText {
-		width: 476rpx;
-		height: 30rpx;
-		font-size: 28rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: #909399;
-		line-height: 30rpx;
-	}
+.line{
+	width: 722rpx;
+	height: 1rpx;
+	background: #EDEFF2;
+	margin-bottom: 20rpx;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<view v-show="i === index" style="padding: 0 28rpx;">
+	<view v-show="i === index" style="margin-top: 70%; padding: 0 28rpx;">
 		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption"  >
 			<view class="" v-for="(item, index) in list" :key="index">
 				<view class="contentItem">
@@ -37,6 +37,7 @@
 						</view>
 					</view>
 				</view>
+				<view class="line"></view> 
 			</view>
 		</mescroll-body>
 	</view>
@@ -199,182 +200,154 @@
 </script>
 
 <style lang="scss" scoped>
-
 .contentItem {
-		width: 694rpx;
-		height: 232rpx;
-		margin: 28rpx;
-		margin-left: 0;
-		margin-top: 0;
-		margin-bottom: 20rpx;
-		border-radius: 8px;
-		display: flex;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+	width: 694rpx;
+	height: 232rpx;
+	margin: 28rpx;
+	margin-left: 0;
+	margin-top: 0;
+	margin-bottom: 20rpx;
+	border-radius: 8px;
+	display: flex;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 
-		.left {
-			position: relative;
+	.left {
+		position: relative;
 
-			.imgTip {
-				position: absolute;
-				left: 0rpx;
-				top: 0rpx;
-				font-size: 24rpx;
-				line-height: 44rpx;
-				font-weight: 500;
-				color: #ffffff;
-				width: 96rpx;
-				height: 44rpx;
-				text-align: center;
-				background-color: rgba(0, 0, 0, 0.6);
-				border-radius: 16rpx 0px 16rpx 0px;
-			}
-
-			image {
-				// margin: 8rpx;
-				width: 192rpx;
-				height: 232rpx;
-				margin-right: 20rpx;
-				border-radius: 16rpx;
-			}
-
-			.videoIcon {
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				margin-top: -20rpx;
-				margin-left: -30rpx;
-				width: 40rpx;
-				height: 40rpx;
-			}
-
-			.playIcon {
-				width: 100%;
-				height: 100%;
-			}
-		}
-
-		.right {
-			margin-top: 12rpx;
-			height: 232rpx;
-			// overflow: hidden;
-			// text-overflow:ellipsis;
-			// white-space: nowrap;
-		}
-
-		.right .title {
-			width: 480rpx;
-			height: 32rpx;
-			font-size: 32rpx;
+		.imgTip {
+			position: absolute;
+			left: 0rpx;
+			top: 0rpx;
+			font-size: 24rpx;
+			line-height: 44rpx;
 			font-weight: 500;
-			color: rgba(48, 49, 51, 1);
-			font-family: PingFangSC-Medium, PingFang SC;
-			line-height: 32rpx;
-			display: flex;
+			color: #ffffff;
+			width: 96rpx;
+			height: 44rpx;
+			text-align: center;
+			background-color: rgba(0, 0, 0, 0.6);
+			border-radius: 16rpx 0px 16rpx 0px;
 		}
 
-		.tips {
-			margin-right: 10rpx;
-		}
-
-		.titleText {
-			flex: 1;
-			// margin-left: 10rpx;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-
-		.richText {
-			width: 480rpx;
-			height: 84rpx;
-			font-size: 28rpx;
-			font-weight: 400;
-			color: #909399;
-			line-height: 42rpx;
-			margin-top: 12rpx;
-			display: -webkit-box;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			word-wrap: break-word;
-			white-space: normal !important;
-			-webkit-line-clamp: 2;
-			-webkit-box-orient: vertical;
-		}
-
-		.favandlikebox {
-			display: flex;
-			align-items: center;
-			margin-top: 14rpx;
-			font-size: 22rpx;
-			// font-family: Roboto-Regular, Roboto;
-			font-weight: 400;
-			color: #606266;
-			line-height: 22rpx;
-		}
-
-		.like {
-			margin-left: 20rpx;
-		}
-
-		.right .position {
-			display: flex;
-			margin-top: 20rpx;
-			// line-height: 40rpx;
-			align-items: center;
-
-			image {
-				height: 30rpx;
-				width: 26rpx;
-				margin-right: 4rpx;
-			}
-
-			.positionText {
-				width: 452rpx;
-				font-size: 22rpx;
-				font-family: PingFangSC-Regular, PingFang SC;
-				font-weight: 400;
-				color: rgba(0, 145, 255, 1);
-				line-height: 22rpx;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-			}
-		}
-
-	}
-	// 列表为空时
-	.empty {
-		position: absolute;
-		left: 50%; 
-		top: 810rpx;
-		transform: translate(-50%, -50%); 
-		-webkit-transform: translate(-50%, -50%);
-		text-align: center;
-		// margin-top: 350rpx;
-		// margin-left: 138rpx;
-	}
-	
-	.emptyImg {
-		width: 148rpx;
-		height: 148rpx;
-		margin-left: 164rpx;
-		margin-bottom: 40rpx;
-	
 		image {
+			// margin: 8rpx;
+			width: 192rpx;
+			height: 232rpx;
+			margin-right: 20rpx;
+			border-radius: 16rpx;
+		}
+
+		.videoIcon {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -20rpx;
+			margin-left: -30rpx;
+			width: 40rpx;
+			height: 40rpx;
+		}
+
+		.playIcon {
 			width: 100%;
 			height: 100%;
 		}
 	}
-	
-	.emptyText {
-		width: 476rpx;
-		height: 30rpx;
+
+	.right {
+		margin-top: 12rpx;
+		height: 232rpx;
+		// overflow: hidden;
+		// text-overflow:ellipsis;
+		// white-space: nowrap;
+	}
+
+	.right .title {
+		width: 480rpx;
+		height: 32rpx;
+		font-size: 32rpx;
+		font-weight: 500;
+		color: rgba(48, 49, 51, 1);
+		font-family: PingFangSC-Medium, PingFang SC;
+		line-height: 32rpx;
+		display: flex;
+	}
+
+	.tips {
+		margin-right: 10rpx;
+	}
+
+	.titleText {
+		flex: 1;
+		// margin-left: 10rpx;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.richText {
+		width: 480rpx;
+		height: 84rpx;
 		font-size: 28rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: #909399;
-		line-height: 30rpx;
+		line-height: 42rpx;
+		margin-top: 12rpx;
+		display: -webkit-box;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		word-wrap: break-word;
+		white-space: normal !important;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
 	}
+
+	.favandlikebox {
+		display: flex;
+		align-items: center;
+		margin-top: 14rpx;
+		font-size: 22rpx;
+		// font-family: Roboto-Regular, Roboto;
+		font-weight: 400;
+		color: #606266;
+		line-height: 22rpx;
+	}
+
+	.like {
+		margin-left: 20rpx;
+	}
+
+	.right .position {
+		display: flex;
+		margin-top: 20rpx;
+		// line-height: 40rpx;
+		align-items: center;
+
+		image {
+			height: 30rpx;
+			width: 26rpx;
+			margin-right: 4rpx;
+		}
+
+		.positionText {
+			width: 452rpx;
+			font-size: 22rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: rgba(0, 145, 255, 1);
+			line-height: 22rpx;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
+}
+.line{
+	width: 722rpx;
+	height: 1rpx;
+	background: #EDEFF2;
+	margin-bottom: 20rpx;
+}
 </style>

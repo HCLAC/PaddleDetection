@@ -521,89 +521,37 @@
 	}
 
 	/* #endif */
-
-	/* #ifndef APP-NVUE */
-	page {
-		display: flex;
-		flex-direction: column;
-		box-sizing: border-box;
-		/* background-color: #efeff4; */
-		min-height: 100%;
-		height: auto;
-	}
-
-	view {
-		font-size: 14px;
-		line-height: inherit;
-	}
-
-	.search-box {
-		width: 486rpx;
-		height: 64rpx;
-		padding-left: 28rpx;
-		z-index: 111;
-	}
-
-	.search-wrap {
-		width: 486rpx;
-		height: 64rpx;
-	}
-
 	/* 导航栏轮播图 */
 	.page-section {
-		/* position: relative;
-	top: -184rpx;
-	left: 0; */
 		width: 100%;
 		height: 440rpx;
+		.page-section-spacing {
+			width: 100%;
+			height: 440rpx;
+			.bannerImg{
+				width: 100%;
+				height: 100%;
+			}
+		}
 	}
-
-	.page-section-spacing {
+	.swiper {
 		width: 100%;
-		height: 440rpx;
-		.bannerImg{
+		height: 100%;
+		.swiperImg {
 			width: 100%;
 			height: 100%;
 		}
 	}
 
-	.swiper {
-		width: 100%;
-		height: 100%;
-	}
-
-	.itemUrl {
-		width: 100%;
-		height: 100%;
-	}
-
-	.swiperImg {
-		width: 100%;
-		height: 100%;
-	}
-
-	.example {
-		padding: 0 15px 15px;
-	}
-
-	.example-info {
-		padding: 15px;
-		color: #3b4144;
-		background: #ffffff;
-	}
-
 	.example-body {
-		flex-direction: row;
 		flex-wrap: wrap;
 		justify-content: center;
-		/* align-items: center; */
-		/* padding-top: 12rpx; */
 		font-size: 14px;
-	}
-	.mediaRight{
 		display: flex;
-		align-items: center;
+		flex-direction: column;
+		background: rgba(58, 61, 70, 0.25);
 	}
+	
 	.headerL{
 		display: flex;
 		align-items: center;
@@ -659,71 +607,6 @@
 		left: 0;
 	}
 
-	.mescroll1 {
-		position: relative;
-		top: 0;
-		left: 0;
-	}
-
-	/* #endif */
-	.example {
-		padding: 0 15px;
-	}
-
-	.example-info {
-		/* #ifndef APP-NVUE */
-		display: block;
-		/* #endif */
-		padding: 15px;
-		color: #3b4144;
-		background-color: #ffffff;
-		font-size: 14px;
-		line-height: 20px;
-	}
-
-	.example-info-text {
-		font-size: 14px;
-		line-height: 20px;
-		color: #3b4144;
-	}
-
-	.example-body {
-		display: flex;
-		flex-direction: column;
-		// background-color: #ffffff;
-		background: rgba(58, 61, 70, 0.25);
-	}
-
-	.word-btn-white {
-		font-size: 18px;
-		color: #ffffff;
-	}
-
-	.word-btn {
-		/* #ifndef APP-NVUE */
-		/* page {
-		display: flex;
-		flex-direction: column;
-		box-sizing: border-box;
-		background-color: #efeff4;
-		min-height: 100%;
-		height: auto;
-	} */
-
-		/* view {
-		font-size: 14px;
-		line-height: inherit;
-	} */
-
-		/* #endif */
-		/* flex-direction: row;
-	align-items: center;
-	justify-content: flex-start; */
-		/* width: 160rpx;
- */
-		/* 	margin-left: 28rpx;
- */
-	}
 
 	.input-view {
 		display: flex;
@@ -761,29 +644,22 @@
 		background-color: #f8f8f8;
 	}
 
-	.cus-sty1 {
-		background-color: #f8f8f8;
-		margin-top: 156rpx;
-	}
-
 	/* 热门景点 */
 	.hot {
 		display: flex;
 		flex-direction: column;
 		background-color: #ffffff;
-	}
-	.wave{
-		margin-top: -50rpx;
-		width: 100%;
-		height: 90rpx;
-		.waveImg{
+		.wave{
+			margin-top: -50rpx;
 			width: 100%;
-			height: 100%;
+			height: 90rpx;
+			.waveImg{
+				width: 100%;
+				height: 100%;
+			}
 		}
 	}
-	.waveNoB{
-		margin-top:20rpx
-	}
+	
 	.citysBox{
 		// display: flex;
 		// align-items: center;
@@ -1057,300 +933,34 @@
 		}
 		
 	}
-	.u-swiper-text{
-		color: #007AFF;
-	}
-	.hot .hot-top {
-		display: flex;
-		justify-content: space-between;
-	}
-
-	.ht-l {
-		/* width: 160rpx; */
-		height: 40rpx;
-		font-size: 40rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: rgba(48, 49, 51, 1);
-		/* line-height: 40rpx; */
-		margin-top: 48rpx;
-		margin-left: 32rpx;
-	}
-
-	.hot-top .ht-r {
-		width: 94rpx;
-		height: 42rpx;
-		background: #edeff2;
-		border-radius: 24rpx;
-		font-size: 22rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #606266;
-		margin: 54rpx 32rpx 0 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.moreIcon {
-		width: 14rpx;
-		height: 14rpx;
-		margin-left: 4rpx;
-	}
-
-	/* 热门景点图 */
-	.hot .hot-bot {
-		/* display: flex; */
-		margin-top: 32rpx;
-	}
-
-	.hotAdress {
-		display: flex;
-		/* align-items: center; */
-		margin-left: 32rpx;
-	}
-
-	.dqwz {
-		width: 216rpx;
-		height: 180rpx;
-		border-radius: 16rpx;
-		// border: 4rpx solid #ffe512;
-		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		// overflow: hidden;
-	}
-
-	.dqwzBg {
-		width: 216rpx;
-		height: 174rpx;
-		border-radius: 16rpx;
-		border: 4rpx solid #ffe512;
-	}
-
-	.dqwzImg {
-		width: 216rpx;
-		height: 174rpx;
-		border-radius: 16rpx;
-		border: 4rpx solid #ffe512;
-	}
-
-	.dqwzBox {
-		position: absolute;
-		text-align: center;
-	}
-
-	.dqwzText {
-		position: absolute;
-		top: 50rpx;
-		left: 78rpx;
-		font-size: 32rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #ffffff;
-		line-height: 32rpx;
-	}
-
-	.adressBox {
-		position: absolute;
-		top: 90rpx;
-		left: 38rpx;
-		display: flex;
-		align-items: center;
-		padding: 8rpx 16rpx;
-		font-size: 16rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		line-height: 16rpx;
-		width: 140rpx;
-		height: 40rpx;
-		background: #ffe512;
-		border-radius: 11px;
-	}
-
-	/* 无banner时 */
-	.dqwznoba {
-		width: 216rpx;
-		height: 180rpx;
-		border-radius: 16rpx;
-		// border: 4rpx solid #ffe512;
-		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.mask {
-		width: 216rpx;
-		height: 180rpx;
-		background: rgba(0, 0, 0, 0.25);
-		border-radius: 16rpx;
-		position: absolute;
-	}
-
-	.mask1 {
-		width: 208rpx;
-		height: 172rpx;
-		background: rgba(0, 0, 0, 0.25);
-		border-radius: 16rpx;
-		position: absolute;
-	}
-
-	.dqwzImgnoba {
-		width: 100%;
-		height: 100%;
-		border: 4rpx solid #ffe512;
-		border-radius: 16rpx;
-	}
-
-	.dqwzBoxnoba {
-		position: absolute;
-		text-align: center;
-	}
-
-	.dqwzTextnoba {
-		position: absolute;
-		top: 50rpx;
-		left: 78rpx;
-		font-size: 32rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #ffffff;
-		line-height: 32rpx;
-	}
-
-	.adressBoxnoba {
-		display: flex;
-		align-items: center;
-		position: absolute;
-		top: 90rpx;
-		left: 38rpx;
-		color: #ffffff;
-		padding: 8rpx 16rpx;
-		font-size: 16rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		line-height: 16rpx;
-		width: 140rpx;
-		height: 40rpx;
-		background: #ffe512;
-		border-radius: 22rpx;
-	}
-
-	.zhishi {
-		width: 24rpx;
-		height: 24rpx;
-		margin-right: 4rpx;
-	}
-
-	.dqwzText1 {
-		height: 20rpx;
-		font-size: 20rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		line-height: 20rpx;
-
-	}
-	.dqwzText2{
-		height: 20rpx;
-		font-size: 16rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		line-height: 20rpx;
-	}
-
-	.hot {
-		/* margin-top: 176rpx; */
-	}
-
-	.hotCity {
-		width: 216rpx;
-		height: 180rpx;
-		border-radius: 16rpx;
-		margin-left: 24rpx;
-		position: relative;
-	}
-
 	.hotCityImg {
 		width: 100%;
 		height: 100%;
 		border-radius: 48rpx;
 	}
 
-	.hotCityText {
-		width: 140rpx;
-		height: 32rpx;
-		font-size: 32rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #ffffff;
-		line-height: 32rpx;
-		text-align: center;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		margin-left: -70rpx;
-		margin-top: -16rpx;
-	}
-
-	.hotCityText1 {
-		width: 140rpx;
-		height: 32rpx;
-		font-size: 32rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #ffffff;
-		line-height: 32rpx;
-		text-align: center;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		margin-left: -70rpx;
-		margin-top: -16rpx;
-	}
-
-	.cityRank {
-		margin-top: 28rpx;
-		margin-left: 32rpx;
-		margin-bottom: 28rpx;
-		display: flex;
-		align-items: center;
-	}
-
-	.rankText {
-		width: 212rpx;
-		font-size: 28rpx;
-		text-align: center;
-	}
-
 	/* 正在旅行 */
 	.touring {
 		// margin-top: 24rpx;
 		background: #FFFFFF;
-	}
-
-	.touring .tourtext {
-		width: 160rpx;
-		height: 104rpx;
-		line-height: 104rpx;
-		font-size: 40rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		margin-left: 32rpx;
-		margin-top: 10rpx;
-	}
-
-	.wrap {
-		width: 750rpx;
-		display: flex;
-		flex-flow: row;
-		flex-wrap: wrap;
-		padding: 0 14rpx 0 28rpx;
+		.tourtext {
+			width: 160rpx;
+			height: 104rpx;
+			line-height: 104rpx;
+			font-size: 40rpx;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 500;
+			color: #303133;
+			margin-left: 32rpx;
+			margin-top: 10rpx;
+		}
+		
+		.wrap {
+			width: 750rpx;
+			display: flex;
+			flex-flow: row;
+			flex-wrap: wrap;
+			padding: 0 14rpx 0 28rpx;
+		}
 	}
 </style>

@@ -61,4 +61,41 @@ export default {
 @import 'uview-ui/index.scss';
 uni-rich-text img{ max-width: 100% !important;}
 
+.example-body {
+	z-index: 9999;
+	flex-wrap: wrap;
+	justify-content: center;
+	padding: 0;
+	font-size: 14px;
+	flex-direction: column;
+	background-color: #ffffff;
+	// transition: background-color 2s;
+}
+.slotleft {
+	display: flex;
+	align-items: center;
+}
+.fanhui {
+	width: 40rpx;
+	height: 40rpx;
+	margin-left: 42rpx;
+	margin-right: 20rpx;
+}
+.fhsy {
+	width: 40rpx;
+	height: 40rpx;
+	margin-left: 20rpx;
+}
+/* #ifdef  MP-BAIDU*/
+.fhsy {
+	margin-left: 100rpx;
+}
+/*  #endif  */
+.slottitle {
+	margin-left: 162rpx;
+	font-size: 38rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 600;
+	color: rgba(0, 0, 0, 1);
+}
 </style>

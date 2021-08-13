@@ -193,67 +193,6 @@
 </script>
 
 <style lang="scss" scoped>
-/* 自定义导航栏样式 */
-.example-body {
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: center;
-	padding: 0;
-	font-size: 14px;
-	background-color: #aa557f;
-	z-index: 9999;
-}
-
-.example-body {
-	flex-direction: column;
-	padding: 15px;
-	background-color: #ffffff;
-}
-
-.example-body {
-	padding: 0;
-}
-
-.navBar {
-	display: flex;
-	z-index: 9999;
-}
-
-.slotleft {
-	display: flex;
-	align-items: center;
-}
-
-.fanhui {
-	width: 40rpx;
-	height: 40rpx;
-	margin-left: 42rpx;
-	margin-right: 20rpx;
-}
-
-.fhsy {
-	width: 40rpx;
-	height: 40rpx;
-}
-/* #ifdef  MP-BAIDU*/
-.fhsy {
-	margin-left: 100rpx;
-}
-/*  #endif  */
-.slottitle {
-	margin-left: 186rpx;
-	font-size: 38rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 600;
-	color: rgba(0, 0, 0, 1);
-}
-
-.button-v-line {
-	width: 1px;
-	height: 18px;
-	background-color: #2f2f2f;
-	margin: 0 8px;
-}
 
 .reportBox{
 	margin: 48rpx 28rpx;

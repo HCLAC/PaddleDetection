@@ -4,16 +4,16 @@
 		<scroll-view v-if="tabs.length" :id="viewId" :scroll-left="scrollLeft" scroll-x scroll-with-animation :scroll-animation-duration="300">
 			<view class="tabs-item" :class="{'tabs-flex':!isScroll, 'tabs-scroll':isScroll}">
 				<!-- tab -->
-				<view class="tab-item" v-for="(tab, i) in tabs" :style="{width: tabWidthVal, height: tabHeightVal, 'line-height':tabHeightVal}" :class="{'active': value===i}" :key="i" @click="tabClick(i)">
-					<view >
+				<view class="tab-item-info" v-for="(tab, i) in tabs" :style="{width: tabWidthVal, height: tabHeightVal, 'line-height':tabHeightVal}" :class="{'active': value===i}" :key="i" @click="tabClick(i)">
+					<view class="name">
 						{{getTabName(tab)}}
 					</view>
-					<view v-if="tab.count" :class="value===i ? 'count' : 'count-active'" :style="{color: '#303133'}" >
-						{{tab.count}}
+					<view class="count" >
+						{{tab.count?tab.count:''}}
 					</view>
 				</view>
 				<!-- 下划线 -->
-				<view class="tabs-line" :style="{left:lineLeft}"></view>
+				<view class="tabs-line" :style="{left:lineLeft, width:lineWidth}"></view>
 			</view>
 		</scroll-view>
 	</view>
@@ -39,6 +39,10 @@
 			fixed: Boolean, // 是否悬浮,默认false
 			tabWidth: Number, // 每个tab的宽度,默认不设置值,为flex平均分配; 如果指定宽度,则不使用flex,每个tab居左,超过则水平滑动(单位默认rpx)
 			height: { // 高度,单位rpx
+				type: Number,
+				default: 64
+			},
+			lineWidth: { // 高度,单位rpx
 				type: Number,
 				default: 64
 			},
@@ -74,7 +78,7 @@
 			lineLeft() {
 				if (this.isScroll) {
 					return this.tabWidthPx * this.value + this.tabWidthPx/2 + 'px' // 需转为px (用rpx的话iOS真机显示有误差)
-				} else{
+				} else {
 					return 100/this.tabs.length*(this.value + 1) - 100/(this.tabs.length*2) + '%'
 				}
 			},
@@ -149,12 +153,13 @@
 <style lang="scss">
 	.me-tabs{
 		position: relative;
-		font-size: 24rpx;
 		background-color: #fff;
-		border-bottom: 1rpx solid #eee;
+		// border-bottom: 1rpx solid #eee;
 		box-sizing: border-box;
 		overflow-y: hidden;
-		background-color: #fff;
+		color: #303133;
+		height: 84rpx;
+		font-size: 28rpx;
 		&.tabs-fixed{
 			z-index: 990;
 			position: fixed;
@@ -167,17 +172,31 @@
 			white-space: nowrap;
 			padding-bottom: 30rpx; // 撑开高度,再配合me-tabs的overflow-y: hidden,以达到隐藏滚动条的目的
 			box-sizing: border-box;
-			.tab-item{
+			.tab-item-info{
+				z-index: 1;
 				position: relative;
 				text-align: center;
 				box-sizing: border-box;
 				&.active{
-					height: 32rpx;
-					font-size: 32rpx;
+					height: 36rpx;
+					font-size: 36rpx;
 					font-family: PingFangSC-Medium, PingFang SC;
 					font-weight: 500;
 					color: #303133;
-					line-height: 32rpx;
+					line-height: 36rpx;
+				}
+				
+				.name{
+					// width: 70%;
+				}
+				.count{
+					// width: 30%;
+					// height: 24rpx;
+					// font-size: 24rpx;
+					// font-family: PingFangSC-Regular, PingFang SC;
+					// font-weight: 400;
+					// color: #303133;
+					// margin-left: -158rpx;
 				}
 			}
 		}
@@ -185,50 +204,28 @@
 		// 平分的方式显示item
 		.tabs-flex{
 			display: flex;
-			.tab-item{
+			.tab-item-info{
 				flex: 1;
 			}
 		}
 		// 居左显示item,支持水平滑动
 		.tabs-scroll{
-			.tab-item{
+			.tab-item-info{
 				display: inline-block;
 			}
 		}
 		
 		// 选中tab的线
 		.tabs-line{
-			z-index: -1;
+			z-index: 0;
 			position: absolute;
-			bottom: 40rpx; // 至少与.tabs-item的padding-bottom一致,才能保证在底部边缘
-			width: 128rpx;
-			height: 12rpx;
+			bottom: 60rpx; // 至少与.tabs-item的padding-bottom一致,才能保证在底部边缘
+			width: 68rpx;
+			height: 40rpx;
 			transform: translateX(-50%);
 			border-radius: 6px;
 			transition: left .3s;
 			background: #FFE512;
 		}
-	}
-	.count{
-		height: 24rpx;
-		font-size: 24rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: #303133;
-		line-height: 24rpx;
-		z-index: 11111;
-		margin-top: 12rpx;
-		// margin-left: -158rpx;
-	}
-	.count-active{
-		height: 24rpx;
-		font-size: 24rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: #303133;
-		line-height: 24rpx;
-		z-index: 11111;
-		margin-top: 12rpx;
-		// margin-left: -158rpx;
 	}
 </style>
