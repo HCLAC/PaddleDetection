@@ -54,7 +54,10 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 		},
 		data() {
 			return {
-				tabList: ['作品'],
+				tabList: [{
+					name:'作品',
+					count: ''
+				}],
 				tabIndex: 0,
 				author_id: 0,
 				authorMsg: null,
@@ -117,6 +120,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 							return
 						}
 						this.authorMsg = res.data.data
+						this.tabList[0].count = this.authorMsg.article_count
 					}
 				})
 			},

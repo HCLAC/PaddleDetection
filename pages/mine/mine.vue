@@ -40,33 +40,6 @@
 			<!-- <view class="phone" @click="tell"><image class="phoneImg" src="/static/images/minephone.svg" mode=""></image></view> -->
 			<!-- 我的收藏 -->
 			<meTabs class="mineTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :tab-width="80"></meTabs>
-
-			<!-- <view class="myCollection" :class="isFixed ? 'fixTabs' : 'noFix'" id="selectcard" >
-				<view class="favBox" @click="change" >
-					<view class="favBT">
-						<view :class="tabIndex == 0 ?'favText' : 'favText1 '" >
-							收藏
-						</view>
-						<view class="favLine" v-if="tabIndex == 0">
-						</view>
-					</view>
-					<view :class="tabIndex == 0 ? 'favNum' : 'favNum1'" :style="{color: favnumcolor.color}" >
-						{{userInfo.favNum}}
-					</view>
-				</view>
-				<view class="likeBox" @click="change1">
-					<view class="likeBT">
-						<view :class="tabIndex == 1 ?'favText' : 'favText1 '">
-							已赞
-						</view>
-						<view class="likeLine" v-if="tabIndex == 1">
-						</view>
-					</view>
-					<view :class="tabIndex == 1 ? 'likeNum' : 'likeNum1'" :style="{color: likenumcolor.color}" >
-						{{userInfo.likeNum}}
-					</view>
-				</view>
-			</view> -->
 		</view>
 		<articleList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex"></articleList>
 	</view>
@@ -89,12 +62,9 @@ export default {
 			favList: [],
 			likeList: [],
 			tabList: [{
-					name: '收藏',
-					count:'',
-				}, 
-				{
-					name: '已赞',
-					count:'',
+					name: '收藏'
+				}, {
+					name: '已赞'
 				}],
 			tabIndex: 0,
 			favnumcolor:{
@@ -167,7 +137,7 @@ export default {
 					Authorization: uni.getStorageSync('Authorization')
 				},
 				method: 'get',
-				success: (res) =>{
+				success: function(res) {
 					if (res.statusCode != 200 || res.data.code != 0){
 						uni.showToast({
 							title: res.data.msg,
@@ -177,10 +147,6 @@ export default {
 					}
 					
 					that.userInfo = res.data.data
-					that.tabList[0].count = res.data.data.fav_count
-					that.tabList[1].count = res.data.data.like_count
-					console.log(that.tabList[0])
-					console.log(that.userInfo,'++++++')
 					that.userInfo.nickName = res.data.data.mobile
 					if(res.data.data.nick_name){
 						that.userInfo.nickName = res.data.data.nick_name
@@ -260,6 +226,7 @@ export default {
 	width: 100%;
 	z-index: -11;
 }
+
 // /* 用户信息 */
 .usermes {
 	padding-top: 154rpx;
