@@ -14,7 +14,7 @@
 		<!-- 头图 -->
 		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"> 
 			<view class="headImgBox">
-				<image class="headImg" :src="querys.image" mode="scaleToFill"></image>
+				<image class="headImg" lazy-load :src="querys.image" mode="scaleToFill"></image>
 				<view class="mask"></view>
 				<view class="cityBox">
 					<view class="city">{{ querys.name || '全国' }}</view>
@@ -38,7 +38,7 @@
 					</view>
 					<view class="contentImgBox">
 						<view class="contentImg" v-for="(item, index) in siteHot" :key="index" @click="toAtt(item.id)">
-							<image class="attImg" :src="item.image" mode="aspectFill"></image>
+							<image class="attImg" lazy-load :src="item.image" mode="aspectFill"></image>
 							<view class="attText">{{ item.name }}</view>
 							<view class="rateBox">
 								<!-- 评分图标 -->
@@ -63,7 +63,7 @@
 					</view>
 					<view class="tripBox">
 						<view class="tripContent" v-for="(item, index) in routeHot" :key="index" @click="toLineDetail(item)">
-							<image class="tripImg" :src="item.image" mode=""></image>
+							<image class="tripImg" lazy-load :src="item.image" mode=""></image>
 							<view class="tripText">{{ item.title }}</view>
 						</view>
 					</view>

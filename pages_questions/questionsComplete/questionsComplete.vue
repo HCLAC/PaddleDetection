@@ -24,7 +24,7 @@
 		</view>
 		<view class="userBox">
 			<view class="user">
-				<image :src="detail.avatar" mode=""></image>
+				<image lazy-load :src="detail.avatar" mode=""></image>
 				<text>{{detail.account_name}}</text>
 			</view>
 			<view class="date">

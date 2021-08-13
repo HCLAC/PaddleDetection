@@ -36,7 +36,7 @@
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<view class="userMse">
-					<image class="userHeard" :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
+					<image class="userHeard" lazy-load :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
 					<view class="userMse-r">
 						<view class="userNikename">{{ articleInfo.author_name }}</view>
 					</view>
@@ -79,7 +79,7 @@
 				</view>
 				<!-- 作者信息 -->
 				<view class="userMse">
-					<image class="userHeard" :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
+					<image class="userHeard" lazy-load :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
 					<view class="userMse-r">
 						<text class="userNikename" selected=true> {{ articleInfo.author_name }}</text>
 						<view class="releaseTime-strategy">发布于{{ articleInfo.update_at.slice(0,10) }}</view>
@@ -121,7 +121,7 @@
 				</view>
 				<view class="replyContent">
 					<view class="myReply">
-						<image class="userImg" :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'" mode=""></image>
+						<image class="userImg" lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'" mode=""></image>
 						<!-- <u-input class="replyInput" placeholder="写个回复走个心" placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;"
 						 confirmType="send" :clearable="false" :disabled="true" @click="commentInput">
 						</u-input> -->
@@ -131,7 +131,7 @@
 					</view>
 					<view class="reply" v-for="(item,index) in commentsList" :key="index">
 						<view class="replyTop">
-							<image class="userImg" :src="item.avatar?item.avatar:'/static/images/userImg.svg'" mode=""></image>
+							<image class="userImg" lazy-load :src="item.avatar?item.avatar:'/static/images/userImg.svg'" mode=""></image>
 							<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
 								<view class="" style="display: flex;align-items: center;">
 									<view class="userName">{{item.account_name}}</view>

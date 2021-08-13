@@ -12,7 +12,7 @@
 					</view>
 					<view class="authorBox">
 						<view class="author">
-							<image :src="item.avatar?item.avatar:'/static/images/userImg.svg'"></image>
+							<image lazy-load :src="item.avatar?item.avatar:'/static/images/userImg.svg'"></image>
 							<text>{{item.account_name}}</text>
 						</view>
 						<view class="lookAnswers">

@@ -16,7 +16,7 @@
 			<image src="/static/images/mineBack.png" class="backImg"></image>
 			<!-- 博主信息 -->
 			<view class="usermes" v-if="authorMsg">
-				<image class="userAva" :src="authorMsg.avatar"></image>
+				<image class="userAva" lazy-load :src="authorMsg.avatar"></image>
 				<image src="/static/images/userImg.svg" class="userAva" v-if="nickName" mode=""></image>
 				<view class="userR">
 					<view class="userName">{{ authorMsg.user_name }}</view>

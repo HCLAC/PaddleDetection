@@ -21,7 +21,7 @@
 						<view class="page-section-spacing">
 							<swiper class="swiper" display-multiple-items="3" >
 								<view v-for="(item,index) in item.images">
-									<image class="swiper-item " :src="item"></image>
+									<image class="swiper-item" lazy-load :src="item"></image>
 								</view>
 							</swiper>
 						</view>

@@ -66,7 +66,7 @@
 				<view class="answersCardTop">
 					<view class="answersAuthor" onclick="popup('zoom-in')">
 						<view class="avatar ldx infinite ldx-zoom-in" ></view>
-						<image class="avatarImg" :src="answersList.avatar?answersList.avatar:'/static/images/userImg.svg'"></image>
+						<image class="avatarImg" lazy-load :src="answersList.avatar?answersList.avatar:'/static/images/userImg.svg'"></image>
 						<view class="userName">
 							{{answersList.account_id}}
 						</view>
@@ -126,7 +126,7 @@
 		<!-- 营销组件 -->
 		<view class="componment" v-if="groupId" onclick="popup('blur-in')">
 			<view class="wechat">
-				<image :src="answersList.avatar" mode=""></image>
+				<image lazy-load :src="answersList.avatar" mode=""></image>
 				<view class="wechatText">{{wechat_name}}:{{wechat}}</view>
 			</view>
 			<view class="wechatBtn ldx infinite ldx-blur-in" @click="templateAdd">复制导游微信</view>

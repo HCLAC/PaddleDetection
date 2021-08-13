@@ -19,7 +19,7 @@
 			<!-- 省市主题 -->
 			<block v-if="area">
 				<view class="siteView" @click="getCity(area)">
-					<image class="siteViewImg" :src="area.image" mode=""></image>
+					<image class="siteViewImg" lazy-load :src="area.image" mode=""></image>
 					<view class="siteViewText">
 						<view class="title">{{ area.name }}</view>
 						<view class="content">
@@ -33,7 +33,7 @@
 			<!-- 景点 -->
 			<block v-if="site">
 				<view class="areaView" @click.stop="getSite(site.id)">
-					<image class="areaImg" :src="site.image[0]" mode=""></image>
+					<image class="areaImg" lazy-load :src="site.image[0]" mode=""></image>
 					<view class="top">
 						<view class="title">{{ site.name }}</view>
 						<view class="areacontent">{{ site.description }}</view>
@@ -60,7 +60,7 @@
 				<view style="padding-left: 4%; padding-top: 30rpx;">
 					<view class="swiper">
 						<view class="swiperItem" v-for="(item, index) in route_list" @click="getRoute(item.uuid)" :key="index">
-							<image :src="item.image"></image>
+							<image lazy-load :src="item.image"></image>
 							<view class="title"><rich-text :nodes="item.htmlStr"></rich-text></view>
 						</view>
 					</view>

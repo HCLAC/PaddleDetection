@@ -16,7 +16,7 @@
 			<u-form :model="model" :rules="rules" ref="uForm" :errorType="errorType" >
 				<!-- 头像 -->
 				<u-form-item class="avatarBox" prop="avatar"  @tap="chooseAvatar">
-					<image :src="model.avatar" slot="right" style="width: 130rpx; height: 130rpx;border-radius: 50%;margin-left: -10rpx;" ></image>
+					<image lazy-load :src="model.avatar" slot="right" style="width: 130rpx; height: 130rpx;border-radius: 50%;margin-left: -10rpx;" ></image>
 					</u-avatar>
 					<view class="avatarText" slot="right">
 						修改头像

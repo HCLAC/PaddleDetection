@@ -13,7 +13,7 @@
 		<view class="container">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 				<view class="lineItem" @click="getDetail(item.uuid)" v-for="(item, index) in lineList" :key="index">
-					<image :src="item.image" mode=""></image>
+					<image lazy-load :src="item.image" mode=""></image>
 					<view class="lineText" >{{ item.title }}</view>
 				</view>
 			</mescroll-body>

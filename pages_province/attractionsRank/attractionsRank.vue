@@ -14,7 +14,7 @@
 		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption"
 		 :up="upOption">
 			<view class="bgBox">
-				<image :src="querys.image" mode="" class="bannerImg"></image>
+				<image lazy-load :src="querys.image" mode="" class="bannerImg"></image>
 				<view class="mask">
 					<view class="content">
 						<!-- <image class="travel" src="/static/images/TRAVEL.png" mode=""></image> -->

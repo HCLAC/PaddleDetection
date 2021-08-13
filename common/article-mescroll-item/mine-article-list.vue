@@ -4,7 +4,7 @@
 			<view v-for="(item, index) in list" :key="index" @click="onPageJump" :id="item.article_id">
 				<view class="contentItem">
 					<view class="left">
-						<image :src="item.main_image" mode="aspectFill">
+						<image lazy-load :src="item.main_image" mode="aspectFill">
 							<view class="imgTip">
 								<view v-if="item.type == 1">游记</view>
 								<view v-else-if="item.type == 2">攻略</view>

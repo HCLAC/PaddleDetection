@@ -13,7 +13,7 @@
 		</view>
 		<!-- 头图 -->
 		<view class="headImgBox" >
-			<image class="headImg" :src="info.image" mode="scaleToFill"></image>
+			<image class="headImg" lazy-load :src="info.image" mode="scaleToFill"></image>
 			<view class="mask"></view>
 			<view class="topicBox" >
 				<view class="bigTitle">

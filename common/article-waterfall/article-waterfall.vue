@@ -32,7 +32,7 @@
 					</view>
 					<view class="demo-user">
 						<view class="userMessage">
-							<image class="userHeard" :src="item.avatar"></image>
+							<image class="userHeard" lazy-load :src="item.avatar"></image>
 							<view class="userNikename">{{ item.author_name }}</view>
 						</view>
 						<view class="count" @click="clickLeftLike(item,index) in leftList ">
@@ -87,7 +87,7 @@
 					</view>
 					<view class="demo-user">
 						<view class="userMessage">
-							<image class="userHeard" :src="item.avatar"></image>
+							<image class="userHeard" lazy-load :src="item.avatar"></image>
 							<view class="userNikename">{{ item.author_name }}</view>
 						</view>
 						<view class="count" @click="clickRightLike(item,index) in rightList">
