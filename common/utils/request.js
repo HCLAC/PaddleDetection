@@ -23,7 +23,7 @@ function request(obj) {
 			}
 			if (res.data.code == 10501 || res.data.code == 10502) {
 				uni.navigateTo({
-					url: '../login/login'
+					url: '/pages_mine/login/login.vue'
 				})
 				return
 			}

@@ -13,7 +13,7 @@
 					</view>
 				</view>
 				<!-- 下划线 -->
-				<view class="tabs-line" :style="{left:lineLeft, width:lineWidth}"></view>
+				<view class="tabs-line" :style="{left:lineLeft, width:lineWidthVal}"></view>
 			</view>
 		</scroll-view>
 	</view>
@@ -75,6 +75,9 @@
 			tabWidthVal(){
 				return this.isScroll ? this.tabWidthPx+'px' : ''
 			},
+			lineWidthVal() {
+				return this.lineWidth+'rpx'
+			},
 			lineLeft() {
 				if (this.isScroll) {
 					return this.tabWidthPx * this.value + this.tabWidthPx/2 + 'px' // 需转为px (用rpx的话iOS真机显示有误差)
@@ -102,7 +105,6 @@
 			let sys = uni.getSystemInfoSync();
 			this.windowWidth = sys.windowWidth
 			this.windowTop = sys.windowTop?sys.windowTop:0
-			console.log(sys)
 		},
 		mounted() {
 			this.scrollCenter() // 滚动到当前下标
@@ -220,7 +222,7 @@
 			z-index: 0;
 			position: absolute;
 			bottom: 60rpx; // 至少与.tabs-item的padding-bottom一致,才能保证在底部边缘
-			width: 68rpx;
+			// width: 68rpx;
 			height: 40rpx;
 			transform: translateX(-50%);
 			border-radius: 6px;

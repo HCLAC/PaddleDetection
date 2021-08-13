@@ -38,7 +38,7 @@
 			<view class="lineTitle">{{ lineContent.title }}</view>
 		</view>
 		<view class="lineDriver"></view>
-		<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="tabsTop" :tab-width="80"></meTabs>
+		<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="tabsTop" :line-width="150" :tab-width="80"></meTabs>
 		<!-- <view  id="tabs" :class="isFixed ? 'fixTabs' : 'noFix'">
 			<view style="width: 60%;display: flex;">
 				<view class="tripBox" @click="tripChange">
