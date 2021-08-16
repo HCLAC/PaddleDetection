@@ -94,6 +94,10 @@ export default {
 				uni.hideLoading();
 			},
 			calcHeight(){
+				if (this.isFixed){
+					return
+				}
+				
 				const query = uni.createSelectorQuery().in(this);
 				setTimeout(() => {
 					query.select('.headImgBox').boundingClientRect(data => {

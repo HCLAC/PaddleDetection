@@ -46,6 +46,9 @@ import answerList from '@/common/article-mescroll-item/mine-answer-list.vue';
 		},
 		methods:{
 			calcCardHeight(){
+				if (this.isFixed){
+					return
+				}
 				const query = uni.createSelectorQuery().in(this);
 				setTimeout(() => {
 					query.select('.mineAnswerTabs').boundingClientRect(data => {

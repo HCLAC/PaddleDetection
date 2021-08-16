@@ -94,6 +94,9 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 		},
 		methods: {
 			calcCardHeight(){
+				if (this.isFixed){
+					return
+				}
 				const query = uni.createSelectorQuery().in(this);
 				setTimeout(() => {
 					query.select('.bloggerTabs').boundingClientRect(data => {

@@ -217,6 +217,9 @@ export default {
 			});
 		},
 		calcHeight(){
+			if (this.isFixed){
+				return
+			}
 			const query = uni.createSelectorQuery().in(this);
 			setTimeout(() => {
 				query.select('.lineHeader').boundingClientRect(data => {

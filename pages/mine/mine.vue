@@ -101,6 +101,7 @@ export default {
 		// this.loadData()
 	},
 	onPageScroll(e) {
+		console.log(e, this.cardheight, this.isFixed)
 		if (e.scrollTop >  this.cardheight) {
 			if (e.scrollTop > this.cardheight+20 && this.isFixed){
 				return
@@ -176,6 +177,9 @@ export default {
 			})
 		},
 		calcCardHeight(){
+			if (this.isFixed){
+				return
+			}
 			const query = uni.createSelectorQuery().in(this);
 			setTimeout(() => {
 				query.select('.mineTabs').boundingClientRect(data => {
