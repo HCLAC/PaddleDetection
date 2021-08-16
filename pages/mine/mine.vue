@@ -41,7 +41,9 @@
 			<!-- 我的收藏 -->
 			<meTabs class="mineTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :tab-width="80"></meTabs>
 		</view>
-		<articleList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex"></articleList>
+		<block v-if="auth">
+			<articleList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex"></articleList>
+		</block>
 	</view>
 </template>
 
@@ -78,11 +80,12 @@ export default {
 			cardheight: 200,
 			navbarHeight: 0,
 			isFixed:false,
+			auth: null,
 		};
 	},
 	onShow() {
-		var auth =  uni.getStorageSync('Authorization')
-		if (!auth){
+		this.auth =  uni.getStorageSync('Authorization')
+		if (!this.auth){
 			uni.navigateTo({
 				url: '/pages_mine/login/login?ismine=1'
 			});
@@ -91,8 +94,8 @@ export default {
 		this.loadData()
 	},
 	onLoad() {
-		var auth =  uni.getStorageSync('Authorization')
-		if (!auth){
+		this.auth =  uni.getStorageSync('Authorization')
+		if (!this.auth){
 			return
 		}
 		// this.loadData()

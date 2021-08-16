@@ -400,7 +400,7 @@
 								uni.getImageInfo({
 									src: that.articleInfo.images[0],
 									success: function(image) {
-										console.log('图片高度--', image.height);
+										console.log('图片高度--', image);
 										let caseRes = image.width / image.height;
 										that.swiperHeight = 100 / caseRes + 'vw';
 									},
