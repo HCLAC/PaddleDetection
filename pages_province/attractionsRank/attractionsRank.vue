@@ -242,7 +242,7 @@
 </script>
 <style lang="scss">
 	page {
-		background-color: #000000 !important;
+		background-color: #FFFFFF !important;
 	}
 </style>
 <style lang="scss" scoped>
@@ -253,6 +253,7 @@
 		// margin-top: -88rpx;
 		width: 750rpx;
 		height: 440rpx;
+		// background: red;
 		background-color: #000000;
 	}
 
