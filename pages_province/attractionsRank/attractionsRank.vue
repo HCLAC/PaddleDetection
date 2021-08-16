@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 白色-->
-		<view class="nav-bar">
-			<uni-nav-bar :fixed="true" :status-bar="true" style="z-index: 999999;" :title="querys.name+'热门景点'">
+		<view class="nav-bar" v-if="isFixed">
+			<uni-nav-bar :fixed="true" :status-bar="true" :title="false" :backgroundColor="backgroundColor">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 					<image class="fanhui" src="/static/images/icon-fanhui-white.svg" @click="Utils.back" />
@@ -13,7 +13,7 @@
 		</view>
 		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption"
 		 :up="upOption">
-			<view class="bgBox">
+			 <view class="bgBox">
 				<image lazy-load :src="querys.image" mode="" class="bannerImg"></image>
 				<view class="mask">
 					<view class="content">
@@ -30,7 +30,7 @@
 					<view class="boxshow">
 					</view>
 				</view>
-			</view>
+			 </view>
 			<!-- 排行 -->
 			<view class="rankContent" :style="{'height': (hotsiteslist.length < 6 ? '1604rpx' : '')}">
 				<view class="cityBox">
@@ -84,14 +84,8 @@
 		mixins: [MescrollMixin],
 		data() {
 			return {
-				background: {
-					backgroundColor: '',
-				},
+				backgroundColor: 'transparent',
 				showCityPicker: false,
-				scrollTop: 0, //tab标题的滚动条位置
-				current: 0, // 预设当前项的值
-				menuHeight: 0, // 左边菜单的高度
-				menuItemHeight: 0, // 左边菜单item的高度
 				month: new Date().getMonth() + 1,
 				day: new Date().getDate(),
 				querys: null,
@@ -101,18 +95,41 @@
 				downOption: {
 					use: false,
 					auto: false
-				}
+				},
+				isFixed: false,
+				cardheight: 200,
 			}
 		},
 		onLoad: function(option) {
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.querys = option
 			this.getCity()
+			this.calcCardHeight()
 		},
 		onPageScroll(e) {
-			
+			if (e.scrollTop >  this.cardheight) {
+				if (e.scrollTop > this.cardheight+20 && this.isFixed){
+					return
+				}
+				this.isFixed = true;
+				this.backgroundColor = '#ffffff';
+			} else {
+				this.isFixed = false;
+				this.backgroundColor = 'transparent';
+			}
 		},
 		methods: {
+			calcCardHeight(){
+				if (this.isFixed){
+					return
+				}
+				const query = uni.createSelectorQuery().in(this);
+				setTimeout(() => {
+					query.select('.cityBox').boundingClientRect(data => {
+						this.cardheight = data.top-data.height
+					}).exec();
+				}, 500);
+			},
 			cityPickerClose(){
 				this.showCityPicker = false
 			},
@@ -240,17 +257,17 @@
 		}
 	}
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 	page {
 		background-color: #000000 !important;
 	}
-</style>
-<style lang="scss" scoped>
+	.nav-bar {
+		background-color: transparent;
+		z-index: 999;
+		position: fixed;
+		top:0px;
+	}
 	.bgBox {
-		// position: absolute;
-		// top:0;
-		// left: 0;
-		// margin-top: -88rpx;
 		width: 750rpx;
 		height: 440rpx;
 		background-color: #000000;
@@ -352,7 +369,7 @@
 
 	.mescroll {
 		position: relative;
-		// top: -178rpx;
+		top: 0rpx;
 		left: 0;
 	}
 

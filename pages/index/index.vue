@@ -233,10 +233,6 @@
 		onLoad() {
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.loadData()
-			setTimeout(() => {
-				this.mescroll.resetUpScroll();
-				this.hideLoad()
-			}, 500);
 		},
 		// 滚动
 		onPageScroll(e) {
@@ -262,8 +258,14 @@
 						this.getBanner();
 						this.getAdress();
 						this.getAreaHot();
+						
+						setTimeout(() => {
+							this.mescroll.resetUpScroll();
+							this.hideLoad()
+						}, 500);
 					}
 				});
+				
 			},
 			hideLoad(){
 				setTimeout(() => {

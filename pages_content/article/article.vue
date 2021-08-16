@@ -685,6 +685,11 @@
 					}
 				});
 			},
+			login(){
+				uni.navigateTo({
+					url: '/pages_mine/login/login'
+				});
+			},
 			// 用户信息
 			getUserInfo() {
 				this.userInfo = uni.getStorageSync('userinfo')
