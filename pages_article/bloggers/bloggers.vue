@@ -36,7 +36,7 @@
 					<text>关注</text>
 				</view>
 			</view>
-			<meTabs class="bloggerTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :tab-width="120"></meTabs>
+			<meTabs class="bloggerTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :line-width="110" :tab-width="120"></meTabs>
 		</view>
 		<bloggerArticleList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :authorID="author_id"></bloggerArticleList>
 		<u-modal v-model="show" :content="content" :z-index=9999 :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
