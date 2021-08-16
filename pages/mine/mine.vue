@@ -149,6 +149,9 @@ export default {
 							title: res.data.msg,
 							icon: 'none'
 						});
+						uni.navigateTo({
+							url: '/pages_mine/login/login?ismine=1'
+						});
 						return
 					}
 					
