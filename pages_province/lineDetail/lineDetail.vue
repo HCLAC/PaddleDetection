@@ -383,6 +383,8 @@ export default {
 	background: #f8f8f8;
 }
 .linePlan {
+	// margin: 0 auto;
+	margin-left: 20rpx;
 	position: absolute; 
 	padding: 10rpx 10rpx;
 	padding-bottom: 105rpx;
