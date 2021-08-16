@@ -178,12 +178,13 @@
 			white-space: nowrap;
 			padding-bottom: 30rpx; // 撑开高度,再配合me-tabs的overflow-y: hidden,以达到隐藏滚动条的目的
 			box-sizing: border-box;
-			padding-left:4%;
+			// padding-left:4%;
 			.tab-item-info{
 				z-index: 1;
 				position: relative;
-				text-align: center;
+				// text-align: center;
 				box-sizing: border-box;
+				justify-content: center;
 				display: flex;
 				align-items: center;
 				color:#909399;
