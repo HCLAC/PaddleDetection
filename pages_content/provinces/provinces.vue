@@ -33,7 +33,7 @@
 						<view class="contentTitle">景点推荐</view>
 						<view class="contentMore" @click="toMore()">
 							更多
-							<image class="moreIcon" src="/static/images/more-right.svg" mode="widthFix"></image>
+							<image class="moreIcon" src="/static/images/more-right.svg" mode=""></image>
 						</view>
 					</view>
 					<view class="contentImgBox">
@@ -58,7 +58,7 @@
 						<view class="tripTitle">行程路线</view>
 						<view class="tripMore" @click="toLineMore()">
 							更多
-							<image class="moreIcon" src="/static/images/more-right.svg" mode="widthFix"></image>
+							<image class="moreIcon" src="/static/images/more-right.svg" mode=""></image>
 						</view>
 					</view>
 					<view class="tripBox">

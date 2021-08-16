@@ -117,7 +117,7 @@
 							});
 							return
 						}
-						that.followList[that.index].is_follow = res.data.data
+						that.followList[that.index].is_follow = status
 					}
 				})
 			},
@@ -143,7 +143,7 @@
 							});
 							return
 						}
-						that.followList[that.index].is_follow = res.data.data
+						that.followList[that.index].is_follow = status
 					}
 				})
 			},

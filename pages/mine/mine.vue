@@ -16,7 +16,7 @@
 				<image src="/static/images/mineBack.png" class="backImg"></image>
 				<!-- 用户信息 -->
 				<view class="usermes">
-					<image lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'" class="userAva" v-if="userInfo.avatar" mode=""></image>
+					<image lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'" class="userAva" mode=""></image>
 					<view class="userR">
 						<view class="userName" @click="toMineInfo">{{ userInfo.nickName }}
 							<image src="/static/images/iconExit.svg" mode=""></image>

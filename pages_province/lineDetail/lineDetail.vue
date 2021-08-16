@@ -41,7 +41,7 @@
 			<view class="lineDriver"></view>
 		</view>
 		<view style="height: 120rpx;">
-			<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :lineLeft="20" :line-width="150" :tab-width="110"></meTabs>
+			<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :line-width="150" :tab-width="110"></meTabs>
 		</view>
 		<view class="linePlan">
 			<view class="planContent">
@@ -220,12 +220,13 @@ export default {
 			const query = uni.createSelectorQuery().in(this);
 			setTimeout(() => {
 				query.select('.lineHeader').boundingClientRect(data => {
+					console.log('lineHeader', data)
 					this.navbarHeight = data.top
 					this.headerHeight = data.height
-				}).exec();
+				})
 				query.select('.linePlan').boundingClientRect(data => {
+					console.log('linePlan', data)
 					this.planHeight = data.height-data.top
-					console.log(data)
 				}).exec();
 			}, 500);
 		},
