@@ -582,13 +582,16 @@
 			align-items: center;
 			height: 64rpx;
 			.nowCityNameText{
-				width: 65rpx;
+				// width: 70rpx;
 				height: 40rpx;
 				font-size: 28rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
 				font-weight: 400;
 				color: #FFFFFF;
 				line-height: 40rpx;
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
 			}
 			.downIcon{
 				width: 48rpx;
@@ -617,7 +620,8 @@
 		background: rgba(248, 248, 248, 1);
 		border-radius: 36rpx;
 		flex-wrap: nowrap;
-		margin: 0 auto;
+		// margin: 0 auto;
+		margin-left: 180rpx;
 		padding-left: 32rpx;
 		.input-uni-icon-Box{
 			width: 28rpx;
