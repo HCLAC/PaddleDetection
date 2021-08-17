@@ -12,7 +12,7 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 博主信息 -->
-		<view class="contentTop" style="position: absolute; width: 100%; top: 0; z-index: 400;">
+		<view class="contentTop" :style="{'position': headerFixed?'absolute':'fixed'}">
 			<image src="/static/images/mineBack.png" class="backImg"></image>
 			<!-- 博主信息 -->
 			<view class="usermes" v-if="authorMsg">
@@ -66,6 +66,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 				cardheight: 0,
 				navbarHeight: 0,
 				isFixed: false,
+				headerFixed: false,
 			};
 		},
 		onLoad(options) {
@@ -74,6 +75,12 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 			this.calcCardHeight()
 		},
 		onPageScroll(e) {
+			if (e.scrollTop <= 0){
+				this.headerFixed = false
+			} else if (e.scrollTop > 0 && this.headerFixed == false){
+				this.headerFixed = true
+			}
+			console.log(e,this.headerFixed)
 			if (e.scrollTop > this.cardheight) {
 				if (e.scrollTop > this.cardheight+20 && this.isFixed){
 					return
@@ -165,7 +172,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 							});
 							return
 						}
-						that.authorMsg.is_follow = res.data.data
+						that.authorMsg.is_follow = status
 					}
 				})
 			},
@@ -191,7 +198,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 							});
 							return
 						}
-						that.authorMsg.is_follow = res.data.data
+						that.authorMsg.is_follow = status
 					}
 				})
 			},
@@ -216,7 +223,11 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 	width: 100%;
 	z-index: -11;
 }
-
+.contentTop {
+	width: 100%;
+	top: 0; 
+	z-index: 400;
+}
 // /* 用户信息 */
 .usermes {
 	padding-top: 154rpx;

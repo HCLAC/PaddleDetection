@@ -11,8 +11,8 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<view class="mineHeader" style="position: absolute; width: 100%; top: 0; z-index: 400;">
-			<view class="contentTop">
+		<view class="mineHeader" :style="{'position': headerFixed?'absolute':'fixed'}">
+			<view class="contentTop" >
 				<image src="/static/images/mineBack.png" class="backImg"></image>
 				<!-- 用户信息 -->
 				<view class="usermes">
@@ -80,6 +80,7 @@ export default {
 			cardheight: 200,
 			navbarHeight: 0,
 			isFixed:false,
+			headerFixed: false,
 			auth: null,
 		};
 	},
@@ -101,6 +102,11 @@ export default {
 		// this.loadData()
 	},
 	onPageScroll(e) {
+		if (e.scrollTop <= 0){
+			this.headerFixed = false
+		} else if (e.scrollTop > 0 && this.headerFixed == false){
+			this.headerFixed = true
+		}
 		if (e.scrollTop >  this.cardheight) {
 			if (e.scrollTop > this.cardheight+20 && this.isFixed){
 				return
@@ -240,6 +246,11 @@ export default {
 	z-index: -11;
 }
 
+.mineHeader {
+	width: 100%;
+	top: 0; 
+	z-index: 400;
+}
 // /* 用户信息 */
 .usermes {
 	padding-top: 154rpx;

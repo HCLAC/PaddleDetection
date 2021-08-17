@@ -12,7 +12,7 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 头图 -->
-		<view class="headImgBox" >
+		<view class="headImgBox"  :style="{'position': headerFixed?'absolute':'fixed'}">
 			<image class="headImg" lazy-load :src="info.image" mode="scaleToFill"></image>
 			<view class="mask"></view>
 			<view class="topicBox" >
@@ -29,8 +29,6 @@
 					<image class="more" src="/static/images/more1.svg" mode=""></image>
 				</view>
 			</view>
-		</view>
-		<view style="height: 120rpx;">
 			<meTabs class="topicTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :tab-width="80"></meTabs>
 		</view>
 		<articleList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :topicID="topic_id"></articleList>
@@ -56,6 +54,7 @@ export default {
 				}],
 				tabIndex: 0,
 				isFixed: false,
+				headerFixed: false,
 				navbarHeight:0,
 				headerHeight: 0,
 				topic_id: 0,
@@ -67,6 +66,11 @@ export default {
 			this.loadData()
 		},
 		onPageScroll(e) {
+			if (e.scrollTop <= 0){
+				this.headerFixed = false
+			} else if (e.scrollTop > 0 && this.headerFixed == false){
+				this.headerFixed = true
+			}
 			if (e.scrollTop > this.headerHeight) {
 				if (e.scrollTop > this.headerHeight+20 && this.isFixed){
 					return
@@ -144,7 +148,6 @@ export default {
 .headImgBox {
 	width: 750rpx;
 	height: 440rpx;
-	position: relative;
 	.headImg {
 		width: 100%;
 		height: 100%;

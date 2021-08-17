@@ -1,13 +1,8 @@
 <template>
-	<view v-show="i === index" >
+	<view v-show="i === index" style="margin-top: 72%;">
 		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			<view class="contentBox" >
-				<!-- 正在旅行 -->
-				<view class="touring">
-					<view class="wrap" >
-						<articleWaterfall :list="list"></articleWaterfall>
-					</view>
-				</view>
+			<view class="touring">
+				<articleWaterfall :list="list"></articleWaterfall>
 			</view>
 		</mescroll-body>
 	</view>
@@ -170,41 +165,16 @@
 </script>
 
 <style lang="scss" scoped>
-
-// 
-.contentBox {
-	width: 750rpx;
-	background: #f8f8f8;
-	border-radius: 8px 8px 0px 0px;
-	position: relative;
-	top: -10rpx;
-	left: 0;
-}
-
 // 瀑布流
 .touring{
-	margin-top: 20rpx;
-}
-.touring .tourtext {
-	width: 160rpx;
-	height: 104rpx;
-	// line-height: 104rpx;
-	font-size: 40rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 500;
-	color: #303133;
-	margin-left: 32rpx;
-	
-}
-
-.wrap {
 	width: 750rpx;
+	background: #f8f8f8;
+	margin-top: 24rpx;
+	min-height: 1470rpx;
 	display: flex;
 	flex-flow: row;
 	flex-wrap: wrap;
-	margin-top: 24rpx;
-	padding-left: 20rpx;
-	min-height: 1470rpx;
+	padding: 0 21rpx 0 21rpx;
 }
 
 </style>

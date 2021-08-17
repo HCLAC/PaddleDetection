@@ -962,7 +962,7 @@
 			display: flex;
 			flex-flow: row;
 			flex-wrap: wrap;
-			padding: 0 14rpx 0 28rpx;
+			padding: 0 21rpx 0 21rpx;
 		}
 	}
 </style>

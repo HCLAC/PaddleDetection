@@ -207,7 +207,8 @@
 	.demo-warter {
 		width: 340rpx;
 		margin-top: 0;
-		margin-right: 14rpx;
+		margin-right: 7rpx;
+		margin-left: 7rpx;
 		margin-bottom: 16rpx;
 		padding-bottom: 16rpx;
 		/* position: relative; */
