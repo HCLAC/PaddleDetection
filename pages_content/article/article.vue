@@ -1459,14 +1459,17 @@
 		display: flex;
 		margin-left: 28rpx;
 		align-items: center;
-		margin-right: 40rpx;
+		// margin-right: 40rpx;
 		position: relative;
+		width: 100rpx;
+		height: 100%;
+		
 	}
 
 	.likeBtn {
 		width: 52rpx;
 		height: 52rpx;
-		margin-right: 8rpx;
+		// margin-right: 8rpx;
 	}
 
 	.likeNum {
@@ -1484,14 +1487,18 @@
 	.fav {
 		display: flex;
 		align-items: center;
-		margin-right: 40rpx;
+		// margin-right: 40rpx;
 		position: relative;
+		width: 100rpx;
+		height: 100%;
+		
 	}
 
 	.favBtn {
 		width: 52rpx;
 		height: 52rpx;
-		margin-right: 8rpx;
+		
+		// margin-right: 8rpx;
 	}
 
 	.favNum {
@@ -1509,6 +1516,8 @@
 		display: flex;
 		align-items: center;
 		position: relative;
+		width: 100rpx;
+		height: 100%;
 		image {
 			width: 52rpx;
 			height: 52rpx;
