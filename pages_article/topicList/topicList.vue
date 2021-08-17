@@ -15,6 +15,8 @@
 		<view class="headImgBox" >
 			<image class="headImg" lazy-load :src="info.image" mode="scaleToFill"></image>
 			<view class="mask"></view>
+			<view class="top-kong"></view>
+			
 			<view class="topicBox" >
 				<view class="bigTitle">
 					#{{info.name}}
@@ -30,8 +32,9 @@
 				</view>
 			</view>
 		</view>
+		
 		<view style="height: 120rpx;">
-			<meTabs class="topicTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :tab-width="80"></meTabs>
+			<meTabs class="topicTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :lineWidth="75"  :height="60" :tab-width="80"></meTabs>
 		</view>
 		<articleList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :topicID="topic_id"></articleList>
 	</view>
@@ -141,6 +144,15 @@ export default {
 	width: 750rpx;
 	height: 440rpx;
 	position: relative;
+	.top-kong{
+		width: 750rpx;
+		height: 20rpx;
+		background: #ffffff;
+		border-radius: 24rpx 24rpx 0px 0px;
+		position: absolute;
+		bottom: 0;
+		z-index: 1;
+	}
 	.headImg {
 		width: 100%;
 		height: 100%;
