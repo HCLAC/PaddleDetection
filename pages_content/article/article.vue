@@ -1145,12 +1145,9 @@
 			text-overflow: ellipsis; 
 		}
 	}
-
-	
-
 	// 内容
 	.contentTitle{
-		margin: 0rpx 28rpx 0rpx;
+		margin: 40rpx 28rpx 0rpx;
 		font-size: 38rpx;
 		font-family: PingFangSC-Semibold, PingFang SC;
 		font-weight: 600;

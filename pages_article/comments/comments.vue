@@ -95,6 +95,7 @@
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
 					});
+					return
 				}
 				uni.navigateTo({
 					url:'/pages_article/report/report?id=' + e.id

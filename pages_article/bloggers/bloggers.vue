@@ -36,10 +36,12 @@
 					<text>关注</text>
 				</view>
 			</view>
-			<meTabs class="bloggerTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :line-width="110" :tab-width="120"></meTabs>
+			<view class="top-kong">
+			</view>
+			<meTabs class="bloggerTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :line-width="110" :tab-width="85"></meTabs>
 		</view>
-		<bloggerArticleList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :authorID="author_id"></bloggerArticleList>
-		<u-modal v-model="show" :content="content" :z-index=9999 :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
+		<bloggerArticleList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :authorID="author_id" ></bloggerArticleList>
+		<u-modal v-model="show" :content="content" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 	</view>
 </template>
 <script>
@@ -211,7 +213,11 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 </script>
 
 <style lang="scss" scoped>
-	
+.top-kong{
+	height: 20rpx;
+	background: #ffffff;
+	border-radius: 24rpx 24rpx 0px 0px;
+}
 .nav-bar {
 	z-index: 999;
 	position: fixed;

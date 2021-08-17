@@ -270,6 +270,7 @@
 	.bgBox {
 		width: 750rpx;
 		height: 440rpx;
+		// background: red;
 		background-color: #000000;
 	}
 

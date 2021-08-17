@@ -38,8 +38,10 @@
 			</view>
 			<!-- 客服 -->
 			<!-- <view class="phone" @click="tell"><image class="phoneImg" src="/static/images/minephone.svg" mode=""></image></view> -->
+			<view class="top-kong">
+			</view>
 			<!-- 我的收藏 -->
-			<meTabs class="mineTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :tab-width="80"></meTabs>
+			<meTabs class="mineTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :lineWidth="100" :tab-width="80"></meTabs>
 		</view>
 		<block v-if="auth">
 			<articleList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex"></articleList>
@@ -337,4 +339,13 @@ export default {
 		height: 124rpx;
 	}
 }
+.top-kong{
+	height: 20rpx;
+	background: #ffffff;
+	border-radius: 24rpx 24rpx 0px 0px;
+}
+// .mineBox{
+// 	height: 100rpx;
+// 	background: red;
+// }
 </style>
