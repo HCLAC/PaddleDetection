@@ -218,6 +218,7 @@
 				isLoadMore: false,
 				item: null,
 				topHotCity: [],
+				cityList: [],
 				isLike: false,
 				likeNum: 0,
 				bannerList: null,
@@ -260,6 +261,7 @@
 						this.getAreaHot();
 						
 						setTimeout(() => {
+							this.getCity()
 							this.mescroll.resetUpScroll();
 							this.hideLoad()
 						}, 500);
@@ -288,6 +290,23 @@
 						this.areaList = res.data.data;
 					}
 				});
+			},
+			// 获取全国城市
+			getCity() {
+				this.HTTP.request({
+					url: '/area/guide',
+					success: (res) => {				
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						var cityList = res.data.data.areas;
+						this.cityList = cityList.slice(1);
+					}
+				})
 			},
 			// 获取banner
 			getBanner() {
@@ -421,11 +440,17 @@
 			// 跳转省市主题页
 			toProvincesNC(){
 				var name = this.cityName
-				var obj = this.areaList.find(function(value, index, arr){
-					if (value.name === name){
-						return true
+				var obj = null
+				for (let i=0;i<this.cityList.length;i++){
+					for (let j=0;j<this.cityList[i].city_list.length;j++) {
+						if (this.cityList[i].city_list[j].name == name){
+							obj = this.cityList[i].city_list[j]
+							break
+						}
 					}
-				})
+				}
+				
+				
 				if (!obj){
 					uni.showToast({
 						title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
