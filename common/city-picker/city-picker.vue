@@ -1,5 +1,5 @@
 <template>
-	<u-popup v-model="show" mode="top" height="383px">
+	<u-popup v-model="show" mode="top" >
 		<uni-nav-bar :fixed="true" :status-bar="true" title="选择城市">
 			<view slot="left" class="slotleft">
 				<!-- #ifndef  MP-BAIDU -->

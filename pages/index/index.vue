@@ -581,6 +581,8 @@
 			display: flex;
 			align-items: center;
 			height: 64rpx;
+			width: 200rpx;
+			overflow: hidden;
 			.nowCityNameText{
 				// width: 70rpx;
 				height: 40rpx;

@@ -26,11 +26,11 @@
 					:color="closeIconColor"
 					:size="closeIconSize"
 				></u-icon>
-				<scroll-view class="u-drawer__scroll-view" scroll-y="true">
+				<scroll-view class="u-drawer__scroll-view" scroll-y="false">
 					<slot />
 				</scroll-view>
 			</view>
-			<scroll-view class="u-drawer__scroll-view" scroll-y="true" v-else>
+			<scroll-view class="u-drawer__scroll-view" scroll-y="false" v-else>
 				<slot />
 			</scroll-view>
 			<view @tap="close" class="u-close" :class="['u-close--' + closeIconPos]">
