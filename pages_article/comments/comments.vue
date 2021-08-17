@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<view class="nav-bar"  >
-			<uni-nav-bar :fixed="true" :status-bar="true" :border="true" >
+		<view class="nav-bar">
+			<uni-nav-bar :fixed="true" :status-bar="true">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
@@ -11,8 +11,8 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			<view class="replyList">
+		<mescroll-uni ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+			<view class="replyList" :style="{top:navbarHeight+'px'}">
 				<view class="replyContent">
 					<view class="reply" v-for="(item,index) in commentsList" :key="index">
 						<view class="replyTop">
@@ -36,7 +36,7 @@
 					</view>
 				</view>
 			</view>
-		</mescroll-body>
+		</mescroll-uni>
 	</view>
 </template>
 
@@ -51,13 +51,22 @@
 				downOption:{
 					use: false,
 					auto:false
-				}
+				},
+				navbarHeight:200,
 			};
 		},
 		onLoad(options) {
 			this.article_id = options.article_id
+			this.calcHeight()
 		},
 		methods:{
+			calcHeight(){
+				const query = uni.createSelectorQuery().in(this);
+				query.select('.nav-bar').boundingClientRect(data => {
+					console.log(data)
+					this.navbarHeight = data.height
+				}).exec();
+			},
 			// 评论点赞
 			replyLike(item, index){
 				let token = uni.getStorageSync('Authorization')
@@ -178,6 +187,7 @@
 <style lang="scss" scoped>
 	
 .replyList{
+	position: relative;
 	.replyContent{
 		margin: 0 28rpx;
 		.reply{

@@ -36,7 +36,7 @@
 							<view class="pImg">
 								<image src="/static/images/iconNewMap.svg" mode="aspectFill"></image>
 							</view>
-							<view>{{ item.location }}</view>
+							<view>{{ item.location.replace(/\（.*?\）/g, '') }}</view>
 						</view>
 					</view>
 				</view>

@@ -450,10 +450,10 @@ export default {
 					// that.list = that.list.concat(answerArr)
 					// 请求成功,隐藏加载状态
 					//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-					this.mescroll.endByPage(curPageLen, totalPage);
+					// this.mescroll.endByPage(curPageLen, totalPage);
 			
 					//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-					// this.mescroll.endBySize(curPageLen, totalSize);
+					this.mescroll.endBySize(curPageLen, totalSize);
 			
 					//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
 					//this.mescroll.endSuccess(curPageLen, hasNext);
@@ -483,64 +483,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	.Title{
-		// overflow: hidden;
-		// white-space: nowrap;
-		// text-overflow: ellipsis;
-		margin: 0 auto;
-	}
-// 自定义导航栏样式
-.nav-bar {
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: center;
-	padding: 0;
-	font-size: 14px;
-	background-color: #aa557f;
-}
-.nav-bar {
-	flex-direction: column;
-	padding: 15px;
-	background-color: #ffffff;
-}
-.nav-bar {
-	padding: 0;
-}
-.navBar {
-	display: flex;
-}
-.slotleft {
-	display: flex;
-	align-items: center;
-}
-.fanhui {
-	width: 40rpx;
-	height: 40rpx;
-	margin-left: 42rpx;
-	margin-right: 20rpx;
-}
-.fhsy {
-	width: 40rpx;
-	height: 40rpx;
-}
-/* #ifdef  MP-BAIDU*/
-.fhsy {
-	margin-left: 100rpx;
-}
-/*  #endif  */
-.slottitle {
-	margin-left: 182rpx;
-	font-size: 38rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 600;
-	color: rgba(0, 0, 0, 1);
-}
-.button-v-line {
-	width: 1px;
-	height: 18px;
-	background-color: #2f2f2f;
-	margin: 0 8px;
-}
 .headImgBox {
 	width: 100%;
 	height: 440rpx;
