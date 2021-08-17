@@ -11,8 +11,7 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption"
-		 :up="upOption">
+		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			 <view class="bgBox">
 				<image lazy-load :src="querys.image" mode="" class="bannerImg"></image>
 				<view class="mask">
@@ -95,6 +94,9 @@
 				downOption: {
 					use: false,
 					auto: false
+				},
+				upOption:{
+					bgColor:'#ffffff'
 				},
 				isFixed: false,
 				cardheight: 200,
