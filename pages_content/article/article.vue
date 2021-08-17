@@ -968,7 +968,11 @@
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 	}
-	
+	.detailContent{
+		// background: red;
+		box-shadow: 0 5px 10px #F5F5F5 inset;
+		// border-top: 2rpx solid #F5F5F5;
+	}
 	/* 轮播图 */
 	.page-section-spacing {
 		position: relative;

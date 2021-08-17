@@ -15,6 +15,8 @@
 		<view class="headImgBox"  :style="{'position': headerFixed?'absolute':'fixed'}">
 			<image class="headImg" lazy-load :src="info.image" mode="scaleToFill"></image>
 			<view class="mask"></view>
+			<view class="top-kong"></view>
+			
 			<view class="topicBox" >
 				<view class="bigTitle">
 					#{{info.name}}
@@ -148,6 +150,15 @@ export default {
 .headImgBox {
 	width: 750rpx;
 	height: 440rpx;
+	.top-kong{
+		width: 750rpx;
+		height: 20rpx;
+		background: #ffffff;
+		border-radius: 24rpx 24rpx 0px 0px;
+		position: absolute;
+		bottom: 0;
+		z-index: 1;
+	}
 	.headImg {
 		width: 100%;
 		height: 100%;
