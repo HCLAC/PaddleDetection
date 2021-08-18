@@ -342,7 +342,7 @@
 	}
 
 	.demo-tag-owner {
-		width: 52rpx;
+		width: 54rpx;
 		height: 28rpx;
 		text-align: center;
 		align-items: center;
@@ -352,7 +352,6 @@
 		font-size: 16rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
-		color: rgba(0, 145, 255, 1);
 		/* margin-top: 6rpx; */
 	}
 
