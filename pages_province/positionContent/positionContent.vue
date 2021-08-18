@@ -324,12 +324,12 @@ export default {
 		display: flex;
 		justify-content: space-between;
 		.title {
-			height: 48rpx;
+			height: 100%;
 			font-size: 48rpx;
 			font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 500;
 			color: rgba(48, 49, 51, 1);
-			line-height: 48rpx;
+			// line-height: 48rpx;
 		}
 	}
 	.contentRank{

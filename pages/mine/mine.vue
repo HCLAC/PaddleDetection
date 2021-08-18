@@ -41,7 +41,7 @@
 			<view class="top-kong">
 			</view>
 			<!-- 我的收藏 -->
-			<meTabs class="mineTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :lineWidth="100" :tab-width="80"></meTabs>
+			<meTabs class="mineTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :lineWidth="70" :tab-width="80"></meTabs>
 		</view>
 		<block v-if="auth">
 			<articleList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex"></articleList>
