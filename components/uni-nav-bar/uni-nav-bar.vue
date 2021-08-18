@@ -121,17 +121,11 @@
 		overflow:hidden;         
 		text-overflow:ellipsis;
 		white-space:nowrap;      
-		width:120px;
-		font-size: 37rpx;
+		width:300rpx;
+		font-size: 36rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
 		color: #303133;
-		/* #ifdef APP-PLUS */
-		font-size: 34rpx;
-		/* #endif */
-		/* #ifndef APP-PLUS */
-		font-size: $uni-font-size-lg;
-		/* #endif */
 	}
 	.uni-nav-bar-right-text {
 		font-size: $uni-font-size-base;

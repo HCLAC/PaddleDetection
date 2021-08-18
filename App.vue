@@ -76,26 +76,13 @@ uni-rich-text img{ max-width: 100% !important;}
 	align-items: center;
 }
 .fanhui {
-	width: 40rpx;
-	height: 40rpx;
-	margin-left: 42rpx;
-	margin-right: 20rpx;
+	width: 22px;
+	height: 22px;
+	margin-left: 18px;
 }
 .fhsy {
-	width: 40rpx;
-	height: 40rpx;
-	margin-left: 20rpx;
-}
-/* #ifdef  MP-BAIDU*/
-.fhsy {
-	margin-left: 100rpx;
-}
-/*  #endif  */
-.slottitle {
-	margin-left: 162rpx;
-	font-size: 38rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 600;
-	color: rgba(0, 0, 0, 1);
+	width: 22px;
+	height: 22px;
+	margin-left: 47px;
 }
 </style>

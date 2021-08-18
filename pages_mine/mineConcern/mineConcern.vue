@@ -9,7 +9,6 @@
 					<!-- #endif -->
 					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
-				<!-- <view class="slottitle">我的关注</view> -->
 			</uni-nav-bar>
 		</view>
 		<!-- 关注列表 -->

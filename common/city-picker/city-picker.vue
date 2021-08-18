@@ -153,34 +153,6 @@
 </script>
 
 <style lang="scss">
-	// 导航栏
-	
-	.slotleft {
-		display: flex;
-		align-items: center;
-	}
-	.fanhui {
-		width: 40rpx;
-		height: 40rpx;
-		margin-left: 42rpx;
-		margin-right: 20rpx;
-	}
-	.fhsy {
-		width: 40rpx;
-		height: 40rpx;
-	}
-	/* #ifdef  MP-BAIDU*/
-	.fhsy {
-		margin-left: 100rpx;
-	}
-	/*  #endif  */
-	.slottitle {
-		margin-left: 182rpx;
-		font-size: 38rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 600;
-		color: rgba(0, 0, 0, 1);
-	}
 	// 列表
 	.u-menu-wrap {
 		height: 574rpx;

@@ -608,10 +608,10 @@
 			display: flex;
 			align-items: center;
 			height: 64rpx;
-			width: 200rpx;
+			width: 118rpx;
 			overflow: hidden;
 			.nowCityNameText{
-				// width: 70rpx;
+				width: 66rpx;
 				height: 40rpx;
 				font-size: 28rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
