@@ -213,7 +213,7 @@
 				.count{
 					// width: 30%;
 					// height: 24rpx;
-					right: 15rpx;
+					right: 8rpx;
 					position: absolute;
 					font-size: 24rpx;
 					font-family: PingFangSC-Regular, PingFang SC;
@@ -222,7 +222,7 @@
 				}
 				.count1{
 					position: absolute;
-					right: 15rpx;
+					// right: 12%;
 					font-size: 24rpx;
 					font-family: PingFangSC-Regular, PingFang SC;
 					font-weight: 400;
