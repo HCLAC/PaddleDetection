@@ -139,9 +139,13 @@
 										{{item.create_at.slice(0,10)}}
 									</view>
 								</view>
-								<view class="">
-									<image class="replyLike" :src="item.like == 1?'/static/images/attLikeA.svg':'/static/images/attLike.svg'" mode="" @click="replyLike(item, index)"></image>
-									<image class="report" src="/static/images/report.svg" mode="" @click="toReport(item.id)"></image>
+								<view class="" style="display: flex;">
+									<view class="min-box" @click="replyLike(item, index)">
+										<image class="replyLike" :src="item.like == 1?'/static/images/attLikeA.svg':'/static/images/attLike.svg'" mode="" ></image>
+									</view>
+									<view class="min-box" @click="toReport(item.id)">
+										<image class="report" src="/static/images/report.svg" mode="" ></image>
+									</view>
 								</view>
 							</view>
 						</view>
@@ -973,6 +977,14 @@
 		box-shadow: 0 5px 10px #F5F5F5 inset;
 		// border-top: 2rpx solid #F5F5F5;
 	}
+	.min-box{
+		width: 60rpx;
+		height: 60rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-left: 10rpx;
+	}
 	/* 轮播图 */
 	.page-section-spacing {
 		position: relative;
@@ -1328,7 +1340,7 @@
 					}
 
 					.report {
-						margin-left: 28rpx;
+						// margin-left: 28rpx;
 						width: 44rpx;
 						height: 44rpx;
 					}
@@ -1447,14 +1459,17 @@
 		display: flex;
 		margin-left: 28rpx;
 		align-items: center;
-		margin-right: 40rpx;
+		// margin-right: 40rpx;
 		position: relative;
+		width: 100rpx;
+		height: 100%;
+		
 	}
 
 	.likeBtn {
 		width: 52rpx;
 		height: 52rpx;
-		margin-right: 8rpx;
+		// margin-right: 8rpx;
 	}
 
 	.likeNum {
@@ -1472,14 +1487,18 @@
 	.fav {
 		display: flex;
 		align-items: center;
-		margin-right: 40rpx;
+		// margin-right: 40rpx;
 		position: relative;
+		width: 100rpx;
+		height: 100%;
+		
 	}
 
 	.favBtn {
 		width: 52rpx;
 		height: 52rpx;
-		margin-right: 8rpx;
+		
+		// margin-right: 8rpx;
 	}
 
 	.favNum {
@@ -1497,6 +1516,8 @@
 		display: flex;
 		align-items: center;
 		position: relative;
+		width: 100rpx;
+		height: 100%;
 		image {
 			width: 52rpx;
 			height: 52rpx;
