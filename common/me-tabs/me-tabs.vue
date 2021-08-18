@@ -184,7 +184,7 @@
 				position: relative;
 				// text-align: center;
 				box-sizing: border-box;
-				justify-content: center;
+				// justify-content: center;
 				display: flex;
 				align-items: center;
 				color:#909399;
@@ -200,23 +200,34 @@
 				}
 				
 				.name{
+					position: absolute;
 					// width: 70%;
+					// margin: 0 auto;
+					z-index: 100;
+					top:50%;
+					left:50%;
+					transform: translate(-50%,-50%);
+					// margin-left: 50%;
+					// transform: translate(-50%);
 				}
 				.count{
 					// width: 30%;
 					// height: 24rpx;
+					right: 15rpx;
+					position: absolute;
 					font-size: 24rpx;
 					font-family: PingFangSC-Regular, PingFang SC;
 					font-weight: 400;
 					color: #909399;
-					margin-left: 8rpx;
 				}
 				.count1{
+					position: absolute;
+					right: 15rpx;
 					font-size: 24rpx;
 					font-family: PingFangSC-Regular, PingFang SC;
 					font-weight: 400;
 					color: #303133;
-					margin-left: 8rpx;
+					// margin-left: 8rpx;
 				}
 			}
 		}
