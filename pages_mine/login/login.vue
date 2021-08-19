@@ -94,12 +94,10 @@ export default {
 			isShowcode: false,
 			serviceProvider: null,
 			serviceSource: null,
-			ismine: '',
 			platform: ''
 		};
 	},
 	onLoad(options) {
-		this.ismine = options.ismine;
 		this.serviceProvider = getApp().globalData.serviceProvider;
 		this.serviceSource = this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null;
 		this.platform = uni.getSystemInfoSync().platform

@@ -86,11 +86,7 @@ export default {
 		};
 	},
 	onShow() {
-		this.auth = getApp().globalData.Authorization
-		if (!this.auth){
-			uni.navigateTo({
-				url: '/pages_mine/login/login?ismine=1'
-			});
+		if (!this.Utils.isLogin()){
 			return
 		}
 		this.loadData()

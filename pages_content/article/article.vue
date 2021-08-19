@@ -690,7 +690,7 @@
 			// 用户信息
 			getUserInfo() {
 				var userInfo = uni.getStorageSync('userinfo')
-				userInfo.avatar = this.Utils.addImageProcess(userInfo.avatar, false, 80)
+				userInfo && (userInfo.avatar = this.Utils.addImageProcess(userInfo.avatar, false, 80))
 				this.userInfo = userInfo
 			},
 			// 举报
