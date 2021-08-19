@@ -13,7 +13,7 @@
 		</view>
 		<!-- 卡片列表 -->
 		<view class="content">
-			<view class="card" v-for="item in cardList.List" @click="toAttractionsDetails(item.id)">
+			<view class="card" v-for="item in cardList" @click="toAttractionsDetails(item.id)">
 				<text class="title">{{item.name}}</text>
 				<view class="cardContent">{{item.description}}</view>
 				<view class="uni-padding-wrap">
@@ -71,7 +71,13 @@
 							});
 							return
 						}
-						that.cardList = res.data.data
+						var cardList = res.data.data.list
+						cardList.forEach((item1, index1) => {
+							item1.images.forEach((item2, index2) => {
+								item1[index2] = that.Utils.addImageProcess(item2, true, 80)
+							})
+						})
+						that.cardList = cardList
 					}
 				})
 			},

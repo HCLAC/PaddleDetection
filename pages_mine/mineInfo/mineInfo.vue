@@ -135,6 +135,7 @@
 			})
 		},
 		onLoad(options) {
+			options.avatar = decodeURIComponent(options.avatar)
 			this.model = options
 		},
 		methods:{

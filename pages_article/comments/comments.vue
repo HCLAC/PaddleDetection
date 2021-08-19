@@ -11,8 +11,8 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<mescroll-uni ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			<view class="replyList" :style="{top:navbarHeight+'px'}">
+		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+			<view class="replyList">
 				<view class="replyContent">
 					<view class="reply" v-for="(item,index) in commentsList" :key="index">
 						<view class="replyTop">
@@ -36,7 +36,7 @@
 					</view>
 				</view>
 			</view>
-		</mescroll-uni>
+		</mescroll-body>
 	</view>
 </template>
 
@@ -52,21 +52,13 @@
 					use: false,
 					auto:false
 				},
-				navbarHeight:200,
 			};
 		},
 		onLoad(options) {
 			this.article_id = options.article_id
-			this.calcHeight()
+			this.mescroll.setPageSize(10)
 		},
 		methods:{
-			calcHeight(){
-				const query = uni.createSelectorQuery().in(this);
-				query.select('.nav-bar').boundingClientRect(data => {
-					console.log(data)
-					this.navbarHeight = data.height
-				}).exec();
-			},
 			// 评论点赞
 			replyLike(item, index){
 				let token = uni.getStorageSync('Authorization')
@@ -123,7 +115,6 @@
 			/*上拉加载的回调*/
 			upCallback(page) {
 				var that = this
-				// mescroll.setPageSize(6)
 				let pageNum = page.num; // 页码, 默认从1开始
 				let pageSize = page.size; // 页长, 默认每页6条
 				this.HTTP.request({
@@ -147,6 +138,10 @@
 						}
 						// 接口返回的当前页数据列表 (数组)
 						let curPageData = res.data.data.list;
+						
+						curPageData.forEach((item1, index1) => {
+							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 80)
+						})
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 						let curPageLen = curPageData.length;
 						// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)

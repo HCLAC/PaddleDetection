@@ -127,10 +127,31 @@
 							});
 							return
 						}
-						that.area = res.data.data.area;
-						that.site = res.data.data.site;
-						that.list = res.data.data.article_list;
-						that.route_list = res.data.data.route_list;
+						var area = res.data.data.area
+						area && (area.image = that.Utils.addImageProcess(area.image, false, 40))
+						that.area = area;
+						
+						var site = res.data.data.site
+						site && (site.image[0] = that.Utils.addImageProcess(site.image[0], false, 40))
+						that.site = site;
+						
+						var list = res.data.data.article_list;
+						list && list.forEach((item1, index1) => {
+							if (item1.cover_height > 0){
+								item1.height = 340*item1.cover_height/item1.cover_width+'rpx'
+							} else{
+								item1.height = '220rpx'
+							}
+							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 80)
+							item1.image = this.Utils.addImageProcess(item1.image, false, 40)
+						})
+						that.list = list
+						
+						var route_list = res.data.data.route_list;
+						route_list && route_list.forEach((item1, index1) => {
+							item1.image = this.Utils.addImageProcess(item1.image, false, 50)
+						})
+						that.route_list = route_list;
 						// let list1 = this.drawCorrelativeKeyword(arr, keyword);
 					} 
 				}); 

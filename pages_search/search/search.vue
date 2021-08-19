@@ -162,7 +162,17 @@ export default {
 						});
 						return
 					}
-					this.list = res.data.data.list;
+					var list = res.data.data.list
+					list.forEach((item1, index1) => {
+						if (item1.cover_height > 0){
+							item1.height = 340*item1.cover_height/item1.cover_width+'rpx'
+						} else{
+							item1.height = '220rpx'
+						}
+						item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 80)
+						item1.image = this.Utils.addImageProcess(item1.image, false, 40)
+					})
+					this.list = list;
 				}
 			});
 		},

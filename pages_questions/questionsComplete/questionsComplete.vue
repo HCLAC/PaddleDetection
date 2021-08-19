@@ -66,8 +66,10 @@
 						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
-						this.detail = res.data.data
-						this.create_at = res.data.data.create_at.slice(0,10)
+						var detail = res.data.data
+						detail.avatar = this.Utils.addImageProcess(detail.avatar, false, 80)
+						this.detail = detail
+						this.create_at = detail.create_at.slice(0,10)
 					}
 				});
 			}

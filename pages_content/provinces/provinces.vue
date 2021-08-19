@@ -156,6 +156,7 @@ export default {
 		cityPicker
 	},
 	onLoad(options) {
+		options.image = this.Utils.addImageProcess(options.image, false, 40)
 		this.querys = options;
 		swan.setPageInfo({
 			title: options.name+"旅游攻略-领途羊",
@@ -260,7 +261,11 @@ export default {
 						});
 						return
 					}
-					this.siteHot = res.data.data;
+					var siteHot = res.data.data
+					siteHot.forEach((item1, index1) => {
+						item1.image = this.Utils.addImageProcess(item1.image, false, 40)
+					})
+					this.siteHot = siteHot;
 				}
 			});
 		},
@@ -281,7 +286,11 @@ export default {
 						});
 						return
 					}
-					this.routeHot = res.data.data;
+					var routeHot = res.data.data
+					routeHot.forEach((item1, index1) => {
+						item1.image = this.Utils.addImageProcess(item1.image, false, 50)
+					})
+					this.routeHot = routeHot;
 				}
 			});
 		},
@@ -314,7 +323,7 @@ export default {
 			var state_id = this.querys.state_id;
 			var city_id = this.querys.city_id;
 			var name = this.querys.name;
-			var image = this.querys.image;
+			var image = encodeURIComponent(this.querys.image);
 			uni.navigateTo({
 				url: '/pages_province/attractionsRank/attractionsRank?state_id=' + state_id + '&city_id=' + city_id+
 							"&name="+name+"&image="+image
@@ -417,7 +426,15 @@ export default {
 					}
 					// 接口返回的当前页数据列表 (数组)
 					let curPageData = res.data.data.list;
-			
+					curPageData.forEach((item1, index1) => {
+						if (item1.cover_height > 0){
+							item1.height = 340*item1.cover_height/item1.cover_width+'rpx'
+						} else{
+							item1.height = '220rpx'
+						}
+						item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 80)
+						item1.image = this.Utils.addImageProcess(item1.image, false, 40)
+					})
 					// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 					let curPageLen = curPageData.length;
 					// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)

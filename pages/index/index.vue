@@ -287,7 +287,12 @@
 							});
 							return
 						}
-						this.areaList = res.data.data;
+						
+						var areaList = res.data.data
+						areaList.forEach((item1, index1) => {
+							item1.image = this.Utils.addImageProcess(item1.image, false, 40)
+						})
+						this.areaList = areaList;
 					}
 				});
 			},
@@ -324,7 +329,11 @@
 							});
 							return
 						}
-						this.bannerList = res.data.data;
+						var bannerList = res.data.data
+						bannerList.forEach((item1, index1) => {
+							item1.image = this.Utils.addImageProcess(item1.image, false, 40)
+						})
+						this.bannerList = bannerList;
 						if (this.bannerList.length == 0) {
 							this.cus_sty_top = '156rpx'
 						} else {
@@ -519,6 +528,15 @@
 						let totalPage = res.data.data.total / pageSize;
 						let totalSize = res.data.data.total;
 						
+						curPageData.forEach((item1, index1) => {
+							if (item1.cover_height > 0){
+								item1.height = 340*item1.cover_height/item1.cover_width+'rpx'
+							} else{
+								item1.height = '220rpx'
+							}
+							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 80)
+							item1.image = this.Utils.addImageProcess(item1.image, false, 40)
+						})
 						this.list = this.list.concat(curPageData); //追加新数据
 						this.mescroll.endByPage(curPageLen, totalPage);
 

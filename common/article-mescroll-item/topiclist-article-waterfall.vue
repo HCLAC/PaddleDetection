@@ -115,6 +115,15 @@
 						// 接口返回的当前页数据列表 (数组)
 						if(res.data.data != null){
 							let curPageData = res.data.data.list;
+							curPageData.forEach((item1, index1) => {
+								if (item1.cover_height > 0){
+									item1.height = 340*item1.cover_height/item1.cover_width+'rpx'
+								} else{
+									item1.height = '220rpx'
+								}
+								item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 80)
+								item1.image = this.Utils.addImageProcess(item1.image, false, 40)
+							})
 							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 							let curPageLen = curPageData.length;
 							// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)

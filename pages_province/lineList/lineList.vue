@@ -76,6 +76,9 @@ export default {
 						return
 					}
 					let curPageData = res.data.data.list;
+					curPageData.forEach((item1, index1) => {
+						item1.image = this.Utils.addImageProcess(item1.image, false, 50)
+					})
 					let curPageLen = curPageData.length ? curPageData.length : 0;
 					let totalPage = res.data.data.total;
 					if (page.num == 1) this.lineList = [];

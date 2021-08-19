@@ -49,6 +49,7 @@
 		mixins: [MescrollMixin],
 		onLoad() {
 			this.calcCardHeight()
+			this.mescroll.setPageSize(10)
 		},
 		
 		onPageScroll(e) {
@@ -116,8 +117,8 @@
 			},
 			/*上拉加载的回调*/
 			upCallback(page) {
-				let pageNum = page.num
-				let pageSize = 30; // 页长, 默认每页10条
+				let pageNum = page.num; // 页码, 默认从1开始
+				let pageSize = page.size; // 页长, 默认每页6条
 				var that = this;
 				this.HTTP.request({
 					url: '/search/hot?page=' + pageNum + '&count=' + pageSize,

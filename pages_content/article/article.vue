@@ -396,7 +396,12 @@
 							}
 						}
 						
-						that.articleInfo = res.data.data;
+						var articleInfo = res.data.data
+						articleInfo.avatar = that.Utils.addImageProcess(articleInfo.avatar, false, 80)
+						articleInfo.images.forEach((item1, index1) => {
+							articleInfo.images[index1] = that.Utils.addImageProcess(item1, true, 80)
+						})
+						that.articleInfo = articleInfo;
 						that.following = that.articleInfo.follow;
 						// 除了攻略文章，其他计算轮播图高度
 						if (that.articleInfo.type != 2){
@@ -696,8 +701,9 @@
 			},
 			// 用户信息
 			getUserInfo() {
-				this.userInfo = uni.getStorageSync('userinfo')
-				console.log('this.userInfo',this.userInfo)
+				var userInfo = uni.getStorageSync('userinfo')
+				userInfo.avatar = this.Utils.addImageProcess(userInfo.avatar, false, 80)
+				this.userInfo = userInfo
 			},
 			// 举报
 			toReport(id) {
@@ -791,7 +797,11 @@
 							});
 							return
 						}
-						this.commentsList = res.data.data.list
+						var commentsList = res.data.data.list
+						commentsList.forEach((item1, index1) => {
+							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 80)
+						})
+						this.commentsList = commentsList
 						this.comment_count = res.data.data.total
 					}
 				});

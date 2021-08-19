@@ -160,6 +160,10 @@ export default {
 						});
 						return
 					}
+					var siteInfo = res.data.data
+					siteInfo.images.forEach((item, index) => {
+						siteInfo.images[index] = that.Utils.addImageProcess(item, true, 70)
+					})
 					that.siteInfo = res.data.data
 					if(that.siteInfo.description.length < 50){
 						that.more = false

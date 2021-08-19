@@ -102,9 +102,10 @@
 				cardheight: 200,
 			}
 		},
-		onLoad: function(option) {
+		onLoad: function(options) {
 			this.serviceProvider = getApp().globalData.serviceProvider
-			this.querys = option
+			options.image = decodeURIComponent(options.image)
+			this.querys = options
 			this.getCity()
 			this.calcCardHeight()
 		},
@@ -207,7 +208,9 @@
 						}
 						// 接口返回的当前页数据列表 (数组)
 						let curPageData = res.data.data.list;
-				
+						curPageData.forEach((item1, index1) => {
+							item1.images[0] = this.Utils.addImageProcess(item1.images[0], false, 40)
+						})
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 						let curPageLen = curPageData.length;
 						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)

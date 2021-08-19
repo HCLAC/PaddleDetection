@@ -125,7 +125,9 @@ export default {
 							});
 							return
 						}
-						this.info = res.data.data;
+						var info = res.data.data
+						info.image = this.Utils.addImageProcess(info.image, false, 60)
+						this.info = info;
 						this.calcHeight()
 					}
 				})

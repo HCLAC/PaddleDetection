@@ -204,15 +204,29 @@ export default {
 						});
 						return
 					}
-					res.data.data.content = res.data.data.content && res.data.data.content.length ? JSON.parse(res.data.data.content) : [];
-					this.butler_mobile = res.data.data.butler_mobile;
-					this.lineContent = res.data.data;
+					var lineContent = res.data.data
+					lineContent.content = lineContent.content && lineContent.content.length ? JSON.parse(lineContent.content) : [];
+					lineContent.content && lineContent.content.forEach((itemDay, index1) => {
+						itemDay.event && itemDay.event.forEach((itemEvent, index2) => {
+							itemEvent.position && itemEvent.position.forEach((itempPosition, index3) => {
+								itempPosition.cover_url = that.Utils.addImageProcess(itempPosition.cover_url, false, 40)
+							})
+						})
+					})
+					
+					that.butler_mobile = lineContent.butler_mobile;
+					
+					lineContent.images.forEach((item1, index1) => {
+						lineContent.images[index1] = that.Utils.addImageProcess(item1, true, 70)
+					})
+					that.lineContent = lineContent;
+					
 					swan.setPageInfo({
 						title: that.lineContent.title+"-领途羊",
 						keywords: that.lineContent.title+",行程路线,领途羊",
 						description: that.lineContent.description,
 					})
-					this.calcHeight()
+					that.calcHeight()
 				}
 			});
 		},

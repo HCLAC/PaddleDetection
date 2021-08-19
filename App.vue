@@ -2,8 +2,9 @@
 export default {
 	globalData: {
 		username: '领途羊',
-		serviceProvider: '',
-		Authorization: ''
+		serviceProvider: 'baidu',
+		Authorization: '',
+		networkType: '4g'
 	},
 	onLaunch: function(res) {
 		console.log('App Launch',res);
@@ -45,6 +46,13 @@ export default {
 			}
 		});
 		this.globalData.Authorization = uni.getStorageSync('Authorization')
+		
+		// 获取网络情况
+		uni.getNetworkType({
+			success: res => {
+				this.globalData.networkType = res.networkType
+			}
+		})
 	},
 	onShow: function(data) {
 		console.log('App Show',data);

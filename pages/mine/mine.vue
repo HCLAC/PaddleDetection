@@ -97,11 +97,6 @@ export default {
 		this.loadData()
 	},
 	onLoad() {
-		this.auth =  uni.getStorageSync('Authorization')
-		if (!this.auth){
-			return
-		}
-		// this.loadData()
 	},
 	onPageScroll(e) {
 		if (e.scrollTop <= 0){
@@ -129,14 +124,14 @@ export default {
 	},
 	methods: {
 		loadData(){
-			uni.showLoading({
-				title: '加载中',
-				mask: true,
-				success: () => {
-					this.getUserMsg();
-					this.hideLoad();
-				}
-			});
+			this.getUserMsg();
+			// uni.showLoading({
+			// 	title: '加载中',
+			// 	mask: true,
+			// 	success: () => {
+			// 		this.hideLoad();
+			// 	}
+			// });
 		},
 		hideLoad(){
 			uni.hideLoading();
@@ -162,26 +157,28 @@ export default {
 						return
 					}
 					
-					that.userInfo = res.data.data
-					that.tabList[0].count = res.data.data.fav_count
-					that.tabList[1].count = res.data.data.like_count
-					that.userInfo.nickName = res.data.data.mobile
-					if(res.data.data.nick_name){
-						that.userInfo.nickName = res.data.data.nick_name
+					var userInfo = res.data.data
+					that.tabList[0].count = userInfo.fav_count
+					that.tabList[1].count = userInfo.like_count
+					userInfo.nickName = userInfo.mobile
+					if(userInfo.nick_name){
+						userInfo.nickName = userInfo.nick_name
 					}
 					
-					let gender = res.data.data.gender
-					that.userInfo.sex = gender == 0 ? '保密' : gender == 2 ? '女' : '男'
+					let gender = userInfo.gender
+					userInfo.sex = gender == 0 ? '保密' : gender == 2 ? '女' : '男'
 					
-					let fllowNum = res.data.data.following
-					that.userInfo.fllowNum = fllowNum>10000?((fllowNum-(fllowNum%1000))/10000+'w'):fllowNum
+					let fllowNum = userInfo.following
+					userInfo.fllowNum = fllowNum>10000?((fllowNum-(fllowNum%1000))/10000+'w'):fllowNum
 					
-					let favNum = res.data.data.fav_count 
-					that.userInfo.favNum = favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum
-					let likeNum = res.data.data.like_count
-					that.userInfo.likeNum = likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum
-					let answersNum = res.data.data.question_count
-					that.userInfo.answersNum = answersNum>10000?((answersNum-(answersNum%1000))/10000+'w'):answersNum
+					let favNum = userInfo.fav_count 
+					userInfo.favNum = favNum>10000?((favNum-(favNum%1000))/10000+'w'):favNum
+					let likeNum = userInfo.like_count
+					userInfo.likeNum = likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum
+					let answersNum = userInfo.question_count
+					userInfo.answersNum = answersNum>10000?((answersNum-(answersNum%1000))/10000+'w'):answersNum
+					userInfo.avatar = that.Utils.addImageProcess(userInfo.avatar, false, 80)
+					that.userInfo = userInfo
 					that.calcCardHeight()
 				}
 			})
@@ -220,7 +217,7 @@ export default {
 		// 跳转信息修改页
 		toMineInfo(){
 			uni.navigateTo({
-				url:'/pages_mine/mineInfo/mineInfo?avatar='+this.userInfo.avatar+'&name='+this.userInfo.nickName+
+				url:'/pages_mine/mineInfo/mineInfo?avatar='+encodeURIComponent(this.userInfo.avatar)+'&name='+this.userInfo.nickName+
 						'&sex='+this.userInfo.sex+'&region='+this.userInfo.location
 			})
 		},

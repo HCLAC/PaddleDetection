@@ -280,6 +280,10 @@
 							});
 							return
 						}
+						var questions = res.data.data
+						questions.forEach((item1, index1) => {
+							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 80)
+						})
 						this.questions = res.data.data
 					}
 				});
@@ -323,8 +327,10 @@
 							// 	</div>`;
 							
 							// res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
-							that.answersList = res.data.data
-							that.answersDate = res.data.data.create_at.slice(0.10)
+							var answersList = res.data.data
+							answersList.avatar = that.Utils.addImageProcess(answersList.avatar, false, 80)
+							that.answersList = answersList
+							that.answersDate = answersList.create_at.slice(0.10)
 						}else{
 							that.HTTP.request({
 								url: '/answers/list',
@@ -344,8 +350,10 @@
 										});
 										return
 									}
-									that.answersList = res.data.data.list[0]
-									that.answersDate = res.data.data.list[0].create_at.slice(0.10)
+									var answersList = res.data.data.list[0]
+									answersList.avatar = that.Utils.addImageProcess(answersList.avatar, false, 80)
+									that.answersList = answersList
+									that.answersDate = answersList.create_at.slice(0.10)
 								}
 							})
 						}
