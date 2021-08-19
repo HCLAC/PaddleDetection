@@ -330,6 +330,8 @@
 		.pImg{
 			width: 26rpx;
 			height: 30rpx;
+			margin-left: 0 !important;
+			margin-right: 4rpx;
 			image {
 				height: 100%;
 				width: 100%;

@@ -250,12 +250,12 @@
 		.tabs-line{
 			z-index: 0;
 			position: absolute;
-			bottom: 60rpx; // 至少与.tabs-item的padding-bottom一致,才能保证在底部边缘
+			bottom: 65rpx; // 至少与.tabs-item的padding-bottom一致,才能保证在底部边缘
 			width: 68rpx;
-			height: 40rpx;
+			height: 24rpx;
 			left: 20rpx;
 			transform: translateX(-50%);
-			border-radius: 6px;
+			border-radius:2rpx 12rpx 2rpx 2rpx;
 			transition: left .3s;
 			background: #FFE512;
 		}
