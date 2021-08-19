@@ -13,7 +13,7 @@
 		</view>
 		<!-- 关注列表 -->
 		<view class="concernBox" v-if="followList || followList.length">
-			<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+			<mescroll-body ref="mescrollRef" :bottom="bom" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 				<view class="card" v-for=" (item,index) in followList" :key="index">
 					<!-- 头像 -->
 					<view class="avatar" @click="tobloggers(item.author_id)">
@@ -62,6 +62,7 @@
 	export default {
 		data() {
 			return {
+				bom:'',
 				fansNum: 36300,
 				artNum: 230,
 				isfllow: 1,
@@ -197,6 +198,11 @@
 						//设置列表数据
 						if (page.num == 1) this.followList = []; //如果是第一页需手动置空列表
 						this.followList = this.followList.concat(curPageData); //追加新数据
+						if(this.followList.length >= 9 ){
+							this.bom = 0
+						}else{
+							this.bom = 300							
+						}
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 						// this.mescroll.endByPage(curPageLen, totalPage);

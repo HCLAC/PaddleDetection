@@ -480,7 +480,7 @@ export default {
 			position: absolute;
 			right: 6rpx;
 			background-color: #FFFFFF;
-			// bottom: -2rpx;
+			bottom: -2rpx;
 			display: flex;
 			justify-content: flex-end;
 			z-index: 111;

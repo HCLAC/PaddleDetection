@@ -23,8 +23,8 @@
 						</view>
 						<view class="fa">
 							<view class="fllow" @click="toConcern">
-								<view class="fllowNum">{{ userInfo.fllowNum }}</view>
 								<text>关注</text>
+								<view style="margin-left: 8rpx;" class="fllowNum">{{ userInfo.fllowNum }}</view>
 							</view>
 							<!-- <view class="answers" @click="toAnswers">
 								<view class="answersNum">{{ userInfo.answersNum }}</view>
@@ -38,8 +38,7 @@
 			</view>
 			<!-- 客服 -->
 			<!-- <view class="phone" @click="tell"><image class="phoneImg" src="/static/images/minephone.svg" mode=""></image></view> -->
-			<view class="top-kong">
-			</view>
+
 			<!-- 我的收藏 -->
 			<meTabs class="mineTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :lineWidth="70" :tab-width="80"></meTabs>
 		</view>
@@ -233,6 +232,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.mineTabs{
+	width: 100%;
+	background: #ffffff;
+	border-radius: 24rpx 24rpx 0px 0px;
+	overflow: hidden;
+	position: absolute;
+	// bottom: 0;
+	top: 420rpx;
+	z-index: 100000;
+}
 .nav-bar {
 	z-index: 999;
 	position: fixed;
@@ -336,11 +345,11 @@ export default {
 		height: 124rpx;
 	}
 }
-.top-kong{
-	height: 20rpx;
-	background: #ffffff;
-	border-radius: 24rpx 24rpx 0px 0px;
-}
+// .top-kong{
+// 	height: 20rpx;
+// 	background: #ffffff;
+// 	border-radius: 24rpx 24rpx 0px 0px;
+// }
 // .mineBox{
 // 	height: 100rpx;
 // 	background: red;
