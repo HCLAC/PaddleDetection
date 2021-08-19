@@ -250,11 +250,19 @@
 	"preloadRule":{
 		"pages/index/index": {
 		    "network": "all",
-		    "packages": ["pages_content"]
+		    "packages": ["pages_content","pages_search"]
 		},
         "pages/mine/mine": {
             "network": "all",
             "packages": ["pages_mine"]
+        },
+        "pages_content/article/article": {
+            "network": "all",
+            "packages": ["pages_article"]
+        },
+        "pages_content/province/province": {
+            "network": "all",
+            "packages": ["pages_province"]
         }
     },
 	"globalStyle": {

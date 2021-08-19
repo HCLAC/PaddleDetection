@@ -268,7 +268,9 @@
 					title: '加载中',
 					mask: true,
 					success: () => {
-						this.getArticleDetail();
+						setTimeout(() => {
+							this.getArticleDetail();
+						}, 1);
 						this.getArticleseo();
 						this.getUserInfo()
 						setTimeout(() => {
@@ -798,7 +800,7 @@
 							return
 						}
 						var commentsList = res.data.data.list
-						commentsList.forEach((item1, index1) => {
+						commentsList && commentsList.forEach((item1, index1) => {
 							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 80)
 						})
 						this.commentsList = commentsList

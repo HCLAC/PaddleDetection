@@ -82,7 +82,6 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 			} else if (e.scrollTop > 0 && this.headerFixed == false){
 				this.headerFixed = true
 			}
-			console.log(e,this.headerFixed)
 			if (e.scrollTop > this.cardheight) {
 				if (e.scrollTop > this.cardheight+20 && this.isFixed){
 					return
