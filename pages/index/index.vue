@@ -290,7 +290,7 @@
 						
 						var areaList = res.data.data
 						areaList.forEach((item1, index1) => {
-							item1.image = this.Utils.addImageProcess(item1.image, false, 40)
+							item1.image = this.Utils.addImageProcess(item1.image, false, 30)
 						})
 						this.areaList = areaList;
 					}

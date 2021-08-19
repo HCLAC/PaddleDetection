@@ -156,7 +156,7 @@ export default {
 		cityPicker
 	},
 	onLoad(options) {
-		options.image = this.Utils.addImageProcess(options.image, false, 40)
+		options.image = this.Utils.addImageProcess(options.image, false, 60)
 		this.querys = options;
 		swan.setPageInfo({
 			title: options.name+"旅游攻略-领途羊",

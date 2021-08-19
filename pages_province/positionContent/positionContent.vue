@@ -18,7 +18,7 @@
 					<view class="page-section-spacing" >
 						<swiper @change="change" :autoplay="true" class="swiper" :indicator-dots="false" circular='true'>
 							<swiper-item v-for="item in siteInfo.images" :key="item.id" class="swiper-item" > 
-								<image :src="item" class="itemImg" :lazy-load="true" mode="aspectFi" ></image>
+								<image :src="item" class="itemImg" :lazy-load="true" mode="aspectFill" ></image>
 							</swiper-item>
 						</swiper>
 						<view class="imageCount">{{ current + 1 }}/{{ siteInfo.images.length }}</view>

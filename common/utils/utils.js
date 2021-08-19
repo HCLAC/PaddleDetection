@@ -23,6 +23,9 @@ function isLogin() {
 
 // water:添加水印，q:中等质量
 function addImageProcess(URL='', water=false, q=50){
+	if (!URL){
+		return '/static/images/userImg.svg'
+	}
 	let networkType = getApp().globalData.networkType
 	var url = URL
 	// 添加处理头
