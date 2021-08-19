@@ -1,6 +1,7 @@
 <template>
-	<view v-show="i === index" style="margin-top: 70%; padding: 0 28rpx;">
-		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption"  >
+	<view v-show="i === index" style="padding: 0 28rpx;">
+		<!-- margin-top: 70%; -->
+		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback" :top="top" :bottom="bom"  @up="upCallback" :down="downOption" :up="upOption"  >
 			<view v-for="(item, index) in list" :key="index" @click="onPageJump" :id="item.article_id">
 				<view class="contentItem">
 					<view class="left">
@@ -34,7 +35,7 @@
 						</view>
 						<view class="position">
 							<view class="pImg">
-								<image src="/static/images/iconNewMap.svg" mode="aspectFill"></image>
+								<image src="/static/images/iconNewMap.png" mode="aspectFill"></image>
 							</view>
 							<view>{{ item.location.replace(/\（.*?\）/g, '') }}</view>
 						</view>
@@ -44,6 +45,7 @@
 			</view>
 		</mescroll-body>
 	</view>
+	
 </template>
 
 <script>
@@ -64,6 +66,8 @@
 		},
 		data() {
 			return {
+				top:'',
+				bom:'',
 				list: [],
 				downOption:{
 					auto:false // 不自动加载 (mixin已处理第一个tab触发downCallback)
@@ -74,20 +78,28 @@
 					// 	num: 0, // 当前页码,默认0,回调之前会加1,即callback(page)会从1开始
 					// 	size: 10 // 每页数据的数量
 					// },
-					noMoreSize: 4, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
+					noMoreSize: 1, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
 					empty:{
 					  use : true ,
 					  icon : null ,
 					  tip : this.i?'您的收藏夹空空如也～':'您还没有赞过任何文章哦～',
 					  btnText : "",
 					  fixed: false,
-					  top: "10rpx",
+					  top: "100rpx",
 					  zIndex: 99
 					}
 				}
 			}
 		},
 		methods: {
+			// padbottom(){
+			// 	if(this.list.length <= 3){
+			// 		this.qqq = 300
+			// 	}else{
+			// 		this.qqq = 0
+					
+			// 	}
+			// },
 			// 跳转文章详情
 			onPageJump(e) {
 				let id = e.currentTarget.id;
@@ -153,6 +165,16 @@
 						if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
 						this.list = this.list.concat(curPageData); //追加新数据
 						console.log("miniArticle",this.list)
+						if(this.list.length >= 3 ){
+							this.bom = 0
+						}else{
+							this.bom = 300							
+						}
+						if(this.list.length == 0){
+							this.top = 374
+						}else{
+							this.top = 550
+						}
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
 						// this.mescroll.endByPage(curPageLen, totalPage);
@@ -207,6 +229,7 @@
 	.left {
 		position: relative;
 		.imgTip {
+			background: green;
 			position: absolute;
 			left: 0rpx;
 			top: 0rpx;
@@ -307,7 +330,6 @@
 		.pImg{
 			width: 26rpx;
 			height: 30rpx;
-			
 			image {
 				height: 100%;
 				width: 100%;
