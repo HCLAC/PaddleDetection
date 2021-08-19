@@ -45,15 +45,7 @@
 		</view>
 		<!-- 弹窗 -->
 		<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
-		<!-- 关注列表为空时 -->
-		<view class="empty" v-if="!followList || !followList.length">
-			<view class="emptyImg">
-				<image src="/static/images/empty.svg" mode=""></image>
-			</view>
-			<view class="emptyText">
-				您还没有关注任何人，去首页看看吧～
-			</view>
-		</view>
+
 	</view>
 </template>
 
@@ -73,6 +65,23 @@
 				content: '',
 				downOption:{
 					auto: false,
+				},
+				upOption:{
+					auto:true, // 不自动加载
+					// page: {
+					// 	num: 0, // 当前页码,默认0,回调之前会加1,即callback(page)会从1开始
+					// 	size: 10 // 每页数据的数量
+					// },
+					noMoreSize: 1, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
+					empty:{
+					  use : true ,
+					  icon : '/static/images/empty.svg' ,
+					  tip : '您还没有关注任何人，去首页看看吧～',
+					  btnText : "",
+					  fixed: false,
+					  top: "100rpx",
+					  zIndex: 99
+					}
 				}
 			};
 		},
