@@ -42,7 +42,7 @@
 							<view class="attText">{{ item.name }}</view>
 							<view class="rateBox">
 								<!-- 评分图标 -->
-								<uni-rate :readonly="true" :value="item.rate" :size='12' margin="1" :allowHalf="true"/>
+								<uni-rate :readonly="true" :value="item.rate" :size='12' margin="3" :allowHalf="true"/>
 								<view class="rate">{{ item.rate }} 星</view>
 							</view>
 						</view>
@@ -68,7 +68,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="line"></view>
+				<!-- <view class="line"></view> -->
 				<!-- 旅途问答 -->
 				<!-- <view class="travelQuestionsBox">
 					<view class="tQTop">
@@ -639,7 +639,7 @@ export default {
 		margin-left: 12rpx;
 		font-size: 20rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
+		font-weight: 600;
 		color: #606266;
 	}
 	
@@ -733,7 +733,7 @@ export default {
 	flex-flow: row;
 	flex-wrap: wrap;
 	margin-top: 24rpx;
-	padding: 0 14rpx 0 28rpx;
+	padding: 0 18rpx;
 }
 
 // 弹窗
