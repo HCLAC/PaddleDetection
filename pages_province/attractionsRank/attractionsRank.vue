@@ -191,9 +191,6 @@
 						state_id: state_id,
 						city_id: city_id,
 					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({

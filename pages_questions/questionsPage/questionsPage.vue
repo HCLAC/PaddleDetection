@@ -147,9 +147,6 @@
 					data:{
 						count:10
 					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -176,9 +173,6 @@
 							data: {
 								state: state,
 								city: city
-							},
-							header: {
-								Authorization: uni.getStorageSync('Authorization')
 							},
 							method: 'POST',
 							success: res => {
@@ -255,9 +249,6 @@
 						anonymous:this.checked
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						var question_id = res.data.data.question_id
 						uni.navigateTo({

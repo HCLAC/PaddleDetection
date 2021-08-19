@@ -236,7 +236,7 @@
 			};
 		},
 		onShow() {
-			this.hasLogin = uni.getStorageSync('Authorization') ? true : false;
+			this.hasLogin = getApp().globalData.Authorization ? true : false;
 			swan.onKeyboardHeightChange(res => {
 				this.inputbottom = res.height
 				this.animation.translateY(-res.height).step()
@@ -270,9 +270,9 @@
 					success: () => {
 						setTimeout(() => {
 							this.getArticleDetail();
+							this.getUserInfo()
 						}, 1);
 						this.getArticleseo();
-						this.getUserInfo()
 						setTimeout(() => {
 							this.getComments();
 							this.hideLoad()
@@ -333,9 +333,6 @@
 					url: '/article',
 					data: {
 						article_id: that.article_id
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: async function(res) {
 						if (res.statusCode != 200 || res.data.code != 0){
@@ -434,10 +431,6 @@
 						url: url,
 						method: 'get',
 						data: data,
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
-				
 						success: res => {
 							resolve(res,'组件信息');
 						},
@@ -627,8 +620,7 @@
 			},
 			// 关注
 			follow() {
-				let token = uni.getStorageSync('Authorization')
-				if(!token){
+				if(!this.hasLogin){
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
 					});
@@ -648,9 +640,6 @@
 						follow: status
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							if (res.data.code == 10303){
@@ -677,9 +666,6 @@
 						follow: 0
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							if (res.data.code == 10304){
@@ -709,8 +695,7 @@
 			},
 			// 举报
 			toReport(id) {
-				let token = uni.getStorageSync('Authorization')
-				if (!token) {
+				if (!this.hasLogin) {
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
 					});
@@ -721,8 +706,7 @@
 				})
 			},
 			commentInput() {
-				let token = uni.getStorageSync('Authorization')
-				if (!token) {
+				if (!this.hasLogin) {
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
 					});
@@ -741,8 +725,7 @@
 				}
 			},
 			pubComment() {
-				let token = uni.getStorageSync('Authorization')
-				if (!token) {
+				if (!this.hasLogin) {
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
 					});
@@ -755,9 +738,6 @@
 						content: this.contentText
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -788,9 +768,6 @@
 						page: 1,
 						count: 3
 					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -810,8 +787,7 @@
 			},
 			// 评论点赞
 			replyLike(item, index) {
-				let token = uni.getStorageSync('Authorization')
-				if (!token) {
+				if (!this.hasLogin) {
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
 					});
@@ -825,9 +801,6 @@
 						like: item.like == 0 ? 1 : 0
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -849,9 +822,7 @@
 			// 点赞
 			clickLike() {
 				var that = this;
-
-				let token = uni.getStorageSync('Authorization')
-				if (!token) {
+				if (!this.hasLogin) {
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
 					});
@@ -864,9 +835,6 @@
 						liked: that.articleInfo.liked == 0 ? 1 : 0
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -883,9 +851,7 @@
 			// 收藏
 			clickFav() {
 				var that = this;
-
-				let token = uni.getStorageSync('Authorization')
-				if (!token) {
+				if (!this.hasLogin) {
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
 					});
@@ -898,9 +864,6 @@
 						favorite: that.articleInfo.fav == 1 ? 0 : 1
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({

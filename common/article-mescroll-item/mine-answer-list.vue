@@ -116,10 +116,6 @@
 				}
 				this.HTTP.request({
 					url: url,
-					
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						// 接口返回的当前页数据列表 (数组)
 						if (res.statusCode != 200 || res.data.code != 0){

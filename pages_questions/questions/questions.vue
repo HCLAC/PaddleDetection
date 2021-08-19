@@ -127,9 +127,6 @@
 						page:1,
 						count: 10
 					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					// type:"GET",
 					success: res => {
 						if (res.data.code == 0) {

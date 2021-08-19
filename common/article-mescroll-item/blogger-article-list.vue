@@ -130,9 +130,6 @@
 				let pageSize = page.size; // 页长, 默认每页10条
 				this.HTTP.request({
 					url: '/author/workslist?page=' + pageNum + '&count=' + pageSize,
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					data: {
 						author_id: this.authorID,
 					},

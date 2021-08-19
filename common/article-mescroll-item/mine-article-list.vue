@@ -136,9 +136,6 @@
 				}
 				this.HTTP.request({
 					url: url,
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({

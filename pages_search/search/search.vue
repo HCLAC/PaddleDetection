@@ -151,9 +151,6 @@ export default {
 					page: 1,
 					first_time: new Date().getTime()	
 				},
-				header: {
-					Authorization: uni.getStorageSync('Authorization')
-				},
 				success: res => {
 					if (res.statusCode != 200 || res.data.code != 0){
 						uni.showToast({
@@ -178,11 +175,7 @@ export default {
 		},
 		// 点赞
 		clickLike(e, index) {
-			let Authorization = uni.getStorageSync('Authorization')
-			if (!Authorization){
-				uni.navigateTo({
-					url: '/pages_mine/login/login'
-				});
+			if (!this.Utils.isLogin()){
 				return
 			}
 			
@@ -195,9 +188,6 @@ export default {
 					liked: e.liked == 0 ? 1 : 0
 				},
 				method: 'POST',
-				header: {
-					Authorization: uni.getStorageSync('Authorization')
-				},
 				success: res=> {
 					if (res.statusCode != 200 || res.data.code != 0){
 						uni.showToast({

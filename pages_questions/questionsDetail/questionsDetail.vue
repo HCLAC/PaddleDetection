@@ -244,9 +244,6 @@
 					data: {
 						question_id: this.question_id
 					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -268,9 +265,6 @@
 					data: {
 						question_id: this.question_id,
 						count:6
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
@@ -295,9 +289,6 @@
 					url: '/answers/official',
 					data: {
 						question_id: this.question_id
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: async function(res) {
 						if (res.statusCode != 200 || res.data.code != 0){
@@ -339,9 +330,6 @@
 									count:10,
 									page:1
 								},
-								header: {
-									Authorization: uni.getStorageSync('Authorization')
-								},
 								success: async function(res) {
 									if (res.statusCode != 200 || res.data.code != 0){
 										uni.showToast({
@@ -370,9 +358,6 @@
 			// 			count:10,
 			// 			page:1
 			// 		},
-			// 		header: {
-			// 			Authorization: uni.getStorageSync('Authorization')
-			// 		},
 			// 		success: async function(res) {
 			// 			console.log('回复列表',res)
 			// 			if(res.data.data.list != 0){
@@ -394,10 +379,6 @@
 								group_id: id,
 								article_id: this.article_num
 							},
-							header: {
-								Authorization: uni.getStorageSync('Authorization')
-							},
-			
 							success: res => {
 								resolve(res);
 							},
@@ -419,9 +400,6 @@
 							id: this.groupId
 						},
 						method: 'PUT',
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
 						success: res => {
 							uni.hideToast()
 							if (res.data.code == 0) {
@@ -483,11 +461,7 @@
 				}
 			},
 			pubComment() {
-				let Authorization = uni.getStorageSync('Authorization')
-				if (!Authorization){
-					uni.navigateTo({
-						url: '/pages_mine/login/login'
-					});
+				if (!this.Utils.isLogin()){
 					return
 				}
 				this.HTTP.request({
@@ -497,9 +471,6 @@
 						content: this.content
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -529,11 +500,7 @@
 			},
 			// 关注
 			Fllow() {
-				let Authorization = uni.getStorageSync('Authorization')
-				if (!Authorization){
-					uni.navigateTo({
-						url: '/pages_mine/login/login'
-					});
+				if (!this.Utils.isLogin()){
 					return
 				}
 				// console.log(item, index)
@@ -551,9 +518,6 @@
 							question_id: that.question_id
 						},
 						method: 'POST',
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
 						success: (res) => {
 							if (res.statusCode != 200 || res.data.code != 0){
 								uni.showToast({
@@ -569,11 +533,7 @@
 			},
 			// 点击确认
 			confirm() {
-				let Authorization = uni.getStorageSync('Authorization')
-				if (!Authorization){
-					uni.navigateTo({
-						url: '/pages_mine/login/login'
-					});
+				if (!this.Utils.isLogin()){
 					return
 				}
 				var that = this;
@@ -585,9 +545,6 @@
 						question_id: that.question_id
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: (res) => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -602,11 +559,7 @@
 			},
 			// 点赞
 			like(e,index){
-				let Authorization = uni.getStorageSync('Authorization')
-				if (!Authorization){
-					uni.navigateTo({
-						url: '/pages_mine/login/login'
-					});
+				if (!this.Utils.isLogin()){
 					return
 				}
 				var answer_id = e.answer_id
@@ -616,9 +569,6 @@
 						answer_id: answer_id,
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -633,11 +583,7 @@
 			},
 			// 点踩
 			disLike(e,index){
-				let Authorization = uni.getStorageSync('Authorization')
-				if (!Authorization){
-					uni.navigateTo({
-						url: '/pages_mine/login/login'
-					});
+				if (!this.Utils.isLogin()){
 					return
 				}
 				var answer_id = e.answer_id
@@ -647,9 +593,6 @@
 						answer_id: answer_id,
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({

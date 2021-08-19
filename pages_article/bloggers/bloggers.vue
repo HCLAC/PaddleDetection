@@ -118,9 +118,6 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 					data: {
 						author_id: this.author_id
 					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					method: 'get',
 					success: (res) => {
 						if (res.statusCode != 200 || res.data.code != 0){
@@ -139,11 +136,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 			},
 			// 关注
 			Fllow() {
-				let Authorization = uni.getStorageSync('Authorization')
-				if (!Authorization){
-					uni.navigateTo({
-						url: '/pages_mine/login/login'
-					});
+				if (!this.Utils.isLogin()){
 					return
 				}
 				
@@ -164,9 +157,6 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 						follow: status
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: (res) => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -190,9 +180,6 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 						follow: status
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: (res) => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({

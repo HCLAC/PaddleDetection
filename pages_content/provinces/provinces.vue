@@ -209,9 +209,6 @@ export default {
 					city_id: this.querys.city_id,
 					count: 6
 				},
-				header: {
-					Authorization: uni.getStorageSync('Authorization')
-				},
 				success: res => {
 					if (res.statusCode != 200 || res.data.code != 0){
 						uni.showToast({
@@ -370,13 +367,11 @@ export default {
 		},
 		// 提问按钮
 		toQuestions(){
-			var Authorization = uni.getStorageSync('Authorization')
-			let url = '/pages_questions/questions/questions'
-			if (!Authorization) {
-				url = '/pages_mine/login/login'
+			if (!this.Utils.isLogin()){
+				return
 			}
 			uni.navigateTo({
-				url: url
+				url: '/pages_questions/questions/questions'
 			})
 		},
 		/*下拉刷新的回调, 有三种处理方式:*/
@@ -409,9 +404,6 @@ export default {
 					state_id: that.querys.state_id,
 					city_id: that.querys.city_id,
 					first_time: that.firstTime
-				},
-				header: {
-					Authorization: uni.getStorageSync('Authorization')
 				},
 				success: res => {
 					if (res.statusCode != 200 || res.data.code != 0){

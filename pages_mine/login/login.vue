@@ -302,7 +302,10 @@ export default {
 							icon: 'none'
 						}),
 						uni.setStorageSync('userinfo', res.data.data)
-						uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
+						var auth = res.header.authorization ? res.header.authorization : res.header.Authorization
+						uni.setStorageSync('Authorization', auth);
+						getApp().globalData.Authorization = auth
+						
 						this.Utils.back()
 					} else {
 						uni.showToast({
@@ -336,7 +339,9 @@ export default {
 							icon: 'none'
 						}),
 						uni.setStorageSync('userinfo', res.data.data)
-						uni.setStorageSync('Authorization', res.header.authorization ? res.header.authorization : res.header.Authorization);
+						var auth = res.header.authorization ? res.header.authorization : res.header.Authorization
+						uni.setStorageSync('Authorization', auth);
+						getApp().globalData.Authorization = auth
 						this.Utils.back()
 					} else {
 						uni.showToast({

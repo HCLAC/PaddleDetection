@@ -21,7 +21,8 @@ function request(obj) {
 				});
 				return
 			}
-			if (res.data.code == 10501 || res.data.code == 10502) {
+			if (res.data.code == 10501 || res.data.code == 10101|| res.data.code == 10502) {
+				getApp().globalData.Authorization = ''
 				uni.navigateTo({
 					url: '/pages_mine/login/login.vue'
 				})

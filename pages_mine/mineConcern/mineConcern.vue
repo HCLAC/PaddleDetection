@@ -115,9 +115,6 @@
 						follow: status
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: (res) => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -141,9 +138,6 @@
 						follow: status
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: (res) => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -175,9 +169,6 @@
 
 				this.HTTP.request({
 					url: '/user/follow/list?page=' + pageNum + '&count=' + pageSize,
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({

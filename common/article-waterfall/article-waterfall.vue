@@ -159,11 +159,7 @@
 				this.updateLike(e,index,false) 
 			},
 			updateLike(e, index, left){
-				let Authorization = uni.getStorageSync('Authorization')
-				if (!Authorization){
-					uni.navigateTo({
-						url: '/pages_mine/login/login'
-					});
+				if (!this.Utils.isLogin()){
 					return
 				}
 				
@@ -177,9 +173,6 @@
 						liked: liked == 0 ? 1 : 0
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({

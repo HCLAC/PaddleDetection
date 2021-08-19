@@ -174,9 +174,6 @@
 							
 						},
 						method: 'POST',
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
 						success: res => {
 							if(res.data.code == 0){
 								this.Utils.back()

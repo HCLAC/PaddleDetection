@@ -62,9 +62,6 @@
 					data: {
 						question_id: this.question_id
 					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						var detail = res.data.data
 						detail.avatar = this.Utils.addImageProcess(detail.avatar, false, 80)

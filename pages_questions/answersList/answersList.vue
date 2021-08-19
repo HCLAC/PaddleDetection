@@ -83,9 +83,6 @@
 						answer_id: answer_id,
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -108,9 +105,6 @@
 						answer_id: answer_id,
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -143,10 +137,6 @@
 					url: '/answers/list?page=' + pageNum + '&count=' + pageSize,
 					data: {
 						question_id: this.question_id,
-						
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){

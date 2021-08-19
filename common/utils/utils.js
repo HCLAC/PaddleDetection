@@ -10,6 +10,17 @@ function home() {
 	});
 }
 
+function isLogin() {
+	let Authorization = getApp().globalData.Authorization
+	if (!Authorization){
+		uni.navigateTo({
+			url: '/pages_mine/login/login'
+		});
+		return false
+	}
+	return true
+}
+
 // water:添加水印，q:中等质量
 function addImageProcess(URL='', water=false, q=50){
 	let networkType = getApp().globalData.networkType
@@ -50,5 +61,6 @@ function addImageProcess(URL='', water=false, q=50){
 export default {
 	back,
 	home,
+	isLogin,
 	addImageProcess
 }

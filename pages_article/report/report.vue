@@ -142,11 +142,7 @@
 		},
 		methods: {
 			submit() {
-				let token = uni.getStorageSync('Authorization')
-				if (!token) {
-					uni.navigateTo({
-						url: '/pages_mine/login/login'
-					});
+				if (!this.Utils.isLogin()){
 					return
 				}
 				let introLength = this.modelIntro.length
@@ -159,9 +155,6 @@
 							content: this.modelIntro
 						},
 						method: 'POST',
-						header: {
-							Authorization: uni.getStorageSync('Authorization')
-						},
 						success: res => {
 							if (res.statusCode != 200 || res.data.code != 0){
 								uni.showToast({

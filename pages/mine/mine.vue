@@ -86,7 +86,7 @@ export default {
 		};
 	},
 	onShow() {
-		this.auth =  uni.getStorageSync('Authorization')
+		this.auth = getApp().globalData.Authorization
 		if (!this.auth){
 			uni.navigateTo({
 				url: '/pages_mine/login/login?ismine=1'
@@ -140,9 +140,6 @@ export default {
 			var that = this;
 			this.HTTP.request({
 				url: '/user/info',
-				header: {
-					Authorization: uni.getStorageSync('Authorization')
-				},
 				method: 'get',
 				success: function(res) {
 					if (res.statusCode != 200 || res.data.code != 0){

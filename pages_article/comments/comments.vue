@@ -61,11 +61,8 @@
 		methods:{
 			// 评论点赞
 			replyLike(item, index){
-				let token = uni.getStorageSync('Authorization')
-				if(!token){
-					uni.navigateTo({
-						url: '/pages_mine/login/login'
-					});
+				if (!this.Utils.isLogin()){
+					return
 				}
 				this.HTTP.request({
 					url: '/comments/likes',
@@ -74,9 +71,6 @@
 						like: item.like == 0 ? 1 : 0
 					},
 					method: 'POST',
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
-					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
@@ -91,11 +85,7 @@
 			},
 			// 举报
 			toReport(e) {
-				let token = uni.getStorageSync('Authorization')
-				if(!token){
-					uni.navigateTo({
-						url: '/pages_mine/login/login'
-					});
+				if (!this.Utils.isLogin()){
 					return
 				}
 				uni.navigateTo({
@@ -121,9 +111,6 @@
 					url: '/comments/list?page=' + pageNum + '&count=' + pageSize,
 					data:{
 						article_id:that.article_id
-					},
-					header: {
-						Authorization: uni.getStorageSync('Authorization')
 					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){

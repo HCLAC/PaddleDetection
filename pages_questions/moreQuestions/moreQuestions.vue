@@ -84,16 +84,12 @@ import questionList from '@/common/article-mescroll-item/mine-answer-list.vue';
 			},
 			// 提问按钮
 			toQuestions(){
-				var Authorization = uni.getStorageSync('Authorization')
-				if (!Authorization) {
-					uni.navigateTo({
-						url: '/pages_mine/login/login'
-					});
-				}else{
-					uni.navigateTo({
-						url:'/pages_questions/questions/questions'
-					})
+				if (!this.Utils.isLogin()){
+					return
 				}
+				uni.navigateTo({
+					url:'/pages_questions/questions/questions'
+				})
 			}
 		}
 	}
