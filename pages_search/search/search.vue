@@ -276,8 +276,8 @@ export default {
 		
 		toSearchResults() {
 			this.saveKeyword(this.keyValue); //保存为历史
-			uni.navigateTo({
-				url: '/pages_search/searchResults/searchResults?keyword='+this.keyValue
+			uni.redirectTo({
+			    url:  '/pages_search/searchResults/searchResults?keyword='+this.keyValue
 			});
 		},
 		//清除历史搜索
@@ -653,7 +653,7 @@ view {
 	height: 220rpx;
 	font-size: 24rpx;
 	color: #606266;
-	background-color: #f8f8f8;
+	background-color: #FFFFFF;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -665,7 +665,7 @@ view {
 	display: flex;
 	flex-flow: row;
 	flex-wrap: wrap;
-	padding: 0 14rpx 0 28rpx;
-	background: #F8F8F8;
+	padding: 0 22rpx;
+	background: #FFFFFF;
 }
 </style>
