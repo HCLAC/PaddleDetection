@@ -382,8 +382,7 @@ export default {
 		width:78rpx;
 		height:78rpx;
 		background:rgba(255,229,18,1);
-		// box-shadow:0px 2px 4px 0px rgba(255,229,18,0.5);
-		box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(255, 229, 18, 0.35);
+		box-shadow:0px 4px 8px 0px rgba(255,229,18,0.5);
 		border-radius: 50%;
 		display: flex;
 		justify-content: center;
