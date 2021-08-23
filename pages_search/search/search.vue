@@ -303,10 +303,10 @@ export default {
 			if (!keyword) return false;
 
 			keyword = keyword;
+			this.saveKeyword(keyword); //保存为历史
 			uni.navigateTo({
 				url: '/pages_search/searchResults/searchResults?keyword='+keyword
 			});
-			this.saveKeyword(keyword); //保存为历史
 		},
 		goSearch(keyword) {
 			this.saveKeyword(keyword.name); //保存为历史

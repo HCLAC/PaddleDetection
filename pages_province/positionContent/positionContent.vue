@@ -234,7 +234,7 @@ export default {
 					uni.redirectTo({ 
 						url: '/pages_province/attractionsRank/attractionsRank?state_id=' +  
 										res.data.data.state_id+"&city_id="+res.data.data.city_id+ 
-										"&name="+res.data.data.name+"&image="+this.querys.image 
+										"&name="+res.data.data.name+"&image="+res.data.data.image 
 					}); 
 				} 
 			});
