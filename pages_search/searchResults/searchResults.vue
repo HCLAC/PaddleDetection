@@ -384,7 +384,7 @@
 			font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 500;
 			color: #303133;
-			margin-left: 28rpx;
+			margin-left: 34rpx;
 			line-height: 36rpx;
 		}
 		.titleBox{
@@ -435,6 +435,7 @@
 		display: flex;
 		flex-flow: row;
 		flex-wrap: wrap;
-		padding: 0 14rpx 0 28rpx;
+		// margin: 0 auto;
+		padding: 0 22rpx 0;
 	}
 </style>
