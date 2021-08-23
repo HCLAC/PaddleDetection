@@ -1107,17 +1107,7 @@
 			font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 400;
 			color: #c9cad1;
-			position: relative;
 		}
-		.isfollowBox::before{
-			position: absolute;
-			content: '';
-			top: -10rpx;
-			left: -10rpx;
-			right: -10rpx;
-			bottom: -10rpx;
-		}
-
 		.followBox {
 			width: 124rpx;
 			height: 48rpx;
