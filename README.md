@@ -13,7 +13,7 @@
 ```
 开头：x-oss-process=image
 加水印：/watermark,image_d2F0ZXJtYXJrLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzg=,g_sw,x_30,y_10
-修改质量：/resize,p_50
+修改质量：/quality,q_50
 转换jpg:/format,jpg
 ```
 ### 遇到的问题：

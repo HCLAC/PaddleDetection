@@ -128,7 +128,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 							return
 						}
 						var authorMsg = res.data.data
-						authorMsg.avatar = this.Utils.addImageProcess(authorMsg.avatar, false, 80)
+						authorMsg.avatar = this.Utils.addImageProcess(authorMsg.avatar, false, 60)
 						this.authorMsg = authorMsg
 						this.tabList[0].count = this.authorMsg.article_count
 					}

@@ -170,7 +170,7 @@ export default {
 					userInfo.likeNum = likeNum>10000?((likeNum-(likeNum%1000))/10000+'w'):likeNum
 					let answersNum = userInfo.question_count
 					userInfo.answersNum = answersNum>10000?((answersNum-(answersNum%1000))/10000+'w'):answersNum
-					userInfo.avatar = that.Utils.addImageProcess(userInfo.avatar, false, 80)
+					userInfo.avatar = that.Utils.addImageProcess(userInfo.avatar, false, 60)
 					that.userInfo = userInfo
 					that.calcCardHeight()
 				}

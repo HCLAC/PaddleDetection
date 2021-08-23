@@ -276,7 +276,7 @@
 						}
 						var questions = res.data.data
 						questions.forEach((item1, index1) => {
-							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 80)
+							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
 						})
 						this.questions = res.data.data
 					}
@@ -319,7 +319,7 @@
 							
 							// res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
 							var answersList = res.data.data
-							answersList.avatar = that.Utils.addImageProcess(answersList.avatar, false, 80)
+							answersList.avatar = that.Utils.addImageProcess(answersList.avatar, false, 60)
 							that.answersList = answersList
 							that.answersDate = answersList.create_at.slice(0.10)
 						}else{
@@ -339,7 +339,7 @@
 										return
 									}
 									var answersList = res.data.data.list[0]
-									answersList.avatar = that.Utils.addImageProcess(answersList.avatar, false, 80)
+									answersList.avatar = that.Utils.addImageProcess(answersList.avatar, false, 60)
 									that.answersList = answersList
 									that.answersDate = answersList.create_at.slice(0.10)
 								}

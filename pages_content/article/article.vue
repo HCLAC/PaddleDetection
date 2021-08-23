@@ -396,7 +396,7 @@
 						}
 						
 						var articleInfo = res.data.data
-						articleInfo.avatar = that.Utils.addImageProcess(articleInfo.avatar, false, 80)
+						articleInfo.avatar = that.Utils.addImageProcess(articleInfo.avatar, false, 60)
 						articleInfo.images.forEach((item1, index1) => {
 							articleInfo.images[index1] = that.Utils.addImageProcess(item1, true, 80)
 						})
@@ -690,7 +690,7 @@
 			// 用户信息
 			getUserInfo() {
 				var userInfo = uni.getStorageSync('userinfo')
-				userInfo && (userInfo.avatar = this.Utils.addImageProcess(userInfo.avatar, false, 80))
+				userInfo && (userInfo.avatar = this.Utils.addImageProcess(userInfo.avatar, false, 60))
 				this.userInfo = userInfo
 			},
 			// 举报
@@ -778,7 +778,7 @@
 						}
 						var commentsList = res.data.data.list
 						commentsList && commentsList.forEach((item1, index1) => {
-							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 80)
+							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
 						})
 						this.commentsList = commentsList
 						this.comment_count = res.data.data.total

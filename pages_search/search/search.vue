@@ -166,7 +166,7 @@ export default {
 						} else{
 							item1.height = '220rpx'
 						}
-						item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 80)
+						item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
 						item1.image = this.Utils.addImageProcess(item1.image, false, 40)
 					})
 					this.list = list;

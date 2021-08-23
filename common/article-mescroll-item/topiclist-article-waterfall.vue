@@ -118,7 +118,7 @@
 								} else{
 									item1.height = '220rpx'
 								}
-								item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 80)
+								item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
 								item1.image = this.Utils.addImageProcess(item1.image, false, 40)
 							})
 							// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)

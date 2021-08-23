@@ -43,15 +43,15 @@ function addImageProcess(URL='', water=false, q=50){
 		case 'wifi':
 		case '5g':
 			let qH = Math.round(q*1.25)
-			url += '/resize,p_'+(qH>=100?100:qH)
+			url += '/quality,q_'+(qH>=100?100:qH)
 			break;
 		case '4g':
-			url += '/resize,p_'+Math.round(q)
+			url += '/quality,q_'+Math.round(q)
 			break;
 		case '3g':
 		case '2g':
 			let qL = Math.round(q*1.25)
-			url += '/resize,p_'+(qL<=8?8:qL)
+			url += '/quality,q_'+(qL<=8?8:qL)
 			break;
 	}
 	// png转jpg

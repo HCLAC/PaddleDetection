@@ -64,7 +64,7 @@
 					},
 					success: res => {
 						var detail = res.data.data
-						detail.avatar = this.Utils.addImageProcess(detail.avatar, false, 80)
+						detail.avatar = this.Utils.addImageProcess(detail.avatar, false, 60)
 						this.detail = detail
 						this.create_at = detail.create_at.slice(0,10)
 					}
