@@ -35,7 +35,7 @@
 							<view class="item-container">
 								<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
 									<!-- <image class="item-menu-image" :src="item2.icon" mode=""></image> -->
-									<view class="item-menu-name" @click="swichToCity(item1, item.name)">{{ item1.name }}</view>
+									<view class="item-menu-name" @click="switchToOther(item1, item.name)">{{ item1.name }}</view>
 								</view>
 							</view>
 						</view>
@@ -102,15 +102,8 @@
 		},
 		methods:{
 			// 跳转其他省市
-			swichToCity(item1, name) {
-				if (item1.name != '全省'){
-					name = item1.name
-				}
-				uni.redirectTo({
-					url: '/pages_content/provinces/provinces?state_id=' +
-									item1.state_id+"&city_id="+item1.city_id+
-									"&name="+name+"&image="+item1.image
-				});
+			switchToOther(item1, name) {
+				this.$emit("switchToOther", item1, name)
 			},
 			
 			// 点击左边的栏目切换

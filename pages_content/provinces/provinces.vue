@@ -14,7 +14,7 @@
 		<!-- 头图 -->
 		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"> 
 			<view class="headImgBox">
-				<image class="headImg" lazy-load :src="querys.image" mode="scaleToFill"></image>
+				<image class="headImg" lazy-load :src="querys.imageProcess" mode="scaleToFill"></image>
 				<view class="mask"></view>
 				<view class="cityBox">
 					<view class="city">{{ querys.name || '全国' }}</view>
@@ -113,7 +113,7 @@
 			</view>
 		</mescroll-body>
 		<!-- 城市选择弹窗 -->
-		<cityPicker :show="showCityPicker" :name="querys.name" :cityList="cityList" @onclose="cityPickerClose"></cityPicker>
+		<cityPicker :show="showCityPicker" :name="querys.name" :cityList="cityList" @onclose="cityPickerClose" @switchToOther="switchToOther"></cityPicker>
 	</view>
 </template>
 
@@ -156,7 +156,7 @@ export default {
 		cityPicker
 	},
 	onLoad(options) {
-		options.image = this.Utils.addImageProcess(options.image, false, 60)
+		options.imageProcess = this.Utils.addImageProcess(options.image, false, 60)
 		this.querys = options;
 		swan.setPageInfo({
 			title: options.name+"旅游攻略-领途羊",
@@ -320,7 +320,7 @@ export default {
 			var state_id = this.querys.state_id;
 			var city_id = this.querys.city_id;
 			var name = this.querys.name;
-			var image = encodeURIComponent(this.querys.image);
+			var image = this.querys.image;
 			uni.navigateTo({
 				url: '/pages_province/attractionsRank/attractionsRank?state_id=' + state_id + '&city_id=' + city_id+
 							"&name="+name+"&image="+image
@@ -373,6 +373,16 @@ export default {
 			uni.navigateTo({
 				url: '/pages_questions/questions/questions'
 			})
+		},
+		switchToOther(item1, name) {
+			if (item1.name != '全省'){
+				name = item1.name
+			}
+			uni.redirectTo({
+				url: '/pages_content/provinces/provinces?state_id=' +
+								item1.state_id+"&city_id="+item1.city_id+
+								"&name="+name+"&image="+item1.image
+			});
 		},
 		/*下拉刷新的回调, 有三种处理方式:*/
 		downCallback() {

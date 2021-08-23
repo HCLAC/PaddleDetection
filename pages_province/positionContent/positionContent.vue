@@ -220,11 +220,11 @@ export default {
 							icon: 'none' 
 						}); 
 						return 
-					} 
+					}
 					uni.redirectTo({ 
 						url: '/pages_province/attractionsRank/attractionsRank?state_id=' +  
 										res.data.data.state_id+"&city_id="+res.data.data.city_id+ 
-										"&name="+res.data.data.name+"&image="+res.data.data.image 
+										"&name="+res.data.data.name+"&image="+this.querys.image 
 					}); 
 				} 
 			});

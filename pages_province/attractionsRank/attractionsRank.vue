@@ -13,7 +13,7 @@
 		</view>
 		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			 <view class="bgBox">
-				<image lazy-load :src="querys.image" mode="" class="bannerImg"></image>
+				<image lazy-load :src="querys.imageProcess" mode="" class="bannerImg"></image>
 				<view class="mask">
 					<view class="content">
 						<!-- <image class="travel" src="/static/images/TRAVEL.png" mode=""></image> -->
@@ -67,7 +67,7 @@
 			</view>
 		</mescroll-body>
 		<!-- 城市选择弹窗 -->
-		<cityPicker :show="showCityPicker" :name="querys.name" :cityList="cityList" @onclose="cityPickerClose"></cityPicker>
+		<cityPicker :show="showCityPicker" :name="querys.name" :cityList="cityList" @onclose="cityPickerClose" @switchToOther="switchToOther"></cityPicker>
 	</view>
 
 </template>
@@ -104,7 +104,7 @@
 		},
 		onLoad: function(options) {
 			this.serviceProvider = getApp().globalData.serviceProvider
-			options.image = decodeURIComponent(options.image)
+			options.imageProcess = this.Utils.addImageProcess(options.image, false, 60)
 			this.querys = options
 			this.getCity()
 			this.calcCardHeight()
@@ -158,6 +158,16 @@
 			toSiteDetail(id) {
 				uni.navigateTo({
 					url: '/pages_province/positionContent/positionContent?id=' + id
+				});
+			},
+			switchToOther(item1, name) {
+				if (item1.name != '全省'){
+					name = item1.name
+				}
+				uni.redirectTo({
+					url: '/pages_province/attractionsRank/attractionsRank?state_id=' +
+									item1.state_id+"&city_id="+item1.city_id+
+									"&name="+name+"&image="+item1.image
 				});
 			},
 			
