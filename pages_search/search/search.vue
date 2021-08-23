@@ -275,6 +275,7 @@ export default {
 		},
 		
 		toSearchResults() {
+			this.saveKeyword(this.keyValue); //保存为历史
 			uni.navigateTo({
 				url: '/pages_search/searchResults/searchResults?keyword='+this.keyValue
 			});
@@ -308,6 +309,7 @@ export default {
 			this.saveKeyword(keyword); //保存为历史
 		},
 		goSearch(keyword) {
+			this.saveKeyword(keyword.name); //保存为历史
 			switch(keyword.type){
 				case 'area':
 					let obj = {

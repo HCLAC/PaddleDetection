@@ -220,7 +220,7 @@ export default {
 	.icon-serach {
 		width: 28rpx;
 		height: 28rpx;
-		margin: 0 30rpx;
+		margin: 0 16rpx 0 30rpx;
 	}
 	.iconImg {
 		width: 36rpx;
