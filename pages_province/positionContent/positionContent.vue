@@ -58,8 +58,18 @@
 				<view class="rateBox" >
 					<!-- 评分图标 -->
 					<uni-rate :readonly="true" :value="siteInfo.rate" :size='20' margin="8" :allowHalf="true"/>
-					<view class="rate">{{siteInfo.rate}} 星</view>
-					<view class="goTo">{{siteInfo.visited}}人去过</view>
+					<view class="rate">
+						<view class="rate-number">
+							{{siteInfo.rate}}
+						</view>
+						<text>星</text>
+					</view>
+					<view class="goTo">
+						<view class="goTo-number">
+							{{siteInfo.visited}}
+						</view>
+						<text>人去过</text>
+					</view>
 				</view>
 				<view class="contentText">
 					<view :class="isShow ? 'loseText' : 'moreText'" id="moreText">
@@ -430,19 +440,39 @@ export default {
 		}
 		.rate {
 			margin-left: 16rpx;
-			font-size: 28rpx;
-			font-weight: 800;
-			font-family: HelveticaNeue;
-			color: rgba(96, 98, 102, 1);
+			display: flex;
+			align-items: center;
+			.rate-number{
+				font-size: 28rpx;
+				font-family: PingFangSC-Semibold, PingFang SC;
+				font-weight: 600;
+				color: #606266;
+				margin-right: 4rpx;
+			}
+			text{
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #606266;
+			}
 		}
 
 		.goTo {
 			margin-left: 46rpx;
-			font-size:24rpx;
-			font-family:PingFangSC-Regular,PingFang SC;
-			font-weight:800;
-			color:rgba(144,147,153,1);
-			line-height:44rpx;
+			display: flex;
+			align-items: center;
+			.goTo-number{
+				font-size: 24rpx;
+				font-family: PingFangSC-Semibold, PingFang SC;
+				font-weight: 600;
+				color: #909399;
+			}
+			text{
+				font-size: 24rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #909399;
+			}
 		}
 	}
 
