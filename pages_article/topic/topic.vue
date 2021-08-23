@@ -204,6 +204,9 @@
 </script>
 
 <style lang="scss" scoped>
+	.nav-bar{
+		border-bottom: 2rpx solid #DDDDDD;
+	}
 // 热门话题
 .hotTopic{
 	margin-top: 30rpx ;
@@ -306,18 +309,16 @@
 			width: 36rpx;
 			height: 36rpx;
 			margin-right: 8rpx;
-			
-			.titleText{
-				
-				height: 36rpx;
-				font-size: 32rpx;
-				font-family: PingFangSC-Regular, PingFang SC;
-				font-weight: 400;
-				color: #303133;
-				// line-height: 36rpx;
-				display: flex;
-				align-items: center;
-			}
+		}
+		.titleText{
+			height: 36rpx;
+			font-size: 32rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #303133;
+			// line-height: 36rpx;
+			display: flex;
+			align-items: center;
 		}
 	}
 
@@ -385,14 +386,10 @@
 			}
 		}
 		.attText {
-			// height: 28rpx;
 			font-size: 28rpx;
-			// font-family: PingFangSC-Medium, PingFang SC;
-			// font-weight: 500;
-			color: #303133;
-			// line-height: 28rpx;
-			margin: 4rpx 0 2rpx 10rpx;
-			// margin: 0 auto
+			color: #606266;
+			// margin: 4rpx 0 2rpx 10rpx;
+			margin-top:12rpx;
 			display: -webkit-box;
 			-webkit-box-orient: vertical;
 			text-overflow: ellipsis;

@@ -655,7 +655,7 @@ export default {
 		margin-right: 6rpx;
 	}
 	.rate {
-		margin-left: 12rpx;
+		margin-left: 3rpx;
 		font-size: 20rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 600;

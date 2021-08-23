@@ -57,7 +57,7 @@
 				</view>
 				<view class="rateBox" >
 					<!-- 评分图标 -->
-					<uni-rate :readonly="true" :value="siteInfo.rate" :size='20' margin="3" :allowHalf="true"/>
+					<uni-rate :readonly="true" :value="siteInfo.rate" :size='20' margin="8" :allowHalf="true"/>
 					<view class="rate">{{siteInfo.rate}} 星</view>
 					<view class="goTo">{{siteInfo.visited}}人去过</view>
 				</view>
@@ -372,7 +372,8 @@ export default {
 		width:78rpx;
 		height:78rpx;
 		background:rgba(255,229,18,1);
-		box-shadow:0px 2px 4px 0px rgba(255,229,18,0.5);
+		// box-shadow:0px 2px 4px 0px rgba(255,229,18,0.5);
+		box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(255, 229, 18, 0.35);
 		border-radius: 50%;
 		display: flex;
 		justify-content: center;
@@ -430,6 +431,7 @@ export default {
 		.rate {
 			margin-left: 16rpx;
 			font-size: 28rpx;
+			font-weight: 800;
 			font-family: HelveticaNeue;
 			color: rgba(96, 98, 102, 1);
 		}
@@ -438,7 +440,7 @@ export default {
 			margin-left: 46rpx;
 			font-size:24rpx;
 			font-family:PingFangSC-Regular,PingFang SC;
-			font-weight:400;
+			font-weight:800;
 			color:rgba(144,147,153,1);
 			line-height:44rpx;
 		}
@@ -516,7 +518,7 @@ export default {
 .adressBox {
 	padding: 0 30rpx 40rpx 30rpx;
 	.title {
-		padding: 40rpx 0 60rpx 0;
+		padding: 40rpx 0 40rpx 0;
 		font-size: 36rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
@@ -542,13 +544,13 @@ export default {
 				font-family: PingFangSC-Regular, PingFang SC;
 				font-weight: 400;
 				color: rgba(96, 98, 102, 1);
-				line-height: 36rpx;
+				line-height: 40rpx;
 				width:320rpx;
 				max-height:70rpx;
 				display: -webkit-box;
 				-webkit-box-orient: vertical;
 				text-overflow: ellipsis;
-				overflow: hidden;
+				// overflow: hidden;
 				-webkit-line-clamp: 2;
 			}
 		}
@@ -557,7 +559,7 @@ export default {
 			height: 96rpx;
 			width: 196rpx;
 			position: relative;
-			> image {
+			 image {
 				width: 100%;
 				height: 100%;
 			}

@@ -1104,7 +1104,6 @@
 			}
 		}
 	}
-
 	.adress {
 		height: 40rpx;
 		margin-top: 32rpx;
