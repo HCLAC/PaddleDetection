@@ -689,9 +689,14 @@
 			},
 			// 用户信息
 			getUserInfo() {
-				var userInfo = uni.getStorageSync('userinfo')
-				userInfo && (userInfo.avatar = this.Utils.addImageProcess(userInfo.avatar, false, 60))
-				this.userInfo = userInfo
+				uni.getStorage({
+					key: 'userinfo',
+					success: res => {
+						var userInfo = res.data
+						userInfo && (userInfo.avatar = this.Utils.addImageProcess(userInfo.avatar, false, 60))
+						this.userInfo = userInfo
+					}
+				});
 			},
 			// 举报
 			toReport(id) {

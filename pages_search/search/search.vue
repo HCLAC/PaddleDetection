@@ -111,10 +111,12 @@ export default {
 		};
 	},
 	onLoad() {
-		let res = uni.getStorageSync('searchHistory')
-		if(res){
-			this.oldKeywordList = JSON.parse(res) || JSON.parse(res.value) ;
-		}
+		uni.getStorage({
+			key: 'searchHistory',
+			success: res => {
+				this.oldKeywordList = res.data
+			}
+		});
 		this.getHotKeyword()
 	},
 	components: {
@@ -309,7 +311,6 @@ export default {
 			});
 		},
 		goSearch(keyword) {
-			this.saveKeyword(keyword.name); //保存为历史
 			switch(keyword.type){
 				case 'area':
 					let obj = {
@@ -339,11 +340,11 @@ export default {
 			var hisKey = uni.getStorageSync('searchHistory');
 			if (!hisKey) {
 				var searchHistory = [keyword];
-				uni.setStorageSync('searchHistory', JSON.stringify(searchHistory));
+				uni.setStorageSync('searchHistory', searchHistory);
 				this.oldKeywordList = searchHistory;
 				return 
 			}
-			var searchHistory = JSON.parse(hisKey);
+			var searchHistory = hisKey;
 			
 			// var searchHistory = res.data;
 			var findIndex = searchHistory.indexOf(keyword);
@@ -354,7 +355,7 @@ export default {
 				searchHistory.unshift(keyword);
 			}
 			searchHistory.length > 10 && searchHistory.pop();
-			uni.setStorageSync('searchHistory',JSON.stringify(searchHistory));
+			uni.setStorageSync('searchHistory', searchHistory);
 			this.oldKeywordList = searchHistory;
 		},
 		

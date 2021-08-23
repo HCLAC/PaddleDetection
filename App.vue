@@ -45,7 +45,12 @@ export default {
 				}
 			}
 		});
-		this.globalData.Authorization = uni.getStorageSync('Authorization')
+		uni.getStorage({
+		    key: 'Authorization',
+		    success: res => {
+				this.globalData.Authorization = res.data
+		    }
+		});
 		
 		// 获取网络情况
 		uni.getNetworkType({

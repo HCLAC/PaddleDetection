@@ -169,7 +169,7 @@ export default {
 		this.getDetail(id);
 	},
 	onShow() {
-		this.hasLogin = uni.getStorageSync('Authorization') ? true : false;
+		this.hasLogin = getApp().globalData.Authorization ? true : false;
 	},
 	onPageScroll(e) {
 		if (e.scrollTop > this.headerHeight) {
