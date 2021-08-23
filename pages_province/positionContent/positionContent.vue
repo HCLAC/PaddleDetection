@@ -555,7 +555,7 @@ export default {
 			height: 96rpx;
 			width: 196rpx;
 			position: relative;
-			> image {
+			 image {
 				width: 100%;
 				height: 100%;
 			}
