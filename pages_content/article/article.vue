@@ -949,7 +949,7 @@
 	}
 	.detailContent{
 		// background: red;
-		box-shadow: 0 5px 10px #F5F5F5 inset;
+		// box-shadow: 0 5px 10px #F5F5F5 inset;
 		// border-top: 2rpx solid #F5F5F5;
 	}
 	.min-box{
