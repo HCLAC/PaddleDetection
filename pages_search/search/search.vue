@@ -537,7 +537,7 @@ view {
 .keyword-box .keyword-block .keyword-list-header {
 	width: 100%;
 	box-sizing: border-box;
-	padding: 40rpx;
+	padding: 40rpx 40rpx 28rpx 40rpx;
 	font-size: 28rpx;
 	font-weight: 600;
 	color: #303133;
@@ -547,7 +547,7 @@ view {
 .keyword-box .keyword-block .keyword-list-header1 {
 	width: 100%;
 	box-sizing: border-box;
-	padding: 40rpx;
+	padding: 40rpx 40rpx 28rpx 40rpx;
 	font-size: 28rpx;
 	font-weight: 600;
 	color: #303133;
