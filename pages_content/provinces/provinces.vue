@@ -31,7 +31,7 @@
 				<view class="content">
 					<view class="contentHeader">
 						<view class="contentTitle">景点推荐</view>
-						<view class="contentMore" @click="toMore()" v-if="siteHot.length > 3">
+						<view class="contentMore" @click="toMore()" v-if="siteHot.length > 2">
 							更多
 							<image class="moreIcon" src="/static/images/more-right.svg" mode=""></image>
 						</view>
