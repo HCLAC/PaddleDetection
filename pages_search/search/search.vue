@@ -306,7 +306,7 @@ export default {
 
 			keyword = keyword;
 			this.saveKeyword(keyword); //保存为历史
-			uni.navigateTo({
+			uni.redirectTo({
 				url: '/pages_search/searchResults/searchResults?keyword='+keyword
 			});
 		},
@@ -330,7 +330,7 @@ export default {
 					});
 					break
 				default:
-					uni.navigateTo({
+					uni.redirectTo({
 						url: '/pages_search/searchResults/searchResults?keyword='+keyword.name
 					});
 			}

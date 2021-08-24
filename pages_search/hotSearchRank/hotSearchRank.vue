@@ -2,13 +2,12 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="nav-bar">
-			<uni-nav-bar  :title="title" :fixed="true" :status-bar="true" :backgroundColor="background" style="z-index: 999999;">
+			<uni-nav-bar :title="title" :fixed="true" :status-bar="true" :backgroundColor="background">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image v-if="Icon" class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
-					<image v-if="!Icon" class="fhsy" src="/static/images/icon-fhsy-white.png" @click="Utils.home"></image>
+					<image class="fhsy" :src="Icon?'/static/images/icon-fhsy.svg':'/static/images/icon-fhsy-white.png'" @click="Utils.home"></image>
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -18,7 +17,7 @@
 				<image src="/static/images/rankBanner.png" mode="" class="bannerImg"></image>
 				<image src="/static/images/hotRank.png" mode="" class="bannerText"></image>
 			</view>
-			<view class="content" id="selectcard">
+			<view class="content">
 				<view class="hotList" v-for="(keyword,index) in hotKeywordList" :key="index" @tap="doSearch(keyword)">
 					<view class="hotImg">
 						<image class=" " :src="`/static/images/icon-${index + 1>4?4:index + 1}.svg`"  mode="aspectFit"></image>
@@ -68,12 +67,8 @@
 		methods:{
 			calcCardHeight(){
 				const query = uni.createSelectorQuery().in(this);
-				query.select('#selectcard').boundingClientRect(data => {
-					if (data.top == 0) {
-						this.cardheight = 200
-					} else {
-						this.cardheight = data.top
-					}
+				query.select('.bgBox').boundingClientRect(data => {
+					this.cardheight = data.height
 				}).exec();
 			},
 			//执行搜索
