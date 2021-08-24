@@ -39,8 +39,13 @@
 						<view class="areacontent">{{ site.description }}</view>
 						<view class="rateBox">
 							<!-- 评分图标 -->
-							<uni-rate :readonly="true" :value="site.rate" :size='16' margin="1" :allowHalf="true"/>
-							<view class="rate">{{ site.rate }} 星</view>
+							<uni-rate :readonly="true" :value="site.rate" :size='16' margin="4" :allowHalf="true"/>
+							<view class="rate">
+								<view class="rate-number">
+									{{ site.rate }}
+								</view>
+								<text>星</text>
+							</view>
 						</view>
 					</view>
 				</view>
@@ -311,10 +316,21 @@
 
 					.rate {
 						margin-left: 16rpx;
-						font-size: 28rpx;
-						font-family: HelveticaNeue;
-						color: #606266;
-						line-height: 20rpx;
+						display: flex;
+						align-items: center;
+						.rate-number{
+							font-size: 24rpx;
+							font-family: PingFangSC-Medium, PingFang SC;
+							font-weight: 600;
+							color: #606266;
+							margin-right: 4rpx;
+						}
+						text{
+							font-size: 24rpx;
+							font-family: PingFangSC-Medium, PingFang SC;
+							font-weight: 400;
+							color: #606266;
+						}
 					}
 				}
 
@@ -436,6 +452,6 @@
 		flex-flow: row;
 		flex-wrap: wrap;
 		// margin: 0 auto;
-		padding: 0 22rpx 0;
+		padding: 0 20rpx 0;
 	}
 </style>

@@ -85,7 +85,9 @@
 					"style" :                                                                                    
 					{
 						"navigationStyle": "custom",
-						"disableScroll": false
+						"disableScroll": false,
+						"navigationBarTextStyle":"white"
+						
 					}
 				}
 			]

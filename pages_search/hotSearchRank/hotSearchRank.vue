@@ -7,7 +7,8 @@
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
+					<image v-if="qqq" class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
+					<image v-if="!qqq" class="fhsy" src="/static/images/icon-fhsy-white.png" @click="Utils.home"></image>
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -43,7 +44,8 @@
 				keyword:'',
 				cardheight: 0,
 				title: '',
-				background: 'transparent'
+				background: 'transparent',
+				qqq:false,
 			};
 		},
 		mixins: [MescrollMixin],
@@ -56,9 +58,11 @@
 			if (e.scrollTop > this.cardheight) {
 				this.background = '#FFFFFF'
 				this.title = "热搜排行榜"
+				this.qqq = true
 			} else {
 				this.background = 'transparent'
 				this.title = ""
+				this.qqq = false
 			}
 		},
 		methods:{
@@ -200,7 +204,7 @@
 			
 		}
 		.bannerText{
-			width: 448rpx;
+			width: 488rpx;
 			height: 114rpx;
 			position: absolute;
 			top: 200rpx;
@@ -216,10 +220,11 @@
 		position: relative;
 		margin-top: -20rpx;
 		padding-left: 28rpx;
+		padding-top: 20rpx;
 		
 		.hotList{
 			width: 100%;
-			height: 94rpx;
+			height: 98rpx;
 			display: flex;
 			align-items: center;
 			border-bottom:0.5px solid #EDEFF2;
