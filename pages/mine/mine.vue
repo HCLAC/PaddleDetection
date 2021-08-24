@@ -85,6 +85,7 @@ export default {
 			hasLogin: false,
 		};
 	},
+	
 	onShow() {
 		if (!this.Utils.isLogin()){
 			return
@@ -92,7 +93,8 @@ export default {
 		this.hasLogin = true
 		this.loadData()
 	},
-	onLoad() {
+	onReady() {
+		this.calcCardHeight()
 	},
 	onPageScroll(e) {
 		if (e.scrollTop <= 0){
@@ -163,24 +165,18 @@ export default {
 					userInfo.answersNum = answersNum>10000?((answersNum-(answersNum%1000))/10000+'w'):answersNum
 					userInfo.avatar = that.Utils.addImageProcess(userInfo.avatar, false, 60)
 					that.userInfo = userInfo
-					that.calcCardHeight()
 				}
 			})
 		},
 		calcCardHeight(){
-			if (this.isFixed){
-				return
-			}
 			const query = uni.createSelectorQuery().in(this);
-			setTimeout(() => {
-				query.select('.mineTabs').boundingClientRect(data => {
-					if (!data){
-						this.calcCardHeight()
-						return
-					}
-					this.cardheight = data.top-data.height
-				}).exec();
-			}, 500);
+			query.select('.contentTop').boundingClientRect(data => {
+				if (!data){
+					this.calcCardHeight()
+					return
+				}
+				this.cardheight = data.height
+			}).exec();
 		},
 		// 切换
 		tabChange(index){
