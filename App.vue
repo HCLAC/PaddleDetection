@@ -4,7 +4,8 @@ export default {
 		username: '领途羊',
 		serviceProvider: 'baidu',
 		Authorization: '',
-		networkType: '4g'
+		networkType: '4g',
+		navbarHeight: 64, // px
 	},
 	onLaunch: function(res) {
 		console.log('App Launch',res);
@@ -58,6 +59,13 @@ export default {
 				this.globalData.networkType = res.networkType
 			}
 		})
+		
+		uni.getSystemInfo({
+		    success: res => {
+		        this.globalData.navbarHeight = res.navigationBarHeight+res.statusBarHeight
+		    }
+		});
+		
 	},
 	onShow: function(data) {
 		console.log('App Show',data);

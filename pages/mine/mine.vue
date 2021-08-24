@@ -79,7 +79,7 @@ export default {
 				color: '#909399'
 			},
 			cardheight: 200,
-			navbarHeight: 0,
+			navbarHeight: getApp().globalData.navbarHeight,
 			isFixed:false,
 			headerFixed: false,
 			hasLogin: false,
@@ -105,15 +105,6 @@ export default {
 				return
 			}
 			this.isFixed = true;
-			
-			if (this.navbarHeight == 0){
-				this.$nextTick(() => {
-					const query = uni.createSelectorQuery().in(this);
-					query.select('.nav-bar').boundingClientRect(data => {
-						this.navbarHeight = data.height
-					}).exec();
-				})
-			}
 		} else {
 			this.isFixed = false;
 		}

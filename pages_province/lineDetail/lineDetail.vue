@@ -157,7 +157,7 @@ export default {
 			isFixed: false,
 			serviceProvider: '',
 			headerHeight:200,
-			navbarHeight: 0,
+			navbarHeight: getApp().globalData.navbarHeight,
 			planHeight: 2000,
 			tabList: ['参考行程', '服务说明'],
 			tabIndex: 0 // 当前tab下标,必须与mescroll-more.js对应,所以tabIndex是固定变量,不可以改为其他的名字
@@ -238,7 +238,6 @@ export default {
 			setTimeout(() => {
 				query.select('.lineHeader').boundingClientRect(data => {
 					console.log('lineHeader', data)
-					this.navbarHeight = data.top
 					this.headerHeight = data.height
 				})
 				query.select('.linePlan').boundingClientRect(data => {

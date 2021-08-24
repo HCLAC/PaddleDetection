@@ -66,7 +66,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 				show: false,
 				content: '',
 				cardheight: 0,
-				navbarHeight: 0,
+				navbarHeight: getApp().globalData.navbarHeight,
 				isFixed: false,
 				headerFixed: false,
 			};
@@ -87,15 +87,6 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 					return
 				}
 				this.isFixed = true;
-				
-				if (this.navbarHeight == 0){
-					this.$nextTick(() => {
-						const query = uni.createSelectorQuery().in(this);
-						query.select('.nav-bar').boundingClientRect(data => {
-							this.navbarHeight = data.height
-						}).exec();
-					})
-				}
 			} else {
 				this.isFixed = false;
 			}
