@@ -7,8 +7,8 @@
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image v-if="qqq" class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
-					<image v-if="!qqq" class="fhsy" src="/static/images/icon-fhsy-white.png" @click="Utils.home"></image>
+					<image v-if="Icon" class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
+					<image v-if="!Icon" class="fhsy" src="/static/images/icon-fhsy-white.png" @click="Utils.home"></image>
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -45,24 +45,24 @@
 				cardheight: 0,
 				title: '',
 				background: 'transparent',
-				qqq:false,
+				Icon:false,
 			};
 		},
 		mixins: [MescrollMixin],
 		onLoad() {
 			this.calcCardHeight()
-			this.mescroll.setPageSize(10)
+			this.mescroll.setPageSize(20)
 		},
 		
 		onPageScroll(e) {
 			if (e.scrollTop > this.cardheight) {
 				this.background = '#FFFFFF'
 				this.title = "热搜排行榜"
-				this.qqq = true
+				this.Icon = true
 			} else {
 				this.background = 'transparent'
 				this.title = ""
-				this.qqq = false
+				this.Icon = false
 			}
 		},
 		methods:{
