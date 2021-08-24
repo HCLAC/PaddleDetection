@@ -190,7 +190,7 @@ export default {
 			}
 			.input {
 				// width: 380rpx;
-				width: 100%;
+				// width: 100%;
 				height: 72rpx;
 				line-height: 72rpx;
 				transition: all 0.2s linear;
