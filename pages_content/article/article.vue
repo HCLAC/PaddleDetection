@@ -272,7 +272,6 @@
 							this.getArticleDetail();
 							this.getUserInfo()
 						}, 1);
-						this.getArticleseo();
 						setTimeout(() => {
 							this.getComments();
 							this.hideLoad()
@@ -284,30 +283,6 @@
 				setTimeout(() => {
 					uni.hideLoading();
 				}, 500);
-			},
-			getArticleseo(){
-				var that = this
-				this.HTTP.request({
-					url: '/article/seo',
-					data: {
-						article_id: that.article_id
-					},
-					success: res => {
-						if (res.statusCode != 200 || res.data.code != 0){
-							uni.showToast({
-								title: res.data.msg,
-								icon: 'none'
-							});
-							return
-						}
-						
-						swan.setPageInfo({
-							title:res.data.data.title,
-							keywords:res.data.data.keywords,
-							description:res.data.data.description,
-						})
-					},
-				})
 			},
 			mpLinktap(e) {
 				if(e['data-url']){
@@ -399,6 +374,17 @@
 						articleInfo.avatar = that.Utils.addImageProcess(articleInfo.avatar, false, 60)
 						articleInfo.images.forEach((item1, index1) => {
 							articleInfo.images[index1] = that.Utils.addImageProcess(item1, true, 80)
+						})
+						swan.setPageInfo({
+							title: articleInfo.title,
+							articleTitle: articleInfo.title,
+							keywords: articleInfo.keywords,
+							description: articleInfo.description,
+							image: articleInfo.images,
+							releaseDate: articleInfo.update_at,
+							likes: articleInfo.like_count,
+							collects: articleInfo.fav_count,
+							visit: articleInfo.visit_count,
 						})
 						that.articleInfo = articleInfo;
 						that.following = that.articleInfo.follow;
