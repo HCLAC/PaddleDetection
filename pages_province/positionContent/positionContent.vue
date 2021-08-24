@@ -66,7 +66,10 @@
 					</view>
 					<view class="goTo">
 						<view class="goTo-number">
-							{{siteInfo.visited}}
+							{{ siteInfo.changeVisited }}
+							<view class="" v-if="siteInfo.visited >= 10000">
+								W
+							</view>
 						</view>
 						<text>人去过</text>
 					</view>
@@ -146,7 +149,8 @@ export default {
 			siteInfo:null,
 			serviceProvider: '',
 			more:true,
-			rate:0
+			rate:0,
+			siteInfoNumber:"",
 		};
 	},
 	onLoad:function(e) {
@@ -171,6 +175,11 @@ export default {
 						return
 					}
 					var siteInfo = res.data.data
+					if(res.data.data.visited >= 10000){
+						siteInfo.changeVisited = (res.data.data.visited / 10000).toFixed(1)
+					}else{
+						siteInfo.changeVisited = res.data.data.visited
+					}
 					siteInfo.images.forEach((item, index) => {
 						siteInfo.images[index] = that.Utils.addImageProcess(item, true, 70)
 					})
@@ -465,6 +474,7 @@ export default {
 				font-family: PingFangSC-Semibold, PingFang SC;
 				font-weight: 600;
 				color: #909399;
+				display: flex;
 			}
 			text{
 				font-size: 24rpx;
@@ -503,7 +513,6 @@ export default {
 			-webkit-line-clamp: 2;
 			text-align:justify;
 			text-justify:inter-ideograph;
-			
 		}
 		.btnBox {
 			// margin-right: 10rpx;
@@ -516,10 +525,10 @@ export default {
 			justify-content: flex-end;
 			z-index: 111;
 			.mask{
-				width: 36rpx;
+				width: 64rpx;
+				// background: red;
 				// background: linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
-				
-				background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+				background: linear-gradient(to right,rgab() 0%,white 100%);
 			}
 			text {
 				margin-top: 10rpx;
@@ -563,6 +572,7 @@ export default {
 				height: 34rpx;
 				width: 34rpx;
 				margin-right: 16rpx;
+				margin-top: 4rpx;
 				image {
 					width: 100%;
 					height: 100%;
@@ -673,6 +683,10 @@ export default {
 				font-weight:400;
 				color:rgba(96,98,102,1);
 				line-height: 38rpx;
+				display: -webkit-box;
+				-webkit-line-clamp:2;
+				-webkit-box-orient:vertical;
+				overflow: hidden;
 			}
 			.bottom{
 				position: absolute;
