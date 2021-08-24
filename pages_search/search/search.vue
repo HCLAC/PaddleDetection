@@ -311,6 +311,7 @@ export default {
 			});
 		},
 		goSearch(keyword) {
+			this.saveKeyword(keyword); //保存为历史
 			switch(keyword.type){
 				case 'area':
 					let obj = {

@@ -56,10 +56,24 @@
 		onPageScroll(e) {
 			if (e.scrollTop > this.cardheight) {
 				this.background = '#FFFFFF'
+				uni.setNavigationBarColor({
+				    frontColor: '#000000',
+					backgroundColor: '#FFFFFF',
+					fail: err => {
+						console.log('setNavigationBarColor fail', err);
+					}
+					})
 				this.title = "热搜排行榜"
 				this.Icon = true
 			} else {
 				this.background = 'transparent'
+				uni.setNavigationBarColor({
+				    frontColor: '#ffffff',
+					backgroundColor: '#000000',
+					fail: err => {
+						console.log('setNavigationBarColor fail', err);
+					}
+					})
 				this.title = ""
 				this.Icon = false
 			}

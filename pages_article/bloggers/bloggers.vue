@@ -85,8 +85,24 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 					return
 				}
 				this.isFixed = true;
+				
+				uni.setNavigationBarColor({
+				    frontColor: '#000000',
+					backgroundColor: '#ffffff',
+					fail: err => {
+						console.log('setNavigationBarColor fail', err);
+					}
+				})
 			} else {
 				this.isFixed = false;
+				
+				uni.setNavigationBarColor({
+				    frontColor: '#ffffff',
+					backgroundColor: '#000000',
+					fail: err => {
+						console.log('setNavigationBarColor fail', err);
+					}
+				})
 			}
 		},
 		methods: {
