@@ -325,7 +325,7 @@ export default {
 }
 // 内容区
 .content {
-	padding: 70rpx 40rpx 0;
+	padding: 70rpx 28rpx 0;
 	.contentTop{
 		display: flex;
 		justify-content: space-between;
