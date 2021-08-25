@@ -14,7 +14,8 @@
 				"backgroundColorBottom": "#F8F8F8",
 				"backgroundColorTop": "#FFFFFF",
 				"backgroundColor":"#F8F8F8",
-				"disableScroll": false
+				"disableScroll": false,
+				"navigationBarTextStyle":"white"
 			}
 		},
 		{
@@ -87,7 +88,6 @@
 						"navigationStyle": "custom",
 						"disableScroll": false,
 						"navigationBarTextStyle":"white"
-						
 					}
 				}
 			]
