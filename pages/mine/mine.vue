@@ -79,13 +79,12 @@ export default {
 				color: '#909399'
 			},
 			cardheight: 200,
-			navbarHeight: getApp().globalData.navbarHeight,
+			navbarHeight: 0,
 			isFixed:false,
 			headerFixed: false,
 			hasLogin: false,
 		};
 	},
-	
 	onShow() {
 		if (!this.Utils.isLogin()){
 			return
@@ -93,8 +92,7 @@ export default {
 		this.hasLogin = true
 		this.loadData()
 	},
-	onReady() {
-		this.calcCardHeight()
+	onLoad() {
 	},
 	onPageScroll(e) {
 		if (e.scrollTop <= 0){
@@ -107,6 +105,15 @@ export default {
 				return
 			}
 			this.isFixed = true;
+			
+			if (this.navbarHeight == 0){
+				this.$nextTick(() => {
+					const query = uni.createSelectorQuery().in(this);
+					query.select('.nav-bar').boundingClientRect(data => {
+						this.navbarHeight = data.height
+					}).exec();
+				})
+			}
 		} else {
 			this.isFixed = false;
 		}
@@ -165,18 +172,24 @@ export default {
 					userInfo.answersNum = answersNum>10000?((answersNum-(answersNum%1000))/10000+'w'):answersNum
 					userInfo.avatar = that.Utils.addImageProcess(userInfo.avatar, false, 60)
 					that.userInfo = userInfo
+					that.calcCardHeight()
 				}
 			})
 		},
 		calcCardHeight(){
+			if (this.isFixed){
+				return
+			}
 			const query = uni.createSelectorQuery().in(this);
-			query.select('.contentTop').boundingClientRect(data => {
-				if (!data){
-					this.calcCardHeight()
-					return
-				}
-				this.cardheight = data.height
-			}).exec();
+			setTimeout(() => {
+				query.select('.mineTabs').boundingClientRect(data => {
+					if (!data){
+						this.calcCardHeight()
+						return
+					}
+					this.cardheight = data.top-data.height
+				}).exec();
+			}, 500);
 		},
 		// 切换
 		tabChange(index){

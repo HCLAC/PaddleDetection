@@ -56,7 +56,7 @@ export default {
 				tabIndex: 0,
 				isFixed: false,
 				headerFixed: false,
-				navbarHeight: getApp().globalData.navbarHeight,
+				navbarHeight:0,
 				headerHeight: 0,
 				topic_id: 0,
 				info:''
@@ -106,6 +106,7 @@ export default {
 				const query = uni.createSelectorQuery().in(this);
 				setTimeout(() => {
 					query.select('.headImgBox').boundingClientRect(data => {
+						this.navbarHeight = data.top
 						this.headerHeight = data.height
 					}).exec();
 				}, 500);

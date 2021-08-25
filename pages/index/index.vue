@@ -232,7 +232,6 @@
 		onShow() {
 		},
 		onLoad() {
-			this.mescroll.setPageSize(10)
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.loadData()
 		},

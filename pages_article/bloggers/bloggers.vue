@@ -15,7 +15,7 @@
 		<view class="contentTop" :style="{'position': headerFixed?'absolute':'fixed'}">
 			<image src="/static/images/mineBack.png" class="backImg"></image>
 			<!-- 博主信息 -->
-			<view class="usermes" v-show="authorMsg">
+			<view class="usermes" v-if="authorMsg">
 				<image class="userAva" lazy-load :src="authorMsg.avatar"></image>
 				<image src="/static/images/userImg.svg" class="userAva" v-if="nickName" mode=""></image>
 				<view class="userR">
@@ -35,6 +35,8 @@
 				<view class="unfollow" v-else="!authorMsg.is_follow" @click="Fllow(true)">
 					<text>关注</text>
 				</view>
+			</view>
+			<view class="top-kong">
 			</view>
 			<meTabs class="bloggerTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :line-width="70" :tab-width="80"></meTabs>
 		</view>
@@ -64,7 +66,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 				show: false,
 				content: '',
 				cardheight: 0,
-				navbarHeight: getApp().globalData.navbarHeight,
+				navbarHeight: 0,
 				isFixed: false,
 				headerFixed: false,
 			};
@@ -107,11 +109,15 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 		},
 		methods: {
 			calcCardHeight(){
+				if (this.isFixed){
+					return
+				}
 				const query = uni.createSelectorQuery().in(this);
-				
-				query.select('.usermes').boundingClientRect(data => {
-					this.cardheight = data.height
-				}).exec();
+				setTimeout(() => {
+					query.select('.bloggerTabs').boundingClientRect(data => {
+						this.cardheight = data.top-data.height
+					}).exec();
+				}, 500);
 			},
 			getBloggerMsg() {
 				this.HTTP.request({
@@ -202,16 +208,10 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 </script>
 
 <style lang="scss" scoped>
-	
-.bloggerTabs{
-	width: 100%;
+.top-kong{
+	height: 20rpx;
 	background: #ffffff;
 	border-radius: 24rpx 24rpx 0px 0px;
-	overflow: hidden;
-	position: absolute;
-	// bottom: 0;
-	top: 420rpx;
-	z-index: 100000;
 }
 .nav-bar {
 	z-index: 999;

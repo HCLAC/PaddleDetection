@@ -111,12 +111,10 @@ export default {
 		};
 	},
 	onLoad() {
-		uni.getStorage({
-			key: 'searchHistory',
-			success: res => {
-				this.oldKeywordList = res.data
-			}
-		});
+		let res = uni.getStorageSync('searchHistory')
+		if(res){
+			this.oldKeywordList = JSON.parse(res) || JSON.parse(res.value) ;
+		}
 		this.getHotKeyword()
 	},
 	components: {
@@ -309,6 +307,7 @@ export default {
 			uni.redirectTo({
 				url: '/pages_search/searchResults/searchResults?keyword='+keyword
 			});
+			this.saveKeyword(keyword); //保存为历史
 		},
 		goSearch(keyword) {
 			this.saveKeyword(keyword); //保存为历史
@@ -338,31 +337,26 @@ export default {
 		},
 		//保存关键字到历史记录
 		saveKeyword(keyword) {
-			uni.getStorage({
-				key: 'searchHistory',
-				success: res => {
-					var hisKey = res.data
-					var searchHistory = null
-					if (!hisKey) {
-						searchHistory = [keyword];
-					} else {
-						searchHistory = hisKey;
-						var findIndex = searchHistory.indexOf(keyword);
-						if (findIndex != -1) {
-							searchHistory.splice(findIndex, 1);
-						}
-						searchHistory.unshift(keyword);
-						searchHistory.length > 10 && searchHistory.pop();
-					}
-					uni.setStorage({
-					    key: 'searchHistory',
-					    data: searchHistory,
-					    success: function () {
-							this.oldKeywordList = searchHistory;
-					    }
-					});
-				}
-			});
+			var hisKey = uni.getStorageSync('searchHistory');
+			if (!hisKey) {
+				var searchHistory = [keyword];
+				uni.setStorageSync('searchHistory', JSON.stringify(searchHistory));
+				this.oldKeywordList = searchHistory;
+				return 
+			}
+			var searchHistory = JSON.parse(hisKey);
+			
+			// var searchHistory = res.data;
+			var findIndex = searchHistory.indexOf(keyword);
+			if (findIndex == -1) {
+				searchHistory.unshift(keyword);
+			} else {
+				searchHistory.splice(findIndex, 1);
+				searchHistory.unshift(keyword);
+			}
+			searchHistory.length > 10 && searchHistory.pop();
+			uni.setStorageSync('searchHistory',JSON.stringify(searchHistory));
+			this.oldKeywordList = searchHistory;
 		},
 		
 		// 跳转热搜榜单

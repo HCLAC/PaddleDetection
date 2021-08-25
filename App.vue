@@ -4,8 +4,7 @@ export default {
 		username: '领途羊',
 		serviceProvider: 'baidu',
 		Authorization: '',
-		networkType: '4g',
-		navbarHeight: 64, // px
+		networkType: '4g'
 	},
 	onLaunch: function(res) {
 		console.log('App Launch',res);
@@ -46,12 +45,7 @@ export default {
 				}
 			}
 		});
-		uni.getStorage({
-		    key: 'Authorization',
-		    success: res => {
-				this.globalData.Authorization = res.data
-		    }
-		});
+		this.globalData.Authorization = uni.getStorageSync('Authorization')
 		
 		// 获取网络情况
 		uni.getNetworkType({
@@ -59,13 +53,6 @@ export default {
 				this.globalData.networkType = res.networkType
 			}
 		})
-		
-		uni.getSystemInfo({
-		    success: res => {
-		        this.globalData.navbarHeight = res.navigationBarHeight+res.statusBarHeight
-		    }
-		});
-		
 	},
 	onShow: function(data) {
 		console.log('App Show',data);

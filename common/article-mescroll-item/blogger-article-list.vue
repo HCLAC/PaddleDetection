@@ -1,6 +1,6 @@
 <template>
-	<view v-show="i === index" style="padding: 0 28rpx;">
-		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback"  :top="top" :bottom="bom" @up="upCallback" :down="downOption" :up="upOption"  >
+	<view v-show="i === index" style="margin-top: 70%; padding: 0 28rpx;">
+		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption"  >
 			<view class="" v-for="(item, index) in list" :key="index">
 				<view class="contentItem">
 					<view class="left">
@@ -32,7 +32,7 @@
 							</view>
 						</view>
 						<view class="position">
-							<image src="/static/images/iconNewMap.png" mode=""></image>
+							<image src="/static/images/iconNewMap.svg" mode=""></image>
 							<view class="positionText">{{ item.location.replace(/\（.*?\）/g, '') }}</view>
 						</view>
 					</view>
@@ -58,7 +58,7 @@
 					return 0
 				}
 			},
-			authorID:{
+			authorID:{ 
 				type: Number,
 				default(){
 					return 0
@@ -73,8 +73,6 @@
 		},
 		data() {
 			return {
-				top:'',
-				bom:'',
 				list: [],
 				downOption:{
 					auto:false // 不自动加载 (mixin已处理第一个tab触发downCallback)
@@ -164,17 +162,6 @@
 						//设置列表数据
 						if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
 						this.list = this.list.concat(curPageData); //追加新数据
-						
-						if(this.list.length >= 3 ){
-							this.bom = 0
-						}else{
-							this.bom = 300							
-						}
-						if(this.list.length == 0){
-							this.top = 374
-						}else{
-							this.top = 550
-						}
 						console.log("bloggerArticle",this.list)
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage

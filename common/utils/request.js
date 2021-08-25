@@ -10,7 +10,7 @@ function request(obj) {
 		url: url,
 		data: data,
 		header: {
-			'Authorization': getApp().globalData.Authorization
+			'Authorization': uni.getStorageSync('Authorization')
 		},
 		method: method,
 		success: function(res) {

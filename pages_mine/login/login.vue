@@ -295,8 +295,16 @@ export default {
 				method: 'POST',
 				success: res => {
 					if (res.data.code == 0) {
+						uni.showToast({
+							title: '登录成功',
+							icon: 'none'
+						}),
+						uni.setStorageSync('userinfo', res.data.data)
 						var auth = res.header.authorization ? res.header.authorization : res.header.Authorization
-						this.loginSuccess(res.data.data, auth)
+						uni.setStorageSync('Authorization', auth);
+						getApp().globalData.Authorization = auth
+						
+						this.Utils.back()
 					} else {
 						uni.showToast({
 							title: res.data.msg,
@@ -324,8 +332,15 @@ export default {
 				method: 'POST',
 				success: res => {
 					if (res.data.code == 0) {
+						uni.showToast({
+							title: '登录成功',
+							icon: 'none'
+						}),
+						uni.setStorageSync('userinfo', res.data.data)
 						var auth = res.header.authorization ? res.header.authorization : res.header.Authorization
-						this.loginSuccess(res.data.data, auth)
+						uni.setStorageSync('Authorization', auth);
+						getApp().globalData.Authorization = auth
+						this.Utils.back()
 					} else {
 						uni.showToast({
 							title: '手机验证码错误',
@@ -336,27 +351,6 @@ export default {
 				}
 			});
 		},
-		loginSuccess(userinfo, auth){
-			uni.showToast({
-				title: '登录成功',
-				icon: 'none'
-			}),
-			getApp().globalData.Authorization = auth
-			
-			uni.setStorage({
-			    key: 'userinfo',
-			    data: userinfo,
-			    success: function () {
-			    }
-			});
-			uni.setStorage({
-			    key: 'Authorization',
-			    data: auth,
-			    success: function () {
-			    }
-			});
-			this.Utils.back()
-		}
 	}
 };
 </script>
