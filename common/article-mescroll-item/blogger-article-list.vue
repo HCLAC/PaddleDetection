@@ -144,7 +144,8 @@
 							return
 						}
 						// 接口返回的当前页数据列表 (数组)
-						if(!res.data.data || !res.data.data.list){
+						if (!res.data.data || !res.data.data.list || res.data.data.list.length == 0){
+							that.mescroll.endBySize(0, 0);
 							return
 						}
 						let curPageData = res.data.data.list;

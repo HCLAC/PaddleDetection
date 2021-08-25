@@ -106,7 +106,8 @@
 							});
 							return
 						}
-						if (!res.data.data.list || res.data.data.list.length == 0){
+						if (!res.data.data || !res.data.data.list || res.data.data.list.length == 0){
+							that.mescroll.endBySize(0, 0);
 							return
 						}
 						// 接口返回的当前页数据列表 (数组)

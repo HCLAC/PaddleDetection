@@ -433,8 +433,8 @@ export default {
 						});
 						return
 					}
-					if (!res.data.data.list || res.data.data.list.length == 0){
-						this.mescroll.endBySize(0, 0);
+					if (!res.data.data || !res.data.data.list || res.data.data.list.length == 0){
+						that.mescroll.endBySize(0, 0);
 						return
 					}
 					// 接口返回的当前页数据列表 (数组)
@@ -450,8 +450,6 @@ export default {
 					})
 					// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 					let curPageLen = curPageData.length;
-					// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
-					let totalPage = res.data.data.total / pageSize;
 					// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
 					let totalSize = res.data.data.total;
 					// 接口返回的是否有下一页 (true/false)
