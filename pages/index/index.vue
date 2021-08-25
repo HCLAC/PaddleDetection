@@ -54,7 +54,7 @@
 							<view class="citysBoxLeft">
 								<view class="cblt">
 									<view class="cbltcBig" @click="toProvinces(areaList[0])" >
-										<image class="hotCityImg" :src="areaList[0].image" mode="scaleToFill" :lazy-load="true"></image>
+										<image class="hotCityImg" :src="areaList[0].image" mode="aspectFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cbltcBigText">
 												{{areaList[0].name}}
@@ -62,7 +62,7 @@
 										</view>
 									</view>
 									<view class="cbltcSmall" @click="toProvinces(areaList[1])">
-										<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill" :lazy-load="true"></image>
+										<image class="hotCityImg" :src="areaList[1].image" mode="aspectFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cbltcSmallText">
 												{{areaList[1].name}}
@@ -70,7 +70,7 @@
 										</view>
 									</view>
 									<view class="cbltcSmall" @click="toProvinces(areaList[2])" >
-										<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill" :lazy-load="true"></image>
+										<image class="hotCityImg" :src="areaList[2].image" mode="aspectFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cbltcSmallText">
 												{{areaList[2].name}}
@@ -80,7 +80,7 @@
 								</view>
 								<view class="cblb">
 									<view class="cblbcSmall" @click="toProvinces(areaList[3])" >
-										<image class="hotCityImg" :src="areaList[3].image" mode="scaleToFill" :lazy-load="true"></image>
+										<image class="hotCityImg" :src="areaList[3].image" mode="aspectFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cblbcSmallText">
 												{{areaList[3].name}}
@@ -88,7 +88,7 @@
 										</view>
 									</view>
 									<view class="cblbcSmall" @click="toProvinces(areaList[4])">
-										<image class="hotCityImg" :src="areaList[4].image" mode="scaleToFill" :lazy-load="true"></image>
+										<image class="hotCityImg" :src="areaList[4].image" mode="aspectFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cblbcSmallText">
 												{{areaList[4].name}}
@@ -96,7 +96,7 @@
 										</view>
 									</view>
 									<view class="cblbcBig" @click="toProvinces(areaList[5])" >
-										<image class="hotCityImg" :src="areaList[5].image" mode="scaleToFill" :lazy-load="true"></image>
+										<image class="hotCityImg" :src="areaList[5].image" mode="aspectFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cblbcBigText">
 												{{areaList[5].name}}
@@ -108,7 +108,7 @@
 							<view class="citysBoxRight">
 								<view class="cblt">
 									<view class="cbltcBig" @click="toProvinces(areaList[6])" >
-										<image class="hotCityImg" :src="areaList[6].image" mode="scaleToFill" :lazy-load="true"></image>
+										<image class="hotCityImg" :src="areaList[6].image" mode="aspectFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cbltcBigText">
 												{{areaList[6].name}}
@@ -116,7 +116,7 @@
 										</view>
 									</view>
 									<view class="cbltcSmall" @click="toProvinces(areaList[7])" >
-										<image class="hotCityImg" :src="areaList[7].image" mode="scaleToFill" :lazy-load="true"></image>
+										<image class="hotCityImg" :src="areaList[7].image" mode="aspectFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cbltcSmallText">
 												{{areaList[7].name}}
@@ -124,7 +124,7 @@
 										</view>
 									</view>
 									<view class="cbltcSmall" @click="toProvinces(areaList[8])" >
-										<image class="hotCityImg" :src="areaList[8].image" mode="scaleToFill" :lazy-load="true"></image>
+										<image class="hotCityImg" :src="areaList[8].image" mode="aspectFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cbltcSmallText">
 												{{areaList[8].name}}
@@ -134,7 +134,7 @@
 								</view>
 								<view class="cblb">
 									<view class="cblbcSmall" @click="toProvinces(areaList[9])" >
-										<image class="hotCityImg" :src="areaList[9].image" mode="scaleToFill" :lazy-load="true"></image>
+										<image class="hotCityImg" :src="areaList[9].image" mode="aspectFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cblbcSmallText">
 												{{areaList[9].name}}
@@ -142,7 +142,7 @@
 										</view>
 									</view>
 									<view class="cblbcSmall" @click="toProvinces(areaList[10])" >
-										<image class="hotCityImg" :src="areaList[10].image" mode="scaleToFill" :lazy-load="true"></image>
+										<image class="hotCityImg" :src="areaList[10].image" mode="aspectFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cblbcSmallText">
 												{{areaList[10].name}}
@@ -150,7 +150,7 @@
 										</view>
 									</view>
 									<view class="cblbcBig" @click="toProvinces(areaList[11])" >
-										<image class="hotCityImg" :src="areaList[11].image" mode="scaleToFill" :lazy-load="true"></image>
+										<image class="hotCityImg" :src="areaList[11].image" mode="aspectFill" :lazy-load="true"></image>
 										<view class="cbltcBigTextBox">
 											<view class="cblbcBigText">
 												{{areaList[11].name}}
@@ -232,7 +232,6 @@
 		onShow() {
 		},
 		onLoad() {
-			this.mescroll.setPageSize(10) 
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.loadData()
 		},
@@ -507,8 +506,7 @@
 							});
 							return
 						}
-						if (!res.data.data || !res.data.data.list || res.data.data.list.length == 0){
-							that.mescroll.endBySize(0, 0);
+						if (!res.data.data.list || res.data.data.list.length == 0){
 							return
 						}
 						
@@ -731,7 +729,8 @@
 							position: absolute;
 						}
 						.cbltcBigText{
-							padding: 2rpx 14.6rpx 4rpx 16rpx;
+							height: 48rpx;
+							padding: 2rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
 							opacity: 0.7;
@@ -739,9 +738,6 @@
 							font-family: PingFangSC-Medium, PingFang SC;
 							font-weight: 500;
 							color: #303133;
-							line-height: 48rpx;
-							text-align: center;
-							
 						}
 					}
 					.cbltcSmall{
@@ -763,7 +759,8 @@
 							position: absolute;
 						}
 						.cbltcSmallText{
-							padding: 2rpx 14.6rpx 4rpx 16rpx;
+							height: 48rpx;
+							padding: 2rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
 							opacity: 0.7;
@@ -771,8 +768,6 @@
 							font-family: PingFangSC-Medium, PingFang SC;
 							font-weight: 500;
 							color: #303133;
-							line-height: 48rpx;
-							text-align: center;
 						}
 					}
 				}
@@ -795,7 +790,8 @@
 							position: absolute;
 						}
 						.cblbcBigText{
-							padding: 2rpx 14.6rpx 4rpx 16rpx;
+							height: 48rpx;
+							padding: 2rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
 							opacity: 0.7;
@@ -803,8 +799,6 @@
 							font-family: PingFangSC-Medium, PingFang SC;
 							font-weight: 500;
 							color: #303133;
-							line-height: 48rpx;
-							text-align: center;
 						}
 					}
 					.cblbcSmall{
@@ -823,7 +817,8 @@
 							position: absolute;
 						}
 						.cblbcSmallText{
-							padding: 2rpx 14.6rpx 4rpx 16rpx;
+							height: 48rpx;
+							padding: 2rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
 							opacity: 0.7;
@@ -831,8 +826,6 @@
 							font-family: PingFangSC-Medium, PingFang SC;
 							font-weight: 500;
 							color: #303133;
-							line-height: 48rpx;
-							text-align: center;
 						}
 					}
 				}
@@ -858,7 +851,8 @@
 							position: absolute;
 						}
 						.cbltcBigTextBox{
-							padding: 2rpx 14.6rpx 4rpx 16rpx;
+							height: 48rpx;
+							padding: 2rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
 							opacity: 0.7;
@@ -867,8 +861,6 @@
 								font-family: PingFangSC-Medium, PingFang SC;
 								font-weight: 500;
 								color: #303133;
-								line-height: 48rpx;
-								text-align: center;
 							}
 						}
 					}
@@ -888,7 +880,8 @@
 							position: absolute;
 						}
 						.cbltcBigTextBox{
-							padding: 2rpx 14.6rpx 4rpx 16rpx;
+							height: 48rpx;
+							padding: 2rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
 							opacity: 0.7;
@@ -897,8 +890,6 @@
 								font-family: PingFangSC-Medium, PingFang SC;
 								font-weight: 500;
 								color: #303133;
-								line-height: 48rpx;
-								text-align: center;
 								z-index: 1;
 							}
 						}
@@ -924,7 +915,8 @@
 							position: absolute;
 						}
 						.cbltcBigTextBox{
-							padding: 2rpx 14.6rpx 4rpx 16rpx;
+							height: 48rpx;
+							padding: 2rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
 							opacity: 0.7;
@@ -933,8 +925,6 @@
 								font-family: PingFangSC-Medium, PingFang SC;
 								font-weight: 500;
 								color: #303133;
-								line-height: 48rpx;
-								text-align: center;
 							}
 						}
 						
@@ -955,7 +945,8 @@
 							position: absolute;
 						}
 						.cbltcBigTextBox{
-							padding: 2rpx 14.6rpx 4rpx 16rpx;
+							height: 48rpx;
+							padding: 2rpx 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
 							opacity: 0.7;
@@ -964,8 +955,6 @@
 								font-family: PingFangSC-Medium, PingFang SC;
 								font-weight: 500;
 								color: #303133;
-								line-height: 48rpx;
-								text-align: center;
 							}
 						}
 						
@@ -993,7 +982,7 @@
 			font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 500;
 			color: #303133;
-			margin-left: 32rpx;
+			margin-left: 28rpx;
 			margin-top: 10rpx;
 		}
 		
