@@ -728,16 +728,21 @@
 						image{
 							position: absolute;
 						}
-						.cbltcBigText{
+						.cbltcBigTextBox{
+							display: flex;
+							align-items: center;
 							height: 48rpx;
-							padding: 2rpx 16rpx;
+							padding: 0 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
-							opacity: 0.7;
-							font-size: 32rpx;
-							font-family: PingFangSC-Medium, PingFang SC;
-							font-weight: 500;
-							color: #303133;
+							opacity: 0.85;
+							.cbltcBigText{
+								font-size: 32rpx;
+								font-family: PingFangSC-Medium, PingFang SC;
+								font-weight: 500;
+								color: #303133;
+								opacity: 1;
+							}
 						}
 					}
 					.cbltcSmall{
@@ -758,16 +763,19 @@
 						image{
 							position: absolute;
 						}
-						.cbltcSmallText{
+						.cbltcBigTextBox{
 							height: 48rpx;
-							padding: 2rpx 16rpx;
+							padding: 0 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
-							opacity: 0.7;
-							font-size: 32rpx;
-							font-family: PingFangSC-Medium, PingFang SC;
-							font-weight: 500;
-							color: #303133;
+							opacity: 0.85;
+							.cbltcSmallText{
+								font-size: 32rpx;
+								font-family: PingFangSC-Medium, PingFang SC;
+								font-weight: 500;
+								color: #303133;
+								opacity: 1;
+							}
 						}
 					}
 				}
@@ -789,16 +797,19 @@
 						image{
 							position: absolute;
 						}
-						.cblbcBigText{
+						.cbltcBigTextBox{
 							height: 48rpx;
-							padding: 2rpx 16rpx;
+							padding: 0 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
-							opacity: 0.7;
-							font-size: 32rpx;
-							font-family: PingFangSC-Medium, PingFang SC;
-							font-weight: 500;
-							color: #303133;
+							opacity: 0.85;
+							.cblbcBigText{
+								font-size: 32rpx;
+								font-family: PingFangSC-Medium, PingFang SC;
+								font-weight: 500;
+								color: #303133;
+								opacity: 1;
+							}
 						}
 					}
 					.cblbcSmall{
@@ -816,16 +827,19 @@
 						image{
 							position: absolute;
 						}
-						.cblbcSmallText{
+						.cbltcBigTextBox{
 							height: 48rpx;
-							padding: 2rpx 16rpx;
+							padding: 0 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
-							opacity: 0.7;
-							font-size: 32rpx;
-							font-family: PingFangSC-Medium, PingFang SC;
-							font-weight: 500;
-							color: #303133;
+							opacity: 0.85;
+							.cblbcSmallText{
+								font-size: 32rpx;
+								font-family: PingFangSC-Medium, PingFang SC;
+								font-weight: 500;
+								color: #303133;
+								opacity: 1;
+							}
 						}
 					}
 				}
@@ -852,10 +866,12 @@
 						}
 						.cbltcBigTextBox{
 							height: 48rpx;
-							padding: 2rpx 16rpx;
+							padding: 0 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
-							opacity: 0.7;
+							opacity: 0.85;
+							display: flex;
+							align-items: center;
 							.cbltcBigText{
 								font-size: 32rpx;
 								font-family: PingFangSC-Medium, PingFang SC;
@@ -881,10 +897,13 @@
 						}
 						.cbltcBigTextBox{
 							height: 48rpx;
-							padding: 2rpx 16rpx;
+							padding: 0 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
-							opacity: 0.7;
+							opacity: 0.85;
+							display: flex;
+							align-items: center;
+							
 							.cbltcSmallText{
 								font-size: 32rpx;
 								font-family: PingFangSC-Medium, PingFang SC;
@@ -916,10 +935,13 @@
 						}
 						.cbltcBigTextBox{
 							height: 48rpx;
-							padding: 2rpx 16rpx;
+							padding: 0 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
-							opacity: 0.7;
+							opacity: 0.85;
+							display: flex;
+							align-items: center;
+							
 							.cblbcBigText{
 								font-size: 32rpx;
 								font-family: PingFangSC-Medium, PingFang SC;
@@ -946,10 +968,13 @@
 						}
 						.cbltcBigTextBox{
 							height: 48rpx;
-							padding: 2rpx 16rpx;
+							padding: 0 16rpx;
 							background: #FFFFFF;
 							border-radius: 8rpx;
-							opacity: 0.7;
+							opacity: 0.85;
+							display: flex;
+							align-items: center;
+							
 							.cblbcSmallText{
 								font-size: 32rpx;
 								font-family: PingFangSC-Medium, PingFang SC;
@@ -957,12 +982,10 @@
 								color: #303133;
 							}
 						}
-						
 					}
 				}
 			}
 		}
-		
 	}
 	.hotCityImg {
 		width: 100%;
