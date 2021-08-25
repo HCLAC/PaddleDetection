@@ -214,6 +214,7 @@ export default {
 			
 			// 百度小程序直接调用swan.getLoginCode，其他平台调用uni.login
 			if (this.serviceProvider == 'baidu'){
+				//#ifdef MP-BAIDU
 				swan.getLoginCode({
 					success: result => {
 						if (!result || !result.code || result.code.length == 0) {
@@ -234,6 +235,7 @@ export default {
 						console.error('getLoginCode', err)
 					}
 				});
+				//#endif
 				return 
 			}
 			uni.login({

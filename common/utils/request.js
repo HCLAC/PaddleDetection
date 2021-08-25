@@ -22,8 +22,8 @@ function request(obj) {
 				return
 			}
 			if (res.data.code == 10501 || res.data.code == 10101|| res.data.code == 10502) {
-				swan.removeStorageSync("userinfo");
-				swan.removeStorageSync("Authorization");
+				uni.removeStorageSync("userinfo");
+				uni.removeStorageSync("Authorization");
 				getApp().globalData.Authorization = ''
 				uni.navigateTo({
 					url: '/pages_mine/login/login.vue'
