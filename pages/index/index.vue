@@ -736,6 +736,9 @@
 							background: #FFFFFF;
 							border-radius: 8rpx;
 							opacity: 0.85;
+							display: flex;
+							align-items: center;
+							
 							.cbltcBigText{
 								font-size: 32rpx;
 								font-family: PingFangSC-Medium, PingFang SC;
@@ -769,6 +772,9 @@
 							background: #FFFFFF;
 							border-radius: 8rpx;
 							opacity: 0.85;
+							display: flex;
+							align-items: center;
+							
 							.cbltcSmallText{
 								font-size: 32rpx;
 								font-family: PingFangSC-Medium, PingFang SC;
@@ -803,6 +809,9 @@
 							background: #FFFFFF;
 							border-radius: 8rpx;
 							opacity: 0.85;
+							display: flex;
+							align-items: center;
+							
 							.cblbcBigText{
 								font-size: 32rpx;
 								font-family: PingFangSC-Medium, PingFang SC;
@@ -833,6 +842,8 @@
 							background: #FFFFFF;
 							border-radius: 8rpx;
 							opacity: 0.85;
+							display: flex;
+							align-items: center;
 							.cblbcSmallText{
 								font-size: 32rpx;
 								font-family: PingFangSC-Medium, PingFang SC;

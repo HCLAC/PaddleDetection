@@ -585,11 +585,11 @@ export default {
 				color: rgba(96, 98, 102, 1);
 				line-height: 40rpx;
 				width:320rpx;
-				max-height:70rpx;
+				max-height:80rpx;
 				display: -webkit-box;
 				-webkit-box-orient: vertical;
 				text-overflow: ellipsis;
-				// overflow: hidden;
+				overflow: hidden;
 				-webkit-line-clamp: 2;
 			}
 		}
