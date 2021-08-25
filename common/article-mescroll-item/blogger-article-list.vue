@@ -32,7 +32,7 @@
 							</view>
 						</view>
 						<view class="position">
-							<image src="/static/images/iconNewMap.svg" mode=""></image>
+							<image src="/static/images/iconNewMap.png" mode=""></image>
 							<view class="positionText">{{ item.location.replace(/\（.*?\）/g, '') }}</view>
 						</view>
 					</view>

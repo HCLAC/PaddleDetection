@@ -93,31 +93,7 @@
 				});
 				
 			},
-			//保存关键字到历史记录
-			saveKeyword(keyword) {
-				var hisKey = uni.getStorageSync('searchHistory');
-				if (!hisKey) {
-					var searchHistory = [keyword];
-					uni.setStorageSync('searchHistory',JSON.stringify(searchHistory));
-					this.oldKeywordList = searchHistory;
 			
-				} else {
-					var searchHistory = JSON.parse(hisKey);
-					
-					// var searchHistory = res.data;
-					var findIndex = searchHistory.indexOf(keyword);
-					if (findIndex == -1) {
-						searchHistory.unshift(keyword);
-					} else {
-						searchHistory.splice(findIndex, 1);
-						searchHistory.unshift(keyword);
-					}
-					searchHistory.length > 10 && searchHistory.pop();
-					uni.setStorageSync('searchHistory',JSON.stringify(searchHistory));
-					this.oldKeywordList = searchHistory;
-				
-				}
-			},
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {
 				// 第1种: 请求具体接口

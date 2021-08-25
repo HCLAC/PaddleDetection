@@ -79,7 +79,7 @@ export default {
 				color: '#909399'
 			},
 			cardheight: 200,
-			navbarHeight: 0,
+			navbarHeight: getApp().globalData.navbarHeight, 
 			isFixed:false,
 			headerFixed: false,
 			hasLogin: false,
@@ -92,8 +92,9 @@ export default {
 		this.hasLogin = true
 		this.loadData()
 	},
-	onLoad() {
-	},
+	onReady() {
+		this.calcCardHeight() 
+	}, 
 	onPageScroll(e) {
 		if (e.scrollTop <= 0){
 			this.headerFixed = false
@@ -105,15 +106,6 @@ export default {
 				return
 			}
 			this.isFixed = true;
-			
-			if (this.navbarHeight == 0){
-				this.$nextTick(() => {
-					const query = uni.createSelectorQuery().in(this);
-					query.select('.nav-bar').boundingClientRect(data => {
-						this.navbarHeight = data.height
-					}).exec();
-				})
-			}
 		} else {
 			this.isFixed = false;
 		}
@@ -177,19 +169,14 @@ export default {
 			})
 		},
 		calcCardHeight(){
-			if (this.isFixed){
-				return
-			}
-			const query = uni.createSelectorQuery().in(this);
-			setTimeout(() => {
-				query.select('.mineTabs').boundingClientRect(data => {
-					if (!data){
-						this.calcCardHeight()
-						return
-					}
-					this.cardheight = data.top-data.height
-				}).exec();
-			}, 500);
+			const query = uni.createSelectorQuery().in(this); 
+			query.select('.contentTop').boundingClientRect(data => {
+				if (!data){
+					this.calcCardHeight()
+					return
+				}
+				this.cardheight = data.height
+			}).exec(); 
 		},
 		// 切换
 		tabChange(index){

@@ -134,7 +134,17 @@ export default {
 				bgColor:'#F8F8F8'
 			},
 			upOption: {
-				auto:false
+				auto:false,
+				noMoreSize: 1, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
+				empty:{
+				  use : true ,
+				  icon : null ,
+				  tip : '暂无旅行',
+				  btnText : "",
+				  fixed: false,
+				  top: "100rpx",
+				  zIndex: 99
+				}
 			},
 			list: [],
 			weather: null,
