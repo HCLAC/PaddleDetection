@@ -272,7 +272,6 @@
 							this.getArticleDetail();
 							this.getUserInfo()
 						}, 1);
-						this.getArticleseo();
 						setTimeout(() => {
 							this.getComments();
 							this.hideLoad()

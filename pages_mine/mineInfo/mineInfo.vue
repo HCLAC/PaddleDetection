@@ -164,6 +164,12 @@
 					if (!valid) {
 						console.log('验证失败');
 					}
+					uni.showLoading({
+						title: '修改中',
+						mask: true,
+						success: () => {
+						}
+					});
 					this.HTTP.request({
 						url: '/user/info',
 						data: {
@@ -175,9 +181,22 @@
 						},
 						method: 'POST',
 						success: res => {
+							uni.hideLoading();
 							if(res.data.code == 0){
 								this.Utils.back()
+							} else {
+								uni.showToast({
+									title: '修改失败',
+									icon: 'none'
+								});
 							}
+						}, 
+						fail: res=>{
+							uni.hideLoading();
+							uni.showToast({
+								title: '修改失败',
+								icon: 'none'
+							});
 						}
 					});
 				});
