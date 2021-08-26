@@ -540,10 +540,10 @@
 	}
 	.rate {
 		font-size: 24rpx;
-		font-family: HelveticaNeue;
+		font-family: PingFangSC-Medium, PingFang SC;
 		color: #606266;
 		line-height: 24rpx;
-		font-weight: 800;
+		font-weight: 500;
 	}
 
 	.shareBox {
