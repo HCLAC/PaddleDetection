@@ -172,7 +172,7 @@ export default {
 		height: 72rpx;
 		//border: 1px #ccc solid; //HM修改 去掉边框
 		background: #fff;
-		overflow: hidden;
+		// overflow: hidden;
 		transition: all 0.2s linear;
 		border-radius: 36rpx;
 
