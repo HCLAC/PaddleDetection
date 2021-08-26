@@ -78,9 +78,9 @@
         "uniStatistics" : {
             "enable" : true
         },
-		"optimization" : {
-		    "subPackages" : true
-		}
+        "optimization" : {
+            "subPackages" : true
+        }
     },
     "mp-toutiao" : {
         "setting" : {
@@ -90,9 +90,9 @@
             "postcss" : true
         },
         "appid" : "tt74ea0257ebd1c647",
-		"optimization" : {
-		    "subPackages" : true
-		}
+        "optimization" : {
+            "subPackages" : true
+        }
     },
     "uniStatistics" : {
         "enable" : true
@@ -103,7 +103,15 @@
         },
         "title" : "领途羊",
         "router" : {
-            "mode" : "hash"
+            "mode" : "history"
+        },
+        "template" : "template-dev.h5.html",
+        "sdkConfigs" : {
+            "maps" : {
+                "qqmap" : {
+                    "key" : "3L3BZ-V5OCV-GXHPP-ULIVW-DYQRT-HRFBL"
+                }
+            }
         }
     },
     "mp-alipay" : {

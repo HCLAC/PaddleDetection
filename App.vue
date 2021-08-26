@@ -101,6 +101,11 @@ uni-rich-text img{ max-width: 100% !important;}
 .fhsy {
 	width: 22px;
 	height: 22px;
+	/* #ifdef MP-BAIDU */
 	margin-left: 47px;
+	/* #endif */
+	/* #ifdef H5 */
+	margin-left: 10px;
+	/* #endif */
 }
 </style>

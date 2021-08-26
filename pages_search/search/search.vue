@@ -28,10 +28,10 @@
 			<scroll-view class="keyword-list-box" scroll-y scroll-x="false" v-if="isShowKeywordList">
 				<block v-for="(row, index) in keywordList" :key="index">
 					<view class="keyword-entry" hover-class="keyword-entry-tap">
-						<!-- <veiw v-if="row.keyword.type" class="otherIcon"><u-icon size="32" :name="row.keyword.type == 'site' ? 'photo' : row.keyword.type ? 'map-fill' : ''"></u-icon></veiw> -->
-						<veiw v-if="row.keyword.type" :class=" row.keyword.type == 'site' ? 'otherIcon' : 'otherIcon1'">
+						<!-- <view v-if="row.keyword.type" class="otherIcon"><u-icon size="32" :name="row.keyword.type == 'site' ? 'photo' : row.keyword.type ? 'map-fill' : ''"></u-icon></view> -->
+						<view v-if="row.keyword.type" :class=" row.keyword.type == 'site' ? 'otherIcon' : 'otherIcon1'">
 							<image :src="row.keyword.type == 'site'?'/static/images/attIcon.svg':'/static/images/adressIcon.svg'" ></image>
-						</veiw>
+						</view>
 						<view class="liIcon" v-else></view>
 						<view class="keyword-text" @tap.stop="goSearch(row.keyword)"><rich-text :nodes="row.htmlStr"></rich-text></view>
 						<view class="otherText" v-if="row.keyword.type">{{ row.keyword.type == 'site' ? '景点' : '目的地' }}</view>
@@ -39,7 +39,7 @@
 				</block>
 				<view class="search-bottom" @click="toSearchResults()">
 					搜索更多关于“
-					<veiw>{{ keyValue }}</veiw>
+					<view>{{ keyValue }}</view>
 					”的结果
 				</view>
 			</scroll-view>
@@ -77,7 +77,7 @@
 		<view v-if="isShowArticlieList">
 			<view class="noResult">
 				没找到“
-				<veiw>{{ keyValue }}</veiw>
+				<view>{{ keyValue }}</view>
 				”相关结果
 			</view>
 				<view class="wrap">

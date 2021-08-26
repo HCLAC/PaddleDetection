@@ -56,7 +56,7 @@
 			<!-- 行程路线 -->
 			<block v-if="route_list && route_list.length">
 				<view class="titleBox">
-					<veiw class="contentTitle">行程线路</veiw>
+					<view class="contentTitle">行程线路</view>
 					<view class="moreBox" @click="toLineMore()" v-if="route_list.length > 2">
 						更多
 						<image src="/static/images/more-right.svg" mode=""></image>
@@ -76,7 +76,7 @@
 			</block>
 			<!-- 内容精选 -->
 			<block v-if="list">
-				<veiw class="contentTitle">内容精选</veiw>
+				<view class="contentTitle">内容精选</view>
 				<view class="touring">
 					<view class="wrap">
 						<articleWaterfall :list="list"></articleWaterfall>
