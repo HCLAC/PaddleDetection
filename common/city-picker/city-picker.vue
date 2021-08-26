@@ -5,7 +5,7 @@
 				<!-- #ifndef  MP-BAIDU -->
 					<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 				<!-- #endif -->						
-				<image class="fhsy" src="/static/images/icon-fhsy.png" @click="Utils.home" />
+				<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 			</view>
 		</uni-nav-bar>
 		<!-- 城市 -->

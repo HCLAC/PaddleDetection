@@ -7,7 +7,7 @@
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" :src="Icon?'/static/images/icon-fhsy.png':'/static/images/icon-fhsy-white.png'" @click="Utils.home"></image>
+					<image class="fhsy" :src="Icon?'/static/images/icon-fhsy.svg':'/static/images/icon-fhsy-white.png'" @click="Utils.home"></image>
 				</view>
 			</uni-nav-bar>
 		</view>
