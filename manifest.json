@@ -80,7 +80,14 @@
         },
         "optimization" : {
             "subPackages" : true
-        }
+        },
+		"dynamicLib": {
+			// 'swan-sitemap-lib' 是个可自己定的别名。
+			"swan-sitemap-lib": {
+				// provider 是要引用的动态库的名字，在此为 'swan-sitemap'。
+				"provider": "swan-sitemap"
+			}
+		}
     },
     "mp-toutiao" : {
         "setting" : {
