@@ -63,7 +63,7 @@ export default {
 			};
 		},
 		onLoad(e) {
-			this.topic_id = e.id
+			this.topic_id = Number(e.id)
 			this.loadData()
 		},
 		onPageScroll(e) {

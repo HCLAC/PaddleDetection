@@ -221,11 +221,13 @@ export default {
 					})
 					that.lineContent = lineContent;
 					
+					//#ifdef MP-BAIDU
 					swan.setPageInfo({
 						title: that.lineContent.title+"-领途羊",
 						keywords: that.lineContent.title+",行程路线,领途羊",
 						description: that.lineContent.description,
 					})
+					//#endif
 					that.calcHeight()
 				}
 			});

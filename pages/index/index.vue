@@ -28,7 +28,7 @@
 		<mescroll-body @scroll="uniScroll" class="mescroll" ref="mescrollRef" @init="mescrollInit"
 		 @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部轮播图 -->
-			<view class="page-section " v-if="bannerList.length != 0">
+			<view class="page-section " v-if="bannerList != null && bannerList.length != 0">
 				<view class="page-section-spacing">
 					<!-- 新版 -->
 					<image class="bannerImg" :src="bannerList[0].image" mode=""></image>
@@ -229,8 +229,6 @@
 				cus_sty_top: '156rpx'
 			};
 		},
-		onShow() {
-		},
 		onLoad() {
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.loadData()
@@ -250,6 +248,7 @@
 		methods: {
 			mescrollInit(mescroll) {
 				this.mescroll = mescroll;
+				this.mescroll.setPageSize(10) 
 			},
 			loadData(){
 				uni.showLoading({

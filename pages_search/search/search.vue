@@ -115,6 +115,9 @@ export default {
 			key: 'searchHistory',
 			success: res => {
 				this.oldKeywordList = res.data
+				if (typeof(res.data) == 'string'){
+					this.oldKeywordList = JSON.parse(res.data)
+				}
 			}
 		}); 
 		this.getHotKeyword()
@@ -278,7 +281,7 @@ export default {
 		
 		toSearchResults() {
 			this.saveKeyword(this.keyValue); //保存为历史
-			uni.redirectTo({
+			uni.navigateTo({
 			    url:  '/pages_search/searchResults/searchResults?keyword='+this.keyValue
 			});
 		},
@@ -306,12 +309,12 @@ export default {
 
 			keyword = keyword;
 			this.saveKeyword(keyword); //保存为历史
-			uni.redirectTo({
+			uni.navigateTo({
 				url: '/pages_search/searchResults/searchResults?keyword='+keyword
 			});
 		},
 		goSearch(keyword) {
-			this.saveKeyword(keyword); //保存为历史
+			this.saveKeyword(keyword.name); //保存为历史
 			switch(keyword.type){
 				case 'area':
 					let obj = {
@@ -338,31 +341,27 @@ export default {
 		},
 		//保存关键字到历史记录
 		saveKeyword(keyword) {
-			uni.getStorage({
-				key: 'searchHistory',
-				success: res => {
-					var hisKey = res.data
-					var searchHistory = null
-					if (!hisKey) {
-						searchHistory = [keyword];
-					} else {
-						searchHistory = hisKey;
-						var findIndex = searchHistory.indexOf(keyword);
-						if (findIndex != -1) {
-							searchHistory.splice(findIndex, 1);
-						}
-						searchHistory.unshift(keyword);
-						searchHistory.length > 10 && searchHistory.pop();
-					}
-					uni.setStorage({
-						key: 'searchHistory',
-						data: searchHistory,
-						success: function () {
-							this.oldKeywordList = searchHistory;
-						}
-					});
+			var that = this
+			var hisKey = this.oldKeywordList
+			var searchHistory = null
+			if (!hisKey) {
+				searchHistory = [keyword];
+			} else {
+				searchHistory = hisKey;
+				var findIndex = searchHistory.indexOf(keyword);
+				if (findIndex != -1) {
+					searchHistory.splice(findIndex, 1);
 				}
-			}); 
+				searchHistory.unshift(keyword);
+				searchHistory.length > 10 && searchHistory.pop();
+			}
+			uni.setStorage({
+				key: 'searchHistory',
+				data: searchHistory,
+				success: function () {
+					that.oldKeywordList = searchHistory;
+				}
+			});
 		}, 
 		
 		// 跳转热搜榜单

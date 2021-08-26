@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="nav-bar">
-			<uni-nav-bar :fixed="true" :status-bar="true" :title="articleInfo.title">
+			<uni-nav-bar :fixed="true" :status-bar="true" :title="title">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
@@ -161,7 +161,7 @@
 			<view class="safeBox"></view>
 		</view>
 		<!-- 登录 -->
-		<view class="bottom">
+		<view class="bottom" v-if="articleInfo">
 			<view class="line"></view>
 			<view class="contentBottom savepadding">
 				<view style="display: flex;">
@@ -211,7 +211,7 @@
 				indicatorDots: true,
 				current: 0,
 				list: [],
-				VX: 17827277778,
+				title: '领途羊',
 				articleInfo: null,
 				token: '',
 				article_id: '',
@@ -237,11 +237,13 @@
 		},
 		onShow() {
 			this.hasLogin = getApp().globalData.Authorization ? true : false;
+			//#ifdef MP-BAIDU
 			swan.onKeyboardHeightChange(res => {
 				this.inputbottom = res.height
 				this.animation.translateY(-res.height).step()
 				this.animationInputC = this.animation.export()
 			});
+			//#endif
 		},
 		onLoad(obj) {
 			this.serviceProvider = getApp().globalData.serviceProvider
@@ -317,7 +319,7 @@
 							});
 							return
 						}
-
+						that.title = res.data.data.title
 						let inputComponets = res.data.data.content.match(/<input[^>]*\/>/gi);
 						if (inputComponets != null && inputComponets.length > 0){
 							for (var i=0;i<inputComponets.length;i++){
@@ -375,6 +377,7 @@
 						articleInfo.images.forEach((item1, index1) => {
 							articleInfo.images[index1] = that.Utils.addImageProcess(item1, true, 80)
 						})
+						//#ifdef MP-BAIDU
 						swan.setPageInfo({
 							title: articleInfo.title,
 							articleTitle: articleInfo.title,
@@ -386,6 +389,7 @@
 							collects: articleInfo.fav_count,
 							visit: articleInfo.visit_count,
 						}) 
+						//#endif
 						that.articleInfo = articleInfo;
 						that.following = that.articleInfo.follow;
 						// 除了攻略文章，其他计算轮播图高度
