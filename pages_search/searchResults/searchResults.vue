@@ -435,6 +435,7 @@
 		justify-content: space-between;
 		position: sticky;
 		top: 0;
+		color: red;
 	}
 
 	.search-box .mSearch-input-box {

@@ -1103,7 +1103,7 @@
 	}
 	.adress {
 		height: 40rpx;
-		margin-top: 32rpx;
+		// margin-top: 32rpx;
 		margin-left: 28rpx;
 		margin-right: 28rpx;
 		background: rgba(0, 145, 255, 0.1);
