@@ -15,7 +15,7 @@
 			<!-- 内容详情轮播图 -->
 			<view class="uni-padding-wrap" >
 				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="articleInfo.type != 4 && articleInfo.type != 5">
-					<swiper @change="change" class="swiper" :autoplay="true" circular='true' :indicator-dots="false">
+					<swiper @change="change" class="swiper" :autoplay="true" circular='true' :indicator-dots="false" @click="ImgSee">
 						<swiper-item v-for="(item, index) in articleInfo.images" :key="index">
 							<image class="itemImg" :style="{ width: index == 0 ? '100%' : '' }" lazy-load :mode="index == 0 ? 'widthFix' : 'aspectFit'"
 							 :src="item"></image>
@@ -47,7 +47,7 @@
 					<view class="isfollowBox" @click="follow()" v-else-if="articleInfo.is_follow">已关注</view>
 				</view>
 				<!-- 地址 -->
-				<view class="adress">
+				<view class="adress-1">
 					<image src="/static/images/iconMap.svg" mode="" class="adreessIcon"></image>
 					<view class="adressText" @click="map()">{{ articleInfo.location }}</view>
 				</view>
@@ -265,6 +265,12 @@
 			});
 		},
 		methods: {
+			ImgSee(){
+				uni.previewImage({
+					current:this.current,
+					urls: this.articleInfo.images,
+				});
+			},
 			loadData(){
 				uni.showLoading({
 					title: '加载中',
@@ -961,11 +967,9 @@
 	.page-section-spacing {
 		position: relative;
 		width: 100%;
-		
 		.swiper {
 			width: 100%;
 			height: 100%;
-
 			.itemImg {
 				width: 100%;
 				height: 100%;
@@ -1101,7 +1105,10 @@
 			}
 		}
 	}
-	.adress {
+	.adress-1{
+		margin-top: 32rpx;
+	}
+	.adress,.adress-1 {
 		height: 40rpx;
 		// margin-top: 32rpx;
 		margin-left: 28rpx;
