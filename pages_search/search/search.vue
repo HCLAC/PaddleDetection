@@ -334,7 +334,7 @@ export default {
 					});
 					break
 				default:
-					uni.redirectTo({
+					uni.navigateTo({
 						url: '/pages_search/searchResults/searchResults?keyword='+keyword.name
 					});
 			}

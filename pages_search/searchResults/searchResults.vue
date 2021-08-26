@@ -104,7 +104,6 @@
 				isFocus: false
 			};
 		},
-
 		components: {
 			mSearch,
 			uniNavBar,
@@ -218,9 +217,7 @@
 				}
 			},
 			toSearch(){
-				uni.redirectTo({
-					url: '/pages_search/search/search'
-				})
+				this.Utils.back()
 			},
 			focus() {
 				//#ifndef MP-BAIDU
