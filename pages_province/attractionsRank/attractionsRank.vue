@@ -16,7 +16,7 @@
 				<image lazy-load :src="querys.imageProcess" mode="" class="bannerImg"></image>
 				<view class="mask">
 					<view class="content">
-						<!-- <image class="travel" src="/static/images/TRAVEL.png" mode=""></image> -->
+						<image class="travel" src="/static/images/TRAVEL.png" mode=""></image>
 						<view class="atthotbox">
 							<image src="/static/images/leftleaves.svg" mode=""></image>
 							<text class="atthottext">{{querys.name}}热门景点</text>
@@ -332,7 +332,7 @@
 		line-height: 56rpx;
 		letter-spacing: 2rpx;
 
-		// background: url(/static/images/TRAVEL.png) no-repeat center 4rpx;
+		// background: url(./static/images/TRAVEL.png) no-repeat center 4rpx;
 		.travel {
 			width: 100%;
 			height: 100%;
