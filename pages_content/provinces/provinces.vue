@@ -42,7 +42,7 @@
 							<view class="attText">{{ item.name }}</view>
 							<view class="rateBox">
 								<!-- 评分图标 -->
-								<uni-rate :readonly="true" :value="item.rate" :size='12' margin="3" :allowHalf="true"/>
+								<uni-rate :readonly="true" :value="item.rate" :size='12' margin="2" :allowHalf="true"/>
 								<view class="rate">{{ item.rate }} 星</view>
 							</view>
 						</view>
