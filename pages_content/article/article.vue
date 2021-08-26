@@ -192,7 +192,7 @@
 			<view class="send" @click="pubComment">发送</view>
 		</view>
 		<!-- 弹窗 -->
-		<u-modal v-model="show" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
+		<u-modal v-model="show" :content="content" :border-radius="30" :show-title="false"  cancel-color='#303133' :show-cancel-button="true" @confirm="confirm"></u-modal>
 	</view>
 </template>
 
