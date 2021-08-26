@@ -68,7 +68,7 @@
 						<view class="goTo-number">
 							{{ siteInfo.changeVisited }}
 							<view class="" v-if="siteInfo.visited >= 10000">
-								W
+								w
 							</view>
 						</view>
 						<text>人去过</text>
@@ -518,17 +518,16 @@ export default {
 			// margin-right: 10rpx;
 			height: 42rpx;
 			position: absolute;
-			right: 6rpx;
-			background-color: #FFFFFF;
-			bottom: -2rpx;
+			right: 5rpx;
+			// background-color: #FFFFFF;
+			bottom: 0;
 			display: flex;
 			justify-content: flex-end;
 			z-index: 111;
 			.mask{
 				width: 64rpx;
-				// background: red;
 				// background: linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
-				background: linear-gradient(to right,rgab() 0%,white 100%);
+				background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
 			}
 			text {
 				margin-top: 10rpx;
