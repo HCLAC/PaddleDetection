@@ -175,7 +175,7 @@
 // 瀑布流
 .touring{
 	width: 750rpx;
-	background: #f8f8f8;
+	background: #FFFFFF;
 	margin-top: 24rpx;
 	min-height: 1470rpx;
 	display: flex;

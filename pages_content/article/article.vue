@@ -6,7 +6,7 @@
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.png" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -1234,7 +1234,7 @@
 	.replyBox {
 		margin: 28rpx;
 
-		.relpyText {
+		.replyText {
 			height: 32rpx;
 			font-size: 32rpx;
 			font-family: PingFangSC-Medium, PingFang SC;

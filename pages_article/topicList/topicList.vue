@@ -7,7 +7,7 @@
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.png" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -146,6 +146,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 // 头图
 .headImgBox {
 	width: 750rpx;
@@ -159,8 +160,6 @@ export default {
 		position: absolute;
 		// bottom: 0;
 		top: 420rpx;
-		z-index: 100000;
-		
 	}
 	.headImg {
 		width: 100%;
