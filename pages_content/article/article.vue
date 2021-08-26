@@ -69,7 +69,7 @@
 			</view>
 		</view>
 		<!-- 攻略文章 -->
-		<view class="" v-else-if="articleInfo && articleInfo.type == 2">
+		<view class="box-Introduction" v-else-if="articleInfo && articleInfo.type == 2">
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<!-- 标题 -->
@@ -232,12 +232,11 @@
 				inputbottom: 270,
 				textareafocus: false,
 				animation: null,
-				animationInputC: {}
+				animationInputC: {},
 			};
 		},
 		onShow() {
 			this.hasLogin = getApp().globalData.Authorization ? true : false;
-			
 			//#ifdef MP-BAIDU
 			swan.onKeyboardHeightChange(res => {
 				this.inputbottom = res.height
@@ -251,8 +250,8 @@
 			this.article_id = obj.article_id
 			this.animation = uni.createAnimation({
 				  transformOrigin: "50% 50%",
-				  duration: 280,
-				  timingFunction: "ease-in-out",
+				  duration: 175,
+				  timingFunction: "ease-out",
 				  delay: 0
 				}
 			)
@@ -943,9 +942,10 @@
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 	}
-	.detailContent{
+	
+	.box-Introduction{
 		// background: red;
-		// box-shadow: 0 5px 10px #F5F5F5 inset;
+		box-shadow: 0 5px 10px #F5F5F5 inset;
 		// border-top: 2rpx solid #F5F5F5;
 	}
 	.min-box{
@@ -956,6 +956,7 @@
 		align-items: center;
 		margin-left: 10rpx;
 	}
+
 	/* 轮播图 */
 	.page-section-spacing {
 		position: relative;
@@ -1345,9 +1346,11 @@
 	// 评论框
 	.commentInput {
 		width: 100%;
+		padding-bottom: 100rpx;
+		// height: 300rpx;
 		position: fixed;
 		background: #ffffff;
-		bottom: 0;
+		bottom: -100rpx;
 		display: flex;
 		align-items: center;
 		// padding-bottom: 110rpx;

@@ -1,13 +1,13 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 白色-->
-		<view class="nav-bar" v-if="isFixed">
+		<view class="nav-bar">
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="false" :backgroundColor="backgroundColor">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-					<image class="fanhui" src="/static/images/icon-fanhui-white.svg" @click="Utils.back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
+					<image class="fhsy" :src="isFixed?'/static/images/icon-fhsy.svg':'/static/images/icon-fhsy-white.png'" @click="Utils.home"></image>
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -116,25 +116,23 @@
 				}
 				this.isFixed = true;
 				this.backgroundColor = '#ffffff';
-				
 				uni.setNavigationBarColor({
 				    frontColor: '#000000',
 					backgroundColor: '#FFFFFF',
 					fail: err => {
 						console.log('setNavigationBarColor fail', err);
 					}
-					})
+				})
 			} else {
 				this.isFixed = false;
 				this.backgroundColor = 'transparent';
-				
 				uni.setNavigationBarColor({
 				    frontColor: '#ffffff',
 					backgroundColor: '#000000',
 					fail: err => {
 						console.log('setNavigationBarColor fail', err);
 					}
-					})
+				})
 			}
 		},
 		methods: {

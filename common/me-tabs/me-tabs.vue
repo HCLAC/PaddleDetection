@@ -211,10 +211,8 @@
 					// transform: translate(-50%);
 				}
 				.count{
-					// width: 30%;
-					// height: 24rpx;
-					right: 8rpx;
 					position: absolute;
+					left:115rpx;
 					font-size: 24rpx;
 					font-family: PingFangSC-Regular, PingFang SC;
 					font-weight: 400;
@@ -222,7 +220,7 @@
 				}
 				.count1{
 					position: absolute;
-					// right: 12%;
+					left: 120rpx;
 					font-size: 24rpx;
 					font-family: PingFangSC-Regular, PingFang SC;
 					font-weight: 400;

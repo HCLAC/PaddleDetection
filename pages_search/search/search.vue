@@ -281,7 +281,7 @@ export default {
 		
 		toSearchResults() {
 			this.saveKeyword(this.keyValue); //保存为历史
-			uni.redirectTo({
+			uni.navigateTo({
 			    url:  '/pages_search/searchResults/searchResults?keyword='+this.keyValue
 			});
 		},
@@ -309,7 +309,7 @@ export default {
 
 			keyword = keyword;
 			this.saveKeyword(keyword); //保存为历史
-			uni.redirectTo({
+			uni.navigateTo({
 				url: '/pages_search/searchResults/searchResults?keyword='+keyword
 			});
 		},
