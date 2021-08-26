@@ -38,9 +38,7 @@
 					</view>
 				</block>
 				<view class="search-bottom" @click="toSearchResults()">
-					搜索更多关于“
-					<view>{{ keyValue }}</view>
-					”的结果
+					搜索更多关于“{{ keyValue }}”的结果
 				</view>
 			</scroll-view>
 			<scroll-view class="keyword-box" scroll-y scroll-x="false" v-if="isShowHt">
@@ -76,9 +74,7 @@
 		</view>
 		<view v-if="isShowArticlieList">
 			<view class="noResult">
-				没找到“
-				<view>{{ keyValue }}</view>
-				”相关结果
+				没找到“{{ keyValue }}”相关结果
 			</view>
 				<view class="wrap">
 					<articleWaterfall :list="list"></articleWaterfall>
