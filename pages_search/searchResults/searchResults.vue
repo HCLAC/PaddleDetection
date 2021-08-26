@@ -232,6 +232,12 @@
 </script>
 
 <style lang="scss">
+	.center{
+		width: 606rpx !important;
+	}
+	.iconTitle{
+		margin-left: 24rpx !important;
+	}
 	.container {
 		padding-top: 28rpx;
 
