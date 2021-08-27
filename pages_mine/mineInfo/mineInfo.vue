@@ -17,31 +17,30 @@
 				<!-- 头像 -->
 				<u-form-item class="avatarBox" prop="avatar"  @tap="chooseAvatar">
 					<image lazy-load :src="model.avatar" slot="right" style="width: 130rpx; height: 130rpx;border-radius: 50%;margin-left: -10rpx;" ></image>
-					</u-avatar>
 					<view class="avatarText" slot="right">
 						修改头像
 					</view>
 					<image class="moreRight" src="/static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 				<!-- 昵称 -->
-				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}"   :label-position="labelPosition" label="昵　称:" label-width="120" prop="name">
-					<u-input :customStyle="customStyleinput" :border="border"  v-model="model.name" type="text"></u-input>
+				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}"   label="昵　称:" label-width="120" prop="name">
+					<u-input :customStyle="customStyleinput" v-model="model.name" type="text"></u-input>
 				</u-form-item>
 				<!-- 性别 -->
-				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" :label-position="labelPosition" label="性　别:" label-width="120" prop="sex">
-					<u-input :customStyle="customStyleinput" :border="border" :disabled="true"  :select-open="actionSheetShow" v-model="model.sex" @click="actionSheetShow = true"></u-input>
+				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" label="性　别:" label-width="120" prop="sex">
+					<u-input :customStyle="customStyleinput" :disabled="true"  :select-open="actionSheetShow" v-model="model.sex" @click="actionSheetShow = true"></u-input>
 					<image class="moreRight" src="/static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 				<!-- 常住地 -->
-				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" :label-position="labelPosition" label="常住地:" prop="region" label-width="120">
-					<u-input :customStyle="customStyleinput" :border="border" :disabled="true"   :select-open="pickerShow" v-model="model.region" @click="pickerShow = true"></u-input>
+				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" label="常住地:" prop="region" label-width="120">
+					<u-input :customStyle="customStyleinput" :disabled="true" :select-open="pickerShow" v-model="model.region" @click="pickerShow = true"></u-input>
 					<image class="moreRight" src="/static/images/moreR.svg" slot="right" mode=""></image>
 				</u-form-item>
 			</u-form>
 			<view class="customStyle" @click="submit">
 				保存
 			</view>
-			<u-action-sheet :list="actionSheetList"  v-model="actionSheetShow" @click="actionSheetCallback"></u-action-sheet>
+			<u-action-sheet :list="actionSheetList" v-model="actionSheetShow" @click="actionSheetCallback"></u-action-sheet>
 			<u-picker mode="region" v-model="pickerShow" @confirm="regionConfirm"></u-picker>
 		</view>
 	</view>
@@ -163,6 +162,7 @@
 				this.$refs.uForm.validate(valid => {
 					if (!valid) {
 						console.log('验证失败');
+						return
 					}
 					uni.showLoading({
 						title: '修改中',

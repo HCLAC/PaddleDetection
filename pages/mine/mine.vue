@@ -43,7 +43,7 @@
 			<meTabs class="mineTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :lineWidth="70" :tab-width="80"></meTabs>
 		</view>
 		<block v-if="hasLogin">
-			<articleList ref="mescrollItem" v-for="(tab,index) in tabList" :key="i" :tab='tab' :i="index" :index="tabIndex"></articleList>
+			<articleList ref="mescrollItem" v-for="(tab,index) in tabList" :key="index" :tab='tab' :i="index" :index="tabIndex"></articleList>
 		</block>
 	</view>
 </template>

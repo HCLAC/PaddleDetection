@@ -85,7 +85,8 @@
 				downOption:{
 					use:false,
 					auto:false
-				}
+				},
+				upOption:{}
 			};
 		},
 		onLoad() {
