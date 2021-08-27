@@ -213,6 +213,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .mineTabs{
 	width: 100%;
 	background: #ffffff;
@@ -220,8 +221,8 @@ export default {
 	overflow: hidden;
 	position: absolute;
 	// bottom: 0;
-	top: 420rpx;
-	z-index: 100000;
+	top: 360rpx;
+	z-index: 10;
 }
 .nav-bar {
 	z-index: 999;

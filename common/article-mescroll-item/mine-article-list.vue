@@ -1,5 +1,5 @@
 <template>
-	<view v-show="i === index" style="padding: 0 28rpx;">
+	<view v-show="i === index"  style="padding: 0 28rpx;">
 		<!-- margin-top: 70%; -->
 		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback" :top="top" :bottom="bom" @up="upCallback" :down="downOption" :up="upOption"  >
 			<view v-for="(item, index) in list" :key="index" @click="onPageJump" :id="item.article_id">
@@ -27,10 +27,20 @@
 						</view>
 						<view class="favandlikebox">
 							<view class="fav">
-								{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}收藏
+								<view class="fav-number">
+									{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}
+								</view>
+								<view class="fav-text">
+									收藏
+								</view>
 							</view>
 							<view class="like">
-								{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}点赞
+								<view class="like-number">
+									{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}
+								</view>
+								<view class="like-text">
+									点赞
+								</view>
 							</view>
 						</view>
 						<view class="position">
@@ -176,7 +186,7 @@
 						if(this.list.length == 0){
 							this.top = 374
 						}else{
-							this.top = 550
+							this.top = 480
 						}
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
@@ -276,7 +286,7 @@
 		// white-space: nowrap;
 	}
 	.right .title {
-		width: 480rpx;
+		width: 482rpx;
 		height: 32rpx;
 		font-size: 32rpx;
 		font-weight: 500;
@@ -317,9 +327,17 @@
 		margin-top: 14rpx;
 		font-size: 22rpx;
 		// font-family: Roboto-Regular, Roboto;
-		font-weight: 400;
 		color: #606266;
 		line-height: 22rpx;
+		.fav,.like{
+			display: flex;
+			.fav-number,.like-number{
+				font-weight: 500;
+			}
+			.fav-text,.like-text{
+				font-weight: 400;
+			}
+		}
 	}
 	.like{
 		margin-left: 20rpx;
