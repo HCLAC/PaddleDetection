@@ -16,27 +16,23 @@
 			<view class="reportTitle">
 				这条内容存在什么问题？
 			</view>
-			<u-form :model="model" :rules="rules" ref="uForm" :errorType="errorType">
+			<view>
 				<!-- 选项 -->
-				<u-form-item :label-position="labelPosition" :border-bottom="false" prop="payType" label-width="150">
-					<u-radio-group v-model="radio" @change="radioGroupChange"  activeColor="#ffe512" :width="radioCheckWidth" :wrap="radioCheckWrap">
-						<u-radio shape="circle" v-model="item.checked"  v-for="(item, index) in radioList" :key="index" :name="item.name">{{ item.name }}</u-radio>
-					</u-radio-group>
-				</u-form-item>
+				<u-radio-group v-model="selectName" @change="radioGroupChange" activeColor="#ffe512" width="auto">
+					<u-radio shape="circle" v-for="(item, index) in radioList" :key="index" :labelColor="selectName==item.name?'#303133':'#909399'" :name="item.name">{{ item.name }}</u-radio>
+				</u-radio-group>
 				<!-- 内容 -->
-				<u-form-item class="formItem" :label-position="labelPosition" :border-bottom="false" prop="intro">
-					<textarea
-						class="textArea"
-						:clearable="false"  
-						placeholder="为帮助审核人员更加快速处理，请补充违规内容出现位置等详细信息" 
-						placeholder-style="font-size:28rpx;line-height:42rpx"
-						maxlength="140"  
-						:style="{background: customStyleInput.background}" 
-						v-model="modelIntro" 
-					>
-					</textarea>
-				</u-form-item>
-			</u-form>
+				<textarea
+					class="textArea"
+					:clearable="false"  
+					placeholder="为帮助审核人员更加快速处理，请补充违规内容出现位置等详细信息" 
+					placeholder-style="font-size:28rpx;line-height:42rpx"
+					maxlength="140"  
+					style="background:#f8f8f8;" 
+					v-model="reportInfo" 
+				>
+				</textarea>
+			</view>
 			<view class="textNum">
 				{{number}}/140
 			</view>
@@ -53,91 +49,46 @@
 			return {
 				number:0,
 				id:'',
-				model: {
-					intro: '',
-					payType:''
-				},
-				modelIntro: '',
-				rules:{
-					intro: [
-						{
-							min: 5, 
-							message: '原因不能少于5个字', 
-							trigger: 'change'
-						},
-					],
-					payType: [
-						{
-							required: false,
-							message: '请选择一种举报类型',
-							trigger: 'change',
-						}
-					],
-				},
+				reportInfo: '',
+				selectName: '',
 				radioList: [
 					{
 						name: '广告灌水',
-						checked: true,
-						disabled: false
 					},
 					{
 						name: '色情暴力',
-						checked: false,
-						disabled: false
 					},
 					{
 						name: '危害国家安全',
-						checked: false,
-						disabled: false
 					},
 					{
 						name: '错误信息',
-						checked: false,
-						disabled: false
 					},
 					{
 						name: '盗用',
-						checked: false,
-						disabled: false
 					},
 					{
 						name: '其他',
-						checked: false,
-						disabled: false
 					}
 				],
-				check: false,
-				radio: '',
-				actionSheetShow: false,
-				radioCheckWidth: 'auto',
-				radioCheckWrap: false,
-				labelPosition: 'left',
-				errorType: ['message'],
 				customStyle:{
 					background: '#EDEFF2'
 				},
-				customStyleInput:{
-					background: '#f8f8f8',
-				},
-				disabled:true,
 				show: false,
 				content: '提交成功'
 			}
-		},
-		onReady() {
-			this.$refs.uForm.setRules(this.rules);
 		},
 		onLoad(e) {
 			this.id = e.id
 		},
 		watch:{
-			modelIntro(val){
+			reportInfo(val){
 				this.number = val.length
-				if(val.length && val.length > 0 ){
-						this.customStyle.background = '#FFE512';
-					}else {
-						this.customStyle.background = '#EDEFF2';
-					}
+				if(val.length && val.length > 4 ){
+					this.customStyle.background = '#FFE512';
+				}else {
+					this.customStyle.background = '#EDEFF2';
+				}
 			}
 		},
 		methods: {
@@ -145,41 +96,40 @@
 				if (!this.Utils.isLogin()){
 					return
 				}
-				let introLength = this.modelIntro.length
-				if (introLength >= 5) {
-					this.HTTP.request({
-						url: '/comments/report',
-						data: {
-							id: this.id,
-							behavior: this.model.payType,
-							content: this.modelIntro
-						},
-						method: 'POST',
-						success: res => {
-							if (res.statusCode != 200 || res.data.code != 0){
-								uni.showToast({
-									title: res.data.msg,
-									icon: 'none'
-								});
-								return
-							}
-							this.show = true
-						}
-					});
-				} else {
+				let introLength = this.reportInfo.length
+				if (introLength < 5) {
 					uni.showToast({
 						title: '原因不能少于5个字',
 						icon:'none',
 						duration: 2000
 					})
+					return
 				}
+				this.HTTP.request({
+					url: '/comments/report',
+					data: {
+						id: this.id,
+						behavior: this.selectName,
+						content: this.reportInfo
+					},
+					method: 'POST',
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						this.show = true
+					}
+				});
 			},
 			confirm(){
 				this.Utils.back()
 			},
 			// radio选择发生变化
 			radioGroupChange(e) {
-				this.model.payType = e;
 			},
 		}
 	}
