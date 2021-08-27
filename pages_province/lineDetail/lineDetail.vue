@@ -312,6 +312,11 @@ export default {
 </script>
 
 <style lang="scss">
+.tabs-line{
+	border-radius: 12px !important;
+	height: 12rpx !important;
+	margin-bottom: 2rpx !important;
+}
 .page-section-spacing {
 	position: relative;
 	width: 100%;
