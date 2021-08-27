@@ -56,13 +56,26 @@
 		name:"article-list",
 		mixins: [MescrollMixin, MescrollMoreItemMixin], // 注意此处还需使用MescrollMoreItemMixin (必须写在MescrollMixin后面)
 		props:{
-			i: Number, // 每个tab页的专属下标 (除了支付宝小程序必须在这里定义, 其他平台都可不用写, 因为已在MescrollMoreItemMixin定义)
+			i: Number,
 			index: { // 当前tab的下标 (除了支付宝小程序必须在这里定义, 其他平台都可不用写, 因为已在MescrollMoreItemMixin定义)
 				type: Number,
 				default(){
 					return 0
 				}
-			}
+			},
+			tab: { 
+				type: Object,
+				default(){
+					return null
+				}
+			},
+		},
+		computed:{
+			update(){
+				if (this.isInit){
+					this.mescroll.optUp.empty.tip = this.tab.tip
+				}
+			},
 		},
 		data() {
 			return {
@@ -81,8 +94,7 @@
 					noMoreSize: 1, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
 					empty:{
 					  use : true ,
-					  // icon : null ,
-					  tip : this.i?'您的收藏夹空空如也～':'您还没有赞过任何文章哦～',
+					  tip : '',
 					  btnText : "",
 					  fixed: false,
 					  top: "100px",

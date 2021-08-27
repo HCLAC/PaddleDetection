@@ -43,7 +43,7 @@
 			<meTabs class="mineTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :lineWidth="70" :tab-width="80"></meTabs>
 		</view>
 		<block v-if="hasLogin">
-			<articleList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex"></articleList>
+			<articleList ref="mescrollItem" v-for="(tab,index) in tabList" :key="i" :tab='tab' :i="index" :index="tabIndex"></articleList>
 		</block>
 	</view>
 </template>
@@ -67,9 +67,11 @@ export default {
 			tabList: [{
 					name: '收藏',
 					count: '',
+					tip: '您的收藏夹空空如也～'
 				}, {
 					name: '已赞',
-					count: ''
+					count: '',
+					tip: '您还没有赞过任何文章哦～'
 				}],
 			tabIndex: 0,
 			favnumcolor:{
