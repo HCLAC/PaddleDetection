@@ -23,8 +23,8 @@ import MescrollBody from "@/components/mescroll-uni/mescroll-body.vue"
 Vue.component('mescroll-body', MescrollBody)
 App.mpType = 'app'
 
-import MetaInfo from 'vue-meta-info'
-Vue.use(MetaInfo)
+// import MetaInfo from 'vue-meta-info'
+// Vue.use(MetaInfo)
 
 
 const app = new Vue({
