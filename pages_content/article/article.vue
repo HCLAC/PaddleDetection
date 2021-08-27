@@ -229,17 +229,30 @@
 				userInfo: {},
 				focus: false,
 				autoHeight: false,
-				inputbottom: 270,
 				textareafocus: false,
 				animation: null,
 				animationInputC: {},
 			};
 		},
+		//#ifdef H5
+		metaInfo() {
+			return {
+				title: this.articleInfo.title+"-领途羊", // set a title
+				meta: [{                 // set meta
+					name: 'keywords',
+					content: this.articleInfo.keywords
+				},
+				{                 // set meta
+					name: 'description',
+					content: this.articleInfo.description
+				}]
+			}
+		},
+		// #endif
 		onShow() {
 			this.hasLogin = getApp().globalData.Authorization ? true : false;
 			//#ifdef MP-BAIDU
 			swan.onKeyboardHeightChange(res => {
-				this.inputbottom = res.height
 				this.animation.translateY(-res.height).step()
 				this.animationInputC = this.animation.export()
 			});
@@ -782,7 +795,7 @@
 							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
 						})
 						this.commentsList = commentsList
-						this.comment_count = res.data.data.total
+						this.comment_count = res.data.data.total==0?'':res.data.data.total
 					}
 				});
 			},

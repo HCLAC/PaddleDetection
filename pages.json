@@ -24,6 +24,19 @@
 				"navigationStyle": "custom"
 			}
 		}
+        ,{
+            "path" : "swan-sitemap/index",
+            "style" :                                                                                    
+            {
+				"mp-baidu": {
+					"usingComponents": {
+						"swan-sitemap-list": "dynamicLib://swan-sitemap-lib/swan-sitemap-list"
+					}
+				},
+				"navigationStyle": "default",
+                "navigationBarTitleText": "自然搜索索引页"
+            }
+        }
     ],
 	"subPackages": [
 		{
@@ -293,10 +306,5 @@
 		"color": "#C9CAD1",
 		"selectedColor": "#303133",
 		"borderStyle": "black"
-	},
-	"dynamicLib": {
-		"smartUI": {
-			"provider": "smart-ui"
-		}
 	}
 }

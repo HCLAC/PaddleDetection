@@ -1,5 +1,5 @@
 {
-    "name" : "lingtuyang",
+    "name" : "领途羊",
     "appid" : "__UNI__71D005B",
     "description" : "",
     "versionName" : "1.0.0",
@@ -78,8 +78,15 @@
         "uniStatistics" : {
             "enable" : true
         },
-		"optimization" : {
-		    "subPackages" : true
+        "optimization" : {
+            "subPackages" : true
+        },
+		"dynamicLib": {
+			// 'swan-sitemap-lib' 是个可自己定的别名。
+			"swan-sitemap-lib": {
+				// provider 是要引用的动态库的名字，在此为 'swan-sitemap'。
+				"provider": "swan-sitemap"
+			}
 		}
     },
     "mp-toutiao" : {
@@ -90,9 +97,9 @@
             "postcss" : true
         },
         "appid" : "tt74ea0257ebd1c647",
-		"optimization" : {
-		    "subPackages" : true
-		}
+        "optimization" : {
+            "subPackages" : true
+        }
     },
     "uniStatistics" : {
         "enable" : true
@@ -103,7 +110,15 @@
         },
         "title" : "领途羊",
         "router" : {
-            "mode" : "hash"
+            "mode" : "history"
+        },
+        "template" : "template-dev.h5.html",
+        "sdkConfigs" : {
+            "maps" : {
+                "qqmap" : {
+                    "key" : "3L3BZ-V5OCV-GXHPP-ULIVW-DYQRT-HRFBL"
+                }
+            }
         }
     },
     "mp-alipay" : {
