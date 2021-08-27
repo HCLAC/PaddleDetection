@@ -161,15 +161,12 @@
 			onClickLabel() {
 				if (!this.elLabelDisabled && !this.elDisabled) {
 					this.parent.setValue(this.name);
-					
 					this.emitEvent();
 				}
-				
 			},
 			toggle() {
 				if (!this.elDisabled) {
 					this.parent.setValue(this.name);
-					this.labelColor = '#303133'
 					this.emitEvent();
 				}
 			},
