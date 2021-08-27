@@ -236,8 +236,8 @@ export default {
 		align-items: center;
 	}
 	.placeholder-class {
-		// color: #c9cad1;
-		color: #606266;
+		color: #c9cad1;
+		// color: #606266;
 		font-size: 28rpx;
 	}
 	.button {

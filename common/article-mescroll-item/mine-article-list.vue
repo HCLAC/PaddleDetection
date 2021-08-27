@@ -198,7 +198,7 @@
 						if(this.list.length == 0){
 							this.top = 374
 						}else{
-							this.top = 480
+							this.top = 490
 						}
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
