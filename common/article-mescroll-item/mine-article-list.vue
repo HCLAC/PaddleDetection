@@ -1,7 +1,7 @@
 <template>
 	<view v-show="i === index" style="padding: 0 28rpx;">
 		<!-- margin-top: 70%; -->
-		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback" :top="top" :bottom="bom"  @up="upCallback" :down="downOption" :up="upOption"  >
+		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback" :top="top" :bottom="bom" @up="upCallback" :down="downOption" :up="upOption"  >
 			<view v-for="(item, index) in list" :key="index" @click="onPageJump" :id="item.article_id">
 				<view class="contentItem">
 					<view class="left">
@@ -81,11 +81,11 @@
 					noMoreSize: 1, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
 					empty:{
 					  use : true ,
-					  icon : null ,
+					  // icon : null ,
 					  tip : this.i?'您的收藏夹空空如也～':'您还没有赞过任何文章哦～',
 					  btnText : "",
 					  fixed: false,
-					  top: "100rpx",
+					  top: "100px",
 					  zIndex: 99
 					}
 				}
@@ -146,7 +146,8 @@
 						}
 						// 接口返回的当前页数据列表 (数组)
 						if (!res.data.data || !res.data.data.list || res.data.data.list.length == 0){
-							that.list = [];
+							this.list = [];
+							this.top = 374
 							that.mescroll.endBySize(0, 0);
 							return
 						}

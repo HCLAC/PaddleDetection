@@ -233,7 +233,7 @@
 		width: 606rpx !important;
 	}
 	.iconTitle{
-		margin-left: 24rpx !important;
+		margin-left: 22rpx !important;
 	}
 	.container {
 		padding-top: 28rpx;
