@@ -147,6 +147,7 @@
 							return
 						}
 						if (!res.data.data || !res.data.data.list || res.data.data.list.length == 0){
+							that.list = [];
 							that.mescroll.endBySize(0, 0);
 							return
 						}
