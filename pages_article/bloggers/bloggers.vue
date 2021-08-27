@@ -208,8 +208,8 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 	overflow: hidden;
 	position: absolute;
 	// bottom: 0;
-	top: 420rpx;
-	z-index: 100000;
+	top: 360rpx;
+	z-index: 10;
 } 
 .nav-bar {
 	z-index: 999;

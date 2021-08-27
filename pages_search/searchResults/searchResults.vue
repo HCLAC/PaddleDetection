@@ -66,7 +66,10 @@
 					<view class="swiper">
 						<view class="swiperItem" v-for="(item, index) in route_list" @click="getRoute(item.uuid)" :key="index">
 							<image lazy-load :src="item.image"></image>
-							<view class="title"><rich-text :nodes="item.htmlStr"></rich-text></view>
+							<view class="">
+								{{item.title}}
+							</view>
+							<!-- <view class="title"><rich-text :nodes="item.htmlStr"></rich-text></view> -->
 						</view>
 					</view>
 				</view>
@@ -152,6 +155,7 @@
 						that.list = list
 						
 						var route_list = res.data.data.route_list;
+						console.log(route_list,'route_list')
 						route_list && route_list.forEach((item1, index1) => {
 							item1.image = this.Utils.addImageProcess(item1.image, false, 50)
 						})
@@ -372,7 +376,10 @@
 				flex: none;
 				width: 46%;
 				margin-right: calc( 8% / 2);
-				// margin-right: 18rpx;
+				font-size: 28rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
+				color: #303133;
 				image {
 					width: 98%;
 					// width: 338rpx;
