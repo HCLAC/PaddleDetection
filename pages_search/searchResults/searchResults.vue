@@ -233,6 +233,7 @@
 </script>
 
 <style lang="scss">
+
 	.center{
 		width: 606rpx !important;
 	}

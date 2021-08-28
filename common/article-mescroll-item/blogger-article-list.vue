@@ -25,10 +25,20 @@
 						</view>
 						<view class="favandlikebox">
 							<view class="fav">
-								{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}收藏
+								<view class="fav-number">
+									{{item.fav_count>10000?((item.fav_count-(item.fav_count%1000))/10000+'w'):item.fav_count}}
+								</view>
+								<view class="fav-text">
+									收藏
+								</view>
 							</view>
 							<view class="like">
-								{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}点赞
+								<view class="like-number">
+									{{item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count}}
+								</view>
+								<view class="like-text">
+									点赞
+								</view>
 							</view>
 						</view>
 						<view class="position">
@@ -175,7 +185,7 @@
 						if(this.list.length == 0){
 							this.top = 374
 						}else{
-							this.top = 480
+							this.top = 490
 						}
 						
 						// 请求成功,隐藏加载状态
@@ -325,9 +335,18 @@
 		margin-top: 14rpx;
 		font-size: 22rpx;
 		// font-family: Roboto-Regular, Roboto;
-		font-weight: 400;
+		// font-weight: 400;
 		color: #606266;
 		line-height: 22rpx;
+		.fav,.like{
+			display: flex;
+			.fav-number,.like-number{
+				font-weight: 500;
+			}
+			.fav-text,.like-text{
+				font-weight: 400;
+			}
+		}
 	}
 
 	.like {
