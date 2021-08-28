@@ -56,7 +56,7 @@
 				<view class="trip" v-if="routeHot.length">
 					<view class="tripHeader">
 						<view class="tripTitle">行程路线</view>
-						<view class="tripMore" @click="toLineMore()" v-if="routeHot.length > 2">
+						<view class="tripMore" @click="toLineMore()" v-if="routeHot.length == 2">
 							更多
 							<image class="moreIcon" src="/static/images/more-right.svg" mode=""></image>
 						</view>
