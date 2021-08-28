@@ -191,8 +191,13 @@
 			 :adjust-position="false"></textarea>
 			<view class="send" @click="pubComment">发送</view>
 		</view>
+		
 		<!-- 弹窗 -->
 		<u-modal v-model="show" :content="content" :border-radius="30" :show-title="false"  cancel-color='#303133' :show-cancel-button="true" @confirm="confirm"></u-modal>
+		<!-- 遮罩层 -->
+		<view class="mask" v-if="textareafocus">
+			
+		</view>
 	</view>
 </template>
 
@@ -253,7 +258,7 @@
 			this.hasLogin = getApp().globalData.Authorization ? true : false;
 			//#ifdef MP-BAIDU
 			swan.onKeyboardHeightChange(res => {
-				this.animation.translateY(-res.height).step()
+				this.animation.translateY(- (res.height + 60)).step()
 				this.animationInputC = this.animation.export()
 			});
 			//#endif
@@ -263,7 +268,7 @@
 			this.article_id = obj.article_id
 			this.animation = uni.createAnimation({
 				  transformOrigin: "50% 50%",
-				  duration: 175,
+				  duration: 150,
 				  timingFunction: "ease-out",
 				  delay: 0
 				}
@@ -1041,7 +1046,14 @@
 		}
 	}
 
-
+	.mask{
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		background: rgba(0, 0, 0, 0.4);
+		top: 0;
+		z-index: 100;
+	}
 
 	
 
@@ -1366,21 +1378,29 @@
 	// 评论框
 	.commentInput {
 		width: 100%;
-		padding-bottom: 100rpx;
+		height: 100px;
+		// padding-bottom: 100rpx;
 		// height: 300rpx;
 		position: fixed;
 		background: #ffffff;
-		bottom: -100rpx;
+		bottom: -100px;
 		display: flex;
-		align-items: center;
+		z-index: 110;
+		// align-items: center;
 		// padding-bottom: 110rpx;
 		.inputK {
-			height: 28rpx;
-			width: 558rpx;
+			// height: 28rpx;
+			// width: 558rpx;
+			// background: #F8F8F8;
+			// border-radius: 4px;
+			// margin: 16rpx 32rpx;
+			// padding: 20rpx 16rpx;
+			height: 14px;
+			width: 295px;
+			margin: 8px 16px;
 			background: #F8F8F8;
+			padding: 10px 8px;
 			border-radius: 4px;
-			margin: 16rpx 32rpx;
-			padding: 20rpx 16rpx;
 		}
 
 		.send {
@@ -1391,7 +1411,7 @@
 			font-weight: 500;
 			color: #0091FF;
 			line-height: 32rpx;
-
+			margin-top: 36rpx;
 		}
 	}
 

@@ -13,7 +13,6 @@
 		</view>
 		<!-- 信息表单 -->
 		<view class="" style="margin:0 28rpx;" >
-			
 			<view class="form-box"  :errorType="errorType">
 				<!-- 头像 -->
 				<view class="form-image" @click="chooseAvatar">
@@ -147,9 +146,7 @@
 			this.model = options
 		},
 		methods:{
-			qqq(){
-				console.log(11)
-			},
+
 			// 头像裁剪
 			chooseAvatar() {
 				// 新上传头像方法
