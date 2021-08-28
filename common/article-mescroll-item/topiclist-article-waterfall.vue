@@ -177,7 +177,7 @@
 .touring{
 	width: 750rpx;
 	background: #FFFFFF;
-	margin-top: 24rpx;
+	// margin-top: 24rpx;
 	min-height: 1470rpx;
 	display: flex;
 	flex-flow: row;

@@ -37,7 +37,7 @@
 				{{number}}/140
 			</view>
 			<button class="bbutton" @click="submit" :style="{background: customStyle.background}"  >提交举报</button>
-			<u-modal v-model="show" :content="content" @confirm="confirm" z-index="999999" :show-title="false" :show-cancel-button="false" confirm-text="OK" confirm-color="#007AFF" ></u-modal>
+			<u-modal v-model="show" :content="content" :border-radius="40" @confirm="confirm" z-index="999999" :show-title="false" :show-cancel-button="false" confirm-text="OK" confirm-color="#007AFF" ></u-modal>
 		</view>
 	</view>
 </template>
