@@ -160,6 +160,9 @@
 			// 保存
 			submit() {
 				this.$refs.uForm.validate(valid => {
+					if ('/static/images/userImg.svg' === this.model.avatar){
+						this.model.avatar = ''
+					}
 					if (!valid) {
 						console.log('验证失败');
 						return
