@@ -187,7 +187,7 @@
 		<!-- 评论输入框 -->
 		<view :animation="animationInputC" class="commentInput" >
 			<textarea class="inputK" v-model="contentText" placeholder="快来写下你的评论吧" :show-confirm-bar="false" :focus="textareafocus"
-			 @blur="inputBlur" :auto-height="autoHeight" @input="inputValue" maxlength="140" cursor-spacing="20"
+			 @blur="inputBlur" :auto-height="autoHeight" @input="inputValue" maxlength="140"
 			 :adjust-position="false"></textarea>
 			<view class="send" @click="pubComment">发送</view>
 		</view>
@@ -258,10 +258,6 @@
 			this.hasLogin = getApp().globalData.Authorization ? true : false;
 			//#ifdef MP-BAIDU
 			swan.onKeyboardHeightChange(res => {
-				uni.showToast({
-					title: res.height,
-					icon: 'success'
-				});
 				this.animation.translateY(- (res.height + 60)).step()
 				this.animationInputC = this.animation.export()
 			});
