@@ -195,6 +195,7 @@ export default {
 					_this.getCodeisWaiting = false;
 					_this.getCodeBtnColor = '#ffffff';
 					_this.getCodeText = '获取验证码';
+					_this.codeColor.color = 'rgba(0, 145, 255, 1)';
 					clearInterval(_this.Timer);
 					return;
 				}
