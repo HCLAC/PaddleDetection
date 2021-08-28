@@ -51,7 +51,7 @@
 						/>
 						<image src="/static/images/gb.svg" mode="" class="searchSel" v-if="code && isShowcode"  @click="clearcode()"></image>
 						<view class="code-sx"></view>
-						<view class="codeimg" @click.stop="getCode()" :style="{ color: codeColor }">{{ getCodeText }}</view>
+						<view class="codeimg" @click.stop="getCode()" :style="{ color: codeColor.color }">{{ getCodeText }}</view>
 					</view>
 					<u-line color="rgba(237, 239, 242, 1)" margin="40rpx 0rpx"></u-line>
 				</view>
@@ -78,7 +78,7 @@ export default {
 			getCodeisWaiting: false,
 			codeObj: '',
 			codeColor: {
-				color: '#0091FF'
+				color: '#0091FF',
 			},
 			styleObj: {
 				color: '#C9CAD1'
@@ -94,7 +94,7 @@ export default {
 			isShowcode: false,
 			serviceProvider: null,
 			serviceSource: null,
-			platform: ''
+			platform: '',
 		};
 	},
 	onLoad(options) {
@@ -187,8 +187,8 @@ export default {
 		},
 		setTimer() {
 			let holdTime = 59,
-				_this = this;
-			_this.codeColor.color = 'rgba(0,145,255,0.52)';
+			_this = this;
+			_this.codeColor.color = 'rgba(0, 145, 255, 0.52)';
 			_this.getCodeText = '60s重新获取';
 			_this.Timer = setInterval(() => {
 				if (holdTime <= 0) {
@@ -442,14 +442,14 @@ export default {
 }
 // .is-input1:valid + .searchSel {display: block;}
 .codeimg {
-	width:204rpx;
+	width:200rpx;
 	height: 30rpx;
 	font-size: 30rpx;
 	font-family: PingFangSC-Regular, PingFang SC;
 	font-weight: 400;
-	color: rgba(0, 145, 255, 1);
+	// color: rgba(0, 145, 255, 1);
 	line-height: 30rpx;
-	margin-right: 32rpx;
+	// margin-right: 32rpx;
 }
 .loginButton .lb {
 	width: 692rpx;
