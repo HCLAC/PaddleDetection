@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<view class="nav-bar">
+		<view class="nav-bar" style="border-bottom: 2rpx solid #EDEFF2;">
 			<uni-nav-bar :fixed="true" :status-bar="true" :border="true" title="修改资料">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -13,31 +13,38 @@
 		</view>
 		<!-- 信息表单 -->
 		<view class="" style="margin:0 28rpx;" >
-			<u-form :model="model" :rules="rules" ref="uForm" :errorType="errorType" >
+			
+			<view class="form-box"  :errorType="errorType">
 				<!-- 头像 -->
-				<u-form-item class="avatarBox" prop="avatar"  @tap="chooseAvatar">
-					<image lazy-load :src="model.avatar" slot="right" style="width: 130rpx; height: 130rpx;border-radius: 50%;margin-left: -10rpx;" ></image>
-					</u-avatar>
-					<view class="avatarText" slot="right">
+				<view class="form-image" @click="chooseAvatar">
+					<image lazy-load :src="model.avatar"  style="width: 130rpx; height: 130rpx;border-radius: 50%;margin-left: -10rpx;" ></image>
+					<view class="avatarText" >
 						修改头像
 					</view>
-					<image class="moreRight" src="/static/images/moreR.svg" slot="right" mode=""></image>
-				</u-form-item>
+					<image class="moreRight" src="/static/images/moreR.svg"  mode=""></image>
+				</view>
 				<!-- 昵称 -->
-				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}"   :label-position="labelPosition" label="昵　称:" label-width="120" prop="name">
+				<view class="form-name">
+					<text space="nbsp">昵   称：</text>
 					<u-input :customStyle="customStyleinput" :border="border"  v-model="model.name" type="text"></u-input>
-				</u-form-item>
+				</view>
 				<!-- 性别 -->
-				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" :label-position="labelPosition" label="性　别:" label-width="120" prop="sex">
-					<u-input :customStyle="customStyleinput" :border="border" :disabled="true"  :select-open="actionSheetShow" v-model="model.sex" @click="actionSheetShow = true"></u-input>
+				<view class="form-sex">
+					<view class="sex-box">
+						<text space="nbsp">性   别：</text>
+						<u-input :customStyle="customStyleinput" :border="border" :disabled="true"  :select-open="actionSheetShow" v-model="model.sex" @click="actionSheetShow = true"></u-input>
+					</view>
 					<image class="moreRight" src="/static/images/moreR.svg" slot="right" mode=""></image>
-				</u-form-item>
+				</view>
 				<!-- 常住地 -->
-				<u-form-item :label-style="{fontWeight:'400',color: '#909399',fontSize:'28rpx',fontFamily: 'PingFangSC-Regular, PingFang SC'}" :label-position="labelPosition" label="常住地:" prop="region" label-width="120">
-					<u-input :customStyle="customStyleinput" :border="border" :disabled="true"   :select-open="pickerShow" v-model="model.region" @click="pickerShow = true"></u-input>
+				<view class="form-region">
+					<view class="region-box">
+						<text space="nbsp">常住地：</text>
+						<u-input :customStyle="customStyleinput" :border="border" :disabled="true"   :select-open="pickerShow" v-model="model.region" @click="pickerShow = true"></u-input>
+					</view>
 					<image class="moreRight" src="/static/images/moreR.svg" slot="right" mode=""></image>
-				</u-form-item>
-			</u-form>
+				</view>
+			</view>
 			<view class="customStyle" @click="submit">
 				保存
 			</view>
@@ -120,13 +127,14 @@
 				selectShow: false,
 				errorType: ['message'],
 				customStyleinput:{
+					width:'540rpx',
 					margin:'16rpx 0'
 				}
 			};
 		},
-		onReady() {
-			this.$refs.uForm.setRules(this.rules);
-		},
+		// onReady() {
+		// 	this.$refs.uForm.setRules(this.rules);
+		// },
 		created() {
 			// 监听从裁剪页发布的事件，获得裁剪结果
 			uni.$on('cropper', e => {
@@ -139,6 +147,9 @@
 			this.model = options
 		},
 		methods:{
+			qqq(){
+				console.log(11)
+			},
 			// 头像裁剪
 			chooseAvatar() {
 				// 新上传头像方法
@@ -160,45 +171,40 @@
 			},
 			// 保存
 			submit() {
-				this.$refs.uForm.validate(valid => {
-					if (!valid) {
-						console.log('验证失败');
+				uni.showLoading({
+					title: '修改中',
+					mask: true,
+					success: () => {
 					}
-					uni.showLoading({
-						title: '修改中',
-						mask: true,
-						success: () => {
-						}
-					});
-					this.HTTP.request({
-						url: '/user/info',
-						data: {
-							nick_name: this.model.name,
-							avatar: this.model.avatar,
-							gender: this.model.sex == '男' ? 1 : this.model.sex == '女' ? 2 : 0,
-							location: this.model.region ? this.model.region : '北京'
-							
-						},
-						method: 'POST',
-						success: res => {
-							uni.hideLoading();
-							if(res.data.code == 0){
-								this.Utils.back()
-							} else {
-								uni.showToast({
-									title: '修改失败',
-									icon: 'none'
-								});
-							}
-						}, 
-						fail: res=>{
-							uni.hideLoading();
+				});
+				this.HTTP.request({
+					url: '/user/info',
+					data: {
+						nick_name: this.model.name,
+						avatar: this.model.avatar,
+						gender: this.model.sex == '男' ? 1 : this.model.sex == '女' ? 2 : 0,
+						location: this.model.region ? this.model.region : '北京'
+						
+					},
+					method: 'POST',
+					success: res => {
+						uni.hideLoading();
+						if(res.data.code == 0){
+							this.Utils.back()
+						} else {
 							uni.showToast({
 								title: '修改失败',
 								icon: 'none'
 							});
 						}
-					});
+					}, 
+					fail: res=>{
+						uni.hideLoading();
+						uni.showToast({
+							title: '修改失败',
+							icon: 'none'
+						});
+					}
 				});
 			},
 			// 选择地区回调
@@ -210,23 +216,62 @@
 </script>
 
 <style lang="scss" scoped>
-.avatarBox{
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	image{
-		margin: 24rpx 0;
+.form-box{
+	.form-image{
+		height: 178rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		// border-radius: 4rpx solid red;
+		border-bottom: 1rpx solid #EDEFF2;
+		.avatarText{
+			height: 28rpx;
+			font-size: 28rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #909399;
+			line-height: 28rpx;
+			margin-left: 28rpx;
+			margin-right:390rpx ;
+		}
 	}
-}
-.avatarText{
-	height: 28rpx;
-	font-size: 28rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: #909399;
-	line-height: 28rpx;
-	margin-left: 28rpx;
-	margin-right:390rpx ;
+	.form-name{
+		display: flex;
+		align-items: center;
+		height: 96rpx;
+		margin-top: 6rpx;
+		border-bottom: 1rpx solid #EDEFF2;
+		text{
+			font-size: 28rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #909399;
+		}
+	}
+	.form-sex,.form-region{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 96rpx;
+		margin-top: 2rpx;
+		border-bottom: 1rpx solid #EDEFF2;
+		.sex-box,.region-box{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			text{
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #909399;
+			}
+		}
+		.moreRight{
+			width: 20rpx;
+			height: 20rpx;
+			// margin-left: 400rpx;
+		}
+	}
 }
 .moreRight{
 	width: 20rpx;
