@@ -193,7 +193,7 @@
 		</view>
 		
 		<!-- 弹窗 -->
-		<u-modal v-model="show" :content="content" :border-radius="30" :show-title="false"  cancel-color='#303133' :show-cancel-button="true" @confirm="confirm"></u-modal>
+		<u-modal v-model="show" :content="content" :border-radius="40" :show-title="false"  cancel-color='#303133' :show-cancel-button="true" @confirm="confirm"></u-modal>
 		<!-- 遮罩层 -->
 		<view class="mask" v-if="textareafocus">
 			
