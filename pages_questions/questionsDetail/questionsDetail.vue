@@ -184,7 +184,7 @@
 			</view>
 		</view>
 		<!-- 弹窗 -->
-		<u-modal v-model="show" :content="contentp" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
+		<u-modal v-model="show" :border-radius="40" :content="contentp" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 		<u-modal v-model="weshow" width="670rpx" :show-title="false"  :mask-close-able="true" :show-confirm-button="false" :show-cancel-button="false" >
 			<view class="slot-content">
 				<image class="sucIcon" src="/static/images/sucIcon.svg" mode=""></image>
