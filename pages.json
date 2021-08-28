@@ -267,7 +267,7 @@
 	"preloadRule":{
 		"pages/index/index": {
 		    "network": "all",
-		    "packages": ["pages_content","pages_search"]
+		    "packages": ["pages_content","pages_search","pages_mine"]
 		},
         "pages/mine/mine": {
             "network": "all",

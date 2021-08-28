@@ -195,7 +195,7 @@
 		<!-- 弹窗 -->
 		<u-modal v-model="show" :content="content" :border-radius="40" :show-title="false"  cancel-color='#303133' :show-cancel-button="true" @confirm="confirm"></u-modal>
 		<!-- 遮罩层 -->
-		<view class="mask" v-if="textareafocus">
+		<view class="mask" v-show="textareafocus">
 			
 		</view>
 	</view>
@@ -258,6 +258,10 @@
 			this.hasLogin = getApp().globalData.Authorization ? true : false;
 			//#ifdef MP-BAIDU
 			swan.onKeyboardHeightChange(res => {
+				uni.showToast({
+					title: res.height,
+					icon: 'success'
+				});
 				this.animation.translateY(- (res.height + 60)).step()
 				this.animationInputC = this.animation.export()
 			});
@@ -268,8 +272,8 @@
 			this.article_id = obj.article_id
 			this.animation = uni.createAnimation({
 				  transformOrigin: "50% 50%",
-				  duration: 150,
-				  timingFunction: "ease-out",
+				  duration: 175,
+				  timingFunction: "linear",
 				  delay: 0
 				}
 			)
@@ -1396,7 +1400,7 @@
 			// margin: 16rpx 32rpx;
 			// padding: 20rpx 16rpx;
 			height: 14px;
-			width: 295px;
+			width: 558rpx;
 			margin: 8px 16px;
 			background: #F8F8F8;
 			padding: 10px 8px;
