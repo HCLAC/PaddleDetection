@@ -294,21 +294,19 @@
 					title: '加载中',
 					mask: true,
 					success: () => {
-						setTimeout(() => {
-							this.getArticleDetail();
-							this.getUserInfo()
-						}, 1);
+						this.getArticleDetail();
+						this.getUserInfo()
 						setTimeout(() => {
 							this.getComments();
 							this.hideLoad()
-						}, 300);
+						}, 200);
 					}
 				});
 			},
 			hideLoad(){
 				setTimeout(() => {
 					uni.hideLoading();
-				}, 500);
+				}, 100);
 			},
 			mpLinktap(e) {
 				if(e['data-url']){
