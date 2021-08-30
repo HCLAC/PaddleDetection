@@ -12,8 +12,8 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 信息表单 -->
-		<view class="" style="margin:0 28rpx;" >
-			<view class="form-box"  :errorType="errorType">
+		<view class="" style="margin:0 28rpx;" v-show="model">
+			<view class="form-box" >
 				<!-- 头像 -->
 				<view class="form-image" @click="chooseAvatar">
 					<image lazy-load :src="model.avatar"  style="width: 130rpx; height: 130rpx;border-radius: 50%;margin-left: -10rpx;" ></image>
@@ -25,13 +25,13 @@
 				<!-- 昵称 -->
 				<view class="form-name">
 					<text space="nbsp">昵   称：</text>
-					<u-input :customStyle="customStyleinput" :border="border"  v-model="model.name" type="text"></u-input>
+					<u-input :customStyle="customStyleinput" v-model="model.name" type="text"></u-input>
 				</view>
 				<!-- 性别 -->
 				<view class="form-sex">
 					<view class="sex-box">
 						<text space="nbsp">性   别：</text>
-						<u-input :customStyle="customStyleinput" :border="border" :disabled="true"  :select-open="actionSheetShow" v-model="model.sex" @click="actionSheetShow = true"></u-input>
+						<u-input :customStyle="customStyleinput"  :disabled="true" v-model="model.sex" @click="actionSheetShow = true"></u-input>
 					</view>
 					<image class="moreRight" src="/static/images/moreR.svg" slot="right" mode=""></image>
 				</view>
@@ -39,7 +39,7 @@
 				<view class="form-region">
 					<view class="region-box">
 						<text space="nbsp">常住地：</text>
-						<u-input :customStyle="customStyleinput" :border="border" :disabled="true"   :select-open="pickerShow" v-model="model.region" @click="pickerShow = true"></u-input>
+						<u-input :customStyle="customStyleinput" :disabled="true" v-model="model.region" @click="pickerShow = true"></u-input>
 					</view>
 					<image class="moreRight" src="/static/images/moreR.svg" slot="right" mode=""></image>
 				</view>
@@ -67,36 +67,6 @@
 					sex: '',
 					region: ''
 				},
-				rules: {
-					name : [
-						{
-							required: false,
-							message: '请输入姓名',
-							trigger: 'blur' ,
-						},
-						{
-							min: 3,
-							max: 10,
-							message: '姓名长度在3到10个字符',
-							trigger: ['change','blur'],
-						},
-					],
-					sex: [
-						{
-							required: false,
-							message: '请选择性别',
-							trigger: 'change'
-						},
-					],
-					region: [
-						{
-							required: false,
-							message: '请选择地区',
-							trigger: 'change',
-						}
-					],
-					
-				},
 				actionSheetList: [
 					{
 						text: '男',
@@ -123,8 +93,6 @@
 				],
 				actionSheetShow: false,
 				pickerShow: false,
-				selectShow: false,
-				errorType: ['message'],
 				customStyleinput:{
 					width:'540rpx',
 					margin:'16rpx 0'
@@ -168,6 +136,13 @@
 			},
 			// 保存
 			submit() {
+				if(this.model.name.length < 3 || this.model.name.length > 10){
+					uni.showToast({
+					    title: '姓名长度在3到10个字符',
+						icon:'none'
+					});
+					return
+				}
 				uni.showLoading({
 					title: '修改中',
 					mask: true,
