@@ -171,7 +171,6 @@
 			left: 0;
 			width: 100%;
 		}
-		
 		.tabs-item{
 			display: flex;
 			position: relative;
