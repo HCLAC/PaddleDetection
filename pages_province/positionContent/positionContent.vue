@@ -183,7 +183,8 @@ export default {
 					siteInfo.images.forEach((item, index) => {
 						siteInfo.images[index] = that.Utils.addImageProcess(item, true, 70)
 					})
-					that.siteInfo = res.data.data
+					siteInfo.articles = siteInfo.articles.splice(0,4)
+					that.siteInfo = siteInfo
 					if(that.siteInfo.description.length < 50){
 						that.more = false
 					}
