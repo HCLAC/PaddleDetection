@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="17px" height="17px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
-    <title>time-clock-circle</title>
+    <title>切片</title>
     <desc>Created with Sketch.</desc>
-    <g id="time-clock-circle" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g transform="translate(8.500000, 8.500000) scale(-1, 1) translate(-8.500000, -8.500000) ">
-            <rect id="矩形" fill="#FFFFFF" x="0" y="0" width="17" height="17"></rect>
-            <circle id="Oval" stroke="#606266" stroke-width="1.04318182" stroke-linecap="round" stroke-linejoin="round" cx="8.5" cy="8.5" r="6.49090909"></circle>
-            <line x1="8.5" y1="8.5" x2="8.5" y2="6.18181818" id="Path" stroke="#606266" stroke-width="1.04318182" stroke-linecap="round" stroke-linejoin="round"></line>
-            <line x1="8.5" y1="8.5" x2="11.3974182" y2="11.3980364" id="Path" stroke="#606266" stroke-width="1.04318182" stroke-linecap="round" stroke-linejoin="round"></line>
+    <g id="话题+路线" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="路线调整" transform="translate(-16.000000, -901.000000)">
+            <g id="编组-5备份" transform="translate(16.000000, 899.000000)">
+                <g id="time-clock-circle" transform="translate(0.000000, 2.000000)">
+                    <g transform="translate(8.500000, 8.500000) scale(-1, 1) translate(-8.500000, -8.500000) ">
+                        <rect id="矩形" fill="#FFFFFF" x="0" y="0" width="17" height="17"></rect>
+                        <circle id="Oval" stroke="#606266" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" cx="8.5" cy="8.5" r="6.49090909"></circle>
+                        <line x1="8.5" y1="8.5" x2="8.5" y2="6.18181818" id="Path" stroke="#606266" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></line>
+                        <line x1="8.5" y1="8.5" x2="11.3974182" y2="11.3980364" id="Path" stroke="#606266" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></line>
+                    </g>
+                </g>
+            </g>
         </g>
     </g>
 </svg>
