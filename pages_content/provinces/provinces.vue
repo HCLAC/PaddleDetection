@@ -190,18 +190,11 @@ export default {
 				title: '加载中',
 				mask: true,
 				success: () => {
-					this.getWeather();
-					
-					setTimeout(() => {
-						this.getSiteHot();
-					}, 100);
-					setTimeout(() => {
-						this.getRouteHot();
-					}, 300);
-					setTimeout(() => {
-						this.getCity();
-						this.hideLoad();
-					}, 500);
+					this.getWeather(),
+					this.getSiteHot(),
+					this.getRouteHot();
+					this.getCity();
+					this.hideLoad();
 					// this.getQuestionList()
 				}
 			});
