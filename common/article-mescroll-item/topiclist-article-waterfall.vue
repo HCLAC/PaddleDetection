@@ -1,5 +1,5 @@
 <template>
-	<view v-show="i === index" style="margin-top: 72%;">
+	<view v-show="i === index" style="margin-top: 70%;">
 		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="touring">
 				<articleWaterfall :list="list"></articleWaterfall>

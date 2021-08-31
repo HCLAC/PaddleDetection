@@ -40,8 +40,8 @@
 			</view>
 			<view class="lineDriver"></view>
 		</view>
-		<view style="height: 120rpx;">
-			<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight"  :line-width="140" :tab-width="100"></meTabs>
+		<view style="height: 120rpx;padding-left: 10px;">
+			<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight"  :line-width="130" :tab-width="105"></meTabs>
 		</view>
 		<view class="linePlan">
 			<view class="planContent">
@@ -312,6 +312,12 @@ export default {
 </script>
 
 <style lang="scss">
+// .name{
+// 	font-size: 18px !important;
+// }
+.active{
+	font-size: 32rpx !important;
+}
 .tabs-line{
 	border-radius: 12px !important;
 	height: 12rpx !important;
@@ -320,7 +326,7 @@ export default {
 .page-section-spacing {
 	position: relative;
 	width: 100%;
-	height: 400rpx;
+	height: 440rpx;
 	
 }
 .swiper {
@@ -556,6 +562,7 @@ export default {
 		position: relative;
 		left: -14rpx;
 		line-height: 36rpx;
+		text-align: justify;
 	}
 	.u-order-desc1 {
 		font-size: 24rpx;
