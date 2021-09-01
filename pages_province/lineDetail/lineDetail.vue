@@ -31,16 +31,24 @@
 			</view>
 			<view class="container">
 				<view class="linePrice">
-					<text>参考价格</text>
-					<text class="price" style="font-size:28rpx; ">￥</text>
-					<text class="price">{{ lineContent.money }}</text>
-					<text>起</text>
+					<view class="linePrice-number">
+						<!-- <text class="price" style="font-size:18rpx; ">
+							￥</text> -->
+						<view class="price-img">
+							<image src="../../static/images/money.svg" mode=""></image>
+						</view>
+						<text class="price">{{ lineContent.money }}</text>
+						<text>起</text>
+					</view>
+					<view class="linePrice-text">
+						参考价格
+					</view>
 				</view>
 				<view class="lineTitle">{{ lineContent.title }}</view>
 			</view>
 			<view class="lineDriver"></view>
 		</view>
-		<view style="height: 120rpx;padding-left: 10px;">
+		<view style="height: 120rpx;">
 			<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight"  :line-width="130" :tab-width="105"></meTabs>
 		</view>
 		<view class="linePlan">
@@ -59,12 +67,12 @@
 								<view>
 									<view class="u-order-title">
 										<text class="tui-chat-right">
-											<text class="tui-chatbox tui-chatbox-right">D{{ item.day }}</text>
+											<text class="tui-chatbox tui-chatbox-right">第{{ item.day }}天</text>
 										</text>
 										<text class="planTitle">{{ item.title }}</text>
 									</view>
 									<view class="u-order-desc1">{{ item.description }}</view>
-									<view class="u-order-time"></view>
+									<!-- <view class="u-order-time"></view> -->
 								</view>
 							</template>
 						</u-time-line-item>
@@ -73,7 +81,7 @@
 								<template v-slot:node>
 									<view class="uTime">
 										<image class="timeIcon" src="/static/images/timeClock.svg"></image>
-										<text>{{ eve.time == '上午' ? 'AM' : 'PM' }}</text>
+										<text>{{ eve.time == '上午' ? '上午' : '下午' }}</text>
 									</view>
 								</template>
 								<template v-slot:content>
@@ -102,7 +110,7 @@
 											<view class="right">
 												<view class="title">{{ pos.name }}</view>
 												<view class="rateBox">
-													<uni-rate :readonly="true" :value="pos.rate" :size='12' margin="1" :allowHalf="true"/>
+													<uni-rate :readonly="true" :value="pos.rate" :size='14' margin="4" :allowHalf="true"/>
 													<view class="rate" >{{ pos.rate }} 星</view>
 												</view>
 												<text class="content">{{ pos.description }}</text>
@@ -119,6 +127,9 @@
 					<view class="content">{{ lineContent.description }}</view>
 					<view class="phone" @click="tell" ><image src="/static/images/serverCall.svg"></image></view>
 				</view>
+				<view class="kong" v-if="Show == true" style="width: 100%;height: 570rpx;background: #FFFFFF;">
+				</view>
+				
 			</view>
 			<view class="bottom">
 				<!-- 分割线 -->
@@ -140,6 +151,7 @@
 				</view>
 			</view>
 		</view>
+		
 	</view>
 </template>
 
@@ -160,7 +172,8 @@ export default {
 			navbarHeight: getApp().globalData.navbarHeight,
 			planHeight: 2000,
 			tabList: ['参考行程', '服务说明'],
-			tabIndex: 0 // 当前tab下标,必须与mescroll-more.js对应,所以tabIndex是固定变量,不可以改为其他的名字
+			tabIndex: 0 ,// 当前tab下标,必须与mescroll-more.js对应,所以tabIndex是固定变量,不可以改为其他的名字
+			Show:false,
 		};
 	},
 	onLoad(options) {
@@ -172,6 +185,7 @@ export default {
 		this.hasLogin = getApp().globalData.Authorization ? true : false;
 	},
 	onPageScroll(e) {
+		console.log(e,"+++")
 		if (e.scrollTop > this.headerHeight) {
 			if (e.scrollTop > this.headerHeight+20 && this.isFixed){
 			} else {
@@ -250,8 +264,13 @@ export default {
 		},
 		// 切换
 		tabChange(index){
+			if(index == 1){
+				this.Show = true
+			}else{
+				this.Show = false
+			}
 			this.tabIndex = index
-			let scrollTop = this.planHeight*2
+			let scrollTop = this.planHeight * 2
 			if (index == 0){
 				scrollTop = this.headerHeight
 			}
@@ -312,9 +331,10 @@ export default {
 </script>
 
 <style lang="scss">
-// .name{
-// 	font-size: 18px !important;
-// }
+
+.u-node{
+	border: 8rpx solid #FFFFFF;
+}
 .active{
 	font-size: 32rpx !important;
 }
@@ -384,23 +404,57 @@ export default {
 }
 // swipper样式 end
 .container {
-	padding: 40rpx 30rpx 32rpx;
+	padding: 40rpx 30rpx 20rpx;
 
 	.linePrice {
 		font-size: 24rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: #909399;
-		.price {
-			font-size: 40rpx;
-			font-family: PingFangSC-Medium, PingFang SC;
-			font-weight: 500;
-			color: #faad14;
+		display: flex;
+		align-items: flex-end;
+		.linePrice-number{
+			display: flex;
+			align-items: flex-end;
+			.price-img{
+				width: 14rpx;
+				height: 18rpx;
+				margin-bottom: 10rpx;
+				image{
+					width: 100%;
+					height: 100%;
+				}
+			}
+			.price {
+				font-size: 64rpx;
+				font-family: STSongti-SC-Black, STSongti-SC;
+				font-weight: 900;
+				color: #FA541C;
+				line-height: 50rpx;
+			}
+			text{
+				margin-left: 8rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				color: #FA541C;
+			}
+		}
+		.linePrice-text{
+			width: 112rpx;
+			height: 36rpx;
+			background: rgba(0, 145, 255, 0.1);
+			border-radius: 18rpx;
+			color: #0091FF;
+			display: flex;
+			font-size: 22rpx;
+			justify-content: center;
+			align-items: center;
+			margin-left: 16rpx;
+			// margin-bottom: 6rpx;
 		}
 	}
 	.lineTitle {
-		padding-top: 14rpx;
-		font-size: 32rpx;
+		padding-top: 20rpx;
+		font-size: 36rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
 		color: #303133;
@@ -414,12 +468,16 @@ export default {
 }
 .linePlan {
 	// margin: 0 auto;
+	margin-top: 20rpx;
 	margin-left: 20rpx;
 	position: absolute; 
 	padding: 10rpx 10rpx;
 	padding-bottom: 105rpx;
 	.planContent {
-		padding: 20rpx 30rpx 30rpx 20rpx;
+		// padding: 20rpx 30rpx 30rpx 20rpx;
+		// padding:  0 32rpx 0 36rpx;
+		padding-right: 10rpx;
+		padding-left: 5rpx;
 	}
 }
 .tui-chatbox::before {
@@ -435,7 +493,10 @@ export default {
 	padding: 0 10rpx;
 	height: 40rpx;
 	background: #ffe512;
-	text-align: center;
+	// display: flex;
+	// justify-content: center;
+	// align-items: center;
+	// text-align: center;
 	position: relative;
 	border-radius: 6rpx;
 	font-size: 24rpx;
@@ -459,30 +520,33 @@ export default {
 	.position {
 		position: relative;
 		left: -14rpx;
-		width: 556rpx;
-		height: 172rpx;
-		background: #f8f8f8;
-		border-radius: 16rpx;
-		border: 2rpx solid #edeff2;
-		padding: 14rpx 16rpx;
-		margin-top: 14rpx;
-		margin-bottom: 20rpx;
+		width: 642rpx;
+		margin: 32rpx 0;
+		height: 204rpx;
+		background: #FFFFFF;
+		box-shadow: 0 0 36rpx 0 rgba(0, 0, 0, 0.1);
+		border-radius: 8rpx;
 		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0 20rpx;
 		.right {
-			margin-left: 10rpx;
+			margin-left: 20rpx;
+			height: 164rpx;
 			.title {
-				font-size: 28rpx;
+				font-size: 30rpx;
 				font-family: PingFangSC-Medium, PingFang SC;
 				font-weight: 500;
 				color: #303133;
 			}
 			.content {
-				width: 90%;
-				font-size: 22rpx;
+				margin-top: 6rpx;
+				font-size: 26rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
 				font-weight: 400;
 				color: #909399;
-				line-height: 32rpx;
+				line-height: 36rpx;
+				text-align: justify;
 				text-overflow: -o-ellipsis-lastline;
 				overflow: hidden;
 				text-overflow: ellipsis;
@@ -494,11 +558,12 @@ export default {
 			.rateBox {
 				display: flex;
 				align-items: center;
-
+				margin-top: 6rpx;
 				.rate {
 					margin-left: 2rpx;
-					font-size: 20rpx;
-					font-family: HelveticaNeue;
+					font-size: 24rpx;
+					font-family: PingFangSC-Medium, PingFang SC;
+					font-weight: 500;
 					color: #606266;
 				}
 				.rateStart {
@@ -514,89 +579,100 @@ export default {
 			position: relative;
 
 			.positionImg {
-				width: 184rpx;
-				height: 140rpx;
+				width: 216rpx;
+				height: 164rpx;
 				border-radius: 12rpx;
+				margin-top: 4rpx;
 			}
 			.imgTag {
-				width: 60rpx;
-				height: 30rpx;
+				width: 88rpx;
+				height: 44rpx;
 				background: #9fd873;
 				border-radius: 12rpx 0px 12rpx 0px;
 				position: absolute;
 				left: 0;
-				top: 0;
+				top: 4rpx;
 				color: #ffffff;
-				font-size: 16rpx;
+				font-size: 24rpx;
 				text-align: center;
-				line-height: 30rpx;
+				line-height: 44rpx;
 			}
 		}
 	}
 
 	.u-order-title {
 		position: relative;
-		top: -18rpx;
+		top: -20rpx;
 		left: -18rpx;
+		display: flex;
+		align-items: center;
 	}
 	
 	.planTitle {
-		font-size: 28rpx;
+		// margin-top: 6rpx;
+		font-size: 30rpx;
 		font-weight: 500;
 		color: #303133;
 		margin-left: 20rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
 	}
 	.stitle{
-		
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-size: 28rpx;
-		font-weight: 400;
+		margin-left: 4rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-size: 30rpx;
+		font-weight: 500;
 		color: #303133;
 	}
 	.u-order-desc {
-		font-size: 24rpx;
+		font-size: 30rpx;
+		text-align: justify;
 		color: #606266;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
+		font-family: PingFangSC-Light, PingFang SC;
+		font-weight: 300;
 		position: relative;
 		left: -14rpx;
-		line-height: 36rpx;
+		line-height: 42rpx;
 		text-align: justify;
 	}
 	.u-order-desc1 {
-		font-size: 24rpx;
+		font-size: 30rpx;
+		text-align: justify;
 		color: #303133;
+		// font-family: PingFangSC-Light, PingFang SC;
 		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
+		font-weight: 300;
 		position: relative;
 		left: -14rpx;
-		line-height: 36rpx;
+		line-height: 42rpx;
 	}
-	.u-order-time {
-		margin-top: 14rpx;
-		position: relative;
-		left: -14rpx;
-		border-bottom: 0.5px solid #dddddd;
-	}
+	// .u-order-time {
+	// 	margin-top: 14rpx;
+	// 	position: relative;
+	// 	left: -14rpx;
+	// 	border-bottom: 0.5px solid #dddddd;
+	// }
 
 	.uTime {
 		display: flex;
 		align-items: center;
-		margin-left: 45rpx;
+		margin-left: 60rpx;
 		.timeIcon {
 			width: 34rpx;
 			height: 34rpx;
+			margin-left: 14rpx;
 		}
 		text {
+			font-size: 30rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			line-height: 42rpx;
 			color: #606266;
-			font-size: 24rpx;
 			margin-left: 10rpx;
 		}
 	}
 }
 .u-time-axis-node {
-	top: -0.5vw !important;
+	top: -1.5vw !important;
 }
 .bottom {
 	width: 100%;
@@ -620,8 +696,8 @@ export default {
 .contentBottom {
 	display: flex;
 	align-items: center;
-	margin-top: 16rpx;
-	padding:0 56rpx;
+	// margin-top: 16rpx;
+	// padding:0 56rpx;
 	justify-content: space-between;
 	font-size: 24rpx;
 	font-family: PingFangSC-Regular, PingFang SC;
@@ -671,8 +747,12 @@ export default {
 
 .share {
 	display: flex;
-	
+	width: 88rpx;
+	height: 88rpx;
+	margin-left: 28rpx;
+	margin-top: 6rpx;
 	align-items: center;
+	justify-content: center;
 }
 
 .share image {
@@ -685,24 +765,27 @@ export default {
 	box-sizing: content-box;
 }
 .serverInfo {
-	width: 654rpx;
+	width: 694rpx;
 	min-height: 416rpx;
 	background: #f8f8f8;
 	border-radius: 8rpx;
 	position: relative;
-	padding: 30rpx;
+	padding: 28rpx;
+	margin: 0 auto;
+	margin-left: -4rpx;
+	// margin-top: 80rpx;
 	.title {
-		font-size: 28rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
+		font-size: 30rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 500;
 		color: #303133;
 		line-height: 50rpx;
 		text-align: center;
 	}
 	.content {
-		margin-top: 10rpx;
-		font-size: 24rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
+		margin-top: 20rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Light, PingFang SC;
 		font-weight: 400;
 		color: #606266;
 		line-height: 36rpx;
