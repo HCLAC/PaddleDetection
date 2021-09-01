@@ -185,7 +185,6 @@ export default {
 		this.hasLogin = getApp().globalData.Authorization ? true : false;
 	},
 	onPageScroll(e) {
-		console.log(e,"+++")
 		if (e.scrollTop > this.headerHeight) {
 			if (e.scrollTop > this.headerHeight+20 && this.isFixed){
 			} else {
@@ -194,11 +193,11 @@ export default {
 		} else {
 			this.isFixed = false;
 		}
-		
 		if(e.scrollTop >= this.planHeight){
 			this.tabIndex = 1
 		} else {
 			this.tabIndex = 0
+			this.Show = false
 		}
 	},
 	methods: {
@@ -271,6 +270,7 @@ export default {
 			}
 			this.tabIndex = index
 			let scrollTop = this.planHeight * 2
+			// console.log(scrollTop,'scrollTop')
 			if (index == 0){
 				scrollTop = this.headerHeight
 			}
@@ -331,7 +331,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .u-node{
 	border: 8rpx solid #FFFFFF;
 }

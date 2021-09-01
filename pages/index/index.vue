@@ -473,7 +473,7 @@
 			},
 			toSearch() {
 				uni.navigateTo({
-					url: '/pages_search/search/search'
+					url: '/pages_search/searchResults/searchResults'
 				});
 			},
 			/*下拉刷新的回调, 有三种处理方式:*/
