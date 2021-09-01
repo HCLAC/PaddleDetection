@@ -229,6 +229,11 @@
 				cus_sty_top: '156rpx'
 			};
 		},
+		onReady() {
+			swan.showFavoriteGuide({
+			    type: 'tip'
+			})
+		},
 		onLoad() {
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.loadData()
