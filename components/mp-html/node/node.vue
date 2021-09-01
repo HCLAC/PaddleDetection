@@ -3,7 +3,7 @@
     <block v-for="(n, i) in childs" v-bind:key="i">
       <!-- 图片 -->
       <!-- 占位图 -->
-      <image v-if="n.name=='img'&&((opts[1]&&!ctrl[i])||ctrl[i]<0)" class="_img" :style="n.attrs.style" :src="ctrl[i]<0?opts[2]:opts[1]" mode="widthFix" />
+      <image v-if="n.name=='img'&&((opts[1]&&!ctrl[i])||ctrl[i]<0)" class="_img" :style="n.attrs.style" :src="ctrl[i]<0?opts[2]:opts[1]" :mode="n.h?'':'widthFix'" />
       <!-- 显示图片 -->
       <!-- #ifdef H5 || APP-PLUS -->
       <img v-if="n.name=='img'" :id="n.attrs.id" :class="'_img '+n.attrs.class" :style="(ctrl[i]==-1?'display:none;':'')+n.attrs.style" :src="n.attrs.src||(ctrl.load?n.attrs['data-src']:'')" :data-i="i" @load="imgLoad" @error="mediaError" @tap.stop="imgTap" @longpress="imgLongTap"/>

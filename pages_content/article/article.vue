@@ -55,9 +55,8 @@
 				<!-- <text class="contentTitle" selected=true>{{ articleInfo.title }}</text> -->
 				<!-- 内容文章 -->
 				<view class="contentText">
-					<!-- <rich-text :nodes="articleInfo.content | formatRichText"></rich-text> -->
 					<mp-html ref="parse" v-if="articleInfo" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
-					 :content="articleInfo.content | formatRichText"></mp-html>
+					 :content="articleInfo.content"></mp-html>
 				</view>
 				<view class="tips">
 					<view v-for="item in articleInfo.topics" :key="item.id" @click="toTopic(item.id)">
@@ -93,7 +92,7 @@
 				<!-- 内容文章 -->
 				<view class="contentText">
 					<mp-html ref="parse" v-if="articleInfo" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
-					 :content="articleInfo.content | formatRichText"></mp-html>
+					 :content="articleInfo.content"></mp-html>
 				</view>
 				<!-- 地址 -->
 				<view class="adress">
@@ -341,8 +340,36 @@
 							});
 							return
 						}
-						that.title = res.data.data.title
-						let inputComponets = res.data.data.content.match(/<input[^>]*\/>/gi);
+						
+						var articleInfo = res.data.data
+						that.title = articleInfo.title
+						
+						// 适配字体
+						articleInfo.content = articleInfo.content.replace(/(\d+)px/g, function(s, t) {
+							s = s.replace('px', '');
+							var value = parseInt(s) * 2; //   此处 1rem =120px
+							return value + 'rpx';
+						});
+						// 处理文章图片，先处理图片，再处理营销组件，因为组件中的图片不需要处理
+						let article_images = articleInfo.content.match(/<img[^>]*\/>/gi);
+						if (article_images != null && article_images.length > 0){
+							for (var i=0;i<article_images.length;i++){
+								var item = article_images[i]
+								let obj = item.split('"')
+								if (!obj || obj.length < 8){
+									console.error("未知图片格式：", item)
+									continue
+								}
+								let src = that.Utils.addImageProcess(obj[1], true, 60)
+								let width = obj[5]
+								let height = obj[7]
+								let heightR = obj[7]*750/width
+								let img = '<img src="'+src+'" style="width:750rpx;height:'+heightR+'rpx;display:inline-block;margin:10rpx auto;"/>'
+								articleInfo.content = articleInfo.content.replace(item, img);
+							}
+						}
+						// 处理营销组件
+						let inputComponets = articleInfo.content.match(/<input[^>]*\/>/gi);
 						if (inputComponets != null && inputComponets.length > 0){
 							for (var i=0;i<inputComponets.length;i++){
 								var item = inputComponets[i]
@@ -361,11 +388,11 @@
 										} else {
 											var obj = component.data.data
 											replaceStr = that.generateWeixinMarketingGroup(obj)
-											res.data.data.content = res.data.data.content.replace(item, replaceStr);
+											articleInfo.content = articleInfo.content.replace(item, replaceStr);
 											// console.log("营销组件", replaceStr)
 										}
 									} else if (item.indexOf("在线客服")!=-1){
-										res.data.data.content = res.data.data.content.replace(item, '');
+										articleInfo.content = articleInfo.content.replace(item, '');
 										// let component = await that.asyncGetComponentInfo('/online/call', {id:id});
 										// if (component.data.code != 0) {
 										// 	console.error('获取在线客服信息失败', component)
@@ -373,11 +400,11 @@
 										// } else {
 										// 	var obj = component.data.data
 										// 	replaceStr = that.generateOnlineCustomer(obj)
-										// 	res.data.data.content = res.data.data.content.replace(item, replaceStr);
+										// 	articleInfo.content = articleInfo.content.replace(item, replaceStr);
 										// 	// console.log("在线客服", replaceStr)
 										// }
 									} else if (item.indexOf("小程序")!=-1){
-										res.data.data.content = res.data.data.content.replace(item, '');
+										articleInfo.content = articleInfo.content.replace(item, '');
 										// let component = await that.asyncGetComponentInfo('/miniapp/call', {id:id});
 										// if (component.data.code != 0) {
 										// 	console.error('获取小程序信息失败', component)
@@ -386,15 +413,13 @@
 										// 	console.log('component', component)
 										// 	var obj = component.data.data
 										// 	replaceStr = that.generateMiniapp(obj)
-										// 	res.data.data.content = res.data.data.content.replace(item, replaceStr);
+										// 	articleInfo.content = articleInfo.content.replace(item, replaceStr);
 										// 	// console.log("在线客服", replaceStr)
 										// }
 									}
 								}
 							}
 						}
-						
-						var articleInfo = res.data.data
 						articleInfo.avatar = that.Utils.addImageProcess(articleInfo.avatar, false, 60)
 						articleInfo.images.forEach((item1, index1) => {
 							articleInfo.images[index1] = that.Utils.addImageProcess(item1, true, 80)
@@ -931,7 +956,10 @@
 
 			formatRichText(html) {
 				//控制小程序中图片大小
+				// <img src="" alt="" width="790" height="506" />
 				let newContent = html.replace(/<img[?!component_img|^>]*>/gi, function(match, capture) {
+					console.log(match, capture)
+					console.log('11111')
 					match = match.replace(/style="[^"]+"/gi, '').replace(/style='[^']+'/gi, '');
 					match = match.replace(/width="[^"]+"/gi, '').replace(/width='[^']+'/gi, '');
 					match = match.replace(/height="[^"]+"/gi, '').replace(/height='[^']+'/gi, '');

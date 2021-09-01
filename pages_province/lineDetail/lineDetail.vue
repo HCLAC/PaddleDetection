@@ -185,7 +185,6 @@ export default {
 		this.hasLogin = getApp().globalData.Authorization ? true : false;
 	},
 	onPageScroll(e) {
-		console.log(e,"+++")
 		if (e.scrollTop > this.headerHeight) {
 			if (e.scrollTop > this.headerHeight+20 && this.isFixed){
 			} else {
