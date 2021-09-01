@@ -7,7 +7,7 @@
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
+					<image class="fhsy" v-if="home" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -185,6 +185,7 @@
 				isShowHt: true,
 				list: [],
 				Show:false,
+				home:false,
 			};
 		},
 		components: {
@@ -472,6 +473,7 @@
 				// console.log(this.keyword,'11')
 				this.isShowKeywordList = false
 				this.Show = true
+				this.home = true
 			},
 			//清除历史搜索
 			oldDelete() {
@@ -499,6 +501,7 @@
 				this.getSearchResults(keyword)
 				// console.log(111)
 				this.Show = true
+				this.home = true
 				this.isShowHt = false
 				this.keyword = keyword
 			},
@@ -524,6 +527,7 @@
 						break
 					default:
 						this.Show = true
+						this.home = true
 						this.isShowKeywordList = false
 						this.getSearchResults(keyword.name)
 						this.keyword = keyword.name
