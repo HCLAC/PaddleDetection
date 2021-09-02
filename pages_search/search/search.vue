@@ -7,11 +7,11 @@
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" v-if="home" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
+					<image class="fhsy" v-if="isShowResult" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
-		<view class="search-box" >
+		<view class="search-box">
 			<mSearch 
 				class="mSearch-input-box" 
 				:mode="2" 
@@ -26,7 +26,7 @@
 				
 			></mSearch>
 		</view>
-		<view class="container" v-if="Show" >
+		<view class="container" v-if="isShowResult" >
 			<!-- 省市主题 -->
 			<block v-if="area">
 				<view class="siteView" @click="getCity(area)">
@@ -98,6 +98,14 @@
 				</view>
 			</block>
 		</view>
+		<view v-if="isShowEmpty">
+			<view class="noResult">
+				没找到“{{ keyword }}”相关结果
+			</view>
+			<view class="wrap">
+				<articleWaterfall :list="list"></articleWaterfall>
+			</view>
+		</view>
 		<!-- new -->
 		<view class="search-keyword">
 			<scroll-view class="keyword-list-box" scroll-y scroll-x="false" v-if="isShowKeywordList">
@@ -116,7 +124,7 @@
 					搜索更多关于“{{ keyword }}”的结果
 				</view>
 			</scroll-view>
-			<scroll-view class="keyword-box" scroll-y scroll-x="false" v-if="isShowHt">
+			<scroll-view class="keyword-box" scroll-y scroll-x="false" v-if="isShowHirstoryHot">
 				<view class="keyword-block" v-if="oldKeywordList.length > 0">
 					<view class="keyword-list-header">
 						<view>历史记录</view>
@@ -146,15 +154,6 @@
 				</view>
 			</scroll-view>
 		</view>
-		<view v-if="isShowArticlieList">
-			<view class="noResult">
-				没找到“{{ keyword }}”相关结果
-			</view>
-				<view class="wrap">
-					<articleWaterfall :list="list"></articleWaterfall>
-				</view>
-			</view>
-		</view>
 	</view>
 </template>
 
@@ -180,12 +179,11 @@
 				oldKeywordList: [],
 				hotKeywordList: [],
 				// forbid: '',
-				isShowArticlieList: false,
-				isShowKeywordList: false,
-				isShowHt: true,
+				isShowKeywordList: false,//下拉提示
+				isShowHirstoryHot: true,//历史搜索和热搜
+				isShowResult:false,//搜索结果
+				isShowEmpty:false,//空搜索结果
 				list: [],
-				Show:false,
-				home:false,
 			};
 		},
 		components: {
@@ -208,6 +206,7 @@
 		// 方法
 		methods: {
 			getSearchResults(keyword) {
+				this.isShowKeywordList = false;
 				var that = this
 				this.HTTP.request({ 
 					url: '/search', 
@@ -241,6 +240,13 @@
 							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
 							item1.image = this.Utils.addImageProcess(item1.image, false, 40)
 						})
+						
+						
+						if (!list || list.length == 0){
+							this.isShowEmpty = true
+							this.isShowResult = false
+							this.GetArticleList()
+						}
 						that.list = list
 						
 						var route_list = res.data.data.route_list;
@@ -333,7 +339,7 @@
 					}
 				});
 			},
-			getArticleList() {
+			GetArticleList() {
 				this.HTTP.request({
 					url: '/article/list',
 					data: {
@@ -398,14 +404,15 @@
 				var keyword = event.detail ? event.detail.value : event;
 				if (!keyword) {
 					this.keywordList = [];
-					this.isShowArticlieList = false;
 					this.isShowKeywordList = false;
-					this.isShowHt = true;
-					this.Show = false;
+					this.isShowHirstoryHot = true;
+					this.isShowResult = false;
 					return;
 				}
 				this.isShowKeywordList = true;
-				this.Show = false;
+				this.isShowResult = false;
+				this.isShowHirstoryHot = false;
+				this.isShowEmpty = false
 				this.HTTP.request({
 					url: '/search/suggest',
 					data: {
@@ -422,7 +429,6 @@
 							return
 						}
 						
-						this.isShowHt = false;
 						this.keywordList = [];
 						let arr = [];
 						if (res.data.data.special) {
@@ -436,14 +442,6 @@
 						
 						this.keywordList = this.drawCorrelativeKeyword(arr, keyword);
 						// console.log(this.keywordList,'111')
-						if (this.keywordList && this.keywordList.length > 0){
-							this.isShowArticlieList = false;
-							this.isShowKeywordList = true;
-						} else {
-							this.getArticleList()
-							this.isShowArticlieList = true;
-							this.isShowKeywordList = false;
-						}
 					}
 				});
 			},
@@ -472,7 +470,7 @@
 				this.getSearchResults(this.keyword)
 				// console.log(this.keyword,'11')
 				this.isShowKeywordList = false
-				this.Show = true
+				this.isShowResult = true
 				this.home = true
 			},
 			//清除历史搜索
@@ -500,9 +498,9 @@
 				this.saveKeyword(keyword); //保存为历史
 				this.getSearchResults(keyword)
 				// console.log(111)
-				this.Show = true
+				this.isShowResult = true
 				this.home = true
-				this.isShowHt = false
+				this.isShowHirstoryHot = false
 				this.keyword = keyword
 			},
 			goSearch(keyword) {
@@ -526,7 +524,7 @@
 						});
 						break
 					default:
-						this.Show = true
+						this.isShowResult = true
 						this.home = true
 						this.isShowKeywordList = false
 						this.getSearchResults(keyword.name)
