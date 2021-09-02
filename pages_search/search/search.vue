@@ -165,7 +165,6 @@
 	export default {
 		data() {
 			return {
-				defaultKeyword: '',
 				keyword: '',
 				list: [],
 				site: null,
@@ -199,6 +198,7 @@
 					if (typeof(res.data) == 'string'){
 						this.oldKeywordList = JSON.parse(res.data)
 					}
+					this.defaultKeyword = this.oldKeywordList ? this.oldKeywordList[0]: '搜索热门目的地/景点'
 				}
 			}); 
 			this.getHotKeyword()
@@ -206,7 +206,6 @@
 		// 方法
 		methods: {
 			getSearchResults(keyword) {
-				this.isShowKeywordList = false;
 				var that = this
 				this.HTTP.request({ 
 					url: '/search', 
@@ -400,13 +399,15 @@
 			},
 			//监听输入
 			inputChange(event) {
-				//兼容引入组件时传入参数情况
-				var keyword = event.detail ? event.detail.value : event;
+				var keyword = event.replace(/^\s+|\s+$/g,'')
+				this.keyword = keyword
 				if (!keyword) {
 					this.keywordList = [];
 					this.isShowKeywordList = false;
 					this.isShowHirstoryHot = true;
+					this.isShowEmpty = false
 					this.isShowResult = false;
+					this.defaultKeyword = this.oldKeywordList ? this.oldKeywordList[0]: '搜索热门目的地/景点'
 					return;
 				}
 				this.isShowKeywordList = true;
@@ -466,12 +467,24 @@
 			},
 			// 回车搜索
 			toSearchResults() {
-				this.saveKeyword(this.keyword); //保存为历史
+				var keyword = this.keyword ? this.keyword : this.defaultKeyword
+				// keyword = keyword.replace(/^\s+|\s+$/g,'')
+				if(keyword == '搜索热门目的地/景点'){
+					uni.showToast({
+					    title: '请输入搜索词',
+						icon:'none'
+					});
+					return
+				}
+				this.keyword = keyword
+				this.isShowKeywordList = false;
 				this.getSearchResults(this.keyword)
 				// console.log(this.keyword,'11')
 				this.isShowKeywordList = false
 				this.isShowResult = true
-				this.home = true
+				this.isShowHirstoryHot = false
+				this.saveKeyword(this.keyword); //保存为历史
+				
 			},
 			//清除历史搜索
 			oldDelete() {
