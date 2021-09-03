@@ -45,7 +45,6 @@
 		</view>
 		<!-- 弹窗 -->
 		<u-modal v-model="show" :border-radius="40" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
-
 	</view>
 </template>
 

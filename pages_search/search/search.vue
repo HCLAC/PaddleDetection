@@ -134,6 +134,7 @@
 						<view v-for="(keyword, index) in oldKeywordList" @tap="doSearch(keyword)" :key="index">{{ keyword }}</view>
 					</view>
 				</view>
+				<u-modal v-model="isShow" :border-radius="40" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 				<view class="keyword-block">
 					<view class="keyword-list-header1">
 						<view>热门搜索</view>
@@ -177,11 +178,13 @@
 				keywordList: [],
 				oldKeywordList: [],
 				hotKeywordList: [],
+				content: '确定清除历史搜索记录？',
 				// forbid: '',
 				isShowKeywordList: false,//下拉提示
 				isShowHirstoryHot: true,//历史搜索和热搜
 				isShowResult:false,//搜索结果
 				isShowEmpty:false,//空搜索结果
+				isShow:false,//弹窗
 				list: [],
 			};
 		},
@@ -488,16 +491,13 @@
 			},
 			//清除历史搜索
 			oldDelete() {
-				uni.showModal({
-					content: '确定清除历史搜索记录？',
-					success: res => {
-						if (res.confirm) {
-							this.oldKeywordList = [];
-							uni.removeStorage({
-								key: 'searchHistory'
-							});
-						}
-					}
+				this.isShow = true
+			},
+			// 点击确定
+			confirm(){
+				this.oldKeywordList = [];
+				uni.removeStorage({
+					key: 'searchHistory'
 				});
 			},
 			//热门搜索开关
