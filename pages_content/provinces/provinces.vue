@@ -12,7 +12,7 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 头图 -->
-		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"> 
+		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"> 
 			<view class="headImgBox">
 				<image class="headImg" lazy-load :src="querys.imageProcess" mode="scaleToFill"></image>
 				<view class="mask"></view>

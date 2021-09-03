@@ -363,10 +363,12 @@
 							for (var i=0;i<article_images.length;i++){
 								var item = article_images[i]
 								let obj = item.split('"')
-								if (!obj || obj.length < 8){
+								if (obj[0].indexOf("src") === -1 || !obj || obj.length < 8){
 									console.warn("未知图片格式：", item)
-									let src = that.Utils.addImageProcess(obj[1], true, 60)
-									articleInfo.content = articleInfo.content.replace(obj[1], src);
+									if (obj[1].indexOf("lingtuyang.cn")!=-1){
+										let src = that.Utils.addImageProcess(obj[1], true, 60)
+										articleInfo.content = articleInfo.content.replace(obj[1], src);
+									}
 									continue
 								}
 								let src = that.Utils.addImageProcess(obj[1], true, 60)
