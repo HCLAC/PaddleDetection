@@ -123,7 +123,7 @@ import articleWaterfall from '@/common/article-waterfall/article-waterfall.vue';
 import weather from '@/common/weather/weather.vue';
 import cityPicker from '@/common/city-picker/city-picker.vue';
 // 引入mescroll-mixins.js
-import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
+import MescrollMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js';
 export default {
 	mixins: [MescrollMixin],
 	data() {

@@ -74,7 +74,7 @@
 
 <script>
 	// 引入mescroll-mixins.js
-	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
+	import MescrollMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js';
 	import cityPicker from '@/common/city-picker/city-picker.vue';
 	export default {
 		components: {

@@ -31,8 +31,8 @@
 </template>
 
 <script>
-	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
-	import MescrollMoreItemMixin from '@/components/mescroll-uni/mixins/mescroll-more-item.js';
+	import MescrollMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js';
+	import MescrollMoreItemMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-more-item.js';
 	import articleWaterfall from '@/common/article-waterfall/article-waterfall.vue';
 	
 	export default {

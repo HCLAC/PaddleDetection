@@ -1,7 +1,7 @@
 <!--空布局
 
 可作为独立的组件, 不使用mescroll的页面也能单独引入, 以便APP全局统一管理:
-import MescrollEmpty from '@/components/mescroll-uni/components/mescroll-empty.vue';
+import MescrollEmpty from '@/uni_modules/mescroll-uni/components/mescroll-uni/components/mescroll-empty.vue';
 <mescroll-empty v-if="isShowEmpty" :option="optEmpty" @emptyclick="emptyClick"></mescroll-empty>
 
 -->

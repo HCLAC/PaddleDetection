@@ -41,7 +41,7 @@
 </template>
 
 <script>
-	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
+	import MescrollMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js';
 	export default {
 		mixins: [MescrollMixin],
 		data() {
