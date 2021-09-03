@@ -197,11 +197,14 @@ export default {
 						that.more = false
 					}
 					
+					//#ifdef MP-BAIDU
 					swan.setPageInfo({
 						title: that.siteInfo.name+"景点介绍-领途羊",
 						keywords: that.siteInfo.name+","+that.siteInfo.city+"旅游攻略,"+that.siteInfo.pos+",领途羊",
 						description: that.siteInfo.description,
+						image: that.siteInfo.images,
 					})
+					// #endif
 				}
 			})
 			

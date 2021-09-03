@@ -177,7 +177,7 @@
 <script>
 	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 	// 引入mescroll-mixins.js
-	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
+	import MescrollMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js';
 	import articleWaterfall from '@/common/article-waterfall/article-waterfall.vue';
 	export default {
 		components: {
@@ -228,6 +228,11 @@
 				serviceProvider: '',
 				cus_sty_top: '156rpx'
 			};
+		},
+		onReady() {
+			swan.showFavoriteGuide({
+			    type: 'tip'
+			})
 		},
 		onLoad() {
 			this.serviceProvider = getApp().globalData.serviceProvider

@@ -32,7 +32,7 @@
 
 <script>
 	// 引入mescroll-mixins.js
-	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
+	import MescrollMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js';
 	export default {
 		data() {
 			return {
@@ -89,7 +89,7 @@
 			doSearch(keyword) {
 				if (!keyword) return false;
 				uni.navigateTo({
-					url: '/pages_search/searchResults/searchResults?keyword='+keyword
+					url: '/pages_search/search/search?keyword='+keyword
 				});
 				
 			},

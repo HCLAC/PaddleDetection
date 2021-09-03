@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import MescrollMoreMixin from '@/components/mescroll-uni/mixins/mescroll-more.js';
+import MescrollMoreMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-more.js';
 import meTabs from '@/common/me-tabs/me-tabs.vue';
 import answerList from '@/common/article-mescroll-item/mine-answer-list.vue';
 	export default {
