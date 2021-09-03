@@ -1,6 +1,6 @@
 <template>
-	<view v-show="i === index" style="padding: 0 28rpx;margin-top: 450rpx;">
-		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit"  :bottom="bom" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption"  >
+	<view v-show="i === index" style="padding: 0 28rpx;">
+		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" :top="top" :bottom="bom" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption"  >
 			<view class="" v-for="(item, index) in list" :key="index">
 				<view class="contentItem">
 					<view class="left">
