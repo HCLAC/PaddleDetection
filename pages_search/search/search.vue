@@ -147,7 +147,7 @@
 			</block>
 		</view>
 		<view v-if="showType == 3">
-			<view class="noResultList">
+			<view class="noResult">
 				没找到“{{ keyword }}”相关结果
 			</view>
 			<view class="wrap">
