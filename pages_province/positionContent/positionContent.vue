@@ -45,7 +45,6 @@
 								class="tipHot" v-for="(item,index) in siteInfo.new_tags"
 								:key="index" 
 							>{{item.tag_name}}</view>
-							<view class="tip">{{siteInfo.city}}</view>
 						</view>
 					</view>
 					<view class="shareBox" @click="share" v-if="serviceProvider =='baidu' ">

@@ -129,9 +129,7 @@ export default {
 	data() {
 		return {
 			downOption: {
-				auto:false,
 				use:false,
-				bgColor:'#F8F8F8'
 			},
 			upOption: {
 				auto:false,
