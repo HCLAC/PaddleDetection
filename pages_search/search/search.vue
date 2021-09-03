@@ -48,7 +48,7 @@
 				<view class="keyword-block" v-if="historyList.length > 0">
 					<view class="keyword-list-header">
 						<view>历史记录</view>
-						<view><image @tap="oldDelete" src="/static/images/icon-shanchu.svg"></image></view>
+						<view><image @tap="clearShow=true" src="/static/images/icon-shanchu.svg"></image></view>
 					</view>
 					<view class="keyword">
 						<view v-for="(keyword, index) in historyList" @tap="doSearch(keyword)" :key="index">{{ keyword }}</view>
@@ -154,6 +154,7 @@
 				<articleWaterfall :list="noResultList"></articleWaterfall>
 			</view>
 		</view>
+		<u-modal v-model="clearShow" :border-radius="40" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 	</view>
 </template>
 
@@ -174,7 +175,8 @@
 				suggestList: [],	// 下拉提示
 				historyList: [],	// 历史搜索记录
 				hotKeywordList: [],	// 热搜记录
-				showType: 0 // 0-热搜和历史搜索 1-下拉提示 2-搜索结果
+				showType: 0 ,// 0-热搜和历史搜索 1-下拉提示 2-搜索结果
+				clearShow: false,
 			};
 		},
 		components: {
@@ -191,7 +193,7 @@
 				key: 'searchHistory',
 				success: res => {
 					this.historyList = res.data
-					if (typeof(res.data) == 'string'){
+					if (res.data && typeof(res.data) == 'string'){
 						this.historyList = JSON.parse(res.data)
 					}
 					this.placeholderKeyword = this.historyList && this.historyList.length>0 ? this.historyList[0]: this.defaultKeyword
@@ -369,17 +371,11 @@
 				
 			},
 			//清除历史搜索
-			oldDelete() {
-				uni.showModal({
-					content: '确定清除历史搜索记录？',
-					success: res => {
-						if (res.confirm) {
-							this.historyList = [];
-							uni.removeStorage({
-								key: 'searchHistory'
-							});
-						}
-					}
+			confirm() {
+				this.historyList = [];
+				this.placeholderKeyword = this.defaultKeyword
+				uni.removeStorage({
+					key: 'searchHistory'
 				});
 			},
 			//执行搜索
