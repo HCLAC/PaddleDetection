@@ -59,7 +59,7 @@ MeScroll.prototype.extendDownScroll = function(optDown) {
 		textSuccess: '加载成功', // 加载成功的文本
 		textErr: '加载失败', // 加载失败的文本
 		beforeEndDelay: 0, // 延时结束的时长 (显示加载成功/失败的时长, android小程序设置此项结束下拉会卡顿, 配置后请注意测试)
-		bgColor: "transparent", // 背景颜色 (建议在pages.json中再设置一下backgroundColorTop)
+		bgColor: "#ffffff", // 背景颜色 (建议在pages.json中再设置一下backgroundColorTop)
 		textColor: "gray", // 文本颜色 (当bgColor配置了颜色,而textColor未配置时,则textColor会默认为白色)
 		inited: null, // 下拉刷新初始化完毕的回调
 		inOffset: null, // 下拉的距离进入offset范围内那一刻的回调
@@ -89,14 +89,14 @@ MeScroll.prototype.extendUpScroll = function(optUp) {
 		callback: null, // 上拉加载的回调;function(page,mescroll){ }
 		page: {
 			num: 0, // 当前页码,默认0,回调之前会加1,即callback(page)会从1开始
-			size: 10, // 每页数据的数量
+			size: 8, // 每页数据的数量
 			time: null // 加载第一页数据服务器返回的时间; 防止用户翻页时,后台新增了数据从而导致下一页数据重复;
 		},
-		noMoreSize: 5, // 如果列表已无数据,可设置列表的总数量要大于等于5条才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看
+		noMoreSize: 1, // 如果列表已无数据,可设置列表的总数量要大于等于5条才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看
 		offset: 150, // 距底部多远时,触发upCallback,仅mescroll-uni生效 ( mescroll-body配置的是pages.json的 onReachBottomDistance )
 		textLoading: '加载中 ...', // 加载中的提示文本
-		textNoMore: '-- END --', // 没有更多数据的提示文本
-		bgColor: "transparent", // 背景颜色 (建议在pages.json中再设置一下backgroundColorBottom)
+		textNoMore: '~已经到底啦~', // 没有更多数据的提示文本
+		bgColor: "#ffffff", // 背景颜色 (建议在pages.json中再设置一下backgroundColorBottom)
 		textColor: "gray", // 文本颜色 (当bgColor配置了颜色,而textColor未配置时,则textColor会默认为白色)
 		inited: null, // 初始化完毕的回调
 		showLoading: null, // 显示加载中的回调

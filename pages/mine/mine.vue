@@ -67,11 +67,13 @@ export default {
 			tabList: [{
 					name: '收藏',
 					count: '',
-					tip: '您的收藏夹空空如也～'
+					tip: '您的收藏夹空空如也～',
+					icon: '/static/images/wenjianjia.png',
 				}, {
 					name: '已赞',
 					count: '',
-					tip: '您还没有赞过任何文章哦～'
+					tip: '您还没有赞过任何文章哦～',
+					icon: '/static/images/wenjianjia.png',
 				}],
 			tabIndex: 0,
 			favnumcolor:{
@@ -215,6 +217,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+/deep/.mescroll-empty .empty-icon { width: 154rpx !important }
+/deep/.mescroll-empty .empty-icon { height: 122rpx !important }
 
 .mineTabs{
 	width: 100%;

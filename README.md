@@ -4,11 +4,10 @@
 
 ### TODO
 - 图片加载优化，后端返回图片宽高
+- 
 
 ### 图片加载优化
 - 后台服务返回图片宽高，
-- 保证瀑布流显示正常：前端动态计算高度
-- 根据网络情况，动态加载不同质量的图片
 - 图片处理参数说明：
 ```
 开头：x-oss-process=image
@@ -18,3 +17,12 @@
 ```
 ### 遇到的问题：
 - [改动一：二级页面使用自定义导航栏时，需要预留返回按钮位置，避免界面元素冲突](https://smartprogram.baidu.com/forum/topic/show/125547#:~:text=%E6%94%B9%E5%8A%A8%E4%B8%80%EF%BC%9A%E4%BA%8C%E7%BA%A7%E9%A1%B5%E9%9D%A2%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AF%BC%E8%88%AA%E6%A0%8F%E6%97%B6%EF%BC%8C%E9%9C%80%E8%A6%81%E9%A2%84%E7%95%99%E8%BF%94%E5%9B%9E%E6%8C%89%E9%92%AE%E4%BD%8D%E7%BD%AE%EF%BC%8C%E9%81%BF%E5%85%8D%E7%95%8C%E9%9D%A2%E5%85%83%E7%B4%A0%E5%86%B2%E7%AA%81)
+- 修改创建或者组件样式：在对应vue页面的样式中添加，例子：
+```
+Q. 如何重置mescroll默认样式,比如修改空布局的样式 ?
+
+推荐使用scss最简单,且支持多平台 ( 把样式名拷贝一份, 加 /deep/ 和 !important ) :
+.mescroll-empty .empty-tip,
+/deep/.mescroll-empty .empty-tip { color: red !important }
+
+```
