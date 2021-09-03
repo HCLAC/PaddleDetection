@@ -7,7 +7,7 @@
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" v-if="isShowResult" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
+					<image class="fhsy" v-if="showType==2" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -16,107 +16,24 @@
 				class="mSearch-input-box" 
 				:mode="2" 
 				button="inside" 
-				:placeholder="defaultKeyword" 
-				v-model="keyword" 
-				:focus="isFocus"
-				@search="doSearch(keyword)"
+				:placeholder="placeholderKeyword"
+				v-model="keyword"
 				@input="inputChange"
 				confirm-type="search"
 				@confirm="toSearchResults()"
-				
 			></mSearch>
 		</view>
-		<view class="container" v-if="isShowResult" >
-			<!-- 省市主题 -->
-			<block v-if="area">
-				<view class="siteView" @click="getCity(area)">
-					<image class="siteViewImg" lazy-load :src="area.image" mode=""></image>
-					<view class="siteViewText">
-						<view class="title">{{ area.name }}</view>
-						<view class="content">
-							查看省市主题页
-						</view>
-					</view>
-					<image class="iconRight" src="/static/images/more-right.svg" mode=""></image>
-				</view>
-				<view class="line"></view>
-			</block>
-			<!-- 景点 -->
-			<block v-if="site">
-				<view class="areaView" @click.stop="getSite(site.id)">
-					<image class="areaImg" lazy-load :src="site.image[0]" mode=""></image>
-					<view class="top">
-						<view class="title">{{ site.name }}</view>
-						<view class="areacontent">{{ site.description }}</view>
-						<view class="rateBox">
-							<!-- 评分图标 -->
-							<uni-rate :readonly="true" :value="site.rate" :size='16' margin="4" :allowHalf="true"/>
-							<view class="rate">
-								<view class="rate-number">
-									{{ site.rate }}
-								</view>
-								<text>星</text>
-							</view>
-						</view>
-					</view>
-				</view>
-				<view class="line">
-					
-				</view>
-			</block>
-			<!-- 行程路线 -->
-			<block v-if="route_list && route_list.length">
-				<view class="titleBox">
-					<view class="contentTitle">行程线路</view>
-					<view class="moreBox" @click="toLineMore()" v-if="route_list.length > 2">
-						更多
-						<image src="/static/images/more-right.svg" mode=""></image>
-					</view>
-				</view>
-				<view style="padding-left: 4%; padding-top: 30rpx;">
-					<view class="swiper">
-						<view class="swiperItem" v-for="(item, index) in route_list" @click="getRoute(item.uuid)" :key="index">
-							<image lazy-load :src="item.image"></image>
-							<view class="">
-								{{item.title}}
-							</view>
-							<!-- <view class="title"><rich-text :nodes="item.htmlStr"></rich-text></view> -->
-						</view>
-					</view>
-				</view>
-				<view class="line">
-					
-				</view>
-			</block>
-			<!-- 内容精选 -->
-			<block v-if="list">
-				<view class="contentTitle">内容精选</view>
-				<view class="touring">
-					<view class="wrap">
-						<articleWaterfall :list="list"></articleWaterfall>
-					</view>
-				</view>
-			</block>
-		</view>
-		<view v-if="isShowEmpty">
-			<view class="noResult">
-				没找到“{{ keyword }}”相关结果
-			</view>
-			<view class="wrap">
-				<articleWaterfall :list="list"></articleWaterfall>
-			</view>
-		</view>
-		<!-- new -->
-		<view class="search-keyword">
-			<scroll-view class="keyword-list-box" scroll-y scroll-x="false" v-if="isShowKeywordList">
-				<block v-for="(row, index) in keywordList" :key="index">
+		<!-- 下拉 -->
+		<view class="search-keyword" v-if="showType == 1">
+			<scroll-view class="keyword-list-box" scroll-y scroll-x="false">
+				<block v-for="(row, index) in suggestList" :key="index">
 					<view class="keyword-entry" hover-class="keyword-entry-tap">
 						<!-- <view v-if="row.keyword.type" class="otherIcon"><u-icon size="32" :name="row.keyword.type == 'site' ? 'photo' : row.keyword.type ? 'map-fill' : ''"></u-icon></view> -->
 						<view v-if="row.keyword.type" :class=" row.keyword.type == 'site' ? 'otherIcon' : 'otherIcon1'">
 							<image :src="row.keyword.type == 'site'?'/static/images/attIcon.svg':'/static/images/adressIcon.svg'" ></image>
 						</view>
 						<view class="liIcon" v-else></view>
-						<view class="keyword-text" @tap.stop="goSearch(row.keyword)"><rich-text :nodes="row.htmlStr"></rich-text></view>
+						<view class="keyword-text" @tap.stop="suggestToSearch(row.keyword)"><rich-text :nodes="row.htmlStr"></rich-text></view>
 						<view class="otherText" v-if="row.keyword.type">{{ row.keyword.type == 'site' ? '景点' : '目的地' }}</view>
 					</view>
 				</block>
@@ -124,14 +41,17 @@
 					搜索更多关于“{{ keyword }}”的结果
 				</view>
 			</scroll-view>
-			<scroll-view class="keyword-box" scroll-y scroll-x="false" v-if="isShowHirstoryHot">
-				<view class="keyword-block" v-if="oldKeywordList.length > 0">
+		</view>
+		<!-- 历史搜索和热搜 -->
+		<view class="search-keyword" v-if="showType == 0">
+			<scroll-view class="keyword-box" scroll-y scroll-x="false">
+				<view class="keyword-block" v-if="historyList.length > 0">
 					<view class="keyword-list-header">
 						<view>历史记录</view>
 						<view><image @tap="oldDelete" src="/static/images/icon-shanchu.svg"></image></view>
 					</view>
 					<view class="keyword">
-						<view v-for="(keyword, index) in oldKeywordList" @tap="doSearch(keyword)" :key="index">{{ keyword }}</view>
+						<view v-for="(keyword, index) in historyList" @tap="doSearch(keyword)" :key="index">{{ keyword }}</view>
 					</view>
 				</view>
 				<view class="keyword-block">
@@ -154,6 +74,86 @@
 				</view>
 			</scroll-view>
 		</view>
+		<view class="container" v-if="showType == 2" >
+			<!-- 省市主题 -->
+			<block v-if="result.area">
+				<view class="siteView" @click="toPrivince(result.area)">
+					<image class="siteViewImg" lazy-load :src="result.area.image" mode=""></image>
+					<view class="siteViewText">
+						<view class="title">{{ result.area.name }}</view>
+						<view class="content">
+							查看省市主题页
+						</view>
+					</view>
+					<image class="iconRight" src="/static/images/more-right.svg" mode=""></image>
+				</view>
+				<view class="line"></view>
+			</block>
+			<!-- 景点 -->
+			<block v-if="site">
+				<view class="areaView" @click.stop="toSite(site.id)">
+					<image class="areaImg" lazy-load :src="site.image[0]" mode=""></image>
+					<view class="top">
+						<view class="title">{{ site.name }}</view>
+						<view class="areacontent">{{ site.description }}</view>
+						<view class="rateBox">
+							<!-- 评分图标 -->
+							<uni-rate :readonly="true" :value="site.rate" :size='16' margin="4" :allowHalf="true"/>
+							<view class="rate">
+								<view class="rate-number">
+									{{ site.rate }}
+								</view>
+								<text>星</text>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="line">
+					
+				</view>
+			</block>
+			<!-- 行程路线 -->
+			<block v-if="result.route_list && result.route_list.length">
+				<view class="titleBox">
+					<view class="contentTitle">行程线路</view>
+					<view class="moreBox" @click="toLineMore()" v-if="result.route_list.length > 2">
+						更多
+						<image src="/static/images/more-right.svg" mode=""></image>
+					</view>
+				</view>
+				<view style="padding-left: 4%; padding-top: 30rpx;">
+					<view class="swiper">
+						<view class="swiperItem" v-for="(item, index) in result.route_list" @click="toRoute(item.uuid)" :key="index">
+							<image lazy-load :src="item.image"></image>
+							<view class="">
+								{{item.title}}
+							</view>
+							<!-- <view class="title"><rich-text :nodes="item.htmlStr"></rich-text></view> -->
+						</view>
+					</view>
+				</view>
+				<view class="line">
+					
+				</view>
+			</block>
+			<!-- 内容精选 -->
+			<block v-if="result.article_list && result.article_list.length">
+				<view class="contentTitle">内容精选</view>
+				<view class="touring">
+					<view class="wrap">
+						<articleWaterfall :list="result.article_list"></articleWaterfall>
+					</view>
+				</view>
+			</block>
+		</view>
+		<view v-if="showType == 3">
+			<view class="noResultList">
+				没找到“{{ keyword }}”相关结果
+			</view>
+			<view class="wrap">
+				<articleWaterfall :list="noResultList"></articleWaterfall>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -166,23 +166,15 @@
 		data() {
 			return {
 				keyword: '',
-				list: [],
-				site: null,
-				area: null,
-				route_list: null,
-				isFocus: false,
-				da:1,
+				placeholderKeyword: '搜索热门目的地/景点',
 				defaultKeyword: '搜索热门目的地/景点',
-				keyValue: '',
-				keywordList: [],
-				oldKeywordList: [],
-				hotKeywordList: [],
-				// forbid: '',
-				isShowKeywordList: false,//下拉提示
-				isShowHirstoryHot: true,//历史搜索和热搜
-				isShowResult:false,//搜索结果
-				isShowEmpty:false,//空搜索结果
-				list: [],
+				result: null, // 搜索结果
+				site: null,
+				noResultList: [],	// 如果未搜索到结果，返回首页文章列表
+				suggestList: [],	// 下拉提示
+				historyList: [],	// 历史搜索记录
+				hotKeywordList: [],	// 热搜记录
+				showType: 0 // 0-热搜和历史搜索 1-下拉提示 2-搜索结果
 			};
 		},
 		components: {
@@ -191,136 +183,24 @@
 			articleWaterfall
 		},
 		onLoad(options) {
+			this.keyword = options.keyword
+			if (this.keyword){
+				this.getSearchResults(this.keyword)
+			}
 			uni.getStorage({
 				key: 'searchHistory',
 				success: res => {
-					this.oldKeywordList = res.data
+					this.historyList = res.data
 					if (typeof(res.data) == 'string'){
-						this.oldKeywordList = JSON.parse(res.data)
+						this.historyList = JSON.parse(res.data)
 					}
-					this.defaultKeyword = this.oldKeywordList ? this.oldKeywordList[0]: '搜索热门目的地/景点'
+					this.placeholderKeyword = this.historyList && this.historyList.length>0 ? this.historyList[0]: this.defaultKeyword
 				}
-			}); 
+			});
 			this.getHotKeyword()
 		},
 		// 方法
 		methods: {
-			getSearchResults(keyword) {
-				var that = this
-				this.HTTP.request({ 
-					url: '/search', 
-					data: { 
-						query: keyword, 
-						hit: 8 
-					},
-					success: res => {
-						if (res.statusCode != 200 || res.data.code != 0){
-							uni.showToast({
-								title: res.data.msg,
-								icon: 'none'
-							});
-							return
-						}
-						var area = res.data.data.area
-						area && (area.image = that.Utils.addImageProcess(area.image, false, 40))
-						that.area = area;
-						
-						var site = res.data.data.site
-						site && (site.image[0] = that.Utils.addImageProcess(site.image[0], false, 40))
-						that.site = site;
-						
-						var list = res.data.data.article_list;
-						list && list.forEach((item1, index1) => {
-							if (item1.cover_height > 0){
-								item1.height = 340*item1.cover_height/item1.cover_width+'rpx'
-							} else{
-								item1.height = '220rpx'
-							}
-							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
-							item1.image = this.Utils.addImageProcess(item1.image, false, 40)
-						})
-						
-						
-						if (!list || list.length == 0){
-							this.isShowEmpty = true
-							this.isShowResult = false
-							this.GetArticleList()
-						}
-						that.list = list
-						
-						var route_list = res.data.data.route_list;
-						route_list && route_list.forEach((item1, index1) => {
-							item1.image = this.Utils.addImageProcess(item1.image, false, 50)
-						})
-						that.route_list = route_list;
-					} 
-				}); 
-			}, 
-			//高亮关键字
-			drawCorrelativeKeyword(keywords, keyword) {
-				var len = keywords.length;
-				var keywordArr = [];
-				for (var i = 0; i < len; i++) {
-					var row = keywords[i].title;
-					console.log(row, 1);
-					//定义高亮#9f9f9f
-					var html = row.replace(keyword, "<span style='color: #A86B13;font-weight:bold'>" + keyword + '</span>');
-					html = '<div>' + html + '</div>';
-					var tmpObj = {
-						...keywords[i],
-						htmlStr: html
-					};
-					keywordArr.push(tmpObj);
-				}
-			
-				return keywordArr;
-				
-			},
-			// 线路列表
-			toLineMore() {
-				var state_id = this.area.state_id;
-				var city_id = this.area.city_id;
-				uni.navigateTo({
-					url: '/pages_province/lineList/lineList?state_id=' + state_id + '&city_id=' + city_id
-				});
-			},
-			getSite(id) {
-				if (id) {
-					uni.navigateTo({
-						url: '/pages_province/positionContent/positionContent?id=' + id
-					});
-				}
-			},
-			getRoute(id) {
-				if (id) {
-					uni.navigateTo({
-						url: '/pages_province/lineDetail/lineDetail?id=' + id
-					});
-				}
-			},
-			getCity(area) {
-				if (area) {
-					let obj = {
-						state_id: area.state_id,
-						name: area.name,
-						image: area.image,
-						city_id: area.city_id
-					};
-					uni.navigateTo({
-						url: '/pages_content/provinces/provinces?state_id=' + 
-						obj.state_id+"&city_id="+obj.city_id+"&name="+obj.name+"&image="+obj.image
-					});
-				}
-			},
-			// toSearch(){
-			// 	this.Utils.back()
-			// },
-			focus() {
-				//#ifndef MP-BAIDU
-				uni.hideKeyboard();
-				//#endif
-			},
-			// new
 			getHotKeyword() {
 				//定义热门搜索关键字，可以自己实现ajax请求数据再赋值
 				this.HTTP.request({
@@ -338,7 +218,52 @@
 					}
 				});
 			},
-			GetArticleList() {
+			getSearchResults(keyword) {
+				this.showType = 2
+				this.articleList = []
+				var that = this
+				this.HTTP.request({ 
+					url: '/search', 
+					data: {
+						query: keyword, 
+						hit: 8 
+					},
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						var result = res.data.data
+						result.area && (result.area.image = that.Utils.addImageProcess(result.area.image, false, 40))
+						
+						result.site && (result.site.image[0] = that.Utils.addImageProcess(result.site.image[0], false, 40))
+						this.site = result.site
+						
+						result.article_list && result.article_list.forEach((item1, index1) => {
+							if (item1.cover_height > 0){
+								item1.height = 340*item1.cover_height/item1.cover_width+'rpx'
+							} else{
+								item1.height = '220rpx'
+							}
+							item1.avatar = that.Utils.addImageProcess(item1.avatar, false, 60)
+							item1.image = that.Utils.addImageProcess(item1.image, false, 40)
+						})
+						if (!result.article_list || result.article_list.length == 0){
+							that.getArticleList()
+						}
+						
+						result.route_list && result.route_list.forEach((item1, index1) => {
+							item1.image = that.Utils.addImageProcess(item1.image, false, 50)
+						})
+						that.result = result
+					} 
+				}); 
+			},
+			getArticleList() {
+				this.showType = 3
 				this.HTTP.request({
 					url: '/article/list',
 					data: {
@@ -364,56 +289,22 @@
 							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
 							item1.image = this.Utils.addImageProcess(item1.image, false, 40)
 						})
-						this.list = list;
+						this.noResultList = list;
 					}
 				});
 			},
-			// 点赞
-			clickLike(e, index) {
-				if (!this.Utils.isLogin()){
-					return
-				}
-				
-				let article = e.article_id;
-				var that = this;
-				this.HTTP.request({
-					url: '/user/liked',
-					data: {
-						article_id: article,
-						liked: e.liked == 0 ? 1 : 0
-					},
-					method: 'POST',
-					success: res=> {
-						if (res.statusCode != 200 || res.data.code != 0){
-							uni.showToast({
-								title: res.data.msg,
-								icon: 'none'
-							});
-							return
-						}
 			
-						this.list[index].liked = res.data.data.liked
-						this.list[index].like_count = res.data.data.like_count
-					}
-				});
-			},
 			//监听输入
 			inputChange(event) {
+				this.showType = 1
 				var keyword = event.replace(/^\s+|\s+$/g,'')
 				this.keyword = keyword
 				if (!keyword) {
-					this.keywordList = [];
-					this.isShowKeywordList = false;
-					this.isShowHirstoryHot = true;
-					this.isShowEmpty = false
-					this.isShowResult = false;
-					this.defaultKeyword = this.oldKeywordList ? this.oldKeywordList[0]: '搜索热门目的地/景点'
+					this.showType = 0
+					this.suggestList = [];
+					this.placeholderKeyword = this.historyList ? this.historyList[0]: this.defaultKeyword
 					return;
 				}
-				this.isShowKeywordList = true;
-				this.isShowResult = false;
-				this.isShowHirstoryHot = false;
-				this.isShowEmpty = false
 				this.HTTP.request({
 					url: '/search/suggest',
 					data: {
@@ -430,7 +321,6 @@
 							return
 						}
 						
-						this.keywordList = [];
 						let arr = [];
 						if (res.data.data.special) {
 							arr.push({ ...res.data.data.special });
@@ -441,12 +331,10 @@
 							});
 						}
 						
-						this.keywordList = this.drawCorrelativeKeyword(arr, keyword);
-						// console.log(this.keywordList,'111')
+						this.suggestList = this.drawCorrelativeKeyword(arr, keyword);
 					}
 				});
 			},
-			
 			//高亮关键字
 			drawCorrelativeKeyword(keywords, keyword) {
 				var len = keywords.length;
@@ -467,8 +355,7 @@
 			},
 			// 回车搜索
 			toSearchResults() {
-				var keyword = this.keyword ? this.keyword : this.defaultKeyword
-				// keyword = keyword.replace(/^\s+|\s+$/g,'')
+				var keyword = this.keyword ? this.keyword : this.placeholderKeyword
 				if(keyword == '搜索热门目的地/景点'){
 					uni.showToast({
 					    title: '请输入搜索词',
@@ -477,12 +364,7 @@
 					return
 				}
 				this.keyword = keyword
-				this.isShowKeywordList = false;
 				this.getSearchResults(this.keyword)
-				// console.log(this.keyword,'11')
-				this.isShowKeywordList = false
-				this.isShowResult = true
-				this.isShowHirstoryHot = false
 				this.saveKeyword(this.keyword); //保存为历史
 				
 			},
@@ -492,7 +374,7 @@
 					content: '确定清除历史搜索记录？',
 					success: res => {
 						if (res.confirm) {
-							this.oldKeywordList = [];
+							this.historyList = [];
 							uni.removeStorage({
 								key: 'searchHistory'
 							});
@@ -500,23 +382,15 @@
 					}
 				});
 			},
-			//热门搜索开关
-			// hotToggle() {
-			// 	this.forbid = this.forbid ? '' : '_forbid';
-			// },
 			//执行搜索
 			doSearch(keyword) {
 				if (!keyword) return false;
 				keyword = keyword;
 				this.saveKeyword(keyword); //保存为历史
 				this.getSearchResults(keyword)
-				// console.log(111)
-				this.isShowResult = true
-				this.home = true
-				this.isShowHirstoryHot = false
 				this.keyword = keyword
 			},
-			goSearch(keyword) {
+			suggestToSearch(keyword) {
 				this.saveKeyword(keyword.name); //保存为历史
 				switch(keyword.type){
 					case 'area':
@@ -537,9 +411,6 @@
 						});
 						break
 					default:
-						this.isShowResult = true
-						this.home = true
-						this.isShowKeywordList = false
 						this.getSearchResults(keyword.name)
 						this.keyword = keyword.name
 				}
@@ -547,7 +418,7 @@
 			//保存关键字到历史记录
 			saveKeyword(keyword) {
 				var that = this
-				var hisKey = this.oldKeywordList
+				var hisKey = this.historyList
 				var searchHistory = null
 				if (!hisKey) {
 					searchHistory = [keyword];
@@ -564,24 +435,46 @@
 					key: 'searchHistory',
 					data: searchHistory,
 					success: function () {
-						that.oldKeywordList = searchHistory;
+						that.historyList = searchHistory;
 					}
 				});
-			}, 
-			
+			},
+			// 线路列表
+			toLineMore() {
+				var state_id = this.area.state_id;
+				var city_id = this.area.city_id;
+				uni.navigateTo({
+					url: '/pages_province/lineList/lineList?state_id=' + state_id + '&city_id=' + city_id
+				});
+			},
+			toSite(id) {
+				uni.navigateTo({
+					url: '/pages_province/positionContent/positionContent?id=' + id
+				});
+			},
+			toRoute(id) {
+				uni.navigateTo({
+					url: '/pages_province/lineDetail/lineDetail?id=' + id
+				});
+			},
+			toPrivince(area) {
+				let obj = {
+					state_id: area.state_id,
+					name: area.name,
+					image: area.image,
+					city_id: area.city_id
+				};
+				uni.navigateTo({
+					url: '/pages_content/provinces/provinces?state_id=' + 
+					obj.state_id+"&city_id="+obj.city_id+"&name="+obj.name+"&image="+obj.image
+				});
+			},
 			// 跳转热搜榜单
 			toHotRank(){
 				uni.navigateTo({
 					url:'/pages_search/hotSearchRank/hotSearchRank'
 				})
 			},
-			// 跳转文章详情
-			onPageJump(e) {
-				let id = e.currentTarget.id;
-				uni.navigateTo({
-					url: '/pages_content/article/article?article_id=' + id
-				});
-			}
 		}
 	};
 </script>

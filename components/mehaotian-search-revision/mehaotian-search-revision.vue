@@ -68,7 +68,7 @@ export default {
 			inputVal: '',
 			searchName: '取消',
 			isDelShow: false,
-			isFocus: false
+			isFocus: true
 		};
 	},
 	methods: {
