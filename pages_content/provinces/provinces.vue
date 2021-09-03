@@ -173,6 +173,7 @@ export default {
 			title: options.name+"旅游攻略-领途羊",
 			keywords: options.name+","+options.name+"旅游攻略,"+options.name+"景点介绍,领途羊",
 			description: options.name+"旅游攻略，欢迎来领途羊咨询旅游",
+			image: [options.image],
 		})
 		//#endif
 		this.loadData()
