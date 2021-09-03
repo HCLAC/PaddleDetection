@@ -135,10 +135,8 @@
 		},
 		methods:{
 			// 发出组件高度信息，在此处可以区分正确和错误的加载，给予错误的提示图片
-			
 			// 跳转问题详情
 			toQuestionsDetail(item){
-				console.log("itme", item)
 				var question_id = item.currentTarget.id
 				uni.navigateTo({
 					url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + question_id

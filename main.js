@@ -19,8 +19,6 @@ Vue.use(uView);
 
 Vue.config.productionTip = true
 
-import MescrollBody from "@/components/mescroll-uni/mescroll-body.vue"
-Vue.component('mescroll-body', MescrollBody)
 App.mpType = 'app'
 
 // import MetaInfo from 'vue-meta-info'

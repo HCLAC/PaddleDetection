@@ -59,8 +59,8 @@
 </template>
 
 <script>
-	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
-	import MescrollMoreItemMixin from '@/components/mescroll-uni/mixins/mescroll-more-item.js';
+	import MescrollMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js';
+	import MescrollMoreItemMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-more-item.js';
 	
 	export default {
 		name:"article-list",
@@ -84,6 +84,7 @@
 			update(){
 				if (this.isInit){
 					this.mescroll.optUp.empty.tip = this.tab.tip
+					this.mescroll.optUp.empty.icon = this.tab.icon
 				}
 			},
 		},
@@ -103,12 +104,11 @@
 					// },
 					noMoreSize: 1, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
 					empty:{
-					  use : true ,
-					  tip : '',
-					  btnText : "",
-					  fixed: false,
-					  top: "100px",
-					  zIndex: 99
+						use : true ,
+						tip : '',
+						icon: '/static/images/wenjianjia.png',
+						fixed: true, // 是否使用fixed定位,默认false; 配置fixed为true,以下的top和zIndex才生效 (transform会使fixed失效,最终会降级为absolute)
+						top: "680rpx", // fixed定位的top值 (完整的单位值,如 "10%"; "100rpx")
 					}
 				}
 			}
@@ -238,7 +238,6 @@
 </script>
 
 <style lang="scss" scoped>
-
 .contentItem {
 	width: 694rpx;
 	height: 232rpx;
