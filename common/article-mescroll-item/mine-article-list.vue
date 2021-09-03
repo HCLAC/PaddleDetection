@@ -318,7 +318,7 @@
 		white-space: nowrap;
 	}
 	.richText {
-		width: 480rpx;
+		width: 482rpx;
 		height: 84rpx;
 		font-size: 28rpx;
 		font-weight: 400;

@@ -39,7 +39,12 @@
 							</view>
 						</view>
 						<view class="tips">
-							<view class="tipHot" v-for="(item,index) in siteInfo.tags" :key="index" >{{item}}</view>
+							
+							<view 
+								:style="{background:item.tag_type == 1 ? 'rgba(113, 200, 23, 1)':'',color:item.tag_type == 1 ? '#ffffff':'',border:item.tag_type == 1 ? 'none':''}" 
+								class="tipHot" v-for="(item,index) in siteInfo.new_tags"
+								:key="index" 
+							>{{item.tag_name}}</view>
 							<view class="tip">{{siteInfo.city}}</view>
 						</view>
 					</view>
@@ -183,7 +188,10 @@ export default {
 					siteInfo.images.forEach((item, index) => {
 						siteInfo.images[index] = that.Utils.addImageProcess(item, true, 70)
 					})
-					siteInfo.articles = siteInfo.articles.splice(0,4)
+					
+					if(siteInfo.articles && siteInfo.articles.length > 4){
+						siteInfo.articles = siteInfo.articles.splice(0,4)
+					}
 					that.siteInfo = siteInfo
 					if(that.siteInfo.description.length < 50){
 						that.more = false
@@ -426,11 +434,14 @@ export default {
 			margin-top: 4rpx;
 			padding: 2rpx 8rpx;
 			border-radius: 4rpx;
-			background: rgba(113, 200, 23, 1);
+			// background: rgba(113, 200, 23, 1);
 			font-size: 20rpx;
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
-			color: #fff;
+			border: 2rpx solid rgba(144, 147, 153, 1);
+			color: rgba(144, 147, 153, 1);
+			
+			// color: #fff;
 			// height: 36rpx;
 			display: flex;
 			align-items: center;
