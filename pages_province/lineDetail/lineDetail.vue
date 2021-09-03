@@ -48,7 +48,7 @@
 			</view>
 			<view class="lineDriver"></view>
 		</view>
-		<view style="height: 120rpx;">
+		<view >
 			<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight"  :line-width="130" :tab-width="105"></meTabs>
 		</view>
 		<view class="linePlan">
