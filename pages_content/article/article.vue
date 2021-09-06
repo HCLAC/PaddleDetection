@@ -441,12 +441,12 @@
 							articleTitle: articleInfo.title,
 							keywords: articleInfo.keywords,
 							description: articleInfo.description,
-							image: articleInfo.images,
+							image: articleInfo.images.length <=3 ?articleInfo.images:articleInfo.images.splice(0,3),
 							releaseDate: articleInfo.update_at,
 							likes: articleInfo.like_count,
 							collects: articleInfo.fav_count,
-							visit: articleInfo.visit_count,
-						}) 
+							visit: {pv:articleInfo.visit_count+''},
+						})
 						//#endif
 						that.articleInfo = articleInfo;
 						that.following = that.articleInfo.follow;

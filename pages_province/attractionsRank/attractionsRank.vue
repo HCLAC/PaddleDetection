@@ -103,9 +103,19 @@
 			}
 		},
 		onLoad: function(options) {
+			if (!options.name){
+				this.querys = {
+					imageProcess: this.Utils.addImageProcess('https://cache.lingtuyang.cn/areas/8bca332388ab1dca8c905d65f35ede84.png', false, 60),
+					name: '全国',
+					state_id: 0,
+					city_id: 0,
+				}
+			} else {
+				options.imageProcess = this.Utils.addImageProcess(options.image, false, 60)
+				this.querys = options;
+			}
+			
 			this.serviceProvider = getApp().globalData.serviceProvider
-			options.imageProcess = this.Utils.addImageProcess(options.image, false, 60)
-			this.querys = options
 			this.getCity()
 			this.calcCardHeight()
 		},
