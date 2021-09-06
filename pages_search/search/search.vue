@@ -156,7 +156,7 @@
 				</view>
 			</view>
 		</mescroll-body>
-		<u-modal v-model="clearShow" :border-radius="40" :content="content" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
+		<u-modal v-model="clearShow" :border-radius="40" content="确定清除历史搜索记录？" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 	</view>
 </template>
 

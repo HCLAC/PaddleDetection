@@ -175,7 +175,7 @@ export default {
 			options.imageProcess = this.Utils.addImageProcess(options.image, false, 60)
 			this.querys = options;
 		}
-		console.log(options, this.querys)
+		
 		//#ifdef MP-BAIDU
 		swan.setPageInfo({
 			title: options.name+"旅游攻略-领途羊",

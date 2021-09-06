@@ -3,6 +3,7 @@
 ### 发布流程
 
 ### TODO
+- auth区分dev和master
 - 图片加载优化，后端返回图片宽高上传图片压缩
 - 文章图片优化
 - 个人下拉的问题
@@ -10,8 +11,8 @@
 - 搜索优化：添加下拉回调接口，开放搜索添加类目预测
 
 ### 图片加载优化
-- 后台服务返回图片宽高，
-- 图片处理参数说明：
+- 后台服务返回图片宽高
+- 图片处理参数说明
 ```
 开头：x-oss-process=image
 加水印：/watermark,image_d2F0ZXJtYXJrLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzg=,g_sw,x_30,y_10
