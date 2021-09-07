@@ -43,7 +43,7 @@
 			tabWidth: Number, // 每个tab的宽度,默认不设置值,为flex平均分配; 如果指定宽度,则不使用flex,每个tab居左,超过则水平滑动(单位默认rpx)
 			height: { // 高度,单位rpx
 				type: Number,
-				default: 44
+				default: 46
 			},
 			lineWidth: { // 高度,单位rpx
 				type: Number,
