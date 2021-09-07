@@ -12,23 +12,25 @@
 			</uni-nav-bar>
 		</view>
 		<view class="search-box">
-			<mSearch 
-				class="mSearch-input-box" 
-				:mode="2" 
-				button="inside" 
-				:placeholder="placeholderKeyword"
+			<u-search 
 				v-model="keyword"
+				:focus="autofocus"
+				action-text="取消"
+				:placeholder="placeholderKeyword" 
+				bg-color='#F8F8F8'
+				:action-style="{width:'64rpx',height:'32rpx',marginLeft:'24rpx',}"
+				:input-style="{background: '#F8F8F8'}"
+				height=72
 				@input="inputChange"
-				confirm-type="search"
-				@confirm="toSearchResults()"
-			></mSearch>
+				@search="toSearchResults"
+				@custom="Utils.back"
+			></u-search>
 		</view>
 		<!-- 下拉 -->
 		<view class="search-keyword" v-if="showType == 1">
 			<scroll-view class="keyword-list-box" scroll-y scroll-x="false">
 				<block v-for="(row, index) in suggestList" :key="index">
 					<view class="keyword-entry" hover-class="keyword-entry-tap">
-						<!-- <view v-if="row.keyword.type" class="otherIcon"><u-icon size="32" :name="row.keyword.type == 'site' ? 'photo' : row.keyword.type ? 'map-fill' : ''"></u-icon></view> -->
 						<view v-if="row.keyword.type" :class=" row.keyword.type == 'site' ? 'otherIcon' : 'otherIcon1'">
 							<image :src="row.keyword.type == 'site'?'/static/images/attIcon.svg':'/static/images/adressIcon.svg'" ></image>
 						</view>
@@ -127,9 +129,8 @@
 							<view class="swiperItem" v-for="(item, index) in result.route_list" @click="toRoute(item.uuid)" :key="index">
 								<image lazy-load :src="item.image"></image>
 								<view class="">
-									{{item.title}}
+									<rich-text :nodes="item.htmlStr"></rich-text>
 								</view>
-								<!-- <view class="title"><rich-text :nodes="item.htmlStr"></rich-text></view> -->
 							</view>
 						</view>
 					</view>
@@ -194,6 +195,7 @@
 				hotKeywordList: [],	// 热搜记录
 				showType: 0 ,// 0-热搜和历史搜索 1-下拉提示 2-搜索结果
 				clearShow: false,
+				autofocus: true,
 			};
 		},
 		components: {
@@ -203,6 +205,7 @@
 		},
 		onLoad(options) {
 			this.keyword = options.keyword
+			this.autofocus = options.focus ? options.focus==1 : true
 			if (this.keyword){
 				this.getSearchResults()
 			}
@@ -243,6 +246,7 @@
 			getSearchResults() {
 				this.showType = 2
 				this.saveKeyword(this.keyword); //保存为历史
+				this.articleList = [];
 				this.mescroll.resetUpScroll();
 				var that = this
 				this.HTTP.request({ 
@@ -268,9 +272,22 @@
 						result.route_list && result.route_list.forEach((item1, index1) => {
 							item1.image = that.Utils.addImageProcess(item1.image, false, 50)
 						})
+						this.drawCorrelativeRoute(result.route_list, this.keyword)
 						that.result = result
 					} 
 				}); 
+			},
+			//高亮关键字
+			drawCorrelativeRoute(routeList, keyword) {
+				var len = routeList.length;
+				for (var i = 0; i < len; i++) {
+					var title = routeList[i].title;
+					
+					//定义高亮#9f9f9f
+					var html = title.replace(keyword, "<span style='color: #A86B13;font-weight:bold'>" + keyword + '</span>');
+					html = '<div>' + html + '</div>';
+					routeList[i].htmlStr = html
+				}
 			},
 			getArticleList() {
 				this.showType = 3
@@ -305,10 +322,8 @@
 			},
 			
 			//监听输入
-			inputChange(event) {
+			inputChange(keyword) {
 				this.showType = 1
-				var keyword = event.replace(/^\s+|\s+$/g,'')
-				this.keyword = keyword
 				if (!keyword) {
 					this.showType = 0
 					this.suggestList = [];
@@ -341,12 +356,12 @@
 							});
 						}
 						
-						this.suggestList = this.drawCorrelativeKeyword(arr, keyword);
+						this.suggestList = this.drawCorrelativeSuggest(arr, keyword);
 					}
 				});
 			},
 			//高亮关键字
-			drawCorrelativeKeyword(keywords, keyword) {
+			drawCorrelativeSuggest(keywords, keyword) {
 				var len = keywords.length;
 				var keywordArr = [];
 				for (var i = 0; i < len; i++) {
@@ -490,7 +505,6 @@
 			},
 			/*上拉加载的回调*/
 			upCallback(page) {
-				console.log('1111')
 				if (this.showType != 2){
 					return
 				}
@@ -782,15 +796,7 @@
 .search-box {
 	width: 100%;
 	padding: 8rpx 28rpx 0;
-	display: flex;
 	justify-content: space-between;
-	position: sticky;
-	top: 0;
-	color: red;
-}
-
-.search-box .mSearch-input-box {
-	width: 100%;
 }
 
 
@@ -806,55 +812,6 @@
 	// margin: 0 auto;
 	padding: 0 20rpx 0;
 }
-// new
-.search-box {
-	width: 100%;
-	box-sizing: border-box;
-	background-color: rgb(255, 255, 255);
-	padding: 8rpx 28rpx 0;
-	display: flex;
-	justify-content: space-between;
-	position: sticky;
-	top: 0;
-}
-.search-box .mSearch-input-box {
-	// width: 100%;
-	// height: 72rpx;
-}
-.search-box .input-box {
-	width: 606rpx;
-	flex-shrink: 1;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.search-box .search-btn {
-	width: 15%;
-	margin: 0 0 0 2%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-shrink: 0;
-	font-size: 28upx;
-	color: #fff;
-	background: linear-gradient(to right, #ff9801, #ff570a);
-	border-radius: 60upx;
-}
-.search-box .input-box > input {
-	width: 100%;
-	height: 60upx;
-	font-size: 32upx;
-	box-sizing: border-box;
-	border: 0;
-	border-radius: 60upx;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	padding: 0 3%;
-	margin: 0;
-	background-color: #ff557f;
-}
-
 .search-keyword {
 	width: 100%;
 	box-sizing: border-box;
