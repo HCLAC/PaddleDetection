@@ -101,9 +101,8 @@
 					  icon : null ,
 					  tip : this.i?'您的收藏夹空空如也～':'您还没有赞过任何文章哦～',
 					  btnText : "",
-					  fixed: false,
-					  top: "10rpx",
-					  zIndex: 99
+					  fixed: true,
+					  top: "680rpx",
 					}
 				}
 			}
@@ -177,15 +176,15 @@
 						if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
 						this.list = this.list.concat(curPageData); //追加新数据
 						console.log("bloggerArticle",this.list)
-						// if(this.list.length >= 3 ){
-						// 	this.bom = 0
-						// }else{
-						// 	this.bom = 300							
-						// }
+						if(this.list.length >= 3 ){
+							this.bom = 0
+						}else{
+							this.bom = 300							
+						}
 						if(this.list.length == 0){
 							this.top = 374
 						}else{
-							this.top = 490
+							this.top = 450
 						}
 						
 						// 请求成功,隐藏加载状态

@@ -722,7 +722,8 @@
 
 	.swiper {
 		width: 100%;
-		height: 240rpx;
+		margin-bottom: 28rpx;
+		// height: 240rpx;
 		overflow-x: auto;
 		display: flex;
 		justify-content: space-between;

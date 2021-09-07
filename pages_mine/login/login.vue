@@ -412,7 +412,8 @@ export default {
 	justify-content: space-between;
 	image{
 		position: relative;
-		left: 400rpx;
+		// left: 400rpx;
+		left: 0;
 	}
 }
 .styleOjb {
