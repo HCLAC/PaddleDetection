@@ -4,7 +4,7 @@
 		    :list-data="listData"
 		    :current-page="currentPage"
 		    :total-page="totalPage"
-		    path="/swan-sitemap/index">
+		    path="/swan-sitemap/site">
 		</swan-sitemap-list>
 	</view>
 </template>
@@ -16,7 +16,7 @@
 				listData: [],
 				totalPage: 1,
 				currentPage: 1,
-				path: 'swan-sitemap/index'
+				path: 'swan-sitemap/site'
 			}
 		},
 		onLoad(e) {
@@ -29,9 +29,9 @@
 		},
 		methods: {
 			requestData(currentPage){
-				var pageSize = 150
+				var pageSize = 100
 				this.HTTP.request({
-					url: '/article/sitemap?page=' + currentPage + '&count=' + pageSize,
+					url: '/site/sitemap?page=' + currentPage + '&count=' + pageSize,
 					data: {
 					},
 					success: res => {
@@ -47,7 +47,7 @@
 							return
 						}
 						list.forEach((item, index) => {
-							item.path = '/pages_content/article/article?article_id=' + item.uuid
+							item.path = '/pages_province/positionContent/positionContent?id=' + item.id
 							item.releaseDate = item.update_at
 							})
 						this.listData = res.data.data.list,

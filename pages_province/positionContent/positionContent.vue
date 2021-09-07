@@ -45,7 +45,6 @@
 								class="tipHot" v-for="(item,index) in siteInfo.new_tags"
 								:key="index" 
 							>{{item.tag_name}}</view>
-							<view class="tip">{{siteInfo.city}}</view>
 						</view>
 					</view>
 					<view class="shareBox" @click="share" v-if="serviceProvider =='baidu' ">
@@ -202,7 +201,7 @@ export default {
 						title: that.siteInfo.name+"景点介绍-领途羊",
 						keywords: that.siteInfo.name+","+that.siteInfo.city+"旅游攻略,"+that.siteInfo.pos+",领途羊",
 						description: that.siteInfo.description,
-						image: that.siteInfo.images,
+						image: that.siteInfo.images.length<=3?that.siteInfo.images:that.siteInfo.images.splice(0,3),
 					})
 					// #endif
 				}

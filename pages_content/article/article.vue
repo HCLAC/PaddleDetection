@@ -363,10 +363,12 @@
 							for (var i=0;i<article_images.length;i++){
 								var item = article_images[i]
 								let obj = item.split('"')
-								if (!obj || obj.length < 8){
+								if (obj[0].indexOf("src") === -1 || !obj || obj.length < 8){
 									console.warn("未知图片格式：", item)
-									let src = that.Utils.addImageProcess(obj[1], true, 60)
-									articleInfo.content = articleInfo.content.replace(obj[1], src);
+									if (obj[1].indexOf("lingtuyang.cn")!=-1){
+										let src = that.Utils.addImageProcess(obj[1], true, 60)
+										articleInfo.content = articleInfo.content.replace(obj[1], src);
+									}
 									continue
 								}
 								let src = that.Utils.addImageProcess(obj[1], true, 60)
@@ -439,12 +441,12 @@
 							articleTitle: articleInfo.title,
 							keywords: articleInfo.keywords,
 							description: articleInfo.description,
-							image: articleInfo.images,
+							image: articleInfo.images.length <=3 ?articleInfo.images:articleInfo.images.splice(0,3),
 							releaseDate: articleInfo.update_at,
 							likes: articleInfo.like_count,
 							collects: articleInfo.fav_count,
-							visit: articleInfo.visit_count,
-						}) 
+							visit: {pv:articleInfo.visit_count+''},
+						})
 						//#endif
 						that.articleInfo = articleInfo;
 						that.following = that.articleInfo.follow;

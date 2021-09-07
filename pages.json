@@ -14,7 +14,6 @@
 				"backgroundColorBottom": "#F8F8F8",
 				"backgroundColorTop": "#FFFFFF",
 				"backgroundColor":"#F8F8F8",
-				"disableScroll": false,
 				"navigationBarTextStyle":"white"
 			}
 		},
@@ -34,7 +33,33 @@
 					}
 				},
 				"navigationStyle": "default",
-                "navigationBarTitleText": "自然搜索索引页"
+                "navigationBarTitleText": "文章索引页"
+            }
+        }
+        ,{
+            "path" : "swan-sitemap/province",
+            "style" :                                                                                    
+            {
+				"mp-baidu": {
+					"usingComponents": {
+						"swan-sitemap-list": "dynamicLib://swan-sitemap-lib/swan-sitemap-list"
+					}
+				},
+				"navigationStyle": "default",
+                "navigationBarTitleText": "省市索引页"
+            }
+        }
+        ,{
+            "path" : "swan-sitemap/site",
+            "style" :                                                                                    
+            {
+				"mp-baidu": {
+					"usingComponents": {
+						"swan-sitemap-list": "dynamicLib://swan-sitemap-lib/swan-sitemap-list"
+					}
+				},
+				"navigationStyle": "default",
+                "navigationBarTitleText": "景点索引页"
             }
         }
     ],

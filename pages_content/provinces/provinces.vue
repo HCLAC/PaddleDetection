@@ -12,7 +12,7 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 头图 -->
-		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"> 
+		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"> 
 			<view class="headImgBox">
 				<image class="headImg" lazy-load :src="querys.imageProcess" mode="scaleToFill"></image>
 				<view class="mask"></view>
@@ -129,9 +129,7 @@ export default {
 	data() {
 		return {
 			downOption: {
-				auto:false,
 				use:false,
-				bgColor:'#F8F8F8'
 			},
 			upOption: {
 				auto:false,
@@ -166,8 +164,18 @@ export default {
 		cityPicker
 	},
 	onLoad(options) {
-		options.imageProcess = this.Utils.addImageProcess(options.image, false, 60)
-		this.querys = options;
+		if (!options.name){
+			this.querys = {
+				imageProcess: this.Utils.addImageProcess('https://cache.lingtuyang.cn/areas/8bca332388ab1dca8c905d65f35ede84.png', false, 60),
+				name: '全国',
+				state_id: 0,
+				city_id: 0,
+			}
+		} else {
+			options.imageProcess = this.Utils.addImageProcess(options.image, false, 60)
+			this.querys = options;
+		}
+		
 		//#ifdef MP-BAIDU
 		swan.setPageInfo({
 			title: options.name+"旅游攻略-领途羊",

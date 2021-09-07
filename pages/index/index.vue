@@ -25,7 +25,7 @@
 		</view>
 
 		<!-- 内容 -->
-		<mescroll-body @scroll="uniScroll" class="mescroll" ref="mescrollRef" @init="mescrollInit"
+		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit"
 		 @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部轮播图 -->
 			<view class="page-section " v-if="bannerList != null && bannerList.length != 0">
@@ -192,7 +192,6 @@
 				},
 				upOption: {
 					auto:false,
-					bgColor: '#F8F8F8'
 				},
 				backgroundColor: 'transparent',
 				firstTime: new Date().getTime(),
@@ -549,6 +548,11 @@
 <style lang="scss" scoped>
 	
 
+.nav-bar {
+	z-index: 999;
+	position: fixed;
+	top:0px;
+}
 	/* 头条小程序组件内不能引入字体 */
 	/* #ifdef MP-TOUTIAO */
 	@font-face {
@@ -644,13 +648,6 @@
 			}
 		}
 	}
-	.mescroll {
-		position: relative;
-		top: -184rpx;
-		left: 0;
-	}
-
-
 	.input-view {
 		display: flex;
 		flex-direction: row;
