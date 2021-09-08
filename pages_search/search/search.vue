@@ -18,12 +18,13 @@
 				action-text="取消"
 				:placeholder="placeholderKeyword" 
 				bg-color='#F8F8F8'
-				:action-style="{width:'64rpx',height:'32rpx',marginLeft:'24rpx',}"
+				:action-style="{width:'64rpx',height:'42rpx',marginLeft:'24rpx',fontSize:'32rpx'}"
 				:input-style="{background: '#F8F8F8'}"
 				height=72
 				@input="inputChange"
 				@search="toSearchResults"
 				@custom="Utils.back"
+				@clear="clear"
 			></u-search>
 		</view>
 		<!-- 下拉 -->
@@ -224,6 +225,9 @@
 		},
 		// 方法
 		methods: {
+			clear(){
+				this.keyword = ''
+			},
 			mescrollInit(mescroll) {
 				this.mescroll = mescroll;
 			},

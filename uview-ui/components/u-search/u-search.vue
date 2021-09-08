@@ -12,7 +12,8 @@
 			}"
 		>
 			<view class="u-icon-wrap">
-				<u-icon class="u-clear-icon" :size="28" :name="searchIcon" :color="searchIconColor ? searchIconColor : color"></u-icon>
+				<image class="u-clear-img" src="@/static/images/icon-search.svg" mode=""></image>
+				<!-- <u-icon class="u-clear-icon" :size="28" :name="searchIcon" :color="searchIconColor ? searchIconColor : color"></u-icon> -->
 			</view>
 			<input
 				confirm-type="search"
@@ -36,7 +37,9 @@
 				}, inputStyle]"
 			/>
 			<view class="u-close-wrap" v-if="keyword && clearabled && focused" @tap="clear">
-				<u-icon class="u-clear-icon" name="close-circle-fill" size="34" color="#c0c4cc"></u-icon>
+				<image class="u-clear-img-eliminate" src="@/static/images/ic_search_sel.svg" mode=""></image>
+				
+				<!-- <u-icon class="u-clear-icon" name="close-circle-fill" size="34" color="#c0c4cc"></u-icon> -->
 			</view>
 		</view>
 		<view :style="[actionStyle]" class="u-action" 
@@ -296,7 +299,14 @@ export default {
 	align-items: center;
 	flex: 1;
 }
-
+.u-clear-img{
+	width: 30rpx;
+	height: 30rpx;
+}
+.u-clear-img-eliminate{
+	width: 38rpx;
+	height: 36rpx;
+}
 .u-content {
 	@include vue-flex;
 	align-items: center;
