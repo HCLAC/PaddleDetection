@@ -1,9 +1,9 @@
 <template>
-	<u-waterfall v-model="list" ref="uWaterfall">
+	<u-waterfall v-model="list" add-time='150' ref="uWaterfall">
 		<template v-slot:left="{ leftList }">
 			<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
 				<view class="" v-if="item.type != 6">
-					<view class="" @click="toArticleDetail" :id="item.article_id">
+					<view class="" @click="toArticleDetail(index, true)" :id="index">
 						<view class="demo-top">
 							<view class="imgBox">
 								<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
@@ -57,7 +57,7 @@
 		<template v-slot:right="{ rightList }">
 			<view class="demo-warter" v-for="(item, index) in rightList" :key="index">
 				<view class="" v-if="item.type != 6"> 
-					<view class="" @click="toArticleDetail" :id="item.article_id">
+					<view class="" @click="toArticleDetail(index, false)">
 						<view class="demo-top">
 							<view class="imgBox">
 								<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
@@ -143,10 +143,25 @@
 				});
 			},
 			// 跳转文章详情
-			toArticleDetail(e) {
-				let id = e.currentTarget.id;
+			toArticleDetail(index, left=true) {
+				let obj = null
+				if (left){
+					obj = this.$refs.uWaterfall.leftList[index]
+				} else {
+					obj = this.$refs.uWaterfall.rightList[index]
+				}
+				let url = '/pages_content/article/article?article_id=' + obj.article_id
+				if (obj.trace_info && obj.rn) {
+					url += '&trace_info='+obj.trace_info+"&rn="+obj.rn
+					this.Opensearch.uploadData({
+						trace_info: obj.trace_info,
+						rn: obj.rn,
+						item_id: obj.article_id,
+						bhv_type: 'click'
+					})
+				}
 				uni.navigateTo({
-					url: '/pages_content/article/article?article_id=' + id
+					url: url
 				});
 			},
 			// 点赞 
@@ -156,13 +171,13 @@
 			clickRightLike(e, index) {
 				this.updateLike(e,index,false) 
 			},
-			updateLike(e, index, left){
+			updateLike(obj, index, left){
 				if (!this.Utils.isLogin()){
 					return
 				}
 				
-				let article = e.article_id;
-				let liked = e.liked;
+				let article = obj.article_id;
+				let liked = obj.liked;
 				var that = this;
 				this.HTTP.request({
 					url: '/user/liked',
@@ -186,6 +201,15 @@
 						}else{
 							this.$refs.uWaterfall.rightList[index].liked = res.data.data.liked
 							this.$refs.uWaterfall.rightList[index].like_count = res.data.data.like_count
+						}
+						
+						if (obj.trace_info && obj.rn) {
+							this.Opensearch.uploadData({
+								trace_info: obj.trace_info,
+								rn: obj.rn,
+								item_id: obj.article_id,
+								bhv_type: 'like'
+							})
 						}
 					}
 				});

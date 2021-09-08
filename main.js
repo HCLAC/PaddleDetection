@@ -10,6 +10,9 @@ Vue.prototype.HTTP = http
 // 引入utils.js
 import utils from '@/common/utils/utils.js'
 Vue.prototype.Utils = utils
+// 引入opensearch.js
+import Opensearch from '@/common/utils/opensearch.js'
+Vue.prototype.Opensearch = Opensearch
 // import store from './store'
 // //把vuex定义成全局组件
 // Vue.prototype.$store = store
