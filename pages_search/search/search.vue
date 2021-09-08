@@ -29,14 +29,14 @@
 		<!-- 下拉 -->
 		<view class="search-keyword" v-if="showType == 1">
 			<scroll-view class="keyword-list-box" scroll-y scroll-x="false">
-				<block v-for="(row, index) in suggestList" :key="index">
+				<block v-for="(item, index) in suggestList" :key="index">
 					<view class="keyword-entry" hover-class="keyword-entry-tap">
-						<view v-if="row.keyword.type" :class=" row.keyword.type == 'site' ? 'otherIcon' : 'otherIcon1'">
-							<image :src="row.keyword.type == 'site'?'/static/images/attIcon.svg':'/static/images/adressIcon.svg'" ></image>
+						<view v-if="item.type" :class=" item.type == 'site' ? 'otherIcon' : 'otherIcon1'">
+							<image :src="item.type == 'site'?'/static/images/attIcon.svg':'/static/images/adressIcon.svg'" ></image>
 						</view>
 						<view class="liIcon" v-else></view>
-						<view class="keyword-text" @tap.stop="suggestToSearch(row.keyword)"><rich-text :nodes="row.htmlStr"></rich-text></view>
-						<view class="otherText" v-if="row.keyword.type">{{ row.keyword.type == 'site' ? '景点' : '目的地' }}</view>
+						<view class="keyword-text" @tap.stop="suggestToSearch(item)"><rich-text :nodes="item.nameHtml"></rich-text></view>
+						<view class="otherText" v-if="item.type">{{ item.type == 'site' ? '景点' : '目的地' }}</view>
 					</view>
 				</block>
 				<view class="search-bottom" @click="toSearchResults()">
@@ -119,7 +119,7 @@
 				<block v-if="result.route_list && result.route_list.length">
 					<view class="titleBox">
 						<view class="contentTitle">行程线路</view>
-						<view class="moreBox" @click="toLineMore()" v-if="result.route_list.length > 2">
+						<view class="moreBox" @click="toLineMore()" v-if="result.route_list.length >= 2">
 							更多
 							<image src="/static/images/more-right.svg" mode=""></image>
 						</view>
@@ -129,7 +129,7 @@
 							<view class="swiperItem" v-for="(item, index) in result.route_list" @click="toRoute(item.uuid)" :key="index">
 								<image lazy-load :src="item.image"></image>
 								<view class="">
-									<rich-text :nodes="item.htmlStr"></rich-text>
+									<rich-text :nodes="item.titleHtml"></rich-text>
 								</view>
 							</view>
 						</view>
@@ -272,22 +272,15 @@
 						result.route_list && result.route_list.forEach((item1, index1) => {
 							item1.image = that.Utils.addImageProcess(item1.image, false, 50)
 						})
-						this.drawCorrelativeRoute(result.route_list, this.keyword)
+						//高亮关键字
+						result.route_list.forEach(item => {
+							var title = item.title;
+							title = title.replace(this.keyword, "<span style='color: #A86B13;font-weight:bold'>" + this.keyword + '</span>');
+							item.titleHtml = '<div>' + title + '</div>';
+						});
 						that.result = result
-					} 
+					}
 				}); 
-			},
-			//高亮关键字
-			drawCorrelativeRoute(routeList, keyword) {
-				var len = routeList.length;
-				for (var i = 0; i < len; i++) {
-					var title = routeList[i].title;
-					
-					//定义高亮#9f9f9f
-					var html = title.replace(keyword, "<span style='color: #A86B13;font-weight:bold'>" + keyword + '</span>');
-					html = '<div>' + html + '</div>';
-					routeList[i].htmlStr = html
-				}
 			},
 			getArticleList() {
 				this.showType = 3
@@ -346,37 +339,23 @@
 							return
 						}
 						
-						let arr = [];
+						let suggestList = [];
 						if (res.data.data.special) {
-							arr.push({ ...res.data.data.special });
+							suggestList.push({ ...res.data.data.special });
 						}
 						if (res.data.data.list && res.data.data.list.length) {
-							res.data.data.list.forEach(item => {
-								arr.push({ ...item });
-							});
+							suggestList.push({ ...res.data.data.list });
 						}
 						
-						this.suggestList = this.drawCorrelativeSuggest(arr, keyword);
+						//高亮关键字
+						suggestList.forEach(item => {
+							var name = item.name;
+							name = name.replace(keyword, "<span style='color: #A86B13;font-weight:bold'>" + keyword + '</span>');
+							item.nameHtml = '<div>' + name + '</div>';
+						});
+						this.suggestList = suggestList
 					}
 				});
-			},
-			//高亮关键字
-			drawCorrelativeSuggest(keywords, keyword) {
-				var len = keywords.length;
-				var keywordArr = [];
-				for (var i = 0; i < len; i++) {
-					var row = keywords[i].name;
-					
-					//定义高亮#9f9f9f
-					var html = row.replace(keyword, "<span style='color: #A86B13;font-weight:bold'>" + keyword + '</span>');
-					html = '<div>' + html + '</div>';
-					var tmpObj = {
-						keyword: keywords[i],
-						htmlStr: html
-					};
-					keywordArr.push(tmpObj);
-				}
-				return keywordArr;
 			},
 			// 回车搜索
 			toSearchResults() {
@@ -458,10 +437,8 @@
 			},
 			// 线路列表
 			toLineMore() {
-				var state_id = this.area.state_id;
-				var city_id = this.area.city_id;
 				uni.navigateTo({
-					url: '/pages_province/lineList/lineList?state_id=' + state_id + '&city_id=' + city_id
+					url: '/pages_province/lineList/lineList?query=' + this.keyword
 				});
 			},
 			toSite(id) {

@@ -28,6 +28,7 @@ export default {
 	data() {
 		return {
 			lineList: [],
+			query: null,
 			state_id: null,
 			city_id: null,
 			upOption:{
@@ -40,12 +41,9 @@ export default {
 		};
 	},
 	onLoad(option){
-		if(option.state_id == 0){
-			this.state_id = option.city_id ? option.city_id : null
-		}else{
-			this.state_id = option.state_id ? option.state_id : null
-			this.city_id = option.city_id ? option.city_id : null
-		}
+		this.query = option.query ? option.query : null
+		this.state_id = option.state_id ? option.state_id : null
+		this.city_id = option.city_id ? option.city_id : null
 	},
 	methods: {
 		downCallback() {
@@ -54,14 +52,19 @@ export default {
 		upCallback(page) {
 			let pageNum = page.num; // 页码, 默认从1开始
 			let pageSize = page.size;
+			let url = '/route/list'
+			if (this.query){
+				url = '/route/klist'
+			}
 			this.HTTP.request({
-				url: '/route/list',
+				url: url,
 				method: 'GET',
 				data: {
 					count: pageSize,
 					page: pageNum,
 					city_Id: this.city_id,
-					state_id: this.state_id
+					state_id: this.state_id,
+					query: this.query
 				},
 
 				success: res => {
