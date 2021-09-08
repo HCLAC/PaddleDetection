@@ -448,7 +448,7 @@
 							articleTitle: articleInfo.title,
 							keywords: articleInfo.keywords,
 							description: articleInfo.description,
-							image: articleInfo.images.length <=3 ?articleInfo.images:articleInfo.images.slice(0,4),
+							image: articleInfo.images.length <=3 ?articleInfo.images:articleInfo.images.slice(0,3),
 							releaseDate: articleInfo.update_at,
 							likes: articleInfo.like_count,
 							collects: articleInfo.fav_count,

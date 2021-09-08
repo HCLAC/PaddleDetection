@@ -120,7 +120,7 @@
 				<block v-if="result.route_list && result.route_list.length">
 					<view class="titleBox">
 						<view class="contentTitle">行程线路</view>
-						<view class="moreBox" @click="toLineMore()" v-if="result.route_list.length >= 2">
+						<view class="moreBox" @click="toLineMore()" v-if="routeHotMore">
 							更多
 							<image src="/static/images/more-right.svg" mode=""></image>
 						</view>
@@ -198,6 +198,7 @@
 				clearShow: false,
 				autofocus: true,
 				requestID: '',
+				routeHotMore: false
 			};
 		},
 		components: {
@@ -275,15 +276,16 @@
 						result.site && (result.site.image[0] = that.Utils.addImageProcess(result.site.image[0], false, 40))
 						this.site = result.site
 						
-						result.route_list && result.route_list.forEach((item1, index1) => {
-							item1.image = that.Utils.addImageProcess(item1.image, false, 50)
-						})
-						//高亮关键字
-						result.route_list.forEach(item => {
+						this.routeHotMore = result.route_list.length > 2
+						result.route_list = result.route_list.slice(0, 2)
+						result.route_list && result.route_list.forEach((item, index) => {
+							item.image = that.Utils.addImageProcess(item.image, false, 50)
+							//高亮关键字
 							var title = item.title;
 							title = title.replace(this.keyword, "<span style='color: #A86B13;font-weight:bold'>" + this.keyword + '</span>');
 							item.titleHtml = '<div>' + title + '</div>';
-						});
+						})
+						console.log(result)
 						that.result = result
 					}
 				}); 
@@ -319,7 +321,6 @@
 					}
 				});
 			},
-			
 			//监听输入
 			inputChange(keyword) {
 				this.showType = 1

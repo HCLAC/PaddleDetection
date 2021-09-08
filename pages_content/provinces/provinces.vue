@@ -56,7 +56,7 @@
 				<view class="trip" v-if="routeHot.length">
 					<view class="tripHeader">
 						<view class="tripTitle">行程路线</view>
-						<view class="tripMore" @click="toLineMore()" v-if="routeHot.length >= 2">
+						<view class="tripMore" @click="toLineMore()" v-if="routeHotMore">
 							更多
 							<image class="moreIcon" src="/static/images/more-right.svg" mode=""></image>
 						</view>
@@ -154,7 +154,8 @@ export default {
 			name: null,
 			firstTime: new Date().getTime(),
 			questions: [],
-			answersList:[]
+			answersList:[],
+			routeHotMore: false,
 		};
 	},
 	components: {
@@ -287,7 +288,6 @@ export default {
 				data: {
 					state_id: this.querys.state_id,
 					city_id: this.querys.city_id,
-					count: 2
 				},
 				success: res => {					
 					if (res.statusCode != 200 || res.data.code != 0){
@@ -301,7 +301,8 @@ export default {
 					routeHot.forEach((item1, index1) => {
 						item1.image = this.Utils.addImageProcess(item1.image, false, 50)
 					})
-					this.routeHot = routeHot;
+					this.routeHotMore = routeHot.length > 2
+					this.routeHot = routeHot.slice(0,2);
 				}
 			});
 		},
