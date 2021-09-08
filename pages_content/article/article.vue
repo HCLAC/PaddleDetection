@@ -56,7 +56,7 @@
 				<!-- 内容文章 -->
 				<view class="contentText">
 					<mp-html ref="parse" v-if="articleInfo" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
-					 :content="articleInfo.content" loading-img='/static/images/load.svg'></mp-html>
+					 :content="articleInfo.content" loading-img='/static/images/load.png'></mp-html>
 				</view>
 				<view class="tips">
 					<view v-for="item in articleInfo.topics" :key="item.id" @click="toTopic(item.id)">
@@ -92,7 +92,7 @@
 				<!-- 内容文章 -->
 				<view class="contentText">
 					<mp-html ref="parse" v-if="articleInfo" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
-					 :content="articleInfo.content" loading-img='/static/images/load.svg'></mp-html>
+					 :content="articleInfo.content" loading-img='/static/images/load.png'></mp-html>
 				</view>
 				<!-- 地址 -->
 				<view class="adress">
