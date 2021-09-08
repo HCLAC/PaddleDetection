@@ -189,7 +189,7 @@ export default {
 					})
 					
 					if(siteInfo.articles && siteInfo.articles.length > 4){
-						siteInfo.articles = siteInfo.articles.splice(0,4)
+						siteInfo.articles.splice(0,4)
 					}
 					that.siteInfo = siteInfo
 					if(that.siteInfo.description.length < 50){
@@ -201,7 +201,7 @@ export default {
 						title: that.siteInfo.name+"景点介绍-领途羊",
 						keywords: that.siteInfo.name+","+that.siteInfo.city+"旅游攻略,"+that.siteInfo.pos+",领途羊",
 						description: that.siteInfo.description,
-						image: that.siteInfo.images.length<=3?that.siteInfo.images:that.siteInfo.images.splice(0,3),
+						image: that.siteInfo.images.length<=3?that.siteInfo.images:that.siteInfo.images.slice(0,4),
 					})
 					// #endif
 				}
