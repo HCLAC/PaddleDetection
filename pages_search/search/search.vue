@@ -196,6 +196,7 @@
 				showType: 0 ,// 0-热搜和历史搜索 1-下拉提示 2-搜索结果
 				clearShow: false,
 				autofocus: true,
+				requestID: '',
 			};
 		},
 		components: {
@@ -243,7 +244,8 @@
 					}
 				});
 			},
-			getSearchResults() {
+			getSearchResults(requestID='') {
+				this.requestID = requestID
 				this.showType = 2
 				this.saveKeyword(this.keyword); //保存为历史
 				this.articleList = [];
@@ -344,7 +346,7 @@
 							suggestList.push({ ...res.data.data.special });
 						}
 						if (res.data.data.list && res.data.data.list.length) {
-							suggestList.push({ ...res.data.data.list });
+							suggestList.push( ...res.data.data.list );
 						}
 						
 						//高亮关键字
@@ -385,15 +387,15 @@
 				this.keyword = keyword
 				this.getSearchResults()
 			},
-			suggestToSearch(keyword) {
-				switch(keyword.type){
+			suggestToSearch(item) {
+				switch(item.type){
 					case 'area':
-						this.saveKeyword(keyword.name); //保存为历史
+						this.saveKeyword(item.name); //保存为历史
 						let obj = {
-							state_id: keyword.state_id,
-							name: keyword.name,
-							image: keyword.image,
-							city_id: keyword.city_id
+							state_id: item.state_id,
+							name: item.name,
+							image: item.image,
+							city_id: item.city_id
 						};
 						uni.navigateTo({
 							url: '/pages_content/provinces/provinces?state_id=' + 
@@ -401,14 +403,14 @@
 						});
 						break;
 					case 'site':
-						this.saveKeyword(keyword.name); //保存为历史
+						this.saveKeyword(item.name); //保存为历史
 						uni.navigateTo({
-							url: '/pages_province/positionContent/positionContent?id=' + keyword.id
+							url: '/pages_province/positionContent/positionContent?id=' + item.id
 						});
 						break
 					default:
-						this.keyword = keyword.name
-						this.getSearchResults()
+						this.keyword = item.name
+						this.getSearchResults(item.from_request_id)
 				}
 			},
 			//保存关键字到历史记录
@@ -491,6 +493,7 @@
 				this.HTTP.request({
 					url: '/search/article?page=' + pageNum + '&hit=' + pageSize,
 					data: {
+						from_request_id: this.requestID,
 						query: that.keyword
 					},
 					success: res => {
