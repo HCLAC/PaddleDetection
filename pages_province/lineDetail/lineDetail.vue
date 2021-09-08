@@ -239,6 +239,7 @@ export default {
 						title: that.lineContent.title+"-领途羊",
 						keywords: that.lineContent.title+",行程路线,领途羊",
 						description: that.lineContent.description,
+						image: that.lineContent.images.length <=3 ? that.lineContent.images : that.lineContent.images.slice(0,4),
 					})
 					//#endif
 					that.calcHeight()

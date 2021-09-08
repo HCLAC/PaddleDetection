@@ -4,9 +4,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="title">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
 					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -238,6 +238,10 @@
 				textareafocus: false,
 				animation: null,
 				animationInputC: {},
+				// 数据采集
+				trace_info: null,
+				rn: null,
+				joinTime: 0
 			};
 		},
 		//#ifdef H5
@@ -272,6 +276,9 @@
 		onLoad(obj) {
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.article_id = obj.article_id
+			this.trace_info = obj.trace_info?obj.trace_info:null
+			this.rn = obj.rn?obj.rn:null
+			this.joinTime = Number((new Date().getTime())/1000).toFixed(0)
 			this.animation = uni.createAnimation({
 				  transformOrigin: "50% 50%",
 				  duration: 175,
@@ -441,7 +448,7 @@
 							articleTitle: articleInfo.title,
 							keywords: articleInfo.keywords,
 							description: articleInfo.description,
-							image: articleInfo.images.length <=3 ?articleInfo.images:articleInfo.images.splice(0,3),
+							image: articleInfo.images.length <=3 ?articleInfo.images:articleInfo.images.slice(0,4),
 							releaseDate: articleInfo.update_at,
 							likes: articleInfo.like_count,
 							collects: articleInfo.fav_count,
@@ -784,6 +791,7 @@
 					});
 					return
 				}
+				var that = this
 				this.HTTP.request({
 					url: '/comments',
 					data: {
@@ -809,6 +817,14 @@
 							icon: 'none',
 							duration: 2000
 						})
+						if (that.trace_info && that.rn) {
+							that.Opensearch.uploadData({
+								trace_info: that.trace_info,
+								rn: that.rn,
+								item_id: that.article_id,
+								bhv_type: 'collect'
+							})
+						}
 					}
 				})
 			},
@@ -898,6 +914,15 @@
 						}
 						that.articleInfo.liked = res.data.data.liked
 						that.articleInfo.like_count = res.data.data.like_count
+						
+						if (that.trace_info && that.rn) {
+							that.Opensearch.uploadData({
+								trace_info: that.trace_info,
+								rn: that.rn,
+								item_id: that.article_id,
+								bhv_type: 'like'
+							})
+						}
 					}
 				});
 			},
@@ -927,6 +952,14 @@
 						}
 						that.articleInfo.fav = res.data.data.fav
 						that.articleInfo.fav_count = res.data.data.fav_count
+						if (that.trace_info && that.rn) {
+							that.Opensearch.uploadData({
+								trace_info: that.trace_info,
+								rn: that.rn,
+								item_id: that.article_id,
+								bhv_type: 'collect'
+							})
+						}
 					}
 				});
 			},
@@ -948,6 +981,36 @@
 			},
 			share() {
 				uni.showShareMenu({});
+			},
+			back(){
+				this.recordStayAndRead()
+				this.Utils.back()
+				
+			},
+			home(){
+				this.recordStayAndRead()
+				this.Utils.home()
+			},
+			recordStayAndRead(){
+				var that = this
+				let curT = Number((new Date().getTime())/1000).toFixed(0)
+				if (that.trace_info && that.rn) {
+					that.Opensearch.uploadData({
+						trace_info: that.trace_info,
+						rn: that.rn,
+						item_id: that.article_id,
+						bhv_type: 'stay',
+						bhv_value: ''+ (curT - this.joinTime)
+					})
+					if (curT - this.joinTime > 3){
+						that.Opensearch.uploadData({
+							trace_info: that.trace_info,
+							rn: that.rn,
+							item_id: that.article_id,
+							bhv_type: 'read'
+						})
+					}
+				}
 			}
 		}
 	};
