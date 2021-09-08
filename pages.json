@@ -62,6 +62,19 @@
                 "navigationBarTitleText": "景点索引页"
             }
         }
+        ,{
+            "path" : "swan-sitemap/route",
+            "style" :                                                                                    
+            {
+				"mp-baidu": {
+					"usingComponents": {
+						"swan-sitemap-list": "dynamicLib://swan-sitemap-lib/swan-sitemap-list"
+					}
+				},
+				"navigationStyle": "default",
+                "navigationBarTitleText": "路线索引页"
+            }
+        }
     ],
 	"subPackages": [
 		{
