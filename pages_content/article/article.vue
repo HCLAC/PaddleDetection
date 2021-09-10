@@ -184,7 +184,7 @@
 			</view>
 		</view>
 		<!-- 评论输入框 -->
-		<view :animation="animationInputC" class="commentInput" >
+		<view :animation="animationInputC" class="commentInput" v-if="showText">
 			<textarea class="inputK" v-model="contentText" placeholder="快来写下你的评论吧" :show-confirm-bar="false" :focus="textareafocus"
 			 @blur="inputBlur" :auto-height="autoHeight" @input="inputValue" maxlength="140"
 			 :adjust-position="false"></textarea>
@@ -214,6 +214,7 @@
 		},
 		data() {
 			return {
+				showText:false,
 				indicatorDots: true,
 				current: 0,
 				list: [],
@@ -281,7 +282,7 @@
 			this.joinTime = Number((new Date().getTime())/1000).toFixed(0)
 			this.animation = uni.createAnimation({
 				  transformOrigin: "50% 50%",
-				  duration: 175,
+				  duration:200,//175动画速度
 				  timingFunction: "linear",
 				  delay: 0
 				}
@@ -772,6 +773,7 @@
 					});
 					return
 				}
+				this.showText = true
 				this.textareafocus = true
 			},
 			inputBlur() {
@@ -1335,7 +1337,7 @@
 				display: flex;
 				align-items: center;
 				margin-top: 40rpx;
-
+				margin-bottom: 40rpx;
 				.userImg {
 					width: 68rpx;
 					height: 68rpx;

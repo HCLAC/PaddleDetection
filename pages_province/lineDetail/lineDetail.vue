@@ -277,7 +277,7 @@ export default {
 			}
 			uni.pageScrollTo({
 				scrollTop: scrollTop,
-				duration: 10,
+				duration: 400,
 			})
 		},
 		change(e) {
@@ -347,11 +347,17 @@ export default {
 	position: relative;
 	width: 100%;
 	height: 440rpx;
-	
 }
 .swiper {
 	width: 100%;
 	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
 }
 
 .itemImg {
@@ -546,8 +552,8 @@ export default {
 				font-weight: 400;
 				color: #909399;
 				line-height: 36rpx;
-				text-align: justify;
-				text-overflow: -o-ellipsis-lastline;
+				// text-align: justify;
+				// text-overflow: -o-ellipsis-lastline;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				display: -webkit-box;
@@ -718,6 +724,7 @@ export default {
 	line-height: 68rpx;
 	border: none;
 	text-align: center;
+	margin-right: 28rpx;
 	
 }
 
