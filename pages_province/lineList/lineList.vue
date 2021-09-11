@@ -13,7 +13,7 @@
 		<view class="container">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 				<view class="lineItem" @click="getDetail(item.uuid)" v-for="(item, index) in lineList" :key="index">
-					<image lazy-load :src="item.image" mode=""></image>
+					<u-image width="100%" height="370rpx" border-radius="16rpx 16rpx 0 0" :src="item.image" mode=""></u-image>
 					<view class="lineText" >{{ item.title }}</view>
 				</view>
 			</mescroll-body>
@@ -121,11 +121,11 @@ export default {
 		box-shadow: 0px 4rpx 56rpx 0px #EDEFF2;
 		border-radius: 0px 0px 16rpx 16rpx;
 		z-index: 999999;
-		image {
-			width: 100%;
-			height: 370rpx;
-			border-radius: 16rpx 16rpx 0 0;
-		}
+		// image {
+		// 	width: 100%;
+		// 	height: 370rpx;
+		// 	border-radius: 16rpx 16rpx 0 0;
+		// }
 		.lineText {
 			// width: 684rpx;
 			// height: 32rpx;
