@@ -43,7 +43,7 @@
 				<view class="cardList">
 					<view class="cards" v-for="(item,index) in hotsiteslist" :key="index" @click="toSiteDetail(item.id)">
 						<view class="cardsleft">
-							<image class="bigImg" lazy-load	:src="item.images[0]" mode="aspectFill"></image>
+							<u-image  width="262rpx" height="198rpx" border-radius="16rpx" :src="item.images[0]" mode="aspectFill"></u-image>
 							<image class="rankImg " :src="`/static/images/rank/top-${index+1}.svg`" v-if="index < 6" mode=""></image>
 						</view>
 						<view class="cardsright">
@@ -488,14 +488,6 @@
 		height: 198rpx;
 		border-radius: 16rpx;
 		position: relative;
-
-		.bigImg {
-			width: 262rpx;
-			height: 198rpx;
-			border-radius: 18rpx;
-			position: absolute;
-		}
-
 		.rankImg {
 			width: 88rpx;
 			height: 44rpx;

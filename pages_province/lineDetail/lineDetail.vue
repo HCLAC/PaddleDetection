@@ -18,7 +18,7 @@
 						<view class="page-section-spacing" >
 							<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false" circular='true'>
 								<swiper-item v-for="(item, index) in lineContent.images" :key="index">
-									<image class="itemImg" lazy-load mode="scaleToFill" :src="item"></image>
+									<u-image width="100%" height="440rpx" mode="scaleToFill" :src="item"></u-image>
 								</swiper-item>
 							</swiper>
 							<view class="imageCount">{{ current + 1 }}/{{ lineContent.images.length }}</view>
@@ -104,7 +104,7 @@
 										<view class="u-order-desc">{{ eve.description }}</view>
 										<view class="position" v-for="(pos, posIndex) in eve.position" :key="posIndex" @click="toPosition(pos)">
 											<view class="left">
-												<image lazy-load :src="pos.cover_url" class="positionImg" mode=""></image>
+												<u-image width="216rpx" height="164rpx" border-radius="12rpx" :src="pos.cover_url" mode=""></u-image>
 												<view class="imgTag">景点</view>
 											</view>
 											<view class="right">
@@ -360,10 +360,6 @@ export default {
 	transform: translate(-50%,-50%);
 }
 
-.itemImg {
-	width: 100%;
-	height: 100%;
-}
 
 .imageCount {
 	// width: 90rpx;
@@ -584,12 +580,6 @@ export default {
 		.left {
 			position: relative;
 
-			.positionImg {
-				width: 216rpx;
-				height: 164rpx;
-				border-radius: 12rpx;
-				margin-top: 4rpx;
-			}
 			.imgTag {
 				width: 88rpx;
 				height: 44rpx;
@@ -597,7 +587,7 @@ export default {
 				border-radius: 12rpx 0px 12rpx 0px;
 				position: absolute;
 				left: 0;
-				top: 4rpx;
+				top: 0;
 				color: #ffffff;
 				font-size: 24rpx;
 				text-align: center;
