@@ -5,18 +5,17 @@
 			<view v-for="(item, index) in list" :key="index" @click="onPageJump" :id="item.article_id">
 				<view class="contentItem">
 					<view class="left">
-						<image lazy-load :src="item.main_image" mode="aspectFill">
-							<view class="imgTip">
-								<view v-if="item.type == 1">游记</view>
-								<view v-else-if="item.type == 2">攻略</view>
-								<view v-else-if="item.type == 4">视频</view>
-								<view v-else-if="item.type == 5">推广</view>
-								<view v-else>文章</view>
-							</view>
-							<view class="videoIcon" v-if="item.type == 4">
-								<image class="playIcon"  src="/static/images/playIcon.svg" mode="aspectFill"></image>
-							</view>
-						</image>
+						<u-image width="192rpx" height="232rpx" border-radius="16rpx" :src="item.main_image" mode="aspectFill"></u-image>
+						<view class="imgTip">
+							<view v-if="item.type == 1">游记</view>
+							<view v-else-if="item.type == 2">攻略</view>
+							<view v-else-if="item.type == 4">视频</view>
+							<view v-else-if="item.type == 5">推广</view>
+							<view v-else>文章</view>
+						</view>
+						<view class="videoIcon" v-if="item.type == 4">
+							<image class="playIcon"  src="/static/images/playIcon.svg" mode="aspectFill"></image>
+						</view>
 					</view>
 					<view class="right" >
 						<view class="title">
@@ -252,6 +251,7 @@
 	white-space: nowrap;
 	.left {
 		position: relative;
+		margin-right: 20rpx;
 		.imgTip {
 			background: green;
 			position: absolute;
@@ -267,13 +267,13 @@
 			background-color: rgba(0, 0, 0, 0.6);
 			border-radius: 16rpx 0px 16rpx 0px;
 		}
-		image {
-			// margin: 8rpx;
-			width: 192rpx;
-			height: 232rpx;
-			margin-right: 20rpx;
-			border-radius: 16rpx;
-		}
+		// image {
+		// 	// margin: 8rpx;
+		// 	width: 192rpx;
+		// 	height: 232rpx;
+		// 	margin-right: 20rpx;
+		// 	border-radius: 16rpx;
+		// }
 		.videoIcon{
 			position: absolute;
 			top: 50%;

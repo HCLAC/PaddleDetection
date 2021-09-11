@@ -57,12 +57,8 @@
 					</view>
 					<view class="conttentBox">
 						<view class="contentImgBox">
-							<view class="contentImg" v-for="(item1,index) in item.list" :key="index" @click="onPageJump" :id="item1.article_id">
-								<image class="attImg" lazy-load	:src="item1.image" mode="aspectFill">
-									<view class="videoIcon" v-if="item1.type == 4">
-										<image class="playIcon"  src="/static/images/playIcon.svg" mode=""></image>
-									</view>
-								</image>
+							<view class="contentImg" v-for="(item1,index1) in item.list" :key="index1" @click="onPageJump" :id="item1.article_id">
+								<u-image width="216rpx" height="216rpx" border-radius="8rpx" :src="item1.image" mode="aspectFill"></u-image>
 								<view class="attText">{{ item1.title }}</view>
 							</view>
 						</view>
@@ -370,24 +366,6 @@
 		padding-bottom: 14rpx;
 		border-radius: 8px ;
 		position: relative;
-		.attImg {
-			width: 216rpx;
-			height: 216rpx;
-			border-radius: 8px ;
-			.videoIcon{
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				margin-top: -55rpx;
-				margin-left: -20rpx;
-				width: 40rpx;
-				height: 40rpx;
-				.playIcon{
-					width: 100%;
-					height: 100%;
-				}
-			}
-		}
 		.attText {
 			font-size: 28rpx;
 			color: #606266;
