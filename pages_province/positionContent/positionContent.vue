@@ -544,7 +544,9 @@ export default {
 				background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
 			}
 			text {
-				margin-top: 10rpx;
+				height: 100%;
+				padding-top: 8rpx;
+				// margin-top: 6rpx;
 				font-size: 24rpx;
 				font-family: PingFangSC-Medium, PingFang SC;
 				font-weight: 500;
