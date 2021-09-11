@@ -21,7 +21,7 @@
 			}"
 		>
 			<slot v-if="$slots.loading" name="loading" />
-			<u-icon v-else :name="loadingIcon" :width="width" :height="height"></u-icon>
+			<u-icon v-else :name="loadingIcon" width="88" height="88"></u-icon>
 		</view>
 		<view
 			v-if="showError && isError && !loading"
@@ -31,7 +31,7 @@
 			}"
 		>
 			<slot v-if="$slots.error" name="error" />
-			<u-icon v-else :name="errorIcon" :width="width" :height="height"></u-icon>
+			<u-icon v-else :name="errorIcon" width="88" height="88"></u-icon>
 		</view>
 	</view>
 </template>
@@ -109,12 +109,12 @@ export default {
 		// 加载中的图标，或者小图片
 		loadingIcon: {
 			type: String,
-			default: 'photo'
+			default: '/static/images/load-mini.svg'
 		},
 		// 加载失败的图标，或者小图片
 		errorIcon: {
 			type: String,
-			default: 'error-circle'
+			default: '/static/images/fail-mini.svg'
 		},
 		// 是否显示加载中的图标或者自定义的slot
 		showLoading: {
@@ -129,7 +129,7 @@ export default {
 		// 是否需要淡入效果
 		fade: {
 			type: Boolean,
-			default: true
+			default: false
 		},
 		// 只支持网络资源，只对微信小程序有效
 		webp: {
@@ -144,7 +144,7 @@ export default {
 		// 背景颜色，用于深色页面加载图片时，为了和背景色融合
 		bgColor: {
 			type: String,
-			default: '#f3f4f6'
+			default: '#F2F2F2'
 		}
 	},
 	data() {

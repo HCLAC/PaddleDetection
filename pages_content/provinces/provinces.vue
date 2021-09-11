@@ -14,7 +14,7 @@
 		<!-- 头图 -->
 		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"> 
 			<view class="headImgBox">
-				<image class="headImg" lazy-load :src="querys.imageProcess" mode="scaleToFill"></image>
+				<u-image width="100%" height="440rpx" :src="querys.imageProcess" mode="scaleToFill"></u-image>
 				<view class="mask"></view>
 				<view class="cityBox">
 					<view class="city">{{ querys.name || '全国' }}</view>
@@ -38,7 +38,7 @@
 					</view>
 					<view class="contentImgBox">
 						<view class="contentImg" v-for="(item, index) in siteHot" :key="index" @click="toAtt(item.id)">
-							<image class="attImg" lazy-load :src="item.image" mode="aspectFill"></image>
+							<u-image width="100%" height="166rpx" border-radius="8rpx 8rpx 0 0" :src="item.image" mode="aspectFill"></u-image>
 							<view class="attText">{{ item.name }}</view>
 							<view class="rateBox">
 								<!-- 评分图标 -->
@@ -63,7 +63,7 @@
 					</view>
 					<view class="tripBox">
 						<view class="tripContent" v-for="(item, index) in routeHot" :key="index" @click="toLineDetail(item)">
-							<image class="tripImg" lazy-load :src="item.image" mode=""></image>
+							<u-image width="100%" height="180rpx" border-radius="8rpx" :src="item.image"></u-image>
 							<view class="tripText">{{ item.title }}</view>
 						</view>
 					</view>
@@ -523,10 +523,10 @@ export default {
 	position: relative;
 	border: none;
 }
-.headImg {
-	width: 100%;
-	height: 100%;
-}
+// .headImg {
+// 	width: 100%;
+// 	height: 100%;
+// }
 .mask {
 	width: 100%;
 	height: 244rpx;
@@ -640,11 +640,11 @@ export default {
 	border-radius: 16rpx 16rpx 0rpx 0rpx;
 	box-shadow: 0rpx 4rpx 24rpx 0rpx #EDEFF2;
 }
-.attImg {
-	width: 100%;
-	height: 166rpx;
-	border-radius: 8px 8px 0px 0px;
-}
+// .attImg {
+// 	width: 100%;
+// 	height: 166rpx;
+// 	border-radius: 8px 8px 0px 0px;
+// }
 .attText {
 	// height: 28rpx;
 	font-size: 28rpx;
@@ -727,11 +727,11 @@ export default {
 	width: 338rpx;
 	margin-right: 18rpx;
 }
-.tripImg {
-	width: 100%;
-	height: 180rpx;
-	border-radius: 8px;
-}
+// .tripImg {
+// 	width: 100%;
+// 	height: 180rpx;
+// 	border-radius: 8px;
+// }
 .tripText {
 	// height: 28rpx;
 	margin-top: 8rpx;
