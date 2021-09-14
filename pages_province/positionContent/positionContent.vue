@@ -2,7 +2,7 @@
 	<view> 
 		<!-- 自定义导航栏 -->
 		<view class="nav-bar">
-			<uni-nav-bar :fixed="true" :status-bar="true" :title="siteInfo.name">
+			<uni-nav-bar :fixed="true" :status-bar="true" :title="siteInfo?siteInfo.name:'领途羊'">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
@@ -12,7 +12,7 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 内容详情轮播图 -->
-		<view class="" v-show="siteInfo != null">
+		<view class="" v-if="siteInfo != null">
 			<view class="uni-padding-wrap">
 				<view class="page-section" >
 					<view class="page-section-spacing" >

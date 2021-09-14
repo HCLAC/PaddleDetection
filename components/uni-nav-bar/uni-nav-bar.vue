@@ -52,7 +52,7 @@
 		},
 		props: {
 			title: {
-				type: [Boolean, String],
+				type: [String, Boolean],
 				default: "领途羊"
 			},
 			leftText: {

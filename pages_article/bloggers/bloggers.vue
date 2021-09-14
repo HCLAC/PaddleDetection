@@ -15,9 +15,8 @@
 		<view class="contentTop" :style="{'position': headerFixed?'absolute':'fixed'}">
 			<image src="/static/images/mineBack.png" class="backImg"></image>
 			<!-- 博主信息 -->
-			<view class="usermes" v-show="authorMsg">
-				<image class="userAva" lazy-load :src="authorMsg.avatar"></image>
-				<image src="/static/images/userImg.svg" class="userAva" v-if="nickName" mode=""></image>
+			<view class="usermes" v-if="authorMsg">
+				<image class="userAva" lazy-load :src="authorMsg.avatar?authorMsg.avatar:'/static/images/userImg.svg'"></image>
 				<view class="userR">
 					<view class="userName">{{ authorMsg.user_name }}</view>
 					<view class="likeandfans">
@@ -59,7 +58,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 					count: ''
 				}],
 				tabIndex: 0,
-				author_id: 0,
+				author_id: '',
 				authorMsg: null,
 				show: false,
 				content: '',
@@ -70,8 +69,10 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 			};
 		},
 		onLoad(options) {
-			this.author_id = options.author_id
+			this.author_id = String(options.author_id)
 			this.getBloggerMsg()
+		}, 
+		mounted() {
 			this.calcCardHeight()
 		},
 		onPageScroll(e) {
@@ -108,7 +109,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 		methods: {
 			calcCardHeight(){
 				const query = uni.createSelectorQuery().in(this); 	
-				query.select('.usermes').boundingClientRect(data => {
+				query.select('.backImg').boundingClientRect(data => {
 					this.cardheight = data.height
 				}).exec(); 
 			},

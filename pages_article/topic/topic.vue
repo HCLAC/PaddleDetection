@@ -58,7 +58,11 @@
 					<view class="conttentBox">
 						<view class="contentImgBox">
 							<view class="contentImg" v-for="(item1,index1) in item.list" :key="index1" @click="onPageJump" :id="item1.article_id">
-								<u-image width="216rpx" height="216rpx" border-radius="8rpx" :src="item1.image" mode="aspectFill"></u-image>
+								<u-image width="216rpx" height="216rpx" border-radius="8rpx" :src="item1.image" mode="aspectFill">
+									<!-- <view class="videoIcon" v-if="item1.type == 4">
+										<image class="playIcon"  src="/static/images/playIcon.svg" mode=""></image>
+									</view> -->
+								</u-image>
 								<view class="attText">{{ item1.title }}</view>
 							</view>
 						</view>

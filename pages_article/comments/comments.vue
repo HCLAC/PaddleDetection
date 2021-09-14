@@ -52,6 +52,7 @@
 					use: false,
 					auto:false
 				},
+				upOption:{}
 			};
 		},
 		onLoad(options) {
@@ -59,6 +60,10 @@
 			this.mescroll.setPageSize(10)
 		},
 		methods:{
+			mescrollInit(mescroll) {
+				this.mescroll = mescroll;
+				this.mescroll.setPageSize(10)
+			},
 			// 评论点赞
 			replyLike(item, index){
 				if (!this.Utils.isLogin()){

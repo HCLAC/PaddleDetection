@@ -5,7 +5,7 @@
 			<uni-nav-bar :title="title" :fixed="true" :status-bar="true" :backgroundColor="background">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
+						<image class="fanhui" :src="Icon?'/static/images/icon-fanhui.svg':'/static/images/icon-fanhui-white.svg'" @click="Utils.back" />
 					<!-- #endif -->
 					<image class="fhsy" :src="Icon?'/static/images/icon-fhsy.svg':'/static/images/icon-fhsy-white.svg'" @click="Utils.home"></image>
 				</view>
@@ -39,6 +39,7 @@
 				downOption: {
 					auto: false
 				},
+				upOption:{},
 				hotKeywordList:'',
 				keyword:'',
 				cardheight: 0,
@@ -49,6 +50,8 @@
 		},
 		mixins: [MescrollMixin],
 		onLoad() {
+		},
+		mounted() {
 			this.calcCardHeight()
 			this.mescroll.setPageSize(20)
 		},
@@ -79,6 +82,10 @@
 			}
 		},
 		methods:{
+			mescrollInit(mescroll) {
+				this.mescroll = mescroll;
+				this.mescroll.setPageSize(20)
+			},
 			calcCardHeight(){
 				const query = uni.createSelectorQuery().in(this);
 				query.select('.bgBox').boundingClientRect(data => {

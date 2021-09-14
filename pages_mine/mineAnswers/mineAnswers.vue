@@ -11,8 +11,8 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<meTabs class="mineAnswerTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :tab-width="220"></meTabs>
-		<answerList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex"></answerList>
+		<meTabs class="mineAnswerTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :lineWidth="170" :top="navbarHeight" :fixed="isFixed"></meTabs>
+		<answerList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :top="navbarHeight"></answerList>
 	</view>
 </template>
 
@@ -30,18 +30,13 @@ import answerList from '@/common/article-mescroll-item/mine-answer-list.vue';
 			return {
 				tabList: ['关注的问题','回答的问题'], //'发布的问题',
 				tabIndex: 0,
-				isFixed:false,
+				isFixed:true,
+				navbarHeight: getApp().globalData.navbarHeight, 
 				cardheight:0
 			};
 		},
-		onPageScroll(e) {
-			if (e.scrollTop >  this.cardheight) {
-				this.isFixed = true;
-			} else {
-				this.isFixed = false;
-			}
-		},
-		onLoad() {
+		
+		mounted() {
 			this.calcCardHeight()
 		},
 		methods:{

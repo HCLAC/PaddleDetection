@@ -26,10 +26,10 @@
 								<text>关注</text>
 								<view style="margin-left: 8rpx;" class="fllowNum">{{ userInfo.fllowNum }}</view>
 							</view>
-							<!-- <view class="answers" @click="toAnswers">
-								<view class="answersNum">{{ userInfo.answersNum }}</view>
+							<view class="answers" @click="toAnswers">
 								<text>问答</text>
-							</view> -->
+								<view style="margin-left: 8rpx;" class="answersNum">{{ userInfo.answersNum }}</view>
+							</view>
 						</view>
 						
 						<!-- <view class="logout">退出登录</view> -->
@@ -95,10 +95,10 @@ export default {
 		}
 		this.hasLogin = true
 		this.loadData()
-	},
-	onReady() {
-		this.calcCardHeight() 
 	}, 
+	mounted() {
+		this.calcCardHeight()
+	},
 	onPageScroll(e) {
 		if (e.scrollTop <= 0){
 			this.headerFixed = false
@@ -168,7 +168,6 @@ export default {
 					userInfo.answersNum = answersNum>10000?((answersNum-(answersNum%1000))/10000+'w'):answersNum
 					userInfo.avatar = that.Utils.addImageProcess(userInfo.avatar, false, 60)
 					that.userInfo = userInfo
-					that.calcCardHeight()
 				}
 			})
 		},

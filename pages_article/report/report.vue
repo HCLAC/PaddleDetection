@@ -45,7 +45,6 @@
 <script>
 	export default {
 		data() {
-			let that = this;
 			return {
 				number:0,
 				id:'',

@@ -27,20 +27,17 @@
 						</view>
 					</view>
 					<view class="answersCardContent">
-						<mp-html ref="parse" v-if="answersList" style="overflow: hidden;" lazy-load :tag-style="style"
-						 :html="item.content "></mp-html>
+						<mp-html ref="parse" v-if="answersList" style="overflow: hidden;" lazy-load :tag-style="style" :content="item.content "></mp-html>
 					</view>
 					<view class="answersCardBottom">
 						<view class="acbr">
 							<view class="answersLike" @click="like(item,index) in answersList">
-								<image src="/static/images/aLike.svg" v-if="item.option == 0 || item.option == 2" mode=""></image>
-								<image src="/static/images/aLikeActive.svg" v-if="item.option == 1" mode=""></image>
+								<image :src="item.option == 1?'/static/images/aLikeActive.svg':'/static/images/aLike.svg'" mode=""></image>
 								<text>{{item.like == 0 ? '赞同' : item.like}}</text> 
 							</view>
 							
 							<view class="answersDisLike" @click="disLike(item,index) in answersList">
-								<image src="/static/images/aDisLike.svg" v-if="item.option == 0 || item.option == 1" mode=""></image>
-								<image src="/static/images/aDisLikeActive.svg" v-if="item.option == 2" mode=""></image>
+								<image :src="item.option == 2?'/static/images/aDisLikeActive.svg':'/static/images/aDisLike.svg'" mode=""></image>
 								<text>{{item.dislike == 0 ? '踩' : item.dislike}}</text>
 							</view>
 						</view>
@@ -64,8 +61,10 @@
 					img: 'border-radius: 16rpx'
 				},
 				downOption:{
-					use:false
+					auto: false,
+					use: false
 				},
+				upOption:{}
 			};
 		},
 		mixins: [MescrollMixin],
@@ -73,14 +72,19 @@
 			this.question_id = question_id.question_id
 		},
 		methods:{
+			mescrollInit(mescroll) {
+				this.mescroll = mescroll;
+				this.mescroll.setPageSize(10) 
+			},
 			// 点赞
 			like(e,index){
 				var that = this
-				var answer_id = e.$orig.answer_id
+				var answer_id = e.answer_id
 				this.HTTP.request({
 					url: '/answers/like',
 					data: {
 						answer_id: answer_id,
+						status: e.option==1?0:1,
 					},
 					method: 'POST',
 					success: res => {
@@ -91,18 +95,21 @@
 							});
 							return
 						}
-						that.answersList[index].like++
+						that.answersList[index].option = res.data.data.option
+						that.answersList[index].like = res.data.data.like
+						that.answersList[index].dislike = res.data.data.dislike
 					}
 				});
 			},
 			// 点踩
-			disLike(e,index){
-				var answer_id = e.$orig.answer_id
+			disLike(e, index){
+				var answer_id = e.answer_id
 				var that = this
 				this.HTTP.request({
 					url: '/answers/dislike',
 					data: {
 						answer_id: answer_id,
+						status: e.option==2?0:1,
 					},
 					method: 'POST',
 					success: res => {
@@ -113,7 +120,9 @@
 							});
 							return
 						}
-						that.answersList[index].disLike++
+						that.answersList[index].option = res.data.data.option
+						that.answersList[index].like = res.data.data.like
+						that.answersList[index].dislike = res.data.data.dislike
 					}
 				});
 			},

@@ -11,7 +11,7 @@
 			</uni-nav-bar>
 		</view>
 		<view class="lineHeader">
-			<view class="lineImageWrap" v-show="lineContent">
+			<view class="lineImageWrap" v-if="lineContent" v-show="lineContent">
 				<!-- 内容详情轮播图 -->
 				<view class="uni-padding-wrap">
 					<view class="page-section" >
@@ -44,7 +44,7 @@
 						参考价格
 					</view>
 				</view>
-				<view class="lineTitle">{{ lineContent.title }}</view>
+				<view class="lineTitle">{{ lineContent?lineContent.title:'' }}</view>
 			</view>
 			<view class="lineDriver"></view>
 		</view>
@@ -52,7 +52,7 @@
 			<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight"  :line-width="130" :tab-width="105"></meTabs>
 		</view>
 		<view class="linePlan">
-			<view class="planContent">
+			<view class="planContent" v-if='lineContent'>
 				<u-time-line >
 					<view v-for="(item, index) in lineContent.content" :key="index">
 						<u-time-line-item nodeTop="2">
@@ -277,7 +277,7 @@ export default {
 			}
 			uni.pageScrollTo({
 				scrollTop: scrollTop,
-				duration: 400,
+				duration: 10,
 			})
 		},
 		change(e) {
@@ -548,7 +548,7 @@ export default {
 				font-weight: 400;
 				color: #909399;
 				line-height: 36rpx;
-				// text-align: justify;
+				text-align: justify;
 				// text-overflow: -o-ellipsis-lastline;
 				overflow: hidden;
 				text-overflow: ellipsis;
@@ -587,7 +587,7 @@ export default {
 				border-radius: 12rpx 0px 12rpx 0px;
 				position: absolute;
 				left: 0;
-				top: 0;
+				top: 0rpx;
 				color: #ffffff;
 				font-size: 24rpx;
 				text-align: center;

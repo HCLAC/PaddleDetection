@@ -33,7 +33,7 @@ function request(obj) {
 			obj.success(res)
 		},
 		fail: (res) => {
-			un.uni.showToast({
+			uni.showToast({
 				title: '网络不给力~,请稍后再试',
 				icon: 'none'
 			});

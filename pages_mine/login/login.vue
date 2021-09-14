@@ -57,9 +57,11 @@
 				</view>
 				<!-- 登录按钮 -->
 				<view class="loginButton"><button class="lb" :disabled="disabled" :style="{ background: styleBtn.background }" @tap="doLogin">登录</button></view>
+				<!-- #ifndef H5 -->
 				<view class="loginButton" v-if="platform!='web'">
 					<button class="badiduBtn" :style="{ background: styleBtn.background }" open-type="getPhoneNumber" @getphonenumber="getPhone">手机号一键登录</button>
 				</view>
+				<!-- #endif -->
 			</view>
 		</view>
 	</view>
@@ -99,7 +101,19 @@ export default {
 	},
 	onLoad(options) {
 		this.serviceProvider = getApp().globalData.serviceProvider;
-		this.serviceSource = this.serviceProvider == 'baidu' ? 2 : this.serviceProvider == 'weixin' ? 8 : this.serviceProvider == 'toutiao' ? 4 : null;
+		switch(this.serviceProvider){
+			case 'baidu':
+				this.serviceSource = 2
+				break;
+			case 'toutiao':
+				this.serviceSource = 4
+				break;
+			case 'weixin':
+				this.serviceSource = 8
+				break;
+			default:
+				this.serviceSource = 1
+		}
 		this.platform = uni.getSystemInfoSync().platform
 	},
 	methods: {

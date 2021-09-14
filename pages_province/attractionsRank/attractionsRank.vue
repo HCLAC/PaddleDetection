@@ -5,9 +5,9 @@
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="false" :backgroundColor="backgroundColor">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
+						<image class="fanhui" :src="isFixed?'/static/images/icon-fanhui.svg':'/static/images/icon-fanhui-white.svg'" @click="Utils.back" />
 					<!-- #endif -->
-					<image class="fhsy" :src="isFixed?'/static/images/icon-fhsy.svg':'/static/images/icon-fhsy-white.svg'" @click="Utils.home"></image>
+					<image class="fhsy" :src="isFixed?'/static/images/icon-fhsy.svg':'/static/images/icon-fhsy-white.png'" @click="Utils.home"></image>
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -31,7 +31,7 @@
 				</view>
 			 </view>
 			<!-- 排行 -->
-			<view class="rankContent" :style="{'height': (hotsiteslist.length < 6 ? '1604rpx' : '')}">
+			<view class="rankContent" v-if='hotsiteslist' :style="{'height': (hotsiteslist.length < 6 ? '1604rpx' : '')}">
 				<view class="cityBox">
 					<view class="city" @click="showCityPicker = true">
 						<view class="">
@@ -117,6 +117,8 @@
 			
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.getCity()
+		}, 
+		mounted() {
 			this.calcCardHeight()
 		},
 		onPageScroll(e) {

@@ -102,6 +102,13 @@
 						"navigationStyle": "custom"
 					}
 				},
+				{
+				    "path" : "mineAnswers/mineAnswers",
+				    "style" :                                                                                    
+				    {
+				        "navigationStyle": "custom"
+				    }
+				},
 				// {
 				//     "path" : "mineAnswers/mineAnswers",
 				//     "style" :                                                                                    
@@ -244,57 +251,57 @@
 				}
 			]
 		}
-		// ,{
-		// 	"root":"pages_questions",
-		// 	"pages":[
-		// 		{
-		// 			"path" : "questions/questions",
-		// 			"style" : {
-		// 				"navigationStyle": "custom"
-		// 			}
-		// 		},
-		// 		{
-		// 			"path" : "questionsPage/questionsPage",
-		// 			"style" :                                                                                    
-		// 			{
-		// 				"navigationStyle": "custom"
-		// 			}
+		,{
+			"root":"pages_questions",
+			"pages":[
+				{
+					"path" : "questions/questions",
+					"style" : {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "questionsPage/questionsPage",
+					"style" :                                                                                    
+					{
+						"navigationStyle": "custom"
+					}
 					
-		// 		},
-		// 		{
-		// 			"path" : "moreQuestions/moreQuestions",
-		// 			"style" :                                                                                    
-		// 			{
-		// 				"navigationStyle": "custom"
-		// 			}
+				},
+				{
+					"path" : "moreQuestions/moreQuestions",
+					"style" :                                                                                    
+					{
+						"navigationStyle": "custom"
+					}
 					
-		// 		},
-		// 		{
-		// 			"path" : "questionsComplete/questionsComplete",
-		// 			"style" :                                                                                    
-		// 			{
-		// 				"navigationStyle": "custom"
-		// 			}
+				},
+				{
+					"path" : "questionsComplete/questionsComplete",
+					"style" :                                                                                    
+					{
+						"navigationStyle": "custom"
+					}
 					
-		// 		},
-		// 		{
-		// 			"path" : "questionsDetail/questionsDetail",
-		// 			"style" :                                                                                    
-		// 			{
-		// 				"navigationStyle": "custom"
-		// 			}
+				},
+				{
+					"path" : "questionsDetail/questionsDetail",
+					"style" :                                                                                    
+					{
+						"navigationStyle": "custom"
+					}
 					
-		// 		},
-		// 		{
-		// 			"path" : "answersList/answersList",
-		// 			"style" :                                                                                    
-		// 			{
-		// 				"navigationStyle": "custom"
-		// 			}
+				},
+				{
+					"path" : "answersList/answersList",
+					"style" :                                                                                    
+					{
+						"navigationStyle": "custom"
+					}
 					
-		// 		}
-		// 	]
-		// }
+				}
+			]
+		}
 	],
 	"preloadRule":{
 		"pages/index/index": {
@@ -311,7 +318,11 @@
         },
         "pages_content/province/province": {
             "network": "all",
-            "packages": ["pages_province"]
+            "packages": ["pages_province", "pages_questions"]
+        },
+		"pages_mine/mineAnswers/mineAnswers": {
+            "network": "all",
+            "packages": ["pages_questions"]
         }
     },
 	"globalStyle": {

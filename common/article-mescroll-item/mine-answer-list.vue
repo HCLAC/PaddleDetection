@@ -1,6 +1,6 @@
 <template>
 	<view v-show="i === index" >
-		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" :top="top" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="answerList">
 				<view class="card" v-for="(item,index) in list" :key="index" @click="toQuestionsDetail(item)">
 					<view class="avatar">
@@ -13,8 +13,6 @@
 							<text class="date">{{item.create_at.slice(0,10)}}</text>
 						</view>
 						<view class="content">
-							<!-- <mp-html ref="parse"  style="overflow: hidden;" lazy-load
-							 :html="item.content"></mp-html> -->
 							 {{item.title}}
 						</view>
 						<view class="lookAnswers">
@@ -49,6 +47,12 @@
 					return 0
 				}
 			},
+			top: {
+				type: Number,
+				default(){
+					return 64
+				}
+			}
 		},
 		data() {
 			return {
@@ -62,7 +66,7 @@
 					// 	num: 0, // 当前页码,默认0,回调之前会加1,即callback(page)会从1开始
 					// 	size: 10 // 每页数据的数量
 					// },
-					noMoreSize: 4, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
+					noMoreSize: 1, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
 					empty:{
 					  use : true ,
 					  icon : null ,

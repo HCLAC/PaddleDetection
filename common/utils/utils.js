@@ -26,6 +26,9 @@ function addImageProcess(URL='', water=false, q=50){
 	if (!URL){
 		return '/static/images/userImg.svg'
 	}
+	if (URL.search('.m3u8|.mp4|.gif|.ts')!=-1){
+		return URL
+	}
 	let networkType = getApp().globalData.networkType
 	var url = URL
 	// 添加处理头

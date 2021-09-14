@@ -220,6 +220,11 @@
 				list: [],
 				title: '领途羊',
 				articleInfo: null,
+				articleSEO: {
+					title: '',
+					keywords: '',
+					description: ''
+				},
 				token: '',
 				article_id: '',
 				hasLogin: true,
@@ -235,7 +240,7 @@
 				comment_count: '',
 				userInfo: {},
 				focus: false,
-				autoHeight: false,
+				autoHeight: true,
 				textareafocus: false,
 				animation: null,
 				animationInputC: {},
@@ -248,14 +253,14 @@
 		//#ifdef H5
 		metaInfo() {
 			return {
-				title: this.articleInfo.title+"-领途羊", // set a title
+				title: this.articleSEO.title+"-领途羊", // set a title
 				meta: [{                 // set meta
 					name: 'keywords',
-					content: this.articleInfo.keywords
+					content: this.articleSEO.keywords
 				},
 				{                 // set meta
 					name: 'description',
-					content: this.articleInfo.description
+					content: this.articleSEO.description
 				}]
 			}
 		},
@@ -323,6 +328,24 @@
 				}, 100);
 			},
 			mpLinktap(e) {
+				console.log(e)
+				// #ifdef H5
+				if(e['data-url']){
+					window.location.href = e['data-url']
+				} else if (e['data-weixin']){
+					uni.setClipboardData({
+						data: e['data-weixin'],
+						success: () => {
+							uni.showToast({
+								title: '复制成功',
+								icon: 'success'
+							});
+						}
+					});
+					window.location.href = "weixin://"
+				}
+				return
+				// #endif
 				if(e['data-url']){
 					uni.navigateTo({
 						url: '../webview/webview?url=' + encodeURIComponent(e['data-url'])
@@ -358,6 +381,9 @@
 						
 						var articleInfo = res.data.data
 						that.title = articleInfo.title
+						that.articleSEO.title = articleInfo.title
+						that.articleSEO.keywords = articleInfo.keywords
+						that.articleSEO.description = articleInfo.description
 						
 						// 适配字体
 						articleInfo.content = articleInfo.content.replace(/(\d+)px/g, function(s, t) {
@@ -411,30 +437,38 @@
 											// console.log("营销组件", replaceStr)
 										}
 									} else if (item.indexOf("在线客服")!=-1){
+										// #ifndef H5
 										articleInfo.content = articleInfo.content.replace(item, '');
-										// let component = await that.asyncGetComponentInfo('/online/call', {id:id});
-										// if (component.data.code != 0) {
-										// 	console.error('获取在线客服信息失败', component)
-										// 	replaceStr = ""
-										// } else {
-										// 	var obj = component.data.data
-										// 	replaceStr = that.generateOnlineCustomer(obj)
-										// 	articleInfo.content = articleInfo.content.replace(item, replaceStr);
-										// 	// console.log("在线客服", replaceStr)
-										// }
+										// #endif
+										// #ifdef H5
+										let component = await that.asyncGetComponentInfo('/online/call', {id:id});
+										if (component.data.code != 0) {
+											console.error('获取在线客服信息失败', component)
+											replaceStr = ""
+										} else {
+											var obj = component.data.data
+											replaceStr = that.generateOnlineCustomer(obj)
+											articleInfo.content = articleInfo.content.replace(item, replaceStr);
+											// console.log("在线客服", replaceStr)
+										}
+										// #endif
 									} else if (item.indexOf("小程序")!=-1){
+										// #ifndef H5
 										articleInfo.content = articleInfo.content.replace(item, '');
-										// let component = await that.asyncGetComponentInfo('/miniapp/call', {id:id});
-										// if (component.data.code != 0) {
-										// 	console.error('获取小程序信息失败', component)
-										// 	replaceStr = ""
-										// } else {
-										// 	console.log('component', component)
-										// 	var obj = component.data.data
-										// 	replaceStr = that.generateMiniapp(obj)
-										// 	articleInfo.content = articleInfo.content.replace(item, replaceStr);
-										// 	// console.log("在线客服", replaceStr)
-										// }
+										// #endif
+										// #ifdef H5
+										let component = await that.asyncGetComponentInfo('/miniapp/call', {id:id});
+										if (component.data.code != 0) {
+											console.error('获取小程序信息失败', component)
+											replaceStr = ""
+										} else {
+											console.log('component', component)
+											var obj = component.data.data
+											replaceStr = that.generateMiniapp(obj)
+											articleInfo.content = articleInfo.content.replace(item, replaceStr);
+											// console.log("在线客服", replaceStr)
+										}
+										// #endif
 									}
 								}
 							}
@@ -779,17 +813,17 @@
 			inputBlur() {
 				this.textareafocus = false
 			},
-			inputValue(e) {
-				if (e.detail.value.length > 18) {
-					this.autoHeight = true
-				} else {
-					this.autoHeight = false
-				}
-			},
 			pubComment() {
 				if (!this.hasLogin) {
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
+					});
+					return
+				}
+				if (this.contentText.length == 0){
+					uni.showToast({
+						title: '请输入回答内容',
+						icon: 'none'
 					});
 					return
 				}

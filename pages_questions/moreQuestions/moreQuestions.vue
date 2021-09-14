@@ -48,6 +48,8 @@ import questionList from '@/common/article-mescroll-item/mine-answer-list.vue';
 		onLoad(option) {
 			this.state_id = option.state_id
 			this.city_id = option.city_id
+		}, 
+		mounted() {
 			this.calcCardHeight()
 		},
 		onPageScroll(e) {

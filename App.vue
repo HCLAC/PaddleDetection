@@ -37,7 +37,7 @@ export default {
 			service: 'oauth',
 			success: res => {
 				if (res.errMsg == 'getProvider:ok') {
-					this.globalData.serviceProvider = res.provider[0]
+					this.globalData.serviceProvider = res.provider.length>0?res.provider[0]:'h5'
 				} else {
 					uni.showToast({
 						title: '获取提供商失败',
@@ -55,12 +55,19 @@ export default {
 		// 获取网络情况
 		uni.getNetworkType({
 			success: res => {
+				if (res.networkType == "unknown"){
+					return
+				}
 				this.globalData.networkType = res.networkType
 			}
 		})
 		uni.getSystemInfo({
 			success: res => {
-				this.globalData.navbarHeight = res.navigationBarHeight+res.statusBarHeight
+				var height = 44
+				if (res.navigationBarHeight && res.statusBarHeight){
+					height = res.navigationBarHeight+res.statusBarHeight
+				}
+				this.globalData.navbarHeight = height
 			}
 		});
 	},

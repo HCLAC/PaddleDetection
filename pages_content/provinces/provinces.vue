@@ -132,7 +132,7 @@ export default {
 				use:false,
 			},
 			upOption: {
-				auto:false,
+				auto:true,
 				noMoreSize: 1, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
 				empty:{
 				  use : true ,
@@ -186,7 +186,6 @@ export default {
 		})
 		//#endif
 		this.loadData()
-		this.mescroll.resetUpScroll();
 	},
 	methods: {
 		cityPickerClose(){
@@ -205,14 +204,14 @@ export default {
 					this.getRouteHot();
 					this.getCity();
 					this.hideLoad();
-					// this.getQuestionList()
+					this.getQuestionList()
 				}
 			});
 		},
 		hideLoad(){
 			setTimeout(() => {
 				uni.hideLoading();
-			}, 500);
+			}, 100);
 		},
 		
 		// 获取问答列表
@@ -238,6 +237,7 @@ export default {
 		},
 		// 天气接口
 		getWeather() {
+			// #ifndef H5
 			uni.request({
 				url: 'https://query.asilu.com/weather/baidu',
 				data: {
@@ -254,6 +254,23 @@ export default {
 					this.weather = res.data.weather[0];
 				}
 			});
+			// #endif
+			
+			// #ifdef H5
+			var name = '全国'
+			if (this.querys.name){
+				name = this.querys.name
+			}
+			this.$jsonp('https://query.asilu.com/weather/baidu',{
+				city: name,
+			},5000)
+			.then(res => {
+				this.weather = res.weather[0];
+			})
+			.catch(error => {
+				console.error('get weather failed, ',error);
+			})
+			// #endif
 		},
 		// 推荐景点接口
 		getSiteHot() {

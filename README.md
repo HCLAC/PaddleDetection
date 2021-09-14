@@ -2,6 +2,10 @@
 
 ### 发布流程
 
+### 合并h5的改动
+- metabs平分tap
+- 短视频显示问题
+
 ### TODO
 - auth区分dev和master
 - 更新h5，删除无用插件

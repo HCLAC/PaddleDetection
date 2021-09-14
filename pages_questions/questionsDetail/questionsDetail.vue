@@ -18,12 +18,6 @@
 					<view class="cardTopText">
 						领途羊·旅行问答
 					</view>
-					<!-- <view class="cardFollow" v-if="!detail.is_follow" @click="Fllow()">
-						关注
-					</view>
-					<view class="cardIsFollow" v-else="detail.is_follow" @click="Fllow()">
-						已关注
-					</view> -->
 				</view>
 				<view class="cradTitle">
 					{{detail.title}}
@@ -36,112 +30,83 @@
 					</view>
 					
 					<view class="questionsDate">
-						{{detail.account_name}}问于{{create_at}}
+						{{detail.account_name}}问于{{detail.create_at}}
 					</view>
 				</view>
 				<image class="answersIcon" src="/static/images/answersIcon.png" mode=""></image>
 			</view>
-			<!-- <view class="cardBottomBox">
-				
-				<view class="cardAuthorBox">
-					<view class="author">
-						<image class="userImg" :src="detail.avatar?detail.avatar:'/static/images/userImg.svg'"></image>
-						<view class="authorName">
-							{{detail.account_name}}
-						</view>
-					</view>
-					<view class="questionsDate">
-						问于{{create_at}}
-					</view>
-				</view>
-			</view> -->
 		</view>
 		<!-- 问题回答 -->
-		<view class="answersTip" v-if="answersNum != 0">
-			<text>全部回答·{{answersNum || 0}}</text>
+		<view class="answersTip">
+			<text>全部回答·{{detail.reply_count}}</text>
 			<view class="answersLine"></view>
 		</view>
-		<view class="answersList" v-if="answersNum != 0">
+		<view class="answersOfficial" v-if="answersOfficial">
 			<view class="answersCardBox" >
 				<view class="answersCardTop">
-					<view class="answersAuthor" onclick="popup('zoom-in')">
+					<view class="answersAuthor">
 						<view class="avatar ldx infinite ldx-zoom-in" ></view>
-						<image class="avatarImg" lazy-load :src="answersList.avatar?answersList.avatar:'/static/images/userImg.svg'"></image>
+						<image class="avatarImg" lazy-load :src="answersOfficial.avatar?answersOfficial.avatar:'/static/images/userImg.svg'"></image>
 						<view class="userName">
-							{{answersList.account_id}}
+							{{answersOfficial.account_id}}
 						</view>
-						<image class="gficon" src="/static/images/gficon.svg" mode="" v-if="answersList.account_type == 1"></image>
+						<image class="gficon" src="/static/images/gficon.svg" mode="" v-if="answersOfficial.account_type == 1"></image>
 					</view>
 					<view class="answersDate">
-						{{answersDate.slice(0,10) }}
+						{{answersOfficial.create_at }}
 					</view>
 				</view>
 				<view class="answersCardContent">
-					<mp-html ref="parse" v-if="answersList" style="overflow: hidden;" lazy-load :tag-style="style" 
-					 :html="answersList.content "></mp-html>
+					<mp-html ref="parse" style="overflow: hidden;" lazy-load :tag-style="style" :content="answersOfficial.content"></mp-html>
 				</view>
-				
 				<view class="answersCardBottom">
 					<view class="acbr">
-						<view class="answersLike" @click="like(answersList)">
-							<image src="/static/images/aLike.svg" v-if="answersList.option == 0 || answersList.option == 2" mode=""></image>
-							<image src="/static/images/aLikeActive.svg" v-else-if="answersList.option == 1" mode=""></image>
-							<text>{{answersList.like == 0 ? '赞同' : answersList.like}}</text> 
+						<view class="answersLike" @click="like(answersOfficial)">
+							<image :src="answersOfficial.option == 1?'/static/images/aLikeActive.svg':'/static/images/aLike.svg'" mode=""></image>
+							<text>{{answersOfficial.like == 0 ? '赞同' : answersOfficial.like}}</text> 
 						</view>
 						
-						<view class="answersDisLike" @click="disLike(answersList)">
-							<image src="/static/images/aDisLike.svg" v-if="answersList.option == 0 || answersList.option == 1" mode=""></image>
-							<image src="/static/images/aDisLikeActive.svg" v-else-if="answersList.option == 2" mode=""></image>
-							<text>{{answersList.dislike == 0 ? '踩' : answersList.dislike}}</text>
+						<view class="answersDisLike" @click="disLike(answersOfficial)">
+							<image :src="answersOfficial.option == 2?'/static/images/aDisLikeActive.svg':'/static/images/aDisLike.svg'" mode=""></image>
+							<text>{{answersOfficial.dislike == 0 ? '踩' : answersOfficial.dislike}}</text>
 						</view>
 					</view>
 				</view>
 				<view class="answersLine">
 				</view>
 			</view>
-			<view class="moreAnswers" @click="moreAnswers()" v-if="answersNum > 1">
-				查看全部{{answersNum}}条回答
+			<view class="moreAnswers" @click="moreAnswers()" v-if="detail.reply_count > 1">
+				查看全部{{detail.reply_count}}条回答
 			</view>
 		</view>
-		<view class="answersNull" v-if="answersNum == 0">
+		<view class="answersNull" v-else>
 			还没有收到回答
 		</view>
-		
 		<!-- <view class="myAnswersBtn" @click="commentInput" v-if="!textareafocus">
 			<image src="/static/images/followIcon.svg" mode=""></image>
 			<view class="mabt">
 				我来回答
 			</view>
 		</view> -->
-		
-		<!-- 输入框 -->
-		<view class="commentInput" v-if="textareafocus" :style="{bottom : inputbottom.bottom}">
-			<textarea class="inputK" v-model="content" placeholder="快来写下你的回答吧" :show-confirm-bar="false" :focus="textareafocus"
-			 @blur="inputBlur" @focus="inputFocus" :auto-height="autoHeight" @input="inputValue" maxlength="140" cursor-spacing="20"
-			 :adjust-position="false"></textarea>
-			<view class="send" @click="pubComment">发送</view>
-		</view>
-		<!-- 相关问题 -->
 		<view class="line">	</view>
 		<!-- 营销组件 -->
-		<view class="componment" v-if="groupId" onclick="popup('blur-in')">
+		<view class="componment" v-if="marketingData">
 			<view class="wechat">
-				<image lazy-load :src="answersList.avatar" mode=""></image>
-				<view class="wechatText">{{wechat_name}}:{{wechat}}</view>
+				<image lazy-load :src="answersOfficial.avatar" mode=""></image>
+				<view class="wechatText">{{marketingData.template}}</view>
 			</view>
 			<view class="wechatBtn ldx infinite ldx-blur-in" @click="templateAdd">复制导游微信</view>
-			
 		</view>
+		<!-- 相关问题 -->
 		<view class="travelQuestionsBox">
 			<view class="tQTop">
 				<view class="tQTBox">
 					<text class="tQText">相关问题</text>
 					<view class="tQLine"></view>
 				</view>
-				
 			</view>
-			<view class="tQContent" v-if="questions.length != 0">
-				<view class="tQCard" v-for="(item,index) in questions " :key="index" @click="toQuestionsDetail(item)">
+			<view class="tQContent" v-if="questionsRelated">
+				<view class="tQCard" v-for="(item,index) in questionsRelated " :key="index" @click="toQuestionsDetail(item)">
 					<view class="tQCRight">
 						<view class="tQCTitle">
 							{{item.title}}
@@ -163,13 +128,13 @@
 					</view>
 				</view>
 			</view>
-			<view class="tQNull" v-if="questions.length == 0">
+			<view class="tQNull" v-else>
 				暂无相关问题
 			</view>
 		</view>
 		<!-- 我要提问按钮 -->
 		<view class="answersFollow" >
-			<view class="addBox" @click="commentInput" v-if="!textareafocus">
+			<view class="addBox" @click="commentInput">
 				<view class="midBox">
 					<image src="/static/images/addQ.svg" mode=""></image>
 					<text>添加问答</text>
@@ -182,6 +147,13 @@
 					<text >{{detail.is_follow == 0?'关注问题':'已关注'}}</text>
 				</view>
 			</view>
+		</view>
+		<!-- 输入框 -->
+		<view :animation="animationInputC" class="commentInput" >
+			<textarea class="inputK" v-model="contentText" placeholder="快来写下你的回答吧" :show-confirm-bar="false" :focus="textareafocus"
+			 @blur="inputBlur" auto-height maxlength="140" cursor-spacing="20"
+			 :adjust-position="false"></textarea>
+			<view class="send" @click="pubComment">发送</view>
 		</view>
 		<!-- 弹窗 -->
 		<u-modal v-model="show" :border-radius="40" :content="contentp" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
@@ -202,12 +174,9 @@
 			return {
 				question_id:'',
 				detail:{},
-				create_at:'',
-				answersNum:'',
-				answersList:{},
-				questions:{},
-				content: '',
-				value: '',
+				answersOfficial:null,
+				questionsRelated:null,
+				contentText: '',
 				autoHeight: false,
 				inputbottom: {
 					bottom: ''
@@ -216,25 +185,43 @@
 				show: false,
 				weshow:false,
 				contentp: '',
-				wetitle:'微信已复制',
 				wecontent:`
 					微信号复制成功<br>
 					快去添加微信免费咨询吧`,
 				style: {
-					img: 'border-radius: 16rpx'
+					img: 'border-radius: 16rpx',
+					height: '20px'
 				},
-				answersDate:'',
-				wechat:'',
-				wechat_name:'',
-				groupId:''
+				marketingData: null,
+				animation: null,
+				animationInputC: {},
 			};
 		},
 		onLoad(options) {
 			this.question_id = options.question_id
 			this.getQuestionsDetail()
-			// this.getanswersList()
+			this.getAnswersOfficial()
 			this.getQuestionsRelated()
-			this.getanswersOfficial()
+			this.animation = uni.createAnimation({
+				  transformOrigin: "50% 50%",
+				  duration: 175,
+				  timingFunction: "ease-out",
+				  delay: 0
+				}
+			)
+		},
+		onShow() {
+			//#ifdef MP-BAIDU
+			swan.onKeyboardHeightChange(res => {
+				this.animation.translateY(-res.height).step()
+				this.animationInputC = this.animation.export()
+			});
+			return
+			//#endif
+			uni.onKeyboardHeightChange(res => {
+			  this.animation.translateY(-res.height).step()
+			  this.animationInputC = this.animation.export()
+			})
 		},
 		methods:{
 			// 获取问题详情
@@ -253,8 +240,6 @@
 							return
 						}
 						this.detail = res.data.data
-						this.create_at = res.data.data.create_at.slice(0,10)
-						this.answersNum = res.data.data.reply_count
 					}
 				});
 			},
@@ -278,12 +263,12 @@
 						questions.forEach((item1, index1) => {
 							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
 						})
-						this.questions = res.data.data
+						this.questionsRelated = res.data.data
 					}
 				});
 			},
 			// 获取回复列表
-			getanswersOfficial(){
+			getAnswersOfficial(){
 				var that = this
 				this.HTTP.request({
 					url: '/answers/official',
@@ -298,134 +283,58 @@
 							});
 							return
 						}
+						var answersOfficial = res.data.data
+						answersOfficial.avatar = that.Utils.addImageProcess(answersOfficial.avatar, false, 60)
 						
-						let strIndex = res.data.data.content.match(/<input[^>]*\/>/gi);
-						if(strIndex != null){
-							let strIdarr = strIndex[0].match(/\d+/g);
-							let strId = strIdarr.join('')
-							let resCode =  await that.getTemplate(strId);
-							let wechat_id = resCode.data.data.wechat_id.replace(/\s*/g, '');
-							let wechat_name = resCode.data.data.wechat_name.replace(/\s*/g, '');
-							that.wechat = wechat_id
-							that.wechat_name = wechat_name
-							that.groupId = strId
-							// let str =
-							// 	`<div>
-							// 		<image src="/static/images/userImg.svg" style="width:68rpx;height:68rpx;" mode=""></image>
-							// 		<span style=" font-size: 28rpx; font-family: 'PingFang SC'; font-weight: 500;">
-							// 			详情请加VX：${wechat_id}
-							// 		</span><a groupId="${strId}"   group="${wechat_id}" style="color: #0091FF; font-size: 28rpx;margin-left: 36rpx; font-weight: 400;">点击复制</a>
-							// 	</div>`;
-							
-							// res.data.data.content = res.data.data.content.replace(/<input[^>]*\/>/gi, str);
-							var answersList = res.data.data
-							answersList.avatar = that.Utils.addImageProcess(answersList.avatar, false, 60)
-							that.answersList = answersList
-							that.answersDate = answersList.create_at.slice(0.10)
-						}else{
-							that.HTTP.request({
-								url: '/answers/list',
-								data: {
-									question_id: that.question_id,
-									count:10,
-									page:1
-								},
-								success: async function(res) {
-									if (res.statusCode != 200 || res.data.code != 0){
-										uni.showToast({
-											title: res.data.msg,
-											icon: 'none'
-										});
-										return
+						let inputComponets = answersOfficial.content.match(/<input[^>]*\/>/gi);
+						if (inputComponets != null && inputComponets.length > 0){
+							var item = inputComponets[0]
+							let strValue = item.match(/name="(\S*)"/);
+							if (strValue != null && strValue.length == 2){
+								var id = strValue[1]
+								if (item.indexOf("营销组件")!=-1){
+									let component = await that.asyncGetComponentInfo('/marketing/unit', {
+																			group_id: id,
+																			article_id: that.question_id
+																		});
+									if (component.data.code != 0) {
+										console.error('获取营销组件信息失败', component)
+										replaceStr = ""
+									} else {
+										that.marketingData = component.data.data
+										answersOfficial.content = answersOfficial.content.replace(item, '');
 									}
-									var answersList = res.data.data.list[0]
-									answersList.avatar = that.Utils.addImageProcess(answersList.avatar, false, 60)
-									that.answersList = answersList
-									that.answersDate = answersList.create_at.slice(0.10)
 								}
-							})
+							}
 						}
-						
+						// answersOfficial.content = '<div>'+answersOfficial.content+'</div>'
+						that.answersOfficial = answersOfficial
 					}
 				})
 			},
-			// getanswersList(){
-			// 	var that = this
-			// 	this.HTTP.request({
-			// 		url: '/answers/list',
-			// 		data: {
-			// 			question_id: this.question_id,
-			// 			count:10,
-			// 			page:1
-			// 		},
-			// 		success: async function(res) {
-			// 			console.log('回复列表',res)
-			// 			if(res.data.data.list != 0){
-			// 				 = res.data.data.total
-			// 			}else{
-			// 				that.answersNum = 1
-			// 			}
-			// 		}
-			// 	})
-			// },
-			getTemplate(id) {
-				if (id) {
-					return new Promise((resolve, reject) => {
-						this.HTTP.request({
-							// url:'article',
-							url: '/marketing/unit',
-							method: 'get',
-							data: {
-								group_id: id,
-								article_id: this.article_num
-							},
-							success: res => {
-								resolve(res);
-							},
-							fail: error => {
-								reject(error);
-							}
-						});
+			async asyncGetComponentInfo(url, data){
+				return new Promise((resolve, reject) => {
+					this.HTTP.request({
+						url: url,
+						method: 'get',
+						data: data,
+						success: res => {
+							resolve(res,'组件信息');
+						},
+						fail: error => {
+							reject(error);
+						}
 					});
-				}
+				});
 			},
 			// 点击复制
 			templateAdd() {
-				// console.log('e', e);
-				var that = this
-				// if (e.group && e.groupid) {
-					this.HTTP.request({
-						url: '/marketing/copy',
-						data: {
-							id: this.groupId
-						},
-						method: 'PUT',
-						success: res => {
-							uni.hideToast()
-							if (res.data.code == 0) {
-								uni.setClipboardData({
-									data: this.wechat,
-									success: () => {
-										uni.hideToast()
-										this.weshow = true
-										setTimeout(function(){
-											that.weshow = false
-										},3000)
-									}
-								});
-							} else {
-								uni.showToast({
-									title: res.data.msg,
-									icon: 'none'
-								});
-							}
-						}
-					});
-				// } else {
-				// 	console.log(e);
-				// 	e.ignore();
-				// 	return false;
-				// }
+				uni.setClipboardData({
+					data: this.marketingData.wechat_id,
+					success: () => {
+						this.weshow = true
+					}
+				});
 			},
 			// 查看全部回答
 			moreAnswers(){
@@ -442,36 +351,34 @@
 			},
 			// 提问按钮
 			commentInput() {
+				if (!this.Utils.isLogin()){
+					return
+				}
 				this.textareafocus = true
 			},
 			inputBlur() {
 				this.textareafocus = false
-				this.inputbottom.bottom = 0 + 'px'
-			},
-			inputFocus(e) {
-				this.textareafocus = true
-				this.inputbottom.bottom = e.detail.height + 'px'
-			
-			},
-			inputValue(e) {
-				if (e.detail.value.length > 18) {
-					this.autoHeight = true
-				} else {
-					this.autoHeight = false
-				}
 			},
 			pubComment() {
 				if (!this.Utils.isLogin()){
+					return
+				}
+				if (this.contentText.length == 0){
+					uni.showToast({
+						title: '请输入回答内容',
+						icon: 'none'
+					});
 					return
 				}
 				this.HTTP.request({
 					url: '/answers',
 					data: {
 						question_id: this.question_id,
-						content: this.content
+						content: this.contentText
 					},
 					method: 'POST',
 					success: res => {
+						console.log(this.contentText, res)
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
 								title: res.data.msg,
@@ -484,17 +391,13 @@
 							icon: 'none',
 							duration: 2000
 						})
-						this.content = ''
+						this.contentText = ''
 						
 						//#ifndef MP-BAIDU
 						uni.hideKeyboard();
 						//#endif
-						// this.$refs.comment.toggleMask('none');
-						// this.getanswersList()
 						this.getQuestionsDetail()
-						this.getanswersOfficial()
-			
-			
+						// this.getAnswersOfficial()
 					}
 				})
 			},
@@ -515,7 +418,8 @@
 					this.HTTP.request({
 						url: '/questions/follow',
 						data: {
-							question_id: that.question_id
+							question_id: that.question_id,
+							status: status,
 						},
 						method: 'POST',
 						success: (res) => {
@@ -526,7 +430,7 @@
 								});
 								return
 							}
-							that.detail.is_follow = status == 1 ? true : false
+							that.detail.is_follow = res.data.data
 						}
 					})
 				}
@@ -537,12 +441,12 @@
 					return
 				}
 				var that = this;
-				let msg = this.detail.is_follow ? '确认取消关注?' : '确认关注?'
 				let status = this.detail.is_follow ? 0 : 1
 				this.HTTP.request({
 					url: '/questions/follow',
 					data: {
-						question_id: that.question_id
+						question_id: that.question_id,
+						status: status,
 					},
 					method: 'POST',
 					success: (res) => {
@@ -553,12 +457,13 @@
 							});
 							return
 						}
-						that.detail.is_follow = status == 1 ? true : false
+						that.detail.is_follow = res.data.data
 					}
 				})
 			},
 			// 点赞
-			like(e,index){
+			like(e){
+				var that = this
 				if (!this.Utils.isLogin()){
 					return
 				}
@@ -567,6 +472,7 @@
 					url: '/answers/like',
 					data: {
 						answer_id: answer_id,
+						status: e.option==1?0:1,
 					},
 					method: 'POST',
 					success: res => {
@@ -577,12 +483,15 @@
 							});
 							return
 						}
-						this.getanswersOfficial()
+						that.answersOfficial.option = res.data.data.option
+						that.answersOfficial.like = res.data.data.like
+						that.answersOfficial.dislike = res.data.data.dislike
 					}
 				});
 			},
 			// 点踩
-			disLike(e,index){
+			disLike(e){
+				var that = this
 				if (!this.Utils.isLogin()){
 					return
 				}
@@ -591,6 +500,7 @@
 					url: '/answers/dislike',
 					data: {
 						answer_id: answer_id,
+						status: e.option==2?0:1,
 					},
 					method: 'POST',
 					success: res => {
@@ -601,7 +511,9 @@
 							});
 							return
 						}
-						this.getanswersOfficial()
+						that.answersOfficial.option = res.data.data.option
+						that.answersOfficial.like = res.data.data.like
+						that.answersOfficial.dislike = res.data.data.dislike
 					}
 				});
 			}
@@ -610,7 +522,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import url('../../components/transition-min/transition.min.css');卡片
+	@import url('../../components/transition-min/transition.min.css');
 	.detailCard{
 		margin-top: 20rpx;
 		margin-left: 32rpx;
@@ -636,31 +548,6 @@
 					font-weight: 400;
 					color: rgba(255, 255, 255, 1);
 					line-height: 40rpx;
-
-				}
-				.cardFollow{
-					width: 100rpx;
-					height: 44rpx;
-					background: #FFFFFF;
-					border-radius: 22rpx;
-					text-align: center;
-					font-size: 24rpx;
-					font-family: PingFangSC-Medium, PingFang SC;
-					font-weight: 500;
-					color: #0091FF;
-					line-height: 44rpx;
-				}
-				.cardIsFollow{
-					width: 100rpx;
-					height: 44rpx;
-					background: rgba(255, 255, 255, 0.35);
-					border-radius: 22rpx;
-					text-align: center;
-					font-size: 24rpx;
-					font-family: PingFangSC-Medium, PingFang SC;
-					font-weight: 500;
-					color: #0091FF;
-					line-height: 44rpx;
 
 				}
 			}
@@ -717,61 +604,6 @@
 				right: 4rpx;
 			}
 		}
-		.cardBottomBox{
-			width: 686rpx;
-			background: #FFFFFF;
-			box-shadow: 0rpx 8rpx 28rpx 0rpx #EDEFF2;
-			border-radius: 0rpx 0rpx 16rpx 16rpx;
-			.cardContent{
-				padding: 20rpx 28rpx;
-				font-size: 28rpx;
-				font-family: PingFangSC-Light, PingFang SC;
-				font-weight: 300;
-				color: #606266;
-				line-height: 40rpx;
-				text-shadow: 0rpx 8rpx 28rpx #EDEFF2;
-
-			}
-			.cardAuthorBox{
-				padding: 28rpx;
-				padding-top: 0rpx;
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				.author{
-					display: flex;
-					align-items: center;
-					.userImg{
-						width: 48rpx;
-						height: 48rpx;
-						box-shadow: 0rpx 8rpx 28rpx 0rpx #EDEFF2;
-						border-radius: 50%;
-
-					}
-					.authorName{
-						height: 34rpx;
-						font-size: 24rpx;
-						font-family: PingFangSC-Medium, PingFang SC;
-						font-weight: 500;
-						color: #303133;
-						line-height: 34rpx;
-						text-shadow: 0rpx 8rpx 28rpx #EDEFF2;
-						margin-left: 16rpx;
-					}
-				}
-				.questionsDate{
-					width: 188rpx;
-					height: 24rpx;
-					font-size: 24rpx;
-					font-family: PingFangSC-Regular, PingFang SC;
-					font-weight: 400;
-					color: #909399;
-					line-height: 24rpx;
-					text-shadow: 0rpx 8rpx 28rpx #EDEFF2;
-
-				}
-			}
-		}
 	}
 	// 回复列表
 	.answersTip{
@@ -788,7 +620,7 @@
 			margin-top: 20rpx;
 		}
 	}
-	.answersList{
+	.answersOfficial{
 		margin: 0px 28rpx;
 		.answersCardBox{
 			margin-top: 20rpx;
@@ -1260,11 +1092,13 @@
 	// 评论框
 	.commentInput {
 		width: 100%;
+		padding-bottom: 100rpx;
 		position: fixed;
 		background: #ffffff;
+		bottom: -100rpx;
 		display: flex;
 		align-items: center;
-		z-index: 99999;
+		// padding-bottom: 110rpx;
 		.inputK {
 			height: 28rpx;
 			width: 558rpx;

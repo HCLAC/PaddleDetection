@@ -229,14 +229,14 @@
 			}
 		}
 		
-		// // 平分的方式显示item
-		// .tabs-flex{
-		// 	display: flex;
-		// 	.tab-item-info{
-		// 		flex: 1;
-		// 	}
-		// }
-		// // 居左显示item,支持水平滑动
+		// 平分的方式显示item
+		.tabs-flex{
+			display: flex;
+			.tab-item-info{
+				flex: 1;
+			}
+		}
+		// 居左显示item,支持水平滑动
 		// .tabs-scroll{
 		// 	.tab-item-info{
 		// 		display: inline-block;

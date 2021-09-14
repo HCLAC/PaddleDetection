@@ -349,13 +349,24 @@
 			// 获取当前地理位置
 			getAdress() {
 				var that = this;
+				// #ifdef H5
+				this.$jsonp('https://apis.map.qq.com/ws/location/v1/ip?output=jsonp',{
+					key: '3L3BZ-V5OCV-GXHPP-ULIVW-DYQRT-HRFBL',
+				},5000)
+				.then(res => {
+					that.cityName = res.result.ad_info.city.substr(0, res.result.ad_info.city.length - 1);
+				})
+				.catch(error => {
+					console.error('get address failed, ',error);
+				})
+				return
+				// #endif
 				uni.getLocation({
 					type: 'wgs84',
 					success: res => {
 						if (res.city && res.province) {
-							this.cityName = res.city.substr(0, res.city.length - 1);
-							this.city = res.city;
-							this.province = res.province;
+							that.cityName = res.city.substr(0, res.city.length - 1);
+							that.province = res.province;
 						} else {
 							let arr = [];
 							arr.push(res.latitude);
@@ -368,10 +379,9 @@
 								},
 								success: result => {
 									if (result.data.status == 0) {
-										this.cityName = result.data.result.addressComponent.city.substr(0, result.data.result.addressComponent.city
+										that.cityName = result.data.result.addressComponent.city.substr(0, result.data.result.addressComponent.city
 											.length - 1);
-										this.city = result.data.result.addressComponent.city;
-										this.province = result.data.result.addressComponent.province;
+										that.province = result.data.result.addressComponent.province;
 									} else {
 										uni.showToast({
 											title: result.errMsg
@@ -525,7 +535,7 @@
 							if (item1.cover_height > 0){
 								item1.height = 340*item1.cover_height/item1.cover_width+'rpx'
 							} else{
-								item1.height = '220rpx'
+								item1.height = null
 							}
 							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
 							item1.image = this.Utils.addImageProcess(item1.image, false, 40)

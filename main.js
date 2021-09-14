@@ -24,9 +24,13 @@ Vue.config.productionTip = true
 
 App.mpType = 'app'
 
-// import MetaInfo from 'vue-meta-info'
-// Vue.use(MetaInfo)
-
+// #ifdef H5
+import MetaInfo from 'vue-meta-info'
+Vue.use(MetaInfo)
+//jsonp封装
+import { VueJsonp } from 'vue-jsonp'    // 网上很多博客引用不加{}，会报错
+Vue.use(VueJsonp)
+// #endif
 
 const app = new Vue({
 	...App

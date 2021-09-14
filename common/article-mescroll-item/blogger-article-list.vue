@@ -4,7 +4,6 @@
 			<view class="" v-for="(item, index) in list" :key="index">
 				<view class="contentItem">
 					<view class="left">
-						<!-- <image lazy-load :src="item.image" mode="aspectFill"> -->
 						<u-image width="192rpx" height="232rpx" border-radius="16rpx" :src="item.image" mode="aspectFill"></u-image>
 							<view class="imgTip">
 								<view v-if="item.type == 1">游记</view>
@@ -15,7 +14,6 @@
 							<view class="videoIcon" v-if="item.type == 4">
 								<image class="playIcon" src="/static/images/playIcon.svg" mode=""></image>
 							</view>
-						<!-- </image> -->
 					</view>
 					<view class="right" @click="onPageJump" :id="item.article_id">
 						<view class="title">
@@ -70,16 +68,18 @@
 				}
 			},
 			authorID:{ 
-				type: Number,
+				type: String,
 				default(){
-					return 0
+					return ''
 				}
 			},
 		},
 		watch: {
 			authorID(newVal, old) {
 				this.authorID = newVal;
-				this.mescroll.resetUpScroll();
+				if (this.authorID && this.authorID.length){
+					this.mescroll.resetUpScroll();
+				}
 			}
 		},
 		data() {
@@ -128,7 +128,7 @@
 			},
 			/*上拉加载的回调*/
 			upCallback(page) {
-				if (this.topicID == 0){
+				if (!this.authorID || !this.authorID.length){
 					this.mescroll.endSuccess()
 					return
 				}
