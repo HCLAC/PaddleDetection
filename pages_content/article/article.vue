@@ -36,15 +36,21 @@
 			<!-- 内容详情 -->
 			<view class="detailContent savebottom">
 				<view class="userMse">
-					<image class="userHeard" lazy-load :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
-					<view class="userMse-r">
-						<view class="userNikename">{{ articleInfo.author_name }}</view>
+					<view class="left">
+						<view class="userHeard">
+							<image  lazy-load :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
+						</view>
+						<view class="userMse-r">
+							<view class="userNikename">{{ articleInfo.author_name }}</view>
+						</view>
 					</view>
-					<view class="followBox" @click="follow()" v-if="!articleInfo.is_follow">
-						<image class="followImg" src="/static/images/followIcon.svg" mode=""></image>
-						关注
+					<view class="right">
+						<view class="followBox" @click="follow()" v-if="!articleInfo.is_follow">
+							<image class="followImg" src="/static/images/followIcon.svg" mode=""></image>
+							关注
+						</view>
+						<view class="isfollowBox" @click="follow()" v-else-if="articleInfo.is_follow">已关注</view>
 					</view>
-					<view class="isfollowBox" @click="follow()" v-else-if="articleInfo.is_follow">已关注</view>
 				</view>
 				<!-- 地址 -->
 				<view class="adress-1">
@@ -78,16 +84,24 @@
 				</view>
 				<!-- 作者信息 -->
 				<view class="userMse">
-					<image class="userHeard" lazy-load :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
-					<view class="userMse-r">
-						<text class="userNikename" selected=true> {{ articleInfo.author_name }}</text>
-						<view class="releaseTime-strategy">发布于{{ articleInfo.update_at.slice(0,10) }}</view>
+					<view class="left">
+						<view class="userHeard">
+							<image lazy-load :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
+						</view>
+						<view class="userMse-r">
+							<text class="userNikename" selected=true> {{ articleInfo.author_name }}</text>
+							<view class="releaseTime-strategy">
+								发布于{{ articleInfo.update_at.slice(0,10) }}
+							</view>
+						</view>
 					</view>
-					<view class="followBox" @click="follow()" v-if="!articleInfo.is_follow">
-						<image class="followImg" src="/static/images/followIcon.svg" mode=""></image>
-						关注
+					<view class="right">
+						<view class="followBox" @click="follow()" v-if="!articleInfo.is_follow">
+							<image class="followImg" src="/static/images/followIcon.svg" mode=""></image>
+							关注
+						</view>
+						<view class="isfollowBox" @click="follow()" v-else>已关注</view>
 					</view>
-					<view class="isfollowBox" @click="follow()" v-else>已关注</view>
 				</view>
 				<!-- 内容文章 -->
 				<view class="contentText">
@@ -115,8 +129,11 @@
 		<view>
 			<view class="replyLine"></view>
 			<view class="replyBox">
-				<view class="replyText">
-					回复
+				<view class="replyText" v-if="comment_count == 0">
+					暂无评论
+				</view>
+				<view class="replyText" v-if="comment_count > 0">
+					共{{comment_count}}条评论
 				</view>
 				<view class="replyContent">
 					<view class="myReply">
@@ -164,6 +181,9 @@
 			<view class="line"></view>
 			<view class="contentBottom savepadding">
 				<view style="display: flex;">
+					<view class="bottom-text" @click="commentInput">
+						撩点什么…
+					</view>
 					<view class="like" @click="clickLike">
 						<image class="likeBtn" :src="articleInfo.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image>
 						<view class="likeNum" v-if="articleInfo.like_count != 0">{{ articleInfo.like_count }}</view>
@@ -172,14 +192,9 @@
 						<image class="favBtn" :src="articleInfo.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
 						<view class="favNum" v-if="articleInfo.fav_count != 0">{{ articleInfo.fav_count }}</view>
 					</view>
-					<view class="replyIcon" @click="commentInput">
-						<image src="/static/images/replyIcon.svg" mode=""></image>
-						<view class="replyNum">{{comment_count}}</view>
+					<view class="share"  @click="share">
+						<image src="/static/images/shareIcon.svg"></image>
 					</view>
-					<!-- <view class="share" v-if="serviceProvider == 'baidu'" @click="share"><image src="/static/images/shareIcon.svg"></image></view> -->
-				</view>
-				<view class="">
-					<view class="loginButton" @click="login" v-if="!hasLogin">登录</view>
 				</view>
 			</view>
 		</view>
@@ -1169,57 +1184,66 @@
 	.userMse {
 		display: flex;
 		align-items: center;
-		margin-left: 28rpx;
-		margin-top: 50rpx;
-		.userHeard {
-			width: 80rpx;
-			height: 80rpx;
-			border-radius: 50%;
-		}
-		
-		.userMse-r {
-			margin-left: 20rpx;
-			flex: 1;
-			.userNikename {
-				font-size: 28rpx;
-				font-family: PingFangSC-Medium, PingFang SC;
-				font-weight: 500;
-				color: rgba(48, 49, 51, 1);
-				line-height: 28rpx;
+		justify-content: space-between;
+		padding: 0 28rpx;
+		// margin-left: 28rpx;
+		margin-top: 40rpx;
+		.left{
+			display: flex;
+			align-items: center;
+			.userHeard {
+				width: 80rpx;
+				height: 80rpx;
+				border-radius: 50%;
+				overflow: hidden;
+				image{
+					width: 100%;
+					height: 100%;
+				}
+			}
+			.userMse-r {
+				margin-left: 20rpx;
+				.userNikename {
+					font-size: 28rpx;
+					font-family: PingFangSC-Medium, PingFang SC;
+					font-weight: 500;
+					color: rgba(48, 49, 51, 1);
+					line-height: 28rpx;
+				}
 			}
 		}
-		.isfollowBox {
-			width: 124rpx;
-			height: 48rpx;
-			background: #f8f8f8;
-			border-radius: 24rpx;
-			margin-right: 28rpx;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-size: 24rpx;
-			font-family: PingFangSC-Medium, PingFang SC;
-			font-weight: 400;
-			color: #c9cad1;
-		}
-		.followBox {
-			width: 124rpx;
-			height: 48rpx;
-			background: #ffe512;
-			border-radius: 24rpx;
-			margin-right: 28rpx;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-size: 24rpx;
-			font-family: PingFangSC-Medium, PingFang SC;
-			font-weight: 500;
-			color: #303133;
-			.followImg {
-				width: 16rpx;
-				height: 16rpx;
-				margin-right: 4rpx;
-				// margin-top: 4rpx;
+		.right{
+			.isfollowBox {
+				width: 124rpx;
+				height: 48rpx;
+				background: #f8f8f8;
+				border-radius: 24rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 24rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 400;
+				color: #c9cad1;
+			}
+			.followBox {
+				width: 124rpx;
+				height: 48rpx;
+				background: #ffe512;
+				border-radius: 24rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 24rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
+				color: #303133;
+				.followImg {
+					width: 16rpx;
+					height: 16rpx;
+					margin-right: 4rpx;
+					// margin-top: 4rpx;
+				}
 			}
 		}
 	}
@@ -1337,7 +1361,7 @@
 		padding-bottom: env(safe-area-inset-bottom);
 	}
 	.releaseTime-strategy{
-		width: 200rpx;
+		// width: 200rpx;
 		height: 22rpx;
 		font-size: 22rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
@@ -1513,7 +1537,6 @@
 		height: 142rpx;
 		width: 100%;
 	}
-
 	/* 底部 */
 	.bottom {
 		width: 100%;
@@ -1523,7 +1546,6 @@
 		bottom: var(--window-bottom);
 		z-index: 111;
 		background-color: #ffffff;
-		// padding-bottom: 68rpx;
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 		box-sizing: content-box;
@@ -1545,25 +1567,46 @@
 		}
 		
 	}
-
-	.loginButton {
-		width: 156rpx;
+	// .loginButton {
+	// 	width: 156rpx;
+	// 	height: 68rpx;
+	// 	background: rgba(255, 229, 18, 1);
+	// 	border-radius: 20px;
+	// 	font-size: 32rpx;
+	// 	font-family: PingFangSC-Medium, PingFang SC;
+	// 	font-weight: 600;
+	// 	color: rgba(48, 49, 51, 1);
+	// 	line-height: 68rpx;
+	// 	border: none;
+	// 	text-align: center;
+	// 	margin-right: 56rpx;
+	// }
+	.bottom-text{
+		width: 392rpx;
 		height: 68rpx;
-		background: rgba(255, 229, 18, 1);
-		border-radius: 20px;
-		font-size: 32rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 600;
-		color: rgba(48, 49, 51, 1);
-		line-height: 68rpx;
-		border: none;
-		text-align: center;
-		margin-right: 56rpx;
+		background: #F8F8F8;
+		border-radius: 34rpx;
+		display: flex;
+		align-items: center;
+		font-size: 24rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #909399;
+		padding-left: 28rpx;
+		margin-left: 28rpx;
+		z-index: 100000;
 	}
-
+	.share{
+		width: 52rpx;
+		height: 52rpx;
+		image{
+			width: 100%;
+			height: 100%;
+		}
+	}
 	.like {
 		display: flex;
-		margin-left: 28rpx;
+		margin-left: 32rpx;
 		align-items: center;
 		// margin-right: 40rpx;
 		position: relative;
@@ -1579,7 +1622,6 @@
 	}
 
 	.likeNum {
-
 		height: 24rpx;
 		font-size: 24rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
@@ -1587,7 +1629,7 @@
 		color: #909399;
 		line-height: 24rpx;
 		position: absolute;
-		left: 55rpx;
+		left: 56rpx;
 	}
 
 	.fav {
@@ -1595,9 +1637,8 @@
 		align-items: center;
 		// margin-right: 40rpx;
 		position: relative;
-		width: 100rpx;
+		// width: 100rpx;
 		height: 100%;
-		
 	}
 
 	.favBtn {
@@ -1615,7 +1656,7 @@
 		color: #909399;
 		line-height: 24rpx;
 		position: absolute;
-		left: 55rpx;
+		left: 56rpx;
 	}
 
 	.replyIcon {

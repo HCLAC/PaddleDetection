@@ -73,7 +73,7 @@ export default {
 					name: '已赞',
 					count: '',
 					tip: '您还没有赞过任何文章哦～',
-					icon: '/static/images/wenjianjia.png',
+					icon: '/static/images/dianzhan.png',
 				}],
 			tabIndex: 0,
 			favnumcolor:{
@@ -218,7 +218,8 @@ export default {
 <style lang="scss" scoped>
 
 /deep/.mescroll-empty .empty-icon { width: 154rpx !important }
-/deep/.mescroll-empty .empty-icon { height: 122rpx !important }
+/deep/.mescroll-empty .empty-icon { height: 148rpx !important }
+// /deep/.mescroll-empty  .empty-fixed{top: 120rpx !important;}
 
 .mineTabs{
 	width: 100%;
