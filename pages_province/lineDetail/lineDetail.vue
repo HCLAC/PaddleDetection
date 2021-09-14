@@ -770,6 +770,7 @@ export default {
 	padding: 28rpx;
 	margin: 0 auto;
 	margin-left: -4rpx;
+	text-align: justify;
 	// margin-top: 80rpx;
 	.title {
 		font-size: 30rpx;
