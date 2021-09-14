@@ -48,7 +48,7 @@
 						{{item.title}} 
 					</view> 
 					<view class="answersNum"> 
-						{{item.reply_count}} 回答 
+						{{item.reply_count}}个回答 
 					</view> 
 				</view> 
 			</view>
@@ -101,7 +101,7 @@
 						{{item.title}} 
 					</view> 
 					<view class="answersNum"> 
-						{{item.reply_count}} 回答 
+						{{item.reply_count}}个回答 
 					</view> 
 				</view> 
 			</view>

@@ -12,6 +12,8 @@
 			</uni-nav-bar>
 		</view>
 		<meTabs class="mineAnswerTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :lineWidth="170" :top="navbarHeight" :fixed="isFixed"></meTabs>
+		<view class="line" >
+		</view>
 		<answerList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :top="navbarHeight"></answerList>
 	</view>
 </template>
@@ -60,5 +62,13 @@ import answerList from '@/common/article-mescroll-item/mine-answer-list.vue';
 </script>
 
 <style lang="scss" scoped>
-
+	
+.line{
+	position: relative;
+	width:100% ;
+	height: 20rpx;
+	background: #F8F8F8;
+	top:92rpx;
+	margin-bottom: 34rpx;
+}
 </style>
