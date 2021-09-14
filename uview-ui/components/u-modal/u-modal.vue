@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<u-popup :zoom="zoom" mode="center" :popup="false" :z-index="uZIndex" v-model="value" :length="width"
-		 :mask-close-able="maskCloseAble" :border-radius="borderRadius" @close="popupClose" :negative-top="negativeTop">
+		 :mask-close-able="maskCloseAble" :border-radius="borderRadius" @close="popupClose" :negative-top="negativeTop" :mask-custom-style="{background: 'rgba(0, 0, 0, 0.3)'}">
 			<view class="u-model">
 				<view v-if="showTitle" class="u-model__title u-line-1" :style="[titleStyle]">{{ title }}</view>
 				<view class="u-model__content">

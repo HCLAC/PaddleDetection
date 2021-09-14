@@ -72,15 +72,18 @@
 						</view>
 					</view>
 				</view>
-				<view class="answersLine">
-				</view>
+				<!-- <view class="answersLine">
+				</view> -->
 			</view>
 			<view class="moreAnswers" @click="moreAnswers()" v-if="detail&&detail.reply_count > 1">
 				查看全部{{detail.reply_count}}条回答
 			</view>
 		</view>
 		<view class="answersNull" v-else>
-			还没有收到回答
+			<view class="answersNull-img">
+				<image src="/static/images/wd-kong.png" mode=""></image>
+			</view>
+			<text>还没有收到回答</text>
 		</view>
 		<!-- <view class="myAnswersBtn" @click="commentInput" v-if="!textareafocus">
 			<image src="/static/images/followIcon.svg"></image>
@@ -88,7 +91,7 @@
 				我来回答
 			</view>
 		</view> -->
-		<view class="line">	</view>
+		<view class="line" v-if="detail&&detail.reply_count > 0"></view>
 		<!-- 营销组件 -->
 		<view class="componment" v-if="marketingData">
 			<view class="wechat">
@@ -757,12 +760,11 @@
 								height: 44rpx;
 							}
 							text{
-								// width: 48rpx;
+								width: 48rpx;
 								font-size: 20rpx;
 								font-family: PingFangSC-Regular, PingFang SC;
 								font-weight: 400;
 								color: #606266;
-							
 							}
 						}
 					}
@@ -788,14 +790,28 @@
 		}
 	}
 	.answersNull{
-		font-size: 28rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: #909399;
-		line-height: 28rpx;
-		text-align: center;
-		margin: 80rpx 0rpx;
-
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin: 0 auto;
+		margin-bottom: 80rpx;
+		.answersNull-img{
+			width: 306rpx;
+			height: 246rpx;
+			margin-top: 40rpx;
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		text{
+			font-size: 28rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #909399;
+			margin-top: 24rpx;
+		}
 	}
 	.line{
 		width: 100%;
@@ -822,6 +838,10 @@
 				border-radius: 50%;
 			}
 			.wechatText{
+				width: 350rpx;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
 				height: 40rpx;
 				font-size: 28rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
@@ -829,7 +849,6 @@
 				color: #303133;
 				line-height: 40rpx;
 			}
-
 		}
 		.wechatBtn{
 			background: #FFFFFF;
