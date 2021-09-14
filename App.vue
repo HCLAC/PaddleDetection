@@ -68,6 +68,7 @@ export default {
 					height = res.navigationBarHeight+res.statusBarHeight
 				}
 				this.globalData.navbarHeight = height
+				console.log(res,'res')
 			}
 		});
 	},
@@ -85,7 +86,7 @@ export default {
 <style lang="scss">
 @import 'uview-ui/index.scss';
 uni-rich-text img{ max-width: 100% !important;}
-
+/deep/.rich-text-selectable{text-align: justify !important;}
 .nav-bar {
 	z-index: 9999;
 	flex-wrap: wrap;

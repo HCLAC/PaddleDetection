@@ -24,7 +24,7 @@
 				</view>
 				<view class="cardTipsBox">
 					<view class="cTL">
-						<view class="cardTips" v-for="(item,index ) in detail.labels" :key="index" >
+						<view class="cardTips" v-if="index <= 1" v-for="(item,index) in detail.labels" :key="index" >
 							#{{item}}
 						</view>
 					</view>
@@ -544,7 +544,6 @@
 			border-radius: 16rpx;
 			.cardTop{
 				display: flex;
-				
 				justify-content: space-between;
 				align-items: center;
 				padding: 30rpx 28rpx 20rpx;
@@ -556,7 +555,6 @@
 					font-weight: 400;
 					color: rgba(255, 255, 255, 1);
 					line-height: 40rpx;
-
 				}
 			}
 			.cradTitle{
@@ -907,6 +905,7 @@
 						color: #303133;
 						line-height: 56rpx;
 						margin-bottom: 20rpx;
+						text-align: justify;
 						display: -webkit-box;
 						overflow: hidden;
 						text-overflow: ellipsis;
@@ -1093,7 +1092,7 @@
 	// 评论框
 	.commentInput {
 		width: 100%;
-		padding-bottom: 100rpx;
+		padding-bottom: 90rpx;
 		position: fixed;
 		background: #ffffff;
 		bottom: -100rpx;
