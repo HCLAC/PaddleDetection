@@ -531,6 +531,10 @@
 
 <style lang="scss" scoped>
 	@import url('../../components/transition-min/transition.min.css');
+	page {
+		padding-bottom: constant(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom);
+	}
 	.detailCard{
 		margin-top: 20rpx;
 		margin-left: 32rpx;
@@ -1031,6 +1035,7 @@
 		height: 98rpx;
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
+		box-sizing: content-box;
 		background: #FFFFFF;
 		box-shadow: 0px -16rpx 56rpx 0px rgba(0, 0, 0, 0.05);
 		display: flex;
