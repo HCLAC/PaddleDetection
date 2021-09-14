@@ -171,7 +171,7 @@
 					</view>
 				</view>
 				<view class="moreReply" v-if="comment_count > 3" @click="toMoreReply">
-					查看全部{{comment_count}}条回复
+					查看全部{{comment_count}}条评论
 				</view>
 			</view>
 			<view class="safeBox"></view>
@@ -180,18 +180,20 @@
 		<view class="bottom" v-if="articleInfo">
 			<view class="line"></view>
 			<view class="contentBottom savepadding">
-				<view style="display: flex;">
+				<view style="display: flex;align-items: center;">
 					<view class="bottom-text" @click="commentInput">
 						撩点什么…
 					</view>
 					<view class="like" @click="clickLike">
 						<image class="likeBtn" :src="articleInfo.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image>
-						<view class="likeNum" v-if="articleInfo.like_count != 0">{{ articleInfo.like_count }}</view>
 					</view>
+					<view class="likeNum" v-if="articleInfo.like_count != 0">{{ articleInfo.like_count }}</view>
+					
 					<view class="fav" @click="clickFav">
 						<image class="favBtn" :src="articleInfo.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
-						<view class="favNum" v-if="articleInfo.fav_count != 0">{{ articleInfo.fav_count }}</view>
 					</view>
+					<view class="favNum" v-if="articleInfo.fav_count != 0">{{ articleInfo.fav_count }}</view>
+					
 					<view class="share"  @click="share">
 						<image src="/static/images/shareIcon.svg"></image>
 					</view>
@@ -1549,22 +1551,25 @@
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 		box-sizing: content-box;
+		display: flex;
+		align-items: center;
+		border-top: 2rpx solid #EDEFF2;
 		.line {
 			height: 0.5rpx;
 			background: rgba(221, 221, 221, 1);
 			// margin-top: 84rpx;
 		}
-		.contentBottom {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-top: 16rpx;
-			font-size: 24rpx;
-			font-family: PingFangSC-Regular, PingFang SC;
-			font-weight: 400;
-			color: rgba(48, 49, 51, 1);
-			line-height: 24rpx;
-		}
+		// .contentBottom {
+		// 	display: flex;
+		// 	justify-content: space-between;
+		// 	align-items: center;
+		// 	margin-top: 16rpx;
+		// 	font-size: 24rpx;
+		// 	font-family: PingFangSC-Regular, PingFang SC;
+		// 	font-weight: 400;
+		// 	color: rgba(48, 49, 51, 1);
+		// 	line-height: 24rpx;
+		// }
 		
 	}
 	// .loginButton {
@@ -1582,7 +1587,7 @@
 	// 	margin-right: 56rpx;
 	// }
 	.bottom-text{
-		width: 392rpx;
+		width: 372rpx;
 		height: 68rpx;
 		background: #F8F8F8;
 		border-radius: 34rpx;
@@ -1594,9 +1599,10 @@
 		color: #909399;
 		padding-left: 28rpx;
 		margin-left: 28rpx;
-		z-index: 100000;
+		margin-right: 32rpx;
 	}
 	.share{
+		margin-left: 32rpx;
 		width: 52rpx;
 		height: 52rpx;
 		image{
@@ -1606,96 +1612,48 @@
 	}
 	.like {
 		display: flex;
-		margin-left: 32rpx;
 		align-items: center;
-		// margin-right: 40rpx;
-		position: relative;
-		width: 100rpx;
-		height: 100%;
-		
-	}
-
-	.likeBtn {
 		width: 52rpx;
 		height: 52rpx;
-		// margin-right: 8rpx;
+		margin-right: 4rpx;
+		.likeBtn {
+			width: 100%;
+			height: 100%;
+		}
 	}
-
 	.likeNum {
+		width: 30rpx;
 		height: 24rpx;
 		font-size: 24rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: #909399;
 		line-height: 24rpx;
-		position: absolute;
-		left: 56rpx;
+		margin-right: 32rpx;
 	}
-
 	.fav {
 		display: flex;
 		align-items: center;
-		// margin-right: 40rpx;
+		margin-right: 4rpx;
 		position: relative;
-		// width: 100rpx;
-		height: 100%;
-	}
-
-	.favBtn {
 		width: 52rpx;
 		height: 52rpx;
-		
-		// margin-right: 8rpx;
-	}
-
-	.favNum {
-		height: 24rpx;
-		font-size: 24rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: #909399;
-		line-height: 24rpx;
-		position: absolute;
-		left: 56rpx;
-	}
-
-	.replyIcon {
-		display: flex;
-		align-items: center;
-		position: relative;
-		width: 100rpx;
-		height: 100%;
-		image {
-			width: 52rpx;
-			height: 52rpx;
+		.favBtn {
+			width: 100%;
+			height: 100%;
+			// margin-right: 8rpx;
 		}
-
 	}
-
-	.replyNum {
-		margin-left: 8rpx;
+	.favNum {
+		width: 30rpx;
 		height: 24rpx;
 		font-size: 24rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 400;
 		color: #909399;
 		line-height: 24rpx;
-		position: absolute;
-		left: 55rpx;
 	}
 
-	.share {
-		display: flex;
-		margin-left: 56rpx;
-		align-items: center;
-	}
-
-	.share image {
-		width: 52rpx;
-		height: 52rpx;
-	}
-	
-	
 	.loading{
 		position: absolute;
 		top: 50%;
