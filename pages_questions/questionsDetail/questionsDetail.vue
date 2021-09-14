@@ -549,7 +549,7 @@
 				align-items: center;
 				padding: 30rpx 28rpx 20rpx;
 				.cardTopText{
-					width: 210rpx;
+					width: 220rpx;
 					height: 40rpx;
 					font-size: 28rpx;
 					font-family: PingFangSC-Regular, PingFang SC;

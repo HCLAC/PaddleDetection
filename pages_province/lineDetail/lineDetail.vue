@@ -104,7 +104,7 @@
 										<view class="u-order-desc">{{ eve.description }}</view>
 										<view class="position" v-for="(pos, posIndex) in eve.position" :key="posIndex" @click="toPosition(pos)">
 											<view class="left">
-												<u-image width="216rpx" height="164rpx" border-radius="12rpx" :src="pos.cover_url" mode=""></u-image>
+												<u-image width="216rpx" height="164rpx" border-radius="12rpx" :src="pos.cover_url"></u-image>
 												<view class="imgTag">景点</view>
 											</view>
 											<view class="right">

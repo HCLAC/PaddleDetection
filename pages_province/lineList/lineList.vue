@@ -13,7 +13,7 @@
 		<view class="container">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 				<view class="lineItem" @click="getDetail(item.uuid)" v-for="(item, index) in lineList" :key="index">
-					<u-image width="100%" height="370rpx" border-radius="16rpx 16rpx 0 0" :src="item.image" mode=""></u-image>
+					<u-image width="100%" height="370rpx" border-radius="16rpx 16rpx 0 0" :src="item.image"></u-image>
 					<view class="lineText" >{{ item.title }}</view>
 				</view>
 			</mescroll-body>
