@@ -187,12 +187,12 @@
 					<view class="like" @click="clickLike">
 						<image class="likeBtn" :src="articleInfo.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image>
 					</view>
-					<view class="likeNum" v-if="articleInfo.like_count != 0">{{ articleInfo.like_count }}</view>
+					<view class="likeNum">{{ articleInfo.like_count }}</view>
 					
 					<view class="fav" @click="clickFav">
 						<image class="favBtn" :src="articleInfo.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
 					</view>
-					<view class="favNum" v-if="articleInfo.fav_count != 0">{{ articleInfo.fav_count }}</view>
+					<view class="favNum">{{ articleInfo.fav_count }}</view>
 					
 					<view class="share"  @click="share">
 						<image src="/static/images/shareIcon.svg"></image>
