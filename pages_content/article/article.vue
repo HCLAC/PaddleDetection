@@ -129,8 +129,11 @@
 		<view>
 			<view class="replyLine"></view>
 			<view class="replyBox">
-				<view class="replyText">
-					回复
+				<view class="replyText" v-if="comment_count == 0">
+					暂无评论
+				</view>
+				<view class="replyText" v-if="comment_count > 0">
+					共{{comment_count}}条评论
 				</view>
 				<view class="replyContent">
 					<view class="myReply">
@@ -178,6 +181,9 @@
 			<view class="line"></view>
 			<view class="contentBottom savepadding">
 				<view style="display: flex;">
+					<view class="bottom-text" @click="commentInput">
+						撩点什么…
+					</view>
 					<view class="like" @click="clickLike">
 						<image class="likeBtn" :src="articleInfo.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image>
 						<view class="likeNum" v-if="articleInfo.like_count != 0">{{ articleInfo.like_count }}</view>
@@ -186,14 +192,9 @@
 						<image class="favBtn" :src="articleInfo.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
 						<view class="favNum" v-if="articleInfo.fav_count != 0">{{ articleInfo.fav_count }}</view>
 					</view>
-					<view class="replyIcon" @click="commentInput">
-						<image src="/static/images/replyIcon.svg" mode=""></image>
-						<view class="replyNum">{{comment_count}}</view>
+					<view class="share"  @click="share">
+						<image src="/static/images/shareIcon.svg"></image>
 					</view>
-					<!-- <view class="share" v-if="serviceProvider == 'baidu'" @click="share"><image src="/static/images/shareIcon.svg"></image></view> -->
-				</view>
-				<view class="">
-					<view class="loginButton" @click="login" v-if="!hasLogin">登录</view>
 				</view>
 			</view>
 		</view>
@@ -1500,7 +1501,6 @@
 		height: 142rpx;
 		width: 100%;
 	}
-
 	/* 底部 */
 	.bottom {
 		width: 100%;
@@ -1510,7 +1510,6 @@
 		bottom: var(--window-bottom);
 		z-index: 111;
 		background-color: #ffffff;
-		// padding-bottom: 68rpx;
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 		box-sizing: content-box;
@@ -1532,25 +1531,46 @@
 		}
 		
 	}
-
-	.loginButton {
-		width: 156rpx;
+	// .loginButton {
+	// 	width: 156rpx;
+	// 	height: 68rpx;
+	// 	background: rgba(255, 229, 18, 1);
+	// 	border-radius: 20px;
+	// 	font-size: 32rpx;
+	// 	font-family: PingFangSC-Medium, PingFang SC;
+	// 	font-weight: 600;
+	// 	color: rgba(48, 49, 51, 1);
+	// 	line-height: 68rpx;
+	// 	border: none;
+	// 	text-align: center;
+	// 	margin-right: 56rpx;
+	// }
+	.bottom-text{
+		width: 392rpx;
 		height: 68rpx;
-		background: rgba(255, 229, 18, 1);
-		border-radius: 20px;
-		font-size: 32rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 600;
-		color: rgba(48, 49, 51, 1);
-		line-height: 68rpx;
-		border: none;
-		text-align: center;
-		margin-right: 56rpx;
+		background: #F8F8F8;
+		border-radius: 34rpx;
+		display: flex;
+		align-items: center;
+		font-size: 24rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #909399;
+		padding-left: 28rpx;
+		margin-left: 28rpx;
+		z-index: 100000;
 	}
-
+	.share{
+		width: 52rpx;
+		height: 52rpx;
+		image{
+			width: 100%;
+			height: 100%;
+		}
+	}
 	.like {
 		display: flex;
-		margin-left: 28rpx;
+		margin-left: 32rpx;
 		align-items: center;
 		// margin-right: 40rpx;
 		position: relative;
@@ -1566,7 +1586,6 @@
 	}
 
 	.likeNum {
-
 		height: 24rpx;
 		font-size: 24rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
@@ -1574,7 +1593,7 @@
 		color: #909399;
 		line-height: 24rpx;
 		position: absolute;
-		left: 55rpx;
+		left: 56rpx;
 	}
 
 	.fav {
@@ -1582,9 +1601,8 @@
 		align-items: center;
 		// margin-right: 40rpx;
 		position: relative;
-		width: 100rpx;
+		// width: 100rpx;
 		height: 100%;
-		
 	}
 
 	.favBtn {
@@ -1602,7 +1620,7 @@
 		color: #909399;
 		line-height: 24rpx;
 		position: absolute;
-		left: 55rpx;
+		left: 56rpx;
 	}
 
 	.replyIcon {
