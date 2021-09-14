@@ -1517,6 +1517,7 @@
 		box-sizing: content-box;
 		display: flex;
 		align-items: center;
+		border-top: 2rpx solid #EDEFF2;
 		.line {
 			height: 0.5rpx;
 			background: rgba(221, 221, 221, 1);
@@ -1550,7 +1551,7 @@
 	// 	margin-right: 56rpx;
 	// }
 	.bottom-text{
-		width: 332rpx;
+		width: 372rpx;
 		height: 68rpx;
 		background: #F8F8F8;
 		border-radius: 34rpx;
@@ -1585,6 +1586,7 @@
 		}
 	}
 	.likeNum {
+		width: 30rpx;
 		height: 24rpx;
 		font-size: 24rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
@@ -1607,6 +1609,7 @@
 		}
 	}
 	.favNum {
+		width: 30rpx;
 		height: 24rpx;
 		font-size: 24rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
