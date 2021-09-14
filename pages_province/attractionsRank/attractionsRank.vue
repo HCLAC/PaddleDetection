@@ -13,14 +13,14 @@
 		</view>
 		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			 <view class="bgBox">
-				<image lazy-load :src="querys.imageProcess" mode="" class="bannerImg"></image>
+				<image lazy-load :src="querys.imageProcess" class="bannerImg"></image>
 				<view class="mask">
 					<view class="content">
-						<image class="travel" src="/static/images/TRAVEL.png" mode=""></image>
+						<image class="travel" src="/static/images/TRAVEL.png"></image>
 						<view class="atthotbox">
-							<image src="/static/images/leftleaves.svg" mode=""></image>
+							<image src="/static/images/leftleaves.svg"></image>
 							<text class="atthottext">{{querys.name}}热门景点</text>
-							<image src="/static/images/rightleaves.svg" mode=""></image>
+							<image src="/static/images/rightleaves.svg"></image>
 						</view>
 					</view>
 					<view class="rankTime">
@@ -36,7 +36,7 @@
 					<view class="city" @click="showCityPicker = true">
 						<view class="">
 							<text class="cityname">{{querys.name}}</text>
-							<image src="/static/images/more-down.svg" mode=""></image>
+							<image src="/static/images/more-down.svg"></image>
 						</view>
 					</view>
 				</view>
@@ -44,7 +44,7 @@
 					<view class="cards" v-for="(item,index) in hotsiteslist" :key="index" @click="toSiteDetail(item.id)">
 						<view class="cardsleft">
 							<u-image  width="262rpx" height="198rpx" border-radius="16rpx" :src="item.images[0]" mode="aspectFill"></u-image>
-							<image class="rankImg " :src="`/static/images/rank/top-${index+1}.svg`" v-if="index < 6" mode=""></image>
+							<image class="rankImg " :src="`/static/images/rank/top-${index+1}.svg`" v-if="index < 6"></image>
 						</view>
 						<view class="cardsright">
 							<view class="title">
@@ -63,7 +63,7 @@
 				</view>
 			</view>
 			<view class="shareBox" v-if="serviceProvider =='baidu' " @click="share">
-				<image src="/static/images/icon-share.svg" mode=""></image>
+				<image src="/static/images/icon-share.svg"></image>
 			</view>
 		</mescroll-body>
 		<!-- 城市选择弹窗 -->

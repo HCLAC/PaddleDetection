@@ -19,7 +19,7 @@
 		<questionList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :keyword="keyword"></questionList>
 		<!-- 提问按钮 -->
 		<view class="questionsBtn" @click="toQuestions">
-			<image src="/static/images/twIcon.svg" mode=""></image>
+			<image src="/static/images/twIcon.svg"></image>
 		</view>
 	</view>
 </template>

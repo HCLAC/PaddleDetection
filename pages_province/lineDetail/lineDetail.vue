@@ -35,7 +35,7 @@
 						<!-- <text class="price" style="font-size:18rpx; ">
 							￥</text> -->
 						<view class="price-img">
-							<image src="../../static/images/money.svg" mode=""></image>
+							<image src="../../static/images/money.svg"></image>
 						</view>
 						<text class="price">{{ lineContent?lineContent.money:0 }}</text>
 						<text>起</text>

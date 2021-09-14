@@ -17,7 +17,7 @@
 				<view class="card" v-for=" (item,index) in followList" :key="index">
 					<!-- 头像 -->
 					<view class="avatar" @click="tobloggers(item.author_id)">
-						<image lazy-load :src="item.avatar" mode=""></image>
+						<image lazy-load :src="item.avatar"></image>
 					</view>
 					<!-- 信息 -->
 					<view class="info" @click="tobloggers(item.author_id)">

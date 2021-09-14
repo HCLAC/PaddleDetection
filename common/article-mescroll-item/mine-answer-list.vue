@@ -4,7 +4,7 @@
 			<view class="answerList">
 				<view class="card" v-for="(item,index) in list" :key="index" @click="toQuestionsDetail(item)">
 					<view class="avatar">
-						<image lazy-load :src="item.avatar?item.avatar:'/static/images/userImg.svg'" mode=""></image>
+						<image lazy-load :src="item.avatar?item.avatar:'/static/images/userImg.svg'"></image>
 					</view>
 					
 					<view class="cradR">

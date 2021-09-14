@@ -16,7 +16,7 @@
 				<view class="replyContent">
 					<view class="reply" v-for="(item,index) in commentsList" :key="index">
 						<view class="replyTop">
-							<image class="userImg" lazy-load :src="item.avatar?item.avatar:'/static/images/userImg.svg'" mode=""></image>
+							<image class="userImg" lazy-load :src="item.avatar?item.avatar:'/static/images/userImg.svg'"></image>
 							<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
 								<view class="" style="display: flex;align-items: center;">
 									<view class="userName">{{item.account_name}}</view>
@@ -25,8 +25,8 @@
 									</view>
 								</view>
 								<view class="">
-									<image class="replyLike" :src="item.like == 1?'/static/images/attLikeA.svg':'/static/images/attLike.svg'" mode="" @click="replyLike(item, index)"></image>
-									<image class="report" src="/static/images/report.svg" mode="" @click="toReport(item)"></image>
+									<image class="replyLike" :src="item.like == 1?'/static/images/attLikeA.svg':'/static/images/attLike.svg'" @click="replyLike(item, index)"></image>
+									<image class="report" src="/static/images/report.svg" @click="toReport(item)"></image>
 								</view>
 							</view>
 						</view>

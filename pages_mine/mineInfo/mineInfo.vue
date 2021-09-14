@@ -20,7 +20,7 @@
 					<view class="avatarText" >
 						修改头像
 					</view>
-					<image class="moreRight" src="/static/images/moreR.svg"  mode=""></image>
+					<image class="moreRight" src="/static/images/moreR.svg" ></image>
 				</view>
 				<!-- 昵称 -->
 				<view class="form-name">
@@ -33,7 +33,7 @@
 						<text space="nbsp">性   别：</text>
 						<u-input :customStyle="customStyleinput"  :disabled="true" v-model="model.sex" @click="actionSheetShow = true"></u-input>
 					</view>
-					<image class="moreRight" src="/static/images/moreR.svg" slot="right" mode=""></image>
+					<image class="moreRight" src="/static/images/moreR.svg" slot="right"></image>
 				</view>
 				<!-- 常住地 -->
 				<view class="form-region">
@@ -41,7 +41,7 @@
 						<text space="nbsp">常住地：</text>
 						<u-input :customStyle="customStyleinput" :disabled="true" v-model="model.region" @click="pickerShow = true"></u-input>
 					</view>
-					<image class="moreRight" src="/static/images/moreR.svg" slot="right" mode=""></image>
+					<image class="moreRight" src="/static/images/moreR.svg" slot="right"></image>
 				</view>
 			</view>
 			<view class="customStyle" @click="submit">

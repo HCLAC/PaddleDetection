@@ -21,7 +21,7 @@
 			</view>
 			<view class="topicRankBox">
 				<view class="topicTips" @click="toTopicList(item.topic_id)" v-for="(item,index) in hotTopic " :key="index" >
-					<image class="rankImg" lazy-load :src="`/static/images/topic-${index+1}.png`" mode=""></image>
+					<image class="rankImg" lazy-load :src="`/static/images/topic-${index+1}.png`"></image>
 					<view class="tipsText" >
 						{{item.name}}
 					</view>
@@ -40,7 +40,7 @@
 				<view class="topicList" v-for="(item,index) in recommList" :key="index"  >
 					<view class="topicTitle">
 						<view class="titleLeft">
-							<image class="titleImg" src="/static/images/topicIcon.svg" mode=""></image>
+							<image class="titleImg" src="/static/images/topicIcon.svg"></image>
 							<view class="titleText">
 								{{item.name}}
 							</view>
@@ -52,7 +52,7 @@
 							<view class="rightText">
 								篇文章
 							</view>
-							<image class="moreRight" src="/static/images/more-right.svg" mode=""></image>
+							<image class="moreRight" src="/static/images/more-right.svg"></image>
 						</view>
 					</view>
 					<view class="conttentBox">
@@ -60,7 +60,7 @@
 							<view class="contentImg" v-for="(item1,index1) in item.list" :key="index1" @click="onPageJump" :id="item1.article_id">
 								<u-image width="216rpx" height="216rpx" border-radius="8rpx" :src="item1.image" mode="aspectFill">
 									<!-- <view class="videoIcon" v-if="item1.type == 4">
-										<image class="playIcon"  src="/static/images/playIcon.svg" mode=""></image>
+										<image class="playIcon"  src="/static/images/playIcon.svg"></image>
 									</view> -->
 								</u-image>
 								<view class="attText">{{ item1.title }}</view>

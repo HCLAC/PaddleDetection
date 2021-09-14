@@ -1,6 +1,6 @@
 <template>
 	<view class="weather" v-if="weather">
-		<image class="weatherImg" :src="imgUrl" mode="" ></image>
+		<image class="weatherImg" :src="imgUrl" ></image>
 		<view class="temp">{{ weather.temp }}</view>
 	</view>
 </template>

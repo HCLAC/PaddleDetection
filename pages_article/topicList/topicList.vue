@@ -27,7 +27,7 @@
 					<view class="squareText">
 						话题广场
 					</view>
-					<image class="more" src="/static/images/more1.svg" mode=""></image>
+					<image class="more" src="/static/images/more1.svg"></image>
 				</view>
 			</view>
 			<meTabs class="topicTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :tab-width="80"></meTabs>

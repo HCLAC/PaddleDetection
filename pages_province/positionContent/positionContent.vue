@@ -48,7 +48,7 @@
 						</view>
 					</view>
 					<view class="shareBox" @click="share" v-if="serviceProvider =='baidu' ">
-						<image src="/static/images/iconShare.svg" mode="" ></image>
+						<image src="/static/images/iconShare.svg" ></image>
 					</view>
 				</view>
 				<view class="contentRank" @click="toRank()">
@@ -84,12 +84,12 @@
 					</view>
 					<view class="btnBox" @click="showMore" v-if="!isShow && more">
 						<text>收起</text>
-						<image class="iconImg" src="/static/images/zhankaiIcon.png" mode=""></image>
+						<image class="iconImg" src="/static/images/zhankaiIcon.png"></image>
 					</view>
 					<view class="btnBox" @click="showMore" v-else-if="isShow && more">
 						<view class="mask"></view>
 						<text>展开</text>
-						<image class="iconImg" src="/static/images/shouqiIcon.png" mode=""></image>
+						<image class="iconImg" src="/static/images/shouqiIcon.png"></image>
 					</view>
 				</view>
 			</view>
@@ -99,14 +99,14 @@
 				<view class="adress">
 					<view class="left">
 						<view class="adreessIcon">
-							<image class="" src="/static/images/attmap.svg" mode=""></image>
+							<image class="" src="/static/images/attmap.svg"></image>
 						</view>
 						<view class="adressText">{{siteInfo.pos}}</view>
 					</view>
 					<view class="right" @click="map()">
-						<image src="/static/images/mapBack.png" mode=""></image>
+						<image src="/static/images/mapBack.png"></image>
 						<view class="insideBox" >
-							<image src="/static/images/dingwei.svg" mode=""></image>
+							<image src="/static/images/dingwei.svg"></image>
 							<text>导航</text>
 						</view>
 					</view>
@@ -121,10 +121,10 @@
 				<view class="title">热门攻略</view>
 				<view class="contentBox">
 					<view class="contentItem" @click="toArticle(item.article_id)" v-for="(item, index) in siteInfo.articles" :key="index">
-						<image class="topHot" v-if="index==0" src="/static/images/top.svg" mode=""></image>
+						<image class="topHot" v-if="index==0" src="/static/images/top.svg"></image>
 						<view class="top">{{item.title}}</view>
 						<view class="bottom">
-							<image src="/static/images/liulan.svg" mode=""></image>
+							<image src="/static/images/liulan.svg"></image>
 							<text>{{item.visit_count}}</text>
 						</view>
 					</view>

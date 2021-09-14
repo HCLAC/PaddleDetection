@@ -12,7 +12,7 @@
 								<view v-else-if="item.type == 5">推广</view>
 							</view>
 							<view class="videoIcon" v-if="item.type == 4">
-								<image class="playIcon" src="/static/images/playIcon.svg" mode=""></image>
+								<image class="playIcon" src="/static/images/playIcon.svg"></image>
 							</view>
 					</view>
 					<view class="right" @click="onPageJump" :id="item.article_id">
@@ -41,7 +41,7 @@
 							</view>
 						</view>
 						<view class="position">
-							<image src="/static/images/iconNewMap.png" mode=""></image>
+							<image src="/static/images/iconNewMap.png"></image>
 							<view class="positionText">{{ item.location.replace(/\（.*?\）/g, '') }}</view>
 						</view>
 					</view>

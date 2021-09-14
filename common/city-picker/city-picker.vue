@@ -11,7 +11,7 @@
 		<!-- 城市 -->
 		<view class="nowcity">
 			<text>{{ name }}</text>
-			<image class="nowcityImg" src="/static/images/moreDown.svg" mode=""></image>
+			<image class="nowcityImg" src="/static/images/moreDown.svg"></image>
 		</view>
 		<!-- 城市选择列表 -->
 		<view class="u-menu-wrap">
@@ -34,7 +34,7 @@
 							<!-- </view> -->
 							<view class="item-container">
 								<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
-									<!-- <image class="item-menu-image" :src="item2.icon" mode=""></image> -->
+									<!-- <image class="item-menu-image" :src="item2.icon"></image> -->
 									<view class="item-menu-name" @click="switchToOther(item1, item.name)">{{ item1.name }}</view>
 								</view>
 							</view>

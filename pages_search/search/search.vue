@@ -72,7 +72,7 @@
 					</view>
 					<view class="hide-hot-tis" v-if="hotKeywordList.length >= 10" @click="toHotRank">
 						<view>点击查看更多热搜</view>
-						<image class="moreRight" src="/static/images/moreR.svg" mode=""></image>
+						<image class="moreRight" src="/static/images/moreR.svg"></image>
 					</view>
 				</view>
 			</scroll-view>
@@ -82,21 +82,21 @@
 				<!-- 省市主题 -->
 				<block v-if="result && result.area">
 					<view class="siteView" @click="toPrivince(result.area)">
-						<image class="siteViewImg" lazy-load :src="result.area.image" mode=""></image>
+						<image class="siteViewImg" lazy-load :src="result.area.image"></image>
 						<view class="siteViewText">
 							<view class="title">{{ result.area.name }}</view>
 							<view class="content">
 								查看省市主题页
 							</view>
 						</view>
-						<image class="iconRight" src="/static/images/more-right.svg" mode=""></image>
+						<image class="iconRight" src="/static/images/more-right.svg"></image>
 					</view>
 					<view class="line"></view>
 				</block>
 				<!-- 景点 -->
 				<block v-if="site">
 					<view class="areaView" @click.stop="toSite(site.id)">
-						<image class="areaImg" lazy-load :src="site.image[0]" mode=""></image>
+						<image class="areaImg" lazy-load :src="site.image[0]"></image>
 						<view class="top">
 							<view class="title">{{ site.name }}</view>
 							<view class="areacontent">{{ site.description }}</view>
@@ -122,7 +122,7 @@
 						<view class="contentTitle">行程线路</view>
 						<view class="moreBox" @click="toLineMore()" v-if="routeHotMore">
 							更多
-							<image src="/static/images/more-right.svg" mode=""></image>
+							<image src="/static/images/more-right.svg"></image>
 						</view>
 					</view>
 					<view style="padding-left: 4%; padding-top: 30rpx;">

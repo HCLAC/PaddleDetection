@@ -16,10 +16,10 @@
 				<image src="/static/images/mineBack.png" class="backImg"></image>
 				<!-- 用户信息 -->
 				<view class="usermes">
-					<image lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'" class="userAva" mode=""></image>
+					<image lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'" class="userAva"></image>
 					<view class="userR">
 						<view class="userName" @click="toMineInfo">{{ userInfo.nickName }}
-							<image src="/static/images/iconExit.svg" mode=""></image>
+							<image src="/static/images/iconExit.svg"></image>
 						</view>
 						<view class="fa">
 							<view class="fllow" @click="toConcern">
@@ -37,7 +37,7 @@
 				</view>
 			</view>
 			<!-- 客服 -->
-			<!-- <view class="phone" @click="tell"><image class="phoneImg" src="/static/images/minephone.svg" mode=""></image></view> -->
+			<!-- <view class="phone" @click="tell"><image class="phoneImg" src="/static/images/minephone.svg"></image></view> -->
 
 			<!-- 我的收藏 -->
 			<meTabs class="mineTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :lineWidth="70" :tab-width="80"></meTabs>

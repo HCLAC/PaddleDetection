@@ -17,7 +17,7 @@
 				<view class="answersCardBox" v-for=" (item,index) in answersList" :key="index" >
 					<view class="answersCardTop">
 						<view class="answersAuthor">
-							<image lazy-load :src="item.avatar?item.avatar:'/static/images/userImg.svg'" mode=""></image>
+							<image lazy-load :src="item.avatar?item.avatar:'/static/images/userImg.svg'"></image>
 							<view class="userName">
 								{{item.account_id}}
 							</view>
@@ -32,12 +32,12 @@
 					<view class="answersCardBottom">
 						<view class="acbr">
 							<view class="answersLike" @click="like(item,index) in answersList">
-								<image :src="item.option == 1?'/static/images/aLikeActive.svg':'/static/images/aLike.svg'" mode=""></image>
+								<image :src="item.option == 1?'/static/images/aLikeActive.svg':'/static/images/aLike.svg'"></image>
 								<text>{{item.like == 0 ? '赞同' : item.like}}</text> 
 							</view>
 							
 							<view class="answersDisLike" @click="disLike(item,index) in answersList">
-								<image :src="item.option == 2?'/static/images/aDisLikeActive.svg':'/static/images/aDisLike.svg'" mode=""></image>
+								<image :src="item.option == 2?'/static/images/aDisLikeActive.svg':'/static/images/aDisLike.svg'"></image>
 								<text>{{item.dislike == 0 ? '踩' : item.dislike}}</text>
 							</view>
 						</view>

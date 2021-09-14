@@ -32,29 +32,29 @@
 			<!-- 问题目的地 -->
 			<view class="adressBox">
 				<view class="adressText">
-					<image src="/static/images/iconMapt.svg" mode=""></image>
+					<image src="/static/images/iconMapt.svg"></image>
 					<text>问题目的地</text>
 				</view>
 				<view class="change" >
 					<view class="changeText" @click="showCityPicker = true">{{name}}</view>
-					<image class="changeIcon" src="/static/images/more-right.svg" mode=""></image>
+					<image class="changeIcon" src="/static/images/more-right.svg"></image>
 				</view>
 			</view>
 			<!-- 兴趣标签 -->
 			<view class="intTipBox">
 				<view class="intTipText">
-					<image src="/static/images/iconMapt.svg" mode=""></image>
+					<image src="/static/images/iconMapt.svg"></image>
 					<text>兴趣标签</text>
 				</view>
 				<view class="tipsCheck">
 					<view class="tip" v-for="(item,index) in tipsCheck" :key="index" @click="clickTipsCheck(item)">
-						<image src="/static/images/aTip.svg" mode=""></image>
+						<image src="/static/images/aTip.svg"></image>
 						<text>{{item.name}}</text>
 					</view>
 				</view>
 				<view class="tipsBox">
 					<view class="tip" v-for="(item,index) in tips" :key="index" @click="clickTip(item)">
-						<image src="/static/images/aTip.svg" mode=""></image>
+						<image src="/static/images/aTip.svg"></image>
 						<text>{{item.name}}</text>	
 					</view>
 				</view>

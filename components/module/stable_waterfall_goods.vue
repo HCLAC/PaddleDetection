@@ -8,12 +8,12 @@
 						<image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :lazy-load="true" :src="item.image" :index="index"
 						 mode="widthFix">
 							<view class="videoIcon" v-if="item.type == 4">
-								<image class="playIcon" src="/static/images/playIcon.svg" mode=""></image>
+								<image class="playIcon" src="/static/images/playIcon.svg"></image>
 							</view>
 						</image>
 						<view class="adress">
 							<view class="adreessIcon">
-								<image class="" src="/static/images/iconMap3.svg" mode=""></image>
+								<image class="" src="/static/images/iconMap3.svg"></image>
 							</view>
 							<view class="adressText">{{ item.location }}</view>
 						</view>

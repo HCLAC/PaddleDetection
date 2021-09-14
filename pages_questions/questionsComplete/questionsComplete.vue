@@ -24,7 +24,7 @@
 		</view>
 		<view class="userBox">
 			<view class="user">
-				<image lazy-load :src="detail.avatar" mode=""></image>
+				<image lazy-load :src="detail.avatar"></image>
 				<text>{{detail.account_name}}</text>
 			</view>
 			<view class="date">
@@ -33,7 +33,7 @@
 		</view>
 		<view class="line"></view>
 		<view class="bottomBox">
-			<image src="/static/images/anull.svg" mode=""></image>
+			<image src="/static/images/anull.svg"></image>
 			<view class="text">
 				还没有收到回答
 			</view>

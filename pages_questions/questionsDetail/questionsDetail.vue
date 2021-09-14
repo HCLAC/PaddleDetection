@@ -33,7 +33,7 @@
 						{{detail.account_name}}问于{{detail.create_at.slice(0,10)}}
 					</view>
 				</view>
-				<image class="answersIcon" src="/static/images/answersIcon.png" mode=""></image>
+				<image class="answersIcon" src="/static/images/answersIcon.png"></image>
 			</view>
 		</view>
 		<!-- 问题回答 -->
@@ -50,7 +50,7 @@
 						<view class="userName">
 							{{answersOfficial.account_id}}
 						</view>
-						<image class="gficon" src="/static/images/gficon.svg" mode="" v-if="answersOfficial.account_type == 1"></image>
+						<image class="gficon" src="/static/images/gficon.svg" v-if="answersOfficial.account_type == 1"></image>
 					</view>
 					<view class="answersDate">
 						{{answersOfficial.create_at }}
@@ -62,12 +62,12 @@
 				<view class="answersCardBottom">
 					<view class="acbr">
 						<view class="answersLike" @click="like(answersOfficial)">
-							<image :src="answersOfficial.option == 1?'/static/images/aLikeActive.svg':'/static/images/aLike.svg'" mode=""></image>
+							<image :src="answersOfficial.option == 1?'/static/images/aLikeActive.svg':'/static/images/aLike.svg'"></image>
 							<text>{{answersOfficial.like == 0 ? '赞同' : answersOfficial.like}}</text> 
 						</view>
 						
 						<view class="answersDisLike" @click="disLike(answersOfficial)">
-							<image :src="answersOfficial.option == 2?'/static/images/aDisLikeActive.svg':'/static/images/aDisLike.svg'" mode=""></image>
+							<image :src="answersOfficial.option == 2?'/static/images/aDisLikeActive.svg':'/static/images/aDisLike.svg'"></image>
 							<text>{{answersOfficial.dislike == 0 ? '踩' : answersOfficial.dislike}}</text>
 						</view>
 					</view>
@@ -83,7 +83,7 @@
 			还没有收到回答
 		</view>
 		<!-- <view class="myAnswersBtn" @click="commentInput" v-if="!textareafocus">
-			<image src="/static/images/followIcon.svg" mode=""></image>
+			<image src="/static/images/followIcon.svg"></image>
 			<view class="mabt">
 				我来回答
 			</view>
@@ -92,7 +92,7 @@
 		<!-- 营销组件 -->
 		<view class="componment" v-if="marketingData">
 			<view class="wechat">
-				<image lazy-load :src="answersOfficial.avatar" mode=""></image>
+				<image lazy-load :src="answersOfficial.avatar"></image>
 				<view class="wechatText">{{marketingData.template}}</view>
 			</view>
 			<view class="wechatBtn ldx infinite ldx-blur-in" @click="templateAdd">复制导游微信</view>
@@ -113,7 +113,7 @@
 						</view>
 						<view class="authorBox">
 							<view class="author">
-								<image :src="item.avatar?item.avatar:'/static/images/userImg.svg'" mode=""></image>
+								<image :src="item.avatar?item.avatar:'/static/images/userImg.svg'"></image>
 								<text>{{item.account_name}}</text>
 							</view>
 							<view class="lookAnswers">
@@ -136,14 +136,14 @@
 		<view class="answersFollow" >
 			<view class="addBox" @click="commentInput">
 				<view class="midBox">
-					<image src="/static/images/addQ.svg" mode=""></image>
+					<image src="/static/images/addQ.svg"></image>
 					<text>添加问答</text>
 				</view>
 			</view>
 			<view class="aFLine"></view>
 			<view class="followBox"  @click="Fllow()">
 				<view class="midBox">
-					<image src="/static/images/followQ.svg" mode=""></image>
+					<image src="/static/images/followQ.svg"></image>
 					<text >{{detail&&detail.is_follow == 0?'关注问题':'已关注'}}</text>
 				</view>
 			</view>
@@ -159,10 +159,10 @@
 		<u-modal v-model="show" :border-radius="40" :content="contentp" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 		<u-modal v-model="weshow" width="670rpx" :show-title="false"  :mask-close-able="true" :show-confirm-button="false" :show-cancel-button="false" >
 			<view class="slot-content">
-				<image class="sucIcon" src="/static/images/sucIcon.svg" mode=""></image>
+				<image class="sucIcon" src="/static/images/sucIcon.svg"></image>
 				<view class="text">微信已复制</view>
 				<rich-text :nodes="wecontent"></rich-text>
-				<image class="wechatImg" src="/static/images/wechatimg.png" mode=""></image>
+				<image class="wechatImg" src="/static/images/wechatimg.png"></image>
 			</view>
 		</u-modal>
 	</view>

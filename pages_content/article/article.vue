@@ -46,7 +46,7 @@
 					</view>
 					<view class="right">
 						<view class="followBox" @click="follow()" v-if="!articleInfo.is_follow">
-							<image class="followImg" src="/static/images/followIcon.svg" mode=""></image>
+							<image class="followImg" src="/static/images/followIcon.svg"></image>
 							关注
 						</view>
 						<view class="isfollowBox" @click="follow()" v-else-if="articleInfo.is_follow">已关注</view>
@@ -54,7 +54,7 @@
 				</view>
 				<!-- 地址 -->
 				<view class="adress-1">
-					<image src="/static/images/iconMap.svg" mode="" class="adreessIcon"></image>
+					<image src="/static/images/iconMap.svg" class="adreessIcon"></image>
 					<view class="adressText" @click="map()">{{ articleInfo.location }}</view>
 				</view>
 				<!-- 标题 -->
@@ -66,7 +66,7 @@
 				</view>
 				<view class="tips">
 					<view v-for="item in articleInfo.topics" :key="item.id" @click="toTopic(item.id)">
-						<image class="tipsIcon" src="/static/images/topicIcon.svg" mode=""></image>
+						<image class="tipsIcon" src="/static/images/topicIcon.svg"></image>
 						<text class="tipsText">{{ item.name }}</text>
 					</view>
 				</view>
@@ -80,7 +80,7 @@
 				<!-- 标题 -->
 				<text class="contentTitle" selected='true'>{{ articleInfo.title }}</text>
 				<view class="StrategyTip">
-					<image class="StrategyImg" src="/static/images/Strategy.svg" mode=""></image>
+					<image class="StrategyImg" src="/static/images/Strategy.svg"></image>
 				</view>
 				<!-- 作者信息 -->
 				<view class="userMse">
@@ -97,7 +97,7 @@
 					</view>
 					<view class="right">
 						<view class="followBox" @click="follow()" v-if="!articleInfo.is_follow">
-							<image class="followImg" src="/static/images/followIcon.svg" mode=""></image>
+							<image class="followImg" src="/static/images/followIcon.svg"></image>
 							关注
 						</view>
 						<view class="isfollowBox" @click="follow()" v-else>已关注</view>
@@ -110,7 +110,7 @@
 				</view>
 				<!-- 地址 -->
 				<view class="adress">
-					<image src="/static/images/iconMap.svg" mode="" class="adreessIcon"></image>
+					<image src="/static/images/iconMap.svg" class="adreessIcon"></image>
 					<view class="adressText" @click="map()">{{ articleInfo.location }}</view>
 				</view>
 			</view>
@@ -118,7 +118,7 @@
 			<view>
 				<view class="tips">
 					<view v-for="item in articleInfo.topics" :key="item.id" @click="toTopic(item.id)">
-						<image class="tipsIcon" src="/static/images/topicIcon.svg" mode=""></image>
+						<image class="tipsIcon" src="/static/images/topicIcon.svg"></image>
 						<text class="tipsText">{{ item.name }}</text>
 					</view>
 				</view>
@@ -137,7 +137,7 @@
 				</view>
 				<view class="replyContent">
 					<view class="myReply">
-						<image class="userImg" lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'" mode=""></image>
+						<image class="userImg" lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'"></image>
 						<!-- <u-input class="replyInput" placeholder="写个回复走个心" placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;"
 						 confirmType="send" :clearable="false" :disabled="true" @click="commentInput">
 						</u-input> -->
@@ -147,7 +147,7 @@
 					</view>
 					<view class="reply" v-for="(item,index) in commentsList" :key="index">
 						<view class="replyTop">
-							<image class="userImg" lazy-load :src="item.avatar?item.avatar:'/static/images/userImg.svg'" mode=""></image>
+							<image class="userImg" lazy-load :src="item.avatar?item.avatar:'/static/images/userImg.svg'"></image>
 							<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
 								<view class="" style="display: flex;align-items: center;">
 									<view class="userName">{{item.account_name}}</view>
@@ -157,10 +157,10 @@
 								</view>
 								<view class="" style="display: flex;">
 									<view class="min-box" @click="replyLike(item, index)">
-										<image class="replyLike" :src="item.like == 1?'/static/images/attLikeA.svg':'/static/images/attLike.svg'" mode="" ></image>
+										<image class="replyLike" :src="item.like == 1?'/static/images/attLikeA.svg':'/static/images/attLike.svg'" ></image>
 									</view>
 									<view class="min-box" @click="toReport(item.id)">
-										<image class="report" src="/static/images/report.svg" mode="" ></image>
+										<image class="report" src="/static/images/report.svg" ></image>
 									</view>
 								</view>
 							</view>

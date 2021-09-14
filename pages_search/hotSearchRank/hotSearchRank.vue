@@ -14,8 +14,8 @@
 		<mescroll-body @scroll="uniScroll" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部背景 -->
 			<view class="bgBox">
-				<image src="/static/images/rankBanner.png" mode="" class="bannerImg"></image>
-				<image src="/static/images/hotRank.png" mode="" class="bannerText"></image>
+				<image src="/static/images/rankBanner.png" class="bannerImg"></image>
+				<image src="/static/images/hotRank.png" class="bannerText"></image>
 			</view>
 			<view class="content">
 				<view class="hotList" v-for="(keyword,index) in hotKeywordList" :key="index" @tap="doSearch(keyword)">

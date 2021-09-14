@@ -33,7 +33,7 @@
 							@focus="isfocus"
 							@blur="isblur"
 						/>
-						<image src="/static/images/gb.svg"  mode="" @click="clearphone()" class="searchSel" v-if="phone && isShowphone"></image>
+						<image src="/static/images/gb.svg"  @click="clearphone()" class="searchSel" v-if="phone && isShowphone"></image>
 					</view>
 					<u-line color="rgba(237, 239, 242, 1)" margin="40rpx 0rpx"></u-line>
 					<view class="login-code">
@@ -49,7 +49,7 @@
 							@focus="isfocus1"
 							@blur="isblur1"
 						/>
-						<image src="/static/images/gb.svg" mode="" class="searchSel" v-if="code && isShowcode"  @click="clearcode()"></image>
+						<image src="/static/images/gb.svg" class="searchSel" v-if="code && isShowcode"  @click="clearcode()"></image>
 						<view class="code-sx"></view>
 						<view class="codeimg" @click.stop="getCode()" :style="{ color: codeColor.color }">{{ getCodeText }}</view>
 					</view>

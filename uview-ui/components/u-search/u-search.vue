@@ -12,7 +12,7 @@
 			}"
 		>
 			<view class="u-icon-wrap">
-				<image class="u-clear-img" src="@/static/images/icon-search.svg" mode=""></image>
+				<image class="u-clear-img" src="@/static/images/icon-search.svg"></image>
 				<!-- <u-icon class="u-clear-icon" :size="28" :name="searchIcon" :color="searchIconColor ? searchIconColor : color"></u-icon> -->
 			</view>
 			<input
@@ -37,7 +37,7 @@
 				}, inputStyle]"
 			/>
 			<view class="u-close-wrap" v-if="keyword && clearabled && focused" @tap="clear">
-				<image class="u-clear-img-eliminate" src="@/static/images/ic_search_sel.svg" mode=""></image>
+				<image class="u-clear-img-eliminate" src="@/static/images/ic_search_sel.svg"></image>
 				
 				<!-- <u-icon class="u-clear-icon" name="close-circle-fill" size="34" color="#c0c4cc"></u-icon> -->
 			</view>

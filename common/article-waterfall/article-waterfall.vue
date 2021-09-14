@@ -8,12 +8,12 @@
 							<view class="imgBox">
 								 <u-image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" border-radius="16rpx 16rpx 0 0" :height="item.height?item.height:'auto'" :src="item.image" :index="index" mode="widthFix">
 									<view class="videoIcon" v-if="item.type == 4">
-										<image class="playIcon" src="/static/images/playIcon.svg" mode=""></image>
+										<image class="playIcon" src="/static/images/playIcon.svg"></image>
 									</view>
 								</u-image>	
 								<view class="adress">
 									<view class="adreessIcon">
-										<image class="" src="/static/images/iconMap3.svg" mode=""></image>
+										<image class="" src="/static/images/iconMap3.svg"></image>
 									</view>
 									<view class="adressText">{{ item.location }}</view>
 								</view>
@@ -43,7 +43,7 @@
 					</view>
 				</view>
 				<view class="answersBox" v-else-if="item.type == 6" @click="toQuestionsDetail" :id="item.question_id"> 
-					<image src="/static/images/yh.svg" mode=""></image> 
+					<image src="/static/images/yh.svg"></image> 
 					<view class="answersTitle">
 						{{item.title}} 
 					</view> 
@@ -61,12 +61,12 @@
 							<view class="imgBox">
 								<u-image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" border-radius="12rpx 12rpx 0 0" :height="item.height?item.height:'auto'" :lazy-load="true" :src="item.image" :index="index" mode="widthFix">
 									<!-- <view class="videoIcon" v-if="item.type == 4">
-										<image class="playIcon" src="/static/images/playIcon.svg" mode=""></image>
+										<image class="playIcon" src="/static/images/playIcon.svg"></image>
 									</view> -->
 								</u-image>
 								<view class="adress">
 									<view class="adreessIcon">
-										<image class="" src="/static/images/iconMap3.svg" mode=""></image>
+										<image class="" src="/static/images/iconMap3.svg"></image>
 									</view>
 									<view class="adressText">{{ item.location }}</view>
 								</view>
@@ -96,7 +96,7 @@
 					</view>
 				</view>
 				<view class="answersBoxR" v-else-if="item.type == 6" @click="toQuestionsDetail" :id="item.question_id"> 
-					<image src="/static/images/yh.svg" mode=""></image> 
+					<image src="/static/images/yh.svg"></image> 
 					<view class="answersTitle"> 
 						{{item.title}} 
 					</view> 

@@ -20,7 +20,7 @@
 					<view class="city">{{ querys.name || '全国' }}</view>
 					<view class="change" @click="showCityPicker = true">
 						<view class="changeText" >切换</view>
-						<image class="changeIcon" src="/static/images/more-down.svg" mode=""></image>
+						<image class="changeIcon" src="/static/images/more-down.svg"></image>
 					</view>
 				</view>
 				<!-- 天气 -->
@@ -33,7 +33,7 @@
 						<view class="contentTitle">景点推荐</view>
 						<view class="contentMore" @click="toMore()" v-if="siteHot && siteHot.length > 2">
 							更多
-							<image class="moreIcon" src="/static/images/more-right.svg" mode=""></image>
+							<image class="moreIcon" src="/static/images/more-right.svg"></image>
 						</view>
 					</view>
 					<view class="contentImgBox">
@@ -58,7 +58,7 @@
 						<view class="tripTitle">行程路线</view>
 						<view class="tripMore" @click="toLineMore()" v-if="routeHotMore">
 							更多
-							<image class="moreIcon" src="/static/images/more-right.svg" mode=""></image>
+							<image class="moreIcon" src="/static/images/more-right.svg"></image>
 						</view>
 					</view>
 					<view class="tripBox">
@@ -78,7 +78,7 @@
 						</view>
 						
 						<view class="tQBtn" @click="toQuestions">
-							<image src="/static/images/followIcon.svg" mode=""></image>
+							<image src="/static/images/followIcon.svg"></image>
 							<view class="tQBT">
 								我要提问
 							</view>

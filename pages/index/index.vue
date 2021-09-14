@@ -11,7 +11,7 @@
 					<view class="nowCityName" @click="toProvincesNC()">
 						<view class="nowCityNameText">{{ cityName }} </view>
 						<view class="downIcon">
-							<image class="downIconImg" src="/static/images/downIcon.svg" mode=""></image>
+							<image class="downIconImg" src="/static/images/downIcon.svg"></image>
 						</view>
 					</view>
 				</view>
@@ -32,7 +32,7 @@
 				<view class="page-section-spacing">
 					<!-- 新版 -->
 					<u-image  :src="bannerList[0].image" width="750rpx" height="440rpx"></u-image>
-					<!-- <image class="bannerImg" :src="bannerList[0].image" mode=""></image> -->
+					<!-- <image class="bannerImg" :src="bannerList[0].image"></image> -->
 					<!-- 旧版轮播 -->
 					<!-- <swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">
 						<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
@@ -47,7 +47,7 @@
 				<!-- 热门目的地 -->
 				<view class="hot">
 					<view class="wave">
-						<image class="waveImg" src="/static/images/wave.png" mode=""></image>
+						<image class="waveImg" src="/static/images/wave.png"></image>
 					</view>
 					<!-- <u-swiper :list="uswiperlist" mode="none" :autoplay="false" ></u-swiper> -->
 					<view class="citysBox">
