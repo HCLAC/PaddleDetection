@@ -68,7 +68,6 @@ export default {
 					height = res.navigationBarHeight+res.statusBarHeight
 				}
 				this.globalData.navbarHeight = height
-				console.log(res,'res')
 			}
 		});
 	},
