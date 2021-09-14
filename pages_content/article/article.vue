@@ -266,9 +266,11 @@
 		},
 		// #endif
 		onReady() {
+			//#ifdef MP-BAIDU
 			swan.showFavoriteGuide({
 			    type: 'tip'
 			})
+			//#endif
 		},
 		onShow() {
 			this.hasLogin = getApp().globalData.Authorization ? true : false;

@@ -57,7 +57,6 @@
 		},
 		onLoad(options) {
 			this.article_id = options.article_id
-			this.mescroll.setPageSize(10)
 		},
 		methods:{
 			mescrollInit(mescroll) {

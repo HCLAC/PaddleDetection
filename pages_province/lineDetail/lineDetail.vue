@@ -37,7 +37,7 @@
 						<view class="price-img">
 							<image src="../../static/images/money.svg" mode=""></image>
 						</view>
-						<text class="price">{{ lineContent.money }}</text>
+						<text class="price">{{ lineContent?lineContent.money:0 }}</text>
 						<text>起</text>
 					</view>
 					<view class="linePrice-text">

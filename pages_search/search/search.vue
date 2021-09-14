@@ -80,7 +80,7 @@
 		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="container" v-if="showType == 2" >
 				<!-- 省市主题 -->
-				<block v-if="result.area">
+				<block v-if="result && result.area">
 					<view class="siteView" @click="toPrivince(result.area)">
 						<image class="siteViewImg" lazy-load :src="result.area.image" mode=""></image>
 						<view class="siteViewText">
@@ -117,7 +117,7 @@
 					</view>
 				</block>
 				<!-- 行程路线 -->
-				<block v-if="result.route_list && result.route_list.length">
+				<block v-if="result && result.route_list && result.route_list.length">
 					<view class="titleBox">
 						<view class="contentTitle">行程线路</view>
 						<view class="moreBox" @click="toLineMore()" v-if="routeHotMore">
@@ -198,7 +198,7 @@
 				clearShow: false,
 				autofocus: true,
 				requestID: '',
-				routeHotMore: false
+				routeHotMore: false,
 			};
 		},
 		components: {
@@ -206,12 +206,14 @@
 			uniNavBar,
 			articleWaterfall
 		},
-		onLoad(options) {
-			this.keyword = options.keyword
-			this.autofocus = options.focus ? options.focus==1 : true
+		mounted() {
 			if (this.keyword){
 				this.getSearchResults()
 			}
+		},
+		onLoad(options) {
+			this.keyword = options.keyword
+			this.autofocus = options.focus ? options.focus==1 : true
 			uni.getStorage({
 				key: 'searchHistory',
 				success: res => {
@@ -226,11 +228,11 @@
 		},
 		// 方法
 		methods: {
-			clear(){
-				this.keyword = ''
-			},
 			mescrollInit(mescroll) {
 				this.mescroll = mescroll;
+			},
+			clear(){
+				this.keyword = ''
 			},
 			getHotKeyword() {
 				//定义热门搜索关键字，可以自己实现ajax请求数据再赋值
@@ -254,7 +256,6 @@
 				this.showType = 2
 				this.saveKeyword(this.keyword); //保存为历史
 				this.articleList = [];
-				this.mescroll.resetUpScroll();
 				var that = this
 				this.HTTP.request({ 
 					url: '/search', 
@@ -285,8 +286,8 @@
 							title = title.replace(this.keyword, "<span style='color: #A86B13;font-weight:bold'>" + this.keyword + '</span>');
 							item.titleHtml = '<div>' + title + '</div>';
 						})
-						console.log(result)
 						that.result = result
+						this.mescroll.resetUpScroll();
 					}
 				}); 
 			},

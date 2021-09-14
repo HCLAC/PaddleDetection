@@ -230,9 +230,11 @@
 			};
 		},
 		onReady() {
+			// #ifdef MP-BAIDU
 			swan.showFavoriteGuide({
 			    type: 'tip'
 			})
+			// #endif
 		},
 		onLoad() {
 			this.serviceProvider = getApp().globalData.serviceProvider

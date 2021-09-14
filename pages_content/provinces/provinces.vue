@@ -31,7 +31,7 @@
 				<view class="content">
 					<view class="contentHeader">
 						<view class="contentTitle">景点推荐</view>
-						<view class="contentMore" @click="toMore()" v-if="siteHot.length > 2">
+						<view class="contentMore" @click="toMore()" v-if="siteHot && siteHot.length > 2">
 							更多
 							<image class="moreIcon" src="/static/images/more-right.svg" mode=""></image>
 						</view>
@@ -53,7 +53,7 @@
 					</view>
 				</view>
 				<!-- 行程推荐 -->
-				<view class="trip" v-if="routeHot.length">
+				<view class="trip" v-if="routeHot && routeHot.length">
 					<view class="tripHeader">
 						<view class="tripTitle">行程路线</view>
 						<view class="tripMore" @click="toLineMore()" v-if="routeHotMore">

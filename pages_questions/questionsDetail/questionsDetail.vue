@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="nav-bar">
-			<uni-nav-bar :fixed="true" :status-bar="true" :title="detail.title">
+			<uni-nav-bar :fixed="true" :status-bar="true" :title="detail?detail.title:'领途羊'">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
@@ -30,7 +30,7 @@
 					</view>
 					
 					<view class="questionsDate">
-						{{detail.account_name}}问于{{detail.create_at}}
+						{{detail.account_name}}问于{{detail.create_at.slice(0,10)}}
 					</view>
 				</view>
 				<image class="answersIcon" src="/static/images/answersIcon.png" mode=""></image>
@@ -38,7 +38,7 @@
 		</view>
 		<!-- 问题回答 -->
 		<view class="answersTip">
-			<text>全部回答·{{detail.reply_count}}</text>
+			<text>全部回答·{{detail?detail.reply_count:0}}</text>
 			<view class="answersLine"></view>
 		</view>
 		<view class="answersOfficial" v-if="answersOfficial">
@@ -75,7 +75,7 @@
 				<view class="answersLine">
 				</view>
 			</view>
-			<view class="moreAnswers" @click="moreAnswers()" v-if="detail.reply_count > 1">
+			<view class="moreAnswers" @click="moreAnswers()" v-if="detail&&detail.reply_count > 1">
 				查看全部{{detail.reply_count}}条回答
 			</view>
 		</view>
@@ -144,7 +144,7 @@
 			<view class="followBox"  @click="Fllow()">
 				<view class="midBox">
 					<image src="/static/images/followQ.svg" mode=""></image>
-					<text >{{detail.is_follow == 0?'关注问题':'已关注'}}</text>
+					<text >{{detail&&detail.is_follow == 0?'关注问题':'已关注'}}</text>
 				</view>
 			</view>
 		</view>
@@ -173,7 +173,7 @@
 		data() {
 			return {
 				question_id:'',
-				detail:{},
+				detail: null,
 				answersOfficial:null,
 				questionsRelated:null,
 				contentText: '',
@@ -259,6 +259,10 @@
 							});
 							return
 						}
+						if (!res.data.data || res.data.data.length == 0){
+							this.questionsRelated = null
+							return 
+						}
 						var questions = res.data.data
 						questions.forEach((item1, index1) => {
 							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
@@ -281,6 +285,10 @@
 								title: res.data.msg,
 								icon: 'none'
 							});
+							return
+						}
+						if (!res.data.data || res.data.data.length == 0){
+							that.answersOfficial = null
 							return
 						}
 						var answersOfficial = res.data.data
