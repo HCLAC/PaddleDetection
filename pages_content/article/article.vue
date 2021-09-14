@@ -178,26 +178,21 @@
 		</view>
 		<!-- 登录 -->
 		<view class="bottom" v-if="articleInfo">
-			<view class="line"></view>
-			<view class="contentBottom savepadding">
-				<view style="display: flex;align-items: center;">
-					<view class="bottom-text" @click="commentInput">
-						撩点什么…
-					</view>
-					<view class="like" @click="clickLike">
-						<image class="likeBtn" :src="articleInfo.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image>
-					</view>
-					<view class="likeNum">{{ articleInfo.like_count }}</view>
-					
-					<view class="fav" @click="clickFav">
-						<image class="favBtn" :src="articleInfo.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
-					</view>
-					<view class="favNum">{{ articleInfo.fav_count }}</view>
-					
-					<view class="share"  @click="share">
-						<image src="/static/images/shareIcon.svg"></image>
-					</view>
-				</view>
+			<view class="bottom-text" @click="commentInput">
+				撩点什么…
+			</view>
+			<view class="like" @click="clickLike">
+				<image class="likeBtn" :src="articleInfo.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image>
+			</view>
+			<view class="likeNum">{{ articleInfo.like_count }}</view>
+			
+			<view class="fav" @click="clickFav">
+				<image class="favBtn" :src="articleInfo.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
+			</view>
+			<view class="favNum">{{ articleInfo.fav_count }}</view>
+			
+			<view class="share"  @click="share">
+				<image src="/static/images/shareIcon.svg"></image>
 			</view>
 		</view>
 		<!-- 评论输入框 -->
@@ -1072,7 +1067,7 @@
 </script>
 
 <style lang="scss" scoped>
-	html {
+	page {
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 	}
@@ -1545,7 +1540,8 @@
 		height: 98rpx;
 		position: fixed;
 		left: 0;
-		bottom: var(--window-bottom);
+		bottom: var( --window-bottom);
+		// bottom: 0;
 		z-index: 111;
 		background-color: #ffffff;
 		padding-bottom: constant(safe-area-inset-bottom);
@@ -1554,38 +1550,7 @@
 		display: flex;
 		align-items: center;
 		border-top: 2rpx solid #EDEFF2;
-		.line {
-			height: 0.5rpx;
-			background: rgba(221, 221, 221, 1);
-			// margin-top: 84rpx;
-		}
-		// .contentBottom {
-		// 	display: flex;
-		// 	justify-content: space-between;
-		// 	align-items: center;
-		// 	margin-top: 16rpx;
-		// 	font-size: 24rpx;
-		// 	font-family: PingFangSC-Regular, PingFang SC;
-		// 	font-weight: 400;
-		// 	color: rgba(48, 49, 51, 1);
-		// 	line-height: 24rpx;
-		// }
-		
 	}
-	// .loginButton {
-	// 	width: 156rpx;
-	// 	height: 68rpx;
-	// 	background: rgba(255, 229, 18, 1);
-	// 	border-radius: 20px;
-	// 	font-size: 32rpx;
-	// 	font-family: PingFangSC-Medium, PingFang SC;
-	// 	font-weight: 600;
-	// 	color: rgba(48, 49, 51, 1);
-	// 	line-height: 68rpx;
-	// 	border: none;
-	// 	text-align: center;
-	// 	margin-right: 56rpx;
-	// }
 	.bottom-text{
 		width: 372rpx;
 		height: 68rpx;

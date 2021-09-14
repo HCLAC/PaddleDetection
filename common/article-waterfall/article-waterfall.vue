@@ -461,7 +461,7 @@
 			line-height: 50rpx;
 			margin-top: -8rpx;
 			line-height: 50rpx;
-	
+			text-align: justify;
 		}
 		.answersNum{
 			// height: 34rpx;
@@ -497,7 +497,7 @@
 			font-weight: 600;
 			color: #FFFFFF;
 			line-height: 50rpx;
-	
+			text-align: justify;
 		}
 		.answersNum{
 			// height: 34rpx;

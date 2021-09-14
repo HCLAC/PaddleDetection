@@ -24,7 +24,7 @@
 				</view>
 				<view class="cardTipsBox">
 					<view class="cTL">
-						<view class="cardTips" v-for="(item,index ) in detail.labels" :key="index" >
+						<view class="cardTips" v-if="index <= 1" v-for="(item,index) in detail.labels" :key="index" >
 							#{{item}}
 						</view>
 					</view>
@@ -140,7 +140,7 @@
 					<text>添加问答</text>
 				</view>
 			</view>
-			<view class="aFLine"></view>
+			<!-- <view class="aFLine"></view> -->
 			<view class="followBox"  @click="Fllow()">
 				<view class="midBox">
 					<image src="/static/images/followQ.svg"></image>
@@ -531,6 +531,10 @@
 
 <style lang="scss" scoped>
 	@import url('../../components/transition-min/transition.min.css');
+	page {
+		padding-bottom: constant(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom);
+	}
 	.detailCard{
 		margin-top: 20rpx;
 		margin-left: 32rpx;
@@ -544,7 +548,6 @@
 			border-radius: 16rpx;
 			.cardTop{
 				display: flex;
-				
 				justify-content: space-between;
 				align-items: center;
 				padding: 30rpx 28rpx 20rpx;
@@ -556,7 +559,6 @@
 					font-weight: 400;
 					color: rgba(255, 255, 255, 1);
 					line-height: 40rpx;
-
 				}
 			}
 			.cradTitle{
@@ -907,6 +909,7 @@
 						color: #303133;
 						line-height: 56rpx;
 						margin-bottom: 20rpx;
+						text-align: justify;
 						display: -webkit-box;
 						overflow: hidden;
 						text-overflow: ellipsis;
@@ -1029,20 +1032,23 @@
 		right:0;
 		bottom:0;
 		width: 100%;
-		height: 166rpx;
+		height: 98rpx;
+		padding-bottom: constant(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom);
+		box-sizing: content-box;
 		background: #FFFFFF;
 		box-shadow: 0px -16rpx 56rpx 0px rgba(0, 0, 0, 0.05);
 		display: flex;
-		// justify-content: space-around;
-		z-index: 9999;
+		align-items: center;
+		justify-content: center;
+		z-index: 10;
 		.addBox{
-			// margin-top: 24rpx;
-			margin-left: 108rpx;
-			margin-right: 106rpx;
-			height: 98rpx;
+			width: 50%;
+			height: 40rpx;
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			border-right: 2rpx solid #EDEFF2;
 			.midBox{
 				display: flex;
 				align-items: center;
@@ -1062,18 +1068,9 @@
 			}
 			
 		}
-		.aFLine{
-			margin-top: 30rpx;
-			width: 1rpx;
-			height: 40rpx;
-			background: #EDEFF2;
-
-		}
 		.followBox{
-			// margin-top: 24rpx;
-			margin-left: 106rpx;
-			margin-right: 108rpx;
-			height: 98rpx;
+			width: 50%;
+			height: 40rpx;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -1100,7 +1097,7 @@
 	// 评论框
 	.commentInput {
 		width: 100%;
-		padding-bottom: 100rpx;
+		padding-bottom: 90rpx;
 		position: fixed;
 		background: #ffffff;
 		bottom: -100rpx;
