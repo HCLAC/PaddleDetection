@@ -11,7 +11,6 @@
 
 ### TODO
 - metabs吸顶
-- home图标错位
 - auth区分dev和master
 - 更新h5，删除无用插件
 - 百度输入法隐藏键盘后无法调起问题

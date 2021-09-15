@@ -31,7 +31,7 @@
 			<view class="page-section " v-if="bannerList != null && bannerList.length != 0">
 				<view class="page-section-spacing">
 					<!-- 新版 -->
-					<u-image  :src="bannerList[0].image" width="750rpx" height="440rpx"></u-image>
+					<u-image :src="bannerList[0].image" width="750rpx" height="440rpx"></u-image>
 					<!-- <image class="bannerImg" :src="bannerList[0].image"></image> -->
 					<!-- 旧版轮播 -->
 					<!-- <swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">

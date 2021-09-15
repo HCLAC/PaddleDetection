@@ -5,7 +5,7 @@
 			<view v-for="(item, index) in list" :key="index" @click="onPageJump" :id="item.article_id">
 				<view class="contentItem">
 					<view class="left">
-						<u-image width="192rpx" height="232rpx" border-radius="16rpx" :src="item.main_image" mode="aspectFill"></u-image>
+						<u-image width="192rpx" height="232rpx" border-radius="16rpx" :src="item.main_image" mode="aspectFill" :iconSize="44"></u-image>
 						<view class="imgTip">
 							<view v-if="item.type == 1">游记</view>
 							<view v-else-if="item.type == 2">攻略</view>

@@ -21,7 +21,7 @@
 			}"
 		>
 			<slot v-if="$slots.loading" name="loading" />
-			<u-icon v-else :name="loadingIcon" width="88" height="88"></u-icon>
+			<u-icon v-else :name="loadingIcon" :width="iconSize" :height="iconSize"></u-icon>
 		</view>
 		<view
 			v-if="showError && isError && !loading"
@@ -31,7 +31,7 @@
 			}"
 		>
 			<slot v-if="$slots.error" name="error" />
-			<u-icon v-else :name="errorIcon" width="88" height="88"></u-icon>
+			<u-icon v-else :name="errorIcon" :width="iconSize" :height="iconSize"></u-icon>
 		</view>
 	</view>
 </template>
@@ -145,6 +145,11 @@ export default {
 		bgColor: {
 			type: String,
 			default: '#F2F2F2'
+		},
+		// 占位图图标大小
+		iconSize: {
+			type: Number,
+			default: 88
 		}
 	},
 	data() {
