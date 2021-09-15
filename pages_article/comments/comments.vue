@@ -52,7 +52,9 @@
 					use: false,
 					auto:false
 				},
-				upOption:{}
+				upOption:{
+					noMoreSize: 7, // 配置列表的总数量要大于等于5条才显示'-- END --'的提示
+				}
 			};
 		},
 		onLoad(options) {
