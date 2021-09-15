@@ -78,14 +78,14 @@
 			},
 			// 点赞
 			like(e,index){
-				var that = this
-				var answer_id = e.$orig.answer_id
 				console.log(e)
+				var that = this
+				var answer_id = e.answer_id
 				this.HTTP.request({
 					url: '/answers/like',
 					data: {
 						answer_id: answer_id,
-						status: e.$orig.option==1?0:1,
+						status: e.option==1?0:1,
 					},
 					method: 'POST',
 					success: res => {
@@ -104,13 +104,13 @@
 			},
 			// 点踩
 			disLike(e, index){
-				var answer_id = e.$orig.answer_id
+				var answer_id = e.answer_id
 				var that = this
 				this.HTTP.request({
 					url: '/answers/dislike',
 					data: {
 						answer_id: answer_id,
-						status: e.$orig.option==2?0:1,
+						status: e.option==2?0:1,
 					},
 					method: 'POST',
 					success: res => {
