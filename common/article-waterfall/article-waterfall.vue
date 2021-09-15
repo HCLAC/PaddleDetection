@@ -223,7 +223,7 @@
 		margin-right: 7rpx;
 		margin-left: 7rpx;
 		margin-bottom: 16rpx;
-		padding-bottom: 16rpx;
+		// padding-bottom: 16rpx;
 		/* position: relative; */
 		background-color: #ffffff;
 		border-radius: 16rpx 16rpx;
@@ -372,7 +372,7 @@
 		width: 100%;
 		font-size: 10rpx;
 		margin-top: 24rpx;
-		/* margin-bottom: 16rpx; */
+		padding-bottom: 16rpx;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -437,7 +437,6 @@
 		color: rgba(96, 98, 102, 1);
 		/* line-height:20rpx; */
 	}
-	
 	.answersBox{
 		background: linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);
 		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;

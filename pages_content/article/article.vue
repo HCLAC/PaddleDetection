@@ -197,7 +197,7 @@
 		</view>
 		<!-- 评论输入框 -->
 		<view :animation="animationInputC" class="commentInput" v-if="showText">
-			<textarea class="inputK" v-model="contentText" placeholder="快来写下你的评论吧" :show-confirm-bar="false" :focus="textareafocus"
+			<textarea class="inputK" v-model="contentText" placeholder="撩点什么..." :show-confirm-bar="false" :focus="textareafocus"
 			 @blur="inputBlur" :auto-height="autoHeight" @input="inputValue" maxlength="140"
 			 :adjust-position="false"></textarea>
 			<view class="send" @click="pubComment">发送</view>
@@ -209,7 +209,6 @@
 		
 		<!-- 遮罩层 -->
 		<view class="mask" v-show="textareafocus">
-			
 		</view>
 	</view>
 </template>
@@ -301,9 +300,9 @@
 			this.joinTime = Number((new Date().getTime())/1000).toFixed(0)
 			this.animation = uni.createAnimation({
 				  transformOrigin: "50% 50%",
-				  duration:200,//175动画速度
+				  duration:2,//175动画速度
 				  timingFunction: "linear",
-				  delay: 0
+				  delay: 1
 				}
 			)
 			this.loadData()
@@ -1155,7 +1154,7 @@
 		width: 100%;
 		height: 100%;
 		position: fixed;
-		background: rgba(0, 0, 0, 0.4);
+		background: rgba(0, 0, 0, 0);
 		top: 0;
 		z-index: 100;
 	}
@@ -1305,7 +1304,7 @@
 		font-weight: 400;
 		color: rgba(96, 98, 102, 1);
 		line-height: 56rpx;
-		margin: 28rpx;
+		margin: 40rpx 28rpx 0;
 	}
 
 	.tips {
@@ -1499,7 +1498,7 @@
 		background: #ffffff;
 		bottom: -100px;
 		display: flex;
-		z-index: 110;
+		z-index: 100;
 		// align-items: center;
 		// padding-bottom: 110rpx;
 		.inputK {
