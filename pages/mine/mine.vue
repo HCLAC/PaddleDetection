@@ -145,17 +145,17 @@ export default {
 						});
 						return
 					}
-					
+					uni.setStorage({
+						key: 'userinfo',
+						data: res.data.data,
+						success: function () {
+						}
+					});
 					var userInfo = res.data.data
 					that.tabList[0].count = userInfo.fav_count
 					that.tabList[1].count = userInfo.like_count
-					userInfo.nickName = userInfo.mobile
-					if(userInfo.nick_name){
-						userInfo.nickName = userInfo.nick_name
-					}
 					
-					let gender = userInfo.gender
-					userInfo.sex = gender == 0 ? '保密' : gender == 2 ? '女' : '男'
+					userInfo.nickName = userInfo.nick_name?userInfo.nick_name:userInfo.mobile
 					
 					let fllowNum = userInfo.following
 					userInfo.fllowNum = fllowNum>10000?((fllowNum-(fllowNum%1000))/10000+'w'):fllowNum
