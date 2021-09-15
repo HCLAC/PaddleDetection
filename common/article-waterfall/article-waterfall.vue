@@ -6,7 +6,7 @@
 					<view class="" @click="toArticleDetail(index, true)" :id="index">
 						<view class="demo-top">
 							<view class="imgBox">
-								 <u-image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" border-radius="16rpx 16rpx 0 0" :height="item.height?item.height:'220rpx'" :src="item.image" :index="index" :mode="item.height?'scaleToFill':'widthFix'">
+								 <u-image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" border-radius="16rpx 16rpx 0 0" :height="item.height?item.height:'220rpx'" :src="item.image" :index="index" :mode="item.height?'scaleToFill':'widthFix'" :iconSize="66">
 									<view class="videoIcon" v-if="item.type == 4">
 										<image class="playIcon" src="/static/images/playIcon.svg"></image>
 									</view>
@@ -59,7 +59,7 @@
 					<view class="" @click="toArticleDetail(index, false)">
 						<view class="demo-top">
 							<view class="imgBox">
-								<u-image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" border-radius="12rpx 12rpx 0 0" :height="item.height?item.height:'auto'" :lazy-load="true" :src="item.image" :index="index" :mode="item.height?'scaleToFill':'widthFix'">
+								<u-image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" border-radius="12rpx 12rpx 0 0" :height="item.height?item.height:'auto'" :lazy-load="true" :src="item.image" :index="index" :mode="item.height?'scaleToFill':'widthFix'" :iconSize="66">
 									<!-- <view class="videoIcon" v-if="item.type == 4">
 										<image class="playIcon" src="/static/images/playIcon.svg"></image>
 									</view> -->
@@ -124,12 +124,25 @@
 				default(){
 					return "文章列表"
 				}
-			}
+			},
+			clearList: {
+				type: Boolean,
+				default(){
+					return false
+				}
+			},
 		},
 		data() {
 			return {
-				
+				hasLikeClick: false
 			};
+		},
+		watch: {
+			clearList(newVal){
+				if (newVal){
+					this.$refs.uWaterfall.clear()
+				}
+			}
 		},
 		methods:{
 			// 发出组件高度信息，在此处可以区分正确和错误的加载，给予错误的提示图片
@@ -173,7 +186,10 @@
 				if (!this.Utils.isLogin()){
 					return
 				}
-				
+				if (this.hasLikeClick) {
+					return;
+				}
+				this.hasLikeClick = true;
 				let article = obj.article_id;
 				let liked = obj.liked;
 				var that = this;
@@ -194,21 +210,24 @@
 						}
 						
 						if (left){
-							this.$refs.uWaterfall.leftList[index].liked = res.data.data.liked
-							this.$refs.uWaterfall.leftList[index].like_count = res.data.data.like_count
+							that.$refs.uWaterfall.leftList[index].liked = res.data.data.liked
+							that.$refs.uWaterfall.leftList[index].like_count = res.data.data.like_count
 						}else{
-							this.$refs.uWaterfall.rightList[index].liked = res.data.data.liked
-							this.$refs.uWaterfall.rightList[index].like_count = res.data.data.like_count
+							that.$refs.uWaterfall.rightList[index].liked = res.data.data.liked
+							that.$refs.uWaterfall.rightList[index].like_count = res.data.data.like_count
 						}
 						
 						if (obj.trace_info && obj.rn) {
-							this.Opensearch.uploadData({
+							that.Opensearch.uploadData({
 								trace_info: obj.trace_info,
 								rn: obj.rn,
 								item_id: obj.article_id,
 								bhv_type: 'like'
 							})
 						}
+					},
+					complete: () => {
+						that.hasLikeClick = false;
 					}
 				});
 			}

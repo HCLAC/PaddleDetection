@@ -18,7 +18,7 @@
 						<view class="page-section-spacing" >
 							<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false" circular='true'>
 								<swiper-item v-for="(item, index) in lineContent.images" :key="index">
-									<u-image width="100%" height="440rpx" mode="scaleToFill" :src="item"></u-image>
+									<u-image width="100%" height="440rpx" mode="scaleToFill" :src="item" :iconSize="66"></u-image>
 								</swiper-item>
 							</swiper>
 							<view class="imageCount">{{ current + 1 }}/{{ lineContent.images.length }}</view>
@@ -104,7 +104,7 @@
 										<view class="u-order-desc">{{ eve.description }}</view>
 										<view class="position" v-for="(pos, posIndex) in eve.position" :key="posIndex" @click="toPosition(pos)">
 											<view class="left">
-												<u-image width="216rpx" height="164rpx" border-radius="12rpx" :src="pos.cover_url"></u-image>
+												<u-image width="216rpx" height="164rpx" border-radius="12rpx" :src="pos.cover_url" :iconSize="66"></u-image>
 												<view class="imgTag">景点</view>
 											</view>
 											<view class="right">

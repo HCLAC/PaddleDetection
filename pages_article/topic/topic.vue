@@ -58,7 +58,7 @@
 					<view class="conttentBox">
 						<view class="contentImgBox">
 							<view class="contentImg" v-for="(item1,index1) in item.list" :key="index1" @click="onPageJump" :id="item1.article_id">
-								<u-image width="216rpx" height="216rpx" border-radius="8rpx" :src="item1.image" mode="aspectFill">
+								<u-image width="216rpx" height="216rpx" border-radius="8rpx" :src="item1.image" mode="aspectFill" :iconSize="44">
 									<!-- <view class="videoIcon" v-if="item1.type == 4">
 										<image class="playIcon"  src="/static/images/playIcon.svg"></image>
 									</view> -->

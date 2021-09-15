@@ -38,7 +38,7 @@
 					</view>
 					<view class="contentImgBox">
 						<view class="contentImg" v-for="(item, index) in siteHot" :key="index" @click="toAtt(item.id)">
-							<u-image width="100%" height="166rpx" border-radius="8rpx 8rpx 0 0" :src="item.image" mode="aspectFill"></u-image>
+							<u-image width="100%" height="166rpx" border-radius="8rpx 8rpx 0 0" :src="item.image" mode="aspectFill" :iconSize="66"></u-image>
 							<view class="attText">{{ item.name }}</view>
 							<view class="rateBox">
 								<!-- 评分图标 -->
@@ -66,7 +66,7 @@
 					</view>
 					<view class="tripBox">
 						<view class="tripContent" v-for="(item, index) in routeHot" :key="index" @click="toLineDetail(item)">
-							<u-image width="100%" height="180rpx" border-radius="8rpx" :src="item.image"></u-image>
+							<u-image width="100%" height="180rpx" border-radius="8rpx" :src="item.image" :iconSize="66"></u-image>
 							<view class="tripText">{{ item.title }}</view>
 						</view>
 					</view>

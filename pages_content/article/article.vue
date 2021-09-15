@@ -61,7 +61,7 @@
 				<!-- <text class="contentTitle" selected=true>{{ articleInfo.title }}</text> -->
 				<!-- 内容文章 -->
 				<view class="contentText">
-					<mp-html ref="parse" v-if="articleInfo" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
+					<mp-html ref="parse" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
 					 :content="articleInfo.content" loading-img='/static/images/load.svg' error-img='/static/images/fail.svg'></mp-html>
 				</view>
 				<view class="tips">
@@ -105,7 +105,7 @@
 				</view>
 				<!-- 内容文章 -->
 				<view class="contentText">
-					<mp-html ref="parse" v-if="articleInfo" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
+					<mp-html ref="parse" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
 					 :content="articleInfo.content" loading-img='/static/images/load.svg' error-img='/static/images/fail.svg'></mp-html>
 				</view>
 				<!-- 地址 -->
@@ -126,7 +126,7 @@
 		</view>
 		<u-loading v-else :show="true" class="loading"></u-loading>
 		<!-- 评论区 -->
-		<view style="padding-bottom: 30rpx;">
+		<view v-if="articleInfo" style="padding-bottom: 30rpx;">
 			<view class="replyLine"></view>
 			<view class="replyBox">
 				<view class="replyText" v-if="comment_count == 0">
@@ -138,9 +138,6 @@
 				<view class="replyContent">
 					<view class="myReply">
 						<image class="userImg" lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'"></image>
-						<!-- <u-input class="replyInput" placeholder="写个回复走个心" placeholderStyle="text;width:308rpx;height:28rpx;fontSize:28rpx;fontFamily: PingFangSC-Regular, PingFang SC;fontWeight:400;color:#c9cad1;lineHeght:28rpx;"
-						 confirmType="send" :clearable="false" :disabled="true" @click="commentInput">
-						</u-input> -->
 						<view class="replyInput" @click="commentInput">
 							写个回复走个心
 						</view>
@@ -204,7 +201,6 @@
 		</view>
 		
 		<!-- 弹窗 -->
-		<!-- <u-modal v-model="show" :content="content" :border-radius="40" :show-title="false"  cancel-color='#303133' :show-cancel-button="true" @confirm="confirm"></u-modal> -->
 		<u-modal v-model="show" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 		
 		<!-- 遮罩层 -->
@@ -230,7 +226,6 @@
 		data() {
 			return {
 				showText:false,
-				indicatorDots: true,
 				current: 0,
 				list: [],
 				title: '领途羊',
@@ -240,13 +235,11 @@
 					keywords: '',
 					description: ''
 				},
-				token: '',
 				article_id: '',
 				hasLogin: true,
 				wechat_id: null,
 				swiperHeight: '',
 				serviceProvider: '',
-				following: 0,
 				content: '',
 				contentText: '',
 				show: false,
@@ -259,6 +252,10 @@
 				textareafocus: false,
 				animation: null,
 				animationInputC: {},
+				// 防止用户快速点击，多次请求
+				hasLikeClick: false,
+				hasFavClick: false,
+				hasReplyClick: false,
 				// 数据采集
 				trace_info: null,
 				rn: null,
@@ -326,18 +323,23 @@
 				});
 			},
 			loadData(){
-				uni.showLoading({
-					title: '加载中',
-					mask: true,
-					success: () => {
-						this.getArticleDetail();
-						this.getUserInfo()
-						setTimeout(() => {
-							this.getComments();
-							this.hideLoad()
-						}, 200);
-					}
-				});
+				this.getArticleDetail();
+				this.getUserInfo()
+				setTimeout(() => {
+					this.getComments();
+				}, 200);
+				// uni.showLoading({
+				// 	title: '加载中',
+				// 	mask: true,
+				// 	success: () => {
+				// 		this.getArticleDetail();
+				// 		this.getUserInfo()
+				// 		setTimeout(() => {
+				// 			this.getComments();
+				// 			this.hideLoad()
+				// 		}, 200);
+				// 	}
+				// });
 			},
 			hideLoad(){
 				setTimeout(() => {
@@ -508,7 +510,6 @@
 						})
 						//#endif
 						that.articleInfo = articleInfo;
-						that.following = that.articleInfo.follow;
 						// 除了攻略文章，其他计算轮播图高度
 						if (that.articleInfo.type != 2){
 							that.$nextTick(() => {
@@ -915,6 +916,11 @@
 					});
 					return
 				}
+				
+				if (this.hasReplyClick) {
+					return;
+				}
+				this.hasReplyClick = true;
 				var that = this
 				this.HTTP.request({
 					url: '/comments/likes',
@@ -932,6 +938,9 @@
 							return
 						}
 						that.commentsList[index].like = item.like == 0 ? 1 : 0
+					},
+					complete: () => {
+						that.hasReplyClick = false;
 					}
 				});
 			},
@@ -950,6 +959,10 @@
 					});
 					return
 				}
+				if (this.hasLikeClick) {
+					return;
+				}
+				this.hasLikeClick = true;
 				this.HTTP.request({
 					url: '/user/liked',
 					data: {
@@ -976,6 +989,9 @@
 								bhv_type: 'like'
 							})
 						}
+					},
+					complete: () => {
+						that.hasLikeClick = false;
 					}
 				});
 			},
@@ -988,6 +1004,11 @@
 					});
 					return
 				}
+				
+				if (this.hasFavClick) {
+					return;
+				}
+				this.hasFavClick = true;
 				this.HTTP.request({
 					url: '/user/favorite',
 					data: {
@@ -1013,6 +1034,9 @@
 								bhv_type: 'collect'
 							})
 						}
+					},
+					complete: () => {
+						that.hasFavClick = false;
 					}
 				});
 			},
