@@ -4,11 +4,11 @@ import globalUrl from '@/global.js'
 function request(obj) {
 	let url = globalUrl + obj.url; //地址
 	let data = obj.data || {};
-	let success = obj.success;
 	let method = obj.method || 'GET';
 	uni.request({
 		url: url,
 		data: data,
+		timeout: 5000,
 		header: {
 			'Authorization': getApp().globalData.Authorization
 		},
@@ -39,7 +39,8 @@ function request(obj) {
 			});
 			obj.fail && obj.fail(res)
 		},
-		complete: function(res) {
+		complete: () => {
+			obj.complete && obj.complete()
 		},
 	})
 }

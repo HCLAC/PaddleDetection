@@ -167,7 +167,7 @@
 				<view class="touring">
 					<text class="tourtext">正在旅行</text>
 					<view class="wrap" >
-						<articleWaterfall :list="list"></articleWaterfall>
+						<articleWaterfall :clearList="!list || list.length==0" :list="list"></articleWaterfall>
 					</view>
 				</view>
 			</view>
@@ -245,13 +245,14 @@
 		onShow() {
 			var cur = Number((new Date().getTime())/1000).toFixed(0)
 			var firstT = Number((this.firstTime)/1000).toFixed(0)
-			if (cur-firstT > 20 && !this.firstLoad){
+			if (cur-firstT > 30 && !this.firstLoad){
 				uni.pageScrollTo({
 					scrollTop: 0,
 					duration: 10,
 				})
 				this.loadData()
 			}
+			this.firstTime = new Date().getTime()
 			this.firstLoad = false
 		},
 		// 滚动
@@ -269,7 +270,7 @@
 		methods: {
 			mescrollInit(mescroll) {
 				this.mescroll = mescroll;
-				this.mescroll.setPageSize(10) 
+				this.mescroll.setPageSize(8)
 			},
 			loadData(){
 				uni.showLoading({
@@ -513,7 +514,6 @@
 				// this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
 			},
 			upCallback(page) {
-				console.log('page', page)
 				let pageNum = page.num;
 				let pageSize = page.size;
 				if (pageNum == 1) {
@@ -550,7 +550,7 @@
 						curPageData.forEach((item1, index1) => {
 							if (item1.cover_height > 0){
 								item1.height = 340*item1.cover_height/item1.cover_width+'rpx'
-							} else{
+							} else {
 								item1.height = null
 							}
 							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
@@ -558,7 +558,6 @@
 						})
 						this.list = this.list.concat(curPageData); //追加新数据
 						this.mescroll.endByPage(curPageLen, totalPage);
-
 					},
 					fail: () => {
 						//  请求失败,隐藏加载状态
