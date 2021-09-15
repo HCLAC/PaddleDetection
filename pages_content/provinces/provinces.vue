@@ -48,8 +48,11 @@
 						</view>
 					</view>
 					<!-- 无数据展示 -->
-					<view class="contentNull" v-if="siteHot.length == 0">
+					<!-- <view class="contentNull" v-if="siteHot.length == 0">
 						暂无数据请切换其他城市
+					</view> -->
+					<view class="contentNull">
+						{{emptysite}}
 					</view>
 				</view>
 				<!-- 行程推荐 -->
@@ -144,6 +147,7 @@ export default {
 				  zIndex: 99
 				}
 			},
+			emptysite:'',
 			list: [],
 			weather: null,
 			querys: null,
@@ -311,6 +315,11 @@ export default {
 					siteHot.forEach((item1, index1) => {
 						item1.image = this.Utils.addImageProcess(item1.image, false, 40)
 					})
+					if(siteHot.length == 0){
+						this.emptysite = '暂无数据请切换其他城市'
+					}else{
+						this.emptysite = ''
+					}
 					this.siteHot = siteHot;
 				}
 			});
