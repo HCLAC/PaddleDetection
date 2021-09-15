@@ -1304,7 +1304,7 @@
 		font-weight: 400;
 		color: rgba(96, 98, 102, 1);
 		line-height: 56rpx;
-		margin: 28rpx;
+		margin: 40rpx 28rpx 0;
 	}
 
 	.tips {
