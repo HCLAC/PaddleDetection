@@ -126,7 +126,7 @@
 		</view>
 		<u-loading v-else :show="true" class="loading"></u-loading>
 		<!-- 评论区 -->
-		<view v-if="articleInfo">
+		<view v-if="articleInfo" style="padding-bottom: 30rpx;">
 			<view class="replyLine"></view>
 			<view class="replyBox">
 				<view class="replyText" v-if="comment_count == 0">
@@ -1428,7 +1428,7 @@
 					font-size: 28rpx;
 					font-family: PingFangSC-Regular, PingFang SC;
 					font-weight: 400;
-					color: #C9CAD1;
+					color: #909399;
 				}
 			}
 
@@ -1605,9 +1605,9 @@
 		width: 30rpx;
 		height: 24rpx;
 		font-size: 24rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: #909399;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #303133;
 		line-height: 24rpx;
 		margin-right: 32rpx;
 	}
@@ -1628,9 +1628,9 @@
 		width: 30rpx;
 		height: 24rpx;
 		font-size: 24rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: #909399;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #303133;
 		line-height: 24rpx;
 	}
 

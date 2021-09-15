@@ -84,7 +84,7 @@
 					<view class="siteView" @click="toPrivince(result.area)">
 						<image class="siteViewImg" lazy-load :src="result.area.image"></image>
 						<view class="siteViewText">
-							<view class="title">{{ result.area.name }}</view>
+							<view class="titleS">{{ result.area.name }}</view>
 							<view class="content">
 								查看省市主题页
 							</view>
@@ -98,7 +98,7 @@
 					<view class="areaView" @click.stop="toSite(site.id)">
 						<image class="areaImg" lazy-load :src="site.image[0]"></image>
 						<view class="top">
-							<view class="title">{{ site.name }}</view>
+							<rich-text :nodes="site.nameHtml"></rich-text>
 							<view class="areacontent">{{ site.description }}</view>
 							<view class="rateBox">
 								<!-- 评分图标 -->
@@ -178,7 +178,7 @@
 				},
 				upOption: {
 					auto:false,
-					noMoreSize: 1, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
+					noMoreSize: 10, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
 					empty:{
 					  use : true ,
 					  tip : '暂无旅行',
@@ -275,7 +275,12 @@
 						result.area && (result.area.image = that.Utils.addImageProcess(result.area.image, false, 40))
 						
 						result.site && (result.site.image[0] = that.Utils.addImageProcess(result.site.image[0], false, 40))
-						this.site = result.site
+						if(result.site){
+							var name = result.site.name;
+							name = name.replace(this.keyword, "<span style='color: #A86B13;font-weight:bold'>" + this.keyword + '</span>');
+							result.site.nameHtml = '<div>' + name + '</div>';
+							this.site = result.site
+						}
 						
 						this.routeHotMore = result.route_list.length > 2
 						result.route_list = result.route_list.slice(0, 2)
@@ -603,6 +608,12 @@
 			font-size: 32rpx;
 			font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 500;
+			// color: #A86B13;
+		}
+		.titleS {
+			font-size: 32rpx;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 500;
 			color: #A86B13;
 		}
 
@@ -641,12 +652,12 @@
 			margin-right: 20rpx;
 		}
 		.top {
-			.title {
-				font-size: 32rpx;
-				font-family: PingFangSC-Medium, PingFang SC;
-				font-weight: 500;
-				color: #A86B13;
-			}
+			// .title {
+			// 	font-size: 32rpx;
+			// 	font-family: PingFangSC-Medium, PingFang SC;
+			// 	font-weight: 500;
+			// 	color: #A86B13;
+			// }
 
 			.rateBox {
 				display: flex;
