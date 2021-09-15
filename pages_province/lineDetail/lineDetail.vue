@@ -147,7 +147,7 @@
 						<view class="favNum">{{ lineContent.fav_count }}</view>
 					</view> -->
 					<view><view class="share" v-if="serviceProvider =='baidu'"  @click="share"><image src="/static/images/shareIcon.svg"></image></view></view>
-					<view class=""><view class="loginButton" v-if="!hasLogin" @click="login">登录</view></view>
+					<!-- <view class=""><view class="loginButton" v-if="!hasLogin" @click="login">登录</view></view> -->
 				</view>
 			</view>
 		</view>
@@ -313,11 +313,11 @@ export default {
 				});
 			}
 		},
-		login() {
-			uni.navigateTo({
-				url: '/pages_mine/login/login'
-			});
-		},
+		// login() {
+		// 	uni.navigateTo({
+		// 		url: '/pages_mine/login/login'
+		// 	});
+		// },
 		tell(){
 			uni.makePhoneCall({
 				phoneNumber:this.butler_mobile
@@ -474,7 +474,7 @@ export default {
 	margin-left: 20rpx;
 	position: absolute; 
 	padding: 10rpx 10rpx;
-	padding-bottom: 105rpx;
+	padding-bottom: 175rpx;
 	.planContent {
 		// padding: 20rpx 30rpx 30rpx 20rpx;
 		// padding:  0 32rpx 0 36rpx;
@@ -702,21 +702,21 @@ export default {
 	line-height: 24rpx;
 }
 
-.loginButton {
-	width: 156rpx;
-	height: 68rpx;
-	background: rgba(255, 229, 18, 1);
-	border-radius: 20px;
-	font-size: 32rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 600;
-	color: rgba(48, 49, 51, 1);
-	line-height: 68rpx;
-	border: none;
-	text-align: center;
-	margin-right: 28rpx;
+// .loginButton {
+// 	width: 156rpx;
+// 	height: 68rpx;
+// 	background: rgba(255, 229, 18, 1);
+// 	border-radius: 20px;
+// 	font-size: 32rpx;
+// 	font-family: PingFangSC-Medium, PingFang SC;
+// 	font-weight: 600;
+// 	color: rgba(48, 49, 51, 1);
+// 	line-height: 68rpx;
+// 	border: none;
+// 	text-align: center;
+// 	margin-right: 28rpx;
 	
-}
+// }
 
 .like {
 	display: flex;

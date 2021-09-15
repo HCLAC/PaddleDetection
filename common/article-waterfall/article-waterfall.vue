@@ -418,8 +418,8 @@
 	}
 	/* #endif */
 	.countImg {
-		width: 28rpx;
-		height: 28rpx;
+		width: 32rpx;
+		height: 32rpx;
 		// margin-right: 8rpx;
 
 	}

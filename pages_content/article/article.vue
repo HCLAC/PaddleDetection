@@ -208,8 +208,12 @@
 		<u-modal v-model="show" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 		
 		<!-- 遮罩层 -->
-		<view class="mask" v-show="textareafocus">
-		</view>
+		<u-mask 
+			:show="textareafocus" 
+			@click="textareafocus = false"
+			:z-index="100"
+			:custom-style="{background: 'rgba(0, 0, 0, 0)'}"
+		></u-mask>
 	</view>
 </template>
 
@@ -1149,18 +1153,6 @@
 			}
 		}
 	}
-
-	.mask{
-		width: 100%;
-		height: 100%;
-		position: fixed;
-		background: rgba(0, 0, 0, 0);
-		top: 0;
-		z-index: 100;
-	}
-
-	
-
 	/* 内容详情 */
 
 	// ios底部安全距离-padding
