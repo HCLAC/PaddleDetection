@@ -98,7 +98,7 @@
 					<view class="areaView" @click.stop="toSite(site.id)">
 						<image class="areaImg" lazy-load :src="site.image[0]"></image>
 						<view class="top">
-							<view class="title">{{ site.name }}</view>
+							<rich-text :nodes="site.nameHtml"></rich-text>
 							<view class="areacontent">{{ site.description }}</view>
 							<view class="rateBox">
 								<!-- 评分图标 -->
@@ -275,7 +275,12 @@
 						result.area && (result.area.image = that.Utils.addImageProcess(result.area.image, false, 40))
 						
 						result.site && (result.site.image[0] = that.Utils.addImageProcess(result.site.image[0], false, 40))
+						var name = result.site.name;
+						name = name.replace(this.keyword, "<span style='color: #A86B13;font-weight:bold'>" + this.keyword + '</span>');
+						result.site.nameHtml = '<div>' + name + '</div>';
 						this.site = result.site
+						console.log(this.site,'+++')
+						console.log(result.site,'---')
 						
 						this.routeHotMore = result.route_list.length > 2
 						result.route_list = result.route_list.slice(0, 2)
@@ -603,7 +608,7 @@
 			font-size: 32rpx;
 			font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 500;
-			color: #A86B13;
+			// color: #A86B13;
 		}
 
 		.content {
@@ -641,12 +646,12 @@
 			margin-right: 20rpx;
 		}
 		.top {
-			.title {
-				font-size: 32rpx;
-				font-family: PingFangSC-Medium, PingFang SC;
-				font-weight: 500;
-				color: #A86B13;
-			}
+			// .title {
+			// 	font-size: 32rpx;
+			// 	font-family: PingFangSC-Medium, PingFang SC;
+			// 	font-weight: 500;
+			// 	color: #A86B13;
+			// }
 
 			.rateBox {
 				display: flex;
