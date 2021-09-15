@@ -132,7 +132,7 @@ export default {
 				use:false,
 			},
 			upOption: {
-				auto:true,
+				auto:false,
 				noMoreSize: 1, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
 				empty:{
 				  use : true ,
@@ -155,6 +155,7 @@ export default {
 			firstTime: new Date().getTime(),
 			questions: [],
 			answersList:[],
+			randomPage: 0,
 			routeHotMore: false,
 		};
 	},
@@ -193,18 +194,22 @@ export default {
 		},
 		mescrollInit(mescroll) {
 			this.mescroll = mescroll;
+			this.mescroll.setPageSize(6)
 		},
 		loadData(){
 			uni.showLoading({
 				title: '加载中',
 				mask: true,
 				success: () => {
-					this.getWeather(),
+					this.getQuestionList()
 					this.getSiteHot(),
 					this.getRouteHot();
-					this.getCity();
-					this.hideLoad();
-					this.getQuestionList()
+					setTimeout(() => {
+						this.getCity();
+						this.getWeather(),
+						this.mescroll.resetUpScroll();
+						this.hideLoad();
+					}, 200);
 				}
 			});
 		},
@@ -216,11 +221,13 @@ export default {
 		
 		// 获取问答列表
 		getQuestionList() {
+			this.randomPage += 1 
 			this.HTTP.request({
 				url: '/questions/random',
 				data: {
 					state_id: this.querys.state_id,
 					city_id: this.querys.city_id,
+					page: this.randomPage,
 					count: 6
 				},
 				success: res => {
@@ -231,7 +238,17 @@ export default {
 						});
 						return
 					}
-					this.answersList = res.data.data
+					
+					if (res.data.data.total <= this.randomPage*6){
+						this.randomPage = 0
+					}
+					var answersList = res.data.data.list
+					for (let i = 1; i < answersList.length; i++) {
+					    const random = Math.floor(Math.random() * (i + 1));
+					    [answersList[i], answersList[random]] = [answersList[random], answersList[i]];
+					}
+					
+					this.answersList = answersList
 				}
 			});
 		},
@@ -478,25 +495,16 @@ export default {
 					// 接口返回的是否有下一页 (true/false)
 					// let hasNext = res.data.data.list;
 					if(this.answersList.length > 0 ){
-						var answer = this.answersList
-						var sar = Math.floor((Math.random()*answer.length));
-						var addAnswer = answer[sar]
-						let answerArr = [addAnswer]
-						//设置列表数据
-						if (curPageData.length > 5){
-							if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
-							curPageData = curPageData.concat(answerArr)
-							that.list = that.list.concat(curPageData); //追加新数据
-						}else{
-							if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
-							that.list = that.list.concat(curPageData); //追加新数据
+						curPageData = curPageData.concat(this.answersList[(pageNum-1)%this.answersList.length])
+						if ((pageNum-1)%this.answersList.length+1 == this.answersList.length){
+							this.getQuestionList()
 						}
-					}else{
-						// console.log(answerArr,'随机数据')
-						//设置列表数据
-						if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
-						that.list = that.list.concat(curPageData); //追加新数据
+					} else {
+						console.log('no answer')
 					}
+					//设置列表数据
+					if (page.num == 1) that.list = []; //如果是第一页需手动置空列表
+					that.list = that.list.concat(curPageData); //追加新数据
 					console.debug('文章列表', that.list);
 					// that.list = that.list.concat(answerArr)
 					// 请求成功,隐藏加载状态

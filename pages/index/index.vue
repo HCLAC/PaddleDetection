@@ -196,6 +196,7 @@
 				},
 				backgroundColor: 'transparent',
 				firstTime: new Date().getTime(),
+				firstLoad: false,
 				cityName: '',
 				province: '',
 				state_id: '',
@@ -237,8 +238,21 @@
 			// #endif
 		},
 		onLoad() {
+			this.firstLoad = true
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.loadData()
+		},
+		onShow() {
+			var cur = Number((new Date().getTime())/1000).toFixed(0)
+			var firstT = Number((this.firstTime)/1000).toFixed(0)
+			if (cur-firstT > 20 && !this.firstLoad){
+				uni.pageScrollTo({
+					scrollTop: 0,
+					duration: 10,
+				})
+				this.loadData()
+			}
+			this.firstLoad = false
 		},
 		// 滚动
 		onPageScroll(e) {
@@ -270,7 +284,7 @@
 							this.getCity()
 							this.mescroll.resetUpScroll();
 							this.hideLoad()
-						}, 500);
+						}, 200);
 					}
 				});
 				
@@ -278,7 +292,7 @@
 			hideLoad(){
 				setTimeout(() => {
 					uni.hideLoading();
-				}, 500);
+				}, 100);
 			},
 			// 获取热门目的地
 			getAreaHot(){
@@ -496,14 +510,14 @@
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {
 				this.loadData()
-				this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+				// this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
 			},
 			upCallback(page) {
+				console.log('page', page)
 				let pageNum = page.num;
 				let pageSize = page.size;
 				if (pageNum == 1) {
 					this.list = [];
-					this.firstTime = new Date().getTime();
 				}
 				
 				let that = this

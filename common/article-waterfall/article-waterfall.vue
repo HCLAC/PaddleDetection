@@ -6,7 +6,7 @@
 					<view class="" @click="toArticleDetail(index, true)" :id="index">
 						<view class="demo-top">
 							<view class="imgBox">
-								 <u-image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" border-radius="16rpx 16rpx 0 0" :height="item.height?item.height:'auto'" :src="item.image" :index="index" mode="widthFix">
+								 <u-image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" border-radius="16rpx 16rpx 0 0" :height="item.height?item.height:'220rpx'" :src="item.image" :index="index" :mode="item.height?'scaleToFill':'widthFix'">
 									<view class="videoIcon" v-if="item.type == 4">
 										<image class="playIcon" src="/static/images/playIcon.svg"></image>
 									</view>
@@ -59,7 +59,7 @@
 					<view class="" @click="toArticleDetail(index, false)">
 						<view class="demo-top">
 							<view class="imgBox">
-								<u-image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" border-radius="12rpx 12rpx 0 0" :height="item.height?item.height:'auto'" :lazy-load="true" :src="item.image" :index="index" mode="widthFix">
+								<u-image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" border-radius="12rpx 12rpx 0 0" :height="item.height?item.height:'auto'" :lazy-load="true" :src="item.image" :index="index" :mode="item.height?'scaleToFill':'widthFix'">
 									<!-- <view class="videoIcon" v-if="item.type == 4">
 										<image class="playIcon" src="/static/images/playIcon.svg"></image>
 									</view> -->

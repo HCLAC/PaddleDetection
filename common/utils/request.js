@@ -26,7 +26,7 @@ function request(obj) {
 				uni.removeStorageSync("Authorization");
 				getApp().globalData.Authorization = ''
 				uni.navigateTo({
-					url: '/pages_mine/login/login.vue'
+					url: '/pages_mine/login/login'
 				})
 				return
 			}
