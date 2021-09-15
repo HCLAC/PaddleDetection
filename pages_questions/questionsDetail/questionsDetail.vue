@@ -252,7 +252,7 @@
 					url: '/questions/related',
 					data: {
 						question_id: this.question_id,
-						count:6
+						count:3
 					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
