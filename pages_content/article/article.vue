@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="nav-bar">
-			<uni-nav-bar :fixed="true" :status-bar="true" :title="title">
+			<uni-nav-bar :fixed="true" :status-bar="true" :title="title" :shadow="true">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
@@ -199,7 +199,6 @@
 			 :adjust-position="false"></textarea>
 			<view class="send" @click="pubComment">发送</view>
 		</view>
-		
 		<!-- 弹窗 -->
 		<u-modal v-model="show" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 		
@@ -731,6 +730,7 @@
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
 					});
+					return
 				}
 				var that = this;
 				let status = this.articleInfo.is_follow ? 0 : 1;
@@ -1097,12 +1097,11 @@
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 	}
-	
-	.box-Introduction{
-		// background: red;
-		box-shadow: 0 5px 10px #F5F5F5 inset;
-		// border-top: 2rpx solid #F5F5F5;
-	}
+	// .box-Introduction{
+	// 	background: red;
+	// 	box-shadow: 0 5px 10px #F5F5F5 inset;
+	// 	border-top: 2rpx solid #F5F5F5;
+	// }
 	.min-box{
 		width: 60rpx;
 		height: 60rpx;
@@ -1513,7 +1512,7 @@
 		background: #ffffff;
 		bottom: -100px;
 		display: flex;
-		z-index: 100;
+		z-index: 110;
 		// align-items: center;
 		// padding-bottom: 110rpx;
 		.inputK {
@@ -1540,6 +1539,7 @@
 			color: #0091FF;
 			line-height: 32rpx;
 			margin-top: 36rpx;
+			z-index: 200;
 		}
 	}
 

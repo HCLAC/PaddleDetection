@@ -45,8 +45,10 @@
 			<view class="answersCardBox" >
 				<view class="answersCardTop">
 					<view class="answersAuthor">
-						<view class="avatar ldx infinite ldx-zoom-in" ></view>
-						<image class="avatarImg" lazy-load :src="answersOfficial.avatar?answersOfficial.avatar:'/static/images/userImg.svg'"></image>
+						<!-- <view class="avatar ldx infinite ldx-zoom-in" ></view> -->
+						<view class="avatarImg-box">
+							<image class="avatarImg" lazy-load :src="answersOfficial.avatar?answersOfficial.avatar:'/static/images/userImg.svg'"></image>
+						</view>
 						<view class="userName">
 							{{answersOfficial.account_id}}
 						</view>
@@ -72,7 +74,7 @@
 						</view>
 					</view>
 				</view>
-				<!-- <view class="answersLine">
+				<!-- <view class="answersLine" v-if="answersOfficial">
 				</view> -->
 			</view>
 			<view class="moreAnswers" @click="moreAnswers()" v-if="detail&&detail.reply_count > 1">
@@ -91,7 +93,7 @@
 				我来回答
 			</view>
 		</view> -->
-		<view class="line" v-if="detail&&detail.reply_count > 0"></view>
+		<view class="line"></view>
 		<!-- 营销组件 -->
 		<view class="componment" v-if="marketingData">
 			<view class="wechat">
@@ -252,7 +254,7 @@
 					url: '/questions/related',
 					data: {
 						question_id: this.question_id,
-						count:6
+						count:3
 					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
@@ -644,39 +646,52 @@
 				justify-content: space-between;
 				margin-bottom: 20rpx;
 				.answersAuthor{
+					height: 100%;
 					display: flex;
 					align-items: center;
 					position: relative;
-					.avatar{
-						position: relative;
-						width: 80rpx;
-						height: 80rpx;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						border-radius: 50%;
-						&::before {
-							content: "";
-							position: absolute;
-							top: 0;
-							left: 0;
-							right: 0;
-							bottom: 0;
-							border-radius: 50%;
-							border: 2rpx solid gold;
-							// transition: all .5s;
-							// animation: clippath 3s infinite linear;
-						}
-					}
-					.avatarImg{
+					.avatarImg-box{
 						width: 68rpx;
 						height: 68rpx;
 						border-radius: 50%;
-						position: absolute;
-						top: 6rpx;
-						left: 6rpx;
-						
+						overflow: hidden;
+						// border: 2rpx solid #FFE512;
+						// padding: 6rpx;
+						image{
+							border-radius: 50%;
+							width: 100%;
+							height: 100%;
+						}
 					}
+					// .avatar{
+					// 	position: relative;
+					// 	width: 80rpx;
+					// 	height: 80rpx;
+					// 	display: flex;
+					// 	align-items: center;
+					// 	justify-content: center;
+					// 	border-radius: 50%;
+					// 	&::before {
+					// 		content: "";
+					// 		position: absolute;
+					// 		top: 0;
+					// 		left: 0;
+					// 		right: 0;
+					// 		bottom: 0;
+					// 		border-radius: 50%;
+					// 		border: 2rpx solid gold;
+					// 		// transition: all .5s;
+					// 		// animation: clippath 3s infinite linear;
+					// 	}
+					// }
+					// .avatarImg{
+					// 	width: 68rpx;
+					// 	height: 68rpx;
+					// 	border-radius: 50%;
+					// 	position: absolute;
+					// 	top: 6rpx;
+					// 	left: 6rpx;
+					// }
 					@keyframes clippath {
 					    0%  {
 					        clip-path: inset(0 0 95% 0);
@@ -731,9 +746,9 @@
 			.answersCardBottom{
 					display:flex;
 					justify-content: flex-end;
+					// border-bottom: 2rpx solid #EDEFF2;
 					margin-bottom: 20rpx;
 					.acbr{
-						
 						display: flex;
 						align-items: center;
 						.answersLike{
@@ -779,14 +794,15 @@
 		}
 		.moreAnswers{
 			text-align: center;
-			height: 28rpx;
+			height: 92rpx;
 			font-size: 28rpx;
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			color: #0091FF;
-			line-height: 28rpx;
-			margin-top: 32rpx;
-			margin-bottom: 32rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-top: 2rpx solid #EDEFF2;
 		}
 	}
 	.answersNull{
@@ -882,12 +898,11 @@
 	
 				}
 				.tQLine{
-					margin-top: -8rpx;
+					margin-top: -12rpx;
 					width: 144rpx;
 					height: 12rpx;
 					background: #FFE512;
 					border-radius: 12rpx;
-	
 				}
 			}
 			.tQBtn{

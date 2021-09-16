@@ -218,7 +218,7 @@ export default {
 <style lang="scss" scoped>
 
 /deep/.mescroll-empty .empty-icon { width: 154rpx !important }
-/deep/.mescroll-empty .empty-icon { height: 148rpx !important }
+// /deep/.mescroll-empty .empty-icon { height: 148rpx !important }
 // /deep/.mescroll-empty  .empty-fixed{top: 120rpx !important;}
 
 .mineTabs{
