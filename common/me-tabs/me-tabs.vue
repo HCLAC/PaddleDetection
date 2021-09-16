@@ -43,7 +43,7 @@
 			tabWidth: Number, // 每个tab的宽度,默认不设置值,为flex平均分配; 如果指定宽度,则不使用flex,每个tab居左,超过则水平滑动(单位默认rpx)
 			height: { // 高度,单位rpx
 				type: Number,
-				default: 46
+				default: 54
 			},
 			lineWidth: { // 高度,单位rpx
 				type: Number,
@@ -175,7 +175,7 @@
 			display: flex;
 			position: relative;
 			white-space: nowrap;
-			padding-bottom: 30rpx; // 撑开高度,再配合me-tabs的overflow-y: hidden,以达到隐藏滚动条的目的
+			padding-bottom: 20rpx; // 撑开高度,再配合me-tabs的overflow-y: hidden,以达到隐藏滚动条的目的
 			box-sizing: border-box;
 			// padding-left:4%;
 			.tab-item-info{
@@ -190,7 +190,7 @@
 				// margin-left: 24rpx;
 				&.active{
 					height: 36rpx;
-					font-size: 36rpx;
+					font-size: 32rpx;
 					font-family: PingFangSC-Medium, PingFang SC;
 					font-weight: 500;
 					color: #303133;
