@@ -9,6 +9,7 @@ function request(obj) {
 		url: url,
 		data: data,
 		timeout: 5000,
+		defer: obj.defer?obj.defer:false,
 		header: {
 			'Authorization': getApp().globalData.Authorization
 		},
