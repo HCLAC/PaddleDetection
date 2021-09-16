@@ -655,8 +655,8 @@
 						height: 68rpx;
 						border-radius: 50%;
 						overflow: hidden;
-						border: 2rpx solid #FFE512;
-						padding: 6rpx;
+						// border: 2rpx solid #FFE512;
+						// padding: 6rpx;
 						image{
 							border-radius: 50%;
 							width: 100%;

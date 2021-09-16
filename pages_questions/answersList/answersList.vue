@@ -23,7 +23,7 @@
 							<view class="userName">
 								{{item.account_id}}
 							</view>
-							<image class="gficon" src="/static/images/gficon.svg" v-if="index == 0"></image>
+							<image class="gficon" src="/static/images/gficon.svg" v-if="index == 0 && item.account_type == 1"></image>
 						</view>
 						<view class="answersDate">
 							{{item.create_at.slice(0,10)}}
@@ -215,23 +215,23 @@
 		margin: 0px 28rpx;
 		.answersCardBox{
 			margin-top: 20rpx;
-			.answersCardTop-one{
-				.answersAuthor{
-					.avatarImg-box{
-						width: 74rpx !important;
-						height: 74rpx !important;
-						border-radius: 50%;
-						overflow: hidden;
-						border: 2rpx solid #FFE512;
-						padding: 6rpx;
-						image{
-							border-radius: 50%;
-							width: 100%;
-							height: 100%;
-						}
-					}
-				}
-			}
+			// .answersCardTop-one{
+			// 	.answersAuthor{
+			// 		.avatarImg-box{
+			// 			width: 74rpx !important;
+			// 			height: 74rpx !important;
+			// 			border-radius: 50%;
+			// 			overflow: hidden;
+			// 			border: 2rpx solid #FFE512;
+			// 			padding: 6rpx;
+			// 			image{
+			// 				border-radius: 50%;
+			// 				width: 100%;
+			// 				height: 100%;
+			// 			}
+			// 		}
+			// 	}
+			// }
 			.answersCardTop{
 				width: 100%;
 				display: flex;
