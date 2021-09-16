@@ -55,7 +55,7 @@
 							</view>
 							<view class="rateBox">
 								<!-- 评分图标 -->
-								<uni-rate :readonly="true" :value="item.rate" :size='12' margin="3" :allowHalf="true"/>
+								<uni-rate :readonly="true" :value="item.rate" :size='14' margin="3" :allowHalf="true"/>
 								<view class="rate">{{item.rate}} 星</view>
 							</view>
 						</view>
@@ -434,9 +434,10 @@
 		// position: fixed;
 		// top: 420rpx;
 		// z-index: 111;
-		background-color: #FFFFFF;
-		border-radius: 16rpx 16rpx 0px 0px;
+		padding-top: 10rpx;
+		border-radius: 16rpx 16rpx 0 0;
 		border: 1px solid #FFFFFF;
+		overflow: hidden;
 	}
 
 	.city {
@@ -474,6 +475,7 @@
 		width: 700rpx;
 		height: 100%;
 		margin-left: 28rpx;
+		margin-top: 10rpx;
 		// margin-top: 90rpx;
 	}
 

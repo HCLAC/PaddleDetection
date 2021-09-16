@@ -169,7 +169,7 @@
 					"path": "attractionsRank/attractionsRank",
 					"style": {
 						"navigationStyle": "custom",
-						"backgroundColor": "#000000",
+						"backgroundColor": "#ffffff",
 						"navigationBarTextStyle":"white"
 					}
 				},
