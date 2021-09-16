@@ -199,7 +199,6 @@
 			 :adjust-position="false"></textarea>
 			<view class="send" @click="pubComment">发送</view>
 		</view>
-		
 		<!-- 弹窗 -->
 		<u-modal v-model="show" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 		
@@ -732,6 +731,7 @@
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
 					});
+					return
 				}
 				var that = this;
 				let status = this.articleInfo.is_follow ? 0 : 1;
@@ -1513,7 +1513,7 @@
 		background: #ffffff;
 		bottom: -100px;
 		display: flex;
-		z-index: 100;
+		z-index: 110;
 		// align-items: center;
 		// padding-bottom: 110rpx;
 		.inputK {
@@ -1540,6 +1540,7 @@
 			color: #0091FF;
 			line-height: 32rpx;
 			margin-top: 36rpx;
+			z-index: 200;
 		}
 	}
 
