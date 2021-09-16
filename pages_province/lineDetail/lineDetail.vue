@@ -548,7 +548,7 @@ export default {
 				font-weight: 400;
 				color: #909399;
 				line-height: 36rpx;
-				text-align: justify;
+				// text-align: justify;
 				// text-overflow: -o-ellipsis-lastline;
 				overflow: hidden;
 				text-overflow: ellipsis;
