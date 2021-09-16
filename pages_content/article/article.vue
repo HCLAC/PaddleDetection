@@ -347,7 +347,6 @@
 				}, 100);
 			},
 			mpLinktap(e) {
-				console.log(e)
 				// #ifdef H5
 				if(e['data-url']){
 					window.location.href = e['data-url']
@@ -840,7 +839,7 @@
 				}
 				if (this.contentText.length == 0){
 					uni.showToast({
-						title: '请输入回答内容',
+						title: '请输入评论内容',
 						icon: 'none'
 					});
 					return
