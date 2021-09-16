@@ -89,7 +89,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 				
 				uni.setNavigationBarColor({
 				    frontColor: '#000000',
-					backgroundColor: '#ffffff',
+					backgroundColor: '#000000',
 					fail: err => {
 						console.log('setNavigationBarColor fail', err);
 					}
@@ -98,7 +98,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 				this.isFixed = false;
 				
 				uni.setNavigationBarColor({
-				    frontColor: '#ffffff',
+				    frontColor: '#000000',
 					backgroundColor: '#000000',
 					fail: err => {
 						console.log('setNavigationBarColor fail', err);
@@ -267,14 +267,12 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 			margin-top: 20rpx;
 			display: flex;
 			align-items: center;
-		
 			height: 24rpx;
-			font-size: 24rpx;
+			font-size: 28rpx;
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			color: #606266;
 			line-height: 24rpx;
-			
 			.likenum {
 				margin-left: 8rpx;
 				margin-right: 24rpx;

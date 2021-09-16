@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="nav-bar">
-			<uni-nav-bar :fixed="true" :status-bar="true" :title="title">
+			<uni-nav-bar :fixed="true" :status-bar="true" :title="title" :shadow="true">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
@@ -1098,12 +1098,11 @@
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 	}
-	
-	.box-Introduction{
-		// background: red;
-		box-shadow: 0 5px 10px #F5F5F5 inset;
-		// border-top: 2rpx solid #F5F5F5;
-	}
+	// .box-Introduction{
+	// 	background: red;
+	// 	box-shadow: 0 5px 10px #F5F5F5 inset;
+	// 	border-top: 2rpx solid #F5F5F5;
+	// }
 	.min-box{
 		width: 60rpx;
 		height: 60rpx;

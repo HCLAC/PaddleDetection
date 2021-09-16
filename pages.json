@@ -208,7 +208,7 @@
 					"path" : "bloggers/bloggers",
 					"style" : {
 						"navigationStyle": "custom",
-						"navigationBarTextStyle":"white"
+						"navigationBarTextStyle":"black"
 					}
 				},
 				{
