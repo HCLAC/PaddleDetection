@@ -196,7 +196,7 @@
 				hotKeywordList: [],	// 热搜记录
 				showType: 0 ,// 0-热搜和历史搜索 1-下拉提示 2-搜索结果
 				clearShow: false,
-				autofocus: true,
+				autofocus: false,
 				requestID: '',
 				routeHotMore: false,
 			};

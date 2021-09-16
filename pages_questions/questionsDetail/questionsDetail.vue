@@ -93,7 +93,7 @@
 				我来回答
 			</view>
 		</view> -->
-		<view class="line" v-if="detail&&detail.reply_count > 0"></view>
+		<view class="line"></view>
 		<!-- 营销组件 -->
 		<view class="componment" v-if="marketingData">
 			<view class="wechat">
@@ -655,7 +655,7 @@
 						height: 68rpx;
 						border-radius: 50%;
 						overflow: hidden;
-						border: 3rpx solid #FFE512;
+						border: 2rpx solid #FFE512;
 						padding: 6rpx;
 						image{
 							border-radius: 50%;
@@ -794,14 +794,15 @@
 		}
 		.moreAnswers{
 			text-align: center;
-			height: 28rpx;
+			height: 92rpx;
 			font-size: 28rpx;
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			color: #0091FF;
-			line-height: 28rpx;
-			margin-top: 32rpx;
-			margin-bottom: 32rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-top: 2rpx solid #EDEFF2;
 		}
 	}
 	.answersNull{
@@ -897,12 +898,11 @@
 	
 				}
 				.tQLine{
-					margin-top: -8rpx;
+					margin-top: -12rpx;
 					width: 144rpx;
 					height: 12rpx;
 					background: #FFE512;
 					border-radius: 12rpx;
-	
 				}
 			}
 			.tQBtn{
