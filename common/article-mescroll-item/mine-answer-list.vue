@@ -66,7 +66,7 @@
 					// 	num: 0, // 当前页码,默认0,回调之前会加1,即callback(page)会从1开始
 					// 	size: 10 // 每页数据的数量
 					// },
-					noMoreSize: 1, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
+					noMoreSize: 10, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
 					empty:{
 					  use : true ,
 					  icon : null ,
@@ -183,7 +183,7 @@
 	.card{
 		margin: 28rpx 28rpx;
 		margin-bottom: 0rpx;
-		padding-bottom: 40rpx;
+		padding-bottom: 20rpx;
 		border-bottom: 1rpx solid #edeff2;
 		display: flex;
 		.avatar{
@@ -196,12 +196,14 @@
 		}
 		.cradR{
 			// width: 610rpx;
-			margin-left: 16rpx;
+			width: 100%;
+			padding-left: 16rpx;
+			// margin-left: 16rpx;
 			.authorBox{
 				display: flex;
 				align-items: center;
 				justify-content:space-between;
-				width: 590rpx;
+				width: 100%;
 				.authorName{
 					height: 40rpx;
 					font-size: 28rpx;
@@ -228,10 +230,11 @@
 				color: #303133;
 				line-height: 44rpx;
 				margin-top: 8rpx;
-		
+				text-align: justify;
 			}
 			.lookAnswers{
 				margin-top: 20rpx;
+				width: 100%;
 				display: flex;
 				justify-content: flex-end;
 				font-size: 24rpx;

@@ -61,8 +61,15 @@ import answerList from '@/common/article-mescroll-item/mine-answer-list.vue';
 	}
 </script>
 
-<style lang="scss" scoped>
-	
+<style lang="scss">
+.tabs-line{
+	border-radius: 12px !important;
+	height: 12rpx !important;
+	margin-bottom: 0 !important;
+}
+// .name{
+// 	font-size: 32rpx !important;
+// }
 .line{
 	position: relative;
 	width:100% ;
