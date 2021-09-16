@@ -64,6 +64,9 @@
 			uni.onNetworkStatusChange((res) => {
 				this.isConnected = res.isConnected;
 				this.networkType = res.networkType;
+				if (res.networkType != 'none') {
+					this.$emit('retry');
+				}
 			});
 			uni.getNetworkType({
 				success: (res) => {
@@ -84,17 +87,17 @@
 						this.networkType = res.networkType;
 						if (res.networkType == 'none') {
 							uni.showToast({
-								title: '无网络连接',
+								title: '无网络连接，请检查网络后重试',
 								icon: 'none',
 								position: 'top'
 							})
 							this.isConnected = false;
 						} else {
-							uni.showToast({
-								title: '网络已连接',
-								icon: 'none',
-								position: 'top'
-							})
+							// uni.showToast({
+							// 	title: '网络已连接',
+							// 	icon: 'none',
+							// 	position: 'top'
+							// })
 							this.isConnected = true;
 						}
 					}

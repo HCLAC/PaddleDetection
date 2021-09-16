@@ -161,6 +161,7 @@
 				</view>
 			</view>
 		</mescroll-body>
+		<u-no-network @retry="loadData()"></u-no-network>
 	</view>
 </template>
 
