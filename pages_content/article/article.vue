@@ -384,6 +384,7 @@
 				var that = this;
 				this.HTTP.request({
 					url: '/article',
+					retry: 3,
 					data: {
 						article_id: that.article_id
 					},

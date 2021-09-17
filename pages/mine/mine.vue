@@ -133,6 +133,7 @@ export default {
 			var that = this;
 			this.HTTP.request({
 				url: '/user/info',
+				retry: 3,
 				method: 'get',
 				success: function(res) {
 					if (res.statusCode != 200 || res.data.code != 0){

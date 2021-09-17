@@ -8,7 +8,6 @@ function request(obj) {
 	uni.request({
 		url: url,
 		data: data,
-		timeout: 5000,
 		defer: obj.defer?obj.defer:false,
 		header: {
 			'Authorization': getApp().globalData.Authorization
@@ -38,6 +37,17 @@ function request(obj) {
 				title: '网络不给力~,请稍后再试',
 				icon: 'none'
 			});
+			
+			switch(res.errCode){
+				case 1:
+					if (obj.retry && obj.retry > 0){
+						setTimeout(() => {
+							request(obj)
+						}, 500)
+						obj.retry--
+					}
+					break;
+			}
 			obj.fail && obj.fail(res)
 		},
 		complete: () => {

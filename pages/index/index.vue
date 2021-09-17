@@ -491,6 +491,7 @@
 				let that = this
 				this.HTTP.request({
 					url: '/article/list?page=' + pageNum + '&count=' + pageSize,
+					retry: 3,
 					data: {
 						first_time: this.firstTime,
 						source: this.serviceProvider == 'baidu' ? 1 : this.serviceProvider == 'toutiao' ? 2 : this.serviceProvider ==
