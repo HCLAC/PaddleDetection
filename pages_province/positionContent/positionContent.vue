@@ -452,6 +452,7 @@ export default {
 	.rateBox {
 		margin-top: 24rpx;
 		display: flex;
+		align-items: center;
 		.rateStart{
 			display: flex;
 		}
@@ -709,6 +710,7 @@ export default {
 				bottom: 12rpx;
 				margin-top: 6rpx;
 				display: flex;
+				align-items: center;
 				justify-content: flex-end;
 				image{
 					height: 32rpx;
