@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<view class="nav-bar">
+		<view class="nav-bar" style="border-bottom: 2rpx solid #EDEFF2;">
 			<uni-nav-bar :fixed="true" :status-bar="true" title="我的回答">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -12,8 +12,8 @@
 			</uni-nav-bar>
 		</view>
 		<meTabs class="mineAnswerTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :lineWidth="170" :top="navbarHeight" :fixed="isFixed"></meTabs>
-		<view class="line" >
-		</view>
+		<!-- <view class="line" >
+		</view> -->
 		<answerList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :top="navbarHeight"></answerList>
 	</view>
 </template>
@@ -62,20 +62,22 @@ import answerList from '@/common/article-mescroll-item/mine-answer-list.vue';
 </script>
 
 <style lang="scss">
+.tabs-fixed{
+	// height: 75rpx !important;
+	border-bottom: 20rpx solid #F8F8F8 !important;
+	padding-bottom: 100rpx !important;
+}
 .tabs-line{
 	border-radius: 12px !important;
 	height: 12rpx !important;
 	margin-bottom: 0 !important;
 }
-// .name{
-// 	font-size: 32rpx !important;
+// .line{
+// 	position: relative;
+// 	width:100% ;
+// 	height: 20rpx;
+// 	background: #F8F8F8;
+// 	top:92rpx;
+// 	margin-bottom: 34rpx;
 // }
-.line{
-	position: relative;
-	width:100% ;
-	height: 20rpx;
-	background: #F8F8F8;
-	top:92rpx;
-	margin-bottom: 34rpx;
-}
 </style>

@@ -176,10 +176,11 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 // 问答列表
 .answerList{
+	margin-top: 90rpx;
 	.card{
 		margin: 28rpx 28rpx;
 		margin-bottom: 0rpx;
