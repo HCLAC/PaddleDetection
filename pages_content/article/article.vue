@@ -1060,16 +1060,11 @@
 					title: this.articleInfo.title,
 					content: this.articleInfo.description,
 					success() {
-						uni.showToast({
-							title: '分享成功',
-							icon: 'success'
-						})
 					},
 					complete() {
-						this.textareafocus = false
 					}
-					
 				});
+				this.showText = false
 			},
 			back(){
 				this.recordStayAndRead()

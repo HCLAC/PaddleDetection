@@ -98,7 +98,7 @@
 					<view class="areaView" @click.stop="toSite(site.id)">
 						<image class="areaImg" lazy-load :src="site.image[0]"></image>
 						<view class="top">
-							<rich-text :nodes="site.nameHtml"></rich-text>
+							<rich-text class="title" :nodes="site.nameHtml"></rich-text>
 							<view class="areacontent">{{ site.description }}</view>
 							<view class="rateBox">
 								<!-- 评分图标 -->
@@ -652,13 +652,11 @@
 			margin-right: 20rpx;
 		}
 		.top {
-			// .title {
-			// 	font-size: 32rpx;
-			// 	font-family: PingFangSC-Medium, PingFang SC;
-			// 	font-weight: 500;
-			// 	color: #A86B13;
-			// }
-
+			.title{
+				font-size: 32rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
+			}
 			.rateBox {
 				display: flex;
 				align-items: center;
