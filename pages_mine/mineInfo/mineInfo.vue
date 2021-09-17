@@ -12,11 +12,11 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 信息表单 -->
-		<view class="" style="margin:0 28rpx;" v-show="userInfo">
+		<view class="" style="margin:0 28rpx;">
 			<view class="form-box" >
 				<!-- 头像 -->
 				<view class="form-image" @click="chooseAvatar">
-					<image lazy-load :src="userInfo.avatar"  style="width: 130rpx; height: 130rpx;border-radius: 50%;margin-left: -10rpx;" ></image>
+					<image lazy-load :src="avatar"  style="width: 130rpx; height: 130rpx;border-radius: 50%;margin-left: -10rpx;" ></image>
 					<view class="avatarText" >
 						修改头像
 					</view>
@@ -25,13 +25,13 @@
 				<!-- 昵称 -->
 				<view class="form-name">
 					<text space="nbsp">昵   称：</text>
-					<u-input :customStyle="customStyleinput" v-model="userInfo.name" type="text"></u-input>
+					<u-input :customStyle="customStyleinput" v-model="name" type="text"></u-input>
 				</view>
 				<!-- 性别 -->
 				<view class="form-sex">
 					<view class="sex-box">
 						<text space="nbsp">性   别：</text>
-						<u-input :customStyle="customStyleinput" :disabled="true" v-model="userInfo.sex" @click="actionSheetShow = true"></u-input>
+						<u-input :customStyle="customStyleinput" :disabled="true" v-model="sex" @click="actionSheetShow = true"></u-input>
 					</view>
 					<image class="moreRight" src="/static/images/moreR.svg" slot="right"></image>
 				</view>
@@ -39,7 +39,7 @@
 				<view class="form-region">
 					<view class="region-box">
 						<text space="nbsp">常住地：</text>
-						<u-input :customStyle="customStyleinput" :disabled="true" v-model="userInfo.region" @click="pickerShow = true"></u-input>
+						<u-input :customStyle="customStyleinput" :disabled="true" v-model="region" @click="pickerShow = true"></u-input>
 					</view>
 					<image class="moreRight" src="/static/images/moreR.svg" slot="right"></image>
 				</view>
@@ -61,12 +61,10 @@
 		},
 		data() {
 			return {
-				userInfo: {
-					avatar: '',
-					name: '',
-					sex: '',
-					region: ''
-				},
+				avatar: '',
+				name: '',
+				sex: '',
+				region: '',
 				actionSheetList: [
 					{
 						text: '男',
@@ -99,16 +97,15 @@
 				}
 			};
 		},
-		// onReady() {
-		// 	this.$refs.uForm.setRules(this.rules);
-		// },
+		onInit() {
+			this.getUserInfo()
+		},
 		created() {
 			// 监听从裁剪页发布的事件，获得裁剪结果
 			uni.$on('cropper', e => {
 				let base ='data:image/png;base64,'+uni.getFileSystemManager().readFileSync(e.url,'base64')
-				this.userInfo.avatar = base
+				this.avatar = base
 			})
-			this.getUserInfo()
 		},
 		onLoad(options) {
 		},
@@ -118,14 +115,12 @@
 				uni.getStorage({
 					key: 'userinfo',
 					success: res => {
-						var userInfo = res.data 
-						userInfo && (userInfo.sex = userInfo.gender == 0 ? '保密' : userInfo.gender == 2 ? '女' : '男')
-						this.userInfo = {
-							avatar: userInfo.avatar,
-							name: userInfo.nick_name?userInfo.nick_name:userInfo.mobile,
-							sex: userInfo.sex,
-							region: userInfo.location
-						}
+						var userInfoT = res.data 
+						userInfoT && (userInfoT.sex = userInfoT.gender == 0 ? '保密' : userInfoT.gender == 2 ? '女' : '男')
+						this.avatar = this.Utils.addImageProcess(userInfoT.avatar, false, 60),
+						this.name = userInfoT.nick_name?userInfoT.nick_name:userInfoT.mobile,
+						this.sex = userInfoT.sex,
+						this.region = userInfoT.location
 					}
 				}); 
 			}, 
@@ -146,11 +141,11 @@
 			},
 			// 点击actionSheet回调
 			actionSheetCallback(index) {
-				this.userInfo.sex = this.actionSheetList[index].text;
+				this.sex = this.actionSheetList[index].text;
 			},
 			// 保存
 			submit() {
-				if(this.userInfo.name.length < 3 || this.userInfo.name.length > 10){
+				if(this.name.length < 3 || this.name.length > 10){
 					uni.showToast({
 					    title: '姓名长度在3到10个字符',
 						icon:'none'
@@ -166,10 +161,10 @@
 				this.HTTP.request({
 					url: '/user/info',
 					data: {
-						nick_name: this.userInfo.name,
-						avatar: this.userInfo.avatar.indexOf("http") == -1?this.userInfo.avatar:'',
-						gender: this.userInfo.sex == '男' ? 1 : this.userInfo.sex == '女' ? 2 : 0,
-						location: this.userInfo.region ? this.userInfo.region : '北京'
+						nick_name: this.name,
+						avatar: this.avatar.indexOf("http") == -1?this.avatar:'',
+						gender: this.sex == '男' ? 1 : this.sex == '女' ? 2 : 0,
+						location: this.region ? this.region : '北京'
 						
 					},
 					method: 'POST',
@@ -201,7 +196,7 @@
 			},
 			// 选择地区回调
 			regionConfirm(e) {
-				this.userInfo.region = e.province.label + '-' + e.city.label + '-' + e.area.label;
+				this.region = e.province.label + '-' + e.city.label + '-' + e.area.label;
 			}
 		}
 	}
