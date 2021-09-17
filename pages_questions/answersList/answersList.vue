@@ -30,7 +30,7 @@
 						</view>
 					</view>
 					<view class="answersCardContent">
-						<mp-html ref="parse" style="overflow: hidden;" lazy-load :tag-style="style" :content="item.content "></mp-html>
+						<mp-html ref="parse" style="overflow: hidden;text-align: justify;" lazy-load :tag-style="style" :content="item.content "></mp-html>
 					</view>
 					<view class="answersCardBottom">
 						<view class="acbr">

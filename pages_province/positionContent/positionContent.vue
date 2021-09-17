@@ -721,16 +721,11 @@ export default {
 					width: 32rpx;
 					display: flex;
 					align-items: center;
-					
 					image{
 						width: 100%;
 						height: 100%;
 					}
 				}
-				// image{
-				// 	height: 32rpx;
-				// 	width: 32rpx;
-				// }
 				.btm-text{
 					height: 32rpx;
 					display: flex;
