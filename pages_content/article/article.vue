@@ -346,7 +346,6 @@
 				}, 100);
 			},
 			mpLinktap(e) {
-				console.log(e)
 				// #ifdef H5
 				if(e['data-url']){
 					window.location.href = e['data-url']
@@ -426,8 +425,8 @@
 								let src = that.Utils.addImageProcess(obj[1], true, 60)
 								let width = obj[5]
 								let height = obj[7]
-								let heightR = obj[7]*750/width
-								let img = '<img src="'+src+'" style="width:750rpx;height:'+heightR+'rpx;display:inline-block;margin:10rpx auto;"/>'
+								let heightR = (obj[7]*750/width).toFixed(0)
+								let img = '<img src="'+src+'" style="width:750rpx;height:'+heightR+'rpx;"/>'
 								articleInfo.content = articleInfo.content.replace(item, img);
 							}
 						}
@@ -840,7 +839,7 @@
 				}
 				if (this.contentText.length == 0){
 					uni.showToast({
-						title: '请输入回答内容',
+						title: '请输入评论内容',
 						icon: 'none'
 					});
 					return
@@ -1057,7 +1056,20 @@
 				});
 			},
 			share() {
-				uni.showShareMenu({});
+				uni.showShareMenu({
+					title: this.articleInfo.title,
+					content: this.articleInfo.description,
+					success() {
+						uni.showToast({
+							title: '分享成功',
+							icon: 'success'
+						})
+					},
+					complete() {
+						this.textareafocus = false
+					}
+					
+				});
 			},
 			back(){
 				this.recordStayAndRead()

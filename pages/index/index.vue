@@ -28,19 +28,9 @@
 		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit"
 		 @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部轮播图 -->
-			<view class="page-section " v-if="bannerList != null && bannerList.length != 0">
+			<view class="page-section ">
 				<view class="page-section-spacing">
-					<!-- 新版 -->
 					<u-image :src="bannerList[0].image" width="750rpx" height="440rpx"></u-image>
-					<!-- <image class="bannerImg" :src="bannerList[0].image"></image> -->
-					<!-- 旧版轮播 -->
-					<!-- <swiper :autoplay="true" class="swiper" indicator-dots="true" indicator-active-color="#FAAD14">
-						<swiper-item v-for="(item, index) in bannerList" :key="index" class="swiper-item">
-							<image :src="item.image" mode="scaleToFill" class="swiperImg" @click="towebview(item)">
-							</image>
-							</navigator>
-						</swiper-item>
-					</swiper> -->
 				</view>
 			</view>
 			<view class="cus-sty " :style="{'margin-top': cus_sty_top}">
@@ -49,7 +39,6 @@
 					<view class="wave">
 						<image class="waveImg" src="/static/images/wave.png"></image>
 					</view>
-					<!-- <u-swiper :list="uswiperlist" mode="none" :autoplay="false" ></u-swiper> -->
 					<view class="citysBox">
 						<scroll-view scroll-x="true" class="kite-classify-scroll" v-if="areaList.length != 0">
 							<view class="citysBoxLeft">
@@ -172,6 +161,7 @@
 				</view>
 			</view>
 		</mescroll-body>
+		<u-no-network @retry="loadData()"></u-no-network>
 	</view>
 </template>
 
@@ -198,37 +188,20 @@
 				firstTime: new Date().getTime(),
 				firstLoad: false,
 				cityName: '',
-				province: '',
-				state_id: '',
-				city_id: '',
-				hotAtt: [],
 				list: [],
-				uswiperlist:[
-					{
-						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
-					},
-					{
-						title: '身无彩凤双飞翼，心有灵犀一点通'
-					}
-				],
-				token: '',
-				liked: '',
-				page: 1,
-				pagesize: 6,
-				loadStatus: 'loading',
-				isLoadMore: false,
-				item: null,
-				topHotCity: [],
 				cityList: [],
-				isLike: false,
-				likeNum: 0,
-				bannerList: null,
-				indicatorDots: true,
+				bannerList: [
+					{image: ''}
+				],
 				areaList: [],
-				url: '',
 				serviceProvider: '',
 				cus_sty_top: '156rpx'
 			};
+		},
+		onInit() {
+			this.firstLoad = true
+			this.serviceProvider = getApp().globalData.serviceProvider
+			this.loadData()
 		},
 		onReady() {
 			// #ifdef MP-BAIDU
@@ -238,9 +211,6 @@
 			// #endif
 		},
 		onLoad() {
-			this.firstLoad = true
-			this.serviceProvider = getApp().globalData.serviceProvider
-			this.loadData()
 		},
 		onShow() {
 			var cur = Number((new Date().getTime())/1000).toFixed(0)
@@ -383,7 +353,6 @@
 					success: res => {
 						if (res.city && res.province) {
 							that.cityName = res.city.substr(0, res.city.length - 1);
-							that.province = res.province;
 						} else {
 							let arr = [];
 							arr.push(res.latitude);
@@ -398,7 +367,6 @@
 									if (result.data.status == 0) {
 										that.cityName = result.data.result.addressComponent.city.substr(0, result.data.result.addressComponent.city
 											.length - 1);
-										that.province = result.data.result.addressComponent.province;
 									} else {
 										uni.showToast({
 											title: result.errMsg

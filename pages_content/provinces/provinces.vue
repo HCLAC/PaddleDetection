@@ -160,6 +160,7 @@ export default {
 			questions: [],
 			answersList:[],
 			randomPage: 0,
+			randomNum: 0,
 			routeHotMore: false,
 		};
 	},
@@ -226,6 +227,7 @@ export default {
 		// 获取问答列表
 		getQuestionList() {
 			this.randomPage += 1 
+			this.randomNum = 0
 			this.HTTP.request({
 				url: '/questions/random',
 				data: {
@@ -468,6 +470,7 @@ export default {
 			}
 			this.HTTP.request({
 				url: '/article/list?page=' + pageNum + '&count=' + pageSize,
+				defer: true,
 				data: {
 					state_id: that.querys.state_id,
 					city_id: that.querys.city_id,
@@ -504,8 +507,9 @@ export default {
 					// 接口返回的是否有下一页 (true/false)
 					// let hasNext = res.data.data.list;
 					if(this.answersList.length > 0 ){
-						curPageData = curPageData.concat(this.answersList[(pageNum-1)%this.answersList.length])
-						if ((pageNum-1)%this.answersList.length+1 == this.answersList.length){
+						curPageData = curPageData.concat(this.answersList[this.randomNum])
+						this.randomNum++
+						if (this.randomNum == this.answersList.length){
 							this.getQuestionList()
 						}
 					} else {
