@@ -124,8 +124,12 @@
 						<image class="topHot" v-if="index==0" src="/static/images/top.svg"></image>
 						<view class="top">{{item.title}}</view>
 						<view class="bottom">
-							<image src="/static/images/liulan.svg"></image>
-							<text>{{item.visit_count}}</text>
+							<view class="btm-img">
+								<image src="/static/images/liulan.svg"></image>
+							</view>
+							<view class="btm-text">
+								<text>{{item.visit_count}}</text>
+							</view>
 						</view>
 					</view>
 				</view>
@@ -705,22 +709,39 @@ export default {
 				overflow: hidden;
 			}
 			.bottom{
-				position: absolute;
-				right: 24rpx;
-				bottom: 12rpx;
+				// position: absolute;
+				// right: 24rpx;
+				// bottom: 12rpx;
 				margin-top: 6rpx;
 				display: flex;
 				align-items: center;
 				justify-content: flex-end;
-				image{
+				.btm-img{
 					height: 32rpx;
 					width: 32rpx;
+					display: flex;
+					align-items: center;
+					
+					image{
+						width: 100%;
+						height: 100%;
+					}
 				}
-				text{
-					font-size:22rpx;
-					font-family:PingFangSC-Regular,PingFang SC;
-					font-weight:400;
-					color:rgba(144,147,153,1);
+				// image{
+				// 	height: 32rpx;
+				// 	width: 32rpx;
+				// }
+				.btm-text{
+					height: 32rpx;
+					display: flex;
+					align-items: center;
+					
+					text{
+						font-size:22rpx;
+						font-family:PingFangSC-Regular,PingFang SC;
+						font-weight:400;
+						color:rgba(144,147,153,1);
+					}
 				}
 			}
 		}
