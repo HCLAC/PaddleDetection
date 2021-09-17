@@ -126,7 +126,7 @@
 		</view>
 		<u-loading v-else :show="true" class="loading"></u-loading>
 		<!-- 评论区 -->
-		<view v-if="articleInfo" style="padding-bottom: 30rpx;">
+		<view v-if="articleInfo">
 			<view class="replyLine"></view>
 			<view class="replyBox">
 				<view class="replyText" v-if="comment_count == 0">
@@ -1405,8 +1405,7 @@
 
 	// 评论
 	.replyBox {
-		margin: 28rpx;
-
+		margin:0 28rpx;
 		.replyText {
 			height: 32rpx;
 			font-size: 32rpx;
@@ -1506,7 +1505,7 @@
 		.moreReply {
 			text-align: center;
 			margin-top: 32rpx;
-			margin-bottom: 100rpx;
+			// margin-bottom: 40rpx;
 			height: 28rpx;
 			font-size: 28rpx;
 			font-family: PingFangSC-Regular, PingFang SC;
