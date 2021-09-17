@@ -425,8 +425,8 @@
 								let src = that.Utils.addImageProcess(obj[1], true, 60)
 								let width = obj[5]
 								let height = obj[7]
-								let heightR = obj[7]*750/width
-								let img = '<img src="'+src+'" style="width:750rpx;height:'+heightR+'rpx;display:inline-block;margin:10rpx auto;"/>'
+								let heightR = (obj[7]*750/width).toFixed(0)
+								let img = '<img src="'+src+'" style="width:750rpx;height:'+heightR+'rpx;"/>'
 								articleInfo.content = articleInfo.content.replace(item, img);
 							}
 						}

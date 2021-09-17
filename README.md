@@ -9,8 +9,10 @@
 - home图标
 - 首页重新加载、首页加载两次首页，文章页面一直加载中，提示请稍后
 - 页面data设置默认值
-- 重试请求
+- 重试请求，prelink
 - 云测试
+- oss升级宽带
+- Waiting (TTFB)
 
 ### TODO
 - metabs吸顶
