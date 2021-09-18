@@ -77,8 +77,13 @@
 				content: '提交成功'
 			}
 		},
-		onLoad(e) {
-			this.id = e.id
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
+			this.id = query.id
 		},
 		watch:{
 			reportInfo(val){

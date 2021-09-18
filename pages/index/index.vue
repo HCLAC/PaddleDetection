@@ -199,7 +199,12 @@
 				cus_sty_top: '156rpx'
 			};
 		},
-		onInit() {
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
 			this.firstLoad = true
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.loadData()

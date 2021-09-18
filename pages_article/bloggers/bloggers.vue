@@ -68,8 +68,13 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 				headerFixed: false,
 			};
 		},
-		onLoad(options) {
-			this.author_id = String(options.author_id)
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
+			this.author_id = String(query.author_id)
 			this.getBloggerMsg()
 		}, 
 		mounted() {

@@ -57,8 +57,13 @@
 				}
 			};
 		},
-		onLoad(options) {
-			this.article_id = options.article_id
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
+			this.article_id = query.article_id
 		},
 		methods:{
 			mescrollInit(mescroll) {

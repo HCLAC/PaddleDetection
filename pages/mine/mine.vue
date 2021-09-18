@@ -61,7 +61,12 @@ export default {
 	},
 	data() {
 		return {
-			userInfo: {},
+			userInfo: {
+				avatar:'/static/images/userImg.svg',
+				nickName: '羊仔',
+				fllowNum: 0,
+				answersNum: 0,
+			},
 			favList: [],
 			likeList: [],
 			tabList: [{
@@ -87,15 +92,25 @@ export default {
 			isFixed:false,
 			headerFixed: false,
 			hasLogin: false,
+			isInit: true,
 		};
 	},
-	onShow() {
+	// #ifdef MP-BAIDU
+	onInit(query) {
+	// #endif
+	// #ifndef MP-BAIDU
+	onLoad(query) {
+	// #endif
 		if (!this.Utils.isLogin()){
 			return
 		}
 		this.hasLogin = true
 		this.loadData()
-	}, 
+	},
+	onShow() {
+		!this.isInit && this.loadData()
+		this.isInit = false
+	},
 	mounted() {
 		this.calcCardHeight()
 	},

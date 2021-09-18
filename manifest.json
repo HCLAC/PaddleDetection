@@ -90,6 +90,9 @@
 				// provider 是要引用的动态库的名字，在此为 'swan-sitemap'。
 				"provider": "swan-sitemap"
 			}
+		},
+		"cookie": {
+			"enableStore": true // 开启小程序cookie存储设置
 		}
     },
     "mp-toutiao" : {
