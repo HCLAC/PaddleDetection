@@ -10,169 +10,185 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<!-- 游记文章 -->
-		<view class="" v-if="articleInfo && articleInfo.type != 2">
-			<!-- 内容详情轮播图 -->
-			<view class="uni-padding-wrap" >
-				<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="articleInfo.type != 4 && articleInfo.type != 5">
-					<swiper @change="change" class="swiper" :autoplay="true" circular='true' :indicator-dots="false" @click="ImgSee">
-						<swiper-item v-for="(item, index) in articleInfo.images" :key="index">
-							<image class="itemImg" :style="{ width: index == 0 ? '100%' : '' }" lazy-load :mode="index == 0 ? 'widthFix' : 'aspectFit'"
-							 :src="item"></image>
-						</swiper-item>
-					</swiper>
-					<view class="imageCount">{{ current + 1 }}/{{ articleInfo.images.length }}</view>
-					<view class="dots">
-						<block v-for="(item, index) in articleInfo.images" :key="index">
-							<view :class="[index == current ? 'activieDot' : 'dot']"></view>
-						</block>
-					</view>
-				</view>
-				<view class="page-section-spacing" width="100%" v-else-if="articleInfo.type == 4">
-					<video class="videobox" :style="{ height: swiperHeight }" :src="articleInfo.images[1]" object-fit="contain"
-					 :poster="articleInfo.images[0]" controls></video>
+		<view v-if="loading" class="loadBox">
+			<view class="container u-skeleton">
+				<view class="loadBlock" v-for="(item, index) in loadEmpty">
+					<view class="skeleton-long u-skeleton-rect"></view>
+					<view class="skeleton-long u-skeleton-rect"></view>
+					<view class="skeleton-long u-skeleton-rect"></view>
+					<view class="skeleton-short u-skeleton-rect"></view>
+					<view class="skeleton-rect u-skeleton-rect"></view>
 				</view>
 			</view>
-			<!-- 内容详情 -->
-			<view class="detailContent savebottom">
-				<view class="userMse">
-					<view class="left">
-						<view class="userHeard">
-							<image  lazy-load :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
-						</view>
-						<view class="userMse-r">
-							<view class="userNikename">{{ articleInfo.author_name }}</view>
-						</view>
-					</view>
-					<view class="right">
-						<view class="followBox" @click="follow()" v-if="!articleInfo.is_follow">
-							<image class="followImg" src="/static/images/followIcon.svg"></image>
-							关注
-						</view>
-						<view class="isfollowBox" @click="follow()" v-else-if="articleInfo.is_follow">已关注</view>
-					</view>
-				</view>
-				<!-- 地址 -->
-				<view class="adress-1">
-					<image src="/static/images/iconMap.svg" class="adreessIcon"></image>
-					<view class="adressText" @click="map()">{{ articleInfo.location }}</view>
-				</view>
-				<!-- 标题 -->
-				<!-- <text class="contentTitle" selected=true>{{ articleInfo.title }}</text> -->
-				<!-- 内容文章 -->
-				<view class="contentText">
-					<mp-html ref="parse" style="overflow: hidden;text-align: justify;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
-					 :content="articleInfo.content"></mp-html>
-				</view>
-				<view class="tips">
-					<view v-for="item in articleInfo.topics" :key="item.id" @click="toTopic(item.id)">
-						<image class="tipsIcon" src="/static/images/topicIcon.svg"></image>
-						<text class="tipsText">{{ item.name }}</text>
-					</view>
-				</view>
-				<view class="releaseTime">发布于{{ articleInfo.update_at }}</view>
-			</view>
+			<!--引用组件-->
+			<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
 		</view>
-		<!-- 攻略文章 -->
-		<view class="box-Introduction" v-else-if="articleInfo && articleInfo.type == 2">
-			<!-- 内容详情 -->
-			<view class="detailContent savebottom">
-				<!-- 标题 -->
-				<text class="contentTitle" selected='true'>{{ articleInfo.title }}</text>
-				<view class="StrategyTip">
-					<image class="StrategyImg" src="/static/images/Strategy.svg"></image>
-				</view>
-				<!-- 作者信息 -->
-				<view class="userMse">
-					<view class="left">
-						<view class="userHeard">
-							<image lazy-load :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
+		
+		<view v-else>
+			<!-- 游记文章 -->
+			<view class="" v-if="articleInfo && articleInfo.type != 2">
+				<!-- 内容详情轮播图 -->
+				<view class="uni-padding-wrap" >
+					<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="articleInfo.type != 4 && articleInfo.type != 5">
+						<swiper @change="change" class="swiper" :autoplay="true" circular='true' :indicator-dots="false" @click="ImgSee">
+							<swiper-item v-for="(item, index) in articleInfo.images" :key="index">
+								<image class="itemImg" :style="{ width: index == 0 ? '100%' : '' }" lazy-load :mode="index == 0 ? 'widthFix' : 'aspectFit'"
+								 :src="item"></image>
+							</swiper-item>
+						</swiper>
+						<view class="imageCount">{{ current + 1 }}/{{ articleInfo.images.length }}</view>
+						<view class="dots">
+							<block v-for="(item, index) in articleInfo.images" :key="index">
+								<view :class="[index == current ? 'activieDot' : 'dot']"></view>
+							</block>
 						</view>
-						<view class="userMse-r">
-							<text class="userNikename" selected=true> {{ articleInfo.author_name }}</text>
-							<view class="releaseTime-strategy">
-								发布于{{ articleInfo.update_at.slice(0,10) }}
+					</view>
+					<view class="page-section-spacing" width="100%" v-else-if="articleInfo.type == 4">
+						<video class="videobox" :style="{ height: swiperHeight }" :src="articleInfo.images[1]" object-fit="contain"
+						 :poster="articleInfo.images[0]" controls></video>
+					</view>
+				</view>
+				<!-- 内容详情 -->
+				<view class="detailContent savebottom">
+					<view class="userMse">
+						<view class="left">
+							<view class="userHeard">
+								<image  lazy-load :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
+							</view>
+							<view class="userMse-r">
+								<view class="userNikename">{{ articleInfo.author_name }}</view>
 							</view>
 						</view>
-					</view>
-					<view class="right">
-						<view class="followBox" @click="follow()" v-if="!articleInfo.is_follow">
-							<image class="followImg" src="/static/images/followIcon.svg"></image>
-							关注
-						</view>
-						<view class="isfollowBox" @click="follow()" v-else>已关注</view>
-					</view>
-				</view>
-				<!-- 内容文章 -->
-				<view class="contentText">
-					<mp-html ref="parse" style="overflow: hidden;text-align: justify;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
-					 :content="articleInfo.content"></mp-html>
-				</view>
-				<!-- 地址 -->
-				<view class="adress">
-					<image src="/static/images/iconMap.svg" class="adreessIcon"></image>
-					<view class="adressText" @click="map()">{{ articleInfo.location }}</view>
-				</view>
-			</view>
-			<!-- 话题 -->
-			<view>
-				<view class="tips">
-					<view v-for="item in articleInfo.topics" :key="item.id" @click="toTopic(item.id)">
-						<image class="tipsIcon" src="/static/images/topicIcon.svg"></image>
-						<text class="tipsText">{{ item.name }}</text>
-					</view>
-				</view>
-			</view>
-		</view>
-		<u-loading v-else :show="true" class="loading"></u-loading>
-		<!-- 评论区 -->
-		<view v-if="articleInfo">
-			<view class="replyLine"></view>
-			<view class="replyBox">
-				<view class="replyText" v-if="comment_count == 0">
-					暂无评论
-				</view>
-				<view class="replyText" v-if="comment_count > 0">
-					共{{comment_count}}条评论
-				</view>
-				<view class="replyContent">
-					<view class="myReply">
-						<image class="userImg" lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'"></image>
-						<view class="replyInput" @click="commentInput">
-							写个回复走个心
+						<view class="right">
+							<view class="followBox" @click="follow()" v-if="!articleInfo.is_follow">
+								<image class="followImg" src="/static/images/followIcon.svg"></image>
+								关注
+							</view>
+							<view class="isfollowBox" @click="follow()" v-else-if="articleInfo.is_follow">已关注</view>
 						</view>
 					</view>
-					<view class="reply" v-for="(item,index) in commentsList" :key="index">
-						<view class="replyTop">
-							<image class="userImg" lazy-load :src="item.avatar?item.avatar:'/static/images/userImg.svg'"></image>
-							<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
-								<view class="" style="display: flex;align-items: center;">
-									<view class="userName">{{item.account_name}}</view>
-									<view class="replyTime">
-										{{item.create_at.slice(0,10)}}
-									</view>
-								</view>
-								<view class="" style="display: flex;">
-									<view class="min-box" @click="replyLike(item, index)">
-										<image class="replyLike" :src="item.like == 1?'/static/images/attLikeA.svg':'/static/images/attLike.svg'" ></image>
-									</view>
-									<view class="min-box" @click="toReport(item.id)">
-										<image class="report" src="/static/images/report.svg" ></image>
-									</view>
+					<!-- 地址 -->
+					<view class="adress-1">
+						<image src="/static/images/iconMap.svg" class="adreessIcon"></image>
+						<view class="adressText" @click="map()">{{ articleInfo.location }}</view>
+					</view>
+					<!-- 标题 -->
+					<!-- <text class="contentTitle" selected=true>{{ articleInfo.title }}</text> -->
+					<!-- 内容文章 -->
+					<view class="contentText">
+						<mp-html ref="parse" style="overflow: hidden;text-align: justify;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
+						 :content="articleInfo.content"></mp-html>
+					</view>
+					<view class="tips">
+						<view v-for="item in articleInfo.topics" :key="item.id" @click="toTopic(item.id)">
+							<image class="tipsIcon" src="/static/images/topicIcon.svg"></image>
+							<text class="tipsText">{{ item.name }}</text>
+						</view>
+					</view>
+					<view class="releaseTime">发布于{{ articleInfo.update_at }}</view>
+				</view>
+			</view>
+			<!-- 攻略文章 -->
+			<view class="box-Introduction" v-else-if="articleInfo && articleInfo.type == 2">
+				<!-- 内容详情 -->
+				<view class="detailContent savebottom">
+					<!-- 标题 -->
+					<text class="contentTitle" selected='true'>{{ articleInfo.title }}</text>
+					<view class="StrategyTip">
+						<image class="StrategyImg" src="/static/images/Strategy.svg"></image>
+					</view>
+					<!-- 作者信息 -->
+					<view class="userMse">
+						<view class="left">
+							<view class="userHeard">
+								<image lazy-load :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
+							</view>
+							<view class="userMse-r">
+								<text class="userNikename" selected=true> {{ articleInfo.author_name }}</text>
+								<view class="releaseTime-strategy">
+									发布于{{ articleInfo.update_at.slice(0,10) }}
 								</view>
 							</view>
 						</view>
-						<view class="replyBottom">
-							{{item.content}}
+						<view class="right">
+							<view class="followBox" @click="follow()" v-if="!articleInfo.is_follow">
+								<image class="followImg" src="/static/images/followIcon.svg"></image>
+								关注
+							</view>
+							<view class="isfollowBox" @click="follow()" v-else>已关注</view>
+						</view>
+					</view>
+					<!-- 内容文章 -->
+					<view class="contentText">
+						<mp-html ref="parse" style="overflow: hidden;text-align: justify;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
+						 :content="articleInfo.content"></mp-html>
+					</view>
+					<!-- 地址 -->
+					<view class="adress">
+						<image src="/static/images/iconMap.svg" class="adreessIcon"></image>
+						<view class="adressText" @click="map()">{{ articleInfo.location }}</view>
+					</view>
+				</view>
+				<!-- 话题 -->
+				<view>
+					<view class="tips">
+						<view v-for="item in articleInfo.topics" :key="item.id" @click="toTopic(item.id)">
+							<image class="tipsIcon" src="/static/images/topicIcon.svg"></image>
+							<text class="tipsText">{{ item.name }}</text>
 						</view>
 					</view>
 				</view>
-				<view class="moreReply" v-if="comment_count > 3" @click="toMoreReply">
-					查看全部{{comment_count}}条评论
-				</view>
 			</view>
-			<view class="safeBox"></view>
+			<!-- 评论区 -->
+			<view v-if="articleInfo">
+				<view class="replyLine"></view>
+				<view class="replyBox">
+					<view class="replyText" v-if="comment_count == 0">
+						暂无评论
+					</view>
+					<view class="replyText" v-if="comment_count > 0">
+						共{{comment_count}}条评论
+					</view>
+					<view class="replyContent">
+						<view class="myReply">
+							<image class="userImg" lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'"></image>
+							<view class="replyInput" @click="commentInput">
+								写个回复走个心
+							</view>
+						</view>
+						<view class="reply" v-for="(item,index) in commentsList" :key="index">
+							<view class="replyTop">
+								<image class="userImg" lazy-load :src="item.avatar?item.avatar:'/static/images/userImg.svg'"></image>
+								<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
+									<view class="" style="display: flex;align-items: center;">
+										<view class="userName">{{item.account_name}}</view>
+										<view class="replyTime">
+											{{item.create_at.slice(0,10)}}
+										</view>
+									</view>
+									<view class="" style="display: flex;">
+										<view class="min-box" @click="replyLike(item, index)">
+											<image class="replyLike" :src="item.like == 1?'/static/images/attLikeA.svg':'/static/images/attLike.svg'" ></image>
+										</view>
+										<view class="min-box" @click="toReport(item.id)">
+											<image class="report" src="/static/images/report.svg" ></image>
+										</view>
+									</view>
+								</view>
+							</view>
+							<view class="replyBottom">
+								{{item.content}}
+							</view>
+						</view>
+					</view>
+					<view class="moreReply" v-if="comment_count > 3" @click="toMoreReply">
+						查看全部{{comment_count}}条评论
+					</view>
+				</view>
+				<view class="safeBox"></view>
+			</view>
 		</view>
+		
 		<!-- 登录 -->
 		<view class="bottom" v-if="articleInfo">
 			<view class="bottom-text" @click="commentInput">
@@ -228,7 +244,9 @@
 				current: 0,
 				list: [],
 				title: '领途羊',
-				articleInfo: null,
+				articleInfo: {
+					title:'领途羊',
+				},
 				articleSEO: {
 					title: '',
 					keywords: '',
@@ -251,6 +269,9 @@
 				textareafocus: false,
 				animation: null,
 				animationInputC: {},
+				// 骨架屏
+				loadEmpty:[1,2,3],
+				loading: true,
 				// 防止用户快速点击，多次请求
 				hasLikeClick: false,
 				hasFavClick: false,
@@ -295,9 +316,13 @@
 		onLoad(obj) {
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.article_id = obj.article_id
+			this.loadData()
+			// 搜索数据采集
 			this.trace_info = obj.trace_info?obj.trace_info:null
 			this.rn = obj.rn?obj.rn:null
 			this.joinTime = Number((new Date().getTime())/1000).toFixed(0)
+			
+			// 评论框动画
 			this.animation = uni.createAnimation({
 				  transformOrigin: "50% 50%",
 				  duration:2,//175动画速度
@@ -305,14 +330,6 @@
 				  delay: 1
 				}
 			)
-			this.loadData()
-			// 创建动画实例
-			uni.getSystemInfo({ //获取设备信息
-				success: (res) => {
-					this.screenHeight = res.screenHeight;
-					this.platform = res.platform;
-				}
-			});
 		},
 		methods: {
 			ImgSee(){
@@ -322,23 +339,19 @@
 				});
 			},
 			loadData(){
-				this.getArticleDetail();
-				this.getUserInfo()
-				setTimeout(() => {
-					this.getComments();
-				}, 200);
-				// uni.showLoading({
-				// 	title: '加载中',
-				// 	mask: true,
-				// 	success: () => {
-				// 		this.getArticleDetail();
-				// 		this.getUserInfo()
-				// 		setTimeout(() => {
-				// 			this.getComments();
-				// 			this.hideLoad()
-				// 		}, 200);
-				// 	}
-				// });
+				
+				uni.showLoading({
+					title: '加载中',
+					mask: true,
+					success: () => {
+						this.getArticleDetail();
+						setTimeout(() => {
+							this.getUserInfo()
+							this.getComments();
+							this.hideLoad()
+						}, 100);
+					}
+				});
 			},
 			hideLoad(){
 				setTimeout(() => {
@@ -381,6 +394,7 @@
 			},
 			// 获取文章详情
 			getArticleDetail() {
+				this.loading = true
 				var that = this;
 				this.HTTP.request({
 					url: '/article',
@@ -529,6 +543,9 @@
 					fail: error => {
 						//  请求失败,隐藏加载状态
 						this.mescroll.endErr();
+					},
+					complete: () => {
+						this.loading = false
 					}
 				});
 			},
@@ -1105,6 +1122,28 @@
 	page {
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
+	}
+	.loadBox{
+		width: 100%;
+		height: auto;
+		margin: 40rpx 28rpx 0rpx;
+		.loadBlock{
+			.skeleton-long{
+				margin-top: 20rpx;
+				width: 694rpx;
+				height: 20rpx;
+			}
+			.skeleton-short{
+				margin-top: 20rpx;
+				width: 90rpx;
+				height: 20rpx;
+			}
+			.skeleton-rect{
+				margin-top: 40rpx;
+				width: 694rpx;
+				height: 390rpx;
+			}
+		}
 	}
 	// .box-Introduction{
 	// 	background: red;
