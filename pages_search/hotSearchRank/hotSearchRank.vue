@@ -49,13 +49,10 @@
 			};
 		},
 		mixins: [MescrollMixin],
-		onLoad() {
-		},
 		mounted() {
 			this.calcCardHeight()
 			this.mescroll.setPageSize(20)
 		},
-		
 		onPageScroll(e) {
 			if (e.scrollTop > this.cardheight) {
 				this.background = '#FFFFFF'

@@ -62,8 +62,13 @@ export default {
 				info:''
 			};
 		},
-		onLoad(e) {
-			this.topic_id = Number(e.id)
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
+			this.topic_id = Number(query.id)
 			this.loadData()
 		},
 		onPageScroll(e) {

@@ -163,6 +163,7 @@ export default {
 	},
 	data() {
 		return {
+			id: 0,
 			lineContent: null,
 			current: 0,
 			hasLogin: false,
@@ -176,10 +177,15 @@ export default {
 			Show:false,
 		};
 	},
-	onLoad(options) {
-		let id = options.id
+	// #ifdef MP-BAIDU
+	onInit(query) {
+	// #endif
+	// #ifndef MP-BAIDU
+	onLoad(query) {
+	// #endif
+		this.id = query.id
 		this.serviceProvider = getApp().globalData.serviceProvider
-		this.getDetail(id);
+		this.getDetail();
 	},
 	onShow() {
 		this.hasLogin = getApp().globalData.Authorization ? true : false;
@@ -201,13 +207,13 @@ export default {
 		}
 	},
 	methods: {
-		getDetail(id) {
+		getDetail() {
 			var that = this
 			this.HTTP.request({
 				url: '/route',
 				method: 'GET',
 				data: {
-					uuid: id
+					uuid: this.id
 				},
 				success: res => {
 					if (res.statusCode != 200 || res.data.code != 0){

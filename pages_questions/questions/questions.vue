@@ -93,7 +93,12 @@
 		components: {
 			mSearch
 		},
-		onLoad() {
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
 			this.defaultKeyword = '清晰描述您的疑问';
 		},
 		methods: {

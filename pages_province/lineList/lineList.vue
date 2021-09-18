@@ -40,12 +40,17 @@ export default {
 			}
 		};
 	},
-	onLoad(option){
-		if(option.state_id == 0){
-			this.state_id = option.city_id ? option.city_id : null
+	// #ifdef MP-BAIDU
+	onInit(query) {
+	// #endif
+	// #ifndef MP-BAIDU
+	onLoad(query) {
+	// #endif
+		if(query.state_id == 0){
+			this.state_id = query.city_id ? query.city_id : null
 		}else{
-			this.state_id = option.state_id ? option.state_id : null
-			this.city_id = option.city_id ? option.city_id : null
+			this.state_id = query.state_id ? query.state_id : null
+			this.city_id = query.city_id ? query.city_id : null
 		}
 	},
 	methods: {

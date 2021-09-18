@@ -45,12 +45,16 @@
 		components:{
 			uniNavBar
 		},
-		onLoad:function(option){
-			that.state_id = option.state_id
-			that.city_id = option.city_id
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
+			that.state_id = query.state_id
+			that.city_id = query.city_id
 			this.getHotAttList()
 		},
-		
 		methods: {
 			getHotAttList(){
 				var that = this

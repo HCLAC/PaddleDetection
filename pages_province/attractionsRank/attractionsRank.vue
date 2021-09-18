@@ -103,8 +103,13 @@
 				cardheight: 200,
 			}
 		},
-		onLoad: function(options) {
-			if (!options.name){
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
+			if (!query.name){
 				this.querys = {
 					imageProcess: this.Utils.addImageProcess('https://cache.lingtuyang.cn/areas/8bca332388ab1dca8c905d65f35ede84.png', false, 60),
 					name: '全国',
@@ -112,8 +117,8 @@
 					city_id: 0,
 				}
 			} else {
-				options.imageProcess = this.Utils.addImageProcess(options.image, false, 60)
-				this.querys = options;
+				query.imageProcess = this.Utils.addImageProcess(query.image, false, 60)
+				this.querys = query;
 			}
 			
 			this.serviceProvider = getApp().globalData.serviceProvider

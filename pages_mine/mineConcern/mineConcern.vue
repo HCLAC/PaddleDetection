@@ -85,8 +85,6 @@
 			};
 		},
 		mixins: [MescrollMixin],
-		onLoad() {
-		},
 		methods: {
 			// 跳转博主详情页
 			tobloggers(e){

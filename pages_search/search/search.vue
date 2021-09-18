@@ -212,9 +212,14 @@
 				this.getSearchResults()
 			}
 		},
-		onLoad(options) {
-			this.keyword = options.keyword
-			this.autofocus = options.focus ? options.focus==1 : true
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
+			this.keyword = query.keyword
+			this.autofocus = query.focus ? query.focus==1 : true
 			uni.getStorage({
 				key: 'searchHistory',
 				success: res => {

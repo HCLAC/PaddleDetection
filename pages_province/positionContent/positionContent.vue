@@ -161,8 +161,13 @@ export default {
 			siteInfoNumber:"",
 		};
 	},
-	onLoad:function(e) {
-		this.id = e.id
+	// #ifdef MP-BAIDU
+	onInit(query) {
+	// #endif
+	// #ifndef MP-BAIDU
+	onLoad(query) {
+	// #endif
+		this.id = query.id
 		this.serviceProvider = getApp().globalData.serviceProvider
 		this.getSiteDetail()
 	},

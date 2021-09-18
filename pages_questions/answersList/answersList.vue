@@ -73,8 +73,13 @@
 			};
 		},
 		mixins: [MescrollMixin],
-		onLoad(question_id) {
-			this.question_id = question_id.question_id
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
+			this.question_id = query.question_id
 		},
 		methods:{
 			mescrollInit(mescroll) {

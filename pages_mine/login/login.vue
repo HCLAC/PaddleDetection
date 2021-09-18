@@ -99,9 +99,14 @@ export default {
 			platform: '',
 		};
 	},
-	onLoad(options) {
-		this.serviceProvider = getApp().globalData.serviceProvider;
-		switch(this.serviceProvider){
+	// #ifdef MP-BAIDU
+	onInit(query) {
+	// #endif
+	// #ifndef MP-BAIDU
+	onLoad(query) {
+	// #endif
+		var serviceProvider = getApp().globalData.serviceProvider;
+		switch(serviceProvider){
 			case 'baidu':
 				this.serviceSource = 2
 				break;

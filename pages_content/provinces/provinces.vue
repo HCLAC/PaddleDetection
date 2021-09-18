@@ -170,8 +170,13 @@ export default {
 		weather,
 		cityPicker
 	},
-	onLoad(options) {
-		if (!options.name){
+	// #ifdef MP-BAIDU
+	onInit(query) {
+	// #endif
+	// #ifndef MP-BAIDU
+	onLoad(query) {
+	// #endif
+		if (!query.name){
 			this.querys = {
 				imageProcess: this.Utils.addImageProcess('https://cache.lingtuyang.cn/areas/8bca332388ab1dca8c905d65f35ede84.png', false, 60),
 				name: '全国',
@@ -179,16 +184,16 @@ export default {
 				city_id: 0,
 			}
 		} else {
-			options.imageProcess = this.Utils.addImageProcess(options.image, false, 60)
-			this.querys = options;
+			query.imageProcess = this.Utils.addImageProcess(query.image, false, 60)
+			this.querys = query;
 		}
 		
 		//#ifdef MP-BAIDU
 		swan.setPageInfo({
-			title: options.name+"旅游攻略-领途羊",
-			keywords: options.name+","+options.name+"旅游攻略,"+options.name+"景点介绍,领途羊",
-			description: options.name+"旅游攻略，欢迎来领途羊咨询旅游",
-			image: [options.image],
+			title: query.name+"旅游攻略-领途羊",
+			keywords: query.name+","+query.name+"旅游攻略,"+query.name+"景点介绍,领途羊",
+			description: query.name+"旅游攻略，欢迎来领途羊咨询旅游",
+			image: [query.image],
 		})
 		//#endif
 		this.loadData()

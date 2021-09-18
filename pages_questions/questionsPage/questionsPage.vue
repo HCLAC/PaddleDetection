@@ -108,8 +108,13 @@
 				}
 			};
 		},
-		onLoad(options) {
-			this.title = options.title
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
+			this.title = query.title
 			this.getCity()
 			this.getAdress()
 			this.getTips()

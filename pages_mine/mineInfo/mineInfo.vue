@@ -97,7 +97,12 @@
 				}
 			};
 		},
-		onInit() {
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
 			this.getUserInfo()
 		},
 		created() {
@@ -106,8 +111,6 @@
 				let base ='data:image/png;base64,'+uni.getFileSystemManager().readFileSync(e.url,'base64')
 				this.avatar = base
 			})
-		},
-		onLoad(options) {
 		},
 		methods:{
 			// 用户信息

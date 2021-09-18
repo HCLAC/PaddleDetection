@@ -89,7 +89,12 @@
 				upOption:{}
 			};
 		},
-		onLoad() {
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
 			this.getSquare()
 		},
 		methods:{

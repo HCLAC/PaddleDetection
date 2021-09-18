@@ -296,6 +296,29 @@
 				}]
 			}
 		},
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
+			this.serviceProvider = getApp().globalData.serviceProvider
+			this.article_id = query.article_id
+			this.loadData()
+			// 搜索数据采集
+			this.trace_info = query.trace_info?query.trace_info:null
+			this.rn = query.rn?query.rn:null
+			this.joinTime = Number((new Date().getTime())/1000).toFixed(0)
+			
+			// 评论框动画
+			this.animation = uni.createAnimation({
+				  transformOrigin: "50% 50%",
+				  duration: 175,//175动画速度
+				  timingFunction: "linear",
+				  delay: 1
+				}
+			)
+		},
 		// #endif
 		onReady() {
 			//#ifdef MP-BAIDU
@@ -312,24 +335,6 @@
 				this.animationInputC = this.animation.export()
 			});
 			//#endif
-		},
-		onLoad(obj) {
-			this.serviceProvider = getApp().globalData.serviceProvider
-			this.article_id = obj.article_id
-			this.loadData()
-			// 搜索数据采集
-			this.trace_info = obj.trace_info?obj.trace_info:null
-			this.rn = obj.rn?obj.rn:null
-			this.joinTime = Number((new Date().getTime())/1000).toFixed(0)
-			
-			// 评论框动画
-			this.animation = uni.createAnimation({
-				  transformOrigin: "50% 50%",
-				  duration:2,//175动画速度
-				  timingFunction: "linear",
-				  delay: 1
-				}
-			)
 		},
 		methods: {
 			ImgSee(){

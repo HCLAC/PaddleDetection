@@ -202,8 +202,13 @@
 				animationInputC: {},
 			};
 		},
-		onLoad(options) {
-			this.question_id = options.question_id
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
+			this.question_id = query.question_id
 			this.getQuestionsDetail()
 			this.getAnswersOfficial()
 			this.getQuestionsRelated()
