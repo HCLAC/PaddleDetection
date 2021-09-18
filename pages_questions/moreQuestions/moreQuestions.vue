@@ -45,9 +45,14 @@ import questionList from '@/common/article-mescroll-item/mine-answer-list.vue';
 				cardheight: 0
 			};
 		},
-		onLoad(option) {
-			this.state_id = option.state_id
-			this.city_id = option.city_id
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
+			this.state_id = query.state_id
+			this.city_id = query.city_id
 		}, 
 		mounted() {
 			this.calcCardHeight()

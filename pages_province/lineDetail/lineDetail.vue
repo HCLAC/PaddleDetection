@@ -48,7 +48,7 @@
 			</view>
 			<view class="lineDriver"></view>
 		</view>
-		<view >
+		<view class="lineTabs">
 			<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight"  :line-width="130" :tab-width="105"></meTabs>
 		</view>
 		<view class="linePlan">
@@ -172,10 +172,14 @@ export default {
 			headerHeight:200,
 			navbarHeight: getApp().globalData.navbarHeight,
 			planHeight: 2000,
+			serverInfoHeight: 2000,
 			tabList: ['参考行程', '服务说明'],
 			tabIndex: 0 ,// 当前tab下标,必须与mescroll-more.js对应,所以tabIndex是固定变量,不可以改为其他的名字
 			Show:false,
 		};
+	},
+	mounted(){
+		this.calcHeight()
 	},
 	// #ifdef MP-BAIDU
 	onInit(query) {
@@ -248,7 +252,6 @@ export default {
 						image: that.lineContent.images.length <=3 ? that.lineContent.images : that.lineContent.images.slice(0,3),
 					})
 					//#endif
-					that.calcHeight()
 				}
 			});
 		},
@@ -339,7 +342,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .u-node{
 	border: 8rpx solid #FFFFFF;
 }
@@ -476,6 +479,11 @@ export default {
 	width: 100%;
 	background: #f8f8f8;
 }
+
+.lineTabs{
+	height: 128rpx;
+}
+
 .linePlan {
 	// margin: 0 auto;
 	margin-top: 20rpx;

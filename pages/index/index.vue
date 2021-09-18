@@ -381,12 +381,16 @@
 					},
 					// 未开启定位
 					fail: error => {
+						if (error.errCode === 10005) {
+							uni.showToast({
+								title: "请检查定位功能是否开启",
+								icon: 'none'
+							});
+						}
 						this.cityName = '未定位'
 					}
 				});
-				
 			},
-			
 			// 点击banner
 			towebview(item) {
 				uni.navigateTo({

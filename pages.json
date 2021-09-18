@@ -247,43 +247,39 @@
 		,{
 			"root":"pages_questions",
 			"pages":[
-				{
-					"path" : "questions/questions",
-					"style" : {
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path" : "questionsPage/questionsPage",
-					"style" :                                                                                    
-					{
-						"navigationStyle": "custom"
-					}
-					
-				},
-				{
-					"path" : "moreQuestions/moreQuestions",
-					"style" :                                                                                    
-					{
-						"navigationStyle": "custom"
-					}
-					
-				},
-				{
-					"path" : "questionsComplete/questionsComplete",
-					"style" :                                                                                    
-					{
-						"navigationStyle": "custom"
-					}
-					
-				},
+				// {
+				// 	"path" : "questions/questions",
+				// 	"style" : {
+				// 		"navigationStyle": "custom"
+				// 	}
+				// },
+				// {
+				// 	"path" : "questionsPage/questionsPage",
+				// 	"style" :                                                                                    
+				// 	{
+				// 		"navigationStyle": "custom"
+				// 	}
+				// },
+				// {
+				// 	"path" : "moreQuestions/moreQuestions",
+				// 	"style" :                                                                                    
+				// 	{
+				// 		"navigationStyle": "custom"
+				// 	}
+				// },
+				// {
+				// 	"path" : "questionsComplete/questionsComplete",
+				// 	"style" :                                                                                    
+				// 	{
+				// 		"navigationStyle": "custom"
+				// 	}
+				// },
 				{
 					"path" : "questionsDetail/questionsDetail",
 					"style" :                                                                                    
 					{
 						"navigationStyle": "custom"
 					}
-					
 				},
 				{
 					"path" : "answersList/answersList",
@@ -291,7 +287,6 @@
 					{
 						"navigationStyle": "custom"
 					}
-					
 				}
 			]
 		}

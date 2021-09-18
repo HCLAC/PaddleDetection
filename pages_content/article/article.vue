@@ -296,6 +296,8 @@
 				}]
 			}
 		},
+		// #endif
+		
 		// #ifdef MP-BAIDU
 		onInit(query) {
 		// #endif
@@ -319,7 +321,6 @@
 				}
 			)
 		},
-		// #endif
 		onReady() {
 			//#ifdef MP-BAIDU
 			swan.showFavoriteGuide({
