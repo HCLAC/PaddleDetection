@@ -1252,11 +1252,11 @@
 			.userHeard {
 				width: 80rpx;
 				height: 80rpx;
-				border-radius: 50%;
-				overflow: hidden;
+				// overflow: hidden;
 				image{
 					width: 100%;
 					height: 100%;
+					border-radius: 50%;
 				}
 			}
 			.userMse-r {
@@ -1592,8 +1592,11 @@
 
 
 	.safeBox {
-		height: 142rpx;
+		height: 140rpx;
 		width: 100%;
+		padding-bottom: constant(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom);
+		box-sizing: content-box;
 	}
 	/* 底部 */
 	.bottom {

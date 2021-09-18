@@ -96,7 +96,8 @@
 					auto: false
 				},
 				upOption:{
-					bgColor:'#ffffff'
+					bgColor:'#ffffff',
+					noMoreSize: 10, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
 				},
 				isFixed: false,
 				cardheight: 200,
