@@ -59,7 +59,7 @@
 					</view>
 				</view>
 				<view class="answersCardContent">
-					<mp-html ref="parse" style="overflow: hidden;" lazy-load :tag-style="style" :content="answersOfficial.content"></mp-html>
+					<mp-html ref="parse" style="overflow: hidden;text-align: justify;" lazy-load :tag-style="style" :content="answersOfficial.content"></mp-html>
 				</view>
 				<view class="answersCardBottom">
 					<view class="acbr">
@@ -775,7 +775,7 @@
 								height: 44rpx;
 							}
 							text{
-								width: 48rpx;
+								// width: 48rpx;
 								font-size: 20rpx;
 								font-family: PingFangSC-Regular, PingFang SC;
 								font-weight: 400;
