@@ -7,7 +7,7 @@
 						{{item.title}}
 					</view>
 					<view class="content">
-						<mp-html ref="parse"  style="overflow: hidden;" lazy-load :tag-style="style"
+						<mp-html ref="parse" style="overflow: hidden;text-align: justify;" lazy-load :tag-style="style"
 						 :html="item.content"></mp-html>
 					</view>
 					<view class="authorBox">

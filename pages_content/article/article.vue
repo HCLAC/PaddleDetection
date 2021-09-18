@@ -61,8 +61,8 @@
 				<!-- <text class="contentTitle" selected=true>{{ articleInfo.title }}</text> -->
 				<!-- 内容文章 -->
 				<view class="contentText">
-					<mp-html ref="parse" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
-					 :content="articleInfo.content" loading-img='/static/images/load.svg' error-img='/static/images/fail.svg'></mp-html>
+					<mp-html ref="parse" style="overflow: hidden;text-align: justify;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
+					 :content="articleInfo.content"></mp-html>
 				</view>
 				<view class="tips">
 					<view v-for="item in articleInfo.topics" :key="item.id" @click="toTopic(item.id)">
@@ -105,8 +105,8 @@
 				</view>
 				<!-- 内容文章 -->
 				<view class="contentText">
-					<mp-html ref="parse" style="overflow: hidden;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
-					 :content="articleInfo.content" loading-img='/static/images/load.svg' error-img='/static/images/fail.svg'></mp-html>
+					<mp-html ref="parse" style="overflow: hidden;text-align: justify;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
+					 :content="articleInfo.content"></mp-html>
 				</view>
 				<!-- 地址 -->
 				<view class="adress">

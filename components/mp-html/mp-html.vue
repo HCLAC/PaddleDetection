@@ -65,7 +65,7 @@ export default {
     domain: String,
     errorImg: {
       type: String,
-      default: ''
+      default: '/static/images/load.svg'
     },
     lazyLoad: {
       type: Boolean,
@@ -73,7 +73,7 @@ export default {
     },
     loadingImg: {
       type: String,
-      default: ''
+      default: '/static/images/load.svg'
     },
     pauseVideo: {
       type: Boolean,

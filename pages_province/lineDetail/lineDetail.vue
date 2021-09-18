@@ -193,7 +193,7 @@ export default {
 		} else {
 			this.isFixed = false;
 		}
-		if(e.scrollTop >= this.planHeight){
+		if(e.scrollTop >= this.planHeight+20){
 			this.tabIndex = 1
 		} else {
 			this.tabIndex = 0
@@ -275,9 +275,11 @@ export default {
 			if (index == 0){
 				scrollTop = this.headerHeight
 			}
-			uni.pageScrollTo({
-				scrollTop: scrollTop,
-				duration: 10,
+			this.$nextTick(function(){
+				uni.pageScrollTo({
+					scrollTop: scrollTop,
+					duration: 100,
+				})
 			})
 		},
 		change(e) {

@@ -182,7 +182,7 @@
 					auto:false
 				},
 				upOption: {
-					auto:false,
+					auto:true,
 				},
 				backgroundColor: 'transparent',
 				firstTime: new Date().getTime(),
@@ -209,8 +209,6 @@
 			    type: 'tip'
 			})
 			// #endif
-		},
-		onLoad() {
 		},
 		onShow() {
 			var cur = Number((new Date().getTime())/1000).toFixed(0)
@@ -253,7 +251,6 @@
 						
 						setTimeout(() => {
 							this.getCity()
-							this.mescroll.resetUpScroll();
 							this.hideLoad()
 						}, 200);
 					}
@@ -479,7 +476,7 @@
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {
 				this.loadData()
-				// this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+				this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
 			},
 			upCallback(page) {
 				let pageNum = page.num;

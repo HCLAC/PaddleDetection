@@ -109,12 +109,12 @@ export default {
 		// 加载中的图标，或者小图片
 		loadingIcon: {
 			type: String,
-			default: '/static/images/load-mini.svg'
+			default: '/static/images/load_logo.svg'
 		},
 		// 加载失败的图标，或者小图片
 		errorIcon: {
 			type: String,
-			default: '/static/images/fail-mini.svg'
+			default: '/static/images/load_logo.svg'
 		},
 		// 是否显示加载中的图标或者自定义的slot
 		showLoading: {
