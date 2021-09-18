@@ -297,7 +297,12 @@
 			}
 		},
 		// #endif
-		
+		created() {
+			// 监听从博主页面发来的信息
+			uni.$on('onBlogStatus', is_follow => {
+				this.articleInfo.is_follow = is_follow
+			})
+		},
 		// #ifdef MP-BAIDU
 		onInit(query) {
 		// #endif
