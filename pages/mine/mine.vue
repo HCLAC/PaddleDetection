@@ -102,6 +102,7 @@ export default {
 	onLoad(query) {
 	// #endif
 		if (!this.Utils.isLogin()){
+			this.isInit = false
 			return
 		}
 		this.hasLogin = true
@@ -109,6 +110,10 @@ export default {
 	},
 	onShow() {
 		!this.isInit && this.loadData()
+		if (!this.Utils.isLogin()){
+			return
+		}
+		this.hasLogin = true
 		this.isInit = false
 	},
 	mounted() {
