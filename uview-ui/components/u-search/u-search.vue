@@ -12,8 +12,7 @@
 			}"
 		>
 			<view class="u-icon-wrap">
-				<image class="u-clear-img" src="@/static/images/icon-search.svg"></image>
-				<!-- <u-icon class="u-clear-icon" :size="28" :name="searchIcon" :color="searchIconColor ? searchIconColor : color"></u-icon> -->
+				<u-icon class="u-clear-icon" :size="28" :name="searchIcon" :color="searchIconColor ? searchIconColor : color"></u-icon>
 			</view>
 			<input
 				confirm-type="search"
@@ -37,9 +36,7 @@
 				}, inputStyle]"
 			/>
 			<view class="u-close-wrap" v-if="keyword && clearabled && focused" @tap="clear">
-				<image class="u-clear-img-eliminate" src="@/static/images/ic_search_sel.svg"></image>
-				
-				<!-- <u-icon class="u-clear-icon" name="close-circle-fill" size="34" color="#c0c4cc"></u-icon> -->
+				<u-icon class="u-clear-icon" name="close-circle-fill" size="34" color="#c0c4cc"></u-icon>
 			</view>
 		</view>
 		<view :style="[actionStyle]" class="u-action" 
@@ -209,7 +206,7 @@ export default {
 	watch: {
 		keyword(nVal) {
 			// 双向绑定值，让v-model绑定的值双向变化
-			// this.$emit('input', nVal);
+			this.$emit('input', nVal);
 			// 触发change事件，事件效果和v-model双向绑定的效果一样，让用户多一个选择
 			this.$emit('change', nVal);
 		},
@@ -234,8 +231,7 @@ export default {
 	methods: {
 		// 目前HX2.6.9 v-model双向绑定无效，故监听input事件获取输入框内容的变化
 		inputChange(e) {
-			this.keyword = e.detail.value.trim();
-			this.$emit('input', this.keyword);
+			this.keyword = e.detail.value;
 		},
 		// 清空输入
 		// 也可以作为用户通过this.$refs形式调用清空输入框内容
@@ -299,18 +295,11 @@ export default {
 	align-items: center;
 	flex: 1;
 }
-.u-clear-img{
-	width: 30rpx;
-	height: 30rpx;
-}
-.u-clear-img-eliminate{
-	width: 38rpx;
-	height: 36rpx;
-}
+
 .u-content {
 	@include vue-flex;
 	align-items: center;
-	padding:0rpx 18rpx 0rpx 32rpx;
+	padding:0rpx  18rpx;
 	flex: 1;
 }
 
