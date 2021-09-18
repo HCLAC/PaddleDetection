@@ -167,6 +167,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 							return
 						}
 						that.authorMsg.is_follow = status
+						that.authorMsg.fans += 1
 					}
 				})
 			},
@@ -190,6 +191,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 							return
 						}
 						that.authorMsg.is_follow = status
+						that.authorMsg.fans -= 1
 					}
 				})
 			},
