@@ -296,12 +296,11 @@ export default {
 			}
 		}
 		.fa{
-			margin-top: 20rpx;
+			// margin-top: 20rpx;
 			display: flex;
 			align-items: center;
 			.fllow{
-				
-				height: 24rpx;
+				height: 60rpx;
 				font-size: 28rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
 				font-weight: 400;
@@ -313,7 +312,7 @@ export default {
 				}
 			}
 			.answers{
-				height: 24rpx;
+				height: 60rpx;
 				font-size: 28rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
 				font-weight: 400;

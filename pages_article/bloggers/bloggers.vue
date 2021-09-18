@@ -172,6 +172,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 							return
 						}
 						that.authorMsg.is_follow = status
+						that.authorMsg.fans += 1
 						uni.$emit('onBlogStatus', status);
 					}
 				})
@@ -196,6 +197,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 							return
 						}
 						that.authorMsg.is_follow = status
+						that.authorMsg.fans -= 1
 						uni.$emit('onBlogStatus', status);
 					}
 				})
