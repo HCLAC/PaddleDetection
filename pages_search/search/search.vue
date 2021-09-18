@@ -18,7 +18,8 @@
 				action-text="取消"
 				:placeholder="placeholderKeyword" 
 				bg-color='#F8F8F8'
-				:action-style="{width:'64rpx',height:'42rpx',marginLeft:'24rpx',fontSize:'32rpx'}"
+				searchIconColor="#c9cad1"
+				:action-style="{width:'64rpx',height:'50rpx',marginLeft:'24rpx',fontSize:'32rpx'}"
 				:input-style="{background: '#F8F8F8'}"
 				height=72
 				@input="inputChange"

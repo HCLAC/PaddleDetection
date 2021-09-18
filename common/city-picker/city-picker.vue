@@ -147,6 +147,9 @@
 
 <style lang="scss">
 	// 列表
+	.u-line-1{
+		overflow: visible !important;
+	}
 	.u-menu-wrap {
 		height: 574rpx;
 		flex: 1;
@@ -195,7 +198,6 @@
 		font-size: 28rpx;
 		background: #f8f8f8;
 	}
-	
 	.u-tab-item-active::before {
 		content: '';
 		position: absolute;
