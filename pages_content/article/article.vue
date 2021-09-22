@@ -545,9 +545,12 @@
 								});
 							});
 						}
+						// setTimeout(() => {
+						// 	that.loading = false
+						// }, 100);
 					},
 					complete: () => {
-						this.loading = false
+						that.loading = false
 					}
 				});
 			},
@@ -1124,6 +1127,12 @@
 	page {
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
+	}
+	
+	/deep/.contextText {
+		swan-image{
+			width: 100%!important;
+		}
 	}
 	.loadBox{
 		width: 100%;

@@ -64,6 +64,7 @@ export default {
 <style lang="scss">
 @import 'uview-ui/index.scss';
 uni-rich-text img{ max-width: 100% !important;}
+
 // /deep/.rich-text-selectable{text-align: justify !important;}
 .nav-bar {
 	z-index: 9999;

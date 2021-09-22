@@ -273,6 +273,7 @@
 				var that = this
 				this.HTTP.request({
 					url: '/area/hot',
+					retry: 3,
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
