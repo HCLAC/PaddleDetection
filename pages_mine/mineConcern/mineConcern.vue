@@ -323,19 +323,18 @@
 		height: 52rpx;
 		background: #FFE512;
 		border-radius: 26rpx;
-		display: flex;
+		// display: flex;
+		display: inline-block;
 		align-items: center;
 		justify-content: center;
 		margin-right: 28rpx;
 		color: #303133;
-
 		text {
-			height: 14px;
-			font-size: 14px;
+			// height: 14px;
+			font-size: 28rpx;
 			// font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 500;
-
-			line-height: 14px;
+			// line-height: 14px;
 		}
 
 	}
@@ -353,12 +352,12 @@
 		color: rgba(201, 202, 209, 1);
 
 		text {
-			height: 14px;
-			font-size: 14px;
+			// height: 14px;
+			font-size: 28rpx;
 			// font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 400;
 			color: #C9CAD1;
-			line-height: 14px;
+			// line-height: 14px;
 		}
 	}
 
