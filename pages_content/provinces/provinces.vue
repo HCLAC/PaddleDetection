@@ -211,7 +211,7 @@ export default {
 				success: () => {
 					this.hideLoad();
 				},
-				complete: () =>{
+				complete: () => {
 					this.getQuestionList()
 					this.getSiteHot(),
 					this.getRouteHot();
