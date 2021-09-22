@@ -18,20 +18,25 @@
 				<view class="usermes">
 					<image lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'" class="userAva"></image>
 					<view class="userR">
-						<view class="userName" @click="toMineInfo">{{ userInfo.nickName }}
+						<view class="userName" @click="toMineInfo" v-if="hasLogin">{{ userInfo.nickName }}
 							<image src="/static/images/iconExit.svg"></image>
 						</view>
-						<view class="fa">
+						<view class="userSignin" v-else @click="signIn">
+							登录/注册
+						</view>
+						<view class="fa" v-if="hasLogin">
 							<view class="fllow" @click="toConcern">
 								<text>关注</text>
 								<view style="margin-left: 8rpx;" class="fllowNum">{{ userInfo.fllowNum }}</view>
 							</view>
-							<view class="answers" @click="toAnswers">
+							<view class="answers" @click="toAnswers" >
 								<text>问答</text>
 								<view style="margin-left: 8rpx;" class="answersNum">{{ userInfo.answersNum }}</view>
 							</view>
 						</view>
-						
+						<view class="userMsg" v-else>
+							点击登录享受更多更多精彩信息
+						</view>
 						<!-- <view class="logout">退出登录</view> -->
 					</view>
 				</view>
@@ -52,6 +57,7 @@
 import MescrollMoreMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-more.js';
 import meTabs from '@/common/me-tabs/me-tabs.vue';
 import articleList from '@/common/article-mescroll-item/mine-article-list.vue';
+import globalUrl from '@/global.js'
 
 export default {
 	mixins: [MescrollMoreMixin],
@@ -101,19 +107,10 @@ export default {
 	// #ifndef MP-BAIDU
 	onLoad(query) {
 	// #endif
-		if (!this.Utils.isLogin()){
-			this.isInit = false
-			return
-		}
-		this.hasLogin = true
 		this.loadData()
 	},
 	onShow() {
 		!this.isInit && this.loadData()
-		if (!this.Utils.isLogin()){
-			return
-		}
-		this.hasLogin = true
 		this.isInit = false
 	},
 	mounted() {
@@ -135,27 +132,36 @@ export default {
 		}
 	},
 	methods: {
+		signIn(){
+			uni.navigateTo({
+				url: '/pages_mine/login/login'
+			});
+			this.isInit = false
+		},
 		loadData(){
 			this.getUserMsg();
 		},
 		// 获取用户信息
 		getUserMsg() {
 			var that = this;
-			this.HTTP.request({
-				url: '/user/info',
-				retry: 3,
+			uni.request({
+				url:  globalUrl + '/user/info',
 				method: 'get',
-				success: function(res) {
+				header: {
+					'Authorization': getApp().globalData.Authorization
+				},
+				success: (res)=> {
 					if (res.statusCode != 200 || res.data.code != 0){
 						uni.showToast({
-							title: res.data.msg,
+							title: '请点击登录',
 							icon: 'none'
 						});
-						uni.navigateTo({
-							url: '/pages_mine/login/login?ismine=1'
-						});
+						// uni.navigateTo({
+						// 	url: '/pages_mine/login/login?ismine=1'
+						// });
 						return
 					}
+					this.hasLogin = true
 					uni.setStorage({
 						key: 'userinfo',
 						data: res.data.data,
@@ -289,6 +295,18 @@ export default {
 				height: 32rpx;
 				margin-left: 16rpx;
 			}
+		}
+		.userSignin{
+			font-size: 40rpx;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 500;
+			color: #303133;
+		}
+		.userMsg{
+			font-size: 24rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #606266;
 		}
 		.fa{
 			// margin-top: 20rpx;

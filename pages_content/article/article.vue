@@ -1261,9 +1261,9 @@
 			display: flex;
 			align-items: center;
 			.userHeard {
-				width: 80rpx;
-				height: 80rpx;
-				// overflow: hidden;
+				width: 85rpx;
+				height: 85rpx;
+				overflow: hidden;
 				image{
 					width: 100%;
 					height: 100%;
@@ -1430,7 +1430,7 @@
 		padding-bottom: env(safe-area-inset-bottom);
 	}
 	.releaseTime-strategy{
-		// width: 200rpx;
+		width: fit-content;
 		height: 22rpx;
 		font-size: 22rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
@@ -1564,7 +1564,7 @@
 	.commentInput {
 		width: 100%;
 		height: 100px;
-		// padding-bottom: 100rpx;
+		padding-bottom: 100rpx;
 		// height: 300rpx;
 		position: fixed;
 		background: #ffffff;

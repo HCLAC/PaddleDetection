@@ -223,7 +223,7 @@
 	.uni-navbar--shadow {
 		/* #ifndef APP-NVUE */
 		// box-shadow: 0 1px 6px #ccc;
-		box-shadow: 0 5px 10px #F5F5F5;
+		box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
 		/* #endif */
 	}
 
