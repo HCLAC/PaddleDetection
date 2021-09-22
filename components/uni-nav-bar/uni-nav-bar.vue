@@ -3,7 +3,7 @@
 		<view :class="{ 'uni-navbar--fixed': fixed, 'uni-navbar--shadow': shadow, 'uni-navbar--border': border }" :style="{ 'background-color': backgroundColor }"
 		 class="uni-navbar__content">
 			<uni-status-bar v-if="statusBar" />
-			<view :style="{ color: color,backgroundColor: 'transparent' }" class="uni-navbar__header uni-navbar__content_view">
+			<view :style="{ color: color,backgroundColor: 'transparent', height: navigationBarHeight }" class="uni-navbar__header uni-navbar__content_view">
 				<view @tap="onClickLeft" class="uni-navbar__header-btns uni-navbar__header-btns-left uni-navbar__content_view">
 					<view class="uni-navbar__content_view" v-if="leftIcon.length">
 						<uni-icons :color="color" :type="leftIcon" size="24" />
@@ -35,7 +35,7 @@
 		</view>
 		<view class="uni-navbar__placeholder" v-if="fixed">
 			<uni-status-bar v-if="statusBar" />
-			<view class="uni-navbar__placeholder-view" />
+			<view class="uni-navbar__placeholder-view" :style="{ height: navigationBarHeight }"/>
 		</view>
 	</view>
 </template>
@@ -96,6 +96,11 @@
 				default: true
 			}
 		},
+		data() {
+			return {
+				navigationBarHeight: getApp().globalData.navigationBarHeight+'px'
+			}
+		},
         mounted() {
           // if(uni.report && (this.title && this.title !== '')) {
           //     uni.report('title', this.title)
@@ -113,7 +118,7 @@
 </script>
 
 <style lang="scss" scoped>
-	$nav-height: 44px;
+	$nav-height: 44px !default;
 	.uni-nav-bar-text {
 		// width: 100%;
 		// margin: 0 auto;

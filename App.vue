@@ -6,6 +6,7 @@ export default {
 		Authorization: '',
 		networkType: '4g',
 		navbarHeight: 64, // px
+		navigationBarHeight: 44,
 	},
 	onLaunch: function(res) {
 		console.log('App Launch',res);
@@ -74,6 +75,7 @@ export default {
 			success: res => {
 				var height = 44
 				if (res.navigationBarHeight && res.statusBarHeight){
+					this.globalData.navigationBarHeight = res.navigationBarHeight
 					height = res.navigationBarHeight+res.statusBarHeight
 				}
 				this.globalData.navbarHeight = height
@@ -101,7 +103,7 @@ uni-rich-text img{ max-width: 100% !important;}
 	flex-wrap: wrap;
 	justify-content: center;
 	padding: 0;
-	font-size: 14px;
+	font-size: 28rpx;
 	flex-direction: column;
 	background-color: #ffffff;
 	// transition: background-color 2s;
@@ -111,18 +113,18 @@ uni-rich-text img{ max-width: 100% !important;}
 	align-items: center;
 }
 .fanhui {
-	width: 22px;
-	height: 22px;
-	margin-left: 18px;
+	width: 44rpx;
+	height: 44rpx;
+	margin-left: 36rpx;
 }
 .fhsy {
-	width: 22px;
-	height: 22px;
+	width: 44rpx;
+	height: 44rpx;
 	/* #ifdef MP-BAIDU */
-	margin-left: 47px;
+	margin-left: 94rpx;
 	/* #endif */
 	/* #ifdef H5 */
-	margin-left: 10px;
+	margin-left: 20rpx;
 	/* #endif */
 }
 </style>

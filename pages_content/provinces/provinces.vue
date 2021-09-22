@@ -234,6 +234,7 @@ export default {
 			this.randomNum = 0
 			this.HTTP.request({
 				url: '/questions/random',
+				retry: 3,
 				data: {
 					state_id: this.querys.state_id,
 					city_id: this.querys.city_id,

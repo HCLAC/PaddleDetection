@@ -551,11 +551,18 @@
 <style lang="scss" scoped>
 	
 
-.nav-bar {
-	z-index: 999;
-	position: fixed;
-	top:0px;
-}
+	.nav-bar {
+		z-index: 999;
+		position: fixed;
+		top:0px;
+		
+		flex-wrap: wrap;
+		justify-content: center;
+		font-size: 14px;
+		display: flex;
+		flex-direction: column;
+		background: rgba(58, 61, 70, 0.25);
+	}
 	/* 头条小程序组件内不能引入字体 */
 	/* #ifdef MP-TOUTIAO */
 	@font-face {
@@ -586,15 +593,6 @@
 			width: 100%;
 			height: 100%;
 		}
-	}
-
-	.nav-bar {
-		flex-wrap: wrap;
-		justify-content: center;
-		font-size: 14px;
-		display: flex;
-		flex-direction: column;
-		background: rgba(58, 61, 70, 0.25);
 	}
 	
 	.headerL{
