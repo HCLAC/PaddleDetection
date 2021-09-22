@@ -40,3 +40,4 @@ Q. 如何重置mescroll默认样式,比如修改空布局的样式 ?
 /deep/.mescroll-empty .empty-tip { color: red !important }
 
 ```
+- uni.showLoading如果在onInit中，有一定几率显示失败，因为onInit还没进入视图渲染。

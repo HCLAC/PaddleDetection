@@ -498,7 +498,7 @@ export default {
 					curPageData.forEach((item1, index1) => {
 						if (item1.cover_height > 0){
 							item1.height = 340*item1.cover_height/item1.cover_width+'rpx'
-						} else{
+						} else {
 							item1.height = '220rpx'
 						}
 						item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
@@ -510,7 +510,7 @@ export default {
 					let totalSize = res.data.data.total;
 					// 接口返回的是否有下一页 (true/false)
 					// let hasNext = res.data.data.list;
-					if(this.answersList.length > 0 ){
+					if(this.answersList.length > 0 && curPageLen == pageSize){
 						curPageData = curPageData.concat(this.answersList[this.randomNum])
 						this.randomNum++
 						if (this.randomNum == this.answersList.length){
