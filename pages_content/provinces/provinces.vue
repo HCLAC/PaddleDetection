@@ -166,6 +166,11 @@ export default {
 			randomPage: 0,
 			randomNum: 0,
 			routeHotMore: false,
+			backgroundQuestion: [
+				{background: 'linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);'},
+				{background: 'linear-gradient(270deg, #FFE512 0%, #FFB64D 100%);'},
+				{background: 'linear-gradient(270deg, #FFD5A2 0%, #F98480 100%);'}
+				]
 		};
 	},
 	// #ifdef MP-BAIDU
@@ -512,13 +517,16 @@ export default {
 					// 接口返回的是否有下一页 (true/false)
 					// let hasNext = res.data.data.list;
 					if(this.answersList.length > 0 && curPageLen == pageSize){
-						curPageData = curPageData.concat(this.answersList[this.randomNum])
+						let qobj = this.answersList[this.randomNum]
+						qobj.style = this.backgroundQuestion[this.randomNum%3]
+						curPageData = curPageData.concat(qobj)
 						this.randomNum++
 						if (this.randomNum == this.answersList.length){
 							this.getQuestionList()
 						}
 					} else {
 						console.log('no answer')
+						this.getQuestionList()
 					}
 					//设置列表数据
 					if (page.num == 1) that.list = []; //如果是第一页需手动置空列表

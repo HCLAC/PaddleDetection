@@ -42,7 +42,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="answersBox" v-else-if="item.type == 6" @click="toQuestionsDetail" :id="item.question_id"> 
+				<view class="answersBox" :style="item.style" v-else-if="item.type == 6" @click="toQuestionsDetail" :id="item.question_id"> 
 					<image src="/static/images/yh.svg"></image> 
 					<view class="answersTitle">
 						{{item.title}} 
@@ -95,7 +95,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="answersBoxR" v-else-if="item.type == 6" @click="toQuestionsDetail" :id="item.question_id"> 
+				<view class="answersBoxR" :style="item.style" v-else-if="item.type == 6" @click="toQuestionsDetail" :id="item.question_id"> 
 					<image src="/static/images/yh.svg"></image> 
 					<view class="answersTitle"> 
 						{{item.title}} 
@@ -457,7 +457,7 @@
 		/* line-height:20rpx; */
 	}
 	.answersBox{
-		background: linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);
+		// background: linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);
 		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 		border-radius: 16rpx;
 		padding: 80rpx 32rpx 40rpx;
@@ -494,7 +494,7 @@
 	
 	}
 	.answersBoxR{
-		background: linear-gradient(270deg, #FFE512 0%, #FFB64D 100%);
+		// background: linear-gradient(270deg, #FFE512 0%, #FFB64D 100%);
 		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 		border-radius: 16rpx;
 		padding: 80rpx 32rpx 40rpx;
