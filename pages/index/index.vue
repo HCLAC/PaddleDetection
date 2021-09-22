@@ -17,8 +17,8 @@
 				</view>
 				<view slot="center" class="input-view" @click="toSearch">
 					<view class="input-uni-icon-Box">
-						<u-icon name="search" color="#c9cad1" :size="28"></u-icon>
-						<!-- <image class="input-uni-icon" src="/static/images/icon-search.svg" /> -->
+						<!-- <u-icon name="search" color="#c9cad1" :size="28"></u-icon> -->
+						<image class="input-uni-icon" src="/static/images/icon-search.svg" />
 					</view>
 					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索" disabled="true" />
 				</view>
