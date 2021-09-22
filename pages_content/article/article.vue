@@ -1262,9 +1262,10 @@
 			display: flex;
 			align-items: center;
 			.userHeard {
-				width: 85rpx;
-				height: 85rpx;
-				overflow: hidden;
+				width: 90rpx;
+				height: 90rpx;
+				// margin-right: 20rpx;
+				// overflow: hidden;
 				image{
 					width: 100%;
 					height: 100%;
