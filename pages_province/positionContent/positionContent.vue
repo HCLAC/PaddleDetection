@@ -140,13 +140,8 @@
 </template>
 
 <script>
-import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
-import uniIcons from '@/components/uni-icons/uni-icons.vue';
-// import uniFav from '@/components/uni-fav/uni-fav.vue';
 export default {
 	comments: {
-		uniNavBar,
-		uniIcons
 	},
 	data() {
 		return {

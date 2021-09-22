@@ -229,14 +229,8 @@
 </template>
 
 <script>
-	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
-	import uniIcons from '@/components/uni-icons/uni-icons.vue';
-	import chatInput from '@/components/comment/chatinput.vue';
 	export default {
 		components: {
-			uniNavBar,
-			uniIcons,
-			chatInput
 		},
 		data() {
 			return {
@@ -457,7 +451,6 @@
 								articleInfo.content = articleInfo.content.replace(item, img);
 							}
 						}
-									console.warn("未知图片格式：1")
 						// 处理营销组件
 						let inputComponets = articleInfo.content.match(/<input[^>]*\/>/gi);
 						if (inputComponets != null && inputComponets.length > 0){
@@ -518,7 +511,6 @@
 								}
 							}
 						}
-									console.warn("未知图片格式：2")
 						articleInfo.avatar = that.Utils.addImageProcess(articleInfo.avatar, false, 60)
 						articleInfo.images.forEach((item1, index1) => {
 							articleInfo.images[index1] = that.Utils.addImageProcess(item1, true, 80)
@@ -536,11 +528,9 @@
 							visit: {pv:articleInfo.visit_count+''},
 						})
 						//#endif
-									console.warn("未知图片格式：3")
 						that.articleInfo = articleInfo;
 						// 除了攻略文章，其他计算轮播图高度
 						if (that.articleInfo.type != 2){
-									console.warn("未知图片格式：4")
 							that.$nextTick(() => {
 								uni.getImageInfo({
 									src: that.articleInfo.images[0],

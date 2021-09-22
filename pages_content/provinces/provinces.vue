@@ -121,7 +121,6 @@
 </template>
 
 <script>
-import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import articleWaterfall from '@/common/article-waterfall/article-waterfall.vue';
 import weather from '@/common/weather/weather.vue';
 import cityPicker from '@/common/city-picker/city-picker.vue';
@@ -129,6 +128,11 @@ import cityPicker from '@/common/city-picker/city-picker.vue';
 import MescrollMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js';
 export default {
 	mixins: [MescrollMixin],
+	components: {
+		articleWaterfall,
+		weather,
+		cityPicker
+	},
 	data() {
 		return {
 			downOption: {
@@ -163,12 +167,6 @@ export default {
 			randomNum: 0,
 			routeHotMore: false,
 		};
-	},
-	components: {
-		uniNavBar,
-		articleWaterfall,
-		weather,
-		cityPicker
 	},
 	// #ifdef MP-BAIDU
 	onInit(query) {

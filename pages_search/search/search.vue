@@ -166,12 +166,15 @@
 <script>
 	//引用mSearch组件，如不需要删除即可
 	import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision.vue';
-	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 	import articleWaterfall from '@/common/article-waterfall/article-waterfall.vue';
 	// 引入mescroll-mixins.js
 	import MescrollMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js';
 	export default {
 		mixins: [MescrollMixin],
+		components: {
+			mSearch,
+			articleWaterfall
+		},
 		data() {
 			return {
 				downOption: {
@@ -201,11 +204,6 @@
 				requestID: '',
 				routeHotMore: false,
 			};
-		},
-		components: {
-			mSearch,
-			uniNavBar,
-			articleWaterfall
 		},
 		mounted() {
 			if (this.keyword){
