@@ -251,13 +251,15 @@
 					title: '加载中',
 					mask: true,
 					success: () => {
+						this.hideLoad();
+					},
+					complete: () => {
 						this.getBanner();
 						this.getAdress();
 						this.getAreaHot();
 						
 						setTimeout(() => {
 							this.getCity()
-							this.hideLoad()
 						}, 200);
 					}
 				});
@@ -266,7 +268,7 @@
 			hideLoad(){
 				setTimeout(() => {
 					uni.hideLoading();
-				}, 100);
+				}, 300);
 			},
 			// 获取热门目的地
 			getAreaHot(){

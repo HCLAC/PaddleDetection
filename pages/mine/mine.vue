@@ -137,16 +137,6 @@ export default {
 	methods: {
 		loadData(){
 			this.getUserMsg();
-			// uni.showLoading({
-			// 	title: '加载中',
-			// 	mask: true,
-			// 	success: () => {
-			// 		this.hideLoad();
-			// 	}
-			// });
-		},
-		hideLoad(){
-			uni.hideLoading();
 		},
 		// 获取用户信息
 		getUserMsg() {

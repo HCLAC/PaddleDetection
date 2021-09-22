@@ -135,7 +135,7 @@ export default {
 				use:false,
 			},
 			upOption: {
-				auto:false,
+				auto:true,
 				noMoreSize: 10, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
 				empty:{
 				  use : true ,
@@ -211,14 +211,15 @@ export default {
 				title: '加载中',
 				mask: true,
 				success: () => {
+					this.hideLoad();
+				},
+				complete: () =>{
 					this.getQuestionList()
 					this.getSiteHot(),
 					this.getRouteHot();
 					setTimeout(() => {
 						this.getCity();
-						this.getWeather(),
-						this.mescroll.resetUpScroll();
-						this.hideLoad();
+						this.getWeather();
 					}, 200);
 				}
 			});
@@ -226,7 +227,7 @@ export default {
 		hideLoad(){
 			setTimeout(() => {
 				uni.hideLoading();
-			}, 100);
+			}, 300);
 		},
 		
 		// 获取问答列表

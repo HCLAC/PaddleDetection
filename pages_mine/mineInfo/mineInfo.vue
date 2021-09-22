@@ -172,7 +172,6 @@
 					},
 					method: 'POST',
 					success: res => {
-						uni.hideLoading();
 						if(res.data.code == 0){
 							uni.setStorage({
 								key: 'userinfo',
@@ -189,11 +188,14 @@
 						}
 					}, 
 					fail: res=>{
-						uni.hideLoading();
 						uni.showToast({
 							title: '修改失败',
 							icon: 'none'
 						});
+					},
+					complete: () => {
+						uni.hideLoading();
+						this.loading = false
 					}
 				});
 			},

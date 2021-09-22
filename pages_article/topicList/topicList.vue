@@ -89,19 +89,7 @@ export default {
 		
 		methods: {	
 			loadData(){
-				uni.showLoading({
-					title: '加载中',
-					mask: true,
-					success: () => {
-						this.getTopic()
-						// this.getRecommend()
-						// this.getlatest()
-						this.hideLoad()
-					}
-				});
-			},
-			hideLoad(){
-				uni.hideLoading();
+				this.getTopic()
 			},
 			calcHeight(){
 				if (this.isFixed){

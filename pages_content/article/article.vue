@@ -211,7 +211,7 @@
 		<!-- 评论输入框 -->
 		<view :animation="animationInputC" class="commentInput" v-if="showText">
 			<textarea class="inputK" v-model="contentText" placeholder="撩点什么..." :show-confirm-bar="false" :focus="textareafocus"
-			 @blur="inputBlur" :auto-height="autoHeight" @input="inputValue" maxlength="140"
+			 @blur="inputBlur" :auto-height="autoHeight" maxlength="140"
 			 :adjust-position="false"></textarea>
 			<view class="send" @click="pubComment">发送</view>
 		</view>
@@ -350,16 +350,17 @@
 				});
 			},
 			loadData(){
-				
 				uni.showLoading({
 					title: '加载中',
 					mask: true,
 					success: () => {
+						this.hideLoad();
+					},
+					complete: () => {
 						this.getArticleDetail();
 						setTimeout(() => {
 							this.getUserInfo()
 							this.getComments();
-							this.hideLoad()
 						}, 100);
 					}
 				});
@@ -367,7 +368,7 @@
 			hideLoad(){
 				setTimeout(() => {
 					uni.hideLoading();
-				}, 100);
+				}, 200);
 			},
 			mpLinktap(e) {
 				// #ifdef H5
@@ -450,12 +451,13 @@
 								}
 								let src = that.Utils.addImageProcess(obj[1], true, 60)
 								let width = obj[5]
-								let height = obj[7]
+								// let height = obj[7]
 								let heightR = (obj[7]*750/width).toFixed(0)
 								let img = '<img src="'+src+'" style="width:750rpx;height:'+heightR+'rpx;"/>'
 								articleInfo.content = articleInfo.content.replace(item, img);
 							}
 						}
+									console.warn("未知图片格式：1")
 						// 处理营销组件
 						let inputComponets = articleInfo.content.match(/<input[^>]*\/>/gi);
 						if (inputComponets != null && inputComponets.length > 0){
@@ -516,6 +518,7 @@
 								}
 							}
 						}
+									console.warn("未知图片格式：2")
 						articleInfo.avatar = that.Utils.addImageProcess(articleInfo.avatar, false, 60)
 						articleInfo.images.forEach((item1, index1) => {
 							articleInfo.images[index1] = that.Utils.addImageProcess(item1, true, 80)
@@ -533,9 +536,11 @@
 							visit: {pv:articleInfo.visit_count+''},
 						})
 						//#endif
+									console.warn("未知图片格式：3")
 						that.articleInfo = articleInfo;
 						// 除了攻略文章，其他计算轮播图高度
 						if (that.articleInfo.type != 2){
+									console.warn("未知图片格式：4")
 							that.$nextTick(() => {
 								uni.getImageInfo({
 									src: that.articleInfo.images[0],
@@ -550,10 +555,6 @@
 								});
 							});
 						}
-					},
-					fail: error => {
-						//  请求失败,隐藏加载状态
-						this.mescroll.endErr();
 					},
 					complete: () => {
 						this.loading = false
