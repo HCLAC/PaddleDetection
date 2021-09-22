@@ -1262,9 +1262,9 @@
 			display: flex;
 			align-items: center;
 			.userHeard {
-				width: 80rpx;
-				height: 80rpx;
-				// overflow: hidden;
+				width: 85rpx;
+				height: 85rpx;
+				overflow: hidden;
 				image{
 					width: 100%;
 					height: 100%;
@@ -1565,7 +1565,7 @@
 	.commentInput {
 		width: 100%;
 		height: 100px;
-		// padding-bottom: 100rpx;
+		padding-bottom: 100rpx;
 		// height: 300rpx;
 		position: fixed;
 		background: #ffffff;
