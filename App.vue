@@ -118,8 +118,8 @@ uni-rich-text img{ max-width: 100% !important;}
 	margin-left: 36rpx;
 }
 .fhsy {
-	width: 44rpx;
-	height: 44rpx;
+	width: 22px;
+	height: 22px;
 	/* #ifdef MP-BAIDU */
 	margin-left: 94rpx;
 	/* #endif */

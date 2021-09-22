@@ -6,7 +6,7 @@
     "versionCode" : "100",
     "transformPx" : false,
 	"networkTimeout": {
-		"request": 5000
+		"request": 3000
 	},
     "app-plus" : {
         "nvueCompiler" : "uni-app",
