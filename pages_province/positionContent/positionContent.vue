@@ -469,6 +469,8 @@ export default {
 			margin-left: 16rpx;
 			display: flex;
 			align-items: center;
+			height: 44rpx;
+			line-height: 44rpx;
 			.rate-number{
 				font-size: 28rpx;
 				font-family: PingFangSC-Semibold, PingFang SC;
@@ -488,6 +490,8 @@ export default {
 			margin-left: 46rpx;
 			display: flex;
 			align-items: center;
+			height: 44rpx;
+			line-height: 44rpx;
 			.goTo-number{
 				font-size: 24rpx;
 				font-family: PingFangSC-Semibold, PingFang SC;
