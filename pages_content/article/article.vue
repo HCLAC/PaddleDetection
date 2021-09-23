@@ -331,6 +331,9 @@
 			this.hasLogin = getApp().globalData.Authorization ? true : false;
 			//#ifdef MP-BAIDU
 			swan.onKeyboardHeightChange(res => {
+				if (res.height === 0){
+					this.showText = false 
+				}
 				this.animation.translateY(- (res.height + 60)).step()
 				this.animationInputC = this.animation.export()
 			});
@@ -545,12 +548,12 @@
 								});
 							});
 						}
-						// setTimeout(() => {
-						// 	that.loading = false
-						// }, 100);
+						setTimeout(() => {
+							that.loading = false
+						}, 100);
 					},
 					complete: () => {
-						that.loading = false
+						// that.loading = false
 					}
 				});
 			},
@@ -851,6 +854,9 @@
 				this.textareafocus = true
 			},
 			inputBlur() {
+				this.animation.translateY(-60).step()
+				this.animationInputC = this.animation.export()
+				this.showText = false
 				this.textareafocus = false
 			},
 			pubComment() {

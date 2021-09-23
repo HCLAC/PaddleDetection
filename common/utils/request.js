@@ -37,17 +37,18 @@ function request(obj) {
 				title: '网络不给力~,请稍后再试',
 				icon: 'none'
 			});
-			
-			switch(res.errCode){
-				case 1:
-					if (obj.retry && obj.retry > 0){
-						setTimeout(() => {
-							request(obj)
-						}, 500)
-						obj.retry--
-					}
-					break;
+			if (obj.retry && obj.retry > 0){
+				setTimeout(() => {
+					request(obj)
+				}, 500)
+				obj.retry--
+				return
 			}
+			// switch(res.errCode){
+			// 	case 1:
+					
+			// 		break;
+			// }
 			obj.fail && obj.fail(res)
 		},
 		complete: () => {

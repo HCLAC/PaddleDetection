@@ -5,9 +5,9 @@
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
-	"networkTimeout": {
-		"request": 3000
-	},
+    "networkTimeout" : {
+        "request" : 3000
+    },
     "app-plus" : {
         "nvueCompiler" : "uni-app",
         "compilerVersion" : 3,
@@ -49,7 +49,7 @@
             }
         },
         "uniStatistics" : {
-            "enable" : true
+            "enable" : false
         }
     },
     "quickapp" : {},
@@ -62,7 +62,7 @@
             "minified" : true
         },
         "uniStatistics" : {
-            "enable" : true
+            "enable" : false
         },
         "permission" : {
             "scope.userLocation" : {
@@ -84,16 +84,16 @@
         "optimization" : {
             "subPackages" : true
         },
-		"dynamicLib": {
-			// 'swan-sitemap-lib' 是个可自己定的别名。
-			"swan-sitemap-lib": {
-				// provider 是要引用的动态库的名字，在此为 'swan-sitemap'。
-				"provider": "swan-sitemap"
-			}
-		},
-		"cookie": {
-			"enableStore": true // 开启小程序cookie存储设置
-		}
+        "dynamicLib" : {
+            // 'swan-sitemap-lib' 是个可自己定的别名。
+            "swan-sitemap-lib" : {
+                // provider 是要引用的动态库的名字，在此为 'swan-sitemap'。
+                "provider" : "swan-sitemap"
+            }
+        },
+        "cookie" : {
+            "enableStore" : true // 开启小程序cookie存储设置
+        }
     },
     "mp-toutiao" : {
         "setting" : {
@@ -105,14 +105,17 @@
         "appid" : "tt74ea0257ebd1c647",
         "optimization" : {
             "subPackages" : true
+        },
+        "uniStatistics" : {
+            "enable" : false
         }
     },
     "uniStatistics" : {
-        "enable" : true
+        "enable" : false
     },
     "h5" : {
         "uniStatistics" : {
-            "enable" : true
+            "enable" : false
         },
         "title" : "领途羊",
         "router" : {
@@ -129,12 +132,17 @@
     },
     "mp-alipay" : {
         "uniStatistics" : {
-            "enable" : true
+            "enable" : false
         }
     },
     "mp-qq" : {
         "uniStatistics" : {
-            "enable" : true
+            "enable" : false
+        }
+    },
+    "mp-kuaishou" : {
+        "uniStatistics" : {
+            "enable" : false
         }
     }
 }
