@@ -126,7 +126,6 @@
 					<view class="title">服务说明</view>
 					<view class="content">{{ lineContent.description }}</view>
 				</view>
-				<view class="phone" @click="tell" ><image src="/static/images/serverCall.svg"></image></view>
 				
 				<view class="kong" v-if="Show == true" style="width: 100%;height: 570rpx;background: #FFFFFF;">
 				</view>
@@ -152,7 +151,7 @@
 				</view>
 			</view>
 		</view>
-		
+		<view class="phone" @click="tell" ><image src="/static/images/serverCall.svg"></image></view>
 	</view>
 </template>
 
