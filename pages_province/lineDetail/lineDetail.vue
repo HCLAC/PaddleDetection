@@ -125,8 +125,8 @@
 				<view class="serverInfo" v-if="lineContent.content">
 					<view class="title">服务说明</view>
 					<view class="content">{{ lineContent.description }}</view>
-					<view class="phone" @click="tell" ><image src="/static/images/serverCall.svg"></image></view>
 				</view>
+				
 				<view class="kong" v-if="Show == true" style="width: 100%;height: 570rpx;background: #FFFFFF;">
 				</view>
 				
@@ -151,7 +151,7 @@
 				</view>
 			</view>
 		</view>
-		
+		<view class="phone" @click="tell" ><image src="/static/images/serverCall.svg"></image></view>
 	</view>
 </template>
 
@@ -804,22 +804,22 @@ export default {
 		color: #606266;
 		line-height: 36rpx;
 	}
-	.phone {
-		width: 92rpx;
-		height: 92rpx;
-		background: #ffe512;
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		position: fixed;
-		bottom: 246rpx;
-		right: 34rpx;
-		justify-content: center;
-		box-shadow: 0px 0px 12rpx 4rpx rgba(255, 229, 18, 0.35);
-		image {
-			width: 46rpx;
-			height: 46rpx;
-		}
+}
+.phone {
+	width: 92rpx;
+	height: 92rpx;
+	background: #ffe512;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	position: fixed;
+	bottom: 246rpx;
+	right: 34rpx;
+	justify-content: center;
+	box-shadow: 0px 0px 12rpx 4rpx rgba(255, 229, 18, 0.35);
+	image {
+		width: 46rpx;
+		height: 46rpx;
 	}
 }
 </style>

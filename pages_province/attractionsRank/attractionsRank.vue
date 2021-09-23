@@ -509,9 +509,9 @@
 	}
 
 	.cardsright {
-		width: 338rpx;
+		width: 100%;
 		margin-left: 20rpx;
-		margin-right: 28rpx;
+		// margin-right: 28rpx;
 	}
 
 	.title {
@@ -528,9 +528,10 @@
 	}
 
 	.contentText {
-		width: 392rpx;
+		// width: 392rpx;
 		font-size: 28rpx;
 		line-height: 42rpx;
+		text-align: justify;
 		// width: 196px;
 		// height: 70rpx;
 		// font-size: 14px;

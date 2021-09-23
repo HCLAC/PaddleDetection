@@ -188,9 +188,10 @@
 				align-items: center;
 				color:#909399;
 				// margin-left: 24rpx;
+				font-size: 28rpx;
 				&.active{
 					height: 36rpx;
-					font-size: 32rpx;
+					font-size: 36rpx;
 					font-family: PingFangSC-Medium, PingFang SC;
 					font-weight: 500;
 					color: #303133;
