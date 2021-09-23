@@ -220,6 +220,9 @@
 	// 回复列表
 	.answersList{
 		margin: 0px 28rpx;
+		padding-bottom: constant(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom);
+		box-sizing: content-box;
 		.answersCardBox{
 			margin-top: 20rpx;
 			// .answersCardTop-one{
