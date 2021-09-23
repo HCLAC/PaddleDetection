@@ -381,7 +381,7 @@
 				if (!this.Utils.isLogin()){
 					return
 				}
-				if (this.contentText.length == 0){
+				if (this.contentText.replace(/\s+/g, '').length === 0){
 					uni.showToast({
 						title: '请输入回答内容',
 						icon: 'none'
@@ -574,10 +574,11 @@
 			.cradTitle{
 				width: 638rpx;
 				height: 120rpx;
-				font-size: 44rpx;
+				font-size: 40rpx;
 				font-family: PingFangSC-Semibold, PingFang SC;
 				font-weight: 600;
 				color: #FFFFFF;
+				text-align: justify;
 				line-height: 60rpx;
 				margin-left: 28rpx;
 				margin-right: 20rpx;

@@ -3,7 +3,7 @@
 		<view class="content" :style="{ 'border-radius': radius + 'px' }">
 			<!-- HM修改 增加进入输入状态的点击范围 -->
 			<view class="content-box" :class="{ center: mode === 2 }">
-				<image class=" icon-serach" mode="aspectFit" src="/static/images/icon-search.svg"></image>
+				<image class="icon-serach" mode="aspectFit" src="/static/images/icon-search.png"></image>
 				<!-- HM修改 增加placeholder input confirm-type confirm-->
 				<input
 					:placeholder="placeholder"

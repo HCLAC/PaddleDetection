@@ -18,7 +18,7 @@
 				<view slot="center" class="input-view" @click="toSearch">
 					<view class="input-uni-icon-Box">
 						<!-- <u-icon name="search" color="#c9cad1" :size="28"></u-icon> -->
-						<image class="input-uni-icon" src="/static/images/icon-search.svg" />
+						<image class="input-uni-icon" src="/static/images/icon-search.png" />
 					</view>
 					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索" disabled="true" />
 				</view>
@@ -651,19 +651,19 @@
 	}
 	.input-view {
 		display: flex;
-		flex-direction: row;
+		// flex-direction: row;
 		width: 212rpx;
 		height: 64rpx;
 		align-items: center;
 		background: rgba(248, 248, 248, 1);
 		border-radius: 36rpx;
-		flex-wrap: nowrap;
+		// flex-wrap: nowrap;
 		// margin: 0 auto;
 		margin-left: 180rpx;
 		padding-left: 32rpx;
 		.input-uni-icon-Box{
-			width: 28rpx;
-			height: 28rpx;
+			// width: 28rpx;
+			// height: 28rpx;
 			line-height: 28rpx;
 			.input-uni-icon {
 				width: 28rpx;
