@@ -381,7 +381,7 @@
 				if (!this.Utils.isLogin()){
 					return
 				}
-				if (this.contentText.length == 0){
+				if (this.contentText.replace(/\s+/g, '').length === 0){
 					uni.showToast({
 						title: '请输入回答内容',
 						icon: 'none'
