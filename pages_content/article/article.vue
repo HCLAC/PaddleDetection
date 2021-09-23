@@ -139,6 +139,7 @@
 					</view>
 				</view>
 			</view>
+
 			<!-- 评论区 -->
 			<view v-if="articleInfo">
 				<view class="replyLine"></view>
@@ -238,9 +239,7 @@
 				current: 0,
 				list: [],
 				title: '领途羊',
-				articleInfo: {
-					title:'领途羊',
-				},
+				articleInfo: null,
 				articleSEO: {
 					title: '',
 					keywords: '',
@@ -297,15 +296,9 @@
 				this.articleInfo.is_follow = is_follow
 			})
 		},
-		// #ifdef MP-BAIDU
-		onInit(query) {
-		// #endif
-		// #ifndef MP-BAIDU
-		onLoad(query) {
-		// #endif
+		onInit(query){
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.article_id = query.article_id
-			this.loadData()
 			// 搜索数据采集
 			this.trace_info = query.trace_info?query.trace_info:null
 			this.rn = query.rn?query.rn:null
@@ -319,17 +312,16 @@
 				  delay: 1
 				}
 			)
+			
+			this.getUserInfo()
+			this.getComments();
 		},
+		
 		onReady() {
 			//#ifdef MP-BAIDU
 			swan.showFavoriteGuide({
 			    type: 'tip'
 			})
-			//#endif
-		},
-		onShow() {
-			this.hasLogin = getApp().globalData.Authorization ? true : false;
-			//#ifdef MP-BAIDU
 			swan.onKeyboardHeightChange(res => {
 				if (res.height === 0){
 					this.showText = false 
@@ -338,6 +330,10 @@
 				this.animationInputC = this.animation.export()
 			});
 			//#endif
+		},
+		onShow() {
+			this.hasLogin = getApp().globalData.Authorization ? true : false;
+			this.loadData()
 		},
 		methods: {
 			ImgSee(){
@@ -355,10 +351,6 @@
 					},
 					complete: () => {
 						this.getArticleDetail();
-						setTimeout(() => {
-							this.getUserInfo()
-							this.getComments();
-						}, 100);
 					}
 				});
 			},
@@ -531,9 +523,11 @@
 							visit: {pv:articleInfo.visit_count+''},
 						})
 						//#endif
+						
 						that.articleInfo = articleInfo;
+						
 						// 除了攻略文章，其他计算轮播图高度
-						if (that.articleInfo.type != 2){
+						if (articleInfo.type != 2){
 							that.$nextTick(() => {
 								uni.getImageInfo({
 									src: that.articleInfo.images[0],
@@ -550,7 +544,7 @@
 						}
 						setTimeout(() => {
 							that.loading = false
-						}, 100);
+						}, 300);
 					},
 					complete: () => {
 						// that.loading = false
