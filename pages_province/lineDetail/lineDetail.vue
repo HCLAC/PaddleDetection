@@ -342,7 +342,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .u-node{
 	border: 8rpx solid #FFFFFF;
 }
@@ -614,7 +614,7 @@ export default {
 
 	.u-order-title {
 		position: relative;
-		top: -20rpx;
+		top: -10rpx;
 		left: -18rpx;
 		display: flex;
 		align-items: center;
