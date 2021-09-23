@@ -614,7 +614,7 @@ export default {
 
 	.u-order-title {
 		position: relative;
-		top: -10rpx;
+		top: -20rpx;
 		left: -18rpx;
 		display: flex;
 		align-items: center;
