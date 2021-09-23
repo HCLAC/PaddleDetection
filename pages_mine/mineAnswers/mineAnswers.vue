@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<view class="nav-bar" style="border-bottom: 2rpx solid #EDEFF2;">
+		<view class="nav-bar">
 			<uni-nav-bar :fixed="true" :status-bar="true" title="我的回答">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -70,7 +70,13 @@ import answerList from '@/common/article-mescroll-item/mine-answer-list.vue';
 .tabs-line{
 	border-radius: 12px !important;
 	height: 12rpx !important;
-	margin-bottom: 0 !important;
+	// margin-bottom:  !important;
+}
+.tab-item-info{
+	font-size: 26rpx !important;
+	&.active{
+		font-size: 32rpx !important;
+	}
 }
 // .line{
 // 	position: relative;
