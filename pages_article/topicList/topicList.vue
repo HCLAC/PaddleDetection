@@ -30,7 +30,7 @@
 					<image class="more" src="/static/images/more1.svg"></image>
 				</view>
 			</view>
-			<meTabs class="topicTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :tab-width="80"></meTabs>
+			<meTabs class="topicTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :tab-width="65"></meTabs>
 		</view>
 		<articleList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :topicID="topic_id"></articleList>
 	</view>
@@ -138,8 +138,20 @@ export default {
 	}
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="scss">
+// .tab-item-info{
+// 	margin-left: 20rpx !important;
+// }
+.tabs-line{
+	margin-left: 20rpx !important;
+	
+}
+.touring{
+	margin-top: 20rpx !important;
+}
+.tabs-item{
+	padding-left: 20rpx !important;
+}
 // 头图
 .headImgBox {
 	width: 750rpx;
