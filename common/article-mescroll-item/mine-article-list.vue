@@ -1,5 +1,5 @@
 <template>
-	<view v-show="i === index"  style="padding: 18rpx 28rpx;">
+	<view v-show="i === index"  style="padding: 22rpx 28rpx;">
 		<!-- margin-top: 70%; -->
 		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback" :top="top" :bottom="bom" @up="upCallback" :down="downOption" :up="upOption"  >
 			<view v-for="(item, index) in list" :key="index" @click="onPageJump" :id="item.article_id">
