@@ -42,7 +42,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="answersBox" :style="item.style" v-else-if="item.type == 6" @click="toQuestionsDetail" :id="item.question_id"> 
+				<view class="answersBox" :style="item.style" v-else-if="item.type == 6" @click="toQuestionsDetail(item,index) in leftList"> 
 					<image src="/static/images/yh.svg"></image> 
 					<view class="answersTitle">
 						{{item.title}} 
@@ -95,7 +95,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="answersBoxR" :style="item.style" v-else-if="item.type == 6" @click="toQuestionsDetail" :id="item.question_id"> 
+				<view class="answersBoxR" :style="item.style" v-else-if="item.type == 6" @click="toQuestionsDetail(item,index) in rightList"> 
 					<image src="/static/images/yh.svg"></image> 
 					<view class="answersTitle"> 
 						{{item.title}} 
@@ -147,10 +147,11 @@
 		methods:{
 			// 发出组件高度信息，在此处可以区分正确和错误的加载，给予错误的提示图片
 			// 跳转问题详情
-			toQuestionsDetail(item){
-				var question_id = item.currentTarget.id
+			toQuestionsDetail(obj,index){
+				console.log(obj,'eee')
+				// var question_id = item.currentTarget.id
 				uni.navigateTo({
-					url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + question_id
+					url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + obj.question_id +'&background=' + obj.style.background
 				});
 			},
 			// 跳转文章详情
@@ -208,7 +209,6 @@
 							});
 							return
 						}
-						
 						if (left){
 							that.$refs.uWaterfall.leftList[index].liked = res.data.data.liked
 							that.$refs.uWaterfall.leftList[index].like_count = res.data.data.like_count
