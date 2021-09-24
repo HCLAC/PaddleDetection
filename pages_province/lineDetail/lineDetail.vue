@@ -170,7 +170,7 @@ export default {
 			isFixed: false,
 			serviceProvider: '',
 			headerHeight:200,
-			navbarHeight: getApp().globalData.navbarHeight,
+			navbarHeight: 64,
 			planHeight: 2000,
 			serverInfoHeight: 2000,
 			tabList: ['参考行程', '服务说明'],
@@ -179,6 +179,7 @@ export default {
 		};
 	},
 	mounted(){
+		this.navbarHeight = getApp().globalData.navbarHeight
 		this.calcHeight()
 	},
 	// #ifdef MP-BAIDU
