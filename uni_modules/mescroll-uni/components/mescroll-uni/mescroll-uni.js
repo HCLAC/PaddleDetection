@@ -47,7 +47,7 @@ MeScroll.prototype.extendDownScroll = function(optDown) {
 		native: false, // 是否使用系统自带的下拉刷新; 默认false; 仅mescroll-body生效 (值为true时,还需在pages配置enablePullDownRefresh:true;详请参考mescroll-native的案例)
 		autoShowLoading: false, // 如果设置auto=true(在初始化完毕之后自动执行下拉刷新的回调),那么是否显示下拉刷新的进度; 默认false
 		isLock: false, // 是否锁定下拉刷新,默认false;
-		offset: 80, // 在列表顶部,下拉大于80px,松手即可触发下拉刷新的回调
+		offset: 40, // 在列表顶部,下拉大于80px,松手即可触发下拉刷新的回调
 		startTop: 100, // scroll-view快速滚动到顶部时,此时的scroll-top可能大于0, 此值用于控制最大的误差
 		inOffsetRate: 1, // 在列表顶部,下拉的距离小于offset时,改变下拉区域高度比例;值小于1且越接近0,高度变化越小,表现为越往下越难拉
 		outOffsetRate: 0.2, // 在列表顶部,下拉的距离大于offset时,改变下拉区域高度比例;值小于1且越接近0,高度变化越小,表现为越往下越难拉
