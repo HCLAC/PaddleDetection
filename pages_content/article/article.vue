@@ -210,12 +210,20 @@
 			</view>
 		</view>
 		<!-- 评论输入框 -->
-		<view :animation="animationInputC" class="commentInput" v-if="showText">
+		<!-- <view :animation="animationInputC" class="commentInput" v-if="showText">
 			<textarea class="inputK" v-model="contentText" placeholder="撩点什么..." :show-confirm-bar="false" :focus="textareafocus"
 			 @blur="inputBlur" :auto-height="autoHeight" maxlength="140"
 			 :adjust-position="false"></textarea>
 			<view class="send" @click="pubComment">发送</view>
-		</view>
+		</view> -->
+		<u-popup v-model="textareafocus" mode="bottom" :mask-custom-style="{background: 'rgba(0, 0, 0, 0)'}">
+			<view class="commentInput" :style="{'padding-bottom': keywordHeight}" v-if="showText">
+				<textarea class="inputK" v-model="contentText" placeholder="撩点什么..." :show-confirm-bar="false" :focus="textareafocus"
+				 @blur="inputBlur" :auto-height="autoHeight" maxlength="140"
+				 :adjust-position="false"></textarea>
+				<view class="send" @click="pubComment">发送</view>
+			</view>
+		</u-popup>
 		<!-- 弹窗 -->
 		<u-modal v-model="show" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 		
@@ -235,6 +243,7 @@
 		},
 		data() {
 			return {
+				keywordHeight: '366px',
 				showText:false,
 				current: 0,
 				list: [],
@@ -326,8 +335,9 @@
 				if (res.height === 0){
 					this.showText = false 
 				}
-				this.animation.translateY(- (res.height + 60)).step()
-				this.animationInputC = this.animation.export()
+				this.keywordHeight = (res.height + 60)+'px'
+				// this.animation.translateY(- (res.height + 60)).step()
+				// this.animationInputC = this.animation.export()
 			});
 			//#endif
 		},
@@ -1565,11 +1575,11 @@
 	.commentInput {
 		width: 100%;
 		height: 100px;
-		padding-bottom: 100rpx;
+		// padding-bottom: 100rpx;
 		// height: 300rpx;
 		position: fixed;
 		background: #ffffff;
-		bottom: -100px;
+		bottom: 0;
 		display: flex;
 		z-index: 110;
 		// align-items: center;

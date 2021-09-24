@@ -226,6 +226,7 @@
 			}
 			this.firstTime = new Date().getTime()
 			this.firstLoad = false
+			this.downCallback()
 		},
 		// 滚动
 		onPageScroll(e) {
