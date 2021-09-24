@@ -13,7 +13,7 @@
 		</view>
 		<!-- 问题详情卡片 -->
 		<view class="detailCard" v-if="detail">
-			<view class="cardTopBox">
+			<view class="cardTopBox" :style="{background:backgroundColor}">
 				<view class="cardTop">
 					<view class="cardTopText">
 						领途羊·旅行问答
@@ -177,6 +177,7 @@
 	export default {
 		data() {
 			return {
+				backgroundColor: '',
 				question_id:'',
 				detail: null,
 				answersOfficial:null,
@@ -208,6 +209,7 @@
 		// #ifndef MP-BAIDU
 		onLoad(query) {
 		// #endif
+			this.backgroundColor = query.background
 			this.question_id = query.question_id
 			this.getQuestionsDetail()
 			this.getAnswersOfficial()
@@ -553,9 +555,10 @@
 			position: relative;
 			width: 686rpx;
 			height: 296rpx;
-			background: linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);
+			// background: linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);
 			box-shadow: 0rpx 8rpx 28rpx 0rpx #EDEFF2;
 			border-radius: 16rpx;
+			overflow: hidden;
 			.cardTop{
 				display: flex;
 				justify-content: space-between;
