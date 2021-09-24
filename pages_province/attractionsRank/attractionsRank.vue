@@ -481,7 +481,8 @@
 	.cardList {
 		width: 700rpx;
 		height: 100%;
-		margin-left: 28rpx;
+		margin-left: 22rpx;
+		// margin-right: 28rpx;
 		margin-top: 10rpx;
 		// margin-top: 90rpx;
 	}
