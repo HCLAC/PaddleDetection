@@ -94,7 +94,7 @@ export default {
 				color: '#909399'
 			},
 			cardheight: 200,
-			navbarHeight: getApp().globalData.navbarHeight, 
+			navbarHeight: 64, 
 			isFixed:false,
 			headerFixed: false,
 			hasLogin: false,
@@ -114,6 +114,7 @@ export default {
 		this.isInit = false
 	},
 	mounted() {
+		this.navbarHeight = getApp().globalData.navbarHeight
 		this.calcCardHeight()
 	},
 	onPageScroll(e) {

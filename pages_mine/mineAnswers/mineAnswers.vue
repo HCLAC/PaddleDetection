@@ -33,26 +33,14 @@ import answerList from '@/common/article-mescroll-item/mine-answer-list.vue';
 				tabList: ['关注的问题','回答的问题'], //'发布的问题',
 				tabIndex: 0,
 				isFixed:true,
-				navbarHeight: getApp().globalData.navbarHeight, 
+				navbarHeight: 64, 
 				cardheight:0
 			};
 		},
-		
 		mounted() {
-			this.calcCardHeight()
+			this.navbarHeight = getApp().globalData.navbarHeight
 		},
 		methods:{
-			calcCardHeight(){
-				if (this.isFixed){
-					return
-				}
-				const query = uni.createSelectorQuery().in(this);
-				setTimeout(() => {
-					query.select('.mineAnswerTabs').boundingClientRect(data => {
-						this.cardheight = data.top-data.height
-					}).exec();
-				}, 500);
-			},
 			// 切换
 			tabChange(index){
 				this.tabIndex = index

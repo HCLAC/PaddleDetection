@@ -63,7 +63,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 				show: false,
 				content: '',
 				cardheight: 0,
-				navbarHeight: getApp().globalData.navbarHeight, 
+				navbarHeight: 64, 
 				isFixed: false,
 				headerFixed: false,
 			};
@@ -78,6 +78,7 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 			this.getBloggerMsg()
 		}, 
 		mounted() {
+			this.navbarHeight = getApp().globalData.navbarHeight
 			this.calcCardHeight()
 		},
 		onPageScroll(e) {

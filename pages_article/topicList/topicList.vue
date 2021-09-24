@@ -56,7 +56,7 @@ export default {
 				tabIndex: 0,
 				isFixed: false,
 				headerFixed: false,
-				navbarHeight: getApp().globalData.navbarHeight,
+				navbarHeight: 64,
 				headerHeight: 0,
 				topic_id: 0,
 				info:''
@@ -86,7 +86,10 @@ export default {
 				this.isFixed = false;
 			}
 		},
-		
+		mounted(){
+			this.navbarHeight = getApp().globalData.navbarHeight
+			this.calcHeight()
+		},
 		methods: {	
 			loadData(){
 				this.getTopic()
@@ -120,7 +123,6 @@ export default {
 						var info = res.data.data
 						info.image = this.Utils.addImageProcess(info.image, false, 60)
 						this.info = info;
-						this.calcHeight()
 					}
 				})
 			},
