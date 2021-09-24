@@ -12,7 +12,7 @@
 			}"
 		>
 			<view class="u-icon-wrap">
-				<image class="u-clear-img" src="@/static/images/icon-search.svg"></image>
+				<image class="u-clear-img" src="@/static/images/icon-search.png"></image>
 				<!-- <u-icon class="u-clear-icon" :size="28" :name="searchIcon" :color="searchIconColor ? searchIconColor : color"></u-icon> -->
 			</view>
 			<input
@@ -300,8 +300,8 @@ export default {
 	flex: 1;
 }
 .u-clear-img{
-	width: 30rpx;
-	height: 30rpx;
+	width: 28rpx;
+	height: 28rpx;
 }
 .u-clear-img-eliminate{
 	width: 38rpx;
