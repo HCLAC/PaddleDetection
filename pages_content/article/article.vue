@@ -228,12 +228,12 @@
 		<u-modal v-model="show" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 		
 		<!-- 遮罩层 -->
-		<u-mask 
+		<!-- <u-mask 
 			:show="textareafocus" 
 			@click="textareafocus = false"
 			:z-index="100"
 			:custom-style="{background: 'rgba(0, 0, 0, 0)'}"
-		></u-mask>
+		></u-mask> -->
 	</view>
 </template>
 
