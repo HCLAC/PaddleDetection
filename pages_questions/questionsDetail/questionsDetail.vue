@@ -154,12 +154,14 @@
 			</view>
 		</view>
 		<!-- 输入框 -->
-		<view :animation="animationInputC" class="commentInput" >
-			<textarea class="inputK" v-model="contentText" placeholder="快来写下你的回答吧" :show-confirm-bar="false" :focus="textareafocus"
-			 @blur="inputBlur" auto-height maxlength="140" cursor-spacing="20"
-			 :adjust-position="false"></textarea>
-			<view class="send" @click="pubComment">发送</view>
-		</view>
+		<u-popup v-model="textareafocus" mode="bottom" :mask-custom-style="{background: 'rgba(0, 0, 0, 0)'}">
+			<view :style="{'padding-bottom': keywordHeight}" class="commentInput">
+				<textarea class="inputK" v-model="contentText" placeholder="快来写下你的回答吧" :show-confirm-bar="false" :focus="textareafocus"
+				 @blur="inputBlur" auto-height maxlength="140" cursor-spacing="20"
+				 :adjust-position="false"></textarea>
+				<view class="send" @click="pubComment">发送</view>
+			</view>
+		</u-popup>
 		<!-- 弹窗 -->
 		<u-modal v-model="show" :border-radius="40" :content="contentp" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 		<u-modal v-model="weshow" width="670rpx" :show-title="false"  :mask-close-able="true" :show-confirm-button="false" :show-cancel-button="false" >
@@ -177,6 +179,7 @@
 	export default {
 		data() {
 			return {
+				keywordHeight: '366px',
 				backgroundColor: '',
 				question_id:'',
 				detail: null,
@@ -222,18 +225,28 @@
 				}
 			)
 		},
-		onShow() {
-			//#ifdef MP-BAIDU
+		// onShow() {
+		// 	//#ifdef MP-BAIDU
+		// 	swan.onKeyboardHeightChange(res => {
+		// 		this.animation.translateY(-res.height).step()
+		// 		this.animationInputC = this.animation.export()
+		// 	});
+		// 	return
+		// 	//#endif
+		// 	uni.onKeyboardHeightChange(res => {
+		// 	  this.animation.translateY(-res.height).step()
+		// 	  this.animationInputC = this.animation.export()
+		// 	})
+		// },
+		onReady() {
 			swan.onKeyboardHeightChange(res => {
-				this.animation.translateY(-res.height).step()
-				this.animationInputC = this.animation.export()
+				// if (res.height === 0){
+				// 	this.showText = false 
+				// }
+				this.keywordHeight = (res.height + 60)+'px'
+				// this.animation.translateY(- (res.height + 60)).step()
+				// this.animationInputC = this.animation.export()
 			});
-			return
-			//#endif
-			uni.onKeyboardHeightChange(res => {
-			  this.animation.translateY(-res.height).step()
-			  this.animationInputC = this.animation.export()
-			})
 		},
 		methods:{
 			// 获取问题详情
@@ -1140,12 +1153,15 @@
 	// 评论框
 	.commentInput {
 		width: 100%;
-		padding-bottom: 90rpx;
+		height: 200rpx;
+		// padding-bottom: 90rpx;
 		position: fixed;
 		background: #ffffff;
-		bottom: -100rpx;
+		bottom: 0;
 		display: flex;
-		align-items: center;
+		// align-items: center;
+		z-index: 110;
+		
 		// padding-bottom: 110rpx;
 		.inputK {
 			height: 28rpx;
@@ -1157,14 +1173,14 @@
 		}
 	
 		.send {
-			// width: 64rpx;
 			height: 32rpx;
 			font-size: 32rpx;
 			font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 500;
 			color: #0091FF;
 			line-height: 32rpx;
-	
+			margin-top: 36rpx;
+			z-index: 200;
 		}
 	}
 	// 提示框
