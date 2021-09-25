@@ -180,7 +180,7 @@
 		data() {
 			return {
 				keywordHeight: '0px',
-				backgroundColor: '',
+				backgroundColor: 'linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);',
 				question_id:'',
 				detail: null,
 				answersOfficial:null,
