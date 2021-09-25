@@ -155,7 +155,7 @@
 		</view>
 		<!-- 输入框 -->
 		<u-popup v-model="textareafocus" mode="bottom" :mask-custom-style="{background: 'rgba(0, 0, 0, 0)'}">
-			<view :style="{'padding-bottom': keywordHeight}" class="commentInput">
+			<view :style="{'padding-bottom': keywordHeight}" class="commentInput" v-if="textareafocus">
 				<textarea class="inputK" v-model="contentText" placeholder="快来写下你的回答吧" :show-confirm-bar="false" :focus="textareafocus"
 				 @blur="inputBlur" auto-height maxlength="140" cursor-spacing="20"
 				 :adjust-position="false"></textarea>
@@ -179,7 +179,7 @@
 	export default {
 		data() {
 			return {
-				keywordHeight: '366px',
+				keywordHeight: '0px',
 				backgroundColor: '',
 				question_id:'',
 				detail: null,
@@ -202,8 +202,6 @@
 					height: '20px'
 				},
 				marketingData: null,
-				animation: null,
-				animationInputC: {},
 			};
 		},
 		// #ifdef MP-BAIDU
@@ -217,36 +215,13 @@
 			this.getQuestionsDetail()
 			this.getAnswersOfficial()
 			this.getQuestionsRelated()
-			this.animation = uni.createAnimation({
-				  transformOrigin: "50% 50%",
-				  duration: 175,
-				  timingFunction: "ease-out",
-				  delay: 0
-				}
-			)
 		},
-		// onShow() {
-		// 	//#ifdef MP-BAIDU
-		// 	swan.onKeyboardHeightChange(res => {
-		// 		this.animation.translateY(-res.height).step()
-		// 		this.animationInputC = this.animation.export()
-		// 	});
-		// 	return
-		// 	//#endif
-		// 	uni.onKeyboardHeightChange(res => {
-		// 	  this.animation.translateY(-res.height).step()
-		// 	  this.animationInputC = this.animation.export()
-		// 	})
-		// },
 		onReady() {
+		 	//#ifdef MP-BAIDU
 			swan.onKeyboardHeightChange(res => {
-				// if (res.height === 0){
-				// 	this.showText = false 
-				// }
 				this.keywordHeight = (res.height + 60)+'px'
-				// this.animation.translateY(- (res.height + 60)).step()
-				// this.animationInputC = this.animation.export()
 			});
+		 	//#endif
 		},
 		methods:{
 			// 获取问题详情

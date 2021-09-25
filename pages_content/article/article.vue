@@ -210,14 +210,8 @@
 			</view>
 		</view>
 		<!-- 评论输入框 -->
-		<!-- <view :animation="animationInputC" class="commentInput" v-if="showText">
-			<textarea class="inputK" v-model="contentText" placeholder="撩点什么..." :show-confirm-bar="false" :focus="textareafocus"
-			 @blur="inputBlur" :auto-height="autoHeight" maxlength="140"
-			 :adjust-position="false"></textarea>
-			<view class="send" @click="pubComment">发送</view>
-		</view> -->
 		<u-popup v-model="textareafocus" mode="bottom" :mask-custom-style="{background: 'rgba(0, 0, 0, 0)'}">
-			<view class="commentInput" :style="{'padding-bottom': keywordHeight}" v-if="showText">
+			<view class="commentInput" :style="{'padding-bottom': keywordHeight}" v-if="textareafocus">
 				<textarea class="inputK" v-model="contentText" placeholder="撩点什么..." :show-confirm-bar="false" :focus="textareafocus"
 				 @blur="inputBlur" :auto-height="autoHeight" maxlength="140"
 				 :adjust-position="false"></textarea>
@@ -270,8 +264,6 @@
 				focus: false,
 				autoHeight: true,
 				textareafocus: false,
-				animation: null,
-				animationInputC: {},
 				// 骨架屏
 				loadEmpty:[1,2,3],
 				loading: true,
@@ -322,15 +314,6 @@
 			this.rn = query.rn?query.rn:null
 			this.joinTime = Number((new Date().getTime())/1000).toFixed(0)
 			
-			// 评论框动画
-			this.animation = uni.createAnimation({
-				  transformOrigin: "50% 50%",
-				  duration: 175,//175动画速度
-				  timingFunction: "linear",
-				  delay: 1
-				}
-			)
-			
 			this.getUserInfo()
 			this.getComments()
 		},
@@ -345,8 +328,6 @@
 					this.showText = false 
 				}
 				this.keywordHeight = (res.height + 60)+'px'
-				// this.animation.translateY(- (res.height + 60)).step()
-				// this.animationInputC = this.animation.export()
 			});
 			//#endif
 		},
@@ -868,8 +849,6 @@
 				this.textareafocus = true
 			},
 			inputBlur() {
-				this.animation.translateY(-60).step()
-				this.animationInputC = this.animation.export()
 				this.showText = false
 				this.textareafocus = false
 			},
