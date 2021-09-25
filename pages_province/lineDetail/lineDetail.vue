@@ -133,9 +133,9 @@
 			</view>
 			<view class="bottom">
 				<!-- 分割线 -->
-				<view class="line"></view>
+				<!-- <view class="line"></view> -->
 				<!-- 登录 -->
-				<view class="contentBottom savepadding">
+				<!-- <view class="contentBottom savepadding"> -->
 					<!-- <view class="like">
 						<image v-show="!lineContent.fav" class="likeBtn" src="/static/images/attheart.svg"></image>
 						<image v-show="lineContent.fav" class="likeBtn" src="/static/images/heart-actived.svg"></image>
@@ -146,9 +146,24 @@
 						<image v-show="lineContent.fav" class="favBtn" src="/static/images/fav-actived.svg"></image>
 						<view class="favNum">{{ lineContent.fav_count }}</view>
 					</view> -->
-					<view><view class="share" v-if="serviceProvider =='baidu'"  @click="share"><image src="/static/images/shareIcon.svg"></image></view></view>
-					<!-- <view class=""><view class="loginButton" v-if="!hasLogin" @click="login">登录</view></view> -->
+				<view class="bottom-text">
+					
 				</view>
+				<view class="like"  @click="clickLike">
+					<image class="likeBtn" :src="articleInfo.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image>
+				</view>
+				<view class="likeNum">{{ articleInfo.like_count }}</view>
+				
+				<view class="fav" @click="clickFav">
+					<image class="favBtn" :src="articleInfo.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
+				</view>
+				<view class="favNum">{{ articleInfo.fav_count }}</view>
+				
+				<view class="share" v-if="serviceProvider =='baidu'"  @click="share">
+					<image src="/static/images/shareIcon.svg"></image>
+				</view>
+					<!-- <view class=""><view class="loginButton" v-if="!hasLogin" @click="login">登录</view></view> -->
+				<!-- </view> -->
 			</view>
 		</view>
 		<view class="phone" @click="tell" ><image src="/static/images/serverCall.svg"></image></view>
@@ -692,32 +707,119 @@ export default {
 	height: 98rpx;
 	position: fixed;
 	left: 0;
-	bottom: var(--window-bottom);
+	bottom: var( --window-bottom);
+	// bottom: 0;
 	z-index: 111;
 	background-color: #ffffff;
-	padding-bottom: 68rpx;
 	padding-bottom: constant(safe-area-inset-bottom);
 	padding-bottom: env(safe-area-inset-bottom);
 	box-sizing: content-box;
-}
-.line {
-	height: 0.5rpx;
-	background: rgba(221, 221, 221, 1);
-	// margin-top: 84rpx;
-}
-
-.contentBottom {
 	display: flex;
 	align-items: center;
-	// margin-top: 16rpx;
-	// padding:0 56rpx;
-	justify-content: space-between;
+	border-top: 2rpx solid #EDEFF2;
+}
+.bottom-text{
+	width: 372rpx;
+	height: 68rpx;
+	// background: #F8F8F8;
+	// border-radius: 34rpx;
+	// display: flex;
+	// align-items: center;
+	// font-size: 24rpx;
+	// font-family: PingFangSC-Regular, PingFang SC;
+	// font-weight: 400;
+	// color: #909399;
+	padding-left: 28rpx;
+	margin-left: 28rpx;
+	margin-right: 32rpx;
+}
+.share{
+	margin-left: 32rpx;
+	width: 52rpx;
+	height: 52rpx;
+	image{
+		width: 100%;
+		height: 100%;
+	}
+}
+.like {
+	// transition: opacity 3s;
+	// animation:ClickLikeAni 1s infinite;
+	// transition: all 1s ease-in-out 0s;
+	display: flex;
+	align-items: center;
+	width: 52rpx;
+	height: 52rpx;
+	margin-right: 4rpx;
+	.likeBtn {
+		width: 100%;
+		height: 100%;
+	}
+}
+.likeNum {
+	width: 30rpx;
+	height: 24rpx;
 	font-size: 24rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: rgba(48, 49, 51, 1);
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #303133;
+	line-height: 24rpx;
+	margin-right: 32rpx;
+}
+.fav {
+	display: flex;
+	align-items: center;
+	margin-right: 4rpx;
+	position: relative;
+	width: 52rpx;
+	height: 52rpx;
+	.favBtn {
+		width: 100%;
+		height: 100%;
+		// margin-right: 8rpx;
+	}
+}
+.favNum {
+	width: 30rpx;
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #303133;
 	line-height: 24rpx;
 }
+
+// .bottom {
+// 	width: 100%;
+// 	height: 98rpx;
+// 	position: fixed;
+// 	left: 0;
+// 	bottom: var(--window-bottom);
+// 	z-index: 111;
+// 	background-color: #ffffff;
+// 	padding-bottom: 68rpx;
+// 	padding-bottom: constant(safe-area-inset-bottom);
+// 	padding-bottom: env(safe-area-inset-bottom);
+// 	box-sizing: content-box;
+// }
+// .line {
+// 	height: 0.5rpx;
+// 	background: rgba(221, 221, 221, 1);
+// 	// margin-top: 84rpx;
+// }
+
+// .contentBottom {
+// 	display: flex;
+// 	align-items: center;
+// 	// margin-top: 16rpx;
+// 	// padding:0 56rpx;
+// 	justify-content: space-between;
+// 	font-size: 24rpx;
+// 	font-family: PingFangSC-Regular, PingFang SC;
+// 	font-weight: 400;
+// 	color: rgba(48, 49, 51, 1);
+// 	line-height: 24rpx;
+// }
 
 // .loginButton {
 // 	width: 156rpx;
@@ -735,49 +837,49 @@ export default {
 	
 // }
 
-.like {
-	display: flex;
-	margin-left: 28rpx;
-	align-items: center;
-}
+// .like {
+// 	display: flex;
+// 	margin-left: 28rpx;
+// 	align-items: center;
+// }
 
-.likeBtn {
-	width: 52rpx;
-	height: 52rpx;
-	margin-right: 10rpx;
-}
+// .likeBtn {
+// 	width: 52rpx;
+// 	height: 52rpx;
+// 	margin-right: 10rpx;
+// }
 
-.fav {
-	display: flex;
-	margin-left: 56rpx;
-	align-items: center;
-}
+// .fav {
+// 	display: flex;
+// 	margin-left: 56rpx;
+// 	align-items: center;
+// }
 
-.favBtn {
-	width: 52rpx;
-	height: 52rpx;
-	margin-right: 10rpx;
-}
+// .favBtn {
+// 	width: 52rpx;
+// 	height: 52rpx;
+// 	margin-right: 10rpx;
+// }
 
-.share {
-	display: flex;
-	width: 88rpx;
-	height: 88rpx;
-	margin-left: 28rpx;
-	margin-top: 6rpx;
-	align-items: center;
-	justify-content: center;
-}
+// .share {
+// 	display: flex;
+// 	width: 88rpx;
+// 	height: 88rpx;
+// 	margin-left: 28rpx;
+// 	margin-top: 6rpx;
+// 	align-items: center;
+// 	justify-content: center;
+// }
 
-.share image {
-	width: 52rpx;
-	height: 52rpx;
-}
-.savepadding {
-	padding-bottom: constant(safe-area-inset-bottom);
-	padding-bottom: env(safe-area-inset-bottom);
-	box-sizing: content-box;
-}
+// .share image {
+// 	width: 52rpx;
+// 	height: 52rpx;
+// }
+// .savepadding {
+// 	padding-bottom: constant(safe-area-inset-bottom);
+// 	padding-bottom: env(safe-area-inset-bottom);
+// 	box-sizing: content-box;
+// }
 .serverInfo {
 	width: 694rpx;
 	min-height: 416rpx;
