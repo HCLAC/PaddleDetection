@@ -162,7 +162,7 @@
 				</view>
 			</view>
 		</mescroll-body>
-		<u-no-network @retry="loadData()"></u-no-network>
+		<u-no-network @retry="downCallback()"></u-no-network>
 	</view>
 </template>
 
@@ -197,6 +197,14 @@
 				cus_sty_top: '156rpx'
 			};
 		},
+		created() {
+			// 监听从博主页面发来的信息
+			uni.$once('onLoginSuccess', first_login => {
+				if (!first_login){
+					this.mescroll.resetUpScroll()
+				}
+			})
+		},
 		// #ifdef MP-BAIDU
 		onInit(query) {
 		// #endif
@@ -226,7 +234,6 @@
 			}
 			this.firstTime = new Date().getTime()
 			this.firstLoad = false
-			this.downCallback()
 		},
 		// 滚动
 		onPageScroll(e) {

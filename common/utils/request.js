@@ -33,22 +33,17 @@ function request(obj) {
 			obj.success(res)
 		},
 		fail: (res) => {
+			if (obj.retry && obj.retry > 0){
+				setTimeout(() => {
+					request(obj)
+				}, 1000)
+				obj.retry--
+				return
+			}
 			uni.showToast({
 				title: '网络不给力~,请稍后再试',
 				icon: 'none'
 			});
-			if (obj.retry && obj.retry > 0){
-				setTimeout(() => {
-					request(obj)
-				}, 500)
-				obj.retry--
-				return
-			}
-			// switch(res.errCode){
-			// 	case 1:
-					
-			// 		break;
-			// }
 			obj.fail && obj.fail(res)
 		},
 		complete: () => {

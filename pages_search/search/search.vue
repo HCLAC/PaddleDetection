@@ -165,14 +165,12 @@
 
 <script>
 	//引用mSearch组件，如不需要删除即可
-	import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision.vue';
 	import articleWaterfall from '@/common/article-waterfall/article-waterfall.vue';
 	// 引入mescroll-mixins.js
 	import MescrollMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js';
 	export default {
 		mixins: [MescrollMixin],
 		components: {
-			mSearch,
 			articleWaterfall
 		},
 		data() {

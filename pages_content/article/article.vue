@@ -243,7 +243,8 @@
 		},
 		data() {
 			return {
-				keywordHeight: '366px',
+				isShow: true,
+				keywordHeight: '0px',
 				showText:false,
 				current: 0,
 				list: [],
@@ -304,6 +305,14 @@
 			uni.$on('onBlogStatus', is_follow => {
 				this.articleInfo.is_follow = is_follow
 			})
+			// 监听从博主页面发来的信息
+			uni.$once('onLoginSuccess', first_login => {
+				if (!first_login){
+					this.getUserInfo()
+					this.getComments()
+					this.getArticleDetail();
+				}
+			})
 		},
 		onInit(query){
 			this.serviceProvider = getApp().globalData.serviceProvider
@@ -323,7 +332,7 @@
 			)
 			
 			this.getUserInfo()
-			this.getComments();
+			this.getComments()
 		},
 		
 		onReady() {
@@ -343,7 +352,8 @@
 		},
 		onShow() {
 			this.hasLogin = getApp().globalData.Authorization ? true : false;
-			this.loadData()
+			this.isShow && this.loadData()
+			this.isShow = false
 		},
 		methods: {
 			ImgSee(){
@@ -556,8 +566,8 @@
 							that.loading = false
 						}, 300);
 					},
-					complete: () => {
-						// that.loading = false
+					fail: () => {
+						that.loading = false
 					}
 				});
 			},

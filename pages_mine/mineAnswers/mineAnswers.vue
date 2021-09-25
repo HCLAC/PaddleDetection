@@ -21,7 +21,7 @@
 <script>
 import MescrollMoreMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-more.js';
 import meTabs from '@/common/me-tabs/me-tabs.vue';
-import answerList from '@/common/article-mescroll-item/mine-answer-list.vue';
+import answerList from './mine-answer-list.vue';
 	export default {
 		mixins: [MescrollMoreMixin],
 		components: {
@@ -42,9 +42,9 @@ import answerList from '@/common/article-mescroll-item/mine-answer-list.vue';
 		},
 		methods:{
 			// 切换
-			tabChange(index){
-				this.tabIndex = index
-			},
+			// tabChange(index){
+			// 	this.tabIndex = index
+			// },
 		}
 	}
 </script>

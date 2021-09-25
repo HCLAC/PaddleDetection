@@ -377,6 +377,7 @@ export default {
 				success: function () {
 				}
 			});
+			uni.$emit('onLoginSuccess', userinfo.first_login);
 			this.Utils.back()
 		} 
 	}
