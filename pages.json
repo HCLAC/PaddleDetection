@@ -154,12 +154,12 @@
 						"navigationStyle": "custom"
 					}
 				}
-				// ,{
-				// 	"path": "city/city",
-				// 	"style": {
-				// 		"navigationStyle": "custom"
-				// 	}
-				// }
+				,{
+					"path": "city/city",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				}
 			]
 		},
 		{

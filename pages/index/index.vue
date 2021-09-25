@@ -48,7 +48,7 @@
 					<view class="hot-bot" v-if="areaList && areaList.length">
 						<view class="hotAdress">
 							<!-- 当前位置 -->
-							<view class="dqwz" @click="toProvinces(areaList[0])">
+							<!-- <view class="dqwz" @click="toProvinces(areaList[0])">
 								<image class="dqwzBg" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
 								<view class="mask1" v-if="areaList[0].image"></view>
 								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
@@ -62,11 +62,11 @@
 								<view class="mask"></view>
 								<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
 								<text class="hotCityText">{{ areaList[1].name }}</text>
-							</view>
-							<view class="hotCity" @click="toProvinces(areaList[2])" v-if="areaList[2]">
+							</view> -->
+							<view class="hotCity" v-for="(item,index) in areaList" v-if="index<3" :key="index" @click="toProvinces(item)">
 								<view class="mask"></view>
-								<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
-								<text class="hotCityText1">{{ areaList[2].name }}</text>
+								<image class="hotCityImg" :src="item.image" mode="scaleToFill"></image>
+								<text class="hotCityText1">{{ item.name }}</text>
 							</view>
 						</view>
 						<view class="cityRank">
@@ -413,6 +413,18 @@
 				uni.getLocation({
 					type: 'wgs84',
 					success: res => {
+						// console.log(res,'===')
+						// this.HTTP.request({
+						// 	url: '/area/judge',
+						// 	data: {
+						// 		state: res.province,
+						// 		city: res.city
+						// 	},
+						// 	method: 'GET',
+						// 	success: data => {
+						// 		console.log(data,'data')
+						// 	},
+						// })
 						if (res.city && res.province) {
 							that.cityName = res.city.substr(0, res.city.length - 1);
 						} else {
@@ -447,7 +459,14 @@
 							});
 						}
 						this.cityName = '未定位'
+						this.dqdwText = '未获取到定位';
 					}
+				});
+			},
+			//点击更多
+			showCity() {
+				uni.navigateTo({
+					url: '/pages_content/city/city'
 				});
 			},
 			// 点击banner
@@ -800,7 +819,7 @@
 			.hotAdress {
 				display: flex;
 				/* align-items: center; */
-				margin-left: 32rpx;
+				// margin-left: 32rpx;
 				.dqwz {
 					width: 216rpx;
 					height: 180rpx;
@@ -846,7 +865,7 @@
 						font-family: PingFangSC-Medium, PingFang SC;
 						font-weight: 500;
 						color: #303133;
-						line-height: 16rpx;
+						// line-height: 16rpx;
 						/* width: 140rpx; */
 						height: 40rpx;
 						background: #ffe512;
