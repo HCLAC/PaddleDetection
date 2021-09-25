@@ -3,7 +3,7 @@
 		<!-- 自定义导航栏 -->
 		<view class="nav-bar">
 			<uni-nav-bar :title="false" :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor">
-				<view class="headerL" slot="left">
+				<!-- <view class="headerL" slot="left">
 					<view class="world" >
 						<view class="worldText">全世界</view>
 						<view class="worldLine"></view>
@@ -14,7 +14,7 @@
 							<image class="downIconImg" src="/static/images/downIcon.svg"></image>
 						</view>
 					</view>
-				</view>
+				</view> -->
 				<view slot="center" class="input-view" @click="toSearch">
 					<view class="input-uni-icon-Box">
 						<!-- <u-icon name="search" color="#c9cad1" :size="28"></u-icon> -->
@@ -37,6 +37,55 @@
 			<view class="cus-sty " :style="{'margin-top': cus_sty_top}">
 				<!-- 热门目的地 -->
 				<view class="hot">
+					<view class="hot-top">
+						<text class="ht-l">热门目的地</text>
+						<view class="ht-r" @click="showCity">
+							更多
+							<image src="../../static/images/more-right.svg" class="moreIcon" mode=""></image>
+						</view>
+					</view>
+
+					<view class="hot-bot" v-if="areaList && areaList.length">
+						<view class="hotAdress">
+							<!-- 当前位置 -->
+							<view class="dqwz" @click="toProvinces(areaList[0])">
+								<image class="dqwzBg" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
+								<view class="mask1" v-if="areaList[0].image"></view>
+								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
+								<text class="dqwzText">{{ cityName }}</text>
+								<view class="adressBox">
+									<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
+									<text class="dqwzText1">{{ dqdwText }}</text>
+								</view>
+							</view>
+							<view class="hotCity" @click="toProvinces(areaList[1])" v-if="areaList[1]">
+								<view class="mask"></view>
+								<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
+								<text class="hotCityText">{{ areaList[1].name }}</text>
+							</view>
+							<view class="hotCity" @click="toProvinces(areaList[2])" v-if="areaList[2]">
+								<view class="mask"></view>
+								<image class="hotCityImg" :src="areaList[2].image" mode="scaleToFill"></image>
+								<text class="hotCityText1">{{ areaList[2].name }}</text>
+							</view>
+						</view>
+						<view class="cityRank">
+							<view class="rankText" @click="toProvinces(areaList[3])" v-if="areaList[3]">{{ areaList[3].name }}</view>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[4]"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[4])" v-if="areaList[4]">{{ areaList[4].name }}</view>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[5]"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[5])" v-if="areaList[5]">{{ areaList[5].name }}</view>
+						</view>
+						<view class="cityRank">
+							<view class="rankText" @click="toProvinces(areaList[6])" v-if="areaList[6]">{{ areaList[6].name }}</view>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[7]"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[7])" v-if="areaList[7]">{{ areaList[7].name }}</view>
+							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[7]"></u-line>
+							<view class="rankText" @click="toProvinces(areaList[8])" >{{ areaList[8].name }}</view>
+						</view>
+					</view>
+				</view>
+				<!-- <view class="hot">
 					<view class="wave">
 						<image class="waveImg" src="/static/images/wave.png"></image>
 					</view>
@@ -152,7 +201,7 @@
 							</view>
 						</scroll-view>
 					</view>	
-				</view>
+				</view> -->
 				<!-- 正在旅行 -->
 				<view class="touring">
 					<text class="tourtext">正在旅行</text>
@@ -177,6 +226,7 @@
 		mixins: [MescrollMixin],
 		data() {
 			return {
+				dqdwText: '当前位置',
 				downOption: {
 					auto:false
 				},
@@ -660,14 +710,14 @@
 	.input-view {
 		display: flex;
 		// flex-direction: row;
-		width: 212rpx;
+		width: 486rpx;
 		height: 64rpx;
 		align-items: center;
 		background: rgba(248, 248, 248, 1);
 		border-radius: 36rpx;
 		// flex-wrap: nowrap;
 		// margin: 0 auto;
-		margin-left: 180rpx;
+		margin-left: -120rpx;
 		padding-left: 32rpx;
 		.input-uni-icon-Box{
 			// width: 28rpx;
@@ -699,14 +749,183 @@
 		display: flex;
 		flex-direction: column;
 		background-color: #ffffff;
-		.wave{
-			margin-top: -50rpx;
-			width: 100%;
-			height: 90rpx;
-			z-index: 10;
-			.waveImg{
-				width: 100%;
-				height: 100%;
+		.hot-top {
+			display: flex;
+			justify-content: space-between;
+			.ht-l {
+				/* width: 160rpx; */
+				height: 40rpx;
+				font-size: 40rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
+				color: rgba(48, 49, 51, 1);
+				/* line-height: 40rpx; */
+				margin-top: 48rpx;
+				margin-left: 32rpx;
+			}
+			.ht-r {
+				width: 94rpx;
+				height: 42rpx;
+				background: #edeff2;
+				border-radius: 24rpx;
+				font-size: 22rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
+				color: #606266;
+				line-height: 42rpx;
+				margin: 54rpx 32rpx 0 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.moreIcon {
+				width: 14rpx;
+				height: 14rpx;
+				margin-left: 4rpx;
+			}
+		}
+		// .wave{
+		// 	margin-top: -50rpx;
+		// 	width: 100%;
+		// 	height: 90rpx;
+		// 	z-index: 10;
+		// 	.waveImg{
+		// 		width: 100%;
+		// 		height: 100%;
+		// 	}
+		// }
+		.hot-bot {
+			/* display: flex; */
+			margin-top: 32rpx;
+			.hotAdress {
+				display: flex;
+				/* align-items: center; */
+				margin-left: 32rpx;
+				.dqwz {
+					width: 216rpx;
+					height: 180rpx;
+					border-radius: 8px;
+					border: 4rpx solid #ffe512;
+					position: relative;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					overflow: hidden;
+					.dqwzBg {
+						width: 216rpx;
+						height: 180rpx;
+					}
+					.dqwzImg {
+						width: 216rpx;
+						height: 180rpx;
+						border-radius: 8px;
+					}
+					.dqwzBox {
+						position: absolute;
+						text-align: center;
+					}
+					.dqwzText {
+						position: absolute;
+						top: 50rpx;
+						/* left: 78rpx; */
+						font-size: 32rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #ffffff;
+						line-height: 32rpx;
+					}
+					.adressBox {
+						display: flex;
+						align-items: center;
+						position: absolute;
+						top: 90rpx;
+						/* left: 40rpx; */
+						color: #ffffff;
+						padding: 8rpx 16rpx;
+						font-size: 16rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #303133;
+						line-height: 16rpx;
+						/* width: 140rpx; */
+						height: 40rpx;
+						background: #ffe512;
+						border-radius: 11px;
+						.zhishi {
+							width: 24rpx;
+							height: 24rpx;
+							margin-right: 4rpx;
+						}
+						.dqwzText1{
+							font-size: 20rpx;
+							font-family: PingFangSC-Medium, PingFang SC;
+							font-weight: 500;
+							color: #303133;
+						}
+					}
+				}
+				.hotCity {
+					width: 216rpx;
+					height: 180rpx;
+					border-radius: 16rpx;
+					margin-left: 24rpx;
+					position: relative;
+					.mask {
+						width: 216rpx;
+						height: 180rpx;
+						background: rgba(0, 0, 0, 0.25);
+						border-radius: 8px;
+						position: absolute;
+					}
+					.hotCityImg {
+						width: 100%;
+						height: 100%;
+						border-radius: 16rpx;
+					}
+					.hotCityText {
+						width: 140rpx;
+						height: 32rpx;
+						font-size: 32rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #ffffff;
+						line-height: 32rpx;
+						text-align: center;
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						margin-left: -70rpx;
+						margin-top: -16rpx;
+					}
+					.hotCityText1 {
+						width: 140rpx;
+						height: 32rpx;
+						font-size: 32rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #ffffff;
+						line-height: 32rpx;
+						text-align: center;
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						margin-left: -70rpx;
+						margin-top: -16rpx;
+					}
+				}
+
+			}
+			.cityRank {
+				margin-top: 28rpx;
+				margin-left: 32rpx;
+				margin-bottom: 28rpx;
+				display: flex;
+				align-items: center;
+				.rankText {
+					width: 212rpx;
+					font-size: 28rpx;
+					text-align: center;
+				}
 			}
 		}
 	}
@@ -1009,11 +1228,11 @@
 			}
 		}
 	}
-	.hotCityImg {
-		width: 100%;
-		height: 100%;
-		border-radius: 48rpx;
-	}
+	// .hotCityImg {
+	// 	width: 100%;
+	// 	height: 100%;
+	// 	border-radius: 48rpx;
+	// }
 
 	/* 正在旅行 */
 	.touring {
