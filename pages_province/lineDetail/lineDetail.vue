@@ -179,6 +179,7 @@ export default {
 	data() {
 		return {
 			id: 0,
+			articleInfo:null,
 			lineContent: null,
 			current: 0,
 			hasLogin: false,
@@ -191,6 +192,7 @@ export default {
 			tabList: ['参考行程', '服务说明'],
 			tabIndex: 0 ,// 当前tab下标,必须与mescroll-more.js对应,所以tabIndex是固定变量,不可以改为其他的名字
 			Show:false,
+			hasLikeClick:false,
 		};
 	},
 	mounted(){
@@ -227,6 +229,7 @@ export default {
 		}
 	},
 	methods: {
+		//获取行程信息
 		getDetail() {
 			var that = this
 			this.HTTP.request({
@@ -236,6 +239,9 @@ export default {
 					uuid: this.id
 				},
 				success: res => {
+					this.articleInfo = res.data.data
+					console.log(this.articleInfo,'res')
+					
 					if (res.statusCode != 200 || res.data.code != 0){
 						uni.showToast({
 							title: res.data.msg,
@@ -268,6 +274,98 @@ export default {
 						image: that.lineContent.images.length <=3 ? that.lineContent.images : that.lineContent.images.slice(0,3),
 					})
 					//#endif
+				}
+			});
+		},
+		// 点赞
+		clickLike() {
+			var that = this;
+			if (!this.hasLogin) {
+				uni.navigateTo({
+					url: '/pages_mine/login/login'
+				});
+				return
+			}
+			if (this.hasLikeClick) {
+				return;
+			}
+			this.hasLikeClick = true;
+			this.HTTP.request({
+				url: '/user/liked',
+				data: {
+					article_id: that.articleInfo.uuid,
+					liked: that.articleInfo.liked == 0 ? 1 : 0,
+					type: that.articleInfo.type
+				},
+				method: 'POST',
+				success: res => {
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
+					}
+					that.articleInfo.liked = res.data.data.liked
+					that.articleInfo.like_count = res.data.data.like_count
+					
+					// if (that.trace_info && that.rn) {
+					// 	that.Opensearch.uploadData({
+					// 		trace_info: that.trace_info,
+					// 		rn: that.rn,
+					// 		item_id: that.article_id,
+					// 		bhv_type: 'like'
+					// 	})
+					// }
+				},
+				complete: () => {
+					that.hasLikeClick = false;
+				}
+			});
+		},
+		// 收藏
+		clickFav() {
+			var that = this;
+			if (!this.hasLogin) {
+				uni.navigateTo({
+					url: '/pages_mine/login/login'
+				});
+				return
+			}
+			
+			if (this.hasFavClick) {
+				return;
+			}
+			this.hasFavClick = true;
+			this.HTTP.request({
+				url: '/user/favorite',
+				data: {
+					article_id: that.articleInfo.uuid,
+					favorite: that.articleInfo.fav == 0 ? 1 : 0,
+					type: that.articleInfo.type
+				},
+				method: 'POST',
+				success: res => {
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
+					}
+					that.articleInfo.fav = res.data.data.fav
+					that.articleInfo.fav_count = res.data.data.fav_count
+					// if (that.trace_info && that.rn) {
+					// 	that.Opensearch.uploadData({
+					// 		trace_info: that.trace_info,
+					// 		rn: that.rn,
+					// 		item_id: that.article_id,
+					// 		bhv_type: 'collect'
+					// 	})
+					// }
+				},
+				complete: () => {
+					that.hasFavClick = false;
 				}
 			});
 		},

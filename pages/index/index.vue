@@ -67,6 +67,10 @@
 								<view class="mask"></view>
 								<image class="hotCityImg" :src="item.image" mode="scaleToFill"></image>
 								<text class="hotCityText1">{{ item.name }}</text>
+								<!-- <view class="adressBox" v-if="positioningCity.name != ''">
+									<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
+									<text class="dqwzText1">{{ dqdwText }}</text>
+								</view> -->
 							</view>
 						</view>
 						<view class="cityRank">
@@ -413,18 +417,19 @@
 				uni.getLocation({
 					type: 'wgs84',
 					success: res => {
-						// console.log(res,'===')
-						// this.HTTP.request({
-						// 	url: '/area/judge',
-						// 	data: {
-						// 		state: res.province,
-						// 		city: res.city
-						// 	},
-						// 	method: 'GET',
-						// 	success: data => {
-						// 		console.log(data,'data')
-						// 	},
-						// })
+						this.HTTP.request({
+							url: '/area/judge',
+							data: {
+								state: res.province,
+								city: res.city
+							},
+							method: 'GET',
+							success: data => {
+								if(data.data.data.name != ''){
+									this.areaList.unshift(data.data.data)
+								}
+							},
+						})
 						if (res.city && res.province) {
 							that.cityName = res.city.substr(0, res.city.length - 1);
 						} else {
@@ -818,76 +823,78 @@
 			margin-top: 32rpx;
 			.hotAdress {
 				display: flex;
+				justify-content: space-between;
+				padding: 0 28rpx;
 				/* align-items: center; */
 				// margin-left: 32rpx;
-				.dqwz {
-					width: 216rpx;
-					height: 180rpx;
-					border-radius: 8px;
-					border: 4rpx solid #ffe512;
-					position: relative;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					overflow: hidden;
-					.dqwzBg {
-						width: 216rpx;
-						height: 180rpx;
-					}
-					.dqwzImg {
-						width: 216rpx;
-						height: 180rpx;
-						border-radius: 8px;
-					}
-					.dqwzBox {
-						position: absolute;
-						text-align: center;
-					}
-					.dqwzText {
-						position: absolute;
-						top: 50rpx;
-						/* left: 78rpx; */
-						font-size: 32rpx;
-						font-family: PingFangSC-Medium, PingFang SC;
-						font-weight: 500;
-						color: #ffffff;
-						line-height: 32rpx;
-					}
-					.adressBox {
-						display: flex;
-						align-items: center;
-						position: absolute;
-						top: 90rpx;
-						/* left: 40rpx; */
-						color: #ffffff;
-						padding: 8rpx 16rpx;
-						font-size: 16rpx;
-						font-family: PingFangSC-Medium, PingFang SC;
-						font-weight: 500;
-						color: #303133;
-						// line-height: 16rpx;
-						/* width: 140rpx; */
-						height: 40rpx;
-						background: #ffe512;
-						border-radius: 11px;
-						.zhishi {
-							width: 24rpx;
-							height: 24rpx;
-							margin-right: 4rpx;
-						}
-						.dqwzText1{
-							font-size: 20rpx;
-							font-family: PingFangSC-Medium, PingFang SC;
-							font-weight: 500;
-							color: #303133;
-						}
-					}
-				}
+				// .dqwz {
+				// 	width: 216rpx;
+				// 	height: 180rpx;
+				// 	border-radius: 8px;
+				// 	border: 4rpx solid #ffe512;
+				// 	position: relative;
+				// 	display: flex;
+				// 	align-items: center;
+				// 	justify-content: center;
+				// 	overflow: hidden;
+				// 	.dqwzBg {
+				// 		width: 216rpx;
+				// 		height: 180rpx;
+				// 	}
+				// 	.dqwzImg {
+				// 		width: 216rpx;
+				// 		height: 180rpx;
+				// 		border-radius: 8px;
+				// 	}
+				// 	.dqwzBox {
+				// 		position: absolute;
+				// 		text-align: center;
+				// 	}
+				// 	.dqwzText {
+				// 		position: absolute;
+				// 		top: 50rpx;
+				// 		/* left: 78rpx; */
+				// 		font-size: 32rpx;
+				// 		font-family: PingFangSC-Medium, PingFang SC;
+				// 		font-weight: 500;
+				// 		color: #ffffff;
+				// 		line-height: 32rpx;
+				// 	}
+				// 	.adressBox {
+				// 		display: flex;
+				// 		align-items: center;
+				// 		position: absolute;
+				// 		top: 90rpx;
+				// 		/* left: 40rpx; */
+				// 		color: #ffffff;
+				// 		padding: 8rpx 16rpx;
+				// 		font-size: 16rpx;
+				// 		font-family: PingFangSC-Medium, PingFang SC;
+				// 		font-weight: 500;
+				// 		color: #303133;
+				// 		// line-height: 16rpx;
+				// 		/* width: 140rpx; */
+				// 		height: 40rpx;
+				// 		background: #ffe512;
+				// 		border-radius: 11px;
+				// 		.zhishi {
+				// 			width: 24rpx;
+				// 			height: 24rpx;
+				// 			margin-right: 4rpx;
+				// 		}
+				// 		.dqwzText1{
+				// 			font-size: 20rpx;
+				// 			font-family: PingFangSC-Medium, PingFang SC;
+				// 			font-weight: 500;
+				// 			color: #303133;
+				// 		}
+				// 	}
+				// }
 				.hotCity {
 					width: 216rpx;
 					height: 180rpx;
 					border-radius: 16rpx;
-					margin-left: 24rpx;
+					// margin-left: 24rpx;
 					position: relative;
 					.mask {
 						width: 216rpx;
