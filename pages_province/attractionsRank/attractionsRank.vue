@@ -531,7 +531,7 @@
 		// width: 392rpx;
 		font-size: 28rpx;
 		line-height: 42rpx;
-		text-align: justify;
+		// text-align: justify;
 		// width: 196px;
 		// height: 70rpx;
 		// font-size: 14px;
