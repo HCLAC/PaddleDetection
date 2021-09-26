@@ -3,13 +3,13 @@
     <block v-for="(n, i) in childs" v-bind:key="i">
       <!-- 图片 -->
       <!-- 占位图 -->
-      <image v-if="n.name=='img'&&((opts[1]&&!ctrl[i])||ctrl[i]<0)" class="_img" :style="n.h?'background-color:#F2F2F2;'+n.attrs.style:'width:750rpx;height:440rpx'" :src="ctrl[i]<0?opts[2]:opts[1]" />
+      <!-- <image v-if="n.name=='img'&&((opts[1]&&!ctrl[i])||ctrl[i]<0)" class="_img" :style="n.h?'background-color:#F2F2F2;'+n.attrs.style:'width:750rpx;height:440rpx'" :src="ctrl[i]<0?opts[2]:opts[1]" /> -->
       <!-- 显示图片 -->
       <!-- #ifdef H5 || APP-PLUS -->
       <img v-if="n.name=='img'" :id="n.attrs.id" :class="'_img '+n.attrs.class" :style="((!ctrl[i]||ctrl[i]<0)?'height:1rpx;':'width:750rpx;'+n.attrs.style)" :src="n.attrs.src||(ctrl.load?n.attrs['data-src']:'')" :data-i="i" @load="imgLoad" @error="mediaError" @tap.stop="imgTap" @longpress="imgLongTap"/>
       <!-- #endif -->
       <!-- #ifndef H5 || APP-PLUS -->
-      <image v-if="n.name=='img'" :id="n.attrs.id" :class="'_img '+n.attrs.class" :style="((!ctrl[i]||ctrl[i]<0)?'height:1rpx;':'width:750rpx;'+n.attrs.style)" :src="n.attrs.src" :mode="n.h?'':'widthFix'" :lazy-load="opts[0]" :webp="n.webp" :show-menu-by-longpress="opts[3]&&!n.attrs.ignore" :image-menu-prevent="!opts[3]||n.attrs.ignore" :data-i="i" @load="imgLoad" @error="mediaError" @tap.stop="imgTap" @longpress="imgLongTap" />
+      <image v-if="n.name=='img'" :id="n.attrs.id" :class="'_img '+n.attrs.class" :style="n.h?'background-color:#F2F2F2;'+n.attrs.style:'background-color:#F2F2F2;width:750rpx;height:440rpx'" :src="n.attrs.src" :lazy-load="opts[0]" :webp="n.webp" :show-menu-by-longpress="opts[3]&&!n.attrs.ignore" :image-menu-prevent="!opts[3]||n.attrs.ignore" :data-i="i" @load="imgLoad" @error="mediaError" @tap.stop="imgTap" @longpress="imgLongTap" />
       <!-- #endif -->
       <!-- 文本 -->
       <!-- #ifndef MP-BAIDU -->

@@ -32,7 +32,7 @@
 					<view class="page-section-spacing" width="100%" :style="{ height: swiperHeight }" v-if="articleInfo.type != 4 && articleInfo.type != 5">
 						<swiper @change="change" class="swiper" :autoplay="true" circular='true' :indicator-dots="false" @click="ImgSee">
 							<swiper-item v-for="(item, index) in articleInfo.images" :key="index">
-								<image class="itemImg" :style="{ width: index == 0 ? '100%' : '' }" lazy-load :mode="index == 0 ? 'widthFix' : 'aspectFit'"
+								<image class="itemImg" :style="{ width: index == 0 ? '100%' : '' }" :mode="index == 0 ? 'widthFix' : 'aspectFit'"
 								 :src="item"></image>
 							</swiper-item>
 						</swiper>
@@ -53,7 +53,7 @@
 					<view class="userMse">
 						<view class="left">
 							<view class="userHeard">
-								<image lazy-load :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
+								<image :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
 							</view>
 							<view class="userMse-r">
 								<view class="userNikename">{{ articleInfo.author_name }}</view>
@@ -76,7 +76,7 @@
 					<!-- <text class="contentTitle" selected=true>{{ articleInfo.title }}</text> -->
 					<!-- 内容文章 -->
 					<view class="contentText">
-						<mp-html ref="parse" style="overflow: hidden;text-align: justify;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
+						<mp-html ref="parse" style="overflow: hidden;text-align: justify;" @imgtap="imgTap" @linktap="mpLinktap"
 						 :content="articleInfo.content"></mp-html>
 					</view>
 					<view class="tips">
@@ -101,7 +101,7 @@
 					<view class="userMse">
 						<view class="left">
 							<view class="userHeard">
-								<image lazy-load :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
+								<image :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
 							</view>
 							<view class="userMse-r">
 								<text class="userNikename" selected=true> {{ articleInfo.author_name }}</text>
@@ -120,7 +120,7 @@
 					</view>
 					<!-- 内容文章 -->
 					<view class="contentText">
-						<mp-html ref="parse" style="overflow: hidden;text-align: justify;" lazy-load @imgtap="imgTap" @linktap="mpLinktap"
+						<mp-html ref="parse" style="overflow: hidden;text-align: justify;" @imgtap="imgTap" @linktap="mpLinktap"
 						 :content="articleInfo.content"></mp-html>
 					</view>
 					<!-- 地址 -->
@@ -152,7 +152,7 @@
 					</view>
 					<view class="replyContent">
 						<view class="myReply">
-							<image class="userImg" lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'"></image>
+							<image class="userImg" :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'"></image>
 							<view class="replyInput" @click="commentInput">
 								写个回复走个心
 							</view>
@@ -400,7 +400,7 @@
 				var that = this;
 				this.HTTP.request({
 					url: '/article',
-					retry: 3,
+					retry: -1,
 					data: {
 						article_id: that.article_id
 					},

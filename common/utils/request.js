@@ -33,11 +33,13 @@ function request(obj) {
 			obj.success(res)
 		},
 		fail: (res) => {
-			if (obj.retry && obj.retry > 0){
+			if (obj.retry && obj.retry != 0){
 				setTimeout(() => {
 					request(obj)
-				}, 1000)
-				obj.retry--
+				}, 1200)
+				if (obj.retry > 0){
+					obj.retry--
+				}
 				return
 			}
 			uni.showToast({
