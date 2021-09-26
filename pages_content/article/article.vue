@@ -53,7 +53,7 @@
 					<view class="userMse">
 						<view class="left">
 							<view class="userHeard">
-								<image  lazy-load :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
+								<image lazy-load :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
 							</view>
 							<view class="userMse-r">
 								<view class="userNikename">{{ articleInfo.author_name }}</view>
