@@ -235,6 +235,7 @@
 			},
 			clear(){
 				this.keyword = ''
+				this.showType = 0
 			},
 			getHotKeyword() {
 				//定义热门搜索关键字，可以自己实现ajax请求数据再赋值
