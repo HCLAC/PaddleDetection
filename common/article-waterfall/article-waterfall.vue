@@ -1,5 +1,5 @@
 <template>
-	<u-waterfall v-model="list" add-time='150' ref="uWaterfall">
+	<u-waterfall v-model="list" add-time='100' ref="uWaterfall">
 		<template v-slot:left="{ leftList }">
 			<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
 				<view class="" v-if="item.type != 6">

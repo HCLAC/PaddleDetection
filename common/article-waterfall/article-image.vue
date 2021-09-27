@@ -6,6 +6,7 @@
 			:lazy-load="lazyLoad"
 			class="u-image__image"
 			:style="{
+				borderRadius: '12rpx 12rpx 0 0',
 				backgroundColor: backgroundColor[index%8]
 			}"
 		></image>
@@ -75,7 +76,7 @@ export default {
 			style.width = this.$u.addUnit(this.width);
 			style.height = this.$u.addUnit(this.height);
 			// 如果是配置了圆形，设置50%的圆角，否则按照默认的配置值
-			style.borderRadius = '12rpx 12rpx 0 0';
+			// style.borderRadius = '12rpx 12rpx 0 0';
 			// 如果设置圆角，必须要有hidden，否则可能圆角无效
 			style.overflow = 'hidden';
 			return style;
