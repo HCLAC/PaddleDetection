@@ -153,14 +153,23 @@
 					"style": {
 						"navigationStyle": "custom"
 					}
-				}
-				,{
-					"path": "city/city",
-					"style": {
-						"navigationStyle": "custom"
+				},
+				{
+				    "path" : "city-hot/city-hot",
+				    "style" :                                                                                    
+					{
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false
 					}
+				
 				}
-			]
+				// {
+				// 	"path": "city/city",
+				// 	"style": {
+				// 		"navigationStyle": "custom"
+				// 	}
+				// }
+            ]
 		},
 		{
 			"root":"pages_province",
