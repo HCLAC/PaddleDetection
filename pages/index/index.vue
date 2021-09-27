@@ -48,29 +48,14 @@
 					<view class="hot-bot" v-if="areaList && areaList.length">
 						<view class="hotAdress">
 							<!-- 当前位置 -->
-							<!-- <view class="dqwz" @click="toProvinces(areaList[0])">
-								<image class="dqwzBg" src="../../static/images/bg.png" mode="scaleToFill" v-if="!areaList[0].image"></image>
-								<view class="mask1" v-if="areaList[0].image"></view>
-								<image class="dqwzImg" :src="areaList[0].image" mode="scaleToFill" v-if="areaList[0].image"></image>
-								<text class="dqwzText">{{ cityName }}</text>
-								<view class="adressBox">
-									<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
-									<text class="dqwzText1">{{ dqdwText }}</text>
-								</view>
-							</view>
-							<view class="hotCity" @click="toProvinces(areaList[1])" v-if="areaList[1]">
-								<view class="mask"></view>
-								<image class="hotCityImg" :src="areaList[1].image" mode="scaleToFill"></image>
-								<text class="hotCityText">{{ areaList[1].name }}</text>
-							</view> -->
-							<view class="hotCity" v-for="(item,index) in areaList" v-if="index<3" :key="index" @click="toProvinces(item)">
+							<view :class="index == 0 && popularCities ? 'dqwz' : 'hotCity'" v-for="(item,index) in areaList" v-if="index<3" :key="index" @click="toProvinces(item)">
 								<view class="mask"></view>
 								<image class="hotCityImg" :src="item.image" mode="scaleToFill"></image>
 								<text class="hotCityText1">{{ item.name }}</text>
-								<!-- <view class="adressBox" v-if="positioningCity.name != ''">
+								<view class="adressBox" v-if="index == 0 && popularCities">
 									<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
 									<text class="dqwzText1">{{ dqdwText }}</text>
-								</view> -->
+								</view>
 							</view>
 						</view>
 						<view class="cityRank">
@@ -89,123 +74,6 @@
 						</view>
 					</view>
 				</view>
-				<!-- <view class="hot">
-					<view class="wave">
-						<image class="waveImg" src="/static/images/wave.png"></image>
-					</view>
-					<view class="citysBox">
-						<scroll-view scroll-x="true" class="kite-classify-scroll" v-if="areaList.length != 0">
-							<view class="citysBoxLeft">
-								<view class="cblt">
-									<view class="cbltcBig" @click="toProvinces(areaList[0])" >
-										<image class="hotCityImg" :src="areaList[0].image" mode="aspectFill" :lazy-load="true"></image>
-										<view class="cbltcBigTextBox">
-											<view class="cbltcBigText">
-												{{areaList[0].name}}
-											</view>
-										</view>
-									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[1])">
-										<image class="hotCityImg" :src="areaList[1].image" mode="aspectFill" :lazy-load="true"></image>
-										<view class="cbltcBigTextBox">
-											<view class="cbltcSmallText">
-												{{areaList[1].name}}
-											</view>
-										</view>
-									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[2])" >
-										<image class="hotCityImg" :src="areaList[2].image" mode="aspectFill" :lazy-load="true"></image>
-										<view class="cbltcBigTextBox">
-											<view class="cbltcSmallText">
-												{{areaList[2].name}}
-											</view>
-										</view>
-									</view>
-								</view>
-								<view class="cblb">
-									<view class="cblbcSmall" @click="toProvinces(areaList[3])" >
-										<image class="hotCityImg" :src="areaList[3].image" mode="aspectFill" :lazy-load="true"></image>
-										<view class="cbltcBigTextBox">
-											<view class="cblbcSmallText">
-												{{areaList[3].name}}
-											</view>
-										</view>
-									</view>
-									<view class="cblbcSmall" @click="toProvinces(areaList[4])">
-										<image class="hotCityImg" :src="areaList[4].image" mode="aspectFill" :lazy-load="true"></image>
-										<view class="cbltcBigTextBox">
-											<view class="cblbcSmallText">
-												{{areaList[4].name}}
-											</view>
-										</view>
-									</view>
-									<view class="cblbcBig" @click="toProvinces(areaList[5])" >
-										<image class="hotCityImg" :src="areaList[5].image" mode="aspectFill" :lazy-load="true"></image>
-										<view class="cbltcBigTextBox">
-											<view class="cblbcBigText">
-												{{areaList[5].name}}
-											</view>
-										</view>
-									</view>
-								</view>
-							</view>
-							<view class="citysBoxRight">
-								<view class="cblt">
-									<view class="cbltcBig" @click="toProvinces(areaList[6])" >
-										<image class="hotCityImg" :src="areaList[6].image" mode="aspectFill" :lazy-load="true"></image>
-										<view class="cbltcBigTextBox">
-											<view class="cbltcBigText">
-												{{areaList[6].name}}
-											</view>
-										</view>
-									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[7])" >
-										<image class="hotCityImg" :src="areaList[7].image" mode="aspectFill" :lazy-load="true"></image>
-										<view class="cbltcBigTextBox">
-											<view class="cbltcSmallText">
-												{{areaList[7].name}}
-											</view>
-										</view>
-									</view>
-									<view class="cbltcSmall" @click="toProvinces(areaList[8])" >
-										<image class="hotCityImg" :src="areaList[8].image" mode="aspectFill" :lazy-load="true"></image>
-										<view class="cbltcBigTextBox">
-											<view class="cbltcSmallText">
-												{{areaList[8].name}}
-											</view>
-										</view>
-									</view>
-								</view>
-								<view class="cblb">
-									<view class="cblbcSmall" @click="toProvinces(areaList[9])" >
-										<image class="hotCityImg" :src="areaList[9].image" mode="aspectFill" :lazy-load="true"></image>
-										<view class="cbltcBigTextBox">
-											<view class="cblbcSmallText">
-												{{areaList[9].name}}
-											</view>
-										</view>
-									</view>
-									<view class="cblbcSmall" @click="toProvinces(areaList[10])" >
-										<image class="hotCityImg" :src="areaList[10].image" mode="aspectFill" :lazy-load="true"></image>
-										<view class="cbltcBigTextBox">
-											<view class="cblbcSmallText">
-												{{areaList[10].name}}
-											</view>
-										</view>
-									</view>
-									<view class="cblbcBig" @click="toProvinces(areaList[11])" >
-										<image class="hotCityImg" :src="areaList[11].image" mode="aspectFill" :lazy-load="true"></image>
-										<view class="cbltcBigTextBox">
-											<view class="cblbcBigText">
-												{{areaList[11].name}}
-											</view>
-										</view>
-									</view>
-								</view>
-							</view>
-						</scroll-view>
-					</view>	
-				</view> -->
 				<!-- 正在旅行 -->
 				<view class="touring">
 					<text class="tourtext">正在旅行</text>
@@ -225,7 +93,7 @@
 	import articleWaterfall from '@/common/article-waterfall/article-waterfall.vue';
 	export default {
 		components: {
-			articleWaterfall
+			articleWaterfall,
 		},
 		mixins: [MescrollMixin],
 		data() {
@@ -248,7 +116,8 @@
 				],
 				areaList: [],
 				serviceProvider: '',
-				cus_sty_top: '156rpx'
+				cus_sty_top: '156rpx',
+				popularCities:false
 			};
 		},
 		created() {
@@ -425,8 +294,10 @@
 							},
 							method: 'GET',
 							success: data => {
+								console.log(this.popularCities,'data')
 								if(data.data.data.name != ''){
 									this.areaList.unshift(data.data.data)
+									this.popularCities = true
 								}
 							},
 						})
@@ -471,7 +342,7 @@
 			//点击更多
 			showCity() {
 				uni.navigateTo({
-					url: '/pages_content/city/city'
+					url: '/pages_content/city-hot/city-hot'
 				});
 			},
 			// 点击banner
@@ -827,69 +698,88 @@
 				padding: 0 28rpx;
 				/* align-items: center; */
 				// margin-left: 32rpx;
-				// .dqwz {
-				// 	width: 216rpx;
-				// 	height: 180rpx;
-				// 	border-radius: 8px;
-				// 	border: 4rpx solid #ffe512;
-				// 	position: relative;
-				// 	display: flex;
-				// 	align-items: center;
-				// 	justify-content: center;
-				// 	overflow: hidden;
-				// 	.dqwzBg {
-				// 		width: 216rpx;
-				// 		height: 180rpx;
-				// 	}
-				// 	.dqwzImg {
-				// 		width: 216rpx;
-				// 		height: 180rpx;
-				// 		border-radius: 8px;
-				// 	}
-				// 	.dqwzBox {
-				// 		position: absolute;
-				// 		text-align: center;
-				// 	}
-				// 	.dqwzText {
-				// 		position: absolute;
-				// 		top: 50rpx;
-				// 		/* left: 78rpx; */
-				// 		font-size: 32rpx;
-				// 		font-family: PingFangSC-Medium, PingFang SC;
-				// 		font-weight: 500;
-				// 		color: #ffffff;
-				// 		line-height: 32rpx;
-				// 	}
-				// 	.adressBox {
-				// 		display: flex;
-				// 		align-items: center;
-				// 		position: absolute;
-				// 		top: 90rpx;
-				// 		/* left: 40rpx; */
-				// 		color: #ffffff;
-				// 		padding: 8rpx 16rpx;
-				// 		font-size: 16rpx;
-				// 		font-family: PingFangSC-Medium, PingFang SC;
-				// 		font-weight: 500;
-				// 		color: #303133;
-				// 		// line-height: 16rpx;
-				// 		/* width: 140rpx; */
-				// 		height: 40rpx;
-				// 		background: #ffe512;
-				// 		border-radius: 11px;
-				// 		.zhishi {
-				// 			width: 24rpx;
-				// 			height: 24rpx;
-				// 			margin-right: 4rpx;
-				// 		}
-				// 		.dqwzText1{
-				// 			font-size: 20rpx;
-				// 			font-family: PingFangSC-Medium, PingFang SC;
-				// 			font-weight: 500;
-				// 			color: #303133;
-				// 		}
-				// 	}
-				// }
+				.dqwz {
+					width: 216rpx;
+					height: 180rpx;
+					border-radius: 8px;
+					border: 4rpx solid #ffe512;
+					position: relative;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					overflow: hidden;
+					.mask {
+						width: 216rpx;
+						height: 180rpx;
+						background: rgba(0, 0, 0, 0.25);
+						border-radius: 8px;
+						position: absolute;
+					}
+					.hotCityImg {
+						width: 100%;
+						height: 100%;
+						border-radius: 16rpx;
+					}
+					.hotCityText {
+						width: 140rpx;
+						height: 32rpx;
+						font-size: 32rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #ffffff;
+						line-height: 32rpx;
+						text-align: center;
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						margin-left: -70rpx;
+						margin-top: -16rpx;
+					}
+					.hotCityText1 {
+						width: 140rpx;
+						height: 32rpx;
+						font-size: 32rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #ffffff;
+						line-height: 32rpx;
+						text-align: center;
+						position: absolute;
+						top: 30%;
+						left: 50%;
+						margin-left: -70rpx;
+						margin-top: -16rpx;
+					}
+					.adressBox {
+						display: flex;
+						align-items: center;
+						position: absolute;
+						top: 90rpx;
+						left: 40rpx;
+						color: #ffffff;
+						padding: 8rpx 16rpx;
+						font-size: 16rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #303133;
+						// line-height: 16rpx;
+						/* width: 140rpx; */
+						height: 40rpx;
+						background: #ffe512;
+						border-radius: 11px;
+						.zhishi {
+							width: 24rpx;
+							height: 24rpx;
+							margin-right: 4rpx;
+						}
+						.dqwzText1{
+							font-size: 20rpx;
+							font-family: PingFangSC-Medium, PingFang SC;
+							font-weight: 500;
+							color: #303133;
+						}
+					}
+				}
 				.hotCity {
 					width: 216rpx;
 					height: 180rpx;
@@ -937,6 +827,35 @@
 						left: 50%;
 						margin-left: -70rpx;
 						margin-top: -16rpx;
+					}
+					.adressBox {
+						display: flex;
+						align-items: center;
+						position: absolute;
+						top: 90rpx;
+						left: 40rpx;
+						color: #ffffff;
+						padding: 8rpx 16rpx;
+						font-size: 16rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #303133;
+						// line-height: 16rpx;
+						/* width: 140rpx; */
+						height: 40rpx;
+						background: #ffe512;
+						border-radius: 11px;
+						.zhishi {
+							width: 24rpx;
+							height: 24rpx;
+							margin-right: 4rpx;
+						}
+						.dqwzText1{
+							font-size: 20rpx;
+							font-family: PingFangSC-Medium, PingFang SC;
+							font-weight: 500;
+							color: #303133;
+						}
 					}
 				}
 
