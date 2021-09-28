@@ -41,3 +41,8 @@ Q. 如何重置mescroll默认样式,比如修改空布局的样式 ?
 - uni.showLoading如果在onInit中，有一定几率显示失败，因为onInit还没进入视图渲染。
 - 性能优化：
 	- [使用高性能的 view 和 text 组件](https://smartprogram.baidu.com/docs/develop/performance/performance_view&text/)
+- 获取smartUI和内容服务组件源码：
+```
+npm install @smt-ui/component
+npm install @smt-ui/content-component
+```
