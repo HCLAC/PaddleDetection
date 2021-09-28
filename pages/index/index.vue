@@ -52,7 +52,7 @@
 								<view class="mask"></view>
 								<image class="hotCityImg" :src="item.image" mode="scaleToFill"></image>
 								<text class="hotCityText1">{{ item.name }}</text>
-								<view class="adressBox" v-if="index == 0 && popularCities">
+								<view class="adressBox" v-if="index == 0 && popularCities" @tap.stop="notLocation">
 									<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
 									<text class="dqwzText1">{{ dqdwText }}</text>
 								</view>
@@ -117,7 +117,8 @@
 				areaList: [],
 				serviceProvider: '',
 				cus_sty_top: '156rpx',
-				popularCities:false
+				popularCities:false,
+				cityId:'',
 			};
 		},
 		created() {
@@ -161,16 +162,36 @@
 		// 滚动
 		onPageScroll(e) {
 			if (e.scrollTop >= 100){
-				if (e.scrollTop >= 150 && this.backgroundColor == 'rgba(58, 61, 70, 0.25)'){
+				if (e.scrollTop >= 150 && this.backgroundColor == 'rgba(255, 255, 255, 0)'){
 					return
 				}
-				this.backgroundColor = 'rgba(58, 61, 70, 0.25)';
+				this.backgroundColor = '#FFFFFF';
+				uni.setNavigationBarColor({
+				    frontColor: '#000000',
+					backgroundColor: '#FFFFFF',
+					fail: err => {
+						console.log('setNavigationBarColor fail', err);
+					}
+				})
 			} else {
 				this.backgroundColor = 'transparent';
+				uni.setNavigationBarColor({
+				    frontColor: '#ffffff',
+					backgroundColor: '#000000',
+					fail: err => {
+						console.log('setNavigationBarColor fail', err);
+					}
+				})
 			}
 		},
 
 		methods: {
+			notLocation(){
+				if(this.dqdwText == '未定位'){
+					console.log(111)
+					this.loadData()
+				}
+			},
 			mescrollInit(mescroll) {
 				this.mescroll = mescroll;
 				this.mescroll.setPageSize(8)
@@ -187,9 +208,9 @@
 						this.getAdress();
 						this.getAreaHot();
 						
-						setTimeout(() => {
-							this.getCity()
-						}, 200);
+						// setTimeout(() => {
+						// 	this.getCity()
+						// }, 200);
 					}
 				});
 				
@@ -223,22 +244,22 @@
 				});
 			},
 			// 获取全国城市
-			getCity() {
-				this.HTTP.request({
-					url: '/area/guide',
-					success: (res) => {				
-						if (res.statusCode != 200 || res.data.code != 0){
-							uni.showToast({
-								title: res.data.msg,
-								icon: 'none'
-							});
-							return
-						}
-						var cityList = res.data.data.areas;
-						this.cityList = cityList.slice(1);
-					}
-				})
-			},
+			// getCity() {
+			// 	this.HTTP.request({
+			// 		url: '/area/guide',
+			// 		success: (res) => {				
+			// 			if (res.statusCode != 200 || res.data.code != 0){
+			// 				uni.showToast({
+			// 					title: res.data.msg,
+			// 					icon: 'none'
+			// 				});
+			// 				return
+			// 			}
+			// 			var cityList = res.data.data.areas;
+			// 			this.cityList = cityList.slice(1);
+			// 		}
+			// 	})
+			// },
 			// 获取banner
 			getBanner() {
 				this.HTTP.request({
@@ -294,37 +315,42 @@
 							},
 							method: 'GET',
 							success: data => {
-								console.log(this.popularCities,'data')
+								// console.log(data,'data')
+								this.cityId = data.data.data.city_id
+								if(this.cityId == ''){
+									this.popularCities = false;
+								}
 								if(data.data.data.name != ''){
 									this.areaList.unshift(data.data.data)
 									this.popularCities = true
+									this.dqdwText = '当前位置';
 								}
 							},
 						})
-						if (res.city && res.province) {
-							that.cityName = res.city.substr(0, res.city.length - 1);
-						} else {
-							let arr = [];
-							arr.push(res.latitude);
-							arr.push(res.longitude);
-							arr = arr.join(',');
-							uni.request({
-								url: 'https://api.map.baidu.com/reverse_geocoding/v3/?ak=NKyWaSnsW6FFEseeCEX18Fpvgzs3jcmd&output=json&coordtype=wgs84ll',
-								data: {
-									location: arr
-								},
-								success: result => {
-									if (result.data.status == 0) {
-										that.cityName = result.data.result.addressComponent.city.substr(0, result.data.result.addressComponent.city
-											.length - 1);
-									} else {
-										uni.showToast({
-											title: result.errMsg
-										});
-									}
-								}
-							});
-						}
+						// if (res.city && res.province) {
+						// 	that.cityName = res.city.substr(0, res.city.length - 1);
+						// } else {
+						// 	let arr = [];
+						// 	arr.push(res.latitude);
+						// 	arr.push(res.longitude);
+						// 	arr = arr.join(',');
+						// 	uni.request({
+						// 		url: 'https://api.map.baidu.com/reverse_geocoding/v3/?ak=NKyWaSnsW6FFEseeCEX18Fpvgzs3jcmd&output=json&coordtype=wgs84ll',
+						// 		data: {
+						// 			location: arr
+						// 		},
+						// 		success: result => {
+						// 			if (result.data.status == 0) {
+						// 				that.cityName = result.data.result.addressComponent.city.substr(0, result.data.result.addressComponent.city
+						// 					.length - 1);
+						// 			} else {
+						// 				uni.showToast({
+						// 					title: result.errMsg
+						// 				});
+						// 			}
+						// 		}
+						// 	});
+						// }
 					},
 					// 未开启定位
 					fail: error => {
@@ -334,8 +360,9 @@
 								icon: 'none'
 							});
 						}
-						this.cityName = '未定位'
-						this.dqdwText = '未获取到定位';
+						// this.cityName = '未定位'
+						this.dqdwText = '未定位';
+						this.popularCities = true
 					}
 				});
 			},
@@ -400,32 +427,32 @@
 				});
 			},
 			// 跳转省市主题页
-			toProvincesNC(){
-				var name = this.cityName
-				var obj = null
-				for (let i=0;i<this.cityList.length;i++){
-					for (let j=0;j<this.cityList[i].city_list.length;j++) {
-						if (this.cityList[i].city_list[j].name == name){
-							obj = this.cityList[i].city_list[j]
-							break
-						}
-					}
-				}
+			// toProvincesNC(){
+			// 	var name = this.cityName
+			// 	var obj = null
+			// 	for (let i=0;i<this.cityList.length;i++){
+			// 		for (let j=0;j<this.cityList[i].city_list.length;j++) {
+			// 			if (this.cityList[i].city_list[j].name == name){
+			// 				obj = this.cityList[i].city_list[j]
+			// 				break
+			// 			}
+			// 		}
+			// 	}
 				
 				
-				if (!obj){
-					uni.showToast({
-						title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
-						icon: 'none',
-						duration: 3000
-					});
-				} else {
-					uni.navigateTo({
-						url: '/pages_content/provinces/provinces?state_id=' + 
-						obj.state_id+"&city_id="+obj.city_id+"&name="+obj.name+"&image="+obj.image
-					});
-				}
-			},
+			// 	if (!obj){
+			// 		uni.showToast({
+			// 			title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
+			// 			icon: 'none',
+			// 			duration: 3000
+			// 		});
+			// 	} else {
+			// 		uni.navigateTo({
+			// 			url: '/pages_content/provinces/provinces?state_id=' + 
+			// 			obj.state_id+"&city_id="+obj.city_id+"&name="+obj.name+"&image="+obj.image
+			// 		});
+			// 	}
+			// },
 			toProvinces(e) {
 				uni.navigateTo({
 					url: '/pages_content/provinces/provinces?state_id=' + 
@@ -514,7 +541,7 @@
 		font-size: 14px;
 		display: flex;
 		flex-direction: column;
-		background: rgba(58, 61, 70, 0.25);
+		background: rgba(255, 255, 255, 0);
 	}
 	/* 头条小程序组件内不能引入字体 */
 	/* #ifdef MP-TOUTIAO */
@@ -755,7 +782,10 @@
 						align-items: center;
 						position: absolute;
 						top: 90rpx;
+						z-index: 1000;
 						left: 40rpx;
+						// left: 50%;
+						// transform: translate(-50%);
 						color: #ffffff;
 						padding: 8rpx 16rpx;
 						font-size: 16rpx;
@@ -773,6 +803,7 @@
 							margin-right: 4rpx;
 						}
 						.dqwzText1{
+							// width: 60rpx;
 							font-size: 20rpx;
 							font-family: PingFangSC-Medium, PingFang SC;
 							font-weight: 500;
@@ -845,6 +876,7 @@
 						height: 40rpx;
 						background: #ffe512;
 						border-radius: 11px;
+						z-index: 100;
 						.zhishi {
 							width: 24rpx;
 							height: 24rpx;
