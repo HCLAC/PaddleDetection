@@ -671,6 +671,7 @@ export default {
 	margin-left: 4rpx;
 }
 .contentImgBox {
+	height: 264rpx;
 	margin-top: 30rpx;
 	display: flex;
 	margin-left: 28rpx;
@@ -684,6 +685,7 @@ export default {
 	margin-top: 40rpx;
 }
 .contentImg {
+	height: 264rpx;
 	width: 218rpx;
 	margin-right: 20rpx;
 	background-color: #ffffff;
@@ -771,10 +773,13 @@ export default {
 	margin-left: 4rpx;
 }
 .tripBox {
+	width: 750rpx;
+	height: 228rpx;
 	margin-top: 30rpx;
 	display: flex;
 }
 .tripContent {
+	height: 228rpx;
 	width: 338rpx;
 	margin-right: 18rpx;
 }
