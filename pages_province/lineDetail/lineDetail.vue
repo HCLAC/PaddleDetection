@@ -419,7 +419,7 @@ export default {
 			});
 		},
 		calcHeight(){
-			if (this.isFixed){
+			if (this.isFixed || this.loading){
 				return
 			}
 			const query = uni.createSelectorQuery().in(this);

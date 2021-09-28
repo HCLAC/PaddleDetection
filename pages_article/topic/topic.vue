@@ -11,69 +11,69 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<!-- 热门话题 -->
-		<view class="hotTopic" v-if="!loading">
-			<view class="hotTopicTop">
-				<view class="topTitle">
-					热门话题
-				</view>
-				<view class="topLine"></view>
-			</view>
-			<view class="topicRankBox">
-				<view class="topicTips" @click="toTopicList(item.topic_id)" v-for="(item,index) in hotTopic " :key="index" >
-					<image class="rankImg" lazy-load :src="`/static/images/topic-${index+1}.png`"></image>
-					<view class="tipsText" >
-						{{item.name}}
-					</view>
-				</view>
-			</view>
-		</view>
-		<!-- 骨架屏 -->
-		<view v-if="loading" class="loadBox">
-			<view class="container u-skeleton">
-				<view class="loadBlock">
-					<view class="kong u-skeleton-rect"></view>
-					<view class="ht-box">
+		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+			<!-- 骨架屏 -->
+			<view v-if="loading" class="loadBox">
+				<view class="container u-skeleton">
+					<view class="loadBlock">
 						<view class="kong u-skeleton-rect"></view>
-						<view class="kong u-skeleton-rect"></view>
-						<view class="kong u-skeleton-rect"></view>
-						<view class="kong u-skeleton-rect"></view>
-						<view class="kong u-skeleton-rect"></view>
-						<view class="kong u-skeleton-rect"></view>
-					</view>
-					<view class="kong-big u-skeleton-rect"></view>
-					<view class="sj-box" v-for="(item, index) in loadEmpty">
-						<view class="top-box">
-							<view class="kong-yuan u-skeleton-circle"></view>
-							<view class="kong-fang u-skeleton-rect"></view>
-							<view class="kong-min u-skeleton-circle"></view>
+						<view class="ht-box">
+							<view class="kong u-skeleton-rect"></view>
+							<view class="kong u-skeleton-rect"></view>
+							<view class="kong u-skeleton-rect"></view>
+							<view class="kong u-skeleton-rect"></view>
+							<view class="kong u-skeleton-rect"></view>
+							<view class="kong u-skeleton-rect"></view>
 						</view>
-						<view class="btm-box">
-							<view class="btm-left">
-								<view class="left-big u-skeleton-fillet"></view>
-								<view class="left u-skeleton-rect"></view>
-								<view class="left u-skeleton-rect"></view>
+						<view class="kong-big u-skeleton-rect"></view>
+						<view class="sj-box" v-for="(item, index) in loadEmpty">
+							<view class="top-box">
+								<view class="kong-yuan u-skeleton-circle"></view>
+								<view class="kong-fang u-skeleton-rect"></view>
+								<view class="kong-min u-skeleton-circle"></view>
 							</view>
-							<view class="btm-center">
-								<view class="center-big u-skeleton-fillet"></view>
-								<view class="center u-skeleton-rect"></view>
-								<view class="center u-skeleton-rect"></view>
-							</view>
-							<view class="btm-right">
-								<view class="right-big u-skeleton-fillet"></view>
-								<view class="right u-skeleton-rect"></view>
-								<view class="right u-skeleton-rect"></view>
+							<view class="btm-box">
+								<view class="btm-left">
+									<view class="left-big u-skeleton-fillet"></view>
+									<view class="left u-skeleton-rect"></view>
+									<view class="left u-skeleton-rect"></view>
+								</view>
+								<view class="btm-center">
+									<view class="center-big u-skeleton-fillet"></view>
+									<view class="center u-skeleton-rect"></view>
+									<view class="center u-skeleton-rect"></view>
+								</view>
+								<view class="btm-right">
+									<view class="right-big u-skeleton-fillet"></view>
+									<view class="right u-skeleton-rect"></view>
+									<view class="right u-skeleton-rect"></view>
+								</view>
 							</view>
 						</view>
 					</view>
 				</view>
+				<!--引用组件-->
+				<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
 			</view>
-			<!--引用组件-->
-			<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
-		</view>
-		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			<!-- 推荐 -->
-			<view v-if="!loading">
+			<view v-else>
+				<!-- 热门话题 -->
+				<view class="hotTopic">
+					<view class="hotTopicTop">
+						<view class="topTitle">
+							热门话题
+						</view>
+						<view class="topLine"></view>
+					</view>
+					<view class="topicRankBox">
+						<view class="topicTips" @click="toTopicList(item.topic_id)" v-for="(item,index) in hotTopic " :key="index" >
+							<image class="rankImg" lazy-load :src="`/static/images/topic-${index+1}.png`"></image>
+							<view class="tipsText" >
+								{{item.name}}
+							</view>
+						</view>
+					</view>
+				</view>
+				<!-- 推荐 -->
 				<view class="recommended">
 					<view class="recommendedTop">
 						<view class="recommendedTitle">
@@ -116,7 +116,6 @@
 				</view>
 			</view>
 		</mescroll-body>
-		
 	</view>
 </template>
 
@@ -132,7 +131,9 @@
 					use:false,
 					auto:false
 				},
-				upOption:{},
+				upOption:{
+					auto: true
+				},
 				// 骨架屏
 				loadEmpty:[1,2,3],
 				loading: true,
@@ -226,6 +227,7 @@
 						//设置列表数据
 						if (page.num == 1){
 							this.recommList = []; //如果是第一页需手动置空列表
+						
 							setTimeout(() => {
 								this.loading = false
 							}, 300);
@@ -266,14 +268,11 @@
 </script>
 
 <style lang="scss" scoped>
-.nav-bar{
-	border-bottom: 2rpx solid #DDDDDD;
-}
 // 骨架屏样式
 .loadBox{
 	width: 100%;
 	height: auto;
-	margin-top: 40rpx;
+	margin-top: -80rpx;
 	.loadBlock{
 		padding: 0 28rpx;
 		.kong{
@@ -511,10 +510,12 @@
 .contentImgBox {
 	margin-top: 30rpx;
 	display: flex;
+	height: 326rpx;
 	// margin-left: 28rpx;
 	
 	.contentImg {
 		width: 216rpx;
+		height: 326rpx;
 		margin-right: 24rpx;
 		background-color: #ffffff;
 		padding-bottom: 14rpx;
@@ -534,8 +535,6 @@
 		}
 	}
 }
-
-
 
 .line{
 	width: 694rpx;
