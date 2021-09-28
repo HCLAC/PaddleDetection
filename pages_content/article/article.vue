@@ -196,7 +196,9 @@
 				撩点什么…
 			</view>
 			<view class="like" @click="clickLike">
-				<image class="likeBtn" :src="articleInfo.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image>
+				<!-- <image class="likeBtn" :src="articleInfo.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image> -->
+				<view v-if="isAnimate" class="icon-animate"></view>
+				<view v-else :class="articleInfo.liked?'has-like':'icon-like'"></view>
 			</view>
 			<view class="likeNum">{{ articleInfo.like_count }}</view>
 			
@@ -267,6 +269,8 @@
 				// 骨架屏
 				loadEmpty:[1,2,3],
 				loading: true,
+				// 动效
+				isAnimate: false,
 				// 防止用户快速点击，多次请求
 				hasLikeClick: false,
 				hasFavClick: false,
@@ -983,6 +987,12 @@
 				if (this.hasLikeClick) {
 					return;
 				}
+				if (this.articleInfo.liked == 0){
+					this.isAnimate = true
+					setTimeout(() => {
+					    this.isAnimate = false;
+					}, 500);
+				}
 				this.hasLikeClick = true;
 				this.HTTP.request({
 					url: '/user/liked',
@@ -1133,6 +1143,7 @@
 			width: 100%!important;
 		}
 	}
+	
 	.loadBox{
 		width: 100%;
 		height: auto;
@@ -1656,9 +1667,30 @@
 		width: 52rpx;
 		height: 52rpx;
 		margin-right: 4rpx;
-		.likeBtn {
+		.has-like {
 			width: 100%;
 			height: 100%;
+		    display: inline-block;
+		    background-size: 100%;
+		    background-origin: center center;
+		    background-image: url(../../static/images/attHeartActive.svg);
+		}
+		.icon-like {
+			width: 100%;
+			height: 100%;
+		    display: inline-block;
+		    background-image: url(../../static/images/attheart.svg);
+		    background-size: 100%;
+		    background-origin: center center;
+		}
+		
+		.icon-animate {
+			width: 100%;
+			height: 100%;
+			display: block;
+		    background-image: url(../../static/icon-heart.gif);
+		    background-size: 100%;
+		    background-origin: center center;
 		}
 	}
 	.likeNum {
