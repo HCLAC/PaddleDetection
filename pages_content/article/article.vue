@@ -90,6 +90,7 @@
 			</view>
 			<!-- 攻略文章 -->
 			<view class="box-Introduction" v-else-if="articleInfo && articleInfo.type == 2">
+
 				<!-- 内容详情 -->
 				<view class="detailContent savebottom">
 					<!-- 标题 -->
@@ -139,7 +140,6 @@
 					</view>
 				</view>
 			</view>
-
 			<!-- 评论区 -->
 			<view v-if="articleInfo">
 				<view class="replyLine"></view>
@@ -222,7 +222,6 @@
 		</u-popup>
 		<!-- 弹窗 -->
 		<u-modal v-model="show" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
-		
 		<!-- 遮罩层 -->
 		<!-- <u-mask 
 			:show="textareafocus" 
@@ -1188,10 +1187,11 @@
 		}
 	}
 	// .box-Introduction{
-	// 	background: red;
+	// 	background: rgba(255,255,255,0.8);
 	// 	box-shadow: 0 5px 10px #F5F5F5 inset;
 	// 	border-top: 2rpx solid #F5F5F5;
 	// }
+
 	.min-box{
 		width: 60rpx;
 		height: 60rpx;
@@ -1650,13 +1650,18 @@
 		bottom: var( --window-bottom);
 		// bottom: 0;
 		z-index: 111;
-		background-color: #ffffff;
+		// background: #ffffff;
+		// background-color: rgba(252, 252, 252, 0.8);
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 		box-sizing: content-box;
 		display: flex;
 		align-items: center;
 		border-top: 2rpx solid #EDEFF2;
+		background-color: hsla(0,0%,89.8%,.8);
+		background: hsla(0,0%,100%,.9);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
 	}
 	.bottom-text{
 		width: 372rpx;

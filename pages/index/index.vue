@@ -84,6 +84,24 @@
 			</view>
 		</mescroll-body>
 		<u-no-network @retry="downCallback()"></u-no-network>
+		<view class="bottom">
+			<view class="bottom-left">
+				<view class="left-img">
+					<image src="@/static/images/sy.png" mode=""></image>
+				</view>
+				<view class="left-text">
+					首页
+				</view>
+			</view>
+			<view class="bottom-right" @click="topersonal">
+				<view class="right-img">
+					<image src="@/static/images/wd-none.png" mode=""></image>
+				</view>
+				<view class="right-text">
+					我的
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -186,6 +204,12 @@
 		},
 
 		methods: {
+			//跳转个人资料
+			topersonal(){
+				uni.navigateTo({
+				    url: '/pages/mine/mine'
+				});
+			},
 			notLocation(){
 				if(this.dqdwText == '未定位'){
 					console.log(111)
@@ -207,10 +231,7 @@
 						this.getBanner();
 						this.getAdress();
 						this.getAreaHot();
-						
-						// setTimeout(() => {
-						// 	this.getCity()
-						// }, 200);
+
 					}
 				});
 				
@@ -243,23 +264,7 @@
 					}
 				});
 			},
-			// 获取全国城市
-			// getCity() {
-			// 	this.HTTP.request({
-			// 		url: '/area/guide',
-			// 		success: (res) => {				
-			// 			if (res.statusCode != 200 || res.data.code != 0){
-			// 				uni.showToast({
-			// 					title: res.data.msg,
-			// 					icon: 'none'
-			// 				});
-			// 				return
-			// 			}
-			// 			var cityList = res.data.data.areas;
-			// 			this.cityList = cityList.slice(1);
-			// 		}
-			// 	})
-			// },
+
 			// 获取banner
 			getBanner() {
 				this.HTTP.request({
@@ -327,30 +332,7 @@
 								}
 							},
 						})
-						// if (res.city && res.province) {
-						// 	that.cityName = res.city.substr(0, res.city.length - 1);
-						// } else {
-						// 	let arr = [];
-						// 	arr.push(res.latitude);
-						// 	arr.push(res.longitude);
-						// 	arr = arr.join(',');
-						// 	uni.request({
-						// 		url: 'https://api.map.baidu.com/reverse_geocoding/v3/?ak=NKyWaSnsW6FFEseeCEX18Fpvgzs3jcmd&output=json&coordtype=wgs84ll',
-						// 		data: {
-						// 			location: arr
-						// 		},
-						// 		success: result => {
-						// 			if (result.data.status == 0) {
-						// 				that.cityName = result.data.result.addressComponent.city.substr(0, result.data.result.addressComponent.city
-						// 					.length - 1);
-						// 			} else {
-						// 				uni.showToast({
-						// 					title: result.errMsg
-						// 				});
-						// 			}
-						// 		}
-						// 	});
-						// }
+						
 					},
 					// 未开启定位
 					fail: error => {
@@ -426,33 +408,7 @@
 					}
 				});
 			},
-			// 跳转省市主题页
-			// toProvincesNC(){
-			// 	var name = this.cityName
-			// 	var obj = null
-			// 	for (let i=0;i<this.cityList.length;i++){
-			// 		for (let j=0;j<this.cityList[i].city_list.length;j++) {
-			// 			if (this.cityList[i].city_list[j].name == name){
-			// 				obj = this.cityList[i].city_list[j]
-			// 				break
-			// 			}
-			// 		}
-			// 	}
-				
-				
-			// 	if (!obj){
-			// 		uni.showToast({
-			// 			title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
-			// 			icon: 'none',
-			// 			duration: 3000
-			// 		});
-			// 	} else {
-			// 		uni.navigateTo({
-			// 			url: '/pages_content/provinces/provinces?state_id=' + 
-			// 			obj.state_id+"&city_id="+obj.city_id+"&name="+obj.name+"&image="+obj.image
-			// 		});
-			// 	}
-			// },
+
 			toProvinces(e) {
 				uni.navigateTo({
 					url: '/pages_content/provinces/provinces?state_id=' + 
@@ -529,13 +485,78 @@
 </script>
 
 <style lang="scss" scoped>
-	
+page {
+	padding-bottom: constant(safe-area-inset-bottom);
+	padding-bottom: env(safe-area-inset-bottom);
+}
+.bottom{
+	width: 100%;
+	height: 98rpx;
+	// background: pink;
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	justify-content: space-between;
+	padding-bottom: constant(safe-area-inset-bottom);
+	padding-bottom: env(safe-area-inset-bottom);
+	box-sizing: content-box;
+	background-color: hsla(0,0%,89.8%,.8);
+	background: hsla(0,0%,100%,.9);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	.bottom-left{
+		width: 98rpx;
+		height: 98rpx;
+		margin-left: 180rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		.left-img{
+			width: 56rpx;
+			height: 56rpx;
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.left-text{
+			font-size: 20rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #303133;
+		}
+	}
+	.bottom-right{
+		width: 98rpx;
+		height: 98rpx;
+		display: flex;
+		margin-right: 180rpx;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		
+		.right-img{
+			width: 56rpx;
+			height: 56rpx;
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.right-text{
+			font-size: 20rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #303133;
+		}
+	}
+}
 
 	.nav-bar {
 		z-index: 999;
 		position: fixed;
 		top:0px;
-		
 		flex-wrap: wrap;
 		justify-content: center;
 		font-size: 14px;

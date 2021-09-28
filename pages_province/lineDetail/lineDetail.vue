@@ -951,13 +951,17 @@ export default {
 	bottom: var( --window-bottom);
 	// bottom: 0;
 	z-index: 111;
-	background-color: #ffffff;
+	// background-color: #ffffff;
 	padding-bottom: constant(safe-area-inset-bottom);
 	padding-bottom: env(safe-area-inset-bottom);
 	box-sizing: content-box;
 	display: flex;
 	align-items: center;
 	border-top: 2rpx solid #EDEFF2;
+	background-color: hsla(0,0%,89.8%,.8);
+	background: hsla(0,0%,100%,.9);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
 }
 .bottom-text{
 	width: 372rpx;
