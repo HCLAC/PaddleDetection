@@ -46,3 +46,4 @@ Q. 如何重置mescroll默认样式,比如修改空布局的样式 ?
 npm install @smt-ui/component
 npm install @smt-ui/content-component
 ```
+- 软键盘上的输入框：[半屏内容发布器](https://smartprogram.baidu.com/docs/develop/api/open/replyeditor_swan-openReplyEditor/)
