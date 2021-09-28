@@ -1,5 +1,5 @@
 <template>
-	<view >
+	<view>
 		<view class="nav-bar" >
 			<uni-nav-bar :fixed="true" :status-bar="true" style="z-index: 99999 !important;">
 				<view slot="left" class="slotleft">
@@ -10,88 +10,97 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<view class="lineHeader">
-			<view class="lineImageWrap" v-if="lineContent" v-show="lineContent">
-				<!-- 内容详情轮播图 -->
-				<view class="uni-padding-wrap">
-					<view class="page-section" >
-						<view class="page-section-spacing" >
-							<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false" circular='true'>
-								<swiper-item v-for="(item, index) in lineContent.images" :key="index">
-									<u-image width="100%" height="440rpx" mode="scaleToFill" :src="item"></u-image>
-								</swiper-item>
-							</swiper>
-							<view class="imageCount">{{ current + 1 }}/{{ lineContent.images.length }}</view>
-							<view class="dots">
-								<block v-for="(item, index) in lineContent.images" :key="index"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+		<!-- 骨架屏 -->
+		<view v-if="loading" class="loadBox">
+			<view class="content u-skeleton">
+				<view class="loadBlock">
+					<view class="banner u-skeleton-rect"></view>
+					<view class="kong u-skeleton-circle"></view>
+					<view class="box-btm">
+						<view class="kong-big u-skeleton-rect"></view>
+						<view class="title u-skeleton-rect"></view>
+						<view class="title u-skeleton-rect"></view>
+						<view class="title u-skeleton-rect"></view>
+						<view class="title-min u-skeleton-rect"></view>
+						<view class="xxk-box">
+							<view class="xxk u-skeleton-rect"></view>
+							<view class="xxk u-skeleton-rect"></view>
+						</view>
+						<view class="day-box">
+							<view class="day-min u-skeleton-circle"></view>
+							<view class="day u-skeleton-rect"></view>
+						</view>
+						<view class="title u-skeleton-rect"></view>
+						<view class="title-min u-skeleton-rect"></view>
+						<view class="lx-box" v-for="(item, index) in loadEmpty">
+							<view class="lx-top">
+								<view class="lx-min u-skeleton-circle"></view>
+								<view class="lx u-skeleton-rect"></view>
+							</view>
+							<view class="lx-center">
+								<view class="lx-min u-skeleton-rect"></view>
+								<view class="lx u-skeleton-rect"></view>
+								<view class="lx u-skeleton-rect"></view>
+								<view class="lx-min u-skeleton-rect"></view>
+							</view>
+							<view class="lx-btm u-skeleton-rect"></view>
+						</view>
+					</view>
+				</view>
+			</view>
+			<!--引用组件-->
+			<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
+		</view>
+		<view v-else>
+			<view class="lineHeader">
+				<view class="lineImageWrap" v-if="lineContent" v-show="lineContent">
+					<!-- 内容详情轮播图 -->
+					<view class="uni-padding-wrap">
+						<view class="page-section" >
+							<view class="page-section-spacing" >
+								<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false" circular='true'>
+									<swiper-item v-for="(item, index) in lineContent.images" :key="index">
+										<u-image width="100%" height="440rpx" mode="scaleToFill" :src="item"></u-image>
+									</swiper-item>
+								</swiper>
+								<view class="imageCount">{{ current + 1 }}/{{ lineContent.images.length }}</view>
+								<view class="dots">
+									<block v-for="(item, index) in lineContent.images" :key="index"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+								</view>
 							</view>
 						</view>
 					</view>
 				</view>
-			</view>
-			<view class="container">
-				<view class="linePrice">
-					<view class="linePrice-number">
-						<!-- <text class="price" style="font-size:18rpx; ">
-							￥</text> -->
-						<view class="price-img">
-							<image src="../../static/images/money.svg"></image>
+				<view class="container">
+					<view class="linePrice">
+						<view class="linePrice-number">
+							<!-- <text class="price" style="font-size:18rpx; ">
+								￥</text> -->
+							<view class="price-img">
+								<image src="../../static/images/money.svg"></image>
+							</view>
+							<text class="price">{{ lineContent?lineContent.money:0 }}</text>
+							<text>起</text>
 						</view>
-						<text class="price">{{ lineContent?lineContent.money:0 }}</text>
-						<text>起</text>
+						<view class="linePrice-text">
+							参考价格
+						</view>
 					</view>
-					<view class="linePrice-text">
-						参考价格
-					</view>
+					<view class="lineTitle">{{ lineContent?lineContent.title:'' }}</view>
 				</view>
-				<view class="lineTitle">{{ lineContent?lineContent.title:'' }}</view>
+				<view class="lineDriver"></view>
 			</view>
-			<view class="lineDriver"></view>
-		</view>
-		<view class="lineTabs">
-			<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight"  :line-width="130" :tab-width="105"></meTabs>
-		</view>
-		<view class="linePlan">
-			<view class="planContent" v-if='lineContent'>
-				<u-time-line >
-					<view v-for="(item, index) in lineContent.content" :key="index">
-						<u-time-line-item nodeTop="2">
-							<!-- 此处自定义了左边内容，用一个图标替代 -->
-							<template v-slot:node>
-								<view class="u-node" style="background: #BFC2CC ; border-radius: 50%;">
-									<!-- 此处为uView的icon组件 -->
-									<view style="width: 10rpx; height: 10rpx;"></view>
-								</view>
-							</template>
-							<template v-slot:content>
-								<view>
-									<view class="u-order-title">
-										<text class="tui-chat-right">
-											<text class="tui-chatbox tui-chatbox-right">第{{ item.day }}天</text>
-										</text>
-										<text class="planTitle">{{ item.title }}</text>
-									</view>
-									<view class="u-order-desc1">{{ item.description }}</view>
-									<!-- <view class="u-order-time"></view> -->
-								</view>
-							</template>
-						</u-time-line-item>
-						<view v-for="(eve, eveIndex) in item.event" :key="eveIndex">
-							<u-time-line-item>
-								<template v-slot:node>
-									<view class="uTime">
-										<image class="timeIcon" src="/static/images/timeClock.svg"></image>
-										<text>{{ eve.time == '上午' ? '上午' : '下午' }}</text>
-									</view>
-								</template>
-								<template v-slot:content>
-									<view style="height: 40rpx;"></view>
-								</template>
-							</u-time-line-item>
+			<view class="lineTabs">
+				<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight"  :line-width="130" :tab-width="105"></meTabs>
+			</view>
+			<view class="linePlan">
+				<view class="planContent" v-if='lineContent'>
+					<u-time-line >
+						<view v-for="(item, index) in lineContent.content" :key="index">
 							<u-time-line-item nodeTop="2">
 								<!-- 此处自定义了左边内容，用一个图标替代 -->
 								<template v-slot:node>
-									<view class="u-node" style="background: #B7EB8F; border-radius: 50%;">
+									<view class="u-node" style="background: #BFC2CC ; border-radius: 50%;">
 										<!-- 此处为uView的icon组件 -->
 										<view style="width: 10rpx; height: 10rpx;"></view>
 									</view>
@@ -99,74 +108,109 @@
 								<template v-slot:content>
 									<view>
 										<view class="u-order-title">
-											<text class="stitle">{{ eve.title }}</text>
+											<text class="tui-chat-right">
+												<text class="tui-chatbox tui-chatbox-right">第{{ item.day }}天</text>
+											</text>
+											<text class="planTitle">{{ item.title }}</text>
 										</view>
-										<view class="u-order-desc">{{ eve.description }}</view>
-										<view class="position" v-for="(pos, posIndex) in eve.position" :key="posIndex" @click="toPosition(pos)">
-											<view class="left">
-												<u-image width="216rpx" height="164rpx" border-radius="12rpx" :src="pos.cover_url" :iconSize="66"></u-image>
-												<view class="imgTag">景点</view>
-											</view>
-											<view class="right">
-												<view class="title">{{ pos.name }}</view>
-												<view class="rateBox">
-													<uni-rate :readonly="true" :value="pos.rate" :size='14' margin="4" :allowHalf="true"/>
-													<view class="rate" >{{ pos.rate }} 星</view>
-												</view>
-												<text class="content">{{ pos.description }}</text>
-											</view>
-										</view>
+										<view class="u-order-desc1">{{ item.description }}</view>
+										<!-- <view class="u-order-time"></view> -->
 									</view>
 								</template>
 							</u-time-line-item>
+							<view v-for="(eve, eveIndex) in item.event" :key="eveIndex">
+								<u-time-line-item>
+									<template v-slot:node>
+										<view class="uTime">
+											<image class="timeIcon" src="/static/images/timeClock.svg"></image>
+											<text>{{ eve.time == '上午' ? '上午' : '下午' }}</text>
+										</view>
+									</template>
+									<template v-slot:content>
+										<view style="height: 40rpx;"></view>
+									</template>
+								</u-time-line-item>
+								<u-time-line-item nodeTop="2">
+									<!-- 此处自定义了左边内容，用一个图标替代 -->
+									<template v-slot:node>
+										<view class="u-node" style="background: #B7EB8F; border-radius: 50%;">
+											<!-- 此处为uView的icon组件 -->
+											<view style="width: 10rpx; height: 10rpx;"></view>
+										</view>
+									</template>
+									<template v-slot:content>
+										<view>
+											<view class="u-order-title">
+												<text class="stitle">{{ eve.title }}</text>
+											</view>
+											<view class="u-order-desc">{{ eve.description }}</view>
+											<view class="position" v-for="(pos, posIndex) in eve.position" :key="posIndex" @click="toPosition(pos)">
+												<view class="left">
+													<u-image width="216rpx" height="164rpx" border-radius="12rpx" :src="pos.cover_url" :iconSize="66"></u-image>
+													<view class="imgTag">景点</view>
+												</view>
+												<view class="right">
+													<view class="title">{{ pos.name }}</view>
+													<view class="rateBox">
+														<uni-rate :readonly="true" :value="pos.rate" :size='14' margin="4" :allowHalf="true"/>
+														<view class="rate" >{{ pos.rate }} 星</view>
+													</view>
+													<text class="content">{{ pos.description }}</text>
+												</view>
+											</view>
+										</view>
+									</template>
+								</u-time-line-item>
+							</view>
 						</view>
+					</u-time-line>
+					<view class="serverInfo" v-if="lineContent.content">
+						<view class="title">服务说明</view>
+						<view class="content">{{ lineContent.description }}</view>
 					</view>
-				</u-time-line>
-				<view class="serverInfo" v-if="lineContent.content">
-					<view class="title">服务说明</view>
-					<view class="content">{{ lineContent.description }}</view>
-				</view>
-				
-				<view class="kong" v-if="Show == true" style="width: 100%;height: 570rpx;background: #FFFFFF;">
-				</view>
-				
-			</view>
-			<view class="bottom">
-				<!-- 分割线 -->
-				<!-- <view class="line"></view> -->
-				<!-- 登录 -->
-				<!-- <view class="contentBottom savepadding"> -->
-					<!-- <view class="like">
-						<image v-show="!lineContent.fav" class="likeBtn" src="/static/images/attheart.svg"></image>
-						<image v-show="lineContent.fav" class="likeBtn" src="/static/images/heart-actived.svg"></image>
-						<view class="likeNum">{{ lineContent.like_count }}</view>
+					
+					<view class="kong" v-if="Show == true" style="width: 100%;height: 570rpx;background: #FFFFFF;">
 					</view>
-					<view class="fav" @click="lineFav(lineContent.uuid)">
-						<image v-show="!lineContent.fav" class="favBtn" src="/static/images/shouchang.svg"></image>
-						<image v-show="lineContent.fav" class="favBtn" src="/static/images/fav-actived.svg"></image>
-						<view class="favNum">{{ lineContent.fav_count }}</view>
-					</view> -->
-				<view class="bottom-text">
 					
 				</view>
-				<view class="like"  @click="clickLike">
-					<image class="likeBtn" :src="articleInfo.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image>
+				<view class="bottom">
+					<!-- 分割线 -->
+					<!-- <view class="line"></view> -->
+					<!-- 登录 -->
+					<!-- <view class="contentBottom savepadding"> -->
+						<!-- <view class="like">
+							<image v-show="!lineContent.fav" class="likeBtn" src="/static/images/attheart.svg"></image>
+							<image v-show="lineContent.fav" class="likeBtn" src="/static/images/heart-actived.svg"></image>
+							<view class="likeNum">{{ lineContent.like_count }}</view>
+						</view>
+						<view class="fav" @click="lineFav(lineContent.uuid)">
+							<image v-show="!lineContent.fav" class="favBtn" src="/static/images/shouchang.svg"></image>
+							<image v-show="lineContent.fav" class="favBtn" src="/static/images/fav-actived.svg"></image>
+							<view class="favNum">{{ lineContent.fav_count }}</view>
+						</view> -->
+					<view class="bottom-text">
+						
+					</view>
+					<view class="like"  @click="clickLike">
+						<image class="likeBtn" :src="articleInfo.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image>
+					</view>
+					<view class="likeNum">{{ articleInfo.like_count }}</view>
+					
+					<view class="fav" @click="clickFav">
+						<image class="favBtn" :src="articleInfo.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
+					</view>
+					<view class="favNum">{{ articleInfo.fav_count }}</view>
+					
+					<view class="share" v-if="serviceProvider =='baidu'"  @click="share">
+						<image src="/static/images/shareIcon.svg"></image>
+					</view>
+						<!-- <view class=""><view class="loginButton" v-if="!hasLogin" @click="login">登录</view></view> -->
+					<!-- </view> -->
 				</view>
-				<view class="likeNum">{{ articleInfo.like_count }}</view>
-				
-				<view class="fav" @click="clickFav">
-					<image class="favBtn" :src="articleInfo.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
-				</view>
-				<view class="favNum">{{ articleInfo.fav_count }}</view>
-				
-				<view class="share" v-if="serviceProvider =='baidu'"  @click="share">
-					<image src="/static/images/shareIcon.svg"></image>
-				</view>
-					<!-- <view class=""><view class="loginButton" v-if="!hasLogin" @click="login">登录</view></view> -->
-				<!-- </view> -->
 			</view>
+			<view class="phone" @click="tell" ><image src="/static/images/serverCall.svg"></image></view>
 		</view>
-		<view class="phone" @click="tell" ><image src="/static/images/serverCall.svg"></image></view>
+		
 	</view>
 </template>
 
@@ -193,6 +237,9 @@ export default {
 			tabIndex: 0 ,// 当前tab下标,必须与mescroll-more.js对应,所以tabIndex是固定变量,不可以改为其他的名字
 			Show:false,
 			hasLikeClick:false,
+			// 骨架屏
+			loadEmpty:[1,2],
+			loading: true,
 		};
 	},
 	mounted(){
@@ -265,7 +312,9 @@ export default {
 						lineContent.images[index1] = that.Utils.addImageProcess(item1, true, 70)
 					})
 					that.lineContent = lineContent;
-					
+					setTimeout(() => {
+						that.loading = false
+					}, 300);
 					//#ifdef MP-BAIDU
 					swan.setPageInfo({
 						title: that.lineContent.title+"-领途羊",
@@ -457,6 +506,100 @@ export default {
 </script>
 
 <style lang="scss">
+// 骨架屏样式
+.loadBox{
+	width: 100%;
+	height: auto;
+	// margin-top: 40rpx;
+	.loadBlock{
+		// padding: 0 28rpx;
+		.banner{
+			width: 100%;
+			height: 440rpx;
+		}
+		.kong{
+			width: 104rpx;
+			height: 20rpx;
+			margin: 20rpx auto;
+		}
+		.box-btm{
+			padding: 0 28rpx;
+			margin-top: 20rpx;
+			.kong-big{
+				width: 204rpx;
+				height: 40rpx;
+				margin-bottom:20rpx;
+			}
+			.title{
+				width: 694rpx;
+				height: 20rpx;
+				margin-bottom: 20rpx;
+			}
+			.title-min{
+				width: 348rpx;
+				height: 20rpx;
+			}
+		}
+		.xxk-box{
+			display: flex;
+			margin-top: 80rpx;
+			.xxk{
+				width: 120rpx;
+				height: 40rpx;
+				margin-right: 40rpx;
+			}
+		}
+		.day-box{
+			display: flex;
+			align-items: center;
+			margin-top: 40rpx;
+			margin-bottom: 20rpx;
+			.day-min{
+				width: 120rpx;
+				height: 40rpx;
+				margin-right: 20rpx;
+			}
+			.day{
+				width: 554rpx;
+				height: 20rpx;
+			}
+		}
+		.lx-box{
+			.lx-top{
+				display: flex;
+				align-items: center;
+				margin-top: 20rpx;
+				.lx-min{
+					width: 40rpx;
+					height: 40rpx;
+					margin-right: 20rpx;
+				}
+				.lx{
+					width: 40rpx;
+					height: 20rpx;
+				}
+			}
+			.lx-center{
+				// display: flex;
+				.lx-min{
+					width: 348rpx;
+					height: 20rpx;
+					margin-top: 20rpx;
+				}
+				.lx{
+					width: 694rpx;
+					height: 20rpx;
+					margin-top: 20rpx;
+				}
+			}
+			.lx-btm{
+				width: 694rpx;
+				height: 200rpx;
+				margin-top: 20rpx;
+			}
+		}
+	}
+}
 .u-node{
 	border: 8rpx solid #FFFFFF;
 }

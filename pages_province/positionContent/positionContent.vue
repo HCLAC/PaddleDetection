@@ -11,8 +11,63 @@
 				</view>
 			</uni-nav-bar>
 		</view>
+		<!-- 骨架屏 -->
+		<view v-if="loading" class="loadBox">
+			<view class="container u-skeleton">
+				<view class="loadBlock">
+					<view class="banner u-skeleton-rect"></view>
+					<view class="city u-skeleton-circle"></view>
+					<view class="box-btm">
+						<view class="title-box">
+							<view class="title u-skeleton-rect"></view>
+							<view class="share u-skeleton-circle"></view>
+						</view>
+						<view class="scenic-spot">
+							<view class="scenic-spot-box u-skeleton-circle"></view>
+							<view class="scenic-spot-box u-skeleton-circle"></view>
+							<view class="scenic-spot-box u-skeleton-circle"></view>
+						</view>
+						<view class="score-box">
+							<view class="score-box-left">
+								<view class="star u-skeleton-circle"></view>
+								<view class="star u-skeleton-circle"></view>
+								<view class="star u-skeleton-circle"></view>
+								<view class="star u-skeleton-circle"></view>
+								<view class="star u-skeleton-circle"></view>
+							</view>
+							<view class="score-box-right">
+								<view class="text u-skeleton-circle"></view>
+								<view class="text u-skeleton-circle"></view>
+							</view>
+						</view>
+						<view class="kong u-skeleton-rect"></view>
+						<view class="kong u-skeleton-rect"></view>
+						<view class="kong-min u-skeleton-rect"></view>
+						<view class="position-box">
+							<view class="position-box-left">
+								<view class="kong-big u-skeleton-rect"></view>
+								<view class="kong u-skeleton-rect"></view>
+								<view class="kong u-skeleton-rect"></view>
+							</view>
+							<view class="position-box-right">
+								<view class="kong-big u-skeleton-rect"></view>
+							</view>
+						</view>
+						<view class="kong-big u-skeleton-rect"></view>
+						<view class="btm">
+							<view class="kong u-skeleton-rect"></view>
+							<view class="kong u-skeleton-rect"></view>
+							<view class="kong u-skeleton-rect"></view>
+							<view class="kong u-skeleton-rect"></view>
+						</view>
+					</view>
+				</view>
+			</view>
+			<!--引用组件-->
+			<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
+		</view>
 		<!-- 内容详情轮播图 -->
-		<view class="" v-if="siteInfo != null">
+		<view v-else>
 			<view class="uni-padding-wrap">
 				<view class="page-section" >
 					<view class="page-section-spacing" >
@@ -154,6 +209,9 @@ export default {
 			more:true,
 			rate:0,
 			siteInfoNumber:"",
+			// 骨架屏
+			loadEmpty:[1,2,3,4,5],
+			loading: true,
 		};
 	},
 	// #ifdef MP-BAIDU
@@ -199,7 +257,10 @@ export default {
 					if(that.siteInfo.description.length < 50){
 						that.more = false
 					}
-					
+					//关闭骨架屏
+					setTimeout(() => {
+						that.loading = false
+					}, 300);
 					//#ifdef MP-BAIDU
 					swan.setPageInfo({
 						title: that.siteInfo.name+"景点介绍-领途羊",
@@ -295,7 +356,114 @@ export default {
 	height: 440rpx;
 	width: 100%;
 }
-
+// 骨架屏样式
+.loadBox{
+	width: 100%;
+	height: auto;
+	// margin: 0rpx 28rpx 0rpx;
+	.loadBlock{
+		.banner{
+			// margin-top: 40rpx;
+			width: 100%;
+			height: 420rpx;
+		}
+		.city{
+			width: 104rpx;
+			height: 20rpx;
+			margin: 20rpx auto;
+		}
+		.box-btm{
+			padding: 0 28rpx;
+			.title-box{
+				display: flex;
+				align-items: center;
+				.title{
+					width: 596rpx;
+					height: 48rpx;
+				}
+				.share{
+					width: 78rpx;
+					height: 78rpx;
+					margin-left: 20rpx;
+				}
+			}
+			.scenic-spot{
+				display: flex;
+				.scenic-spot-box{
+					width: 100rpx;
+					height: 36rpx;
+					margin-right: 16rpx;
+				}
+			}
+			.score-box{
+				margin-top: 20rpx;
+				display: flex;
+				.score-box-left{
+					display: flex;
+					.star{
+						width: 40rpx;
+						height: 40rpx;
+						margin-right: 12rpx;
+					}
+				}
+				.score-box-right{
+					display: flex;
+					align-items: center;
+					.text{
+						width: 142rpx;
+						height: 20rpx;
+						margin-right: 16rpx;
+					}
+				}
+			}
+			.kong{
+				width: 694rpx;
+				height: 20rpx;
+				margin-top: 20rpx;
+			}
+			.kong-min{
+				width: 200rpx;
+				height: 20rpx;
+				margin-top: 20rpx;
+			}
+			.position-box{
+				display: flex;
+				margin-top: 80rpx;
+				.position-box-left{
+					.kong-big{
+						width: 144rpx;
+						height: 36rpx;
+					}
+					.kong{
+						width: 418rpx;
+						height: 20rpx;
+					}
+				}
+				.position-box-right{
+					.kong-big{
+						width: 196rpx;
+						height: 96rpx;
+						margin-left: 80rpx;
+					}
+				}
+			}
+			.kong-big{
+				width: 144rpx;
+				height: 36rpx;
+				margin-top: 80rpx;
+			}
+			.btm{
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+				.kong{
+					width: 336rpx;
+					height: 158rpx;
+				}
+			}
+		}
+	}
+}
 // .swiper-item {
 // 	width: 100%;
 // 	height: 100%;
@@ -414,7 +582,7 @@ export default {
 		position: fixed;
 		top: 685rpx;
 		right: 40rpx;
-		z-index: 11111;
+		z-index: 1000;
 	}
 	.shareBox image {
 		height: 34rpx;

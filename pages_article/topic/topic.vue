@@ -12,7 +12,7 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 热门话题 -->
-		<view class="hotTopic">
+		<view class="hotTopic" v-if="!loading">
 			<view class="hotTopicTop">
 				<view class="topTitle">
 					热门话题
@@ -28,49 +28,95 @@
 				</view>
 			</view>
 		</view>
+		<!-- 骨架屏 -->
+		<view v-if="loading" class="loadBox">
+			<view class="container u-skeleton">
+				<view class="loadBlock">
+					<view class="kong u-skeleton-rect"></view>
+					<view class="ht-box">
+						<view class="kong u-skeleton-rect"></view>
+						<view class="kong u-skeleton-rect"></view>
+						<view class="kong u-skeleton-rect"></view>
+						<view class="kong u-skeleton-rect"></view>
+						<view class="kong u-skeleton-rect"></view>
+						<view class="kong u-skeleton-rect"></view>
+					</view>
+					<view class="kong-big u-skeleton-rect"></view>
+					<view class="sj-box" v-for="(item, index) in loadEmpty">
+						<view class="top-box">
+							<view class="kong-yuan u-skeleton-circle"></view>
+							<view class="kong-fang u-skeleton-rect"></view>
+							<view class="kong-min u-skeleton-circle"></view>
+						</view>
+						<view class="btm-box">
+							<view class="btm-left">
+								<view class="left-big u-skeleton-fillet"></view>
+								<view class="left u-skeleton-rect"></view>
+								<view class="left u-skeleton-rect"></view>
+							</view>
+							<view class="btm-center">
+								<view class="center-big u-skeleton-fillet"></view>
+								<view class="center u-skeleton-rect"></view>
+								<view class="center u-skeleton-rect"></view>
+							</view>
+							<view class="btm-right">
+								<view class="right-big u-skeleton-fillet"></view>
+								<view class="right u-skeleton-rect"></view>
+								<view class="right u-skeleton-rect"></view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+			<!--引用组件-->
+			<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
+		</view>
 		<mescroll-body class="mescroll" ref="mescrollRef" style="margin-bottom: 300rpx;" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 推荐 -->
-			<view class="recommended">
-				<view class="recommendedTop">
-					<view class="recommendedTitle">
-						推荐
+			<view v-if="!loading">
+				<view class="recommended">
+					<view class="recommendedTop">
+						<view class="recommendedTitle">
+							推荐
+						</view>
+						<view class="recommendedTopLine"></view>
 					</view>
-					<view class="recommendedTopLine"></view>
-				</view>
-				<view class="topicList" v-for="(item,index) in recommList" :key="index"  >
-					<view class="topicTitle">
-						<view class="titleLeft">
-							<image class="titleImg" src="/static/images/topicIcon.svg"></image>
-							<view class="titleText">
-								{{item.name}}
+					<view class="topicList" v-for="(item,index) in recommList" :key="index"  >
+						<view class="topicTitle">
+							<view class="titleLeft">
+								<image class="titleImg" src="/static/images/topicIcon.svg"></image>
+								<view class="titleText">
+									{{item.name}}
+								</view>
+							</view>
+							<view class="titleRight" @click="toTopicList(item.topics_id)">
+								<view class="number">
+									{{item.total>10000?((item.total-(item.total%1000))/10000+'w'):item.total}}
+								</view>
+								<view class="rightText">
+									篇文章
+								</view>
+								<image class="moreRight" src="/static/images/more-right.svg"></image>
 							</view>
 						</view>
-						<view class="titleRight" @click="toTopicList(item.topics_id)">
-							<view class="number">
-								{{item.total>10000?((item.total-(item.total%1000))/10000+'w'):item.total}}
+						<view class="conttentBox">
+							<view class="contentImgBox">
+								<view class="contentImg" v-for="(item1,index1) in item.list" :key="index1" @click="onPageJump" :id="item1.article_id">
+									<u-image width="216rpx" height="216rpx" border-radius="8rpx" :src="item1.image" mode="aspectFill" :iconSize="44">
+										<!-- <view class="videoIcon" v-if="item1.type == 4">
+											<image class="playIcon"  src="/static/images/playIcon.svg"></image>
+										</view> -->
+									</u-image>
+									<view class="attText">{{ item1.title }}</view>
+								</view>
 							</view>
-							<view class="rightText">
-								篇文章
-							</view>
-							<image class="moreRight" src="/static/images/more-right.svg"></image>
+							<view class="line"></view>
 						</view>
-					</view>
-					<view class="conttentBox">
-						<view class="contentImgBox">
-							<view class="contentImg" v-for="(item1,index1) in item.list" :key="index1" @click="onPageJump" :id="item1.article_id">
-								<u-image width="216rpx" height="216rpx" border-radius="8rpx" :src="item1.image" mode="aspectFill" :iconSize="44">
-									<!-- <view class="videoIcon" v-if="item1.type == 4">
-										<image class="playIcon"  src="/static/images/playIcon.svg"></image>
-									</view> -->
-								</u-image>
-								<view class="attText">{{ item1.title }}</view>
-							</view>
-						</view>
-						<view class="line"></view>
 					</view>
 				</view>
 			</view>
 		</mescroll-body>
+		
 	</view>
 </template>
 
@@ -86,7 +132,10 @@
 					use:false,
 					auto:false
 				},
-				upOption:{}
+				upOption:{},
+				// 骨架屏
+				loadEmpty:[1,2,3],
+				loading: true,
 			};
 		},
 		// #ifdef MP-BAIDU
@@ -175,7 +224,12 @@
 						// let hasNext = res.data.data.list;
 				
 						//设置列表数据
-						if (page.num == 1) this.recommList = []; //如果是第一页需手动置空列表
+						if (page.num == 1){
+							this.recommList = []; //如果是第一页需手动置空列表
+							setTimeout(() => {
+								this.loading = false
+							}, 300);
+						}
 						this.recommList = this.recommList.concat(curPageData); //追加新数据
 						console.log('recommList', this.recommList, curPageLen, totalSize)
 						// 请求成功,隐藏加载状态
@@ -212,9 +266,100 @@
 </script>
 
 <style lang="scss" scoped>
-	.nav-bar{
-		border-bottom: 2rpx solid #DDDDDD;
+.nav-bar{
+	border-bottom: 2rpx solid #DDDDDD;
+}
+// 骨架屏样式
+.loadBox{
+	width: 100%;
+	height: auto;
+	margin-top: 40rpx;
+	.loadBlock{
+		padding: 0 28rpx;
+		.kong{
+			width: 144rpx;
+			height: 40rpx;
+		}
+		.ht-box{
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			margin-top: 40rpx;
+			.kong{
+				width: 328rpx;
+				height: 20rpx;
+				margin-bottom: 20rpx;
+			}
+		}
+		.kong-big{
+			width: 144rpx;
+			height: 40rpx;
+			margin-top: 60rpx;
+		}
+		.sj-box{
+			.top-box{
+				margin-top: 60rpx;
+				display: flex;
+				align-items: center;
+				.kong-yuan{
+					width: 36rpx;
+					height: 36rpx;
+				}
+				.kong-fang{
+					width: 400rpx;
+					height: 36rpx;
+					margin-left: 20rpx;
+				}
+				.kong-min{
+					width: 120rpx;
+					height: 36rpx;
+					margin-left: 118rpx;
+				}
+			}
+			.btm-box{
+				display: flex;
+				justify-content: space-between;
+				margin-top: 20rpx;
+				.btm-left{
+					.left-big{
+						width: 216rpx;
+						height: 216rpx;
+						margin-bottom: 20rpx;
+					}
+					.left{
+						width: 216rpx;
+						height: 20rpx;
+						margin-bottom: 20rpx;
+					}
+				}
+				.btm-center{
+					.center-big{
+						width: 216rpx;
+						height: 216rpx;
+						margin-bottom: 20rpx;
+					}
+					.center{
+						width: 216rpx;
+						height: 20rpx;
+						margin-bottom: 20rpx;
+					}
+				}
+				.btm-right{
+					.right-big{
+						width: 216rpx;
+						height: 216rpx;
+						margin-bottom: 20rpx;
+					}
+					.right{
+						width: 216rpx;
+						height: 20rpx;
+						margin-bottom: 20rpx;
+					}
+				}
+			}
+		}
 	}
+}
 // 热门话题
 .hotTopic{
 	margin-top: 30rpx ;

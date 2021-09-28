@@ -12,60 +12,93 @@
 			</uni-nav-bar>
 		</view>
 		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			 <view class="bgBox">
-				<image lazy-load :src="querys.imageProcess" class="bannerImg"></image>
-				<view class="mask">
-					<view class="content">
-						<image class="travel" src="/static/images/TRAVEL.png"></image>
-						<view class="atthotbox">
-							<image src="/static/images/leftleaves.svg"></image>
-							<text class="atthottext">{{querys.name}}热门景点</text>
-							<image src="/static/images/rightleaves.svg"></image>
-						</view>
+			<!-- 骨架屏 -->
+			<view v-if="loading" class="loadBox">
+				<view class="container u-skeleton">
+					<view class="loadBlock">
+						<view class="banner u-skeleton-rect"></view>
+						<view class="city u-skeleton-circle"></view>
 					</view>
-					<view class="rankTime">
-						领途羊景点榜单 · {{month}}月{{day}}日更新
-					</view>
-					<view class="boxshow">
-					</view>
-				</view>
-			 </view>
-			<!-- 排行 -->
-			<view class="rankContent" v-if='hotsiteslist' :style="{'height': (hotsiteslist.length < 6 ? '1604rpx' : '')}">
-				<view class="cityBox">
-					<view class="city" @click="showCityPicker = true">
-						<view class="">
-							<text class="cityname">{{querys.name}}</text>
-							<image src="/static/images/more-down.svg"></image>
-						</view>
-					</view>
-				</view>
-				<view class="cardList">
-					<view class="cards" v-for="(item,index) in hotsiteslist" :key="index" @click="toSiteDetail(item.id)">
-						<view class="cardsleft">
-							<u-image  width="262rpx" height="198rpx" border-radius="16rpx" :src="item.images[0]" mode="aspectFill" :iconSize="66"></u-image>
-							<image class="rankImg " :src="`/static/images/rank/top-${index+1}.svg`" v-if="index < 6"></image>
-						</view>
-						<view class="cardsright">
-							<view class="title">
-								{{item.name}}
-							</view>
-							<view class="contentText">
-								{{item.description}}
-							</view>
-							<view class="rateBox">
-								<!-- 评分图标 -->
-								<uni-rate :readonly="true" :value="item.rate" :size='14' margin="4" :allowHalf="true"/>
-								<view class="rate">{{item.rate}} 星</view>
+					<view class="box-btm" v-for="(item, index) in loadEmpty">
+						<view class="left-img u-skeleton-rect"></view>
+						<view class="right">
+							<view class="text u-skeleton-rect"></view>
+							<view class="text u-skeleton-rect"></view>
+							<view class="text u-skeleton-rect"></view>
+							<view class="right-btm">
+								<view class="btm-left">
+									<view class="yuan u-skeleton-circle"></view>
+									<view class="yuan u-skeleton-circle"></view>
+									<view class="yuan u-skeleton-circle"></view>
+									<view class="yuan u-skeleton-circle"></view>
+									<view class="yuan u-skeleton-circle"></view>
+								</view>
+								<view class="btm-right u-skeleton-circle"></view>
 							</view>
 						</view>
 					</view>
 				</view>
+				<!--引用组件-->
+				<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
 			</view>
-			<view class="shareBox" v-if="serviceProvider =='baidu' " @click="share">
-				<image src="/static/images/icon-share.svg"></image>
+			 
+			<view v-else>
+				 <view class="bgBox">
+					<image lazy-load :src="querys.imageProcess" class="bannerImg"></image>
+					<view class="mask">
+						<view class="content">
+							<image class="travel" src="/static/images/TRAVEL.png"></image>
+							<view class="atthotbox">
+								<image src="/static/images/leftleaves.svg"></image>
+								<text class="atthottext">{{querys.name}}热门景点</text>
+								<image src="/static/images/rightleaves.svg"></image>
+							</view>
+						</view>
+						<view class="rankTime">
+							领途羊景点榜单 · {{month}}月{{day}}日更新
+						</view>
+						<view class="boxshow">
+						</view>
+					</view>
+				</view>
+				<!-- 排行 -->
+				<view class="rankContent" v-if='hotsiteslist' :style="{'height': (hotsiteslist.length < 6 ? '1604rpx' : '')}">
+					<view class="cityBox">
+						<view class="city" @click="showCityPicker = true">
+							<view class="">
+								<text class="cityname">{{querys.name}}</text>
+								<image src="/static/images/more-down.svg"></image>
+							</view>
+						</view>
+					</view>
+					<view class="cardList">
+						<view class="cards" v-for="(item,index) in hotsiteslist" :key="index" @click="toSiteDetail(item.id)">
+							<view class="cardsleft">
+								<u-image  width="262rpx" height="198rpx" border-radius="16rpx" :src="item.images[0]" mode="aspectFill" :iconSize="66"></u-image>
+								<image class="rankImg " :src="`/static/images/rank/top-${index+1}.svg`" v-if="index < 6"></image>
+							</view>
+							<view class="cardsright">
+								<view class="title">
+									{{item.name}}
+								</view>
+								<view class="contentText">
+									{{item.description}}
+								</view>
+								<view class="rateBox">
+									<!-- 评分图标 -->
+									<uni-rate :readonly="true" :value="item.rate" :size='14' margin="4" :allowHalf="true"/>
+									<view class="rate">{{item.rate}} 星</view>
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="shareBox" v-if="serviceProvider =='baidu' " @click="share">
+					<image src="/static/images/icon-share.svg"></image>
+				</view>
 			</view>
 		</mescroll-body>
+		
 		<!-- 城市选择弹窗 -->
 		<cityPicker :show="showCityPicker" :name="querys.name" :cityList="cityList" @onclose="cityPickerClose" @switchToOther="switchToOther"></cityPicker>
 	</view>
@@ -101,6 +134,9 @@
 				},
 				isFixed: false,
 				cardheight: 200,
+				// 骨架屏
+				loadEmpty:[1,2,3,4,5],
+				loading: true,
 			}
 		},
 		// #ifdef MP-BAIDU
@@ -155,7 +191,7 @@
 		},
 		methods: {
 			calcCardHeight(){
-				if (this.isFixed){
+				if (this.isFixed || this.loading){
 					return
 				}
 				const query = uni.createSelectorQuery().in(this);
@@ -262,7 +298,12 @@
 						// let hasNext = res.data.data.list;
 				
 						//设置列表数据
-						if (page.num == 1) this.hotsiteslist = []; //如果是第一页需手动置空列表
+						if (page.num == 1){
+							this.hotsiteslist = []; //如果是第一页需手动置空列表
+							setTimeout(() => {
+								this.loading = false
+							}, 300);
+						} 
 						this.hotsiteslist = this.hotsiteslist.concat(curPageData); //追加新数据
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
@@ -312,6 +353,57 @@
 		z-index: 999;
 		position: fixed;
 		top:0px;
+	}
+	// 骨架屏样式
+	.loadBox{
+		width: 100%;
+		height: auto;
+		// margin: 0rpx 28rpx 0rpx;
+		.loadBlock{
+			.banner{
+				// margin-top: 40rpx;
+				width: 100%;
+				height: 420rpx;
+			}
+			.city{
+				width: 160rpx;
+				height: 60rpx;
+			}
+		}
+		.box-btm{
+			padding: 0 28rpx;
+			display: flex;
+			margin-bottom: 40rpx;
+			.left-img{
+				width: 262rpx;
+				height: 198rpx;
+			}
+			.right{
+				margin-left: 20rpx;
+				padding-top: 20rpx;
+				.text{
+					width: 412rpx;
+					height: 20rpx;
+					margin-bottom: 20rpx;
+				}
+				.right-btm{
+					display: flex;
+					align-items: center;
+					.btm-left{
+						display: flex;
+						.yuan{
+							width: 36rpx;
+							height: 36rpx;
+							margin-right: 12rpx;
+						}
+					}
+					.btm-right{
+						width: 80rpx;
+						height: 28rpx;
+					}
+				}
+			}
+		}
 	}
 	.bgBox {
 		width: 750rpx;
