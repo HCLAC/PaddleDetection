@@ -153,7 +153,7 @@
 					<view class="replyContent">
 						<view class="myReply">
 							<image class="userImg" lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'"></image>
-							<view class="replyInput" @click="commentInput">
+							<view class="replyInput" @click="sendReply">
 								写个回复走个心
 							</view>
 						</view>
@@ -192,7 +192,7 @@
 		
 		<!-- 登录 -->
 		<view class="bottom" v-if="articleInfo">
-			<view class="bottom-text" @click="commentInput">
+			<view class="bottom-text" @click="sendReply">
 				撩点什么…
 			</view>
 			<view class="like" @click="clickLike">
@@ -842,17 +842,38 @@
 					url: '/pages_article/report/report?id=' + id
 				})
 			},
-			commentInput() {
+			sendReply() {
 				if (!this.hasLogin) {
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
 					});
 					return
 				}
+				// #ifdef MP-BAIDU
+				swan.openReplyEditor({
+					sendText: '发送',
+					contentPlaceholder: '撩点什么...',
+					success: res => {
+                        if (res.status === 'reply' || res.status === 'replay') {
+							this.contentText = res.content
+							this.pubComment()
+						}
+						// 主动关闭评论发布器
+						swan.closeReplyEditor();
+					},
+					fail: err => {
+						console.log('fail', err)
+					}
+				});
+				return
+				// #endif
 				this.showText = true
 				this.textareafocus = true
 			},
 			inputBlur() {
+				// #ifdef MP-BAIDU
+				return
+				// #endif
 				this.showText = false
 				this.textareafocus = false
 			},
