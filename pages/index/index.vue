@@ -3,83 +3,63 @@
 		<!-- 自定义导航栏 -->
 		<view class="nav-bar">
 			<uni-nav-bar :title="false" :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor">
-				<!-- <view class="headerL" slot="left">
-					<view class="world" >
-						<view class="worldText">全世界</view>
-						<view class="worldLine"></view>
-					</view>
-					<view class="nowCityName" @click="toProvincesNC()">
-						<view class="nowCityNameText">{{ cityName }} </view>
-						<view class="downIcon">
-							<image class="downIconImg" src="/static/images/downIcon.svg"></image>
-						</view>
-					</view>
-				</view> -->
 				<view slot="center" class="input-view" @click="toSearch">
 					<view class="input-uni-icon-Box">
-						<!-- <u-icon name="search" color="#c9cad1" :size="28"></u-icon> -->
 						<image class="input-uni-icon" src="/static/images/icon-search.png" />
 					</view>
 					<input confirm-type="search" class="nav-bar-input" type="text" placeholder="搜索" disabled="true" />
 				</view>
 			</uni-nav-bar>
 		</view>
-
 		<!-- 内容 -->
-		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit"
-		 @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 头部轮播图 -->
-			<view class="page-section ">
-				<view class="page-section-spacing">
-					<u-image :src="bannerList[0].image" width="750rpx" height="440rpx"></u-image>
-				</view>
+			<view class="banner-box">
+				<u-image :src="bannerList[0].image" width="750rpx" height="440rpx"></u-image>
 			</view>
-			<view class="cus-sty " :style="{'margin-top': cus_sty_top}">
-				<!-- 热门目的地 -->
-				<view class="hot">
-					<view class="hot-top">
-						<text class="ht-l">热门目的地</text>
-						<view class="ht-r" @click="showCity">
-							更多
-							<image src="../../static/images/more-right.svg" class="moreIcon" mode=""></image>
-						</view>
+			<!-- 热门目的地 -->
+			<view class="hot">
+				<view class="hot-top">
+					<text class="ht-l">热门目的地</text>
+					<view class="ht-r" @click="showCity">
+						更多
+						<image src="../../static/images/more-right.svg" class="moreIcon" mode=""></image>
 					</view>
-
-					<view class="hot-bot" v-if="areaList && areaList.length">
-						<view class="hotAdress">
-							<!-- 当前位置 -->
-							<view :class="index == 0 && popularCities ? 'dqwz' : 'hotCity'" v-for="(item,index) in areaList" v-if="index<3" :key="index" @click="toProvinces(item)">
-								<view class="mask"></view>
-								<image class="hotCityImg" :src="item.image" mode="scaleToFill"></image>
-								<text class="hotCityText1">{{ item.name }}</text>
-								<view class="adressBox" v-if="index == 0 && popularCities" @tap.stop="notLocation">
-									<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
-									<text class="dqwzText1">{{ dqdwText }}</text>
-								</view>
+				</view>
+				<view class="hot-bot">
+					<view class="hotAdress">
+						<!-- 当前位置 -->
+						<view :class="index == 0 && popularCities ? 'dqwz' : 'hotCity'" v-for="(item,index) in areaList" v-if="index<3" :key="index" @click="toProvinces(item)">
+							<view class="mask"></view>
+							<image class="hotCityImg" :src="item.image" mode="scaleToFill"></image>
+							<text class="hotCityText1">{{ item.name }}</text>
+							<view class="adressBox" v-if="index == 0 && popularCities" @tap.stop="notLocation">
+								<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
+								<text class="dqwzText1">{{ dqdwText }}</text>
 							</view>
 						</view>
-						<view class="cityRank">
-							<view class="rankText" @click="toProvinces(areaList[3])" v-if="areaList[3]">{{ areaList[3].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[4]"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[4])" v-if="areaList[4]">{{ areaList[4].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[5]"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[5])" v-if="areaList[5]">{{ areaList[5].name }}</view>
-						</view>
-						<view class="cityRank">
-							<view class="rankText" @click="toProvinces(areaList[6])" v-if="areaList[6]">{{ areaList[6].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[7]"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[7])" v-if="areaList[7]">{{ areaList[7].name }}</view>
-							<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx" v-if="areaList[7]"></u-line>
-							<view class="rankText" @click="toProvinces(areaList[8])" >{{ areaList[8].name }}</view>
-						</view>
+					</view>
+					<view class="cityRank">
+						<view class="rankText" @click="toProvinces(areaList[3])">{{ areaList[3].name }}</view>
+						<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+						<view class="rankText" @click="toProvinces(areaList[4])">{{ areaList[4].name }}</view>
+						<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+						<view class="rankText" @click="toProvinces(areaList[5])">{{ areaList[5].name }}</view>
+					</view>
+					<view class="cityRank">
+						<view class="rankText" @click="toProvinces(areaList[6])">{{ areaList[6].name }}</view>
+						<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+						<view class="rankText" @click="toProvinces(areaList[7])">{{ areaList[7].name }}</view>
+						<u-line direction="col" color="#EDEFF2" :hair-line="false" length="28rpx" margin=" 0 16rpx"></u-line>
+						<view class="rankText" @click="toProvinces(areaList[8])" >{{ areaList[8].name }}</view>
 					</view>
 				</view>
-				<!-- 正在旅行 -->
-				<view class="touring">
-					<text class="tourtext">正在旅行</text>
-					<view class="wrap" >
-						<articleWaterfall :clearList="!list || list.length==0" :list="list"></articleWaterfall>
-					</view>
+			</view>
+			<!-- 正在旅行 -->
+			<view class="touring">
+				<text class="tourtext">正在旅行</text>
+				<view class="wrap" >
+					<articleWaterfall :clearList="!list || list.length==0" :list="list"></articleWaterfall>
 				</view>
 			</view>
 		</mescroll-body>
@@ -91,6 +71,7 @@
 	// 引入mescroll-mixins.js
 	import MescrollMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js';
 	import articleWaterfall from '@/common/article-waterfall/article-waterfall.vue';
+	import UTILS from '@/common/utils/utils.js';
 	export default {
 		components: {
 			articleWaterfall,
@@ -98,6 +79,7 @@
 		mixins: [MescrollMixin],
 		data() {
 			return {
+				cityName: '全国',
 				dqdwText: '当前位置',
 				downOption: {
 					auto:false
@@ -108,26 +90,34 @@
 				backgroundColor: 'transparent',
 				firstTime: new Date().getTime(),
 				firstLoad: false,
-				cityName: '',
 				list: [],
-				cityList: [],
 				bannerList: [
 					{image: ''}
 				],
-				areaList: [],
+				bannerPostion: 220,
+				areaList: [
+					{name:'',image:''},{name:'',image:''},{name:'',image:''},
+					{name:'',image:''},{name:'',image:''},{name:'',image:''},
+					{name:'',image:''},{name:'',image:''},{name:'',image:''}
+				],
 				serviceProvider: '',
-				cus_sty_top: '156rpx',
 				popularCities:false,
-				cityId:'',
 			};
 		},
 		created() {
-			// 监听从博主页面发来的信息
+			// 监听从登录页面发来的信息
 			uni.$once('onLoginSuccess', first_login => {
 				if (!first_login){
+					uni.pageScrollTo({
+						scrollTop: 0,
+						duration: 10,
+					})
 					this.mescroll.resetUpScroll()
 				}
 			})
+		},
+		mounted() {
+			this.calcCardHeight()
 		},
 		// #ifdef MP-BAIDU
 		onInit(query) {
@@ -149,7 +139,7 @@
 		onShow() {
 			var cur = Number((new Date().getTime())/1000).toFixed(0)
 			var firstT = Number((this.firstTime)/1000).toFixed(0)
-			if (cur-firstT > 30 && !this.firstLoad){
+			if (cur-firstT > 300 && !this.firstLoad){
 				uni.pageScrollTo({
 					scrollTop: 0,
 					duration: 10,
@@ -160,19 +150,19 @@
 			this.firstLoad = false
 		},
 		// 滚动
-		onPageScroll(e) {
-			if (e.scrollTop >= 100){
-				if (e.scrollTop >= 150 && this.backgroundColor == 'rgba(255, 255, 255, 0)'){
-					return
+		onPageScroll: UTILS.throttle( function(res){
+			var scrollTop = res[0].scrollTop
+			if (scrollTop >= this.bannerPostion){
+				if (this.backgroundColor != '#FFFFFF'){
+					this.backgroundColor = '#FFFFFF';
+					uni.setNavigationBarColor({
+					    frontColor: '#000000',
+						backgroundColor: '#FFFFFF',
+						fail: err => {
+							console.log('setNavigationBarColor fail', err);
+						}
+					})
 				}
-				this.backgroundColor = '#FFFFFF';
-				uni.setNavigationBarColor({
-				    frontColor: '#000000',
-					backgroundColor: '#FFFFFF',
-					fail: err => {
-						console.log('setNavigationBarColor fail', err);
-					}
-				})
 			} else {
 				this.backgroundColor = 'transparent';
 				uni.setNavigationBarColor({
@@ -183,15 +173,8 @@
 					}
 				})
 			}
-		},
-
+		}, 100),
 		methods: {
-			notLocation(){
-				if(this.dqdwText == '未定位'){
-					console.log(111)
-					this.loadData()
-				}
-			},
 			mescrollInit(mescroll) {
 				this.mescroll = mescroll;
 				this.mescroll.setPageSize(8)
@@ -207,10 +190,6 @@
 						this.getBanner();
 						this.getAdress();
 						this.getAreaHot();
-						
-						// setTimeout(() => {
-						// 	this.getCity()
-						// }, 200);
 					}
 				});
 				
@@ -243,23 +222,6 @@
 					}
 				});
 			},
-			// 获取全国城市
-			// getCity() {
-			// 	this.HTTP.request({
-			// 		url: '/area/guide',
-			// 		success: (res) => {				
-			// 			if (res.statusCode != 200 || res.data.code != 0){
-			// 				uni.showToast({
-			// 					title: res.data.msg,
-			// 					icon: 'none'
-			// 				});
-			// 				return
-			// 			}
-			// 			var cityList = res.data.data.areas;
-			// 			this.cityList = cityList.slice(1);
-			// 		}
-			// 	})
-			// },
 			// 获取banner
 			getBanner() {
 				this.HTTP.request({
@@ -281,11 +243,6 @@
 							item1.image = this.Utils.addImageProcess(item1.image, false, 40)
 						})
 						this.bannerList = bannerList;
-						if (this.bannerList.length == 0) {
-							this.cus_sty_top = '156rpx'
-						} else {
-							this.cus_sty_top = '0rpx'
-						}
 					}
 				});
 			},
@@ -297,7 +254,6 @@
 					key: '3L3BZ-V5OCV-GXHPP-ULIVW-DYQRT-HRFBL',
 				},5000)
 				.then(res => {
-					that.cityName = res.result.ad_info.city.substr(0, res.result.ad_info.city.length - 1);
 				})
 				.catch(error => {
 					console.error('get address failed, ',error);
@@ -307,6 +263,7 @@
 				uni.getLocation({
 					type: 'wgs84',
 					success: res => {
+						this.cityName = res.city
 						this.HTTP.request({
 							url: '/area/judge',
 							data: {
@@ -314,145 +271,52 @@
 								city: res.city
 							},
 							method: 'GET',
-							success: data => {
-								// console.log(data,'data')
-								this.cityId = data.data.data.city_id
-								if(this.cityId == ''){
-									this.popularCities = false;
+							success: res => {
+								if (res.statusCode != 200 || res.data.code != 0){
+									uni.showToast({
+										title: res.data.msg,
+										icon: 'none'
+									});
+									return
 								}
-								if(data.data.data.name != ''){
-									this.areaList.unshift(data.data.data)
-									this.popularCities = true
+								var result = res.data.data
+								result.image = this.Utils.addImageProcess(result.image, false, 40)
+								let cityId = res.data.data.city_id
+								if(!result.name || !result.name.length){
+									this.popularCities = false;
+								} else {
 									this.dqdwText = '当前位置';
+									this.popularCities = true
+									this.areaList.unshift(result)
 								}
 							},
 						})
-						// if (res.city && res.province) {
-						// 	that.cityName = res.city.substr(0, res.city.length - 1);
-						// } else {
-						// 	let arr = [];
-						// 	arr.push(res.latitude);
-						// 	arr.push(res.longitude);
-						// 	arr = arr.join(',');
-						// 	uni.request({
-						// 		url: 'https://api.map.baidu.com/reverse_geocoding/v3/?ak=NKyWaSnsW6FFEseeCEX18Fpvgzs3jcmd&output=json&coordtype=wgs84ll',
-						// 		data: {
-						// 			location: arr
-						// 		},
-						// 		success: result => {
-						// 			if (result.data.status == 0) {
-						// 				that.cityName = result.data.result.addressComponent.city.substr(0, result.data.result.addressComponent.city
-						// 					.length - 1);
-						// 			} else {
-						// 				uni.showToast({
-						// 					title: result.errMsg
-						// 				});
-						// 			}
-						// 		}
-						// 	});
-						// }
 					},
 					// 未开启定位
 					fail: error => {
-						if (error.errCode === 10005) {
+						console.log(error)
+						if (error.errCode === 10005 || error.errCode === 10003) {
 							uni.showToast({
 								title: "请检查定位功能是否开启",
 								icon: 'none'
 							});
 						}
-						// this.cityName = '未定位'
 						this.dqdwText = '未定位';
 						this.popularCities = true
 					}
 				});
 			},
-			//点击更多
+			notLocation(){
+				if(this.dqdwText == '未定位'){
+					this.getAdress()
+				}
+			},
+			// 点击更多
 			showCity() {
 				uni.navigateTo({
-					url: '/pages_content/city-hot/city-hot'
+					url: '/pages_content/city-hot/city-hot?name='+this.cityName
 				});
 			},
-			// 点击banner
-			towebview(item) {
-				uni.navigateTo({
-					url: `/pages/webview/webview?url=${item.url}`
-				});
-			},
-			// 跳转文章详情
-			toArticleDetail(e) {
-				let id = e.currentTarget.id;
-				uni.navigateTo({
-					url: '/pages_content/article/article?article_id=' + id
-				});
-			},
-			// 点赞 
-			clickLeftLike(e, index) {
-				this.updateLike(e,index,true) 
-			}, 
-			clickRightLike(e, index) {
-				this.updateLike(e,index,false) 
-			},
-			updateLike(e, index, left){
-				if (!this.Utils.isLogin()){
-					return
-				}
-				
-				let article = e.article_id;
-				let liked = e.liked;
-				var that = this;
-				this.HTTP.request({
-					url: '/user/liked',
-					data: {
-						article_id: article,
-						liked: liked == 0 ? 1 : 0
-					},
-					method: 'POST',
-					success: res => {
-						if (res.statusCode != 200 || res.data.code != 0){
-							uni.showToast({
-								title: res.data.msg,
-								icon: 'none'
-							});
-							return
-						}
-						
-						if (left){
-							this.$refs.uWaterfall.leftList[index].liked = res.data.data.liked
-							this.$refs.uWaterfall.leftList[index].like_count = res.data.data.like_count
-						}else{
-							this.$refs.uWaterfall.rightList[index].liked = res.data.data.liked
-							this.$refs.uWaterfall.rightList[index].like_count = res.data.data.like_count
-						}
-					}
-				});
-			},
-			// 跳转省市主题页
-			// toProvincesNC(){
-			// 	var name = this.cityName
-			// 	var obj = null
-			// 	for (let i=0;i<this.cityList.length;i++){
-			// 		for (let j=0;j<this.cityList[i].city_list.length;j++) {
-			// 			if (this.cityList[i].city_list[j].name == name){
-			// 				obj = this.cityList[i].city_list[j]
-			// 				break
-			// 			}
-			// 		}
-			// 	}
-				
-				
-			// 	if (!obj){
-			// 		uni.showToast({
-			// 			title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
-			// 			icon: 'none',
-			// 			duration: 3000
-			// 		});
-			// 	} else {
-			// 		uni.navigateTo({
-			// 			url: '/pages_content/provinces/provinces?state_id=' + 
-			// 			obj.state_id+"&city_id="+obj.city_id+"&name="+obj.name+"&image="+obj.image
-			// 		});
-			// 	}
-			// },
 			toProvinces(e) {
 				uni.navigateTo({
 					url: '/pages_content/provinces/provinces?state_id=' + 
@@ -463,6 +327,16 @@
 				uni.navigateTo({
 					url: '/pages_search/search/search'
 				});
+			},
+			calcCardHeight(){
+				const query = uni.createSelectorQuery().in(this); 
+				query.select('.banner-box').boundingClientRect(data => {
+					if (!data){
+						this.calcCardHeight()
+						return
+					}
+					this.bannerPostion = data.height
+				}).exec(); 
 			},
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {
@@ -529,8 +403,6 @@
 </script>
 
 <style lang="scss" scoped>
-	
-
 	.nav-bar {
 		z-index: 999;
 		position: fixed;
@@ -553,119 +425,36 @@
 	}
 
 	/* #endif */
-	/* 导航栏轮播图 */
-	.page-section {
-		width: 100%;
+	.banner-box {
+		width: 750rpx;
 		height: 440rpx;
-		.page-section-spacing {
-			width: 100%;
-			height: 440rpx;
-			.bannerImg{
-				width: 100%;
-				height: 100%;
-			}
-		}
-	}
-	.swiper {
-		width: 100%;
-		height: 100%;
-		.swiperImg {
-			width: 100%;
-			height: 100%;
-		}
-	}
-	
-	.headerL{
-		display: flex;
-		align-items: center;
-		margin-left: 20px;
-		height: 76rpx;
-		// width: 260rpx;
-		.world{
-			.worldText{
-				width: 110rpx;
-				height: 48rpx;
-				font-size: 34rpx;
-				font-family: PingFangSC-Medium, PingFang SC;
-				font-weight: 500;
-				color: #FFFFFF;
-				line-height: 48rpx;
-			}
-			.worldLine{
-				width: 102rpx;
-				height: 4rpx;
-				background: #FFFFFF;
-				border-radius: 2rpx;
-			}
-		}
-		.nowCityName{
-			z-index: 100;
-			margin-left: 20rpx;
-			display: flex;
-			align-items: center;
-			height: 64rpx;
-			// width: 118rpx;
-			// overflow: hidden;
-			.nowCityNameText{
-				// width: 66rpx;
-				height: 40rpx;
-				font-size: 28rpx;
-				font-family: PingFangSC-Regular, PingFang SC;
-				font-weight: 400;
-				color: #FFFFFF;
-				line-height: 40rpx;
-				overflow: hidden;
-				text-overflow:ellipsis;
-				white-space: nowrap;
-			}
-			.downIcon{
-				width: 48rpx;
-				height: 48rpx;
-				line-height: 48rpx;
-				.downIconImg{
-					width: 100%;
-					height: 100%;
-				}
-			}
-		}
 	}
 	.input-view {
 		display: flex;
-		// flex-direction: row;
 		width: 486rpx;
 		height: 64rpx;
 		align-items: center;
 		background: rgba(248, 248, 248, 1);
 		border-radius: 36rpx;
-		// flex-wrap: nowrap;
-		// margin: 0 auto;
 		margin-left: -120rpx;
 		padding-left: 32rpx;
 		.input-uni-icon-Box{
-			// width: 28rpx;
-			// height: 28rpx;
 			line-height: 28rpx;
 			.input-uni-icon {
 				width: 28rpx;
 				height: 28rpx;
 			}
 		}
+		.nav-bar-input {
+			height: 64rpx;
+			line-height: 64rpx;
+			font-size: 28rpx;
+			color: #c9cad1;
+			padding-left: 16rpx;
+			font-size: 28rpx;
+		}
 	}
 	
-
-	.nav-bar-input {
-		height: 64rpx;
-		line-height: 64rpx;
-		font-size: 28rpx;
-		color: #c9cad1;
-		padding-left: 16rpx;
-		font-size: 28rpx;
-	}
-
-	.cus-sty {
-		background-color: #f8f8f8;
-	}
-
 	/* 热门景点 */
 	.hot {
 		display: flex;
@@ -782,7 +571,7 @@
 						align-items: center;
 						position: absolute;
 						top: 90rpx;
-						z-index: 1000;
+						z-index: 100;
 						left: 40rpx;
 						// left: 50%;
 						// transform: translate(-50%);
@@ -907,310 +696,6 @@
 		}
 	}
 	
-	.citysBox{
-		// display: flex;
-		// align-items: center;
-		.kite-classify-scroll{
-		    width: 100%;
-			overflow: hidden;
-		 	white-space: nowrap;
-			display: flex;
-			align-items: center;
-			.citysBoxLeft{
-				display: inline-block;
-				.cblt{
-					display: flex;
-					.cbltcBig{
-						width: 226rpx;
-						height: 226rpx;
-						border-radius: 48rpx;
-						margin-left: 28rpx;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						background-repeat: no-repeat;
-						background-size: cover;
-						background-position: center center;
-						position: relative;
-						image{
-							position: absolute;
-						}
-						.cbltcBigTextBox{
-							display: flex;
-							align-items: center;
-							height: 48rpx;
-							padding: 0 16rpx;
-							background: #FFFFFF;
-							border-radius: 8rpx;
-							opacity: 0.85;
-							display: flex;
-							align-items: center;
-							
-							.cbltcBigText{
-								font-size: 32rpx;
-								font-family: PingFangSC-Medium, PingFang SC;
-								font-weight: 500;
-								color: #303133;
-								opacity: 1;
-							}
-						}
-					}
-					.cbltcSmall{
-						width: 178rpx;
-						height: 178rpx;
-						border-radius: 48rpx;
-						margin-left: 12rpx;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						background-repeat: no-repeat;
-						background-size: cover;
-						background-position: center center;
-						position: relative;
-						image{
-							position: absolute;
-						}
-						.cbltcBigTextBox{
-							height: 48rpx;
-							padding: 0 16rpx;
-							background: #FFFFFF;
-							border-radius: 8rpx;
-							opacity: 0.85;
-							display: flex;
-							align-items: center;
-							
-							.cbltcSmallText{
-								font-size: 32rpx;
-								font-family: PingFangSC-Medium, PingFang SC;
-								font-weight: 500;
-								color: #303133;
-								opacity: 1;
-							}
-						}
-					}
-				}
-				.cblb{
-					display: flex;
-					align-items: center;
-					margin-left: 28rpx;
-					.cblbcBig{
-						width: 226rpx;
-						height: 226rpx;
-						border-radius: 48rpx;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						background-repeat: no-repeat;
-						background-size: cover;
-						background-position: center center;
-						position: relative;
-						image{
-							position: absolute;
-						}
-						.cbltcBigTextBox{
-							height: 48rpx;
-							padding: 0 16rpx;
-							background: #FFFFFF;
-							border-radius: 8rpx;
-							opacity: 0.85;
-							display: flex;
-							align-items: center;
-							
-							.cblbcBigText{
-								font-size: 32rpx;
-								font-family: PingFangSC-Medium, PingFang SC;
-								font-weight: 500;
-								color: #303133;
-								opacity: 1;
-							}
-						}
-					}
-					.cblbcSmall{
-						width: 178rpx;
-						height: 178rpx;
-						border-radius: 48rpx;
-						margin-right: 12rpx;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						background-repeat: no-repeat;
-						background-size: cover;
-						background-position: center center;
-						position: relative;
-						image{
-							position: absolute;
-						}
-						.cbltcBigTextBox{
-							height: 48rpx;
-							padding: 0 16rpx;
-							background: #FFFFFF;
-							border-radius: 8rpx;
-							opacity: 0.85;
-							display: flex;
-							align-items: center;
-							.cblbcSmallText{
-								font-size: 32rpx;
-								font-family: PingFangSC-Medium, PingFang SC;
-								font-weight: 500;
-								color: #303133;
-								opacity: 1;
-							}
-						}
-					}
-				}
-			}
-			.citysBoxRight{
-				display: inline-block;
-				margin-right: 28rpx;
-				.cblt{
-					display: flex;
-					.cbltcBig{
-						width: 226rpx;
-						height: 226rpx;
-						border-radius: 48rpx;
-						margin-left: 12rpx;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						background-repeat: no-repeat;
-						background-size: cover;
-						background-position: center center;
-						position: relative;
-						image{
-							position: absolute;
-						}
-						.cbltcBigTextBox{
-							height: 48rpx;
-							padding: 0 16rpx;
-							background: #FFFFFF;
-							border-radius: 8rpx;
-							opacity: 0.85;
-							display: flex;
-							align-items: center;
-							.cbltcBigText{
-								font-size: 32rpx;
-								font-family: PingFangSC-Medium, PingFang SC;
-								font-weight: 500;
-								color: #303133;
-							}
-						}
-					}
-					.cbltcSmall{
-						width: 178rpx;
-						height: 178rpx;
-						border-radius: 48rpx;
-						margin-left: 12rpx;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						background-repeat: no-repeat;
-						background-size: cover;
-						background-position: center center;
-						position: relative;
-						image{
-							position: absolute;
-						}
-						.cbltcBigTextBox{
-							height: 48rpx;
-							padding: 0 16rpx;
-							background: #FFFFFF;
-							border-radius: 8rpx;
-							opacity: 0.85;
-							display: flex;
-							align-items: center;
-							
-							.cbltcSmallText{
-								font-size: 32rpx;
-								font-family: PingFangSC-Medium, PingFang SC;
-								font-weight: 500;
-								color: #303133;
-								z-index: 1;
-							}
-						}
-						
-					}
-				}
-				.cblb{
-					display: flex;
-					align-items: center;
-					margin-left: 12rpx;
-					.cblbcBig{
-						width: 226rpx;
-						height: 226rpx;
-						border-radius: 48rpx;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						background-repeat: no-repeat;
-						background-size: cover;
-						background-position: center center;
-						position: relative;
-						image{
-							position: absolute;
-						}
-						.cbltcBigTextBox{
-							height: 48rpx;
-							padding: 0 16rpx;
-							background: #FFFFFF;
-							border-radius: 8rpx;
-							opacity: 0.85;
-							display: flex;
-							align-items: center;
-							
-							.cblbcBigText{
-								font-size: 32rpx;
-								font-family: PingFangSC-Medium, PingFang SC;
-								font-weight: 500;
-								color: #303133;
-							}
-						}
-						
-					}
-					.cblbcSmall{
-						width: 178rpx;
-						height: 178rpx;
-						border-radius: 48rpx;
-						margin-right: 12rpx;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						background-repeat: no-repeat;
-						background-size: cover;
-						background-position: center center;
-						position: relative;
-						image{
-							position: absolute;
-						}
-						.cbltcBigTextBox{
-							height: 48rpx;
-							padding: 0 16rpx;
-							background: #FFFFFF;
-							border-radius: 8rpx;
-							opacity: 0.85;
-							display: flex;
-							align-items: center;
-							
-							.cblbcSmallText{
-								font-size: 32rpx;
-								font-family: PingFangSC-Medium, PingFang SC;
-								font-weight: 500;
-								color: #303133;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	// .hotCityImg {
-	// 	width: 100%;
-	// 	height: 100%;
-	// 	border-radius: 48rpx;
-	// }
-
 	/* 正在旅行 */
 	.touring {
 		// margin-top: 24rpx;
