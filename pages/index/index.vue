@@ -64,7 +64,7 @@
 			</view>
 		</mescroll-body>
 		<u-no-network @retry="downCallback()"></u-no-network>
-		<view class="bottom">
+		<!-- <view class="bottom">
 			<view class="bottom-left">
 				<view class="left-img">
 					<image src="@/static/images/sy.png" mode=""></image>
@@ -81,7 +81,7 @@
 					我的
 				</view>
 			</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 

@@ -50,7 +50,7 @@
 		<block v-if="hasLogin">
 			<articleList ref="mescrollItem" v-for="(tab,index) in tabList" :key="index" :tab='tab' :i="index" :index="tabIndex"></articleList>
 		</block>
-		<view class="bottom">
+		<!-- <view class="bottom">
 			<view class="bottom-left" @click="toindex">
 				<view class="left-img">
 					<image src="@/static/images/sy-none.png" mode=""></image>
@@ -67,7 +67,7 @@
 					我的
 				</view>
 			</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 
