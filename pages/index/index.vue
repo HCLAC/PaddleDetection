@@ -715,7 +715,7 @@ page {
 				font-family: PingFangSC-Medium, PingFang SC;
 				font-weight: 500;
 				color: #606266;
-				line-height: 42rpx;
+				// line-height: 42rpx;
 				margin: 54rpx 32rpx 0 0;
 				display: flex;
 				align-items: center;

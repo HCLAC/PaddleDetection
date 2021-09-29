@@ -1,5 +1,15 @@
 <template>
 	<view>
+		<view class="nav-bar">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="选择城市" :shadow="true">
+				<view slot="left" class="slotleft">
+					<!-- #ifndef  MP-BAIDU -->
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
+					<!-- #endif -->
+					<!-- <image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" /> -->
+				</view>
+			</uni-nav-bar>
+		</view>
 		<city-select
 			@cityClick="cityClick"
 			:formatName="formatName"
@@ -25,7 +35,7 @@ export default {
             //热门城市
             hotCity: [],
             //显示的城市数据
-            obtainCitys: []
+            obtainCitys: [],
         }
     },
     components: {
@@ -69,6 +79,18 @@ export default {
         // }, 5000)
     },
     methods: {
+		back(){
+			this.recordStayAndRead()
+			this.Utils.back()
+			
+		},
+		home(){
+			// this.recordStayAndRead()
+			// this.Utils.home()
+			uni.navigateTo({
+				url: '/pages/index/index'
+			});
+		},
 		//点击城市
         cityClick(item) {
 			if(item.city_id == 0){
@@ -190,5 +212,9 @@ export default {
 </script>
 
 <style lang="scss">
-
+.kong{
+	width: 100%;
+	height: 140rpx;
+	// background: pink;
+}
 </style>

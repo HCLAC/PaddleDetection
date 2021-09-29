@@ -860,7 +860,10 @@ export default {
 			background: rgba(248, 248, 248, 1);
 			border-radius: 8rpx;
 			margin-bottom: 20rpx;
-			padding: 28rpx 20rpx 0 20rpx;
+			padding: 22rpx 20rpx 20rpx;
+			display: flex;
+			justify-content: space-between;
+			flex-direction: column;
 			position: relative;
 			.topHot{
 				width: 96rpx;
@@ -879,12 +882,13 @@ export default {
 				-webkit-line-clamp:2;
 				-webkit-box-orient:vertical;
 				overflow: hidden;
+				text-align: justify;
 			}
 			.bottom{
 				// position: absolute;
 				// right: 24rpx;
 				// bottom: 12rpx;
-				margin-top: 6rpx;
+				// margin-top: 6rpx;
 				display: flex;
 				align-items: center;
 				justify-content: flex-end;

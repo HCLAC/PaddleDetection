@@ -283,7 +283,7 @@ view {
 	width: 100vw;
 	height: 100vh;
 	background: #f6f5fa;
-	padding-top: 110rpx;
+	// padding-top: 110rpx;
 	// 热门城市
 	.hot-title {
 		padding-left: vww(23);
@@ -370,7 +370,6 @@ view {
 		width: vww(20);
 		height: 100%;
 		text-align: center;
-
 		.city-indexs {
 			width: vww(20);
 			text-align: center;
