@@ -201,8 +201,19 @@
 			},
 			notLocation(){
 				if(this.dqdwText == '未定位'){
-					console.log(111)
-					this.loadData()
+					uni.getSetting({
+					   success: res =>{
+						  if(res.authSetting['scope.userLocation'] == false){
+							  uni.openSetting({
+							    success(res) {
+							      console.log(res.authSetting)
+							    }
+							  });
+						  }else{
+							  this.getAdress()
+						  }
+					   }
+					})
 				}
 			},
 			mescrollInit(mescroll) {
@@ -336,11 +347,11 @@
 					}
 				});
 			},
-			notLocation(){
-				if(this.dqdwText == '未定位'){
-					this.getAdress()
-				}
-			},
+			// notLocation(){
+			// 	if(this.dqdwText == '未定位'){
+			// 		this.getAdress()
+			// 	}
+			// },
 			// 点击更多
 			showCity() {
 				uni.navigateTo({
