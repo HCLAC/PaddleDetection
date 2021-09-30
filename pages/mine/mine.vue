@@ -74,7 +74,7 @@
 <script>
 import MescrollMoreMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-more.js';
 import meTabs from '@/common/me-tabs/me-tabs.vue';
-import articleList from '@/common/article-mescroll-item/mine-article-list.vue';
+import articleList from './mine-article-list.vue';
 import globalUrl from '@/global.js'
 
 export default {
