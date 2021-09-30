@@ -97,7 +97,7 @@
 		mixins: [MescrollMixin],
 		data() {
 			return {
-				cityName: '全国',
+				locationCity: {},
 				dqdwText: '当前位置',
 				downOption: {
 					auto:false
@@ -304,7 +304,7 @@
 				uni.getLocation({
 					type: 'wgs84',
 					success: res => {
-						this.cityName = res.city.substr(0, res.city.length - 1);
+						let cityName = res.city.substr(0, res.city.length - 1);
 						this.HTTP.request({
 							url: '/area/judge',
 							data: {
@@ -322,14 +322,18 @@
 								}
 								var result = res.data.data
 								result.image = this.Utils.addImageProcess(result.image, false, 40)
+								
+								this.locationCity = result
 								let cityId = res.data.data.city_id
 								if(!result.name || !result.name.length){
 									this.popularCities = false;
+									result.name = cityName
 								} else {
 									this.dqdwText = '当前位置';
 									this.popularCities = true
 									this.areaList.unshift(result)
 								}
+								this.locationCity = result
 							},
 						})
 					},
@@ -355,7 +359,8 @@
 			// 点击更多
 			showCity() {
 				uni.navigateTo({
-					url: '/pages_content/city-hot/city-hot?name='+this.cityName
+					url: '/pages_content/city-hot/city-hot?state_id=' + 
+					this.locationCity.state_id+"&city_id="+this.locationCity.city_id+"&name="+this.locationCity.name+"&image="+this.locationCity.image
 				});
 			},
 			toProvinces(e) {

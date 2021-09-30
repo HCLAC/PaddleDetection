@@ -47,7 +47,7 @@ export default {
 	// #ifndef MP-BAIDU
 	onLoad(query) {
 	// #endif
-		this.activeCity = query.name?{name:query.name}:{}
+		this.activeCity = query
 		this.whole()
 		this.hot()
     },
@@ -66,7 +66,7 @@ export default {
 		},
 		//点击城市
         cityClick(item) {
-			if(!item.city_id){
+			if(!item.city_id || item.city_id == '0'){
 				uni.showToast({
 					title: '抱歉，当前定位城市暂未开放，推荐您选择/搜索其他热门城市',
 					icon: 'none',
