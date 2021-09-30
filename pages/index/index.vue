@@ -335,7 +335,7 @@
 					},
 					// 未开启定位
 					fail: error => {
-						console.log(error)
+						console.log('定位', error)
 						if (error.errCode === 10005 || error.errCode === 10003) {
 							uni.showToast({
 								title: "请检查定位功能是否开启",
