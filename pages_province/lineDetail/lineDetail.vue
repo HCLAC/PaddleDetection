@@ -169,30 +169,12 @@
 						<view class="content">{{ lineContent.description }}</view>
 					</view>
 					
-					<view class="kong" v-if="Show == true" style="width: 100%;height: 570rpx;background: #FFFFFF;">
-					</view>
-					
 				</view>
 				<view class="bottom">
-					<!-- 分割线 -->
-					<!-- <view class="line"></view> -->
-					<!-- 登录 -->
-					<!-- <view class="contentBottom savepadding"> -->
-						<!-- <view class="like">
-							<image v-show="!lineContent.fav" class="likeBtn" src="/static/images/attheart.svg"></image>
-							<image v-show="lineContent.fav" class="likeBtn" src="/static/images/heart-actived.svg"></image>
-							<view class="likeNum">{{ lineContent.like_count }}</view>
-						</view>
-						<view class="fav" @click="lineFav(lineContent.uuid)">
-							<image v-show="!lineContent.fav" class="favBtn" src="/static/images/shouchang.svg"></image>
-							<image v-show="lineContent.fav" class="favBtn" src="/static/images/fav-actived.svg"></image>
-							<view class="favNum">{{ lineContent.fav_count }}</view>
-						</view> -->
 					<view class="bottom-text">
 						
 					</view>
 					<view class="like"  @click="clickLike">
-						<!-- <image class="likeBtn" :src="articleInfo.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image> -->
 						<view v-if="isAnimate" class="icon-animate"></view>
 						<view v-else :class="articleInfo.liked?'has-like':'icon-like'"></view>
 					</view>
@@ -206,8 +188,6 @@
 					<view class="share" v-if="serviceProvider =='baidu'"  @click="share">
 						<image src="/static/images/shareIcon.svg"></image>
 					</view>
-						<!-- <view class=""><view class="loginButton" v-if="!hasLogin" @click="login">登录</view></view> -->
-					<!-- </view> -->
 				</view>
 			</view>
 			<view class="phone" @click="tell" ><image src="/static/images/serverCall.svg"></image></view>
@@ -244,6 +224,7 @@ export default {
 			loading: true,
 			// 动效
 			isAnimate: false,
+			inTabChange:false,
 		};
 	},
 	mounted(){
@@ -271,6 +252,9 @@ export default {
 			}
 		} else {
 			this.isFixed = false;
+		}
+		if(this.inTabChange){
+			return
 		}
 		if(e.scrollTop >= this.planHeight+20){
 			this.tabIndex = 1
@@ -446,23 +430,22 @@ export default {
 		},
 		// 切换
 		tabChange(index){
-			if(index == 1){
-				this.Show = true
-			}else{
-				this.Show = false
-			}
+			
 			this.tabIndex = index
 			let scrollTop = this.planHeight * 2
 			// console.log(scrollTop,'scrollTop')
 			if (index == 0){
-				scrollTop = this.headerHeight
+				scrollTop = this.headerHeight + 3
+			}else{
+				this.inTabChange = true
 			}
-			this.$nextTick(function(){
-				uni.pageScrollTo({
-					scrollTop: scrollTop,
-					duration: 100,
-				})
+			uni.pageScrollTo({
+				scrollTop: scrollTop,
+				duration: 50,
 			})
+			setTimeout(() => {
+				this.inTabChange = false
+			}, 300);
 		},
 		change(e) {
 			this.current = e.detail.current;
