@@ -28,7 +28,6 @@
 					placeholder="为帮助审核人员更加快速处理，请补充违规内容出现位置等详细信息" 
 					placeholder-style="font-size:28rpx;line-height:42rpx"
 					maxlength="140"  
-					style="background:#f8f8f8;" 
 					v-model="reportInfo" 
 				>
 				</textarea>

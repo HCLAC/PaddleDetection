@@ -12,8 +12,6 @@
 			</uni-nav-bar>
 		</view>
 		<meTabs class="mineAnswerTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :lineWidth="170" :top="navbarHeight" :fixed="isFixed"></meTabs>
-		<!-- <view class="line" >
-		</view> -->
 		<answerList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :top="navbarHeight"></answerList>
 	</view>
 </template>
@@ -58,7 +56,6 @@ import answerList from './mine-answer-list.vue';
 .tabs-line{
 	border-radius: 12px !important;
 	height: 12rpx !important;
-	// margin-bottom:  !important;
 }
 .tab-item-info{
 	font-size: 26rpx !important;
@@ -66,12 +63,5 @@ import answerList from './mine-answer-list.vue';
 		font-size: 32rpx !important;
 	}
 }
-// .line{
-// 	position: relative;
-// 	width:100% ;
-// 	height: 20rpx;
-// 	background: #F8F8F8;
-// 	top:92rpx;
-// 	margin-bottom: 34rpx;
-// }
+
 </style>

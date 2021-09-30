@@ -17,8 +17,8 @@
 					<view class="reply" v-for="(item,index) in commentsList" :key="index">
 						<view class="replyTop">
 							<image class="userImg" lazy-load :src="item.avatar?item.avatar:'/static/images/userImg.svg'"></image>
-							<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
-								<view class="" style="display: flex;align-items: center;">
+							<view class="replyBox">
+								<view class="box-one">
 									<view class="userName">{{item.account_name}}</view>
 									<view class="replyTime">
 										{{item.create_at.slice(0,10)}}
@@ -197,31 +197,41 @@
 					border-radius: 50%;
 					margin-right: 16rpx;
 				}
-				.userName{
-					height: 28rpx;
-					font-size: 28rpx;
-					font-family: PingFangSC-Medium, PingFang SC;
-					font-weight: 500;
-					color: #303133;
-					line-height: 28rpx;
-				}
-				.replyTime{
-					margin-left: 16rpx;
-					height: 24rpx;
-					font-size: 24rpx;
-					font-family: PingFangSC-Regular, PingFang SC;
-					font-weight: 400;
-					color: #C9CAD1;
-					line-height: 24rpx;
-				}
-				.replyLike{
-					width: 44rpx;
-					height: 44rpx;
-				}
-				.report{
-					margin-left: 28rpx;
-					width: 44rpx;
-					height: 44rpx;
+				.replyBox{
+					display: flex;
+					align-items: center; 
+					justify-content: space-between;
+					width: 626rpx;
+					.box-one{
+						display: flex;
+						align-items: center;
+						.userName{
+							height: 28rpx;
+							font-size: 28rpx;
+							font-family: PingFangSC-Medium, PingFang SC;
+							font-weight: 500;
+							color: #303133;
+							line-height: 28rpx;
+						}
+						.replyTime{
+							margin-left: 16rpx;
+							height: 24rpx;
+							font-size: 24rpx;
+							font-family: PingFangSC-Regular, PingFang SC;
+							font-weight: 400;
+							color: #C9CAD1;
+							line-height: 24rpx;
+						}
+					}
+					.replyLike{
+						width: 44rpx;
+						height: 44rpx;
+					}
+					.report{
+						margin-left: 28rpx;
+						width: 44rpx;
+						height: 44rpx;
+					}
 				}
 			}
 			.replyBottom{

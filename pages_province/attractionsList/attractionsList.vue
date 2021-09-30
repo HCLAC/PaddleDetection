@@ -136,13 +136,10 @@
 		margin-bottom: 20rpx;
 	}
 	.uni-padding-wrap{
-		// width: 280px;
 		overflow: hidden;
 		margin-left: 28rpx;
 	}
-	.page-section{
-		// width: 280px;
-	}
+
 	.swiper{
 		height: 136rpx;
 	}
@@ -151,9 +148,6 @@
 		height: 136rpx;
 		border-radius: 8rpx;
 		margin-right: 28rpx;
-	}
-	.uni-padding-wrap{
-		// padding: 10px;
 	}
 	
 </style>

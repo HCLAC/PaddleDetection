@@ -9,8 +9,6 @@
 					<view class="name">
 						{{getTabName(tab)}}
 					</view>
-					<!-- class="count"
-					:class="['inv-h',Inv==0?'inv-h-se':'']" -->
 					<view :class="['count',value===i?'count1':'']" :key="i" >
 						{{tab.count?tab.count:''}}
 					</view>
@@ -159,7 +157,6 @@
 	.me-tabs{
 		position: relative;
 		background-color: #fff;
-		// border-bottom: 1rpx solid #eee;
 		box-sizing: border-box;
 		overflow-y: hidden;
 		color: #303133;
@@ -177,17 +174,13 @@
 			white-space: nowrap;
 			padding-bottom: 20rpx; // 撑开高度,再配合me-tabs的overflow-y: hidden,以达到隐藏滚动条的目的
 			box-sizing: border-box;
-			// padding-left:4%;
 			.tab-item-info{
 				z-index: 1;
 				position: relative;
-				// text-align: center;
 				box-sizing: border-box;
-				// justify-content: center;
 				display: flex;
 				align-items: center;
 				color:#909399;
-				// margin-left: 24rpx;
 				font-size: 28rpx;
 				&.active{
 					height: 36rpx;
@@ -195,20 +188,15 @@
 					font-family: PingFangSC-Medium, PingFang SC;
 					font-weight: 500;
 					color: #303133;
-					// color: red;
 					line-height: 36rpx;
 				}
 				
 				.name{
 					position: absolute;
-					// width: 70%;
-					// margin: 0 auto;
 					z-index: 100;
 					top:50%;
 					left:50%;
 					transform: translate(-50%,-50%);
-					// margin-left: 50%;
-					// transform: translate(-50%);
 				}
 				.count{
 					position: absolute;
@@ -225,7 +213,6 @@
 					font-family: PingFangSC-Regular, PingFang SC;
 					font-weight: 400;
 					color: #303133;
-					// margin-left: 8rpx;
 				}
 			}
 		}

@@ -14,12 +14,7 @@
 		<!-- 问题 -->
 		<view class="search-box">
 			<!-- mSearch组件 如果使用原样式，删除组件元素-->
-			<view class="" style="display: flex;align-items: center;">
-				<!-- <view class="searchTitle">
-					标题：
-				</view> -->
-				<!-- <u-input v-model="questionsValue"  :type="textarea" :clearable="false" placeholder="标题: 清晰描述你的疑问" 
-				placeholderStyle="font-size: 20px;color: #303133;font-family: PingFangSC-Semibold, PingFang SC;font-weight: 600;" /> -->
+			<view class="boxBig">
 				<u-search 
 					v-model="questionsValue"
 					bg-color="#ffffff" 
@@ -32,7 +27,6 @@
 					@change="inputChange"
 				></u-search>
 			</view>
-			
 			<view class="nextBtn" @click="toQuestions()">
 				下一步
 			</view>
@@ -41,17 +35,12 @@
 			<scroll-view class="keyword-list-box" scroll-y scroll-x="false" v-if="isShowKeywordList">
 				<block v-for="(row, index) in keywordList" :key="index">
 					<view class="keyword-entry" hover-class="keyword-entry-tap">
-						<!-- <view v-if="row.keyword.type" :class=" row.keyword.type == 'site' ? 'otherIcon' : 'otherIcon1'">
-							<image :src="row.keyword.type == 'site'?'/static/images/attIcon.svg':'/static/images/adressIcon.svg'" ></image>
-						</view> -->
-						<!-- <view class="liIcon" v-else></view> -->
 						<view class="keyword-text" @tap.stop="goQuestionDetail(row.keyword)">
 							<rich-text :nodes="row.htmlStr"></rich-text>
 							<view class="kTB">
 								{{row.keyword.city}}'· <text>{{row.keyword.read}}</text>人看过 · <text>{{row.keyword.reply_count}}</text>回答
 							</view>
 						</view>
-						<!-- <view class="otherText" v-if="row.keyword.type">{{ row.keyword.type == 'site' ? '景点' : '目的地' }}</view> -->
 					</view>
 				</block>
 			</scroll-view>
@@ -201,11 +190,11 @@
 	justify-content: space-between;
 	position: sticky;
 	top: 0;
+	.boxBig{
+		display: flex;align-items: center;
+	}
 }
-.search-box .mSearch-input-box {
-	// width: 100%;
-	// height: 72rpx;
-}
+
 .search-box .input-box {
 	width: 606rpx;
 	flex-shrink: 1;

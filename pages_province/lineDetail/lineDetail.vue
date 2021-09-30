@@ -74,8 +74,6 @@
 				<view class="container">
 					<view class="linePrice">
 						<view class="linePrice-number">
-							<!-- <text class="price" style="font-size:18rpx; ">
-								￥</text> -->
 							<view class="price-img">
 								<image src="../../static/images/money.svg"></image>
 							</view>
@@ -502,9 +500,7 @@ export default {
 .loadBox{
 	width: 100%;
 	height: auto;
-	// margin-top: 40rpx;
 	.loadBlock{
-		// padding: 0 28rpx;
 		.banner{
 			width: 100%;
 			height: 440rpx;
@@ -572,7 +568,6 @@ export default {
 				}
 			}
 			.lx-center{
-				// display: flex;
 				.lx-min{
 					width: 348rpx;
 					height: 20rpx;
@@ -622,7 +617,6 @@ export default {
 
 
 .imageCount {
-	// width: 90rpx;
 	height: 40rpx;
 	background-color: rgba(0, 0, 0, 0.6);
 	border-radius: 20rpx;
@@ -645,7 +639,6 @@ export default {
 	display: flex;
 	justify-content: center;
 	position: absolute;
-	/* left: 320rpx; */
 	background: #ffff;
 	bottom: -30rpx;
 	.dot {
@@ -711,7 +704,6 @@ export default {
 			justify-content: center;
 			align-items: center;
 			margin-left: 16rpx;
-			// margin-bottom: 6rpx;
 		}
 	}
 	.lineTitle {
@@ -734,15 +726,12 @@ export default {
 }
 
 .linePlan {
-	// margin: 0 auto;
 	margin-top: 20rpx;
 	margin-left: 20rpx;
 	position: absolute; 
 	padding: 10rpx 10rpx;
 	padding-bottom: 175rpx;
 	.planContent {
-		// padding: 20rpx 30rpx 30rpx 20rpx;
-		// padding:  0 32rpx 0 36rpx;
 		padding-right: 10rpx;
 		padding-left: 5rpx;
 	}
@@ -760,10 +749,6 @@ export default {
 	padding: 0 10rpx;
 	height: 40rpx;
 	background: #ffe512;
-	// display: flex;
-	// justify-content: center;
-	// align-items: center;
-	// text-align: center;
 	position: relative;
 	border-radius: 6rpx;
 	font-size: 24rpx;
@@ -813,8 +798,6 @@ export default {
 				font-weight: 400;
 				color: #909399;
 				line-height: 36rpx;
-				// text-align: justify;
-				// text-overflow: -o-ellipsis-lastline;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				display: -webkit-box;
@@ -870,7 +853,6 @@ export default {
 	}
 	
 	.planTitle {
-		// margin-top: 6rpx;
 		font-size: 30rpx;
 		font-weight: 500;
 		color: #303133;
@@ -899,19 +881,12 @@ export default {
 		font-size: 30rpx;
 		text-align: justify;
 		color: #303133;
-		// font-family: PingFangSC-Light, PingFang SC;
 		font-family: PingFangSC-Regular, PingFang SC;
 		font-weight: 300;
 		position: relative;
 		left: -14rpx;
 		line-height: 42rpx;
 	}
-	// .u-order-time {
-	// 	margin-top: 14rpx;
-	// 	position: relative;
-	// 	left: -14rpx;
-	// 	border-bottom: 0.5px solid #dddddd;
-	// }
 
 	.uTime {
 		display: flex;
@@ -941,9 +916,7 @@ export default {
 	position: fixed;
 	left: 0;
 	bottom: var( --window-bottom);
-	// bottom: 0;
 	z-index: 111;
-	// background-color: #ffffff;
 	padding-bottom: constant(safe-area-inset-bottom);
 	padding-bottom: env(safe-area-inset-bottom);
 	box-sizing: content-box;
@@ -958,14 +931,6 @@ export default {
 .bottom-text{
 	width: 372rpx;
 	height: 68rpx;
-	// background: #F8F8F8;
-	// border-radius: 34rpx;
-	// display: flex;
-	// align-items: center;
-	// font-size: 24rpx;
-	// font-family: PingFangSC-Regular, PingFang SC;
-	// font-weight: 400;
-	// color: #909399;
 	padding-left: 28rpx;
 	margin-left: 28rpx;
 	margin-right: 32rpx;
@@ -979,20 +944,6 @@ export default {
 		height: 100%;
 	}
 }
-// .like {
-// 	// transition: opacity 3s;
-// 	// animation:ClickLikeAni 1s infinite;
-// 	// transition: all 1s ease-in-out 0s;
-// 	display: flex;
-// 	align-items: center;
-// 	width: 52rpx;
-// 	height: 52rpx;
-// 	margin-right: 4rpx;
-// 	.likeBtn {
-// 		width: 100%;
-// 		height: 100%;
-// 	}
-// }
 .like {
 	display: flex;
 	align-items: center;
@@ -1045,7 +996,6 @@ export default {
 	.favBtn {
 		width: 100%;
 		height: 100%;
-		// margin-right: 8rpx;
 	}
 }
 .favNum {
@@ -1057,98 +1007,6 @@ export default {
 	color: #303133;
 	line-height: 24rpx;
 }
-
-// .bottom {
-// 	width: 100%;
-// 	height: 98rpx;
-// 	position: fixed;
-// 	left: 0;
-// 	bottom: var(--window-bottom);
-// 	z-index: 111;
-// 	background-color: #ffffff;
-// 	padding-bottom: 68rpx;
-// 	padding-bottom: constant(safe-area-inset-bottom);
-// 	padding-bottom: env(safe-area-inset-bottom);
-// 	box-sizing: content-box;
-// }
-// .line {
-// 	height: 0.5rpx;
-// 	background: rgba(221, 221, 221, 1);
-// 	// margin-top: 84rpx;
-// }
-
-// .contentBottom {
-// 	display: flex;
-// 	align-items: center;
-// 	// margin-top: 16rpx;
-// 	// padding:0 56rpx;
-// 	justify-content: space-between;
-// 	font-size: 24rpx;
-// 	font-family: PingFangSC-Regular, PingFang SC;
-// 	font-weight: 400;
-// 	color: rgba(48, 49, 51, 1);
-// 	line-height: 24rpx;
-// }
-
-// .loginButton {
-// 	width: 156rpx;
-// 	height: 68rpx;
-// 	background: rgba(255, 229, 18, 1);
-// 	border-radius: 20px;
-// 	font-size: 32rpx;
-// 	font-family: PingFangSC-Medium, PingFang SC;
-// 	font-weight: 600;
-// 	color: rgba(48, 49, 51, 1);
-// 	line-height: 68rpx;
-// 	border: none;
-// 	text-align: center;
-// 	margin-right: 28rpx;
-	
-// }
-
-// .like {
-// 	display: flex;
-// 	margin-left: 28rpx;
-// 	align-items: center;
-// }
-
-// .likeBtn {
-// 	width: 52rpx;
-// 	height: 52rpx;
-// 	margin-right: 10rpx;
-// }
-
-// .fav {
-// 	display: flex;
-// 	margin-left: 56rpx;
-// 	align-items: center;
-// }
-
-// .favBtn {
-// 	width: 52rpx;
-// 	height: 52rpx;
-// 	margin-right: 10rpx;
-// }
-
-// .share {
-// 	display: flex;
-// 	width: 88rpx;
-// 	height: 88rpx;
-// 	margin-left: 28rpx;
-// 	margin-top: 6rpx;
-// 	align-items: center;
-// 	justify-content: center;
-// }
-
-// .share image {
-// 	width: 52rpx;
-// 	height: 52rpx;
-// }
-// .savepadding {
-// 	padding-bottom: constant(safe-area-inset-bottom);
-// 	padding-bottom: env(safe-area-inset-bottom);
-// 	box-sizing: content-box;
-// }
 .serverInfo {
 	width: 694rpx;
 	min-height: 416rpx;
@@ -1159,7 +1017,6 @@ export default {
 	margin: 0 auto;
 	margin-left: -4rpx;
 	text-align: justify;
-	// margin-top: 80rpx;
 	.title {
 		font-size: 30rpx;
 		font-family: PingFangSC-Regular, PingFang SC;

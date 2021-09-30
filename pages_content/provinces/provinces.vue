@@ -574,10 +574,7 @@ export default {
 	position: relative;
 	border: none;
 }
-// .headImg {
-// 	width: 100%;
-// 	height: 100%;
-// }
+
 .mask {
 	width: 100%;
 	height: 244rpx;
@@ -693,18 +690,12 @@ export default {
 	border-radius: 16rpx 16rpx 0rpx 0rpx;
 	box-shadow: 0rpx 4rpx 24rpx 0rpx #EDEFF2;
 }
-// .attImg {
-// 	width: 100%;
-// 	height: 166rpx;
-// 	border-radius: 8px 8px 0px 0px;
-// }
+
 .attText {
-	// height: 28rpx;
 	font-size: 28rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #303133;
-	// line-height: 28rpx;
 	margin: 4rpx 0 2rpx 6rpx;
 	overflow: hidden;
 	white-space: nowrap;
@@ -735,7 +726,6 @@ export default {
 .trip {
 	margin-top: 44rpx;
 	margin-left: 28rpx;
-	// padding-bottom: 40rpx;
 	background: #FFFFFF;
 }
 .tripHeader {
@@ -745,7 +735,6 @@ export default {
 	
 }
 .tripTitle {
-	// width: 144rpx;
 	height: 36rpx;
 	font-size: 36rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
@@ -783,19 +772,12 @@ export default {
 	width: 338rpx;
 	margin-right: 18rpx;
 }
-// .tripImg {
-// 	width: 100%;
-// 	height: 180rpx;
-// 	border-radius: 8px;
-// }
 .tripText {
-	// height: 28rpx;
 	margin-top: 8rpx;
 	font-size: 28rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #303133;
-	// line-height: 28rpx;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -808,7 +790,6 @@ export default {
 .touring .tourtext {
 	width: 160rpx;
 	height: 104rpx;
-	// line-height: 104rpx;
 	font-size: 40rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;

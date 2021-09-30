@@ -563,7 +563,6 @@
 			position: relative;
 			width: 686rpx;
 			height: 296rpx;
-			// background: linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);
 			box-shadow: 0rpx 8rpx 28rpx 0rpx #EDEFF2;
 			border-radius: 16rpx;
 			overflow: hidden;
@@ -672,43 +671,12 @@
 						height: 68rpx;
 						border-radius: 50%;
 						overflow: hidden;
-						// border: 2rpx solid #FFE512;
-						// padding: 6rpx;
 						image{
 							border-radius: 50%;
 							width: 100%;
 							height: 100%;
 						}
 					}
-					// .avatar{
-					// 	position: relative;
-					// 	width: 80rpx;
-					// 	height: 80rpx;
-					// 	display: flex;
-					// 	align-items: center;
-					// 	justify-content: center;
-					// 	border-radius: 50%;
-					// 	&::before {
-					// 		content: "";
-					// 		position: absolute;
-					// 		top: 0;
-					// 		left: 0;
-					// 		right: 0;
-					// 		bottom: 0;
-					// 		border-radius: 50%;
-					// 		border: 2rpx solid gold;
-					// 		// transition: all .5s;
-					// 		// animation: clippath 3s infinite linear;
-					// 	}
-					// }
-					// .avatarImg{
-					// 	width: 68rpx;
-					// 	height: 68rpx;
-					// 	border-radius: 50%;
-					// 	position: absolute;
-					// 	top: 6rpx;
-					// 	left: 6rpx;
-					// }
 					@keyframes clippath {
 					    0%  {
 					        clip-path: inset(0 0 95% 0);
@@ -763,7 +731,6 @@
 			.answersCardBottom{
 					display:flex;
 					justify-content: flex-end;
-					// border-bottom: 2rpx solid #EDEFF2;
 					margin-bottom: 20rpx;
 					.acbr{
 						display: flex;
@@ -792,7 +759,6 @@
 								height: 44rpx;
 							}
 							text{
-								// width: 48rpx;
 								font-size: 20rpx;
 								font-family: PingFangSC-Regular, PingFang SC;
 								font-weight: 400;
@@ -1149,15 +1115,11 @@
 	.commentInput {
 		width: 100%;
 		height: 200rpx;
-		// padding-bottom: 90rpx;
 		position: fixed;
 		background: #ffffff;
 		bottom: 0;
 		display: flex;
-		// align-items: center;
 		z-index: 110;
-		
-		// padding-bottom: 110rpx;
 		.inputK {
 			height: 28rpx;
 			width: 558rpx;

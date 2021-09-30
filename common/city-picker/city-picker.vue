@@ -34,7 +34,6 @@
 							<!-- </view> -->
 							<view class="item-container">
 								<view class="thumb-box" v-for="(item1, index1) in item.city_list" :key="index1">
-									<!-- <image class="item-menu-image" :src="item2.icon"></image> -->
 									<view class="item-menu-name" @click="switchToOther(item1, item.name)">{{ item1.name }}</view>
 								</view>
 							</view>
@@ -214,15 +213,10 @@
 	.right-box {
 		background-color:#f8f8f8;
 	}
-	
-	.page-view {
-		// padding: 16rpx;
-	}
-	
+
 	.class-item {
 		margin-bottom: 30rpx;
 		background-color: #f8f8f8;
-		// padding: 16rpx;
 		border-radius: 8rpx;
 	}
 	
@@ -241,17 +235,10 @@
 		margin-left: 28rpx;
 	}
 	
-	.item-container {
-		// display: flex;
-		// flex-wrap: wrap;
-	}
+
 	
 	.thumb-box {
 		width: 33.333333%;
-		// display: flex;
-		// align-items: center;
-		// justify-content: center;
-		// flex-direction: column;
 		margin-top: 20rpx;
 	}
 	
@@ -260,7 +247,6 @@
 		height: 120rpx;
 	}
 	.nowcity{
-		// background: red;
 		height: 104rpx;
 		padding-left: 40rpx;
 		display: flex;

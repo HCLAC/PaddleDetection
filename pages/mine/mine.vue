@@ -7,7 +7,6 @@
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
 					<!-- #endif -->
-					<!-- <image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" /> -->
 				</view>
 			</uni-nav-bar>
 		</view>
@@ -27,23 +26,19 @@
 						<view class="fa" v-if="hasLogin">
 							<view class="fllow" @click="toConcern">
 								<text>关注</text>
-								<view style="margin-left: 8rpx;" class="fllowNum">{{ userInfo.fllowNum }}</view>
+								<view class="fllowNum">{{ userInfo.fllowNum }}</view>
 							</view>
 							<view class="answers" @click="toAnswers" >
 								<text>问答</text>
-								<view style="margin-left: 8rpx;" class="answersNum">{{ userInfo.answersNum }}</view>
+								<view class="answersNum">{{ userInfo.answersNum }}</view>
 							</view>
 						</view>
 						<view class="userMsg" v-else>
 							点击登录享受更多更多精彩信息
 						</view>
-						<!-- <view class="logout">退出登录</view> -->
 					</view>
 				</view>
 			</view>
-			<!-- 客服 -->
-			<!-- <view class="phone" @click="tell"><image class="phoneImg" src="/static/images/minephone.svg"></image></view> -->
-
 			<!-- 我的收藏 -->
 			<meTabs class="mineTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight" :lineWidth="70" :tab-width="80"></meTabs>
 		</view>
@@ -413,7 +408,8 @@ page {
 				line-height: 24rpx;
 				display: flex;
 				align-items: center;
-				text{
+				.fllowNum{
+					margin-left: 8rpx;
 				}
 			}
 			.answers{
@@ -426,6 +422,9 @@ page {
 				display: flex;
 				align-items: center;
 				margin-left: 20rpx;
+				.answersNum{
+					margin-left: 8rpx;
+				}
 			}
 		}
 		.logout {
@@ -454,13 +453,5 @@ page {
 		height: 124rpx;
 	}
 }
-// .top-kong{
-// 	height: 20rpx;
-// 	background: #ffffff;
-// 	border-radius: 24rpx 24rpx 0px 0px;
-// }
-// .mineBox{
-// 	height: 100rpx;
-// 	background: red;
-// }
+
 </style>

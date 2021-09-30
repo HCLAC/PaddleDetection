@@ -141,9 +141,7 @@ export default {
 </script>
 
 <style lang="scss">
-// .tab-item-info{
-// 	margin-left: 20rpx !important;
-// }
+
 .tabs-line{
 	margin-left: 20rpx !important;
 	
@@ -165,7 +163,6 @@ export default {
 		border-radius: 24rpx 24rpx 0px 0px;
 		overflow: hidden;
 		position: absolute;
-		// bottom: 0;
 		top: 420rpx;
 	}
 	.headImg {

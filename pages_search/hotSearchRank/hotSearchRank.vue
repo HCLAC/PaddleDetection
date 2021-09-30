@@ -202,12 +202,10 @@
 			left: 132rpx;
 		}
 	}
-	// 
 	.content{
 		width: 100%;
 		background: #FFFFFF;
 		border-radius: 12px 12px 0px 0px;
-		// z-index: 999999;
 		position: relative;
 		margin-top: -20rpx;
 		padding-left: 28rpx;

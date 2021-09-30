@@ -194,10 +194,8 @@
 			
 		}
 		.cradR{
-			// width: 610rpx;
 			width: 100%;
 			padding-left: 16rpx;
-			// margin-left: 16rpx;
 			.authorBox{
 				display: flex;
 				align-items: center;

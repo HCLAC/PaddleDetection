@@ -358,10 +358,8 @@
 	.loadBox{
 		width: 100%;
 		height: auto;
-		// margin: 0rpx 28rpx 0rpx;
 		.loadBlock{
 			.banner{
-				// margin-top: 40rpx;
 				width: 100%;
 				height: 420rpx;
 			}
@@ -666,7 +664,6 @@
 		align-items: center;
 		justify-content: center;
 		border-radius: 50%;
-
 		image {
 			width: 38rpx;
 			height: 38rpx;

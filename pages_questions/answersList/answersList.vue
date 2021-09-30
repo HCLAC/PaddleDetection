@@ -225,23 +225,6 @@
 		box-sizing: content-box;
 		.answersCardBox{
 			margin-top: 20rpx;
-			// .answersCardTop-one{
-			// 	.answersAuthor{
-			// 		.avatarImg-box{
-			// 			width: 74rpx !important;
-			// 			height: 74rpx !important;
-			// 			border-radius: 50%;
-			// 			overflow: hidden;
-			// 			border: 2rpx solid #FFE512;
-			// 			padding: 6rpx;
-			// 			image{
-			// 				border-radius: 50%;
-			// 				width: 100%;
-			// 				height: 100%;
-			// 			}
-			// 		}
-			// 	}
-			// }
 			.answersCardTop{
 				width: 100%;
 				display: flex;

@@ -55,7 +55,7 @@
 		</template>
 		<template v-slot:right="{ rightList }">
 			<view class="demo-warter" v-for="(item, index) in rightList" :key="index">
-				<view class="" v-if="item.type != 6"> 
+				<view class="" v-if="item.type != 6">
 					<view class="" @click="toArticleDetail(index, false)">
 						<view class="demo-top">
 							<view class="imgBox">
@@ -244,14 +244,9 @@
 		margin-right: 7rpx;
 		margin-left: 7rpx;
 		margin-bottom: 16rpx;
-		// padding-bottom: 16rpx;
-		/* position: relative; */
 		background-color: #ffffff;
 		border-radius: 16rpx 16rpx;
 		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
-		// display: inline-block;
-		// break-inside: avoid;
-		// box-sizing: border-box;
 	}
 
 	.imgBox {
@@ -261,34 +256,20 @@
 
 	}
 
-	// .imgBox4{
-	// 	position: relative;
-	// 	display: flex;
-	// 	align-items: flex-end;
-
-	// }
-	/* .demo-top {
-	position: relative;
-}
- */
 	image {
 		will-change: transform
 	}
 
 	.demoImage {
 		width: 100%;
-		// min-height: 300rpx;
 		max-height: 800rpx;
-		// box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 		border-radius: 16rpx 16rpx 0px 0px;
 
 	}
 
 	.demoImage4 {
 		width: 100%;
-		// min-height: 272rpx;
 		max-height: 800rpx;
-		// box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 		border-radius: 16rpx 16rpx 0px 0px;
 		
 	}
@@ -339,8 +320,6 @@
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
 		color: rgba(255, 255, 255, 1);
-		/* line-height:24px; */
-		/* margin-right: 16rpx; */
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -354,11 +333,8 @@
 
 	.demo-title {
 		width: 278rpx;
-		/* max-height: 70rpx; */
 		padding-right: 20rpx;
 		font-size: 28rpx;
-		// font-family: PingFangSC-Medium, PingFang SC;
-		// font-weight: 500;
 		color: rgba(48, 49, 51, 1);
 		margin-left: 8rpx;
 		line-height: 46rpx;
@@ -397,8 +373,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		// box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
-		// border-radius: 0px 0px 16rpx 16rpx;
 	}
 
 	.userMessage {
@@ -441,7 +415,6 @@
 	.countImg {
 		width: 32rpx;
 		height: 32rpx;
-		// margin-right: 8rpx;
 
 	}
 
@@ -456,10 +429,8 @@
 		font-weight: 400;
 		margin-left: 8rpx;
 		color: rgba(96, 98, 102, 1);
-		/* line-height:20rpx; */
 	}
 	.answersBox{
-		// background: linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);
 		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 		border-radius: 16rpx;
 		padding: 80rpx 32rpx 40rpx;
@@ -472,7 +443,6 @@
 			left: 32rpx;
 		}
 		.answersTitle{
-			// width: 276rpx;
 			font-size: 36rpx;
 			letter-spacing: 2rpx;
 			font-family: PingFangSC-Semibold, PingFang SC;
@@ -484,7 +454,6 @@
 			text-align: justify;
 		}
 		.answersNum{
-			// height: 34rpx;
 			font-size: 24rpx;
 			font-family: PingFangSC-Light, PingFang SC;
 			font-weight: 300;
@@ -496,7 +465,6 @@
 	
 	}
 	.answersBoxR{
-		// background: linear-gradient(270deg, #FFE512 0%, #FFB64D 100%);
 		box-shadow: 0px 4rpx 24rpx 0px #EDEFF2;
 		border-radius: 16rpx;
 		padding: 80rpx 32rpx 40rpx;
@@ -510,7 +478,6 @@
 			
 		}
 		.answersTitle{
-			// width: 276rpx;
 			font-size: 36rpx;
 			letter-spacing: 2rpx;
 			font-family: PingFangSC-Semibold, PingFang SC;
@@ -520,7 +487,6 @@
 			text-align: justify;
 		}
 		.answersNum{
-			// height: 34rpx;
 			font-size: 24rpx;
 			font-family: PingFangSC-Light, PingFang SC;
 			font-weight: 300;

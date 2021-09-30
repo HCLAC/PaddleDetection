@@ -347,11 +347,7 @@
 					}
 				});
 			},
-			// notLocation(){
-			// 	if(this.dqdwText == '未定位'){
-			// 		this.getAdress()
-			// 	}
-			// },
+
 			// 点击更多
 			showCity() {
 				uni.navigateTo({
@@ -602,25 +598,13 @@
 				margin-left: 4rpx;
 			}
 		}
-		// .wave{
-		// 	margin-top: -50rpx;
-		// 	width: 100%;
-		// 	height: 90rpx;
-		// 	z-index: 10;
-		// 	.waveImg{
-		// 		width: 100%;
-		// 		height: 100%;
-		// 	}
-		// }
+
 		.hot-bot {
-			/* display: flex; */
 			margin-top: 32rpx;
 			.hotAdress {
 				display: flex;
 				justify-content: space-between;
 				padding: 0 28rpx;
-				/* align-items: center; */
-				// margin-left: 32rpx;
 				.dqwz {
 					width: 216rpx;
 					height: 180rpx;
@@ -680,16 +664,12 @@
 						top: 90rpx;
 						z-index: 100;
 						left: 40rpx;
-						// left: 50%;
-						// transform: translate(-50%);
 						color: #ffffff;
 						padding: 8rpx 16rpx;
 						font-size: 16rpx;
 						font-family: PingFangSC-Medium, PingFang SC;
 						font-weight: 500;
 						color: #303133;
-						// line-height: 16rpx;
-						/* width: 140rpx; */
 						height: 40rpx;
 						background: #ffe512;
 						border-radius: 11px;
@@ -699,7 +679,6 @@
 							margin-right: 4rpx;
 						}
 						.dqwzText1{
-							// width: 60rpx;
 							font-size: 20rpx;
 							font-family: PingFangSC-Medium, PingFang SC;
 							font-weight: 500;
@@ -711,7 +690,6 @@
 					width: 216rpx;
 					height: 180rpx;
 					border-radius: 16rpx;
-					// margin-left: 24rpx;
 					position: relative;
 					.mask {
 						width: 216rpx;
@@ -767,8 +745,6 @@
 						font-family: PingFangSC-Medium, PingFang SC;
 						font-weight: 500;
 						color: #303133;
-						// line-height: 16rpx;
-						/* width: 140rpx; */
 						height: 40rpx;
 						background: #ffe512;
 						border-radius: 11px;
@@ -805,7 +781,6 @@
 	
 	/* 正在旅行 */
 	.touring {
-		// margin-top: 24rpx;
 		background: #FFFFFF;
 		.tourtext {
 			width: 160rpx;

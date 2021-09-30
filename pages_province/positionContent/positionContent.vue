@@ -360,10 +360,8 @@ export default {
 .loadBox{
 	width: 100%;
 	height: auto;
-	// margin: 0rpx 28rpx 0rpx;
 	.loadBlock{
 		.banner{
-			// margin-top: 40rpx;
 			width: 100%;
 			height: 420rpx;
 		}
@@ -464,14 +462,6 @@ export default {
 		}
 	}
 }
-// .swiper-item {
-// 	width: 100%;
-// 	height: 100%;
-// 	image {
-// 		height: 100%;
-// 		width: 100%;
-// 	}
-// }
 .swiper{
 	height: 100%;
 	width: 100%;
@@ -497,7 +487,6 @@ export default {
 	display: flex;
 	justify-content: center;
 	position: absolute;
-	/* left: 320rpx; */
 	background: #ffff;
 	bottom: -30rpx;
 	.dot {
@@ -535,7 +524,6 @@ export default {
 			font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 500;
 			color: rgba(48, 49, 51, 1);
-			// line-height: 48rpx;
 		}
 	}
 	.contentRank{
@@ -547,7 +535,6 @@ export default {
 		vertical-align: middle;
 		padding: 0 8rpx 0 12rpx;
 		.rankimgbox{
-			// margin-top: 12rpx;
 			margin-left: 4rpx;
 			height: 100%;
 			float: right;
@@ -608,15 +595,11 @@ export default {
 			margin-top: 4rpx;
 			padding: 2rpx 8rpx;
 			border-radius: 4rpx;
-			// background: rgba(113, 200, 23, 1);
 			font-size: 20rpx;
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			border: 2rpx solid rgba(144, 147, 153, 1);
 			color: rgba(144, 147, 153, 1);
-			
-			// color: #fff;
-			// height: 36rpx;
 			display: flex;
 			align-items: center;
 		}
@@ -688,7 +671,6 @@ export default {
 			line-height: 42rpx;
 			text-align:justify;
 			text-justify:inter-ideograph;
-			// position: relative;
 		}
 		.loseText {
 			font-size: 28rpx;
@@ -699,31 +681,26 @@ export default {
 			
 			display: -webkit-box;
 			-webkit-box-orient: vertical;
-			// text-overflow: ellipsis;
 			overflow: hidden;
 			-webkit-line-clamp: 2;
 			text-align:justify;
 			text-justify:inter-ideograph;
 		}
 		.btnBox {
-			// margin-right: 10rpx;
 			height: 42rpx;
 			position: absolute;
 			right: 5rpx;
-			// background-color: #FFFFFF;
 			bottom: 0;
 			display: flex;
 			justify-content: flex-end;
 			z-index: 111;
 			.mask{
 				width: 64rpx;
-				// background: linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
 				background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
 			}
 			text {
 				height: 100%;
 				padding-top: 8rpx;
-				// margin-top: 6rpx;
 				font-size: 24rpx;
 				font-family: PingFangSC-Medium, PingFang SC;
 				font-weight: 500;
@@ -786,7 +763,6 @@ export default {
 			}
 		}
 		.right {
-			// margin-top: 20rpx;
 			height: 96rpx;
 			width: 196rpx;
 			position: relative;
@@ -822,7 +798,6 @@ export default {
 		}
 	}
 	.phone {
-		// margin-top: 10rpx;
 		height: 36rpx;
 		display: flex;
 		image {
@@ -885,10 +860,6 @@ export default {
 				text-align: justify;
 			}
 			.bottom{
-				// position: absolute;
-				// right: 24rpx;
-				// bottom: 12rpx;
-				// margin-top: 6rpx;
 				display: flex;
 				align-items: center;
 				justify-content: flex-end;
