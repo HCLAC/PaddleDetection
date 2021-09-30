@@ -176,14 +176,14 @@
 					</view>
 					<view class="like"  @click="clickLike">
 						<view v-if="isAnimate" class="icon-animate"></view>
-						<view v-else :class="articleInfo.liked?'has-like':'icon-like'"></view>
+						<view v-else :class="lineContent.liked?'has-like':'icon-like'"></view>
 					</view>
-					<view class="likeNum">{{ articleInfo.like_count }}</view>
+					<view class="likeNum">{{ lineContent.like_count }}</view>
 					
 					<view class="fav" @click="clickFav">
-						<image class="favBtn" :src="articleInfo.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
+						<image class="favBtn" :src="lineContent.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
 					</view>
-					<view class="favNum">{{ articleInfo.fav_count }}</view>
+					<view class="favNum">{{ lineContent.fav_count }}</view>
 					
 					<view class="share" v-if="serviceProvider =='baidu'"  @click="share">
 						<image src="/static/images/shareIcon.svg"></image>
@@ -205,7 +205,7 @@ export default {
 	data() {
 		return {
 			id: 0,
-			articleInfo:null,
+			lineContent:null,
 			lineContent: null,
 			current: 0,
 			hasLogin: false,
@@ -229,7 +229,6 @@ export default {
 	},
 	mounted(){
 		this.navbarHeight = getApp().globalData.navbarHeight
-		this.calcHeight()
 	},
 	// #ifdef MP-BAIDU
 	onInit(query) {
@@ -274,9 +273,6 @@ export default {
 					uuid: this.id
 				},
 				success: res => {
-					this.articleInfo = res.data.data
-					console.log(this.articleInfo,'res')
-					
 					if (res.statusCode != 200 || res.data.code != 0){
 						uni.showToast({
 							title: res.data.msg,
@@ -302,6 +298,9 @@ export default {
 					that.lineContent = lineContent;
 					setTimeout(() => {
 						that.loading = false
+						setTimeout(() => {
+							this.calcHeight()
+						}, 300);
 					}, 300);
 					//#ifdef MP-BAIDU
 					swan.setPageInfo({
@@ -326,7 +325,7 @@ export default {
 			if (this.hasLikeClick) {
 				return;
 			}
-			if (this.articleInfo.liked == 0){
+			if (this.lineContent.liked == 0){
 				this.isAnimate = true
 				setTimeout(() => {
 				    this.isAnimate = false;
@@ -336,9 +335,9 @@ export default {
 			this.HTTP.request({
 				url: '/user/liked',
 				data: {
-					article_id: that.articleInfo.uuid,
-					liked: that.articleInfo.liked == 0 ? 1 : 0,
-					type: that.articleInfo.type
+					article_id: that.lineContent.uuid,
+					liked: that.lineContent.liked == 0 ? 1 : 0,
+					type: that.lineContent.type
 				},
 				method: 'POST',
 				success: res => {
@@ -349,8 +348,8 @@ export default {
 						});
 						return
 					}
-					that.articleInfo.liked = res.data.data.liked
-					that.articleInfo.like_count = res.data.data.like_count
+					that.lineContent.liked = res.data.data.liked
+					that.lineContent.like_count = res.data.data.like_count
 					
 					// if (that.trace_info && that.rn) {
 					// 	that.Opensearch.uploadData({
@@ -383,9 +382,9 @@ export default {
 			this.HTTP.request({
 				url: '/user/favorite',
 				data: {
-					article_id: that.articleInfo.uuid,
-					favorite: that.articleInfo.fav == 0 ? 1 : 0,
-					type: that.articleInfo.type
+					article_id: that.lineContent.uuid,
+					favorite: that.lineContent.fav == 0 ? 1 : 0,
+					type: that.lineContent.type
 				},
 				method: 'POST',
 				success: res => {
@@ -396,8 +395,8 @@ export default {
 						});
 						return
 					}
-					that.articleInfo.fav = res.data.data.fav
-					that.articleInfo.fav_count = res.data.data.fav_count
+					that.lineContent.fav = res.data.data.fav
+					that.lineContent.fav_count = res.data.data.fav_count
 					// if (that.trace_info && that.rn) {
 					// 	that.Opensearch.uploadData({
 					// 		trace_info: that.trace_info,

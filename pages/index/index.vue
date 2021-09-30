@@ -304,7 +304,7 @@
 				uni.getLocation({
 					type: 'wgs84',
 					success: res => {
-						this.cityName = res.city
+						this.cityName = res.city.substr(0, res.city.length - 1);
 						this.HTTP.request({
 							url: '/area/judge',
 							data: {
