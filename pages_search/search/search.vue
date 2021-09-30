@@ -533,6 +533,7 @@
 							} else{
 								item1.height = '220rpx'
 							}
+							item1.isAnimate = false
 							item1.avatar = that.Utils.addImageProcess(item1.avatar, false, 60)
 							item1.image = that.Utils.addImageProcess(item1.image, false, 40)
 						})

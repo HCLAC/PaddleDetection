@@ -1011,7 +1011,7 @@
 					this.isAnimate = true
 					setTimeout(() => {
 					    this.isAnimate = false;
-					}, 500);
+					}, 800);
 				}
 				this.hasLikeClick = true;
 				this.HTTP.request({

@@ -507,6 +507,7 @@ export default {
 						} else {
 							item1.height = '220rpx'
 						}
+						item1.isAnimate = false
 						item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
 						item1.image = this.Utils.addImageProcess(item1.image, false, 40)
 					})

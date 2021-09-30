@@ -1,9 +1,9 @@
 <template>
-	<u-waterfall v-model="list" add-time='100' ref="uWaterfall">
+	<u-waterfall v-model="list" add-time='100' idKey='article_id' ref="uWaterfall">
 		<template v-slot:left="{ leftList }">
 			<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
 				<view class="" v-if="item.type != 6">
-					<view class="" @click="toArticleDetail(index, true)" :id="index">
+					<view class="" @tap.stop="toArticleDetail(item) in leftList">
 						<view class="demo-top">
 							<view class="imgBox">
 								 <articleImage :class="item.type == 4 ? 'demoImage4' : 'demoImage'" border-radius="16rpx 16rpx 0 0" :height="item.height?item.height:'220rpx'" :src="item.image" :index="(index+1)*2-1" :mode="item.height?'scaleToFill':'widthFix'">
@@ -34,9 +34,11 @@
 							<image class="userHeard" lazy-load :src="item.avatar"></image>
 							<view class="userNikename">{{ item.author_name }}</view>
 						</view>
-						<view class="count" @click="clickLeftLike(item,index) in leftList ">
+						<view class="count" @tap.stop="updateLikeLeft(item, index) in leftList">
 							<view class="countImg">
-								<image class="likeImg" mode="aspectFit" :src="item.liked == 0?'/static/images/heart.svg':'/static/images/heart_actived.svg'"></image>
+								<!-- <image class="likeImg" mode="aspectFit" :src="item.liked == 0?'/static/images/heart.svg':'/static/images/heart_actived.svg'"></image> -->
+								<view v-if="item.isAnimate" class="icon-animate"></view>
+								<view v-else :class="item.liked?'has-like':'icon-like'"></view>
 							</view>
 							<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 						</view>
@@ -56,7 +58,7 @@
 		<template v-slot:right="{ rightList }">
 			<view class="demo-warter" v-for="(item, index) in rightList" :key="index">
 				<view class="" v-if="item.type != 6"> 
-					<view class="" @click="toArticleDetail(index, false)">
+					<view class="" @click="toArticleDetail(item) in rightList">
 						<view class="demo-top">
 							<view class="imgBox">
 								<articleImage :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :height="item.height?item.height:'auto'" :lazy-load="true" :src="item.image" :index="index*2" :mode="item.height?'scaleToFill':'widthFix'">
@@ -87,9 +89,11 @@
 							<image class="userHeard" lazy-load :src="item.avatar"></image>
 							<view class="userNikename">{{ item.author_name }}</view>
 						</view>
-						<view class="count" @click="clickRightLike(item,index) in rightList">
+						<view class="count" @click="updateLikeRight(item, index) in rightList">
 							<view class="countImg">								
-								<image class="likeImg" mode="aspectFit" :src="item.liked == 0?'/static/images/heart.svg':'/static/images/heart_actived.svg'"></image>
+								<!-- <image class="likeImg" mode="aspectFit" :src="item.liked == 0?'/static/images/heart.svg':'/static/images/heart_actived.svg'"></image> -->
+								<view v-if="item.isAnimate" class="icon-animate"></view>
+								<view v-else :class="item.liked?'has-like':'icon-like'"></view>
 							</view>
 							<view class="likeCount" v-if="item.like_count != 0">{{ item.like_count>10000?((item.like_count-(item.like_count%1000))/10000+'w'):item.like_count }}</view>
 						</view>
@@ -157,13 +161,7 @@
 				});
 			},
 			// 跳转文章详情
-			toArticleDetail(index, left=true) {
-				let obj = null
-				if (left){
-					obj = this.$refs.uWaterfall.leftList[index]
-				} else {
-					obj = this.$refs.uWaterfall.rightList[index]
-				}
+			toArticleDetail(obj) {
 				let url = '/pages_content/article/article?article_id=' + obj.article_id
 				if (obj.trace_info && obj.rn) {
 					url += '&trace_info='+obj.trace_info+"&rn="+obj.rn
@@ -179,11 +177,11 @@
 				});
 			},
 			// 点赞 
-			clickLeftLike(e, index) {
-				this.updateLike(e,index,true) 
+			updateLikeLeft(e, index) {
+				this.updateLike(e, index, true) 
 			}, 
-			clickRightLike(e, index) {
-				this.updateLike(e,index,false) 
+			updateLikeRight(e, index) {
+				this.updateLike(e, index, false) 
 			},
 			updateLike(obj, index, left){
 				if (!this.Utils.isLogin()){
@@ -192,15 +190,28 @@
 				if (this.hasLikeClick) {
 					return;
 				}
-				this.hasLikeClick = true;
-				let article = obj.article_id;
-				let liked = obj.liked;
+				
 				var that = this;
+				if (obj.liked === 0){
+					if (left){
+						that.$refs.uWaterfall.leftList[index].isAnimate = true
+					} else {
+						that.$refs.uWaterfall.rightList[index].isAnimate = true
+					}
+					setTimeout(() => {
+						if (left){
+							that.$refs.uWaterfall.leftList[index].isAnimate = false
+						} else {
+							that.$refs.uWaterfall.rightList[index].isAnimate = false
+						}
+					}, 800);
+				}
+				this.hasLikeClick = true;
 				this.HTTP.request({
 					url: '/user/liked',
 					data: {
-						article_id: article,
-						liked: liked == 0 ? 1 : 0
+						article_id: obj.article_id,
+						liked: obj.liked == 0 ? 1 : 0
 					},
 					method: 'POST',
 					success: res => {
@@ -211,10 +222,11 @@
 							});
 							return
 						}
+						
 						if (left){
 							that.$refs.uWaterfall.leftList[index].liked = res.data.data.liked
 							that.$refs.uWaterfall.leftList[index].like_count = res.data.data.like_count
-						}else{
+						} else {
 							that.$refs.uWaterfall.rightList[index].liked = res.data.data.liked
 							that.$refs.uWaterfall.rightList[index].like_count = res.data.data.like_count
 						}
@@ -442,7 +454,31 @@
 		width: 32rpx;
 		height: 32rpx;
 		// margin-right: 8rpx;
-
+		.has-like {
+			width: 100%;
+			height: 100%;
+		    display: inline-block;
+		    background-size: 100%;
+		    background-origin: center center;
+		    background-image: url(../../static/images/attHeartActive.svg);
+		}
+		.icon-like {
+			width: 100%;
+			height: 100%;
+		    display: inline-block;
+		    background-image: url(../../static/images/attheart.svg);
+		    background-size: 100%;
+		    background-origin: center center;
+		}
+		
+		.icon-animate {
+			width: 100%;
+			height: 100%;
+			display: block;
+		    background-image: url(../../static/icon-heart.gif);
+		    background-size: 100%;
+		    background-origin: center center;
+		}
 	}
 
 	.likeImg {
