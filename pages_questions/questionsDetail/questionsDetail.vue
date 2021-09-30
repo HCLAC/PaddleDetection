@@ -139,7 +139,7 @@
 		</view>
 		<!-- 我要提问按钮 -->
 		<view class="answersFollow" >
-			<view class="addBox" @click="commentInput">
+			<view class="addBox" @click="sendAsk">
 				<view class="midBox">
 					<image src="/static/images/addQ.svg"></image>
 					<text>添加问答</text>
@@ -358,13 +358,35 @@
 				});
 			},
 			// 提问按钮
-			commentInput() {
+			sendAsk() {
 				if (!this.Utils.isLogin()){
 					return
 				}
+				
+				// #ifdef MP-BAIDU
+				swan.openReplyEditor({
+					sendText: '发送',
+					contentPlaceholder: '快来写下你的回答吧',
+				    success: res => {
+                        if (res.status === 'reply' || res.status === 'replay') {
+							this.contentText = res.content
+							this.pubComment()
+						}
+						// 主动关闭评论发布器
+						swan.closeReplyEditor();
+				    },
+				    fail: err => {
+				        console.log('fail', err)
+				    }
+				});
+				return
+				// #endif
 				this.textareafocus = true
 			},
 			inputBlur() {
+				// #ifdef MP-BAIDU
+				return
+				// #endif
 				this.textareafocus = false
 			},
 			pubComment() {
@@ -386,7 +408,6 @@
 					},
 					method: 'POST',
 					success: res => {
-						console.log(this.contentText, res)
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
 								title: res.data.msg,
@@ -414,7 +435,6 @@
 				if (!this.Utils.isLogin()){
 					return
 				}
-				// console.log(item, index)
 				var that = this;
 				let msg = this.detail.is_follow ? '确认取消关注?' : '确认关注?'
 				let status = this.detail.is_follow ? 0 : 1

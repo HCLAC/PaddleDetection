@@ -2,13 +2,14 @@
 	<view v-show="i === index"  style="padding: 24rpx 28rpx;">
 		<!-- margin-top: 70%; -->
 		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback" :top="top" :bottom="bom" @up="upCallback" :down="downOption" :up="upOption"  >
-			<view v-for="(item, index) in list" :key="index" @click="onPageJump" :id="item.article_id">
+			<view v-for="(item, index) in list" :key="index" @click="onPageJump(item)" :id="item.article_id">
 				<view class="contentItem">
 					<view class="left">
 						<u-image width="192rpx" height="232rpx" border-radius="16rpx" :src="item.main_image" mode="aspectFill" :iconSize="44"></u-image>
 						<view class="imgTip">
 							<view v-if="item.type == 1">游记</view>
 							<view v-else-if="item.type == 2">攻略</view>
+							<view v-else-if="item.type == 3">线路</view>
 							<view v-else-if="item.type == 4">视频</view>
 							<view v-else-if="item.type == 5">推广</view>
 							<view v-else>文章</view>
@@ -123,10 +124,17 @@
 			// },
 			// 跳转文章详情
 			onPageJump(e) {
-				let id = e.currentTarget.id;
-				uni.navigateTo({
-					url: '/pages_content/article/article?article_id=' + id
-				});
+				let id = e.article_id;
+				if(e.type != 3){
+					uni.navigateTo({
+						url: '/pages_content/article/article?article_id=' + id
+					});
+				}else{
+					uni.navigateTo({
+						url: '/pages_province/lineDetail/lineDetail?id=' + id
+					});
+				}
+				
 			},
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {

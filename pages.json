@@ -153,14 +153,23 @@
 					"style": {
 						"navigationStyle": "custom"
 					}
+				},
+				{
+				    "path" : "city-hot/city-hot",
+				    "style" :                                                                                    
+					{
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false
+					}
+				
 				}
-				// ,{
+				// {
 				// 	"path": "city/city",
 				// 	"style": {
 				// 		"navigationStyle": "custom"
 				// 	}
 				// }
-			]
+            ]
 		},
 		{
 			"root":"pages_province",
@@ -317,7 +326,8 @@
 		"navigationBarBackgroundColor": "#F7F7F7",
 		"navigationBarTextStyle": "black",
 		"backgroundColorTop": "#FFFFFF",
-		"navigationStyle":"custom"
+		"navigationStyle":"custom",
+		"onReachBottomDistance": "400"
 	},
 	"tabBar": {
 		"list": [{

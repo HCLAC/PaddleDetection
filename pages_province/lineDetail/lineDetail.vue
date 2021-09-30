@@ -1,5 +1,5 @@
 <template>
-	<view >
+	<view>
 		<view class="nav-bar" >
 			<uni-nav-bar :fixed="true" :status-bar="true" style="z-index: 99999 !important;">
 				<view slot="left" class="slotleft">
@@ -10,88 +10,97 @@
 				</view>
 			</uni-nav-bar>
 		</view>
-		<view class="lineHeader">
-			<view class="lineImageWrap" v-if="lineContent" v-show="lineContent">
-				<!-- 内容详情轮播图 -->
-				<view class="uni-padding-wrap">
-					<view class="page-section" >
-						<view class="page-section-spacing" >
-							<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false" circular='true'>
-								<swiper-item v-for="(item, index) in lineContent.images" :key="index">
-									<u-image width="100%" height="440rpx" mode="scaleToFill" :src="item"></u-image>
-								</swiper-item>
-							</swiper>
-							<view class="imageCount">{{ current + 1 }}/{{ lineContent.images.length }}</view>
-							<view class="dots">
-								<block v-for="(item, index) in lineContent.images" :key="index"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+		<!-- 骨架屏 -->
+		<view v-if="loading" class="loadBox">
+			<view class="content u-skeleton">
+				<view class="loadBlock">
+					<view class="banner u-skeleton-rect"></view>
+					<view class="kong u-skeleton-circle"></view>
+					<view class="box-btm">
+						<view class="kong-big u-skeleton-rect"></view>
+						<view class="title u-skeleton-rect"></view>
+						<view class="title u-skeleton-rect"></view>
+						<view class="title u-skeleton-rect"></view>
+						<view class="title-min u-skeleton-rect"></view>
+						<view class="xxk-box">
+							<view class="xxk u-skeleton-rect"></view>
+							<view class="xxk u-skeleton-rect"></view>
+						</view>
+						<view class="day-box">
+							<view class="day-min u-skeleton-circle"></view>
+							<view class="day u-skeleton-rect"></view>
+						</view>
+						<view class="title u-skeleton-rect"></view>
+						<view class="title-min u-skeleton-rect"></view>
+						<view class="lx-box" v-for="(item, index) in loadEmpty">
+							<view class="lx-top">
+								<view class="lx-min u-skeleton-circle"></view>
+								<view class="lx u-skeleton-rect"></view>
+							</view>
+							<view class="lx-center">
+								<view class="lx-min u-skeleton-rect"></view>
+								<view class="lx u-skeleton-rect"></view>
+								<view class="lx u-skeleton-rect"></view>
+								<view class="lx-min u-skeleton-rect"></view>
+							</view>
+							<view class="lx-btm u-skeleton-rect"></view>
+						</view>
+					</view>
+				</view>
+			</view>
+			<!--引用组件-->
+			<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
+		</view>
+		<view v-else>
+			<view class="lineHeader">
+				<view class="lineImageWrap" v-if="lineContent" v-show="lineContent">
+					<!-- 内容详情轮播图 -->
+					<view class="uni-padding-wrap">
+						<view class="page-section" >
+							<view class="page-section-spacing" >
+								<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false" circular='true'>
+									<swiper-item v-for="(item, index) in lineContent.images" :key="index">
+										<u-image width="100%" height="440rpx" mode="scaleToFill" :src="item"></u-image>
+									</swiper-item>
+								</swiper>
+								<view class="imageCount">{{ current + 1 }}/{{ lineContent.images.length }}</view>
+								<view class="dots">
+									<block v-for="(item, index) in lineContent.images" :key="index"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+								</view>
 							</view>
 						</view>
 					</view>
 				</view>
-			</view>
-			<view class="container">
-				<view class="linePrice">
-					<view class="linePrice-number">
-						<!-- <text class="price" style="font-size:18rpx; ">
-							￥</text> -->
-						<view class="price-img">
-							<image src="../../static/images/money.svg"></image>
+				<view class="container">
+					<view class="linePrice">
+						<view class="linePrice-number">
+							<!-- <text class="price" style="font-size:18rpx; ">
+								￥</text> -->
+							<view class="price-img">
+								<image src="../../static/images/money.svg"></image>
+							</view>
+							<text class="price">{{ lineContent?lineContent.money:0 }}</text>
+							<text>起</text>
 						</view>
-						<text class="price">{{ lineContent?lineContent.money:0 }}</text>
-						<text>起</text>
+						<view class="linePrice-text">
+							参考价格
+						</view>
 					</view>
-					<view class="linePrice-text">
-						参考价格
-					</view>
+					<view class="lineTitle">{{ lineContent?lineContent.title:'' }}</view>
 				</view>
-				<view class="lineTitle">{{ lineContent?lineContent.title:'' }}</view>
+				<view class="lineDriver"></view>
 			</view>
-			<view class="lineDriver"></view>
-		</view>
-		<view class="lineTabs">
-			<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight"  :line-width="130" :tab-width="105"></meTabs>
-		</view>
-		<view class="linePlan">
-			<view class="planContent" v-if='lineContent'>
-				<u-time-line >
-					<view v-for="(item, index) in lineContent.content" :key="index">
-						<u-time-line-item nodeTop="2">
-							<!-- 此处自定义了左边内容，用一个图标替代 -->
-							<template v-slot:node>
-								<view class="u-node" style="background: #BFC2CC ; border-radius: 50%;">
-									<!-- 此处为uView的icon组件 -->
-									<view style="width: 10rpx; height: 10rpx;"></view>
-								</view>
-							</template>
-							<template v-slot:content>
-								<view>
-									<view class="u-order-title">
-										<text class="tui-chat-right">
-											<text class="tui-chatbox tui-chatbox-right">第{{ item.day }}天</text>
-										</text>
-										<text class="planTitle">{{ item.title }}</text>
-									</view>
-									<view class="u-order-desc1">{{ item.description }}</view>
-									<!-- <view class="u-order-time"></view> -->
-								</view>
-							</template>
-						</u-time-line-item>
-						<view v-for="(eve, eveIndex) in item.event" :key="eveIndex">
-							<u-time-line-item>
-								<template v-slot:node>
-									<view class="uTime">
-										<image class="timeIcon" src="/static/images/timeClock.svg"></image>
-										<text>{{ eve.time == '上午' ? '上午' : '下午' }}</text>
-									</view>
-								</template>
-								<template v-slot:content>
-									<view style="height: 40rpx;"></view>
-								</template>
-							</u-time-line-item>
+			<view class="lineTabs">
+				<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight"  :line-width="130" :tab-width="105"></meTabs>
+			</view>
+			<view class="linePlan">
+				<view class="planContent" v-if='lineContent'>
+					<u-time-line >
+						<view v-for="(item, index) in lineContent.content" :key="index">
 							<u-time-line-item nodeTop="2">
 								<!-- 此处自定义了左边内容，用一个图标替代 -->
 								<template v-slot:node>
-									<view class="u-node" style="background: #B7EB8F; border-radius: 50%;">
+									<view class="u-node" style="background: #BFC2CC ; border-radius: 50%;">
 										<!-- 此处为uView的icon组件 -->
 										<view style="width: 10rpx; height: 10rpx;"></view>
 									</view>
@@ -99,59 +108,91 @@
 								<template v-slot:content>
 									<view>
 										<view class="u-order-title">
-											<text class="stitle">{{ eve.title }}</text>
+											<text class="tui-chat-right">
+												<text class="tui-chatbox tui-chatbox-right">第{{ item.day }}天</text>
+											</text>
+											<text class="planTitle">{{ item.title }}</text>
 										</view>
-										<view class="u-order-desc">{{ eve.description }}</view>
-										<view class="position" v-for="(pos, posIndex) in eve.position" :key="posIndex" @click="toPosition(pos)">
-											<view class="left">
-												<u-image width="216rpx" height="164rpx" border-radius="12rpx" :src="pos.cover_url" :iconSize="66"></u-image>
-												<view class="imgTag">景点</view>
-											</view>
-											<view class="right">
-												<view class="title">{{ pos.name }}</view>
-												<view class="rateBox">
-													<uni-rate :readonly="true" :value="pos.rate" :size='14' margin="4" :allowHalf="true"/>
-													<view class="rate" >{{ pos.rate }} 星</view>
-												</view>
-												<text class="content">{{ pos.description }}</text>
-											</view>
-										</view>
+										<view class="u-order-desc1">{{ item.description }}</view>
+										<!-- <view class="u-order-time"></view> -->
 									</view>
 								</template>
 							</u-time-line-item>
+							<view v-for="(eve, eveIndex) in item.event" :key="eveIndex">
+								<u-time-line-item>
+									<template v-slot:node>
+										<view class="uTime">
+											<image class="timeIcon" src="/static/images/timeClock.svg"></image>
+											<text>{{ eve.time == '上午' ? '上午' : '下午' }}</text>
+										</view>
+									</template>
+									<template v-slot:content>
+										<view style="height: 40rpx;"></view>
+									</template>
+								</u-time-line-item>
+								<u-time-line-item nodeTop="2">
+									<!-- 此处自定义了左边内容，用一个图标替代 -->
+									<template v-slot:node>
+										<view class="u-node" style="background: #B7EB8F; border-radius: 50%;">
+											<!-- 此处为uView的icon组件 -->
+											<view style="width: 10rpx; height: 10rpx;"></view>
+										</view>
+									</template>
+									<template v-slot:content>
+										<view>
+											<view class="u-order-title">
+												<text class="stitle">{{ eve.title }}</text>
+											</view>
+											<view class="u-order-desc">{{ eve.description }}</view>
+											<view class="position" v-for="(pos, posIndex) in eve.position" :key="posIndex" @click="toPosition(pos)">
+												<view class="left">
+													<u-image width="216rpx" height="164rpx" border-radius="12rpx" :src="pos.cover_url" :iconSize="66"></u-image>
+													<view class="imgTag">景点</view>
+												</view>
+												<view class="right">
+													<view class="title">{{ pos.name }}</view>
+													<view class="rateBox">
+														<uni-rate :readonly="true" :value="pos.rate" :size='14' margin="4" :allowHalf="true"/>
+														<view class="rate" >{{ pos.rate }} 星</view>
+													</view>
+													<text class="content">{{ pos.description }}</text>
+												</view>
+											</view>
+										</view>
+									</template>
+								</u-time-line-item>
+							</view>
 						</view>
+					</u-time-line>
+					<view class="serverInfo" v-if="lineContent.content">
+						<view class="title">服务说明</view>
+						<view class="content">{{ lineContent.description }}</view>
 					</view>
-				</u-time-line>
-				<view class="serverInfo" v-if="lineContent.content">
-					<view class="title">服务说明</view>
-					<view class="content">{{ lineContent.description }}</view>
+					
 				</view>
-				
-				<view class="kong" v-if="Show == true" style="width: 100%;height: 570rpx;background: #FFFFFF;">
-				</view>
-				
-			</view>
-			<view class="bottom">
-				<!-- 分割线 -->
-				<view class="line"></view>
-				<!-- 登录 -->
-				<view class="contentBottom savepadding">
-					<!-- <view class="like">
-						<image v-show="!lineContent.fav" class="likeBtn" src="/static/images/attheart.svg"></image>
-						<image v-show="lineContent.fav" class="likeBtn" src="/static/images/heart-actived.svg"></image>
-						<view class="likeNum">{{ lineContent.like_count }}</view>
+				<view class="bottom">
+					<view class="bottom-text">
+						
 					</view>
-					<view class="fav" @click="lineFav(lineContent.uuid)">
-						<image v-show="!lineContent.fav" class="favBtn" src="/static/images/shouchang.svg"></image>
-						<image v-show="lineContent.fav" class="favBtn" src="/static/images/fav-actived.svg"></image>
-						<view class="favNum">{{ lineContent.fav_count }}</view>
-					</view> -->
-					<view><view class="share" v-if="serviceProvider =='baidu'"  @click="share"><image src="/static/images/shareIcon.svg"></image></view></view>
-					<!-- <view class=""><view class="loginButton" v-if="!hasLogin" @click="login">登录</view></view> -->
+					<view class="like"  @click="clickLike">
+						<view v-if="isAnimate" class="icon-animate"></view>
+						<view v-else :class="lineContent.liked?'has-like':'icon-like'"></view>
+					</view>
+					<view class="likeNum">{{ lineContent.like_count }}</view>
+					
+					<view class="fav" @click="clickFav">
+						<image class="favBtn" :src="lineContent.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
+					</view>
+					<view class="favNum">{{ lineContent.fav_count }}</view>
+					
+					<view class="share" v-if="serviceProvider =='baidu'"  @click="share">
+						<image src="/static/images/shareIcon.svg"></image>
+					</view>
 				</view>
 			</view>
+			<view class="phone" @click="tell" ><image src="/static/images/serverCall.svg"></image></view>
 		</view>
-		<view class="phone" @click="tell" ><image src="/static/images/serverCall.svg"></image></view>
+		
 	</view>
 </template>
 
@@ -164,6 +205,7 @@ export default {
 	data() {
 		return {
 			id: 0,
+			lineContent:null,
 			lineContent: null,
 			current: 0,
 			hasLogin: false,
@@ -176,11 +218,17 @@ export default {
 			tabList: ['参考行程', '服务说明'],
 			tabIndex: 0 ,// 当前tab下标,必须与mescroll-more.js对应,所以tabIndex是固定变量,不可以改为其他的名字
 			Show:false,
+			hasLikeClick:false,
+			// 骨架屏
+			loadEmpty:[1,2],
+			loading: true,
+			// 动效
+			isAnimate: false,
+			inTabChange:false,
 		};
 	},
 	mounted(){
 		this.navbarHeight = getApp().globalData.navbarHeight
-		this.calcHeight()
 	},
 	// #ifdef MP-BAIDU
 	onInit(query) {
@@ -204,6 +252,9 @@ export default {
 		} else {
 			this.isFixed = false;
 		}
+		if(this.inTabChange){
+			return
+		}
 		if(e.scrollTop >= this.planHeight+20){
 			this.tabIndex = 1
 		} else {
@@ -212,6 +263,7 @@ export default {
 		}
 	},
 	methods: {
+		//获取行程信息
 		getDetail() {
 			var that = this
 			this.HTTP.request({
@@ -244,7 +296,12 @@ export default {
 						lineContent.images[index1] = that.Utils.addImageProcess(item1, true, 70)
 					})
 					that.lineContent = lineContent;
-					
+					setTimeout(() => {
+						that.loading = false
+						setTimeout(() => {
+							this.calcHeight()
+						}, 300);
+					}, 300);
 					//#ifdef MP-BAIDU
 					swan.setPageInfo({
 						title: that.lineContent.title+"-领途羊",
@@ -256,8 +313,106 @@ export default {
 				}
 			});
 		},
+		// 点赞
+		clickLike() {
+			var that = this;
+			if (!this.hasLogin) {
+				uni.navigateTo({
+					url: '/pages_mine/login/login'
+				});
+				return
+			}
+			if (this.hasLikeClick) {
+				return;
+			}
+			if (this.lineContent.liked == 0){
+				this.isAnimate = true
+				setTimeout(() => {
+				    this.isAnimate = false;
+				}, 500);
+			}
+			this.hasLikeClick = true;
+			this.HTTP.request({
+				url: '/user/liked',
+				data: {
+					article_id: that.lineContent.uuid,
+					liked: that.lineContent.liked == 0 ? 1 : 0,
+					type: that.lineContent.type
+				},
+				method: 'POST',
+				success: res => {
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
+					}
+					that.lineContent.liked = res.data.data.liked
+					that.lineContent.like_count = res.data.data.like_count
+					
+					// if (that.trace_info && that.rn) {
+					// 	that.Opensearch.uploadData({
+					// 		trace_info: that.trace_info,
+					// 		rn: that.rn,
+					// 		item_id: that.article_id,
+					// 		bhv_type: 'like'
+					// 	})
+					// }
+				},
+				complete: () => {
+					that.hasLikeClick = false;
+				}
+			});
+		},
+		// 收藏
+		clickFav() {
+			var that = this;
+			if (!this.hasLogin) {
+				uni.navigateTo({
+					url: '/pages_mine/login/login'
+				});
+				return
+			}
+			
+			if (this.hasFavClick) {
+				return;
+			}
+			this.hasFavClick = true;
+			this.HTTP.request({
+				url: '/user/favorite',
+				data: {
+					article_id: that.lineContent.uuid,
+					favorite: that.lineContent.fav == 0 ? 1 : 0,
+					type: that.lineContent.type
+				},
+				method: 'POST',
+				success: res => {
+					if (res.statusCode != 200 || res.data.code != 0){
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
+					}
+					that.lineContent.fav = res.data.data.fav
+					that.lineContent.fav_count = res.data.data.fav_count
+					// if (that.trace_info && that.rn) {
+					// 	that.Opensearch.uploadData({
+					// 		trace_info: that.trace_info,
+					// 		rn: that.rn,
+					// 		item_id: that.article_id,
+					// 		bhv_type: 'collect'
+					// 	})
+					// }
+				},
+				complete: () => {
+					that.hasFavClick = false;
+				}
+			});
+		},
 		calcHeight(){
-			if (this.isFixed){
+			if (this.isFixed || this.loading){
 				return
 			}
 			const query = uni.createSelectorQuery().in(this);
@@ -274,23 +429,22 @@ export default {
 		},
 		// 切换
 		tabChange(index){
-			if(index == 1){
-				this.Show = true
-			}else{
-				this.Show = false
-			}
+			
 			this.tabIndex = index
 			let scrollTop = this.planHeight * 2
 			// console.log(scrollTop,'scrollTop')
 			if (index == 0){
-				scrollTop = this.headerHeight
+				scrollTop = this.headerHeight + 3
+			}else{
+				this.inTabChange = true
 			}
-			this.$nextTick(function(){
-				uni.pageScrollTo({
-					scrollTop: scrollTop,
-					duration: 100,
-				})
+			uni.pageScrollTo({
+				scrollTop: scrollTop,
+				duration: 50,
 			})
+			setTimeout(() => {
+				this.inTabChange = false
+			}, 300);
 		},
 		change(e) {
 			this.current = e.detail.current;
@@ -344,6 +498,100 @@ export default {
 </script>
 
 <style lang="scss">
+// 骨架屏样式
+.loadBox{
+	width: 100%;
+	height: auto;
+	// margin-top: 40rpx;
+	.loadBlock{
+		// padding: 0 28rpx;
+		.banner{
+			width: 100%;
+			height: 440rpx;
+		}
+		.kong{
+			width: 104rpx;
+			height: 20rpx;
+			margin: 20rpx auto;
+		}
+		.box-btm{
+			padding: 0 28rpx;
+			margin-top: 20rpx;
+			.kong-big{
+				width: 204rpx;
+				height: 40rpx;
+				margin-bottom:20rpx;
+			}
+			.title{
+				width: 694rpx;
+				height: 20rpx;
+				margin-bottom: 20rpx;
+			}
+			.title-min{
+				width: 348rpx;
+				height: 20rpx;
+			}
+		}
+		.xxk-box{
+			display: flex;
+			margin-top: 80rpx;
+			.xxk{
+				width: 120rpx;
+				height: 40rpx;
+				margin-right: 40rpx;
+			}
+		}
+		.day-box{
+			display: flex;
+			align-items: center;
+			margin-top: 40rpx;
+			margin-bottom: 20rpx;
+			.day-min{
+				width: 120rpx;
+				height: 40rpx;
+				margin-right: 20rpx;
+			}
+			.day{
+				width: 554rpx;
+				height: 20rpx;
+			}
+		}
+		.lx-box{
+			.lx-top{
+				display: flex;
+				align-items: center;
+				margin-top: 20rpx;
+				.lx-min{
+					width: 40rpx;
+					height: 40rpx;
+					margin-right: 20rpx;
+				}
+				.lx{
+					width: 40rpx;
+					height: 20rpx;
+				}
+			}
+			.lx-center{
+				// display: flex;
+				.lx-min{
+					width: 348rpx;
+					height: 20rpx;
+					margin-top: 20rpx;
+				}
+				.lx{
+					width: 694rpx;
+					height: 20rpx;
+					margin-top: 20rpx;
+				}
+			}
+			.lx-btm{
+				width: 694rpx;
+				height: 200rpx;
+				margin-top: 20rpx;
+			}
+		}
+	}
+}
 .u-node{
 	border: 8rpx solid #FFFFFF;
 }
@@ -692,32 +940,155 @@ export default {
 	height: 98rpx;
 	position: fixed;
 	left: 0;
-	bottom: var(--window-bottom);
+	bottom: var( --window-bottom);
+	// bottom: 0;
 	z-index: 111;
-	background-color: #ffffff;
-	padding-bottom: 68rpx;
+	// background-color: #ffffff;
 	padding-bottom: constant(safe-area-inset-bottom);
 	padding-bottom: env(safe-area-inset-bottom);
 	box-sizing: content-box;
-}
-.line {
-	height: 0.5rpx;
-	background: rgba(221, 221, 221, 1);
-	// margin-top: 84rpx;
-}
-
-.contentBottom {
 	display: flex;
 	align-items: center;
-	// margin-top: 16rpx;
-	// padding:0 56rpx;
-	justify-content: space-between;
+	border-top: 2rpx solid #EDEFF2;
+	background-color: hsla(0,0%,89.8%,.8);
+	background: hsla(0,0%,100%,.9);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+}
+.bottom-text{
+	width: 372rpx;
+	height: 68rpx;
+	// background: #F8F8F8;
+	// border-radius: 34rpx;
+	// display: flex;
+	// align-items: center;
+	// font-size: 24rpx;
+	// font-family: PingFangSC-Regular, PingFang SC;
+	// font-weight: 400;
+	// color: #909399;
+	padding-left: 28rpx;
+	margin-left: 28rpx;
+	margin-right: 32rpx;
+}
+.share{
+	margin-left: 32rpx;
+	width: 52rpx;
+	height: 52rpx;
+	image{
+		width: 100%;
+		height: 100%;
+	}
+}
+// .like {
+// 	// transition: opacity 3s;
+// 	// animation:ClickLikeAni 1s infinite;
+// 	// transition: all 1s ease-in-out 0s;
+// 	display: flex;
+// 	align-items: center;
+// 	width: 52rpx;
+// 	height: 52rpx;
+// 	margin-right: 4rpx;
+// 	.likeBtn {
+// 		width: 100%;
+// 		height: 100%;
+// 	}
+// }
+.like {
+	display: flex;
+	align-items: center;
+	width: 52rpx;
+	height: 52rpx;
+	margin-right: 4rpx;
+	.has-like {
+		width: 100%;
+		height: 100%;
+		display: inline-block;
+		background-size: 100%;
+		background-origin: center center;
+		background-image: url(../../static/images/attHeartActive.svg);
+	}
+	.icon-like {
+		width: 100%;
+		height: 100%;
+		display: inline-block;
+		background-image: url(../../static/images/attheart.svg);
+		background-size: 100%;
+		background-origin: center center;
+	}
+	
+	.icon-animate {
+		width: 100%;
+		height: 100%;
+		display: block;
+		background-image: url(../../static/icon-heart.gif);
+		background-size: 100%;
+		background-origin: center center;
+	}
+}
+.likeNum {
+	width: 30rpx;
+	height: 24rpx;
 	font-size: 24rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: rgba(48, 49, 51, 1);
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #303133;
+	line-height: 24rpx;
+	margin-right: 32rpx;
+}
+.fav {
+	display: flex;
+	align-items: center;
+	margin-right: 4rpx;
+	position: relative;
+	width: 52rpx;
+	height: 52rpx;
+	.favBtn {
+		width: 100%;
+		height: 100%;
+		// margin-right: 8rpx;
+	}
+}
+.favNum {
+	width: 30rpx;
+	height: 24rpx;
+	font-size: 24rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #303133;
 	line-height: 24rpx;
 }
+
+// .bottom {
+// 	width: 100%;
+// 	height: 98rpx;
+// 	position: fixed;
+// 	left: 0;
+// 	bottom: var(--window-bottom);
+// 	z-index: 111;
+// 	background-color: #ffffff;
+// 	padding-bottom: 68rpx;
+// 	padding-bottom: constant(safe-area-inset-bottom);
+// 	padding-bottom: env(safe-area-inset-bottom);
+// 	box-sizing: content-box;
+// }
+// .line {
+// 	height: 0.5rpx;
+// 	background: rgba(221, 221, 221, 1);
+// 	// margin-top: 84rpx;
+// }
+
+// .contentBottom {
+// 	display: flex;
+// 	align-items: center;
+// 	// margin-top: 16rpx;
+// 	// padding:0 56rpx;
+// 	justify-content: space-between;
+// 	font-size: 24rpx;
+// 	font-family: PingFangSC-Regular, PingFang SC;
+// 	font-weight: 400;
+// 	color: rgba(48, 49, 51, 1);
+// 	line-height: 24rpx;
+// }
 
 // .loginButton {
 // 	width: 156rpx;
@@ -735,49 +1106,49 @@ export default {
 	
 // }
 
-.like {
-	display: flex;
-	margin-left: 28rpx;
-	align-items: center;
-}
+// .like {
+// 	display: flex;
+// 	margin-left: 28rpx;
+// 	align-items: center;
+// }
 
-.likeBtn {
-	width: 52rpx;
-	height: 52rpx;
-	margin-right: 10rpx;
-}
+// .likeBtn {
+// 	width: 52rpx;
+// 	height: 52rpx;
+// 	margin-right: 10rpx;
+// }
 
-.fav {
-	display: flex;
-	margin-left: 56rpx;
-	align-items: center;
-}
+// .fav {
+// 	display: flex;
+// 	margin-left: 56rpx;
+// 	align-items: center;
+// }
 
-.favBtn {
-	width: 52rpx;
-	height: 52rpx;
-	margin-right: 10rpx;
-}
+// .favBtn {
+// 	width: 52rpx;
+// 	height: 52rpx;
+// 	margin-right: 10rpx;
+// }
 
-.share {
-	display: flex;
-	width: 88rpx;
-	height: 88rpx;
-	margin-left: 28rpx;
-	margin-top: 6rpx;
-	align-items: center;
-	justify-content: center;
-}
+// .share {
+// 	display: flex;
+// 	width: 88rpx;
+// 	height: 88rpx;
+// 	margin-left: 28rpx;
+// 	margin-top: 6rpx;
+// 	align-items: center;
+// 	justify-content: center;
+// }
 
-.share image {
-	width: 52rpx;
-	height: 52rpx;
-}
-.savepadding {
-	padding-bottom: constant(safe-area-inset-bottom);
-	padding-bottom: env(safe-area-inset-bottom);
-	box-sizing: content-box;
-}
+// .share image {
+// 	width: 52rpx;
+// 	height: 52rpx;
+// }
+// .savepadding {
+// 	padding-bottom: constant(safe-area-inset-bottom);
+// 	padding-bottom: env(safe-area-inset-bottom);
+// 	box-sizing: content-box;
+// }
 .serverInfo {
 	width: 694rpx;
 	min-height: 416rpx;

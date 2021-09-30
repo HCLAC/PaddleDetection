@@ -1,16 +1,16 @@
 <template>
-	<u-waterfall v-model="list" add-time='150' ref="uWaterfall">
+	<u-waterfall v-model="list" add-time='100' ref="uWaterfall">
 		<template v-slot:left="{ leftList }">
 			<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
 				<view class="" v-if="item.type != 6">
 					<view class="" @click="toArticleDetail(index, true)" :id="index">
 						<view class="demo-top">
 							<view class="imgBox">
-								 <u-image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" border-radius="16rpx 16rpx 0 0" :height="item.height?item.height:'220rpx'" :src="item.image" :index="index" :mode="item.height?'scaleToFill':'widthFix'" :iconSize="66">
+								 <articleImage :class="item.type == 4 ? 'demoImage4' : 'demoImage'" border-radius="16rpx 16rpx 0 0" :height="item.height?item.height:'220rpx'" :src="item.image" :index="(index+1)*2-1" :mode="item.height?'scaleToFill':'widthFix'">
 									<view class="videoIcon" v-if="item.type == 4">
 										<image class="playIcon" src="/static/images/playIcon.svg"></image>
 									</view>
-								</u-image>	
+								</articleImage>	
 								<view class="adress">
 									<view class="adreessIcon">
 										<image class="" src="/static/images/iconMap3.svg"></image>
@@ -59,11 +59,11 @@
 					<view class="" @click="toArticleDetail(index, false)">
 						<view class="demo-top">
 							<view class="imgBox">
-								<u-image :class="item.type == 4 ? 'demoImage4' : 'demoImage'" border-radius="12rpx 12rpx 0 0" :height="item.height?item.height:'auto'" :lazy-load="true" :src="item.image" :index="index" :mode="item.height?'scaleToFill':'widthFix'" :iconSize="66">
+								<articleImage :class="item.type == 4 ? 'demoImage4' : 'demoImage'" :height="item.height?item.height:'auto'" :lazy-load="true" :src="item.image" :index="index*2" :mode="item.height?'scaleToFill':'widthFix'">
 									<!-- <view class="videoIcon" v-if="item.type == 4">
 										<image class="playIcon" src="/static/images/playIcon.svg"></image>
 									</view> -->
-								</u-image>
+								</articleImage>
 								<view class="adress">
 									<view class="adreessIcon">
 										<image class="" src="/static/images/iconMap3.svg"></image>
@@ -110,8 +110,12 @@
 </template>
 
 <script>
+	import articleImage from './article-image.vue';
 	export default {
 		name:"article-waterfall",
+		components: {
+			articleImage
+		},
 		props:{
 			list:{
 				type: Array,
@@ -148,8 +152,6 @@
 			// 发出组件高度信息，在此处可以区分正确和错误的加载，给予错误的提示图片
 			// 跳转问题详情
 			toQuestionsDetail(obj,index){
-				console.log(obj,'eee')
-				// var question_id = item.currentTarget.id
 				uni.navigateTo({
 					url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + obj.question_id +'&background=' + obj.style.background
 				});
