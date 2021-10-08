@@ -45,7 +45,7 @@
 		<block v-if="hasLogin">
 			<articleList ref="mescrollItem" v-for="(tab,index) in tabList" :key="index" :tab='tab' :i="index" :index="tabIndex"></articleList>
 		</block>
-		<!-- <view class="bottom">
+		<view class="bottom">
 			<view class="bottom-left" @click="toindex">
 				<view class="left-img">
 					<image src="@/static/images/sy-none.png" mode=""></image>
@@ -62,14 +62,14 @@
 					我的
 				</view>
 			</view>
-		</view> -->
+		</view>
 	</view>
 </template>
 
 <script>
 import MescrollMoreMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-more.js';
 import meTabs from '@/common/me-tabs/me-tabs.vue';
-import articleList from '@/common/article-mescroll-item/mine-article-list.vue';
+import articleList from './mine-article-list.vue';
 import globalUrl from '@/global.js'
 
 export default {
@@ -148,9 +148,7 @@ export default {
 	methods: {
 		//跳转首页
 		toindex(){
-			uni.navigateTo({
-				url: '/pages/index/index'
-			});
+			this.Utils.home()
 		},
 		signIn(){
 			uni.navigateTo({
