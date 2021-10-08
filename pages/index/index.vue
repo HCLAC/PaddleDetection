@@ -111,6 +111,7 @@
 				backgroundColor: 'transparent',
 				firstTime: new Date().getTime(),
 				firstLoad: false,
+				firstLogin: true,
 				list: [],
 				bannerList: [
 					{image: ''}
@@ -128,13 +129,7 @@
 		created() {
 			// 监听从登录页面发来的信息
 			uni.$once('onLoginSuccess', first_login => {
-				if (!first_login){
-					uni.pageScrollTo({
-						scrollTop: 0,
-						duration: 10,
-					})
-					this.mescroll.resetUpScroll()
-				}
+				this.firstLogin = first_login
 			})
 		},
 		mounted() {
@@ -158,6 +153,7 @@
 			// #endif
 		},
 		onShow() {
+			// 间隔300s，重新加载首页
 			var cur = Number((new Date().getTime())/1000).toFixed(0)
 			var firstT = Number((this.firstTime)/1000).toFixed(0)
 			if (cur-firstT > 300 && !this.firstLoad){
@@ -166,9 +162,14 @@
 					duration: 10,
 				})
 				this.loadData()
+				this.mescroll.resetUpScroll()
 			}
 			this.firstTime = new Date().getTime()
 			this.firstLoad = false
+			// 不是首次登录，刷新瀑布流文章
+			if (!this.firstLogin){
+				this.mescroll.resetUpScroll()
+			}
 		},
 		// 滚动
 		onPageScroll: UTILS.throttle( function(res){
