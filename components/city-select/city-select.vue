@@ -5,9 +5,12 @@
 			<!-- 预留搜索-->
 			<view class="city-serach" v-if="isSearch"><input @input="keyInput" :placeholder="placeholder" class="city-serach-input" /></view>
 			<!-- 当前定位城市 -->
-			<view class="hot-title" v-if="activeCity && !serachCity">当前定位城市</view>
-			<view class="hot-city" v-if="activeCity && !serachCity">
-				<view class="hot-item" @click="cityTrigger(activeCity)">{{ activeCity[formatName] }}</view>
+			<view class="hot-box" v-if="activeCity && !serachCity">
+				<view class="box-city" v-if="activeCity && !serachCity">
+					<image src="@/static/images/iconMap3.png" mode=""></image>
+					<view class="box-item" @click="cityTrigger(activeCity)">{{ activeCity[formatName] }}</view>
+				</view>
+				<view class="box-title" v-if="activeCity && !serachCity">当前定位</view>
 			</view>
 			<!-- 热门城市 -->
 			<view class="hot-title" v-if="hotCity.length > 0 && !serachCity">热门城市</view>
@@ -254,17 +257,25 @@ view {
 
 .city-serach {
 	width: 100%;
-	color: #4a4a4a;
+	color: #909399;
 	padding: 0 vww(10);
-
+	height: 132rpx;
+	display: flex;
+	align-items: center;
+	background: #FFFFFF;
+	border-top: 1rpx solid #EDEFF2;
 	&-input {
+		width: 694rpx;
+		height: 72rpx;
+		background: #F8F8F8;
+		color: #909399;
 		margin: vww(10) 0;
 		height: vww(40);
 		line-height: vww(40);
 		font-size: vww(14);
-		padding: 0 vww(5);
-		border: 1px solid #4d8cfd;
-		border-radius: 3px;
+		padding: 0 vww(16);
+		border: 1px solid #F8F8F8;
+		border-radius: 36rpx;
 	}
 }
 
@@ -290,15 +301,19 @@ view {
 		width: 100vw;
 		font-size: 14px;
 		line-height: vww(40);
-		color: #9b9b9b;
+		color: #303133;
 	}
 
 	.hot-city {
 		padding-left: vww(23);
 		padding-right: vww(20);
 		overflow: hidden;
-		width: 100vw;
-
+		// width: 100vw;
+		width: 694rpx;
+		margin: 0 auto;
+		background: #FFFFFF;
+		display: flex;
+		flex: 1;
 		.hot-item {
 			float: left;
 			padding: 0 vww(5);
@@ -360,7 +375,37 @@ view {
 			}
 		}
 	}
-
+	.hot-box{
+		display: flex;
+		width: 694rpx;
+		height: 100rpx;
+		background: #FFFFFF;
+		border-radius: 8rpx;
+		margin: 30rpx 28rpx;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 20rpx;
+		.box-city{
+			display: flex;
+			image{
+				width: 34rpx;
+				height: 34rpx;
+			}
+			.box-item{
+				width: 100px;
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #303133;
+			}
+		}
+		.box-title{
+			font-size: 24rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #303133;
+		}
+	}
 	.city-indexs-view {
 		position: absolute;
 		right: 0;
