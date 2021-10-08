@@ -37,6 +37,9 @@
 								<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
 								<text class="dqwzText1">{{ dqdwText }}</text>
 							</view>
+							<view class="pinyinBox">
+								<text class="pinyinText">{{ item.pinyin }}</text>
+							</view>
 						</view>
 					</view>
 					<view class="cityRank">
@@ -655,7 +658,7 @@
 						font-family: PingFangSC-Medium, PingFang SC;
 						font-weight: 500;
 						color: #ffffff;
-						line-height: 32rpx;
+						line-height: 62rpx;
 						text-align: center;
 						position: absolute;
 						top: 30%;
@@ -690,6 +693,21 @@
 							font-weight: 500;
 							color: #303133;
 						}
+					}
+				}
+				.pinyinBox{
+					display: flex;
+					align-items: center;
+					position: absolute;
+					top: 102rpx;
+					z-index: 10;
+					left: 50%;
+					transform: translate(-50%);
+					.pinyinText{
+						font-size: 20rpx;
+						font-family: STSongti-SC-Light, STSongti-SC;
+						font-weight: 300;
+						color: #FFFFFF;
 					}
 				}
 				.hotCity {
@@ -731,7 +749,7 @@
 						font-family: PingFangSC-Medium, PingFang SC;
 						font-weight: 500;
 						color: #ffffff;
-						line-height: 32rpx;
+						line-height: 20rpx;
 						text-align: center;
 						position: absolute;
 						top: 50%;
