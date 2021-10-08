@@ -61,6 +61,9 @@
 			}
 		},
 		methods: {
+			mescrollInit(mescroll) {
+				this.mescroll = mescroll;
+			},
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {
 				// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可

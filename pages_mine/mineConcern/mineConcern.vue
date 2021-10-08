@@ -86,6 +86,10 @@
 		},
 		mixins: [MescrollMixin],
 		methods: {
+			mescrollInit(mescroll) {
+				this.mescroll = mescroll;
+				this.mescroll.setPageSize(10)
+			},
 			// 跳转博主详情页
 			tobloggers(e){
 				uni.navigateTo({
@@ -162,7 +166,7 @@
 				var that = this
 				// mescroll.setPageSize(6)
 				let pageNum = page.num; // 页码, 默认从1开始
-				let pageSize = 10; // 页长, 默认每页10条
+				let pageSize = page.size; // 页长, 默认每页10条
 
 				this.HTTP.request({
 					url: '/user/follow/list?page=' + pageNum + '&count=' + pageSize,

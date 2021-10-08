@@ -54,6 +54,9 @@ export default {
 		}
 	},
 	methods: {
+		mescrollInit(mescroll) {
+			this.mescroll = mescroll;
+		},
 		downCallback() {
 			this.mescroll.resetUpScroll();
 		},

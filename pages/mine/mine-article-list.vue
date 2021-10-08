@@ -113,6 +113,9 @@
 			}
 		},
 		methods: {
+			mescrollInit(mescroll) {
+				this.mescroll = mescroll;
+			},
 			// 跳转文章详情
 			onPageJump(e) {
 				let id = e.article_id;

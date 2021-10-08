@@ -189,6 +189,9 @@
 			}
 		},
 		methods: {
+			mescrollInit(mescroll) {
+				this.mescroll = mescroll;
+			},
 			loadData(){
 				uni.showLoading({
 					title: '加载中',

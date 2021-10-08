@@ -196,6 +196,10 @@
 			}
 		}, 100),
 		methods: {
+			mescrollInit(mescroll) {
+				this.mescroll = mescroll;
+				this.mescroll.setPageSize(8)
+			},
 			//跳转个人资料
 			topersonal(){
 				uni.navigateTo({
@@ -218,10 +222,6 @@
 					   }
 					})
 				}
-			},
-			mescrollInit(mescroll) {
-				this.mescroll = mescroll;
-				this.mescroll.setPageSize(8)
 			},
 			loadData(){
 				uni.showLoading({
