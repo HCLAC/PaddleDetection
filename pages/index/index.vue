@@ -422,7 +422,7 @@
 						
 						curPageData.forEach((item1, index1) => {
 							if (item1.cover_height > 0){
-								item1.height = 340*item1.cover_height/item1.cover_width+'rpx'
+								item1.height = (340*item1.cover_height/item1.cover_width).toFixed(2)+'rpx'
 							} else {
 								item1.height = null
 							}

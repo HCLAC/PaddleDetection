@@ -56,8 +56,9 @@ export default {
 		}
 	},
 	mounted() {
-		this.tempList = this.cloneData(this.copyFlowList);
-		this.splitData();
+		// console.log('mounted', this.tempList)
+		// this.tempList = this.cloneData(this.copyFlowList);
+		// this.splitData();
 	},
 	computed: {
 		// 破坏flowList变量的引用，否则watch的结果新旧值是一样的
@@ -71,31 +72,57 @@ export default {
 			let leftRect = await this.$uGetRect('#u-left-column');
 			let rightRect = await this.$uGetRect('#u-right-column');
 			// 如果左边小于或等于右边，就添加到左边，否则添加到右边
-			let item = this.tempList[0];
-			// 解决多次快速上拉后，可能数据会乱的问题，因为经过上面的两个await节点查询阻塞一定时间，加上后面的定时器干扰
-			// 数组可能变成[]，导致此item值可能为undefined
-			if(!item) return ;
-			if (leftRect.height < rightRect.height) {
-				this.leftList.push(item);
-			} else if (leftRect.height > rightRect.height) {
-				this.rightList.push(item);
-			} else {
-				// 这里是为了保证第一和第二张添加时，左右都能有内容
-				// 因为添加第一张，实际队列的高度可能还是0，这时需要根据队列元素长度判断下一个该放哪边
-				if (this.leftList.length <= this.rightList.length) {
-					this.leftList.push(item);
+			let temp1 = {
+				height: 0,
+				list: [],
+			}
+			let temp2 = {
+				height: 0,
+				list: [],
+			}
+			this.tempList.forEach((item1, index1) => {
+				if (temp1.height <= temp2.height){
+					temp1.list.push(item1)
+					temp1.height += item1.height ? parseFloat(item1.height) :440
 				} else {
-					this.rightList.push(item);
+					temp2.list.push(item1)
+					temp2.height += item1.height ? parseFloat(item1.height) :440
 				}
+			})
+			
+			if (leftRect.height < rightRect.height) {
+				this.leftList = this.leftList.concat(temp1.height < temp2.height?temp2.list:temp1.list);
+				this.rightList = this.rightList.concat(temp1.height < temp2.height?temp1.list:temp2.list);
+			} else {
+				this.leftList = this.leftList.concat(temp1.height < temp2.height?temp1.list:temp2.list);
+				this.rightList = this.rightList.concat(temp1.height < temp2.height?temp2.list:temp1.list);
 			}
-			// 移除临时列表的第一项
-			this.tempList.splice(0, 1);
-			// 如果临时数组还有数据，继续循环
-			if (this.tempList.length) {
-				setTimeout(() => {
-					this.splitData();
-				}, this.addTime)
-			}
+			this.tempList = []
+			// let item = this.tempList[0];
+			// // 解决多次快速上拉后，可能数据会乱的问题，因为经过上面的两个await节点查询阻塞一定时间，加上后面的定时器干扰
+			// // 数组可能变成[]，导致此item值可能为undefined
+			// if(!item) return ;
+			// if (leftRect.height < rightRect.height) {
+			// 	this.leftList.push(item);
+			// } else if (leftRect.height > rightRect.height) {
+			// 	this.rightList.push(item);
+			// } else {
+			// 	// 这里是为了保证第一和第二张添加时，左右都能有内容
+			// 	// 因为添加第一张，实际队列的高度可能还是0，这时需要根据队列元素长度判断下一个该放哪边
+			// 	if (this.leftList.length <= this.rightList.length) {
+			// 		this.leftList.push(item);
+			// 	} else {
+			// 		this.rightList.push(item);
+			// 	}
+			// }
+			// // 移除临时列表的第一项
+			// this.tempList.splice(0, 1);
+			// // 如果临时数组还有数据，继续循环
+			// if (this.tempList.length) {
+			// 	setTimeout(() => {
+			// 		this.splitData();
+			// 	}, this.addTime)
+			// }
 		},
 		// 复制而不是引用对象和数组
 		cloneData(data) {
@@ -168,7 +195,6 @@ export default {
 	flex: 1;
 	flex-direction: column;
 	height: auto;
-	// margin-left: 10rpx;
 }
 
 .u-image {
