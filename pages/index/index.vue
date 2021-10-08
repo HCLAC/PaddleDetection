@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="nav-bar">
-			<uni-nav-bar :title="false" :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor">
+			<uni-nav-bar :title="false" :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor" :shadow="true">
 				<view slot="center" class="input-view" @click="toSearch">
 					<view class="input-uni-icon-Box">
 						<image class="input-uni-icon" src="/static/images/icon-search.png" />
@@ -673,7 +673,9 @@
 						position: absolute;
 						top: 90rpx;
 						z-index: 100;
-						left: 40rpx;
+						// left: 40rpx;
+						left: 50%;
+						transform: translate(-50%);
 						color: #ffffff;
 						padding: 8rpx 16rpx;
 						font-size: 16rpx;
@@ -689,6 +691,7 @@
 							margin-right: 4rpx;
 						}
 						.dqwzText1{
+							width: 80rpx;
 							font-size: 20rpx;
 							font-family: PingFangSC-Medium, PingFang SC;
 							font-weight: 500;
@@ -796,8 +799,11 @@
 				display: flex;
 				align-items: center;
 				.rankText {
-					width: 212rpx;
-					font-size: 28rpx;
+					width: 208rpx;
+					font-size: 32rpx;
+					font-family: PingFangSC-Medium, PingFang SC;
+					font-weight: 500;
+					color: #303133;
 					text-align: center;
 				}
 			}

@@ -5,9 +5,12 @@
 			<!-- 预留搜索-->
 			<view class="city-serach" v-if="isSearch"><input @input="keyInput" :placeholder="placeholder" class="city-serach-input" /></view>
 			<!-- 当前定位城市 -->
-			<view class="hot-title" v-if="activeCity && !serachCity">当前定位城市</view>
-			<view class="hot-city" v-if="activeCity && !serachCity">
-				<view class="hot-item" @click="cityTrigger(activeCity)">{{ activeCity[formatName] }}</view>
+			<view class="hot-box" v-if="activeCity && !serachCity">
+				<view class="box-city" v-if="activeCity && !serachCity">
+					<image src="@/static/images/iconMap3.png" mode=""></image>
+					<view class="box-item" @click="cityTrigger(activeCity)">{{ activeCity[formatName] }}</view>
+				</view>
+				<view class="box-title" v-if="activeCity && !serachCity">当前定位</view>
 			</view>
 			<!-- 热门城市 -->
 			<view class="hot-title" v-if="hotCity.length > 0 && !serachCity">热门城市</view>
@@ -33,6 +36,9 @@
 		<!-- 城市选择索引-->
 		<view class="city-indexs-view" v-if="!serachCity">
 			<view class="city-indexs">
+				<view class="city-top">
+					#
+				</view>
 				<view v-for="(cityIns, index) in handleCity" class="city-indexs-text" v-show="cityIns.isCity" :key="index" @click="cityindex(cityIns.forName)">
 					{{ cityIns.name }}
 				</view>
@@ -254,17 +260,26 @@ view {
 
 .city-serach {
 	width: 100%;
-	color: #4a4a4a;
+	color: #909399;
 	padding: 0 vww(10);
-
+	height: 132rpx;
+	display: flex;
+	align-items: center;
+	background: #FFFFFF;
+	border-top: 1rpx solid #EDEFF2;
+	border-bottom: 1rpx solid #EDEFF2;
 	&-input {
+		width: 694rpx;
+		height: 72rpx;
+		background: #F8F8F8;
+		color: #909399;
 		margin: vww(10) 0;
-		height: vww(40);
+		// height: vww(40);
 		line-height: vww(40);
 		font-size: vww(14);
-		padding: 0 vww(5);
-		border: 1px solid #4d8cfd;
-		border-radius: 3px;
+		padding: 0 vww(16);
+		border: 1px solid #F8F8F8;
+		border-radius: 36rpx;
 	}
 }
 
@@ -290,34 +305,50 @@ view {
 		width: 100vw;
 		font-size: 14px;
 		line-height: vww(40);
-		color: #9b9b9b;
+		color: #303133;
 	}
 
 	.hot-city {
-		padding-left: vww(23);
-		padding-right: vww(20);
+		// padding-left: vww(23);
+		// padding-right: vww(20);
 		overflow: hidden;
 		width: 100vw;
-
+		width: 694rpx;
+		margin: 0 auto;
+		background: #FFFFFF;
+		border-radius: 8rpx;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		padding: 30rpx 20rpx 0 20rpx; 
 		.hot-item {
-			float: left;
-			padding: 0 vww(5);
-			margin-right: vww(16);
-			margin-bottom: vww(6);
-			overflow: hidden;
-			width: vww(100);
-			height: vww(31);
-			font-size: 14px;
-			text-align: center;
+			// float: left;
+			width: 148rpx;
+			height: 60rpx;
+			background: #FFFFFF;
+			border-radius: 30rpx;
+			border: 1rpx solid #C9CAD1;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-bottom: 30rpx;
+			// padding: 0 vww(5);
+			// margin-right: vww(16);
+			// margin-bottom: vww(6);
+			// overflow: hidden;
+			// width: vww(100);
+			// height: vww(31);
+			// font-size: 14px;
+			// text-align: center;
 
-			display: -webkit-box;
-			-webkit-box-orient: vertical;
-			-webkit-line-clamp: 1;
+			// display: -webkit-box;
+			// -webkit-box-orient: vertical;
+			// -webkit-line-clamp: 1;
 
-			line-height: vww(31);
-			color: #4a4a4a;
-			background: #fff;
-			border: 1px solid #ebebf0;
+			// line-height: vww(31);
+			// color: #4a4a4a;
+			// background: #fff;
+			// border: 1px solid #ebebf0;
 
 			&:nth-child(3n) {
 				margin-right: 0;
@@ -332,18 +363,22 @@ view {
 
 	.citys {
 		.citys-row {
-			padding-left: vww(18);
-			width: 100%;
-			font-size: 14px;
-			background: #fff;
-
+			// padding-left: vww(18);
+			// width: 100%;
+			// font-size: 14px;
+			background: #FFFFFF;
+			width: 694rpx;
+			margin: 0 auto;
+			padding: 0 30rpx;
+			
 			.citys-item-letter {
 				margin-left: vww(-18);
 				padding-left: vww(18);
 				margin-top: -1px;
 				width: 100vw;
 				line-height: vww(30);
-				color: #9b9b9b;
+				// color: #9b9b9b;
+				color: #303133;
 				background: #f6f5fa;
 				border-top: none;
 			}
@@ -360,28 +395,71 @@ view {
 			}
 		}
 	}
-
+	.hot-box{
+		display: flex;
+		width: 694rpx;
+		height: 100rpx;
+		background: #FFFFFF;
+		border-radius: 8rpx;
+		margin: 30rpx 28rpx;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 20rpx;
+		.box-city{
+			display: flex;
+			align-items: center;
+			image{
+				width: 34rpx;
+				height: 34rpx;
+			}
+			.box-item{
+				width: 100px;
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #303133;
+				margin-left: 8rpx;
+			}
+		}
+		.box-title{
+			font-size: 24rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #303133;
+		}
+	}
 	.city-indexs-view {
 		position: absolute;
 		right: 0;
 		top: 0;
 		z-index: 999;
 		display: flex;
-		width: vww(20);
+		width: 28rpx;
+		// width: vww(20);
 		height: 100%;
-		text-align: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		// text-align: center;
 		.city-indexs {
 			width: vww(20);
 			text-align: center;
 			vertical-align: middle;
 			align-self: center;
-
+			.city-top{
+				color: #A86B13;
+				font-weight: 800;
+			}
 			.city-indexs-text {
-				margin-bottom: vww(10);
-				width: vww(20);
-				font-size: 12px;
-				color: #4d8cfd;
-
+				// margin-bottom: vww(10);
+				// width: vww(20);
+				// font-size: 10px;
+				// color: #4d8cfd;
+				margin-bottom: 8rpx;
+				font-size: 20rpx;
+				font-family: Helvetica;
+				font-weight: 800;
+				color: #A86B13;
 				&:last-child {
 					margin-bottom: 0;
 				}
