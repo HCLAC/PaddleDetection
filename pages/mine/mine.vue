@@ -45,6 +45,9 @@
 		<block v-if="hasLogin">
 			<articleList ref="mescrollItem" v-for="(tab,index) in tabList" :key="index" :tab='tab' :i="index" :index="tabIndex"></articleList>
 		</block>
+		<view class="kong">
+			
+		</view>
 		<view class="bottom">
 			<view class="bottom-left" @click="toindex">
 				<view class="left-img">
@@ -259,13 +262,17 @@ page {
 	padding-bottom: constant(safe-area-inset-bottom);
 	padding-bottom: env(safe-area-inset-bottom);
 }
+.kong{
+	width: 100%;
+	height: 98rpx;
+}
 .bottom{
 	width: 100%;
 	height: 98rpx;
 	// background: pink;
 	position: fixed;
 	bottom: 0;
-	border-top: 1rpx solid #DDDDDD;
+	border-top: 1rpx solid #EDEFF2;
 	display: flex;
 	justify-content: space-between;
 	padding-bottom: constant(safe-area-inset-bottom);
