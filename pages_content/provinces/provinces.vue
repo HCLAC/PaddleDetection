@@ -791,7 +791,7 @@ export default {
 .touring .tourtext {
 	width: 160rpx;
 	height: 104rpx;
-	font-size: 40rpx;
+	font-size: 36rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #303133;
