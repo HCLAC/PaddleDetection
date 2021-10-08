@@ -55,7 +55,7 @@
 				<!--引用组件-->
 				<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
 			</view>
-			<view v-else>
+			<view>
 				<!-- 热门话题 -->
 				<view class="hotTopic">
 					<view class="hotTopicTop">
@@ -145,9 +145,27 @@
 		// #ifndef MP-BAIDU
 		onLoad(query) {
 		// #endif
-			this.getSquare()
+			this.loadData()
 		},
 		methods:{
+			loadData(){
+				uni.showLoading({
+					title: '加载中',
+					mask: true,
+					success: () => {
+					},
+					complete: () => {
+						this.loading = true
+						this.getSquare();
+					}
+				});
+			},
+			hideLoad(){
+				setTimeout(() => {
+					this.loading = false
+					uni.hideLoading();
+				}, 300);
+			},
 			// 热门话题
 			getSquare() {
 				this.HTTP.request({
@@ -205,6 +223,7 @@
 						if (!res.data.data || !res.data.data.recomm_list || res.data.data.recomm_list.length == 0){
 							that.list = [];
 							that.mescroll.endBySize(0, 0);
+							that.hideLoad()
 							return
 						}
 						// 接口返回的当前页数据列表 (数组)
@@ -228,9 +247,7 @@
 						if (page.num == 1){
 							this.recommList = []; //如果是第一页需手动置空列表
 						
-							setTimeout(() => {
-								this.loading = false
-							}, 300);
+							this.hideLoad()
 						}
 						this.recommList = this.recommList.concat(curPageData); //追加新数据
 						console.log('recommList', this.recommList, curPageLen, totalSize)
@@ -255,6 +272,7 @@
 					fail: () => {
 						//  请求失败,隐藏加载状态
 						this.mescroll.endErr();
+						this.hideLoad()
 					}
 				});
 				

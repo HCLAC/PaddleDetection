@@ -24,7 +24,7 @@
 			<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
 		</view>
 		
-		<view v-else>
+		<view>
 			<!-- 游记文章 -->
 			<view class="" v-if="articleInfo && articleInfo.type != 2">
 				<!-- 内容详情轮播图 -->
@@ -299,11 +299,16 @@
 				if (!first_login){
 					this.getUserInfo()
 					this.getComments()
-					this.getArticleDetail();
+					this.loadData();
 				}
 			})
 		},
-		onInit(query){
+		// #ifdef MP-BAIDU
+		onInit(query) {
+		// #endif
+		// #ifndef MP-BAIDU
+		onLoad(query) {
+		// #endif
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.article_id = query.article_id
 			// 搜索数据采集
@@ -345,15 +350,16 @@
 					title: '加载中',
 					mask: true,
 					success: () => {
-						this.hideLoad();
 					},
 					complete: () => {
+						this.loading = true
 						this.getArticleDetail();
 					}
 				});
 			},
 			hideLoad(){
 				setTimeout(() => {
+					this.loading = false
 					uni.hideLoading();
 				}, 200);
 			},
@@ -393,7 +399,6 @@
 			},
 			// 获取文章详情
 			getArticleDetail() {
-				this.loading = true
 				var that = this;
 				this.HTTP.request({
 					url: '/article',
@@ -540,12 +545,10 @@
 								});
 							});
 						}
-						setTimeout(() => {
-							that.loading = false
-						}, 300);
+						that.hideLoad();
 					},
 					fail: () => {
-						that.loading = false
+						that.hideLoad();
 					}
 				});
 			},

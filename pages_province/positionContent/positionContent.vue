@@ -67,7 +67,7 @@
 			<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
 		</view>
 		<!-- 内容详情轮播图 -->
-		<view v-else>
+		<view>
 			<view class="uni-padding-wrap">
 				<view class="page-section" >
 					<view class="page-section-spacing" >
@@ -222,9 +222,27 @@ export default {
 	// #endif
 		this.id = query.id
 		this.serviceProvider = getApp().globalData.serviceProvider
-		this.getSiteDetail()
+		this.loadData()
 	},
 	methods: {
+		loadData(){
+			uni.showLoading({
+				title: '加载中',
+				mask: true,
+				success: () => {
+				},
+				complete: () => {
+					this.loading = true
+					this.getSiteDetail();
+				}
+			});
+		},
+		hideLoad(){
+			setTimeout(() => {
+				this.loading = false
+				uni.hideLoading();
+			}, 300);
+		},
 		getSiteDetail(){
 			var that = this
 			this.HTTP.request({
@@ -243,7 +261,7 @@ export default {
 					let siteInfo = res.data.data
 					if(res.data.data.visited >= 10000){
 						siteInfo.changeVisited = (res.data.data.visited / 10000).toFixed(1)
-					}else{
+					} else {
 						siteInfo.changeVisited = res.data.data.visited
 					}
 					siteInfo.images.forEach((item, index) => {
@@ -258,9 +276,7 @@ export default {
 						that.more = false
 					}
 					//关闭骨架屏
-					setTimeout(() => {
-						that.loading = false
-					}, 300);
+					that.hideLoad()
 					//#ifdef MP-BAIDU
 					swan.setPageInfo({
 						title: that.siteInfo.name+"景点介绍-领途羊",

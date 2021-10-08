@@ -51,7 +51,7 @@
 			<!--引用组件-->
 			<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
 		</view>
-		<view v-else>
+		<view>
 			<view class="lineHeader">
 				<view class="lineImageWrap" v-if="lineContent" v-show="lineContent">
 					<!-- 内容详情轮播图 -->
@@ -236,7 +236,7 @@ export default {
 	// #endif
 		this.id = query.id
 		this.serviceProvider = getApp().globalData.serviceProvider
-		this.getDetail();
+		this.loadData();
 	},
 	onShow() {
 		this.hasLogin = getApp().globalData.Authorization ? true : false;
@@ -261,6 +261,24 @@ export default {
 		}
 	},
 	methods: {
+		loadData(){
+			uni.showLoading({
+				title: '加载中',
+				mask: true,
+				success: () => {
+				},
+				complete: () => {
+					this.loading = true
+					this.getDetail();
+				}
+			});
+		},
+		hideLoad(){
+			setTimeout(() => {
+				this.loading = false
+				uni.hideLoading();
+			}, 300);
+		},
 		//获取行程信息
 		getDetail() {
 			var that = this
@@ -294,11 +312,10 @@ export default {
 						lineContent.images[index1] = that.Utils.addImageProcess(item1, true, 70)
 					})
 					that.lineContent = lineContent;
+					
+					that.hideLoad()
 					setTimeout(() => {
-						that.loading = false
-						setTimeout(() => {
-							this.calcHeight()
-						}, 300);
+						this.calcHeight()
 					}, 300);
 					//#ifdef MP-BAIDU
 					swan.setPageInfo({

@@ -41,8 +41,7 @@
 				<!--引用组件-->
 				<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
 			</view>
-			 
-			<view v-else>
+			<view>
 				 <view class="bgBox">
 					<image lazy-load :src="querys.imageProcess" class="bannerImg"></image>
 					<view class="mask">
@@ -158,7 +157,7 @@
 			}
 			
 			this.serviceProvider = getApp().globalData.serviceProvider
-			this.getCity()
+			this.loadData()
 		}, 
 		mounted() {
 			this.calcCardHeight()
@@ -190,6 +189,24 @@
 			}
 		},
 		methods: {
+			loadData(){
+				uni.showLoading({
+					title: '加载中',
+					mask: true,
+					success: () => {
+					},
+					complete: () => {
+						this.loading = true
+						this.getCity();
+					}
+				});
+			},
+			hideLoad(){
+				setTimeout(() => {
+					this.loading = false
+					uni.hideLoading();
+				}, 300);
+			},
 			calcCardHeight(){
 				if (this.isFixed || this.loading){
 					return
@@ -281,12 +298,13 @@
 						if (!res.data.data || !res.data.data.list || res.data.data.list.length == 0){
 							that.list = [];
 							that.mescroll.endBySize(0, 0);
+							that.hideLoad()
 							return
 						}
 						// 接口返回的当前页数据列表 (数组)
 						let curPageData = res.data.data.list;
 						curPageData.forEach((item1, index1) => {
-							item1.images[0] = this.Utils.addImageProcess(item1.images[0], false, 40)
+							item1.images[0] = that.Utils.addImageProcess(item1.images[0], false, 40)
 						})
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 						let curPageLen = curPageData.length;
@@ -299,15 +317,14 @@
 				
 						//设置列表数据
 						if (page.num == 1){
-							this.hotsiteslist = []; //如果是第一页需手动置空列表
-							setTimeout(() => {
-								this.loading = false
-							}, 300);
+							that.hotsiteslist = []; //如果是第一页需手动置空列表
+							
+							that.hideLoad()
 						} 
-						this.hotsiteslist = this.hotsiteslist.concat(curPageData); //追加新数据
+						that.hotsiteslist = that.hotsiteslist.concat(curPageData); //追加新数据
 						// 请求成功,隐藏加载状态
 						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
-						this.mescroll.endByPage(curPageLen, totalPage);
+						that.mescroll.endByPage(curPageLen, totalPage);
 				
 						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
 						// this.mescroll.endBySize(curPageLen, totalSize);
@@ -328,7 +345,8 @@
 					},
 					fail: () => {
 						//  请求失败,隐藏加载状态
-						this.mescroll.endErr();
+						that.mescroll.endErr();
+						that.hideLoad();
 					}
 				});
 

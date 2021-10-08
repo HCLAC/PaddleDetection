@@ -104,8 +104,8 @@
 				query = uni.createSelectorQuery()
 				// #endif
 				query.selectAll('.u-skeleton').boundingClientRect().exec((res) => {
-					this.windowHeight = res[0][0].height;
-					this.windowWinth = res[0][0].width;
+					// this.windowHeight = res[0][0].height;
+					// this.windowWinth = res[0][0].width;
 					this.top = res[0][0].bottom - res[0][0].height;
 					this.left = res[0][0].left;
 				});
