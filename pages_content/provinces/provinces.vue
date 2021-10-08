@@ -36,7 +36,7 @@
 							<image class="moreIcon" src="/static/images/more-right.svg"></image>
 						</view>
 					</view>
-					<view class="contentImgBox">
+					<view class="contentImgBox" v-if="siteHot.length != 0">
 						<view class="contentImg" v-for="(item, index) in siteHot" :key="index" @click="toAtt(item.id)">
 							<u-image width="100%" height="166rpx" border-radius="8rpx 8rpx 0 0" :src="item.image" mode="aspectFill" :iconSize="66"></u-image>
 							<view class="attText">{{ item.name }}</view>
@@ -51,7 +51,7 @@
 					<!-- <view class="contentNull" v-if="siteHot.length == 0">
 						暂无数据请切换其他城市
 					</view> -->
-					<view class="contentNull">
+					<view class="contentNull" v-if="siteHot.length == 0">
 						{{emptysite}}
 					</view>
 				</view>
