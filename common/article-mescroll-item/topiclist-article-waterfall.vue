@@ -1,5 +1,5 @@
 <template>
-	<view v-show="i === index" style="margin-top: 68%;">
+	<view v-show="i === index" class="box">
 		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="touring">
 				<articleWaterfall :list="list"></articleWaterfall>
@@ -173,16 +173,19 @@
 </script>
 
 <style lang="scss" scoped>
-// 瀑布流
-.touring{
-	width: 750rpx;
-	background: #FFFFFF;
-	// margin-top: 28rpx;
-	min-height: 1470rpx;
-	display: flex;
-	flex-flow: row;
-	flex-wrap: wrap;
-	padding: 0 21rpx 0 21rpx;
+.box{
+	margin-top: 68%;
+	// 瀑布流
+	.touring{
+		width: 750rpx;
+		background: #FFFFFF;
+		// margin-top: 28rpx;
+		min-height: 1470rpx;
+		display: flex;
+		flex-flow: row;
+		flex-wrap: wrap;
+		padding: 0 21rpx 0 21rpx;
+	}
 }
 
 </style>

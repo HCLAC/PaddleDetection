@@ -160,14 +160,14 @@
 						<view class="reply" v-for="(item,index) in commentsList" :key="index">
 							<view class="replyTop">
 								<image class="userImg" lazy-load :src="item.avatar?item.avatar:'/static/images/userImg.svg'"></image>
-								<view class="" style="display: flex;align-items: center; justify-content: space-between;width: 626rpx;">
-									<view class="" style="display: flex;align-items: center;">
+								<view class="topBox">
+									<view class="boxOne">
 										<view class="userName">{{item.account_name}}</view>
 										<view class="replyTime">
 											{{item.create_at.slice(0,10)}}
 										</view>
 									</view>
-									<view class="" style="display: flex;">
+									<view class="boxTwo">
 										<view class="min-box" @click="replyLike(item, index)">
 											<image class="replyLike" :src="item.like == 1?'/static/images/attLikeA.svg':'/static/images/attLike.svg'" ></image>
 										</view>
@@ -222,13 +222,7 @@
 		</u-popup>
 		<!-- 弹窗 -->
 		<u-modal v-model="show" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
-		<!-- 遮罩层 -->
-		<!-- <u-mask 
-			:show="textareafocus" 
-			@click="textareafocus = false"
-			:z-index="100"
-			:custom-style="{background: 'rgba(0, 0, 0, 0)'}"
-		></u-mask> -->
+		
 	</view>
 </template>
 
@@ -1186,12 +1180,6 @@
 			}
 		}
 	}
-	// .box-Introduction{
-	// 	background: rgba(255,255,255,0.8);
-	// 	box-shadow: 0 5px 10px #F5F5F5 inset;
-	// 	border-top: 2rpx solid #F5F5F5;
-	// }
-
 	.min-box{
 		width: 60rpx;
 		height: 60rpx;
@@ -1216,13 +1204,11 @@
 		
 		.videobox {
 			width: 100%;
-			// height: auto;
 			min-height: 420rpx;
 			max-height: 1000rpx;
 		}
 		
 		.imageCount {
-			// width: 90rpx;
 			height: 40rpx;
 			background-color: rgba(0, 0, 0, 0.6);
 			border-radius: 20rpx;
@@ -1286,7 +1272,6 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 0 28rpx;
-		// margin-left: 28rpx;
 		margin-top: 40rpx;
 		.left{
 			display: flex;
@@ -1294,8 +1279,6 @@
 			.userHeard {
 				width: 90rpx;
 				height: 90rpx;
-				// margin-right: 20rpx;
-				// overflow: hidden;
 				image{
 					width: 100%;
 					height: 100%;
@@ -1343,7 +1326,6 @@
 					width: 16rpx;
 					height: 16rpx;
 					margin-right: 4rpx;
-					// margin-top: 4rpx;
 				}
 			}
 		}
@@ -1353,17 +1335,13 @@
 	}
 	.adress,.adress-1 {
 		height: 40rpx;
-		// margin-top: 32rpx;
 		margin-left: 28rpx;
 		margin-right: 28rpx;
 		background: rgba(0, 145, 255, 0.1);
 		border-radius: 20rpx;
-		// border: 2rpx solid rgba(0, 145, 255, 1);
 		display: inline-block;
 		line-height: 40rpx;
 		padding: 0 14rpx;
-		// display: flex;
-		// align-items: center;
 		.adreessIcon {
 			width: 24rpx;
 			height: 24rpx;
@@ -1534,41 +1512,49 @@
 						border-radius: 50%;
 						margin-right: 16rpx;
 					}
-
-					.userName {
-						height: 28rpx;
-						font-size: 28rpx;
-						font-family: PingFangSC-Medium, PingFang SC;
-						font-weight: 500;
-						color: #303133;
-						line-height: 28rpx;
-					}
-
-					.replyTime {
-						margin-left: 16rpx;
-						height: 24rpx;
-						font-size: 24rpx;
-						font-family: PingFangSC-Regular, PingFang SC;
-						font-weight: 400;
-						color: #C9CAD1;
-						line-height: 24rpx;
-					}
-
-					.replyLike {
-						width: 44rpx;
-						height: 44rpx;
-					}
-
-					.report {
-						// margin-left: 28rpx;
-						width: 44rpx;
-						height: 44rpx;
+					.topBox{
+						display: flex;
+						align-items: center; 
+						justify-content: space-between;
+						width: 626rpx;
+						.boxOne{
+							display: flex;
+							align-items: center;
+							.userName {
+								height: 28rpx;
+								font-size: 28rpx;
+								font-family: PingFangSC-Medium, PingFang SC;
+								font-weight: 500;
+								color: #303133;
+								line-height: 28rpx;
+							}
+							
+							.replyTime {
+								margin-left: 16rpx;
+								height: 24rpx;
+								font-size: 24rpx;
+								font-family: PingFangSC-Regular, PingFang SC;
+								font-weight: 400;
+								color: #C9CAD1;
+								line-height: 24rpx;
+							}
+						}
+						.boxTwo{
+							display: flex;
+							.replyLike {
+								width: 44rpx;
+								height: 44rpx;
+							}
+							
+							.report {
+								width: 44rpx;
+								height: 44rpx;
+							}
+						}
 					}
 				}
 
-				.replyBottom {
-					// height: 42rpx;
-					font-size: 28rpx;
+				.replyBottom {					font-size: 28rpx;
 					font-family: PingFangSC-Regular, PingFang SC;
 					font-weight: 400;
 					color: #606266;
@@ -1582,7 +1568,6 @@
 		.moreReply {
 			text-align: center;
 			margin-top: 32rpx;
-			// margin-bottom: 40rpx;
 			height: 28rpx;
 			font-size: 28rpx;
 			font-family: PingFangSC-Regular, PingFang SC;
@@ -1596,22 +1581,12 @@
 	.commentInput {
 		width: 100%;
 		height: 100px;
-		// padding-bottom: 100rpx;
-		// height: 300rpx;
 		position: fixed;
 		background: #ffffff;
 		bottom: 0;
 		display: flex;
 		z-index: 110;
-		// align-items: center;
-		// padding-bottom: 110rpx;
 		.inputK {
-			// height: 28rpx;
-			// width: 558rpx;
-			// background: #F8F8F8;
-			// border-radius: 4px;
-			// margin: 16rpx 32rpx;
-			// padding: 20rpx 16rpx;
 			height: 14px;
 			width: 558rpx;
 			margin: 8px 16px;
@@ -1621,7 +1596,6 @@
 		}
 
 		.send {
-			// width: 64rpx;
 			height: 32rpx;
 			font-size: 32rpx;
 			font-family: PingFangSC-Medium, PingFang SC;
@@ -1648,10 +1622,7 @@
 		position: fixed;
 		left: 0;
 		bottom: var( --window-bottom);
-		// bottom: 0;
 		z-index: 111;
-		// background: #ffffff;
-		// background-color: rgba(252, 252, 252, 0.8);
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 		box-sizing: content-box;
@@ -1739,7 +1710,6 @@
 		.favBtn {
 			width: 100%;
 			height: 100%;
-			// margin-right: 8rpx;
 		}
 	}
 	.favNum {

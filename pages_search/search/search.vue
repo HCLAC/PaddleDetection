@@ -126,7 +126,7 @@
 							<image src="/static/images/more-right.svg"></image>
 						</view>
 					</view>
-					<view style="padding-left: 4%; padding-top: 30rpx;">
+					<view class="swiperBox">
 						<view class="swiper">
 							<view class="swiperItem" v-for="(item, index) in result.route_list" @click="toRoute(item.uuid)" :key="index">
 								<image lazy-load :src="item.image"></image>
@@ -693,10 +693,7 @@
 					}
 				}
 			}
-
-			
 		}
-
 		.areacontent {
 			width: 412rpx;
 			height: 84rpx;
@@ -709,7 +706,6 @@
 			color: #909399;
 			display: -webkit-box;
 			-webkit-box-orient: vertical;
-			// text-overflow: ellipsis;
 			overflow: hidden;
 			-webkit-line-clamp: 2;
 		}
@@ -717,15 +713,15 @@
 
 		
 	}
-
+.swiperBox{
+	padding-left: 4%; 
+	padding-top: 30rpx;
 	.swiper {
 		width: 100%;
 		margin-bottom: 28rpx;
-		// height: 240rpx;
 		overflow-x: auto;
 		display: flex;
 		justify-content: space-between;
-
 		.swiperItem {
 			flex: none;
 			width: 46%;
@@ -736,13 +732,10 @@
 			color: #303133;
 			image {
 				width: 98%;
-				// width: 338rpx;
 				border-radius: 16rpx;
 				height: 180rpx;
 			}
-
 			.title {
-				// width: 338rpx;
 				width: 96%;
 				font-size: 28rpx;
 				font-family: PingFangSC-Medium, PingFang SC;
@@ -757,7 +750,7 @@
 			}
 		}
 	}
-
+}
 	.contentTitle {
 		flex: 1;
 		font-size: 36rpx;
@@ -808,7 +801,6 @@
 	display: flex;
 	flex-flow: row;
 	flex-wrap: wrap;
-	// margin: 0 auto;
 	padding: 0 20rpx 0;
 }
 .search-keyword {
@@ -819,7 +811,6 @@
 .keyword-list-box {
 	height: calc(100vh - 110upx);
 	padding-top: 10upx;
-	// border-radius: 20upx 20upx 0 0;
 	background-color: #fff;
 }
 .keyword-entry-tap {
@@ -877,7 +868,6 @@
 
 .keyword-entry .otherText {
 	font-size: 24rpx;
-	// width: 60rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #606266;
@@ -907,13 +897,9 @@
 .keyword-box {
 	width: 100%;
 	box-sizing: border-box;
-	// height: calc(100vh - 110upx);
-	// border-radius: 20upx 20upx 0 0;
 	background-color: #fff;
 }
-.keyword-box .keyword-block {
-	// padding: 10upx 0;
-}
+
 .keyword-box .keyword-block .keyword-list-header {
 	width: 100%;
 	box-sizing: border-box;
@@ -990,7 +976,6 @@
 		margin-left: 8rpx;
 		color: rgba(48, 49, 51, 1);
 		font-size: 28rpx;
-		// line-height: 28rpx;
 		font-weight: 500;
 	}
 }

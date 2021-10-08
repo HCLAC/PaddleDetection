@@ -368,7 +368,6 @@
 	}
 	
 	.topTitle{
-		// width: 144rpx;
 		height: 36rpx;
 		font-size: 36rpx;
 		font-family: PingFangSC-Semibold, PingFang SC;
@@ -392,7 +391,6 @@
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		// width: 660rpx;
 		
 		.topicTips{
 			display: flex;
@@ -427,7 +425,6 @@
 	margin: 26rpx 28rpx 0 28rpx;
 	.recommendedTop{
 		.recommendedTitle{
-			// width: 72rpx;
 			height: 36rpx;
 			font-size: 36rpx;
 			font-family: PingFangSC-Semibold, PingFang SC;
@@ -468,14 +465,12 @@
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			color: #303133;
-			// line-height: 36rpx;
 			display: flex;
 			align-items: center;
 		}
 	}
 
 	.titleRight{
-		// width: 166rpx;
 		height: 36rpx;
 		background: #EDEFF2;
 		display: flex;
@@ -511,7 +506,6 @@
 	margin-top: 30rpx;
 	display: flex;
 	height: 326rpx;
-	// margin-left: 28rpx;
 	
 	.contentImg {
 		width: 216rpx;
@@ -524,7 +518,6 @@
 		.attText {
 			font-size: 28rpx;
 			color: #606266;
-			// margin: 4rpx 0 2rpx 10rpx;
 			margin-top:12rpx;
 			display: -webkit-box;
 			-webkit-box-orient: vertical;

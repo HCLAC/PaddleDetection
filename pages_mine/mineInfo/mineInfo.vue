@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 自定义导航栏 -->
-		<view class="nav-bar" style="border-bottom: 2rpx solid #EDEFF2;">
+		<view class="nav-bar">
 			<uni-nav-bar :fixed="true" :status-bar="true" :border="true" title="修改资料">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -12,11 +12,11 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 信息表单 -->
-		<view class="" style="margin:0 28rpx;">
-			<view class="form-box" >
+		<view class="centent">
+			<view class="form-box">
 				<!-- 头像 -->
 				<view class="form-image" @click="chooseAvatar">
-					<image lazy-load :src="avatar"  style="width: 130rpx; height: 130rpx;border-radius: 50%;margin-left: -10rpx;" ></image>
+					<image class="form-img" lazy-load :src="avatar"></image>
 					<view class="avatarText" >
 						修改头像
 					</view>
@@ -206,49 +206,41 @@
 </script>
 
 <style lang="scss" scoped>
-.form-box{
-	.form-image{
-		height: 178rpx;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		// border-radius: 4rpx solid red;
-		border-bottom: 1rpx solid #EDEFF2;
-		.avatarText{
-			height: 28rpx;
-			font-size: 28rpx;
-			font-family: PingFangSC-Regular, PingFang SC;
-			font-weight: 400;
-			color: #909399;
-			line-height: 28rpx;
-			margin-left: 28rpx;
-			margin-right:390rpx ;
-		}
-	}
-	.form-name{
-		display: flex;
-		align-items: center;
-		height: 96rpx;
-		margin-top: 6rpx;
-		border-bottom: 1rpx solid #EDEFF2;
-		text{
-			font-size: 28rpx;
-			font-family: PingFangSC-Regular, PingFang SC;
-			font-weight: 400;
-			color: #909399;
-		}
-	}
-	.form-sex,.form-region{
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		height: 96rpx;
-		margin-top: 2rpx;
-		border-bottom: 1rpx solid #EDEFF2;
-		.sex-box,.region-box{
+.nav-bar{
+	border-bottom: 2rpx solid #EDEFF2;
+}
+.centent{
+	margin:0 28rpx;
+	.form-box{
+		.form-image{
+			height: 178rpx;
 			display: flex;
-			justify-content: center;
+			justify-content: space-between;
 			align-items: center;
+			border-bottom: 1rpx solid #EDEFF2;
+			.form-img{
+				width: 130rpx; 
+				height: 130rpx;
+				border-radius: 50%;
+				margin-left: -10rpx;
+			}
+			.avatarText{
+				height: 28rpx;
+				font-size: 28rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #909399;
+				line-height: 28rpx;
+				margin-left: 28rpx;
+				margin-right:390rpx ;
+			}
+		}
+		.form-name{
+			display: flex;
+			align-items: center;
+			height: 96rpx;
+			margin-top: 6rpx;
+			border-bottom: 1rpx solid #EDEFF2;
 			text{
 				font-size: 28rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
@@ -256,30 +248,47 @@
 				color: #909399;
 			}
 		}
-		.moreRight{
-			width: 20rpx;
-			height: 20rpx;
-			// margin-left: 400rpx;
+		.form-sex,.form-region{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 96rpx;
+			margin-top: 2rpx;
+			border-bottom: 1rpx solid #EDEFF2;
+			.sex-box,.region-box{
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				text{
+					font-size: 28rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #909399;
+				}
+			}
+			.moreRight{
+				width: 20rpx;
+				height: 20rpx;
+			}
 		}
 	}
-}
-.moreRight{
-	width: 20rpx;
-	height: 20rpx;
-	// margin-left: 400rpx;
-}
-.customStyle{
-	width: 694rpx;
-	height: 98rpx;
-	background: #FFE512;
-	border-radius: 53rpx;
-	font-size: 32rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 500;
-	color: #303133;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-top: 82rpx;
+	.moreRight{
+		width: 20rpx;
+		height: 20rpx;
+	}
+	.customStyle{
+		width: 694rpx;
+		height: 98rpx;
+		background: #FFE512;
+		border-radius: 53rpx;
+		font-size: 32rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #303133;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: 82rpx;
+	}
 }
 </style>

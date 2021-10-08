@@ -1,5 +1,5 @@
 <template>
-	<view v-show="i === index" style="padding: 18rpx 28rpx;">
+	<view v-show="i === index" class="box">
 		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" :top="top" :bottom="bom" @down="downCallback"  @up="upCallback" :down="downOption" :up="upOption"  >
 			<view class="" v-for="(item, index) in list" :key="index">
 				<view class="contentItem">
@@ -226,154 +226,154 @@
 </script>
 
 <style lang="scss" scoped>
-.contentItem {
-	width: 694rpx;
-	height: 232rpx;
-	margin: 28rpx;
-	margin-left: 0;
-	margin-top: 0;
-	margin-bottom: 20rpx;
-	border-radius: 8px;
-	display: flex;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-
-	.left {
-		position: relative;
-		margin-right: 20rpx;
-		.imgTip {
-			position: absolute;
-			left: 0rpx;
-			top: 0rpx;
-			font-size: 24rpx;
-			line-height: 44rpx;
-			font-weight: 500;
-			color: #ffffff;
-			width: 96rpx;
-			height: 44rpx;
-			text-align: center;
-			background-color: rgba(0, 0, 0, 0.6);
-			border-radius: 16rpx 0px 16rpx 0px;
-		}
-		.videoIcon {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			margin-top: -20rpx;
-			margin-left: -30rpx;
-			width: 40rpx;
-			height: 40rpx;
-		}
-
-		.playIcon {
-			width: 100%;
-			height: 100%;
-		}
-	}
-
-	.right {
-		margin-top: 12rpx;
+.box{
+	padding: 18rpx 28rpx;
+	.contentItem {
+		width: 694rpx;
 		height: 232rpx;
-		// overflow: hidden;
-		// text-overflow:ellipsis;
-		// white-space: nowrap;
-	}
-
-	.right .title {
-		width: 480rpx;
-		height: 32rpx;
-		font-size: 32rpx;
-		font-weight: 500;
-		color: rgba(48, 49, 51, 1);
-		font-family: PingFangSC-Medium, PingFang SC;
-		line-height: 32rpx;
+		margin: 28rpx;
+		margin-left: 0;
+		margin-top: 0;
+		margin-bottom: 20rpx;
+		border-radius: 8px;
 		display: flex;
-	}
-
-	.tips {
-		margin-right: 10rpx;
-	}
-
-	.titleText {
-		flex: 1;
-		// margin-left: 10rpx;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-	}
-
-	.richText {
-		width: 480rpx;
-		height: 84rpx;
-		font-size: 28rpx;
-		font-weight: 400;
-		color: #909399;
-		line-height: 42rpx;
-		margin-top: 12rpx;
-		display: -webkit-box;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		word-wrap: break-word;
-		white-space: normal !important;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-	}
-
-	.favandlikebox {
-		display: flex;
-		align-items: center;
-		margin-top: 14rpx;
-		font-size: 22rpx;
-		// font-family: Roboto-Regular, Roboto;
-		// font-weight: 400;
-		color: #606266;
-		line-height: 22rpx;
-		.fav,.like{
-			display: flex;
-			.fav-number,.like-number{
+		.left {
+			position: relative;
+			margin-right: 20rpx;
+			.imgTip {
+				position: absolute;
+				left: 0rpx;
+				top: 0rpx;
+				font-size: 24rpx;
+				line-height: 44rpx;
 				font-weight: 500;
+				color: #ffffff;
+				width: 96rpx;
+				height: 44rpx;
+				text-align: center;
+				background-color: rgba(0, 0, 0, 0.6);
+				border-radius: 16rpx 0px 16rpx 0px;
 			}
-			.fav-text,.like-text{
-				font-weight: 400;
+			.videoIcon {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-top: -20rpx;
+				margin-left: -30rpx;
+				width: 40rpx;
+				height: 40rpx;
+			}
+
+			.playIcon {
+				width: 100%;
+				height: 100%;
 			}
 		}
-	}
 
-	.like {
-		margin-left: 20rpx;
-	}
-
-	.right .position {
-		display: flex;
-		margin-top: 20rpx;
-		// line-height: 40rpx;
-		align-items: center;
-
-		image {
-			height: 30rpx;
-			width: 26rpx;
-			margin-right: 4rpx;
+		.right {
+			margin-top: 12rpx;
+			height: 232rpx;
 		}
 
-		.positionText {
-			width: 452rpx;
-			font-size: 22rpx;
-			font-family: PingFangSC-Regular, PingFang SC;
-			font-weight: 400;
-			color: rgba(0, 145, 255, 1);
-			line-height: 22rpx;
+		.right .title {
+			width: 480rpx;
+			height: 32rpx;
+			font-size: 32rpx;
+			font-weight: 500;
+			color: rgba(48, 49, 51, 1);
+			font-family: PingFangSC-Medium, PingFang SC;
+			line-height: 32rpx;
+			display: flex;
+		}
+
+		.tips {
+			margin-right: 10rpx;
+		}
+
+		.titleText {
+			flex: 1;
+			// margin-left: 10rpx;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
-	}
 
+		.richText {
+			width: 480rpx;
+			height: 84rpx;
+			font-size: 28rpx;
+			font-weight: 400;
+			color: #909399;
+			line-height: 42rpx;
+			margin-top: 12rpx;
+			display: -webkit-box;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			word-wrap: break-word;
+			white-space: normal !important;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+		}
+
+		.favandlikebox {
+			display: flex;
+			align-items: center;
+			margin-top: 14rpx;
+			font-size: 22rpx;
+			// font-family: Roboto-Regular, Roboto;
+			// font-weight: 400;
+			color: #606266;
+			line-height: 22rpx;
+			.fav,.like{
+				display: flex;
+				.fav-number,.like-number{
+					font-weight: 500;
+				}
+				.fav-text,.like-text{
+					font-weight: 400;
+				}
+			}
+		}
+
+		.like {
+			margin-left: 20rpx;
+		}
+
+		.right .position {
+			display: flex;
+			margin-top: 20rpx;
+			// line-height: 40rpx;
+			align-items: center;
+
+			image {
+				height: 30rpx;
+				width: 26rpx;
+				margin-right: 4rpx;
+			}
+
+			.positionText {
+				width: 452rpx;
+				font-size: 22rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: rgba(0, 145, 255, 1);
+				line-height: 22rpx;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+
+	}
+	.line{
+		width: 722rpx;
+		height: 1rpx;
+		background: #EDEFF2;
+		margin-bottom: 20rpx;
+	}
 }
-.line{
-	width: 722rpx;
-	height: 1rpx;
-	background: #EDEFF2;
-	margin-bottom: 20rpx;
-}
+
 </style>

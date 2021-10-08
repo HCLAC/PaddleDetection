@@ -424,7 +424,6 @@ export default {
 	width: 718rpx;
 	height: 30rpx;
 	font-size: 30rpx;
-	// font-family: PingFangSC-Regular, PingFang SC;
 	font-weight: 400;
 	color: #c9cad1;
 	line-height: 30rpx;
@@ -432,7 +431,6 @@ export default {
 	justify-content: space-between;
 	image{
 		position: relative;
-		// left: 400rpx;
 		left: 0;
 	}
 }
@@ -455,23 +453,18 @@ export default {
 .is-input1 {
 	color: #c9cad1;
 }
-// .is-input1::-ms-searchSel{display: none;}
 .searchSel {
 	width: 44rpx;
 	height: 44rpx;
 	margin-right: 32rpx;
-	// display: none;
 }
-// .is-input1:valid + .searchSel {display: block;}
 .codeimg {
 	width:200rpx;
 	height: 30rpx;
 	font-size: 30rpx;
 	font-family: PingFangSC-Regular, PingFang SC;
 	font-weight: 400;
-	// color: rgba(0, 145, 255, 1);
 	line-height: 30rpx;
-	// margin-right: 32rpx;
 }
 .loginButton .lb {
 	width: 692rpx;

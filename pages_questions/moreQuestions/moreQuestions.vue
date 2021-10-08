@@ -116,11 +116,7 @@ import questionList from '@/common/article-mescroll-item/mine-answer-list.vue';
 	background-color: #fff;
 	color: #303133;
 	width: 100%;
-	// font-size: 40rpx;
-	// font-weight: 500;
-	// padding-left: 32rpx;
 	padding-top: 28rpx;
-	// padding-bottom: 22rpx;
 	display: flex;
 	border-bottom: 2rpx solid #edeff2;
 }
@@ -134,25 +130,20 @@ import questionList from '@/common/article-mescroll-item/mine-answer-list.vue';
 	text-align: center;
 }
 .favText{
-	// width: 64px;
 	height: 32rpx;
 	font-size: 32rpx;
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #303133;
 	line-height: 32rpx;
-
-	
 }
 .favText1{
-	// width: 52px;
 	height: 26rpx;
 	font-size: 26rpx;
 	font-family: PingFangSC-Regular, PingFang SC;
 	font-weight: 400;
 	color: #909399;
 	line-height: 26rpx;
-
 	margin-top: 8rpx;
 }
 .favLine{

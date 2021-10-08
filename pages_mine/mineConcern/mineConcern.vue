@@ -289,7 +289,6 @@
 
 		height: 24rpx;
 		font-size: 24rpx;
-		// font-family: Roboto-Regular, Roboto;
 		font-weight: 400;
 		color: #606266;
 		line-height: 24rpx;
@@ -311,7 +310,6 @@
 	.artNum {
 		height: 24rpx;
 		font-size: 24rpx;
-		// font-family: Roboto-Regular, Roboto;
 		font-weight: 400;
 		color: #606266;
 		line-height: 24rpx;
@@ -330,11 +328,8 @@
 		color: #303133;
 		text {
 			display: block;
-			// height: 14px;
 			font-size: 28rpx;
-			// font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 500;
-			// line-height: 14px;
 		}
 
 	}
@@ -353,13 +348,9 @@
 
 		text {
 			display: block;
-			
-			// height: 14px;
 			font-size: 28rpx;
-			// font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 400;
 			color: #C9CAD1;
-			// line-height: 14px;
 		}
 	}
 
@@ -382,7 +373,6 @@
 	}
 
 	.emptyText {
-		// width: 476rpx;
 		width: 100%;
 		height: 30rpx;
 		font-size: 28rpx;

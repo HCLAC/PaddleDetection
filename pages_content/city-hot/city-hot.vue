@@ -118,9 +118,5 @@ export default {
 </script>
 
 <style lang="scss">
-.kong{
-	width: 100%;
-	height: 140rpx;
-	// background: pink;
-}
+
 </style>

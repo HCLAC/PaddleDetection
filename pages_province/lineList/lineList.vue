@@ -129,14 +129,7 @@ export default {
 		box-shadow: 0px 4rpx 56rpx 0px #EDEFF2;
 		border-radius: 0px 0px 16rpx 16rpx;
 		z-index: 999999;
-		// image {
-		// 	width: 100%;
-		// 	height: 370rpx;
-		// 	border-radius: 16rpx 16rpx 0 0;
-		// }
 		.lineText {
-			// width: 684rpx;
-			// height: 32rpx;
 			text-align: left;
 			background: #ffffff;
 			color: #303133;
@@ -150,8 +143,6 @@ export default {
 			padding-top: 20rpx;
 			padding-bottom: 40rpx;
 			margin-left: 2rpx;
-			// box-shadow: 0px 8rpx 28rpx 0px #EDEFF2;
-			// box-shadow: 0px 2px 4px 0px #EDEFF2;
 			border-radius: 0px 0px 16rpx 16rpx;
 		}
 	}

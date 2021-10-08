@@ -218,7 +218,6 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 	border-radius: 24rpx 24rpx 0px 0px;
 	overflow: hidden;
 	position: absolute;
-	// bottom: 0;
 	top: 360rpx;
 	z-index: 10;
 } 
@@ -253,13 +252,11 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 		box-shadow: 0px 0px 14px 0px #F7B500;
 		border: 3px solid #FFFFFF;
 		border-radius: 50%;
-		// margin-top: 24rpx;
 	}
 	
 	.userR {
 		margin-left: 32rpx;
 		margin-right: 16rpx;
-		// margin-top: 24rpx;
 		.userName {
 			width: 366rpx;
 			height: 36rpx;
@@ -299,7 +296,6 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 		height: 52rpx;
 		background: rgba(251, 204, 12, 0.45);
 		border-radius: 26rpx;
-		// margin-left: 30rpx;
 		text-align: center;
 		line-height: 52rpx;
 	
@@ -319,7 +315,6 @@ import bloggerArticleList from '@/common/article-mescroll-item/blogger-article-l
 		height: 52rpx;
 		border-radius: 26rpx;
 		border: 2rpx solid #303133;
-		// margin-left: 30rpx;
 		line-height: 52rpx;
 		text-align: center;
 	
