@@ -227,7 +227,7 @@
 
 <style lang="scss" scoped>
 .box{
-	padding: 18rpx 28rpx;
+	padding: 22rpx 28rpx;
 	.contentItem {
 		width: 694rpx;
 		height: 232rpx;
