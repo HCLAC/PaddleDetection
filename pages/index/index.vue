@@ -313,12 +313,31 @@
 									this.locationCity.name = '暂无定位'
 									this.locationCity.city_id = '0'
 								}
+								this.dqdwText = '当前定位'
 								this.areaList = areaList;
 							}
 						});
 					},
 					// 未开启定位
 					fail: error => {
+						this.HTTP.request({
+							url: '/area/hot',
+							retry: 3,
+							success: res => {
+								if (res.statusCode != 200 || res.data.code != 0){
+									uni.showToast({
+										title: res.data.msg,
+										icon: 'none'
+									});
+									return
+								}
+								var areaList = res.data.data
+								areaList.forEach((item1, index1) => {
+									item1.image = this.Utils.addImageProcess(item1.image, false, 30)
+								})
+								this.areaList = areaList;
+							}
+						});
 						console.log('定位', error)
 						if (error.errCode === 10005 || error.errCode === 10003) {
 							uni.showToast({
@@ -328,6 +347,8 @@
 						}
 						this.dqdwText = '未定位';
 						this.popularCities = true
+						this.locationCity.city_id = '0'
+						this.locationCity.name = '暂无定位'
 					}
 				});
 			},
