@@ -202,12 +202,11 @@ export default {
 		this.loadData()
 	},
 	methods: {
-		cityPickerClose(){
-			this.showCityPicker = false
-		},
 		mescrollInit(mescroll) {
 			this.mescroll = mescroll;
-			this.mescroll.setPageSize(6)
+		},
+		cityPickerClose(){
+			this.showCityPicker = false
 		},
 		loadData(){
 			uni.showLoading({

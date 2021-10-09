@@ -80,9 +80,6 @@
 		watch: {
 		},
 		methods: {
-			mescrollInit(mescroll) {
-				this.mescroll = mescroll;
-			},
 			// 跳转问题详情
 			toQuestionsDetail(item){
 				var question_id = item.question_id
