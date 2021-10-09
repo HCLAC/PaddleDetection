@@ -233,7 +233,7 @@
 					complete: () => {
 						this.getBanner();
 						this.getAdress();
-						this.getAreaHot();
+						// this.getAreaHot();
 					}
 				});
 				
@@ -242,29 +242,6 @@
 				setTimeout(() => {
 					uni.hideLoading();
 				}, 300);
-			},
-			// 获取热门目的地
-			getAreaHot(){
-				var that = this
-				this.HTTP.request({
-					url: '/area/hot',
-					retry: 3,
-					success: res => {
-						if (res.statusCode != 200 || res.data.code != 0){
-							uni.showToast({
-								title: res.data.msg,
-								icon: 'none'
-							});
-							return
-						}
-						
-						var areaList = res.data.data
-						areaList.forEach((item1, index1) => {
-							item1.image = this.Utils.addImageProcess(item1.image, false, 30)
-						})
-						this.areaList = areaList;
-					}
-				});
 			},
 			// 获取banner
 			getBanner() {
@@ -307,14 +284,13 @@
 				uni.getLocation({
 					type: 'wgs84',
 					success: res => {
-						let cityName = res.city.substr(0, res.city.length - 1);
 						this.HTTP.request({
-							url: '/area/judge',
+							url: '/area/hot',
+							retry: 3,
 							data: {
 								state: res.province,
 								city: res.city
 							},
-							method: 'GET',
 							success: res => {
 								if (res.statusCode != 200 || res.data.code != 0){
 									uni.showToast({
@@ -323,22 +299,22 @@
 									});
 									return
 								}
-								var result = res.data.data
-								result.image = this.Utils.addImageProcess(result.image, false, 40)
 								
-								this.locationCity = result
-								let cityId = res.data.data.city_id
-								if(!result.name || !result.name.length){
-									this.popularCities = false;
-									result.name = cityName
-								} else {
-									this.dqdwText = '当前位置';
+								var areaList = res.data.data
+								areaList.forEach((item1, index1) => {
+									item1.image = this.Utils.addImageProcess(item1.image, false, 30)
+								})
+								if(areaList[0].is_location == 1){
 									this.popularCities = true
-									this.areaList.unshift(result)
+									this.locationCity = areaList[0]
+								}else{
+									this.popularCities = false
+									this.locationCity.name = '暂无定位'
+									this.locationCity.city_id = '0'
 								}
-								this.locationCity = result
-							},
-						})
+								this.areaList = areaList;
+							}
+						});
 					},
 					// 未开启定位
 					fail: error => {
