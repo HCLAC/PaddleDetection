@@ -48,24 +48,6 @@
 		<view class="kong">
 			
 		</view>
-		<view class="bottom">
-			<view class="bottom-left" @click="toindex">
-				<view class="left-img">
-					<image src="@/static/images/sy-none.png" mode=""></image>
-				</view>
-				<view class="left-text">
-					首页
-				</view>
-			</view>
-			<view class="bottom-right" @click="topersonal">
-				<view class="right-img">
-					<image src="@/static/images/wd.png" mode=""></image>
-				</view>
-				<view class="right-text">
-					我的
-				</view>
-			</view>
-		</view>
 	</view>
 </template>
 
@@ -149,10 +131,6 @@ export default {
 		}
 	},
 	methods: {
-		//跳转首页
-		toindex(){
-			this.Utils.home()
-		},
 		signIn(){
 			uni.navigateTo({
 				url: '/pages_mine/login/login'
@@ -265,70 +243,6 @@ page {
 .kong{
 	width: 100%;
 	height: 98rpx;
-}
-.bottom{
-	width: 100%;
-	height: 98rpx;
-	// background: pink;
-	position: fixed;
-	bottom: 0;
-	border-top: 1rpx solid #EDEFF2;
-	display: flex;
-	justify-content: space-between;
-	padding-bottom: constant(safe-area-inset-bottom);
-	padding-bottom: env(safe-area-inset-bottom);
-	box-sizing: content-box;
-	background-color: hsla(0,0%,89.8%,.8);
-	background: hsla(0,0%,100%,.9);
-	backdrop-filter: blur(10px);
-	-webkit-backdrop-filter: blur(10px);
-	.bottom-left{
-		width: 98rpx;
-		height: 98rpx;
-		margin-left: 180rpx;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
-		.left-img{
-			width: 56rpx;
-			height: 56rpx;
-			image{
-				width: 100%;
-				height: 100%;
-			}
-		}
-		.left-text{
-			font-size: 20rpx;
-			font-family: PingFangSC-Regular, PingFang SC;
-			font-weight: 400;
-			color: #303133;
-		}
-	}
-	.bottom-right{
-		width: 98rpx;
-		height: 98rpx;
-		display: flex;
-		margin-right: 180rpx;
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
-		
-		.right-img{
-			width: 56rpx;
-			height: 56rpx;
-			image{
-				width: 100%;
-				height: 100%;
-			}
-		}
-		.right-text{
-			font-size: 20rpx;
-			font-family: PingFangSC-Regular, PingFang SC;
-			font-weight: 400;
-			color: #303133;
-		}
-	}
 }
 .mineTabs{
 	width: 100%;
