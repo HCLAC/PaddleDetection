@@ -5,11 +5,6 @@ function back() {
 }
 
 function home() {
-	var pages = getCurrentPages();
-	uni.navigateBack({
-	    delta: pages.length
-	});
-	return
 	uni.switchTab({
 		url: '/pages/index/index'
 	});
