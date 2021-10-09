@@ -79,7 +79,7 @@
             "urlCheck" : true
         },
         "uniStatistics" : {
-            "enable" : true
+            "enable" : false
         },
         "optimization" : {
             "subPackages" : true
