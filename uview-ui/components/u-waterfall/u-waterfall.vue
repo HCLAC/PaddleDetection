@@ -83,13 +83,12 @@ export default {
 			this.tempList.forEach((item1, index1) => {
 				if (temp1.height <= temp2.height){
 					temp1.list.push(item1)
-					temp1.height += item1.height ? parseFloat(item1.height) :440
+					temp1.height += item1.height ? parseFloat(item1.height)+100 :440
 				} else {
 					temp2.list.push(item1)
-					temp2.height += item1.height ? parseFloat(item1.height) :440
+					temp2.height += item1.height ? parseFloat(item1.height)+100 :440
 				}
 			})
-			
 			if (leftRect.height < rightRect.height) {
 				this.leftList = this.leftList.concat(temp1.height < temp2.height?temp2.list:temp1.list);
 				this.rightList = this.rightList.concat(temp1.height < temp2.height?temp1.list:temp2.list);
