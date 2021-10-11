@@ -3,38 +3,44 @@
 	<view class="city-select">
 		<scroll-view :scroll-top="scrollTop" scroll-y="true" class="city-select-main" id="city-select-main" :scroll-into-view="toView">
 			<!-- 预留搜索-->
-			<view class="city-serach" v-if="isSearch"><input @input="keyInput" :placeholder="placeholder" class="city-serach-input" /></view>
+			<view class="city-serach" v-if="isSearch">
+				<input @input="keyInput" :placeholder="placeholder" v-model="inputValue" class="city-serach-input" />
+				<image src="@/static/images/gb.svg" mode="" @click="empty" v-if="searchCity"></image>
+				<view class="city-serach-text" @click="home">
+					取消
+				</view>
+			</view>
 			<!-- 当前定位城市 -->
-			<view class="hot-box" v-if="activeCity && !serachCity">
-				<view class="box-city" v-if="activeCity && !serachCity">
+			<view class="hot-box" v-if="activeCity && !searchCity">
+				<view class="box-city" v-if="activeCity && !searchCity">
 					<image src="@/static/images/iconMap3.png" mode=""></image>
 					<view class="box-item" @click="cityTrigger(activeCity)">{{ activeCity[formatName] }}</view>
 				</view>
-				<view class="box-title" v-if="activeCity && !serachCity">当前定位</view>
+				<view class="box-title" v-if="activeCity && !searchCity">当前定位</view>
 			</view>
 			<!-- 热门城市 -->
-			<view class="hot-title" v-if="hotCity.length > 0 && !serachCity">热门城市</view>
-			<view class="hot-city" v-if="hotCity.length > 0 && !serachCity">
+			<view class="hot-title" v-if="hotCity.length > 0 && !searchCity">热门城市</view>
+			<view class="hot-city" v-if="hotCity.length > 0 && !searchCity">
 				<template v-for="(item, index) in hotCity">
 					<view :key="index" @click="cityTrigger(item, 'hot')" class="hot-item">{{ item[formatName] }}</view>
 				</template>
 			</view>
 			<!-- 城市列表(搜索前) -->
-			<view class="citys" v-if="!serachCity">
+			<view class="citys" v-if="!searchCity">
 				<view v-for="(city, index) in sortItems" :key="index" v-show="city.isCity" class="citys-row">
 					<view class="citys-item-letter" :id="'city-letter-' + (city.name === '#' ? '0' : city.name)">{{ city.name }}</view>
 					<view class="citys-item" v-for="(item, inx) in city.citys" :key="inx" @click="cityTrigger(item)">{{ item.cityName }}</view>
 				</view>
 			</view>
 			<!-- 城市列表(搜索后)  -->
-			<view class="citys" v-if="serachCity">
-				<view v-for="(item, index) in searchDatas" :key="index" class="citys-row">
+			<view class="citys" v-if="searchCity">
+				<view v-for="(item, index) in searchDatas" :key="index" class="citys-row-serach">
 					<view class="citys-item" :key="inx" @click="cityTrigger(item)">{{ item.name }}</view>
 				</view>
 			</view>
 		</scroll-view>
 		<!-- 城市选择索引-->
-		<view class="city-indexs-view" v-if="!serachCity">
+		<view class="city-indexs-view" v-if="!searchCity">
 			<view class="city-indexs">
 				<view class="city-top">
 					#
@@ -52,10 +58,10 @@ import citySelect from './citySelect.js';
 export default {
 	props: {
 		//查询提示文字
-		placeholder: {
-			type: String,
-			default: '请输入城市名称'
-		},
+		// placeholder: {
+		// 	type: String,
+		// 	default: '请输入城市名称'
+		// },
 		//传入要排序的名称
 		formatName: {
 			type: String,
@@ -89,8 +95,10 @@ export default {
 			cityindexs: [], // 城市索引
 			activeCityIndex: '', // 当前所在的城市索引
 			handleCity: [], // 处理后的城市数据
-			serachCity: '', // 搜索的城市
-			cityData: []
+			searchCity: '', // 搜索的城市
+			cityData: [],
+			placeholder:'请输入城市名称',
+			inputValue:''
 		};
 	},
 	computed: {
@@ -118,7 +126,7 @@ export default {
 		searchDatas() {
 			var searchData = [];
 			for (let i = 0; i < this.cityData.length; i++) {
-				if (this.cityData[i][this.formatName].indexOf(this.serachCity) !== -1) {
+				if (this.cityData[i][this.formatName].indexOf(this.searchCity) !== -1) {
 					searchData.push({
 						oldData: this.cityData[i],
 						name: this.cityData[i][this.formatName]
@@ -140,6 +148,17 @@ export default {
 		}
 	},
 	methods: {
+		//input清空按钮
+		empty(){
+			this.searchCity = ''
+			this.inputValue = ''
+		},
+		//取消按钮
+		home(){
+			uni.navigateBack({
+			    delta: 1
+			});
+		},
 		/**
 		 * @desc 初始化
 		 */
@@ -154,7 +173,7 @@ export default {
 		 * @desc 监听输入框的值
 		 */
 		keyInput(event) {
-			this.serachCity = event.detail.value;
+			this.searchCity = event.detail.value;
 		},
 		/**
 		 * @desc 初始化城市数据
@@ -268,8 +287,11 @@ view {
 	background: #FFFFFF;
 	border-top: 1rpx solid #EDEFF2;
 	border-bottom: 1rpx solid #EDEFF2;
+	position: relative;
+	
 	&-input {
-		width: 694rpx;
+		// width: 694rpx;
+		width: 500rpx;
 		height: 72rpx;
 		background: #F8F8F8;
 		color: #909399;
@@ -280,6 +302,22 @@ view {
 		padding: 0 vww(16);
 		border: 1px solid #F8F8F8;
 		border-radius: 36rpx;
+	}
+	
+	image{
+		width: 36rpx;
+		height: 36rpx;
+		position: absolute;
+		right: 136rpx;
+	}
+	.city-serach-text{
+		// width: 64rpx;
+		// height: 32rpx;
+		font-size: 32rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #303133;
+		margin-left: 24rpx;
 	}
 }
 
@@ -312,7 +350,7 @@ view {
 		// padding-left: vww(23);
 		// padding-right: vww(20);
 		overflow: hidden;
-		width: 100vw;
+		// width: 100vw;
 		width: 694rpx;
 		margin: 0 auto;
 		background: #FFFFFF;
@@ -394,6 +432,18 @@ view {
 				}
 			}
 		}
+		.citys-row-serach{
+			width: 100%;
+			height: 98rpx;
+			border-bottom: 2rpx solid #EDEFF2;
+			color: #A86B13;
+			display: flex;
+			align-items: center;
+			background: #FFFFFF;
+			.citys-item{
+				margin-left: 60rpx;
+			}
+		}
 	}
 	.hot-box{
 		display: flex;
@@ -431,12 +481,13 @@ view {
 	.city-indexs-view {
 		position: absolute;
 		right: 0;
-		top: 0;
+		top: 50%;
+		transform: translate(0,-50%);
 		z-index: 999;
 		display: flex;
 		width: 28rpx;
 		// width: vww(20);
-		height: 100%;
+		// height: 100%;
 		display: flex;
 		justify-content: center;
 		align-items: center;

@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="nav-bar">
-			<uni-nav-bar :title="false" :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor" :shadow="true">
+			<uni-nav-bar :title="false" :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor" :shadow='Shadow'>
 				<view slot="center" class="input-view" @click="toSearch">
 					<view class="input-uni-icon-Box">
 						<image class="input-uni-icon" src="/static/images/icon-search.png" />
@@ -106,6 +106,7 @@
 				],
 				serviceProvider: '',
 				popularCities:false,
+				Shadow:false,
 			};
 		},
 		created() {
@@ -159,6 +160,7 @@
 			if (scrollTop >= this.bannerPostion){
 				if (this.backgroundColor != '#FFFFFF'){
 					this.backgroundColor = '#FFFFFF';
+					this.Shadow = true
 					uni.setNavigationBarColor({
 					    frontColor: '#000000',
 						backgroundColor: '#FFFFFF',
@@ -169,6 +171,7 @@
 				}
 			} else {
 				this.backgroundColor = 'transparent';
+				this.Shadow = false
 				uni.setNavigationBarColor({
 				    frontColor: '#ffffff',
 					backgroundColor: '#000000',
