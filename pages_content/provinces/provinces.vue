@@ -471,12 +471,14 @@ export default {
 			if(pageNum == 1){
 				this.firstTime = new Date().getTime()
 			}
-			var that = this;
 			
-			if (that.querys == null) {
-				that.querys.city_id = 0
-				that.querys.state_id = 0
+			if (this.querys == null) {
+				this.querys = {
+					city_id: 0,
+					state_id: 0
+				}
 			}
+			var that = this;
 			this.HTTP.request({
 				url: '/article/list?page=' + pageNum + '&count=' + pageSize,
 				defer: true,

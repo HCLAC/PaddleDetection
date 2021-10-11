@@ -67,12 +67,12 @@
 			<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
 		</view>
 		<!-- 内容详情轮播图 -->
-		<view>
+		<view v-else>
 			<view class="uni-padding-wrap">
 				<view class="page-section" >
 					<view class="page-section-spacing" >
 						<swiper @change="change" :autoplay="true" class="swiper" :indicator-dots="false" circular='true'>
-							<swiper-item v-for="item in siteInfo.images" :key="item.id" class="swiper-item" > 
+							<swiper-item v-for="(item, index) in siteInfo.images" :key="index" class="swiper-item" > 
 								<u-image width="100%" height="440rpx" :src="item"  mode="aspectFill" ></u-image>
 							</swiper-item>
 						</swiper>
