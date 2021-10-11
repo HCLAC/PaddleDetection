@@ -313,7 +313,7 @@
             "network": "all",
             "packages": ["pages_article"]
         },
-        "pages_content/province/province": {
+        "pages_content/provinces/provinces": {
             "network": "all",
             "packages": ["pages_province", "pages_questions"]
         },
@@ -327,7 +327,7 @@
 		"navigationBarTextStyle": "black",
 		"backgroundColorTop": "#FFFFFF",
 		"navigationStyle":"custom",
-		"onReachBottomDistance": "150" 
+		"onReachBottomDistance": 150
 	}
 	,"tabBar": {
 		"list": [{
