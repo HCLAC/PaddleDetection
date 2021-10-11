@@ -408,9 +408,8 @@ view {
 			width: 694rpx;
 			margin: 0 auto;
 			padding: 0 30rpx;
-			
 			.citys-item-letter {
-				margin-left: vww(-18);
+				margin-left: vww(-30);
 				padding-left: vww(18);
 				margin-top: -1px;
 				width: 100vw;
@@ -420,7 +419,6 @@ view {
 				background: #f6f5fa;
 				border-top: none;
 			}
-
 			.citys-item {
 				width: 100%;
 				line-height: vww(50);

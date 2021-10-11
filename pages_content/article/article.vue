@@ -102,7 +102,7 @@
 					<view class="userMse">
 						<view class="left">
 							<view class="userHeard">
-								<image :src="articleInfo.avatar" @click="tobloggers(articleInfo.author_id)"></image>
+								<image :src="articleInfo.avatar ? articleInfo.avatar : '/static/images/userImg.svg'" @click="tobloggers(articleInfo.author_id)"></image>
 							</view>
 							<view class="userMse-r">
 								<text class="userNikename" selected=true> {{ articleInfo.author_name }}</text>
@@ -238,9 +238,7 @@
 				current: 0,
 				list: [],
 				title: '领途羊',
-				articleInfo: {
-					avatar:'@/static/images/userimg.svg'
-				},
+				articleInfo: [],
 				articleSEO: {
 					title: '',
 					keywords: '',
@@ -416,13 +414,11 @@
 							});
 							return
 						}
-						
 						var articleInfo = res.data.data
 						that.title = articleInfo.title
 						that.articleSEO.title = articleInfo.title
 						that.articleSEO.keywords = articleInfo.keywords
 						that.articleSEO.description = articleInfo.description
-						
 						// 适配字体
 						articleInfo.content = articleInfo.content.replace(/(\d+)px/g, function(s, t) {
 							s = s.replace('px', '');
