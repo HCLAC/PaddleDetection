@@ -3,7 +3,13 @@
 	<view class="city-select">
 		<scroll-view :scroll-top="scrollTop" scroll-y="true" class="city-select-main" id="city-select-main" :scroll-into-view="toView">
 			<!-- 预留搜索-->
-			<view class="city-serach" v-if="isSearch"><input @input="keyInput" :placeholder="placeholder" class="city-serach-input" /></view>
+			<view class="city-serach" v-if="isSearch">
+				<input @input="keyInput" :placeholder="placeholder" v-model="inputValue" @click="obtain" class="city-serach-input" />
+				<image src="@/static/images/gb.svg" mode="" @click="empty" v-if="serachCity"></image>
+				<view class="city-serach-text" @click="home">
+					取消
+				</view>
+			</view>
 			<!-- 当前定位城市 -->
 			<view class="hot-box" v-if="activeCity && !serachCity">
 				<view class="box-city" v-if="activeCity && !serachCity">
@@ -28,7 +34,7 @@
 			</view>
 			<!-- 城市列表(搜索后)  -->
 			<view class="citys" v-if="serachCity">
-				<view v-for="(item, index) in searchDatas" :key="index" class="citys-row">
+				<view v-for="(item, index) in searchDatas" :key="index" class="citys-row-serach">
 					<view class="citys-item" :key="inx" @click="cityTrigger(item)">{{ item.name }}</view>
 				</view>
 			</view>
@@ -52,10 +58,10 @@ import citySelect from './citySelect.js';
 export default {
 	props: {
 		//查询提示文字
-		placeholder: {
-			type: String,
-			default: '请输入城市名称'
-		},
+		// placeholder: {
+		// 	type: String,
+		// 	default: '请输入城市名称'
+		// },
 		//传入要排序的名称
 		formatName: {
 			type: String,
@@ -90,7 +96,9 @@ export default {
 			activeCityIndex: '', // 当前所在的城市索引
 			handleCity: [], // 处理后的城市数据
 			serachCity: '', // 搜索的城市
-			cityData: []
+			cityData: [],
+			placeholder:'请输入城市名称',
+			inputValue:''
 		};
 	},
 	computed: {
@@ -140,6 +148,17 @@ export default {
 		}
 	},
 	methods: {
+		//input清空按钮
+		empty(){
+			this.serachCity = ''
+			this.inputValue = ''
+		},
+		//取消按钮
+		home(){
+			uni.navigateBack({
+			    delta: 1
+			});
+		},
 		/**
 		 * @desc 初始化
 		 */
@@ -268,8 +287,11 @@ view {
 	background: #FFFFFF;
 	border-top: 1rpx solid #EDEFF2;
 	border-bottom: 1rpx solid #EDEFF2;
+	position: relative;
+	
 	&-input {
-		width: 694rpx;
+		// width: 694rpx;
+		width: 500rpx;
 		height: 72rpx;
 		background: #F8F8F8;
 		color: #909399;
@@ -280,6 +302,22 @@ view {
 		padding: 0 vww(16);
 		border: 1px solid #F8F8F8;
 		border-radius: 36rpx;
+	}
+	
+	image{
+		width: 36rpx;
+		height: 36rpx;
+		position: absolute;
+		right: 136rpx;
+	}
+	.city-serach-text{
+		// width: 64rpx;
+		// height: 32rpx;
+		font-size: 32rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #303133;
+		margin-left: 24rpx;
 	}
 }
 
@@ -312,7 +350,7 @@ view {
 		// padding-left: vww(23);
 		// padding-right: vww(20);
 		overflow: hidden;
-		width: 100vw;
+		// width: 100vw;
 		width: 694rpx;
 		margin: 0 auto;
 		background: #FFFFFF;
@@ -394,6 +432,18 @@ view {
 				}
 			}
 		}
+		.citys-row-serach{
+			width: 100%;
+			height: 98rpx;
+			border-bottom: 2rpx solid #EDEFF2;
+			color: #A86B13;
+			display: flex;
+			align-items: center;
+			background: #FFFFFF;
+			.citys-item{
+				margin-left: 60rpx;
+			}
+		}
 	}
 	.hot-box{
 		display: flex;
@@ -431,12 +481,13 @@ view {
 	.city-indexs-view {
 		position: absolute;
 		right: 0;
-		top: 0;
+		top: 50%;
+		transform: translate(0,-50%);
 		z-index: 999;
 		display: flex;
 		width: 28rpx;
 		// width: vww(20);
-		height: 100%;
+		// height: 100%;
 		display: flex;
 		justify-content: center;
 		align-items: center;

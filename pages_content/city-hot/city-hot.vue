@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="box">
 		<view class="nav-bar">
 			<uni-nav-bar :fixed="true" :status-bar="true" title="选择城市">
 				<view slot="left" class="slotleft">
@@ -118,5 +118,10 @@ export default {
 </script>
 
 <style lang="scss">
-
+	.box{
+		padding-bottom: constant(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom);
+		box-sizing: content-box;
+		overflow: hidden;
+	}
 </style>
