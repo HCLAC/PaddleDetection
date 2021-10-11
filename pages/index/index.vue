@@ -588,6 +588,8 @@
 							font-family: PingFangSC-Medium, PingFang SC;
 							font-weight: 500;
 							color: #303133;
+							display: flex;
+							justify-content: center;
 						}
 					}
 				}

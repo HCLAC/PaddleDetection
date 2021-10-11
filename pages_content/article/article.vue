@@ -238,7 +238,9 @@
 				current: 0,
 				list: [],
 				title: '领途羊',
-				articleInfo: null,
+				articleInfo: {
+					avatar:'@/static/images/userimg.svg'
+				},
 				articleSEO: {
 					title: '',
 					keywords: '',
