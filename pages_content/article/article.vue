@@ -429,10 +429,15 @@
 						});
 						// 处理文章图片，先处理图片，再处理营销组件，因为组件中的图片不需要处理
 						let article_images = articleInfo.content.match(/<img[^>]*\/>/gi);
+						let image_in_page = ''
 						if (article_images != null && article_images.length > 0){
 							for (var i=0;i<article_images.length;i++){
 								var item = article_images[i]
 								let obj = item.split('"')
+								if (image_in_page.length == 0 && obj[1].indexOf("lingtuyang.cn")!=-1){
+									image_in_page = obj[1]
+								}
+								
 								if (obj[0].indexOf("src") === -1 || !obj || obj.length < 8){
 									console.warn("未知图片格式：", item)
 									if (obj[1].indexOf("lingtuyang.cn")!=-1){
@@ -519,7 +524,7 @@
 							articleTitle: articleInfo.title,
 							keywords: articleInfo.keywords,
 							description: articleInfo.description,
-							image: articleInfo.cover_image ?articleInfo.cover_image:articleInfo.images.slice(0,3),
+							image: image_in_page,
 							releaseDate: articleInfo.update_at,
 							likes: articleInfo.like_count,
 							collects: articleInfo.fav_count,
