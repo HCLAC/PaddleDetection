@@ -327,7 +327,7 @@
 		"navigationBarTextStyle": "black",
 		"backgroundColorTop": "#FFFFFF",
 		"navigationStyle":"custom",
-		"onReachBottomDistance": 150
+		"onReachBottomDistance": 250
 	}
 	,"tabBar": {
 		"list": [{
