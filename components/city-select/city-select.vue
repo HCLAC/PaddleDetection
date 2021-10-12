@@ -285,7 +285,6 @@ view {
 	align-items: center;
 	background: #FFFFFF;
 	border-top: 1rpx solid #EDEFF2;
-	border-bottom: 1rpx solid #EDEFF2;
 	position: relative;
 	
 	&-input {
@@ -325,7 +324,7 @@ view {
 	// overflow: scroll;
 	// -webkit-overflow-scrolling: touch;
 	width: 100%;
-	height: 100%;
+	height: 100vh;
 	background: #f6f5fa;
 	// overflow-y: auto;
 }

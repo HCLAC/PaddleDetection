@@ -1,7 +1,7 @@
 <template>
 	<view class="u-no-network" v-if="!isConnected" :style="{'z-index': uZIndex}" @touchmove.stop.prevent="() => {}">
 		<view class="u-inner">
-			<image class="u-error-icon" :src="image" mode="widthFix"></image>
+			<image class="u-error-icon" src="@/static/images/index-kong.png" mode="widthFix"></image>
 			<view class="u-tips">
 				{{tips}}
 			</view>
@@ -35,7 +35,7 @@
 			// 页面文字提示
 			tips: {
 				type: String,
-				default: '哎呀，网络信号丢失'
+				default: '关注列表空空的'
 			},
 			// 一个z-index值，用于设置没有网络这个组件的层次，因为页面可能会有其他定位的元素层级过高，导致此组件被覆盖
 			zIndex: {
@@ -203,11 +203,12 @@
 	.u-tips {
 		color: $u-tips-color;
 		font-size: 28rpx;
-		padding: 30rpx 0;
+		padding: 40rpx 0;
 	}
 
 	.u-error-icon {
-		width: 300rpx;
+		width: 202rpx;
+		height: 206rpx;
 	}
 
 	.u-to-setting {
@@ -221,12 +222,24 @@
 	}
 
 	.u-retry {
-		margin-top: 30rpx;
-		border: 1px solid $u-tips-color;
-		color: $u-tips-color;
-		font-size: 28rpx;
-		padding: 6rpx 30rpx;
-		border-radius: 3px;
+		// margin-top: 30rpx;
+		// border: 1px solid $u-tips-color;
+		// color: $u-tips-color;
+		// font-size: 28rpx;
+		// padding: 6rpx 30rpx;
+		// border-radius: 3px;
+		width: 416rpx;
+		height: 92rpx;
+		background: #FFE512;
+		border-radius: 46rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 32rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #303133;
+		margin-top: 20rpx;
 	}
 
 	.u-retry-hover {

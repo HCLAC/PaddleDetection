@@ -759,6 +759,7 @@
 								height: 44rpx;
 							}
 							text{
+								width: 20rpx;
 								font-size: 20rpx;
 								font-family: PingFangSC-Regular, PingFang SC;
 								font-weight: 400;
