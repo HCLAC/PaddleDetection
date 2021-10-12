@@ -32,6 +32,7 @@
 						<view class="citys-item-letter" :id="'city-letter-' + (city.name === '#' ? '0' : city.name)">{{ city.name }}</view>
 						<view class="citys-item" v-for="(item, inx) in city.citys" :key="inx" @click="cityTrigger(item)">{{ item.cityName }}</view>
 					</view>
+					<view class='kong'></view>
 				</view>	
 			</view>
 			<!-- 城市列表(搜索后)  -->
@@ -324,7 +325,7 @@ view {
 	// overflow: scroll;
 	// -webkit-overflow-scrolling: touch;
 	width: 100%;
-	height: 100vh;
+	height: 90vh;
 	background: #f6f5fa;
 	// overflow-y: auto;
 }
@@ -332,7 +333,7 @@ view {
 .city-select {
 	position: relative;
 	width: 100vw;
-	height: 100vh;
+	height: 100%;
 	background: #f6f5fa;
 	// padding-top: 110rpx;
 	// 热门城市
@@ -439,6 +440,10 @@ view {
 			.citys-item{
 				margin-left: 60rpx;
 			}
+		}
+		.kong{
+			width: 100%;
+			height: 30rpx;
 		}
 	}
 	.hot-box{
