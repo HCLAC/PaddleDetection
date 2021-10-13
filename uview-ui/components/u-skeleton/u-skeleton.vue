@@ -96,19 +96,19 @@
 			selecterQueryInfo() {
 				// 获取整个父组件容器的高度，当做骨架屏的高度 
 				// 在微信小程序中，如果把骨架屏放入组件中使用的话，需要调in(this)上下文为父组件才有效
-				let query = '';
-				// #ifdef MP-WEIXIN
-				query = uni.createSelectorQuery().in(this.$parent);
-				// #endif
-				// #ifndef MP-WEIXIN
-				query = uni.createSelectorQuery()
-				// #endif
-				query.selectAll('.u-skeleton').boundingClientRect().exec((res) => {
-					// this.windowHeight = res[0][0].height;
-					// this.windowWinth = res[0][0].width;
-					this.top = res[0][0].bottom - res[0][0].height;
-					this.left = res[0][0].left;
-				});
+				// let query = '';
+				// // #ifdef MP-WEIXIN
+				// query = uni.createSelectorQuery().in(this.$parent);
+				// // #endif
+				// // #ifndef MP-WEIXIN
+				// query = uni.createSelectorQuery()
+				// // #endif
+				// query.selectAll('.u-skeleton').boundingClientRect().exec((res) => {
+				// 	// this.windowHeight = res[0][0].height;
+				// 	// this.windowWinth = res[0][0].width;
+				// 	// this.top = res[0][0].bottom - res[0][0].height;
+				// 	// this.left = res[0][0].left;
+				// });
 				// 矩形骨架元素
 				this.getRectEls();
 				// 圆形骨架元素
