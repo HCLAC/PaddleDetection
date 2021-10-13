@@ -1,7 +1,7 @@
 <template>
 	<!-- 城市选择-->
 	<view class="city-select">
-		<scroll-view :scroll-top="scrollTop" scroll-y="true" class="city-select-main" id="city-select-main" :scroll-into-view="toView">
+		<scroll-view :scroll-top="scrollTop" scroll-y="true" :style="{background:bgColor}" class="city-select-main" id="city-select-main" :scroll-into-view="toView">
 			<!-- 预留搜索-->
 			<view class="city-serach" v-if="isSearch">
 				<input @input="keyInput" :placeholder="placeholder" v-model="inputValue" class="city-serach-input" />
@@ -98,7 +98,8 @@ export default {
 			searchCity: '', // 搜索的城市
 			cityData: [],
 			placeholder:'请输入城市名称',
-			inputValue:''
+			inputValue:'',
+			bgColor:'#f6f5fa'
 		};
 	},
 	computed: {
@@ -152,6 +153,7 @@ export default {
 		empty(){
 			this.searchCity = ''
 			this.inputValue = ''
+			this.bgColor = '#f6f5fa'
 		},
 		//取消按钮
 		home(){
@@ -174,6 +176,11 @@ export default {
 		 */
 		keyInput(event) {
 			this.searchCity = event.detail.value;
+			if(this.searchCity){
+				this.bgColor = '#ffffff'
+			}else{
+				this.bgColor = '#f6f5fa'
+			}
 		},
 		/**
 		 * @desc 初始化城市数据
@@ -326,7 +333,8 @@ view {
 	// -webkit-overflow-scrolling: touch;
 	width: 100%;
 	height: 100vh;
-	background: #f6f5fa;
+	// background: #f6f5fa;
+	// background: #FFFFFF;
 	// overflow-y: auto;
 }
 
@@ -433,12 +441,14 @@ view {
 			width: 100%;
 			height: 98rpx;
 			border-bottom: 2rpx solid #EDEFF2;
-			color: #A86B13;
-			display: flex;
-			align-items: center;
 			background: #FFFFFF;
 			.citys-item{
-				margin-left: 60rpx;
+				width: 100%;
+				height: 100%;
+				padding-left: 60rpx;
+				display: flex;
+				align-items: center;
+				color: #A86B13;
 			}
 		}
 	}
