@@ -199,7 +199,7 @@
 							    }
 							  });
 						  }else{
-							  this.getAdress()
+							  this.getLocation()
 						  }
 					   }
 					})
@@ -215,7 +215,6 @@
 					complete: () => {
 						this.getBanner();
 						this.getAdress();
-						// this.getAreaHot();
 					}
 				});
 				
@@ -249,8 +248,23 @@
 					}
 				});
 			},
+			getAdress(){
+				uni.getSetting({
+				   success: res =>{
+					  if(res.authSetting['scope.userLocation'] == false){
+						  this.getAreaHot()
+						  this.dqdwText = '未定位';
+						  this.popularCities = true
+						  this.locationCity.city_id = '0'
+						  this.locationCity.name = '暂无定位'
+					  }else{
+						  this.getLocation()
+					  }
+				   }
+				})
+			},
 			// 获取当前地理位置
-			getAdress() {
+			getLocation() {
 				var that = this;
 				// #ifdef H5
 				this.$jsonp('https://apis.map.qq.com/ws/location/v1/ip?output=jsonp',{
@@ -301,24 +315,7 @@
 					},
 					// 未开启定位
 					fail: error => {
-						this.HTTP.request({
-							url: '/area/hot',
-							retry: 3,
-							success: res => {
-								if (res.statusCode != 200 || res.data.code != 0){
-									uni.showToast({
-										title: res.data.msg,
-										icon: 'none'
-									});
-									return
-								}
-								var areaList = res.data.data
-								areaList.forEach((item1, index1) => {
-									item1.image = this.Utils.addImageProcess(item1.image, false, 30)
-								})
-								this.areaList = areaList;
-							}
-						});
+						this.getAreaHot()
 						console.log('定位', error)
 						if (error.errCode === 10005 || error.errCode === 10003) {
 							uni.showToast({
@@ -333,7 +330,26 @@
 					}
 				});
 			},
-
+			getAreaHot(){
+				this.HTTP.request({
+					url: '/area/hot',
+					retry: 3,
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						var areaList = res.data.data
+						areaList.forEach((item1, index1) => {
+							item1.image = this.Utils.addImageProcess(item1.image, false, 30)
+						})
+						this.areaList = areaList;
+					}
+				});
+			},
 			// 点击更多
 			showCity() {
 				uni.navigateTo({
