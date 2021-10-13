@@ -17,26 +17,31 @@
 				<view class="usermes">
 					<image lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'" class="userAva"></image>
 					<view class="userR">
-						<view class="userName" @click="toMineInfo" v-if="hasLogin">{{ userInfo.nickName }}
-							<image src="/static/images/iconExit.svg"></image>
-						</view>
-						<view class="userSignin" v-else @click="signIn">
-							登录/注册
-						</view>
-						<view class="fa" v-if="hasLogin">
-							<view class="fllow" @click="toConcern">
-								<text>关注</text>
-								<view class="fllowNum">{{ userInfo.fllowNum }}</view>
+						<view v-if="hasLogin">
+							<view class="userName" @click="toMineInfo">{{ userInfo.nickName }}
+								<image src="/static/images/iconExit.svg"></image>
 							</view>
-							<view class="answers" @click="toAnswers" >
-								<text>问答</text>
-								<view class="answersNum">{{ userInfo.answersNum }}</view>
+							<view class="fa">
+								<view class="fllow" @click="toConcern">
+									<text>关注</text>
+									<view class="fllowNum">{{ userInfo.fllowNum }}</view>
+								</view>
+								<view class="answers" @click="toAnswers" >
+									<text>问答</text>
+									<view class="answersNum">{{ userInfo.answersNum }}</view>
+								</view>
 							</view>
 						</view>
-						<view class="userMsg" v-else>
-							点击登录享受更多更多精彩信息
+						<view v-else>
+							<view class="userSignin" @click="signIn">
+								登录/注册
+							</view>
+							<view class="userMsg">
+								点击登录享受更多更多精彩信息
+							</view>
 						</view>
 					</view>
+					
 				</view>
 			</view>
 			<!-- 我的收藏 -->
@@ -99,17 +104,19 @@ export default {
 			isInit: true,
 		};
 	},
-	// #ifdef MP-BAIDU
-	onInit(query) {
-	// #endif
-	// #ifndef MP-BAIDU
-	onLoad(query) {
-	// #endif
-		this.loadData()
-	},
+	// // #ifdef MP-BAIDU
+	// onInit(query) {
+	// // #endif
+	// // #ifndef MP-BAIDU
+	// onLoad(query) {
+	// // #endif
+	// 	this.loadData()
+	// },
 	onShow() {
-		!this.isInit && this.loadData()
-		this.isInit = false
+		this.hasLogin = getApp().globalData.Authorization.length!=0?true:false
+		this.loadData()
+		// !this.isInit && this.loadData()
+		// this.isInit = false
 	},
 	mounted() {
 		this.navbarHeight = getApp().globalData.navbarHeight
@@ -121,7 +128,7 @@ export default {
 		} else if (e.scrollTop > 0 && this.headerFixed == false){
 			this.headerFixed = true
 		}
-		if (e.scrollTop >  this.cardheight) {
+		if (e.scrollTop > this.cardheight) {
 			if (e.scrollTop > this.cardheight+20 && this.isFixed){
 				return
 			}
@@ -131,13 +138,13 @@ export default {
 		}
 	},
 	methods: {
-		signIn(){
+		signIn() {
 			uni.navigateTo({
 				url: '/pages_mine/login/login'
 			});
 			this.isInit = false
 		},
-		loadData(){
+		loadData() {
 			this.getUserMsg();
 		},
 		// 获取用户信息
@@ -155,12 +162,10 @@ export default {
 							title: '请点击登录',
 							icon: 'none'
 						});
-						// uni.navigateTo({
-						// 	url: '/pages_mine/login/login?ismine=1'
-						// });
+						that.hasLogin = false
 						return
 					}
-					this.hasLogin = true
+					that.hasLogin = true
 					uni.setStorage({
 						key: 'userinfo',
 						data: res.data.data,
@@ -184,7 +189,11 @@ export default {
 					userInfo.answersNum = answersNum>10000?((answersNum-(answersNum%1000))/10000+'w'):answersNum
 					userInfo.avatar = that.Utils.addImageProcess(userInfo.avatar, false, 60)
 					that.userInfo = userInfo
-				}
+				},
+				fail: () => {
+					//  请求失败,隐藏加载状态
+					that.hasLogin = false
+				},
 			})
 		},
 		calcCardHeight(){

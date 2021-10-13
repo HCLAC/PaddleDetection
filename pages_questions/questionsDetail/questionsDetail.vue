@@ -142,7 +142,7 @@
 			<view class="addBox" @click="sendAsk">
 				<view class="midBox">
 					<image src="/static/images/addQ.svg"></image>
-					<text>添加问答</text>
+					<text>添加回答</text>
 				</view>
 			</view>
 			<!-- <view class="aFLine"></view> -->

@@ -189,8 +189,8 @@
 			updateLikeRight(e, index) {
 				this.updateLike(e, index, false) 
 			},
-			updateLike(obj, index, left){
-				if (!this.Utils.isLogin()){
+			updateLike(obj, index, left) {
+				if (!this.Utils.isLogin()) {
 					return
 				}
 				if (this.hasLikeClick) {
