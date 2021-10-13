@@ -149,9 +149,11 @@
 			}
 			this.firstTime = new Date().getTime()
 			this.firstLoad = false
+			
 			// 不是首次登录，刷新瀑布流文章
 			if (!this.firstLogin){
 				this.mescroll.resetUpScroll()
+				this.firstLogin = true
 			}
 		},
 		// 滚动
