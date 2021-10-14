@@ -78,7 +78,7 @@
 				</view>
 			</scroll-view>
 		</view>
-		<mescroll-body class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-body v-if="showType > 1" class="mescroll" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="container" v-if="showType == 2" >
 				<!-- 省市主题 -->
 				<block v-if="result && result.area">
