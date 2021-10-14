@@ -238,6 +238,12 @@
 						width: 68rpx;
 						height: 68rpx;
 						border-radius: 50%;
+						background-image: url('/static/images/userImg.svg');
+						background-repeat: no-repeat;
+						background-position: 50%;
+						border-radius: 50%;
+						background-size:68rpx 68rpx;
+						overflow: hidden;
 						image{
 							border-radius: 50%;
 							width: 100%;

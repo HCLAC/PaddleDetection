@@ -16,7 +16,9 @@
 			<image src="/static/images/mineBack.png" class="backImg"></image>
 			<!-- 博主信息 -->
 			<view class="usermes" v-if="authorMsg">
-				<image class="userAva" lazy-load :src="authorMsg.avatar?authorMsg.avatar:'/static/images/userImg.svg'"></image>
+				<view class="userImg">
+					<image class="userAva" lazy-load :src="authorMsg.avatar?authorMsg.avatar:'/static/images/userImg.svg'"></image>
+				</view>
 				<view class="userR">
 					<view class="userName">{{ authorMsg.user_name }}</view>
 					<view class="likeandfans">
@@ -245,14 +247,25 @@ import bloggerArticleList from './blogger-article-list.vue';
 	height: 340rpx;
 	align-items: center;
 	margin-bottom: 38rpx;
-	.userAva {
+	.userImg{
 		margin-left: 28rpx;
 		width: 130rpx;
 		height: 130rpx;
 		box-shadow: 0px 0px 14px 0px #F7B500;
 		border: 3px solid #FFFFFF;
 		border-radius: 50%;
+		background-image: url('/static/images/userImg.svg');
+		background-repeat: no-repeat;
+		background-position: 50%;
+		border-radius: 50%;
+		background-size:130rpx 130rpx;
+		overflow: hidden;
+		.userAva {
+			width: 100%;
+			height: 100%;
+		}
 	}
+	
 	
 	.userR {
 		margin-left: 32rpx;
