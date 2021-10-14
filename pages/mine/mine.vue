@@ -103,19 +103,17 @@ export default {
 			isInit: true,
 		};
 	},
-	// // #ifdef MP-BAIDU
-	// onInit(query) {
-	// // #endif
-	// // #ifndef MP-BAIDU
-	// onLoad(query) {
-	// // #endif
-	// 	this.loadData()
-	// },
-	onShow() {
-		this.hasLogin = getApp().globalData.Authorization.length!=0?true:false
+	// #ifdef MP-BAIDU
+	onInit(query) {
+	// #endif
+	// #ifndef MP-BAIDU
+	onLoad(query) {
+	// #endif
 		this.loadData()
-		// !this.isInit && this.loadData()
-		// this.isInit = false
+	},
+	onShow() {
+		!this.isInit && this.loadData()
+		this.isInit = false
 	},
 	mounted() {
 		this.navbarHeight = getApp().globalData.navbarHeight

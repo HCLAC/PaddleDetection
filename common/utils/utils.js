@@ -13,10 +13,15 @@ function home() {
 function isLogin() {
 	let Authorization = getApp().globalData.Authorization
 	if (!Authorization){
-		uni.navigateTo({
-			url: '/pages_mine/login/login'
-		});
-		return false
+		// 获取token
+		Authorization = uni.getStorageSync('Authorization')
+		getApp().globalData.Authorization = Authorization
+		if (!Authorization){
+			uni.navigateTo({
+				url: '/pages_mine/login/login'
+			});
+			return false
+		}
 	}
 	return true
 }

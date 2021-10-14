@@ -92,7 +92,7 @@
 				},
 				backgroundColor: 'transparent',
 				firstTime: new Date().getTime(),
-				// firstLoad: false,
+				firstLoad: false,
 				firstLogin: true,
 				list: [],
 				bannerList: [
@@ -124,7 +124,7 @@
 		// #ifndef MP-BAIDU
 		onLoad(query) {
 		// #endif
-			// this.firstLoad = true
+			this.firstLoad = true
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.loadData()
 		},
@@ -137,18 +137,18 @@
 		},
 		onShow() {
 			// 间隔300s，重新加载首页
-			// var cur = Number((new Date().getTime())/1000).toFixed(0)
-			// var firstT = Number((this.firstTime)/1000).toFixed(0)
-			// if (cur-firstT > 300 && !this.firstLoad){
-			// 	uni.pageScrollTo({
-			// 		scrollTop: 0,
-			// 		duration: 10,
-			// 	})
-			// 	this.loadData()
-			// 	this.mescroll.resetUpScroll()
-			// }
+			var cur = Number((new Date().getTime())/1000).toFixed(0)
+			var firstT = Number((this.firstTime)/1000).toFixed(0)
+			if (cur-firstT > 300 && !this.firstLoad){
+				uni.pageScrollTo({
+					scrollTop: 0,
+					duration: 10,
+				})
+				this.loadData()
+				this.mescroll.resetUpScroll()
+			}
 			this.firstTime = new Date().getTime()
-			// this.firstLoad = false
+			this.firstLoad = false
 			
 			// 不是首次登录，刷新瀑布流文章
 			if (!this.firstLogin){
