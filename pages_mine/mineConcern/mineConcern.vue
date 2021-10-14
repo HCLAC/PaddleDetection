@@ -255,7 +255,12 @@
 		width: 104rpx;
 		height: 104rpx;
 		border-radius: 50%;
-
+		background-image: url('/static/images/userImg.svg');
+		background-repeat: no-repeat;
+		background-position: 50%;
+		border-radius: 50%;
+		background-size:104rpx 104rpx;
+		overflow: hidden;
 		image {
 			width: 100%;
 			height: 100%;

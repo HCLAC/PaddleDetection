@@ -1290,6 +1290,7 @@
 				background-repeat: no-repeat;
 				background-position: 50%;
 				border-radius: 50%;
+				background-size:80rpx 80rpx;
 				overflow: hidden;
 				image{
 					width: 100%;

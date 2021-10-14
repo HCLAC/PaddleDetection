@@ -118,7 +118,9 @@
 						</view>
 						<view class="authorBox">
 							<view class="author">
-								<image :src="item.avatar?item.avatar:'/static/images/userImg.svg'"></image>
+								<view class="authorImg">
+									<image :src="item.avatar?item.avatar:'/static/images/userImg.svg'"></image>
+								</view>
 								<text>{{item.account_name}}</text>
 							</view>
 							<view class="lookAnswers">
@@ -670,6 +672,11 @@
 						width: 68rpx;
 						height: 68rpx;
 						border-radius: 50%;
+						background-image: url('/static/images/userImg.svg');
+						background-repeat: no-repeat;
+						background-position: 50%;
+						border-radius: 50%;
+						background-size:68rpx 68rpx;
 						overflow: hidden;
 						image{
 							border-radius: 50%;
@@ -944,12 +951,23 @@
 						.author{
 							display: flex;
 							align-items: center;
-							image{
+							.authorImg{
 								width: 48rpx;
 								height: 48rpx;
 								border-radius: 50%;
 								margin-right: 16rpx;
+								background-image: url('/static/images/userImg.svg');
+								background-repeat: no-repeat;
+								background-position: 50%;
+								border-radius: 50%;
+								background-size:48rpx 48rpx;
+								overflow: hidden;
+								image{
+									width: 100%;
+									height: 100%;
+								}
 							}
+							
 							text{
 								font-size: 24rpx;
 								font-family: PingFangSC-Medium, PingFang SC;
