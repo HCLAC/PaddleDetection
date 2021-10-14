@@ -5,8 +5,8 @@
 			<!-- 预留搜索-->
 			<view class="city-serach" v-if="isSearch">
 				<input @input="keyInput" :placeholder="placeholder" :value="searchCity" class="city-serach-input" />
-				<image src="@/static/images/gb.svg" mode="" @click="empty" v-if="searchCity"></image>
-				<view class="city-serach-text" @click="home">
+				<image src="@/static/images/ic_search_sel.svg" mode="" @click="empty" v-if="searchCity"></image>
+				<view class="city-serach-text" @click="home" v-if="searchCity">
 					取消
 				</view>
 			</view>
@@ -30,7 +30,9 @@
 				<view class="citys" v-if="!searchCity">
 					<view v-for="(city, index) in sortItems" :key="index" v-show="city.isCity" class="citys-row">
 						<view class="citys-item-letter" :id="'city-letter-' + (city.name === '#' ? '0' : city.name)">{{ city.name }}</view>
-						<view class="citys-item" v-for="(item, inx) in city.citys" :key="inx" @click="cityTrigger(item)">{{ item.cityName }}</view>
+						<view class="box">
+							<view class="citys-item" v-for="(item, inx) in city.citys" :key="inx" @click="cityTrigger(item)">{{ item.cityName }}</view>
+						</view>
 					</view>
 					<view class='kong'></view>
 				</view>	
@@ -346,7 +348,8 @@ view {
 	.hot-title {
 		padding-left: vww(23);
 		width: 100vw;
-		font-size: 14px;
+		font-size: 28rpx;
+		font-weight: 400;
 		line-height: vww(40);
 		color: #303133;
 	}
@@ -405,36 +408,46 @@ view {
 	}
 
 	.citys {
-		.citys-row {
-			// padding-left: vww(18);
-			// width: 100%;
-			// font-size: 14px;
-			background: #FFFFFF;
+		.citys-row { 
+			// padding-left: vww(18); 
+			// width: 100%; 
+			// font-size: 14px; 
+			// background: #FFFFFF; 
 			width: 694rpx;
 			margin: 0 auto;
-			padding: 0 30rpx;
+			// padding: 0 30rpx;
+			border-radius: 8rpx;
+			overflow: hidden;
 			.citys-item-letter {
-				margin-left: vww(-30);
-				padding-left: vww(18);
-				margin-top: -1px;
+				// margin-left: vww(-30); 
+				padding-left: vww(10);
+				margin-top: -1px; 
 				width: 100vw;
-				line-height: vww(30);
-				// color: #9b9b9b;
-				color: #303133;
-				background: #f6f5fa;
-				border-top: none;
+				font-size: 28rpx;
+				font-weight: 400; 
+				line-height: vww(30); 
+				color: #303133; 
+				background: #f6f5fa; 
+				border-top: none; 
 			}
-			.citys-item {
-				width: 100%;
-				line-height: vww(50);
-				color: #4a4a4a;
-				border-bottom: 1px solid #ebebf0;
-
-				&:last-child {
-					border: none;
+			.box{
+				background: #FFFFFF;
+				border-radius: 8rpx;
+				overflow: hidden;
+				padding: 0 30rpx;
+				.citys-item {
+					width: 100%;
+					line-height: vww(50);
+					color: #4a4a4a;
+					border-bottom: 1px solid #ebebf0;
+				
+					&:last-child {
+						border: none;
+					}
 				}
-			}
-		}
+			} 
+			 
+		} 
 		.citys-row-serach{
 			width: 100%;
 			height: 98rpx;
@@ -443,24 +456,20 @@ view {
 			.citys-item{
 				width: 100%;
 				height: 100%;
-				padding-left: 60rpx;
+				padding-left: 54rpx;
 				display: flex;
 				align-items: center;
 				color: #A86B13;
 			}
 		}
-		.kong{
-			width: 100%;
-			height: 30rpx;
-		}
-	}
+	} 
 	.hot-box{
 		display: flex;
 		width: 694rpx;
 		height: 100rpx;
 		background: #FFFFFF;
 		border-radius: 8rpx;
-		margin: 30rpx 28rpx;
+		margin: 30rpx 28rpx 0;
 		align-items: center;
 		justify-content: space-between;
 		padding: 0 20rpx;
@@ -486,45 +495,45 @@ view {
 			font-weight: 400;
 			color: #303133;
 		}
-	}
-	.city-indexs-view {
-		position: absolute;
-		right: 0;
+	} 
+	.city-indexs-view { 
+		position: absolute; 
+		right: 0; 
 		top: 50%;
 		transform: translate(0,-50%);
-		z-index: 999;
+		z-index: 999; 
 		display: flex;
-		width: 28rpx;
-		// width: vww(20);
+		width: 28rpx; 
+		// width: vww(20); 
 		// height: 100%;
 		display: flex;
 		justify-content: center;
-		align-items: center;
-		// text-align: center;
-		.city-indexs {
-			width: vww(20);
-			text-align: center;
-			vertical-align: middle;
-			align-self: center;
+		align-items: center; 
+		// text-align: center; 
+		.city-indexs { 
+			width: vww(20); 
+			text-align: center; 
+			vertical-align: middle; 
+			align-self: center; 
 			.city-top{
 				color: #A86B13;
 				font-weight: 800;
-			}
-			.city-indexs-text {
-				// margin-bottom: vww(10);
-				// width: vww(20);
-				// font-size: 10px;
+			} 
+			.city-indexs-text { 
+				// margin-bottom: vww(10); 
+				// width: vww(20); 
+				// font-size: 10px; 
 				// color: #4d8cfd;
-				margin-bottom: 8rpx;
+				margin-bottom: 8rpx; 
 				font-size: 20rpx;
 				font-family: Helvetica;
 				font-weight: 800;
-				color: #A86B13;
-				&:last-child {
-					margin-bottom: 0;
-				}
-			}
-		}
-	}
-}
+				color: #A86B13; 
+				&:last-child { 
+					margin-bottom: 0; 
+				} 
+			} 
+		} 
+	} 
+} 
 </style>
