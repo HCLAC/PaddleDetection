@@ -69,7 +69,7 @@ export default {
     },
     lazyLoad: {
       type: Boolean,
-      default: false
+      default: true
     },
     loadingImg: {
       type: String,
