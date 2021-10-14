@@ -103,6 +103,7 @@
 						<view class="left">
 							<view class="userHeard">
 								<image :src="articleInfo.avatar ? articleInfo.avatar : '/static/images/userImg.svg'" @click="tobloggers(articleInfo.author_id)"></image>
+								<!-- <u-image :src="articleInfo.avatar ? articleInfo.avatar : '/static/images/userImg.svg'" @click="tobloggers(articleInfo.author_id)"></u-image> -->
 							</view>
 							<view class="userMse-r">
 								<text class="userNikename" selected=true> {{ articleInfo.author_name }}</text>
@@ -1285,6 +1286,8 @@
 			.userHeard {
 				width: 90rpx;
 				height: 90rpx;
+				// background-image: url('/static/images/userImg.svg');
+				// background-clip:padding-box;
 				image{
 					width: 100%;
 					height: 100%;

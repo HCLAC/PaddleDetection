@@ -41,7 +41,6 @@
 							</view>
 						</view>
 					</view>
-					
 				</view>
 			</view>
 			<!-- 我的收藏 -->

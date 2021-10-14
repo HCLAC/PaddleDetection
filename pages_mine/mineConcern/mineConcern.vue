@@ -74,7 +74,7 @@
 					noMoreSize: 10, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
 					empty:{
 					  use : true ,
-					  icon : '/static/images/empty.svg' ,
+					  icon : '/static/images/index-kong.png' ,
 					  tip : '您还没有关注任何人，去首页看看吧～',
 					  btnText : "",
 					  fixed: false,
@@ -236,7 +236,12 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+	.empty-icon{
+		width: 202rpx;
+		height: 206rpx;
+		margin-top: 200rpx;
+	}
 	//关注列表
 	.card {
 		margin: 28rpx 0 0 28rpx;
