@@ -259,6 +259,8 @@
 				this.showType = 2
 				this.saveKeyword(this.keyword); //保存为历史
 				this.articleList = [];
+				this.site = null;
+				this.result = null;
 				var that = this
 				this.HTTP.request({ 
 					url: '/search', 
