@@ -1286,8 +1286,11 @@
 			.userHeard {
 				width: 90rpx;
 				height: 90rpx;
-				// background-image: url('/static/images/userImg.svg');
-				// background-clip:padding-box;
+				background-image: url('/static/images/userImg.svg');
+				background-repeat: no-repeat;
+				background-position: 50%;
+				border-radius: 50%;
+				overflow: hidden;
 				image{
 					width: 100%;
 					height: 100%;
