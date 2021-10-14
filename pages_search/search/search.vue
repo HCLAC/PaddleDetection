@@ -259,8 +259,8 @@
 				this.showType = 2
 				this.saveKeyword(this.keyword); //保存为历史
 				this.articleList = [];
-				this.site = null;
 				this.result = null;
+				this.site = null;
 				var that = this
 				this.HTTP.request({ 
 					url: '/search', 
@@ -284,10 +284,10 @@
 							var name = result.site.name;
 							name = name.replace(this.keyword, "<span style='color: #A86B13;font-weight:bold'>" + this.keyword + '</span>');
 							result.site.nameHtml = '<div>' + name + '</div>';
-							this.site = result.site
 						}
+						that.site = result.site
 						
-						this.routeHotMore = result.route_list.length > 2
+						that.routeHotMore = result.route_list.length > 2
 						result.route_list = result.route_list.slice(0, 2)
 						result.route_list && result.route_list.forEach((item, index) => {
 							item.image = that.Utils.addImageProcess(item.image, false, 50)
