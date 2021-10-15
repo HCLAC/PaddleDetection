@@ -1,5 +1,5 @@
 <template>
-	<u-waterfall v-model="flowList" add-time='100' idKey='article_id' ref="uWaterfall">
+	<u-waterfall v-model="flowList" add-time='100' :index="index" idKey='article_id' ref="uWaterfall">
 		<template v-slot:left="{ leftList }">
 			<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
 				<view class="" v-if="item.type != 6">
@@ -133,6 +133,10 @@
 					return "文章列表"
 				}
 			},
+			index: {
+				type: Number,
+				default: 0
+			}
 		},
 		data() {
 			return {

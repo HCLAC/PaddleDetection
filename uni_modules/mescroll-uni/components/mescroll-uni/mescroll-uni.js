@@ -35,7 +35,7 @@ export default function MeScroll(options, isScrollBody) {
 				me.optUp.use && me.optUp.auto && !me.isUpAutoLoad && me.triggerUpScroll();
 			},100)
 		}
-	}, 30); // 需让me.optDown.inited和me.optUp.inited先执行
+	}, 50); // 需让me.optDown.inited和me.optUp.inited先执行
 }
 
 /* 配置参数:下拉刷新 */

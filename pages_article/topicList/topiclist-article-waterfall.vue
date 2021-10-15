@@ -2,7 +2,7 @@
 	<view v-show="i === index" class="box">
 		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="touring">
-				<articleWaterfall :list="list"></articleWaterfall>
+				<articleWaterfall :index="index" :list="list"></articleWaterfall>
 			</view>
 		</mescroll-body>
 	</view>
@@ -57,7 +57,10 @@
 		watch: {
 			topicID(newVal, old) {
 				this.topicID = newVal;
-				this.mescroll.resetUpScroll();
+				if (this.topicID == 0 || this.i != this.index){
+					return
+				}
+				this.mescroll && this.mescroll.resetUpScroll();
 			}
 		},
 		methods: {
@@ -79,10 +82,10 @@
 					return
 				}
 				
-				if (this.i != this.index){
-					this.mescroll.endBySize(0,0)
-					return
-				}
+				// if (this.i != this.index){
+				// 	// this.mescroll.endBySize(0,0)
+				// 	return
+				// }
 				var that = this
 				// mescroll.setPageSize(6)
 				let pageNum = page.num; // 页码, 默认从1开始

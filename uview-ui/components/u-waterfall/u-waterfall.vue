@@ -36,6 +36,10 @@ export default {
 		idKey: {
 			type: String,
 			default: 'id'
+		},
+		index: {
+			type: Number,
+			default: 0
 		}
 	},
 	data() {
@@ -69,8 +73,13 @@ export default {
 	methods: {
 		async splitData() {
 			if (!this.tempList.length) return;
-			let leftRect = await this.$uGetRect('#u-left-column');
-			let rightRect = await this.$uGetRect('#u-right-column');
+			// let leftRect = await this.$uGetRect('#u-left-column');
+			// let rightRect = await this.$uGetRect('#u-right-column');
+			
+			let leftRectA = await this.$uGetRect('#u-left-column', true);
+			let leftRect = leftRectA[this.index]
+			let rightRectA = await this.$uGetRect('#u-right-column', true);
+			let rightRect = rightRectA[this.index]
 			// 如果左边小于或等于右边，就添加到左边，否则添加到右边
 			let temp1 = {
 				height: 0,
