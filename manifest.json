@@ -92,7 +92,7 @@
             }
         },
         "cookie" : {
-            "enableStore" : true // 开启小程序cookie存储设置
+            "enableStore" : false // 开启小程序cookie存储设置
         }
     },
     "mp-toutiao" : {

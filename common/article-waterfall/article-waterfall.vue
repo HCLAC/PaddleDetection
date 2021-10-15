@@ -133,12 +133,6 @@
 					return "文章列表"
 				}
 			},
-			clearList: {
-				type: Boolean,
-				default(){
-					return false
-				}
-			},
 		},
 		data() {
 			return {
@@ -146,9 +140,12 @@
 			};
 		},
 		watch: {
-			clearList(newVal){
-				if (newVal){
-					this.$refs.uWaterfall.clear()
+			list: {
+				immediate: true,    // 这句重要
+				handler (val) {
+					if (val.length == 0){
+						this.$refs.uWaterfall.clear && this.$refs.uWaterfall.clear()
+					}
 				}
 			}
 		},

@@ -92,7 +92,7 @@
 				},
 				backgroundColor: 'transparent',
 				firstTime: new Date().getTime(),
-				firstLoad: false,
+				leaveTime: new Date().getTime(),
 				firstLogin: true,
 				list: [],
 				bannerList: [
@@ -124,7 +124,6 @@
 		// #ifndef MP-BAIDU
 		onLoad(query) {
 		// #endif
-			this.firstLoad = true
 			this.serviceProvider = getApp().globalData.serviceProvider
 			this.loadData()
 		},
@@ -138,17 +137,12 @@
 		onShow() {
 			// 间隔300s，重新加载首页
 			var cur = Number((new Date().getTime())/1000).toFixed(0)
-			var firstT = Number((this.firstTime)/1000).toFixed(0)
-			if (cur-firstT > 300 && !this.firstLoad){
-				uni.pageScrollTo({
-					scrollTop: 0,
-					duration: 10,
-				})
-				this.loadData()
-				this.mescroll.resetUpScroll()
+			var firstT = Number((this.leaveTime)/1000).toFixed(0)
+			if (cur-firstT > 300){
+				this.downCallback()
+				this.mescroll.scrollTo(0,0)
+				this.leaveTime = new Date().getTime()
 			}
-			this.firstTime = new Date().getTime()
-			this.firstLoad = false
 			
 			// 不是首次登录，刷新瀑布流文章
 			if (!this.firstLogin){
@@ -386,10 +380,10 @@
 			upCallback(page) {
 				let pageNum = page.num;
 				let pageSize = page.size;
-				if (pageNum == 1) {
-					this.list = [];
-				}
 				
+				if (page.num == 1) {
+					this.list = []; //如果是第一页需手动置空列表
+				}
 				let that = this
 				this.HTTP.request({
 					url: '/article/list?page=' + pageNum + '&count=' + pageSize,
@@ -428,12 +422,12 @@
 							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
 							item1.image = this.Utils.addImageProcess(item1.image, false, 40)
 						})
-						this.list = this.list.concat(curPageData); //追加新数据
-						this.mescroll.endByPage(curPageLen, totalPage);
+						that.list = that.list.concat(curPageData); //追加新数据
+						that.mescroll.endByPage(curPageLen, totalPage);
 					},
 					fail: () => {
 						//  请求失败,隐藏加载状态
-						this.mescroll.endErr();
+						that.mescroll.endErr();
 					},
 					complete() {
 					}
