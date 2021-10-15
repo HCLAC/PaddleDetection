@@ -37,7 +37,7 @@
 								登录/注册
 							</view>
 							<view class="userMsg">
-								点击登录享受更多更多精彩信息
+								点击登录享受更多精彩信息
 							</view>
 						</view>
 					</view>

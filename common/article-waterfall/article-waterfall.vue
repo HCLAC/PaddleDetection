@@ -154,8 +154,11 @@
 		},
 		computed: {
 			// 破坏flowList变量的引用，否则watch的结果新旧值是一样的
-			flowList() {
-				return JSON.parse(JSON.stringify(this.list));;
+			flowList: {
+				get(){
+					return JSON.parse(JSON.stringify(this.list));
+				},
+				set(val){}
 			}
 		},
 		methods:{
