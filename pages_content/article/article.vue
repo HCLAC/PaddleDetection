@@ -76,8 +76,7 @@
 					<!-- <text class="contentTitle" selected=true>{{ articleInfo.title }}</text> -->
 					<!-- 内容文章 -->
 					<view class="contentText">
-						<mp-html ref="parse" style="overflow: hidden;text-align: justify;" @imgtap="imgTap" @linktap="mpLinktap"
-						 :content="articleInfo.content"></mp-html>
+						<mp-html ref="parse" class="mp-html" @imgtap="imgTap" @linktap="mpLinktap" :content="articleInfo.content"></mp-html>
 					</view>
 					<view class="tips">
 						<view v-for="item in articleInfo.topics" :key="item.id" @click="toTopic(item.id)">
@@ -90,7 +89,6 @@
 			</view>
 			<!-- 攻略文章 -->
 			<view class="box-Introduction" v-else-if="articleInfo && articleInfo.type == 2">
-
 				<!-- 内容详情 -->
 				<view class="detailContent savebottom">
 					<!-- 标题 -->
@@ -122,8 +120,7 @@
 					</view>
 					<!-- 内容文章 -->
 					<view class="contentText">
-						<mp-html ref="parse" style="overflow: hidden;text-align: justify;" @imgtap="imgTap" @linktap="mpLinktap"
-						 :content="articleInfo.content"></mp-html>
+						<mp-html ref="parse" class="mp-html" @imgtap="imgTap" @linktap="mpLinktap" :content="articleInfo.content"></mp-html>
 					</view>
 					<!-- 地址 -->
 					<view class="adress">
@@ -362,7 +359,7 @@
 				setTimeout(() => {
 					this.loading = false
 					uni.hideLoading();
-				}, 200);
+				}, 300);
 			},
 			mpLinktap(e) {
 				// #ifdef H5
@@ -1165,6 +1162,10 @@
 		}
 	}
 	
+	.mp-html{
+		 overflow: hidden;
+		 text-align: justify;
+	}
 	.loadBox{
 		width: 100%;
 		height: auto;

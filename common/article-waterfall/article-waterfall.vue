@@ -141,7 +141,7 @@
 		data() {
 			return {
 				hasLikeClick: false,
-				flowList: null,
+				flowList: [],
 			};
 		},
 		watch: {

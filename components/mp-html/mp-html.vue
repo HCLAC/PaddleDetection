@@ -265,19 +265,19 @@ export default {
       })
 
       // 等待图片加载完毕
-      var height
-      clearInterval(this._timer)
-      this._timer = setInterval(() => {
-        this.getRect().then(rect => {
-          // 350ms 总高度无变化就触发 ready 事件
-          if (rect.height == height) {
-            this.$emit('ready', rect)
-            clearInterval(this._timer)
-          }
-          height = rect.height
-        }).catch(() => { })
-      }, 350)
-      // #endif
+      // var height
+      // clearInterval(this._timer)
+      // this._timer = setInterval(() => {
+      //   this.getRect().then(rect => {
+      //     // 350ms 总高度无变化就触发 ready 事件
+      //     if (rect.height == height) {
+      //       this.$emit('ready', rect)
+      //       clearInterval(this._timer)
+      //     }
+      //     height = rect.height
+      //   }).catch(() => { })
+      // }, 350)
+      // // #endif
     },
 
     /**
