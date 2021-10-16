@@ -140,7 +140,8 @@
 		},
 		data() {
 			return {
-				hasLikeClick: false
+				hasLikeClick: false,
+				flowList: null,
 			};
 		},
 		watch: {
@@ -150,18 +151,19 @@
 					if (val.length == 0){
 						this.$refs.uWaterfall.clear && this.$refs.uWaterfall.clear()
 					}
+					this.flowList = JSON.parse(JSON.stringify(val))
 				}
 			}
 		},
-		computed: {
-			// 破坏flowList变量的引用，否则watch的结果新旧值是一样的
-			flowList: {
-				get(){
-					return JSON.parse(JSON.stringify(this.list));
-				},
-				set(val){}
-			}
-		},
+		// computed: {
+		// 	// 破坏flowList变量的引用，否则watch的结果新旧值是一样的
+		// 	flowList: {
+		// 		get(){
+		// 			return JSON.parse(JSON.stringify(this.list));
+		// 		},
+		// 		set(val){}
+		// 	}
+		// },
 		methods:{
 			// 发出组件高度信息，在此处可以区分正确和错误的加载，给予错误的提示图片
 			// 跳转问题详情

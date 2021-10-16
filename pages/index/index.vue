@@ -92,7 +92,7 @@
 				},
 				backgroundColor: 'transparent',
 				firstTime: new Date().getTime(),
-				leaveTime: new Date().getTime(),
+				// leaveTime: new Date().getTime(),
 				firstLogin: true,
 				list: [],
 				bannerList: [
@@ -136,17 +136,18 @@
 		},
 		onShow() {
 			// 间隔300s，重新加载首页
-			var cur = Number((new Date().getTime())/1000).toFixed(0)
-			var firstT = Number((this.leaveTime)/1000).toFixed(0)
-			if (cur-firstT > 300){
-				this.downCallback()
-				this.mescroll.scrollTo(0,0)
-				this.leaveTime = new Date().getTime()
-			}
+			// var cur = Number((new Date().getTime())/1000).toFixed(0)
+			// var firstT = Number((this.leaveTime)/1000).toFixed(0)
+			// if (cur-firstT > 500){
+			// 	this.downCallback()
+			// 	this.mescroll.scrollTo(0,0)
+			// 	this.leaveTime = new Date().getTime()
+			// }
 			
 			// 不是首次登录，刷新瀑布流文章
 			if (!this.firstLogin){
 				this.mescroll.resetUpScroll()
+				this.mescroll.scrollTo(0,0)
 				this.firstLogin = true
 			}
 		},
@@ -178,10 +179,6 @@
 			}
 		}, 100),
 		methods: {
-			mescrollInit(mescroll) {
-				this.mescroll = mescroll;
-				this.mescroll.setPageSize(8)
-			},
 			notLocation(){
 				if(this.dqdwText == '未定位'){
 					uni.getSetting({
