@@ -61,8 +61,8 @@
 			<!-- 正在旅行 -->
 			<view class="touring">
 				<text class="tourtext">正在旅行</text>
-				<view class="wrap" >
-					<articleWaterfall :clearList="!list || list.length==0" :list="list"></articleWaterfall>
+				<view class="wrap">
+					<articleWaterfall :list="list"></articleWaterfall>
 				</view>
 			</view>
 		</mescroll-body>

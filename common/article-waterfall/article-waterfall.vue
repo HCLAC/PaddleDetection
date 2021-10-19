@@ -150,8 +150,10 @@
 				handler (val) {
 					if (val.length == 0){
 						this.$refs.uWaterfall.clear && this.$refs.uWaterfall.clear()
+						this.flowList = []
 					}
 					this.flowList = JSON.parse(JSON.stringify(val))
+					this.$forceUpdate()
 				}
 			}
 		},

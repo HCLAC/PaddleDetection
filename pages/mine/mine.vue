@@ -136,10 +136,10 @@ export default {
 	},
 	methods: {
 		signIn() {
+			this.isInit = false
 			uni.navigateTo({
 				url: '/pages_mine/login/login'
 			});
-			this.isInit = false
 		},
 		loadData() {
 			this.getUserMsg();
@@ -153,7 +153,7 @@ export default {
 				header: {
 					'Authorization': getApp().globalData.Authorization
 				},
-				success: (res)=> {
+				success: res=> {
 					if (res.statusCode != 200 || res.data.code != 0){
 						uni.showToast({
 							title: '请点击登录',

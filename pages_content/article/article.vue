@@ -52,8 +52,8 @@
 				<view class="detailContent savebottom">
 					<view class="userMse">
 						<view class="left">
-							<view class="userHeard">
-								<image lazy-load :src="articleInfo.avatar?articleInfo.avatar:'/static/images/userImg.svg'" @click="tobloggers(articleInfo.author_id)"></image>
+							<view class="userHeard" @click="tobloggers(articleInfo.author_id)">
+								<image lazy-load :src="articleInfo.avatar"></image>
 							</view>
 							<view class="userMse-r">
 								<view class="userNikename">{{ articleInfo.author_name }}</view>
@@ -99,8 +99,8 @@
 					<!-- 作者信息 -->
 					<view class="userMse">
 						<view class="left">
-							<view class="userHeard">
-								<image :src="articleInfo.avatar ? articleInfo.avatar : '/static/images/userImg.svg'" @click="tobloggers(articleInfo.author_id)"></image>
+							<view class="userHeard" @click="tobloggers(articleInfo.author_id)">
+								<image :src="articleInfo.avatar"></image>
 								<!-- <u-image :src="articleInfo.avatar ? articleInfo.avatar : '/static/images/userImg.svg'" @click="tobloggers(articleInfo.author_id)"></u-image> -->
 							</view>
 							<view class="userMse-r">
@@ -230,7 +230,7 @@
 		},
 		data() {
 			return {
-				isShow: true,
+				// isShow: true,
 				keywordHeight: '0px',
 				showText:false,
 				current: 0,
@@ -301,6 +301,9 @@
 				}
 			})
 		},
+		mounted(){
+			this.loadData();
+		},
 		// #ifdef MP-BAIDU
 		onInit(query) {
 		// #endif
@@ -333,8 +336,8 @@
 		},
 		onShow() {
 			this.hasLogin = getApp().globalData.Authorization ? true : false;
-			this.isShow && this.loadData()
-			this.isShow = false
+			// this.isShow && this.loadData()
+			// this.isShow = false
 		},
 		methods: {
 			ImgSee(){
@@ -431,7 +434,8 @@
 								var item = article_images[i]
 								let obj = item.split('"')
 								if (image_in_page.length == 0 && obj[1].indexOf("lingtuyang.cn")!=-1){
-									image_in_page = obj[1]
+									let src2 = that.Utils.addImageProcess(obj[1], true, 60)
+									image_in_page = src2
 								}
 								
 								if (obj[0].indexOf("src") === -1 || !obj || obj.length < 8){
@@ -529,7 +533,7 @@
 						//#endif
 						
 						that.articleInfo = articleInfo;
-						
+						that.$forceUpdate()
 						// 除了攻略文章，其他计算轮播图高度
 						if (articleInfo.type != 2){
 							that.$nextTick(() => {
