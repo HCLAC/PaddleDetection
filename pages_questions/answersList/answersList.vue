@@ -23,7 +23,7 @@
 							<view class="userName">
 								{{item.account_id}}
 							</view>
-							<image class="gficon" src="/static/images/gficon.svg" v-if="index == 0 && item.account_type == 1"></image>
+							<image class="gficon" src="/static/images/gficon.png" v-if="index == 0 && item.account_type == 1"></image>
 						</view>
 						<view class="answersDate">
 							{{item.create_at.slice(0,10)}}
@@ -260,7 +260,7 @@
 						margin-left: 16rpx;
 					}
 					.gficon{
-						width: 56rpx;
+						width: 122rpx;
 						height: 40rpx;
 						margin-left: 8rpx;
 					}

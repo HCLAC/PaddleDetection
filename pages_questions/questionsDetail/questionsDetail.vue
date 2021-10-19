@@ -52,7 +52,7 @@
 						<view class="userName">
 							{{answersOfficial.account_id}}
 						</view>
-						<image class="gficon" src="/static/images/gficon.svg" v-if="answersOfficial.account_type == 1"></image>
+						<image class="gficon" src="/static/images/gficon.png" v-if="answersOfficial.account_type == 1"></image>
 					</view>
 					<view class="answersDate">
 						{{answersOfficial.create_at }}
@@ -242,6 +242,13 @@
 							return
 						}
 						this.detail = res.data.data
+						//#ifdef MP-BAIDU
+						swan.setPageInfo({
+							title: this.detail.title,
+							keywords: this.detail.labels.join(','),
+							description: this.detail.title,
+						})
+						// #endif
 					}
 				});
 			},
@@ -712,7 +719,7 @@
 						margin-left: 16rpx;
 					}
 					.gficon{
-						width: 56rpx;
+						width: 122rpx;
 						height: 40rpx;
 						margin-left: 8rpx;
 					}

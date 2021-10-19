@@ -74,7 +74,20 @@
 				"navigationStyle": "default",
                 "navigationBarTitleText": "路线索引页"
             }
-        }
+        },
+		{
+		    "path" : "swan-sitemap/question",
+		    "style" :                                                                                    
+		    {
+				"mp-baidu": {
+					"usingComponents": {
+						"swan-sitemap-list": "dynamicLib://swan-sitemap-lib/swan-sitemap-list"
+					}
+				},
+				"navigationStyle": "default",
+		        "navigationBarTitleText": "问答索引页"
+		    }
+		}
     ],
 	"subPackages": [
 		{
