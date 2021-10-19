@@ -190,6 +190,7 @@
 			background-image: url('/static/images/userImg.svg');
 			background-repeat: no-repeat;
 			// background-position: 50%;
+			
 			// border-radius: 50%;
 			background-size:68rpx 68rpx;
 			// overflow: hidden;
