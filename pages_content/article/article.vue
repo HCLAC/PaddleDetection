@@ -428,14 +428,14 @@
 						});
 						// 处理文章图片，先处理图片，再处理营销组件，因为组件中的图片不需要处理
 						let article_images = articleInfo.content.match(/<img[^>]*\/>/gi);
-						let image_in_page = ''
+						let image_in_page = []
 						if (article_images != null && article_images.length > 0){
 							for (var i=0;i<article_images.length;i++){
 								var item = article_images[i]
 								let obj = item.split('"')
-								if (image_in_page.length == 0 && obj[1].indexOf("lingtuyang.cn")!=-1){
+								if (image_in_page.length < 4 && obj[1].indexOf("lingtuyang.cn")!=-1){
 									let src2 = that.Utils.addImageProcess(obj[1], true, 60)
-									image_in_page = src2
+									image_in_page.push(src2)
 								}
 								
 								if (obj[0].indexOf("src") === -1 || !obj || obj.length < 8){
@@ -455,70 +455,71 @@
 							}
 						}
 						// 处理营销组件
-						let inputComponets = articleInfo.content.match(/<input[^>]*\/>/gi);
-						if (false && inputComponets != null && inputComponets.length > 0){
-							for (var i=0;i<inputComponets.length;i++){
-								var item = inputComponets[i]
-								let strValue = item.match(/name="(\S*)"/);
-								var replaceStr = ''
-								if (strValue != null && strValue.length == 2){
-									var id = strValue[1]
-									if (item.indexOf("营销组件")!=-1){
-										let component = await that.asyncGetComponentInfo('/marketing/unit', {
-																				group_id: id,
-																				article_id: that.article_id
-																			});
-										if (component.data.code != 0) {
-											console.error('获取营销组件信息失败', component)
-											replaceStr = ""
-										} else {
-											var obj = component.data.data
-											replaceStr = that.generateWeixinMarketingGroup(obj)
-											articleInfo.content = articleInfo.content.replace(item, replaceStr);
-											// console.log("营销组件", replaceStr)
-										}
-									} else if (item.indexOf("在线客服")!=-1){
-										// #ifndef H5
-										articleInfo.content = articleInfo.content.replace(item, '');
-										// #endif
-										// #ifdef H5
-										let component = await that.asyncGetComponentInfo('/online/call', {id:id});
-										if (component.data.code != 0) {
-											console.error('获取在线客服信息失败', component)
-											replaceStr = ""
-										} else {
-											var obj = component.data.data
-											replaceStr = that.generateOnlineCustomer(obj)
-											articleInfo.content = articleInfo.content.replace(item, replaceStr);
-											// console.log("在线客服", replaceStr)
-										}
-										// #endif
-									} else if (item.indexOf("小程序")!=-1){
-										// #ifndef H5
-										articleInfo.content = articleInfo.content.replace(item, '');
-										// #endif
-										// #ifdef H5
-										let component = await that.asyncGetComponentInfo('/miniapp/call', {id:id});
-										if (component.data.code != 0) {
-											console.error('获取小程序信息失败', component)
-											replaceStr = ""
-										} else {
-											console.log('component', component)
-											var obj = component.data.data
-											replaceStr = that.generateMiniapp(obj)
-											articleInfo.content = articleInfo.content.replace(item, replaceStr);
-											// console.log("在线客服", replaceStr)
-										}
-										// #endif
-									}
-								}
-							}
-						}
+						// let inputComponets = articleInfo.content.match(/<input[^>]*\/>/gi);
+						// if (inputComponets != null && inputComponets.length > 0){
+						// 	for (var i=0;i<inputComponets.length;i++){
+						// 		var item = inputComponets[i]
+						// 		let strValue = item.match(/name="(\S*)"/);
+						// 		var replaceStr = ''
+						// 		if (strValue != null && strValue.length == 2){
+						// 			var id = strValue[1]
+						// 			if (item.indexOf("营销组件")!=-1){
+						// 				let component = await that.asyncGetComponentInfo('/marketing/unit', {
+						// 														group_id: id,
+						// 														article_id: that.article_id
+						// 													});
+						// 				if (component.data.code != 0) {
+						// 					console.error('获取营销组件信息失败', component)
+						// 					replaceStr = ""
+						// 				} else {
+						// 					var obj = component.data.data
+						// 					replaceStr = that.generateWeixinMarketingGroup(obj)
+						// 					articleInfo.content = articleInfo.content.replace(item, replaceStr);
+						// 					// console.log("营销组件", replaceStr)
+						// 				}
+						// 			} else if (item.indexOf("在线客服")!=-1){
+						// 				// #ifndef H5
+						// 				articleInfo.content = articleInfo.content.replace(item, '');
+						// 				// #endif
+						// 				// #ifdef H5
+						// 				let component = await that.asyncGetComponentInfo('/online/call', {id:id});
+						// 				if (component.data.code != 0) {
+						// 					console.error('获取在线客服信息失败', component)
+						// 					replaceStr = ""
+						// 				} else {
+						// 					var obj = component.data.data
+						// 					replaceStr = that.generateOnlineCustomer(obj)
+						// 					articleInfo.content = articleInfo.content.replace(item, replaceStr);
+						// 					// console.log("在线客服", replaceStr)
+						// 				}
+						// 				// #endif
+						// 			} else if (item.indexOf("小程序")!=-1){
+						// 				// #ifndef H5
+						// 				articleInfo.content = articleInfo.content.replace(item, '');
+						// 				// #endif
+						// 				// #ifdef H5
+						// 				let component = await that.asyncGetComponentInfo('/miniapp/call', {id:id});
+						// 				if (component.data.code != 0) {
+						// 					console.error('获取小程序信息失败', component)
+						// 					replaceStr = ""
+						// 				} else {
+						// 					console.log('component', component)
+						// 					var obj = component.data.data
+						// 					replaceStr = that.generateMiniapp(obj)
+						// 					articleInfo.content = articleInfo.content.replace(item, replaceStr);
+						// 					// console.log("在线客服", replaceStr)
+						// 				}
+						// 				// #endif
+						// 			}
+						// 		}
+						// 	}
+						// }
 						articleInfo.avatar = that.Utils.addImageProcess(articleInfo.avatar, false, 60)
 						articleInfo.images.forEach((item1, index1) => {
 							articleInfo.images[index1] = that.Utils.addImageProcess(item1, true, 80)
 						})
 						//#ifdef MP-BAIDU
+						console.log(image_in_page)
 						swan.setPageInfo({
 							title: articleInfo.title,
 							articleTitle: articleInfo.title,

@@ -10,7 +10,7 @@ var config = {
   // 块级标签（转为 div，其他的非信任标签转为 span）
   blockTags: makeMap('address,article,aside,body,caption,center,cite,footer,header,html,nav,pre,section'),
   // 要移除的标签
-  ignoreTags: makeMap('area,base,canvas,embed,frame,head,iframe,input,link,map,meta,param,rp,script,source,style,textarea,title,track,wbr'),
+  ignoreTags: makeMap('area,base,canvas,embed,frame,head,iframe,link,map,meta,param,rp,script,source,style,textarea,title,track,wbr'),
   // 自闭合的标签
   voidTags: makeMap('area,base,br,col,circle,ellipse,embed,frame,hr,img,input,line,link,meta,param,path,polygon,rect,source,track,use,wbr'),
   // html 实体
@@ -325,6 +325,13 @@ parser.prototype.onOpenTag = function (selfClose) {
   } // #ifndef APP-PLUS-NVUE
   // 处理音视频
 
+  // 处理input营销组件
+  if (node.name == 'input'){
+	  for (var i = this.stack.length; i--;) {
+	    var item = this.stack[i];
+		item.c = 1
+	  }
+  }
 
   if (node.name == 'video' || node.name == 'audio') {
     // 设置 id 以便获取 context

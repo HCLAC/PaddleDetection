@@ -11,6 +11,18 @@
       <!-- #ifndef H5 || APP-PLUS -->
       <image v-if="n.name=='img'" :id="n.attrs.id" :class="'_img '+n.attrs.class" :style="n.h?'background-color:#F2F2F2;'+n.attrs.style:'background-color:#F2F2F2;width:750rpx;height:440rpx'" :src="n.attrs.src" :lazy-load="opts[0]" :webp="n.webp" :show-menu-by-longpress="opts[3]&&!n.attrs.ignore" :image-menu-prevent="!opts[3]||n.attrs.ignore" :data-i="i" @load="imgLoad" @error="mediaError" @tap.stop="imgTap" @longpress="imgLongTap" />
       <!-- #endif -->
+	  <!-- 营销组件 -->
+	  <view class="btn" v-else-if="n.name=='input'">
+	  	<view class="left">
+	  		<view class="left-img">
+	  			<image src="/static/images/tx.png" mode=""></image>
+	  		</view>
+	  		<text>旅游管家</text>
+	  	</view>
+	  	<view class="right">
+	  		<button class="right-btn" type="primary" open-type="contact" bindcontact="contactCB">立即咨询</button>
+	  	</view>
+	  </view>
       <!-- 文本 -->
       <!-- #ifndef MP-BAIDU -->
       <text v-else-if="n.type=='text'" decode>{{n.text}}</text>
@@ -498,4 +510,52 @@ export default {
   height: 225px;
 }
 /* #endif */
+
+.btn{
+	width: 694rpx;
+	height: 88rpx;
+	background: #F8F8F8;
+	border-radius: 8rpx;
+	border: 1rpx solid #EDEFF2;
+	margin: 0 auto;
+	margin-top: 20rpx;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 28rpx;
+	.left{
+		display: flex;
+		align-items: center;
+		.left-img{
+			width: 56rpx;
+			height: 56rpx;
+			overflow: hidden;
+			border-radius: 50%;
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		text{
+			font-size: 28rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #303133;
+			margin-left: 16rpx;
+		}
+	}
+	.right{
+		.right-btn{
+			width: 160rpx;
+			height: 58rpx;
+			background: #FFE512;
+			box-shadow: 0rpx 16rpx 56rpx 0rpx rgba(0, 0, 0, 0.05);
+			border-radius: 40rpx;
+			font-size: 24rpx;
+			font-family: PingFangSC-Semibold, PingFang SC;
+			font-weight: 600;
+			color: #303133;
+		}
+	}
+}
 </style>

@@ -242,19 +242,19 @@
 				// 输出：{errMsg: 'enterContact:ok'}
 				console.log(e.detail); 
 				// 进入客服会话页面成功，可进行自己的业务逻辑
-				if (e.detail.errMsg === 'enterContact:ok') {
-					swan.reportAnalytics('userMessage', {
-						visit: 1,
-						message: '进入客服页面PV'
-					});
-				}
-				// 可进行一些进入失败的业务逻辑
-				else {
-					swan.reportAnalytics('userMessage', {
-						visit: 0,
-						message: '进入客服页面失败损失PV'
-					});
-				}
+				// if (e.detail.errMsg === 'enterContact:ok') {
+				// 	swan.reportAnalytics('userMessage', {
+				// 		visit: 1,
+				// 		message: '进入客服页面PV'
+				// 	});
+				// }
+				// // 可进行一些进入失败的业务逻辑
+				// else {
+				// 	swan.reportAnalytics('userMessage', {
+				// 		visit: 0,
+				// 		message: '进入客服页面失败损失PV'
+				// 	});
+				// }
 			},
 			// 获取问题详情
 			getQuestionsDetail(){
