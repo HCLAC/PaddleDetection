@@ -263,7 +263,6 @@ export default {
         this._hook('onLoad')
         this.$emit('load')
       })
-
       // 等待图片加载完毕
       // var height
       // clearInterval(this._timer)
@@ -277,7 +276,7 @@ export default {
       //     height = rect.height
       //   }).catch(() => { })
       // }, 350)
-      // // #endif
+       // #endif
     },
 
     /**

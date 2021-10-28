@@ -456,7 +456,7 @@
 						}
 						// 处理营销组件
 						let inputComponets = articleInfo.content.match(/<input[^>]*\/>/gi);
-						if (inputComponets != null && inputComponets.length > 0){
+						if (false && inputComponets != null && inputComponets.length > 0){
 							for (var i=0;i<inputComponets.length;i++){
 								var item = inputComponets[i]
 								let strValue = item.match(/name="(\S*)"/);
