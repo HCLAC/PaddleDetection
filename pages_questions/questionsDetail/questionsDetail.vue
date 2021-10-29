@@ -107,7 +107,7 @@
 				<view class="left-img">
 					<image src="/static/images/tx.png" mode=""></image>
 				</view>
-				<text>旅游管家</text>
+				<text>领途羊旅游管家</text>
 			</view>
 			<view class="right">
 				<button class="right-btn" type="primary" open-type="contact" bindcontact="contactCB">立即咨询</button>
@@ -1099,23 +1099,21 @@
 		}
 	}
 	.btn{
-		width: 694rpx;
-		height: 88rpx;
-		background: #F8F8F8;
-		border-radius: 8rpx;
-		border: 1rpx solid #EDEFF2;
-		margin: 0 auto;
-		margin-top: 20rpx;
+		width: 100%;
+		height: 260rpx;
+		background-image: url(/static/images/bg.png);
+		background-repeat:no-repeat;
+		background-size:100% 100%;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 0 28rpx;
+		padding: 0 52rpx;
 		.left{
 			display: flex;
 			align-items: center;
 			.left-img{
-				width: 56rpx;
-				height: 56rpx;
+				width: 126rpx;
+				height: 126rpx;
 				overflow: hidden;
 				border-radius: 50%;
 				image{
@@ -1124,24 +1122,26 @@
 				}
 			}
 			text{
-				font-size: 28rpx;
-				font-family: PingFangSC-Regular, PingFang SC;
-				font-weight: 400;
+				font-size: 32rpx;
+				font-family: AlibabaPuHuiTiM;
 				color: #303133;
-				margin-left: 16rpx;
+				margin-left: 24rpx;
 			}
 		}
 		.right{
 			.right-btn{
-				width: 160rpx;
-				height: 58rpx;
-				background: #FFE512;
-				box-shadow: 0rpx 16rpx 56rpx 0rpx rgba(0, 0, 0, 0.05);
+				width: 176rpx;
+				height: 60rpx;
+				background: linear-gradient(90deg, #FF5A79 0%, #FF74B4 100%);
+				box-shadow: 0rpx 6rpx 30rpx 0rpx rgba(255, 115, 178, 0.35);
 				border-radius: 40rpx;
-				font-size: 24rpx;
+				font-size: 28rpx;
 				font-family: PingFangSC-Semibold, PingFang SC;
 				font-weight: 600;
-				color: #303133;
+				color: #FFFFFF;
+				display: flex;
+				align-items: center;
+				justify-content: center;
 			}
 		}
 	}
