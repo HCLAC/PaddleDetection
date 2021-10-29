@@ -11,6 +11,18 @@
       <!-- #ifndef H5 || APP-PLUS -->
       <image v-if="n.name=='img'" :id="n.attrs.id" :class="'_img '+n.attrs.class" :style="n.h?'background-color:#F2F2F2;'+n.attrs.style:'background-color:#F2F2F2;width:750rpx;height:440rpx'" :src="n.attrs.src" :lazy-load="opts[0]" :webp="n.webp" :show-menu-by-longpress="opts[3]&&!n.attrs.ignore" :image-menu-prevent="!opts[3]||n.attrs.ignore" :data-i="i" @load="imgLoad" @error="mediaError" @tap.stop="imgTap" @longpress="imgLongTap" />
       <!-- #endif -->
+	  <!-- 营销组件 -->
+	  <view class="btn" v-else-if="n.name=='input'">
+	  	<view class="left">
+	  		<view class="left-img">
+	  			<image src="/static/images/tx.png" mode=""></image>
+	  		</view>
+	  		<text>领途羊旅游管家</text>
+	  	</view>
+	  	<view class="right">
+	  		<button class="right-btn" type="primary" open-type="contact" bindcontact="contactCB">立即咨询</button>
+	  	</view>
+	  </view>
       <!-- 文本 -->
       <!-- #ifndef MP-BAIDU -->
       <text v-else-if="n.type=='text'" decode>{{n.text}}</text>
@@ -329,7 +341,7 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
 /* a 标签默认效果 */
 ._a {
   padding: 1.5px 0 1.5px 0;
@@ -498,4 +510,52 @@ export default {
   height: 225px;
 }
 /* #endif */
+
+.btn{
+	width: 100%;
+	height: 260rpx;
+	background-image: url(/static/images/bg.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 52rpx;
+	.left{
+		display: flex;
+		align-items: center;
+		.left-img{
+			width: 126rpx;
+			height: 126rpx;
+			overflow: hidden;
+			border-radius: 50%;
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		text{
+			font-size: 32rpx;
+			font-family: AlibabaPuHuiTiM;
+			color: #303133;
+			margin-left: 24rpx;
+		}
+	}
+	.right{
+		.right-btn{
+			width: 176rpx;
+			height: 60rpx;
+			background: linear-gradient(90deg, #FF5A79 0%, #FF74B4 100%);
+			box-shadow: 0rpx 6rpx 30rpx 0rpx rgba(255, 115, 178, 0.35);
+			border-radius: 40rpx;
+			font-size: 28rpx;
+			font-family: PingFangSC-Semibold, PingFang SC;
+			font-weight: 600;
+			color: #FFFFFF;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+}
 </style>

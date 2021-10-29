@@ -95,12 +95,23 @@
 		</view> -->
 		<view class="line"></view>
 		<!-- 营销组件 -->
-		<view class="componment" v-if="marketingData">
+		<!-- <view class="componment" v-if="marketingData">
 			<view class="wechat">
 				<image lazy-load :src="answersOfficial.avatar"></image>
 				<view class="wechatText">{{marketingData.template}}</view>
 			</view>
 			<view class="wechatBtn ldx infinite ldx-blur-in" @click="templateAdd">复制导游微信</view>
+		</view> -->
+		<view class="btn">
+			<view class="left">
+				<view class="left-img">
+					<image src="/static/images/tx.png" mode=""></image>
+				</view>
+				<text>领途羊旅游管家</text>
+			</view>
+			<view class="right">
+				<button class="right-btn" type="primary" open-type="contact" bindcontact="contactCB">立即咨询</button>
+			</view>
 		</view>
 		<!-- 相关问题 -->
 		<view class="travelQuestionsBox">
@@ -226,6 +237,25 @@
 		 	//#endif
 		},
 		methods:{
+			//客服
+			contactCB(e) {
+				// 输出：{errMsg: 'enterContact:ok'}
+				console.log(e.detail); 
+				// 进入客服会话页面成功，可进行自己的业务逻辑
+				// if (e.detail.errMsg === 'enterContact:ok') {
+				// 	swan.reportAnalytics('userMessage', {
+				// 		visit: 1,
+				// 		message: '进入客服页面PV'
+				// 	});
+				// }
+				// // 可进行一些进入失败的业务逻辑
+				// else {
+				// 	swan.reportAnalytics('userMessage', {
+				// 		visit: 0,
+				// 		message: '进入客服页面失败损失PV'
+				// 	});
+				// }
+			},
 			// 获取问题详情
 			getQuestionsDetail(){
 				this.HTTP.request({
@@ -1066,6 +1096,53 @@
 			color: #303133;
 			line-height: 40rpx;
 			margin-left: 10rpx;
+		}
+	}
+	.btn{
+		width: 100%;
+		height: 260rpx;
+		background-image: url(/static/images/bg.png);
+		background-repeat:no-repeat;
+		background-size:100% 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 52rpx;
+		.left{
+			display: flex;
+			align-items: center;
+			.left-img{
+				width: 126rpx;
+				height: 126rpx;
+				overflow: hidden;
+				border-radius: 50%;
+				image{
+					width: 100%;
+					height: 100%;
+				}
+			}
+			text{
+				font-size: 32rpx;
+				font-family: AlibabaPuHuiTiM;
+				color: #303133;
+				margin-left: 24rpx;
+			}
+		}
+		.right{
+			.right-btn{
+				width: 176rpx;
+				height: 60rpx;
+				background: linear-gradient(90deg, #FF5A79 0%, #FF74B4 100%);
+				box-shadow: 0rpx 6rpx 30rpx 0rpx rgba(255, 115, 178, 0.35);
+				border-radius: 40rpx;
+				font-size: 28rpx;
+				font-family: PingFangSC-Semibold, PingFang SC;
+				font-weight: 600;
+				color: #FFFFFF;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
 		}
 	}
 	.answersFollow{
