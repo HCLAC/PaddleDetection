@@ -433,7 +433,7 @@
 							for (var i=0;i<article_images.length;i++){
 								var item = article_images[i]
 								let obj = item.split('"')
-								if (image_in_page.length < 4 && obj[1].indexOf("lingtuyang.cn")!=-1){
+								if (image_in_page.length < 3 && obj[1].indexOf("lingtuyang.cn")!=-1){
 									let src2 = that.Utils.addImageProcess(obj[1], true, 60)
 									image_in_page.push(src2)
 								}
@@ -519,7 +519,6 @@
 							articleInfo.images[index1] = that.Utils.addImageProcess(item1, true, 80)
 						})
 						//#ifdef MP-BAIDU
-						console.log(image_in_page)
 						swan.setPageInfo({
 							title: articleInfo.title,
 							articleTitle: articleInfo.title,
