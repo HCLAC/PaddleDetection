@@ -242,6 +242,7 @@
 			this.getQuestionsRelated()
 		},
 		onReady() {
+			
 		 	//#ifdef MP-BAIDU
 			swan.onKeyboardHeightChange(res => {
 				this.keywordHeight = (res.height + 60)+'px'
@@ -251,6 +252,13 @@
 		methods:{
 			share() {
 				uni.showShareMenu({
+					title: this.detail.title,
+					path:'pages_questions/questionsDetail/questionsDetail?question_id=' + this.question_id,
+					// content: this.articleInfo.description,
+					success() {
+					},
+					complete() {
+					}
 				});
 			},
 			//客服
