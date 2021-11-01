@@ -1176,10 +1176,10 @@
 		box-shadow: 0px -16rpx 56rpx 0px rgba(0, 0, 0, 0.05);
 		display: flex;
 		align-items: center;
-		justify-content: center;
+		justify-content: space-between;
 		z-index: 10;
 		.addBox{
-			width: 30%;
+			padding: 0 40rpx;
 			height: 40rpx;
 			display: flex;
 			align-items: center;
@@ -1214,12 +1214,11 @@
 			
 		}
 		.followBox{
-			width: 30%;
 			height: 40rpx;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			border-right: 2rpx solid #EDEFF2;
+			
 			.midBox{
 				display: flex;
 				align-items: center;
@@ -1249,7 +1248,8 @@
 			
 		}
 		.shareBox{
-			width: 30%;
+			border-left: 2rpx solid #EDEFF2;
+			padding: 0 40rpx;
 			height: 40rpx;
 			display: flex;
 			align-items: center;
@@ -1261,7 +1261,7 @@
 					width: 48rpx;
 					height: 48rpx;
 					background: #9F95FF;
-					box-shadow: 0px 0px 26rpx 0px rgba(255, 229, 0, 0.3);
+					box-shadow: 0px 0px 26rpx 0px rgba(159, 149, 255, 0.25);
 					border-radius: 50%;
 					overflow: hidden;
 					margin-right: 8rpx;
