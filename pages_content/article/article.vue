@@ -1113,6 +1113,8 @@
 				uni.showShareMenu({
 					title: this.articleInfo.title,
 					content: this.articleInfo.description,
+					imageUrl: this.articleInfo.cover_image,
+					// path: 'pages_content/article/article?article_id=' + this.article_id,
 					success() {
 					},
 					complete() {
