@@ -154,15 +154,27 @@
 		<view class="answersFollow" >
 			<view class="addBox" @click="sendAsk">
 				<view class="midBox">
-					<image src="/static/images/addQ.svg"></image>
+					<view class="img">
+						<image src="/static/images/wdadd.svg"></image>
+					</view>
 					<text>添加回答</text>
 				</view>
 			</view>
 			<!-- <view class="aFLine"></view> -->
 			<view class="followBox"  @click="Fllow()">
 				<view class="midBox">
-					<image src="/static/images/followQ.svg"></image>
+					<view class="img">
+						<image src="/static/images/wdtj.svg"></image>
+					</view>
 					<text >{{detail&&detail.is_follow == 0?'关注问题':'已关注'}}</text>
+				</view>
+			</view>
+			<view class="shareBox"  @click="share">
+				<view class="midBox">
+					<view class="img">
+						<image src="/static/images/wdfx.svg"></image>
+					</view>
+					<text>分享问答</text>
 				</view>
 			</view>
 		</view>
@@ -237,6 +249,10 @@
 		 	//#endif
 		},
 		methods:{
+			share() {
+				uni.showShareMenu({
+				});
+			},
 			//客服
 			contactCB(e) {
 				// 输出：{errMsg: 'enterContact:ok'}
@@ -1163,7 +1179,7 @@
 		justify-content: center;
 		z-index: 10;
 		.addBox{
-			width: 50%;
+			width: 30%;
 			height: 40rpx;
 			display: flex;
 			align-items: center;
@@ -1172,9 +1188,18 @@
 			.midBox{
 				display: flex;
 				align-items: center;
-				image{
+				.img{
 					width: 48rpx;
 					height: 48rpx;
+					background: #FFE512;
+					box-shadow: 0px 0px 26rpx 0px rgba(255, 229, 0, 0.3);
+					border-radius: 50%;
+					overflow: hidden;
+					margin-right: 8rpx;
+					image{
+						width: 48rpx;
+						height: 48rpx;
+					}
 				}
 				text{
 					height: 40rpx;
@@ -1189,17 +1214,27 @@
 			
 		}
 		.followBox{
-			width: 50%;
+			width: 30%;
 			height: 40rpx;
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			border-right: 2rpx solid #EDEFF2;
 			.midBox{
 				display: flex;
 				align-items: center;
-				image{
+				.img{
 					width: 48rpx;
 					height: 48rpx;
+					background: #FFE512;
+					box-shadow: 0px 0px 26rpx 0px rgba(255, 229, 0, 0.3);
+					border-radius: 50%;
+					overflow: hidden;
+					margin-right: 8rpx;
+					image{
+						width: 48rpx;
+						height: 48rpx;
+					}
 				}
 				text{
 					height: 40rpx;
@@ -1212,6 +1247,39 @@
 				}
 			}
 			
+		}
+		.shareBox{
+			width: 30%;
+			height: 40rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			.midBox{
+				display: flex;
+				align-items: center;
+				.img{
+					width: 48rpx;
+					height: 48rpx;
+					background: #9F95FF;
+					box-shadow: 0px 0px 26rpx 0px rgba(255, 229, 0, 0.3);
+					border-radius: 50%;
+					overflow: hidden;
+					margin-right: 8rpx;
+					image{
+						width: 48rpx;
+						height: 48rpx;
+					}
+				}
+				text{
+					height: 40rpx;
+					font-size: 28rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #303133;
+					line-height: 40rpx;
+				
+				}
+			}
 		}
 	}
 	// 评论框

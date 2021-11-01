@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切片</title>
+    <g id="问答1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="发表完成2" transform="translate(-271.000000, -890.000000)">
+            <g id="编组" transform="translate(271.000000, 890.000000)">
+                <rect id="矩形" x="0" y="0" width="24" height="24"></rect>
+                <path d="M12.4545455,13.4772727 C12.4545455,13.0810023 12.4545455,13.509324 12.4545455,12.7167832 C12.4545455,10.6891644 14.0982553,9.04545455 16.1258741,9.04545455 C16.9184149,9.04545455 16.8310023,9.04545455 17.2272727,9.04545455" id="路径" stroke="#303133" stroke-width="1.2" stroke-linecap="round"></path>
+                <polyline id="路径" stroke="#303133" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(16.362886, 9.045455) rotate(-315.000000) translate(-16.362886, -9.045455) " points="15.5106134 8.19318182 17.2151589 8.19318182 17.2151589 9.89772727"></polyline>
+                <path d="M13.126281,7.04095253 C12.9061571,7.01391932 12.6819768,7 12.4545455,7 C9.44208318,7 7,9.44208318 7,12.4545455 C7,15.4670077 9.44208318,17.9090909 12.4545455,17.9090909 C15.4670077,17.9090909 17.9090909,15.4670077 17.9090909,12.4545455 C17.9090909,12.2458796 17.8973738,12.0399505 17.8745617,11.8373801" id="路径" stroke="#303133" stroke-width="1.2" stroke-linecap="round"></path>
+            </g>
+        </g>
+    </g>
+</svg>
