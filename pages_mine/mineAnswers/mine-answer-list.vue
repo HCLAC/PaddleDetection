@@ -68,7 +68,7 @@
 					empty:{
 					  use : true ,
 					  icon : null ,
-					  tip : "暂无相关数据",
+					  tip : "还没有关注任何问题",
 					  btnText : "",
 					  fixed: false,
 					  top: "100rpx",

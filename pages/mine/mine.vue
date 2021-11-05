@@ -81,12 +81,14 @@ export default {
 					name: '收藏',
 					count: '',
 					tip: '您的收藏夹空空如也～',
-					icon: '/static/images/wenjianjia.png',
+					icon: '/static/images/index-kong.png',
+					// icon: '/static/images/wenjianjia.png',
 				}, {
 					name: '已赞',
 					count: '',
-					tip: '您还没有赞过任何文章哦～',
-					icon: '/static/images/dianzhan.png',
+					tip: '暂无点赞任何文章',
+					icon:'/static/images/index-kong.png',
+					// icon: '/static/images/dianzhan.png',
 				}],
 			tabIndex: 0,
 			favnumcolor:{
