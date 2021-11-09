@@ -282,13 +282,13 @@
 				// 		"navigationStyle": "custom"
 				// 	}
 				// },
-				// {
-				// 	"path" : "moreQuestions/moreQuestions",
-				// 	"style" :                                                                                    
-				// 	{
-				// 		"navigationStyle": "custom"
-				// 	}
-				// },
+				{
+					"path" : "moreQuestions/moreQuestions",
+					"style" :                                                                                    
+					{
+						"navigationStyle": "custom"
+					}
+				},
 				// {
 				// 	"path" : "questionsComplete/questionsComplete",
 				// 	"style" :                                                                                    

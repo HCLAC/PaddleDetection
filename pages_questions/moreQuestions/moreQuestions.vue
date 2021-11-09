@@ -27,7 +27,7 @@
 <script>
 import MescrollMoreMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-more.js';
 import meTabs from '@/common/me-tabs/me-tabs.vue';
-import questionList from '@/common/article-mescroll-item/question-list.vue';
+import questionList from './question-list.vue';
 	export default {
 		mixins: [MescrollMoreMixin],
 		components: {
