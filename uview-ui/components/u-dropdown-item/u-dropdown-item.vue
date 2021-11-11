@@ -6,11 +6,18 @@
 			}">
 				<view class="u-dropdown-item__options">
 					<u-cell-group>
-						<u-cell-item @click="cellClick(item.value)" :arrow="false" :title="item.label" v-for="(item, index) in options"
+						<u-cell-item :border-bottom="false"  @click="cellClick(item.value)" :arrow="false" :title="item.label" v-for="(item, index) in options"
 						 :key="index" :title-style="{
-							color: value == item.value ? activeColor : inactiveColor
+							color: value == item.value ? activeColor : inactiveColor,
+							borderColor: value == item.value ? borderColor : inborderColor,
+						   width:'212rpx',
+						   borderRadius:'30rpx',
+						   border:'2rpx solid',
+						   display:'flex',
+						   justifyContent: 'center',
+						   alignItems: 'center'
 						}">
-							<u-icon v-if="value == item.value" name="checkbox-mark" :color="activeColor" size="32"></u-icon>
+							<!-- <u-icon v-if="value == item.value" name="checkbox-mark" :color="activeColor" size="32"></u-icon> -->
 						</u-cell-item>
 					</u-cell-group>
 				</view>
@@ -69,6 +76,8 @@
 				active: false, // 当前项是否处于展开状态
 				activeColor: '#2979ff', // 激活时左边文字和右边对勾图标的颜色
 				inactiveColor: '#606266', // 未激活时左边文字和右边对勾图标的颜色
+				borderColor:'#FFE512',
+				borderColor:'#606266'
 			}
 		},
 		computed: {
@@ -97,6 +106,8 @@
 					// 将子组件的激活颜色配置为父组件设置的激活和未激活时的颜色
 					this.activeColor = parent.activeColor;
 					this.inactiveColor = parent.inactiveColor;
+					this.borderColor = parent.borderColor;
+					this.inborderColor = parent.inaborderColor;
 					// 将本组件的this，放入到父组件的children数组中，让父组件可以操作本(子)组件的方法和属性
 					// push进去前，显判断是否已经存在了本实例，因为在子组件内部数据变化时，会通过父组件重新初始化子组件
 					let exist = parent.children.find(val => {

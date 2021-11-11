@@ -9,6 +9,7 @@
 				<view class="u-flex">
 					<text class="u-dropdown__menu__item__text" :style="{
 						color: item.disabled ? '#c0c4cc' : (index === current || highlightIndex == index) ? activeColor : inactiveColor,
+						borderColor: item.disabled ? '#c0c4cc' : (index === current || highlightIndex == index) ? borderColor : inborderColor,
 						fontSize: $u.addUnit(titleSize)
 					}">{{item.title}}</text>
 					<view class="u-dropdown__menu__item__arrow" :class="{
@@ -54,6 +55,16 @@
 	export default {
 		name: 'u-dropdown',
 		props: {
+			// 菜单标题和选项的激活态颜色
+			borderColor: {
+				type: String,
+				default: '#FFE512'
+			},
+			// 菜单标题和选项的未激活态颜色
+			inborderColor: {
+				type: String,
+				default: '#606266'
+			},
 			// 菜单标题和选项的激活态颜色
 			activeColor: {
 				type: String,
@@ -273,8 +284,6 @@
 			left: 0px;
 			bottom: 0;
 			overflow: hidden;
-			
-
 			&__mask {
 				position: absolute;
 				z-index: 9;

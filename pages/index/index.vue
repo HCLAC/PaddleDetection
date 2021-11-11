@@ -27,7 +27,7 @@
 					<image class="f-img" src="/static/images/jxwd.png" />
 					<view class="f-text">精选问答</view>
 				</view>
-				<view class="f-box">
+				<view class="f-box" @click="Housekeeper">
 					<image class="f-img" src="/static/images/lygj.png" />
 					<view class="f-text">旅游管家</view>
 				</view>
@@ -198,6 +198,11 @@
 			}
 		}, 100),
 		methods: {
+			Housekeeper(){
+				uni.navigateTo({
+					url:'/pages_content/housekeeperList/housekeeperList'
+				})
+			},
 			//跳转精选问答
 			toquestion(){
 				uni.navigateTo({
