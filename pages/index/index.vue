@@ -200,7 +200,8 @@
 		methods: {
 			Housekeeper(){
 				uni.navigateTo({
-					url:'/pages_content/housekeeperList/housekeeperList'
+					url:'/pages_content/housekeeperList/housekeeperList',
+					
 				})
 			},
 			//跳转精选问答

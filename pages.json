@@ -175,6 +175,15 @@
 						"enablePullDownRefresh": false
 					}
 				
+				},
+				{
+				    "path" : "housekeeperDetails/housekeeperDetails",
+				    "style" :                                                                                    
+					{
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false
+					}
+				
 				}
 				// {
 				// 	"path": "city/city",

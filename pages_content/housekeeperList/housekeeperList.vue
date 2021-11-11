@@ -28,7 +28,7 @@
 				<view class="pm" v-else>
 					<image src="/static/images/tp.png" mode=""></image>
 				</view>
-				<view class="left-box" @click="details">
+				<view class="left-box" @click="details(item)">
 					<view class="left">
 						<image src="/static/images/logo.png" mode=""></image>
 					</view>
@@ -150,9 +150,10 @@
 			this.getComments()
 		},
 		methods:{
-			details(){
+			details(item){
+				// console.log(item,'e')
 				uni.navigateTo({
-					url:'/pages_content/housekeeperList/housekeeperList'
+					url:'/pages_content/housekeeperDetails/housekeeperDetails?bulter_id=' + item.bulter_id
 				})
 			},
 			change1(value){
