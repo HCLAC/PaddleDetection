@@ -127,7 +127,16 @@
 					"style" :                                                                                    
 					{
 					}
-				}
+				},
+				{
+		            "path" : "consultingService/consultingService",
+		            "style" :                                                                                    
+		        {
+		            "navigationBarTitleText": "",
+		            "enablePullDownRefresh": false
+		        }
+		        
+		        }
 			]
 		},
 		{
@@ -175,7 +184,18 @@
 						"enablePullDownRefresh": false
 					}
 				
-				},
+				}
+				// {
+				// 	"path": "city/city",
+				// 	"style": {
+				// 		"navigationStyle": "custom"
+				// 	}
+				// }
+            ]
+		},
+		{
+			"root":"pages_im",
+			"pages":[
 				{
 				    "path" : "housekeeperDetails/housekeeperDetails",
 				    "style" :                                                                                    
@@ -185,22 +205,17 @@
 					}
 				
 				}
-				// {
-				// 	"path": "city/city",
-				// 	"style": {
-				// 		"navigationStyle": "custom"
-				// 	}
-				// }
-                ,{
-                    "path" : "housekeeperList/housekeeperList",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-            ]
+		        ,{
+		            "path" : "housekeeperList/housekeeperList",
+		            "style" :                                                                                    
+		        {
+		            "navigationBarTitleText": "",
+		            "enablePullDownRefresh": false
+		        }
+		        
+		        }
+		        
+		    ]
 		},
 		{
 			"root":"pages_province",
@@ -334,7 +349,7 @@
 	"preloadRule":{
 		"pages/index/index": {
 		    "network": "all",
-		    "packages": ["pages_content","pages_search","pages_mine"]
+		    "packages": ["pages_content","pages_search","pages_mine","pages_im"]
 		},
         "pages/mine/mine": {
             "network": "all",

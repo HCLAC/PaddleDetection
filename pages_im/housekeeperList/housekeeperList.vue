@@ -150,10 +150,17 @@
 			this.getComments()
 		},
 		methods:{
+			back(){
+				this.Utils.back()
+				
+			},
+			home(){
+				this.Utils.home()
+			},
 			details(item){
 				// console.log(item,'e')
 				uni.navigateTo({
-					url:'/pages_content/housekeeperDetails/housekeeperDetails?bulter_id=' + item.bulter_id
+					url:'/pages_im/housekeeperDetails/housekeeperDetails?bulter_id=' + item.bulter_id
 				})
 			},
 			change1(value){

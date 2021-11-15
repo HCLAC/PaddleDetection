@@ -30,6 +30,10 @@
 									<text>问答</text>
 									<view class="answersNum">{{ userInfo.answersNum }}</view>
 								</view>
+								<view class="answers" @click="toCount" >
+									<text>咨询</text>
+									<view class="answersNum">{{ userInfo.search_count }}</view>
+								</view>
 							</view>
 						</view>
 						<view v-else>
@@ -172,6 +176,8 @@ export default {
 						}
 					});
 					var userInfo = res.data.data
+					console.log(userInfo,'userInfo')
+					
 					that.tabList[0].count = userInfo.fav_count
 					that.tabList[1].count = userInfo.like_count
 					
@@ -208,6 +214,12 @@ export default {
 		// 切换
 		tabChange(index){
 			this.tabIndex = index
+		},
+		//跳转咨询页
+		toCount(){
+			uni.navigateTo({
+				url:'/pages_content/consultingService/consultingService'
+			});
 		},
 		// 跳转关注页
 		toConcern(){

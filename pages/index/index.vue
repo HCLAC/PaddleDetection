@@ -200,7 +200,7 @@
 		methods: {
 			Housekeeper(){
 				uni.navigateTo({
-					url:'/pages_content/housekeeperList/housekeeperList',
+					url:'/pages_im/housekeeperList/housekeeperList',
 					
 				})
 			},

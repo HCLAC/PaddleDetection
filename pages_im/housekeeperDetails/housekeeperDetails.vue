@@ -123,10 +123,8 @@
 		<view class="cn">
 			导游本人承诺以上资料全部属实，接受公众监督，并为此承担相应法律责任。如发现虚假信息，请联系领途羊平台客服进行反馈，谢谢。
 		</view>
-		<view class="ljzx-box">
-			<view class="ljzx">
-				立即咨询
-			</view>
+		<view class="ljzx">
+			立即咨询
 		</view>
 	</view>
 </template>
