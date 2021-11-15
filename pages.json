@@ -203,19 +203,24 @@
 						"navigationBarTitleText": "",
 						"enablePullDownRefresh": false
 					}
-				
 				}
 		        ,{
 		            "path" : "housekeeperList/housekeeperList",
 		            "style" :                                                                                    
-		        {
-		            "navigationBarTitleText": "",
-		            "enablePullDownRefresh": false
+					{
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false
+					}
 		        }
-		        
+		        ,{
+		            "path" : "chatroom/chatroom",
+		            "style" :                                                                                    
+		        	{
+		        		"navigationBarTitleText": "",
+		        		"enablePullDownRefresh": false
+		        	}
 		        }
-		        
-		    ]
+            ]
 		},
 		{
 			"root":"pages_province",
