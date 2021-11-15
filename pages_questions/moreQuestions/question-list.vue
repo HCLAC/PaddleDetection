@@ -2,7 +2,7 @@
 	<view v-show="i === index" >
 		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="questionList">
-				<view class="jxbox" v-if="type == 'selected'">
+				<view class="jxbox" v-if="type == 'selected'" @click="toDetail">
 					<view class="one">
 						{{chiose.title}}
 					</view>
@@ -23,10 +23,10 @@
 					</view>
 				</view>
 				<view class="card" v-for="(item,index) in list" :key="index" @click="toQuestionsDetail(item)">
-					<view class="btn" v-if="index == 2 && type == 'selected'">
+					<view class="btn" v-if="index == 2 && type == 'selected'" @click.stop="toConsultation">
 						<image src="@/static/images/gg1.png" mode=""></image>
 					</view>
-					<view class="btn" v-if="index == 2 && type == 'newest'">
+					<view class="btn" v-if="index == 2 && type == 'newest'" @click.stop="toConsultation">
 						<image src="@/static/images/gg2.png" mode=""></image>
 					</view>
 					<view class="title">
@@ -113,6 +113,16 @@
 			}
 		},
 		methods: {
+			toConsultation(){
+				console.log('在线咨询')
+			},
+			//跳转精选问答详情页
+			toDetail(){
+				var question_id = this.chiose.question_id
+				uni.navigateTo({
+					url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + question_id
+				});
+			},
 			// 跳转问题详情
 			toQuestionsDetail(item){
 				var question_id = item.question_id

@@ -218,7 +218,7 @@ export default {
 		//跳转咨询页
 		toCount(){
 			uni.navigateTo({
-				url:'/pages_content/consultingService/consultingService'
+				url:'/pages_mine/consultingService/consultingService'
 			});
 		},
 		// 跳转关注页
