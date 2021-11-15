@@ -14,7 +14,7 @@
 				@click="click" @open="open"
 				:options="options"
 			>
-				<view class="item u-border-bottom">
+				<view class="item u-border-bottom" @click="toConsultation">
 					<!-- 此层wrap在此为必写的，否则可能会出现标题定位错误 -->
 					<view class="title-wrap">
 						在线咨询服务
@@ -28,7 +28,7 @@
 					<view class="item-text">
 						问题描述:{{item.question}}
 					</view>
-					<view class="mp">
+					<view class="mp" @click.stop="toHousekeeper(item)">
 						<image src="/static/images/logo.png" mode=""></image>
 						<view class="m-box">
 							<view class="name">
@@ -66,6 +66,15 @@
 			this.getlist()
 		},
 		methods:{
+			toConsultation(){
+				console.log('在线咨询')
+			},
+			toHousekeeper(item){
+				var bulter_id = item.bulter_id
+				uni.navigateTo({
+					url: '/pages_im/housekeeperDetails/housekeeperDetails?bulter_id=' + bulter_id
+				});
+			},
 			back(){
 				this.Utils.back()
 				
