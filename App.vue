@@ -49,7 +49,7 @@ export default {
 		  login: false,
 		  closed: false,
 		  curOpenOpt: {},
-		
+		onSingleChat:null,
 		  open(opt) {
 		    this.curOpenOpt = opt;
 		    WebIM.conn.open(opt);
@@ -149,7 +149,14 @@ export default {
 				that.globalData.conn.closed = true;
 				WebIM.conn.close();
 			},                  //连接关闭回调
-			onTextMessage: function ( message ) {},    //收到文本消息
+			onTextMessage: function ( message ) {
+				console.log(message,'message')
+				if (
+				  getCurrentRoute() == "pages_im/chatroom/chatroom"
+				) {
+				  that.globalData.conn.onSingleChat(message)
+				}
+			},    //收到文本消息
 			onEmojiMessage: function ( message ) {},   //收到表情消息
 			onPictureMessage: function ( message ) {}, //收到图片消息
 			onCmdMessage: function ( message ) {},     //收到命令消息
@@ -179,7 +186,13 @@ export default {
 				  uni.hideLoading();
 				  disp.fire("em.error.tokenErr");
 				}
-				
+				if (error.type == WebIM.statusCode.WEBIM_CONNCTION_DISCONNECTED) {
+					if(error.type == WebIM.statusCode.WEBIM_CONNCTION_DISCONNECTED && !logout){
+						if(WebIM.conn.autoReconnectNumTotal < WebIM.conn.autoReconnectNumMax){
+							return;
+						}
+					}
+				}
 				if (error.type == "socket_error") {
 				  ///sendMsgError
 				  console.log("socket_errorsocket_error", error);

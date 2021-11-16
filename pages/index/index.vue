@@ -19,7 +19,7 @@
 			</view>
 			<!-- 功能区 -->
 			<view class="function-box">
-				<view class="f-box">
+				<view class="f-box" @click="toChatroom">
 					<image class="f-img" src="/static/images/zxzx.png" />
 					<view class="f-text">在线咨询</view>
 				</view>
@@ -198,10 +198,14 @@
 			}
 		}, 100),
 		methods: {
+			toChatroom(){
+				uni.navigateTo({
+					url:'/pages_im/chatroom/chatroom',
+				})
+			},
 			Housekeeper(){
 				uni.navigateTo({
 					url:'/pages_im/housekeeperList/housekeeperList',
-					
 				})
 			},
 			//跳转精选问答
