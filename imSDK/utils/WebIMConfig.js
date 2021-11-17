@@ -17,8 +17,9 @@ let config = {
   // xmppURL: "wss://im-api-new-hsb.easemob.com/websocket",// websdk 3.0 server 沙箱（测试用）
   
   // xmppURL: "wss://im-api.easemob.com/ws",  //小程序sdk 2.0 server
+	xmppURL: 'wss://im-api-wechat.easemob.com/websocket',
 
-  xmppURL: 'wss://im-api-wechat.easemob.com/websocket', //小程序3.0 server 线上 小程序和原生客户端使用这个
+  // xmppURL: 'wss://im-api-v2.easemob.com/websocket', //小程序3.0 server 线上 小程序和原生客户端使用这个
   
   // xmppURL: 'wss://im-api-v2-hsb-alipay.easemob.com/websocket', // 支付宝沙箱 （测试用）
   
@@ -30,14 +31,13 @@ let config = {
   // apiURL: (location.protocol === 'https:' ? 'https:' : 'http:') + '//a1.easemob.com',
   // ios must be https!!! by lwz
   apiURL: "https://a1.easemob.com",
-  
   // apiURL: 'https://192.168.43.137:8080', // 支付宝测试
   // apiURL: (location.protocol === 'https:' ? 'https:' : 'http:') + '//172.17.3.155:8080',
 
   /*
    * Application AppKey
    */
-  appkey: "easemob-demo#chatdemoui",
+  appkey: "1164211103091042#demo",
 
   /*
    * Whether to use HTTPS      '1177161227178308#xcx'
