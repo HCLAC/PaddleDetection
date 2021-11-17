@@ -49,7 +49,8 @@ export default {
 		  login: false,
 		  closed: false,
 		  curOpenOpt: {},
-		onSingleChat:null,
+		  onMessage: null,
+		
 		  open(opt) {
 		    this.curOpenOpt = opt;
 		    WebIM.conn.open(opt);
@@ -143,24 +144,40 @@ export default {
 		// IM初始化
 		WebIM.conn.listen({
 			onOpened: function () {
+				console.log('onOpened', WebIM.conn)
 				that.globalData.conn.login = true
 			},                  //连接成功回调 
 			onClosed: function () {
+				console.log('onClosed')
 				that.globalData.conn.closed = true;
 				WebIM.conn.close();
 			},                  //连接关闭回调
 			onTextMessage: function ( message ) {
-				console.log(message,'message')
-				if (
-				  getCurrentRoute() == "pages_im/chatroom/chatroom"
-				) {
-				  that.globalData.conn.onSingleChat(message)
+				console.log(message, 'onTextMessage')
+				if (message && onMessageError(message) && that.globalData.conn.onMessage){
+					that.globalData.conn.onMessage('text', message)
+					ack(message);
 				}
 			},    //收到文本消息
-			onEmojiMessage: function ( message ) {},   //收到表情消息
-			onPictureMessage: function ( message ) {}, //收到图片消息
+			onEmojiMessage: function ( message ) {
+				console.log(message, 'onEmojiMessage')
+				if (message && onMessageError(message) && that.globalData.conn.onMessage){
+					that.globalData.conn.onMessage('emoji', message)
+				}
+			},   //收到表情消息
+			onPictureMessage: function ( message ) {
+				console.log(message, 'onPictureMessage')
+				if (message && onMessageError(message) && that.globalData.conn.onMessage){
+					that.globalData.conn.onMessage('picture', message)
+				}
+			}, //收到图片消息
 			onCmdMessage: function ( message ) {},     //收到命令消息
-			onAudioMessage: function ( message ) {},   //收到音频消息
+			onAudioMessage: function ( message ) {
+				console.log(message, 'onAudioMessage')
+				if (message && onMessageError(message) && that.globalData.conn.onMessage){
+					that.globalData.conn.onMessage('audio', message)
+				}
+			},   //收到音频消息
 			onLocationMessage: function ( message ) {},//收到位置消息
 			onFileMessage: function ( message ) {},    //收到文件消息
 			onVideoMessage: function (message) {
@@ -168,53 +185,63 @@ export default {
 			onPresence: function ( message ) {},       //处理“广播”或“发布-订阅”消息，如联系人订阅请求、处理群组、聊天室被踢解散等消息
 			onRoster: function ( message ) {},         //处理好友申请
 			onInviteMessage: function ( message ) {},  //处理群组邀请
-			onOnline: function () {},                  //本机网络连接成功
-			onOffline: function () {},                 //本机网络掉线
+			onOnline: function () {
+				console.log('onOnline')
+				that.globalData.conn.closed = false;
+			},                  //本机网络连接成功
+			onOffline: function () {
+				console.log('onOffline')
+				that.globalData.conn.closed = true;
+			},                 //本机网络掉线
 			onError: function ( error ) {
-				console.log(error)
+				console.log(error, 'onError')
 				if (error.type == WebIM.statusCode.WEBIM_CONNCTION_OPEN_ERROR) {
-				  uni.hideLoading();
 				  disp.fire("em.error.passwordErr"); 
-				  // uni.showModal({
-				  // 	title: "用户名或密码错误",
-				  // 	confirmText: "OK",
-				  // 	showCancel: false
-				  // });
+					that.globalData.conn.login = false
 				}
 				
 				if (error.type == WebIM.statusCode.WEBIM_CONNCTION_AUTH_ERROR) {
-				  uni.hideLoading();
 				  disp.fire("em.error.tokenErr");
 				}
-				if (error.type == WebIM.statusCode.WEBIM_CONNCTION_DISCONNECTED) {
-					if(error.type == WebIM.statusCode.WEBIM_CONNCTION_DISCONNECTED && !logout){
-						if(WebIM.conn.autoReconnectNumTotal < WebIM.conn.autoReconnectNumMax){
-							return;
-						}
-					}
-				}
+				
 				if (error.type == "socket_error") {
-				  ///sendMsgError
-				  console.log("socket_errorsocket_error", error);
 				  uni.showToast({
 				    title: "网络已断开",
 				    icon: "none",
 				    duration: 2000,
 				  });
+				  that.globalData.conn.closed = true;
 				  disp.fire("em.error.sendMsgErr", error);
 				}
 			},          //失败回调
-			onBlacklistUpdate: function (list) {       //黑名单变动
-				// 查询黑名单，将好友拉黑，将好友从黑名单移除都会回调这个函数，list则是黑名单现有的所有好友信息
-				console.log(list);
-			},
-			onRecallMessage: function(message){},      //收到撤回消息回调
-			onReceivedMessage: function(message){},    //收到消息送达服务器回执
-			onDeliveredMessage: function(message){},   //收到消息送达客户端回执
+			onBlacklistUpdate: function (list) {},
+			onRecallMessage: function(message){
+				console.log(message, 'onRecallMessage')
+				if (that.globalData.conn.onMessage){
+					that.globalData.conn.onMessage('recall', message)
+				}
+			},      //收到撤回消息回调
+			onReceivedMessage: function(message){
+				console.log(message, 'onReceivedMessage')
+				if (message && onMessageError(message) && that.globalData.conn.onMessage){
+					that.globalData.conn.onMessage('received', message)
+				}
+			},    //收到消息送达服务器回执
+			onDeliveredMessage: function(message){
+				console.log(message, 'onDeliveredMessage')
+				if (that.globalData.conn.onMessage){
+					that.globalData.conn.onMessage('delivered', message)
+				}
+			},   //收到消息送达客户端回执
 			onReadMessage: function(message){},        //收到消息已读回执
 			onCreateGroup: function(message){},        //创建群组成功回执（需调用createGroupNew）
 			onMutedMessage: function(message){},       //如果用户在A群组被禁言，在A群发消息会走这个回调并且消息不会传递给群其它成员
-			onChannelMessage: function(message){}      //收到整个会话已读的回执，在对方发送channel ack时会在这个回调里收到消息
+			onChannelMessage: function(message){
+				console.log(message, 'onChannelMessage')
+				if (message && onMessageError(message) && that.globalData.conn.onMessage){
+					that.globalData.conn.onMessage('channel', message)
+				}
+			}      //收到整个会话已读的回执，在对方发送channel ack时会在这个回调里收到消息
 		});
 	},
 	onShow: function(data) {

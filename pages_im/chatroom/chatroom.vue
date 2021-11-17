@@ -55,7 +55,7 @@
 				<!-- <button @tap="startRecord">开始录音</button>
 				<button @tap="endRecord">停止录音</button>
 				<button @tap="playVoice">播放录音</button> -->
-				<u-input class="text" v-model="text" type="text" border="true" />
+				<u-input class="text" v-model="text" type="text" :border="true" />
 				<button type="default" @click="sendPrivateText">111</button>
 			</view>
 			
@@ -90,11 +90,6 @@
 		},
 		onLoad() {
 			this.postconsulting()
-			getApp().globalData.conn.onSingleChat = this.onmsg;
-			setTimeout(() => {
-				this.sendPrivateText()
-			}, 800);
-			
 			let self = this;
 			recorderManager.onStop( (res)=> {
 				console.log('recorder stop' + JSON.stringify(res));
@@ -104,7 +99,10 @@
 			});
 		},
 		onShow(){
-			this.postconsulting()
+			getApp().globalData.conn.onMessage = this.onMessage;
+		},
+		onUnload() {
+			getApp().globalData.conn.onMessage = null;
 		},
 		methods: {
 			startRecord() {
@@ -165,7 +163,7 @@
 						console.log(this.title,'title')
 						getApp().globalData.conn.open({
 						  apiUrl: WebIM.config.apiURL,
-						  user: this.consulting.account_username,
+						  user: 'test1',//this.consulting.account_username,
 						  pwd: '123456',
 						  grant_type: 'password',
 						  appKey: WebIM.config.appkey
@@ -173,12 +171,11 @@
 					}
 				});
 			},
-			onmsg(message){
-				// this.leftList = message
-				this.arr.push(message)
-				console.log(this.arr,'数据')
-				// console.log(this.$refs.info,'ref')
-				this.$forceUpdate()
+			onMessage(type, message){				
+				console.log(type, message)
+
+				// this.arr.push(message)
+				// this.$forceUpdate()
 			},
 			
 			//发送文本信息
@@ -187,25 +184,23 @@
 			    let msg = new WebIM.message('txt', id);      // 创建文本消息
 			    msg.set({
 			        msg: this.text,                  // 消息内容
-			        to: this.consulting.username,                          // 接收消息对象（用户id）
+			        to:  'test2',                          // 接收消息对象（用户id）
 			        chatType: 'singleChat',                  // 设置为单聊
 			        success:  (id, serverMsgId)=> {
-			            console.log('send private text Success');  
-						console.log(msg,'msg')
+			            console.log('send private text Success', msg);  
 						this.arr.push(msg.body)
-						console.log(this.arr,'233333')
-						this.HTTP.request({
-							url: '/im/save_msg',
-							method:'POST',
-							data: {
-								type:msg.type,
-								msg:msg.value,
-								bulter_id:this.consulting.bulter_id
-							},
-							success: res => {
-								console.log('成功')
-							}
-						});
+						// this.HTTP.request({
+						// 	url: '/im/save_msg',
+						// 	method:'POST',
+						// 	data: {
+						// 		type:msg.type,
+						// 		msg:msg.value,
+						// 		bulter_id:this.consulting.bulter_id
+						// 	},
+						// 	success: res => {
+						// 		console.log('成功')
+						// 	}
+						// });
 			        }, 
 			        fail: function(e){
 			            // 失败原因:
@@ -218,7 +213,7 @@
 			            // e.type === '501' 消息包含敏感词
 			            // e.type === '502' 被设置的自定义拦截捕获
 			            // e.type === '503' 未知错误
-			            console.log("Send private text error");  
+			            console.log("Send private text error", e);  
 			        }
 			    });
 			    WebIM.conn.send(msg.body);
