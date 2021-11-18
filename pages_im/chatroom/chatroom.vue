@@ -38,7 +38,8 @@
 				  @newAudioMsg="saveSendMsg"
 				></chatSuitAudio>
 			</view>
-			<view :class="showCamera == false ? 'btm' : 'btm1' ">
+			<!-- :class="showCamera == false ? 'btm' : 'btm1' " -->
+			<view class="btm" :style="{bottom:btm + 'rpx'}">
 				<view class="voice" v-if="showText" @click="onSwitch">
 					<image  src="@/static/images/voice.png" mode=""></image>
 				</view>
@@ -68,6 +69,36 @@
 					<image src="@/static/images/im_zp.png" mode=""></image>
 				</view>
 			</view>
+			<view class="btmImg" v-if="showEmo">
+				<swiper :class="show" id="btmImg" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
+					<block>
+						<swiper-item>
+							<view class="emoji_item">
+								<image v-for="(item, index) in emojiObj.map1" :key="index" :src="'../../' +emojiObj.path + item" @tap="sendEmoji" :data-emoji="index"></image>
+							</view>
+							<view class="emoji_item">
+								<image v-for="(item, index) in emojiObj.map2" :key="index" :src="'../../' +emojiObj.path + item" @tap="sendEmoji" :data-emoji="index"></image>
+							</view>
+							<view class="emoji_item">
+								<image v-for="(item, index) in emojiObj.map3" :key="index" :src="'../../' +emojiObj.path + item" @tap="sendEmoji" :data-emoji="index"></image>
+							</view>
+						</swiper-item>
+					</block>
+					<block class="second">
+						<swiper-item>
+							<view class="emoji_item">
+								<image v-for="(item, index) in emojiObj.map4" :key="index" :src="'../../' +emojiObj.path + item" @tap="sendEmoji" :data-emoji="index"></image>
+							</view>
+							<view class="emoji_item">
+								<image v-for="(item, index) in emojiObj.map5" :key="index" :src="'../../' +emojiObj.path + item" @tap="sendEmoji" :data-emoji="index"></image>
+							</view>
+							<view class="emoji_item last_item">
+								<image v-for="(item, index) in emojiObj.map6" :key="index" :src="'../../' +emojiObj.path + item" @tap="sendEmoji" :data-emoji="index"></image>
+							</view>
+						</swiper-item>
+					</block>
+				</swiper>
+			</view>
 		</view>
 	</view>
 </template>
@@ -76,17 +107,31 @@
 	import chatSuitAudio from './audio/audio.vue';
 	let WebIM = require("../../imSDK/utils/WebIM")["default"];
 	let msgType = require("../../imSDK/utils/msgtype");
+	let EMOJI_STATUS = {
+	  OPENED: "showEmoji",
+	  CLOSED: "emoji_list"
+	};
 	export default {
 		data() {
 			return {
 				showText:true,
 				showCamera:false,
+				showEmo:false,
 				history:[],
 				arr:[],
 				text:'',
 				title:'',
 				consulting:{},
 				username:{},
+				btm:0,
+				
+				show: EMOJI_STATUS.CLOSED,
+				emoji: WebIM.Emoji,
+				emojiObj: WebIM.EmojiObj,
+				interval: 5000,
+				duration: 1000,
+				autoplay: false,
+				indicatorDots: true // 显示面板指示点
 			}
 		},
 		components:{
@@ -102,6 +147,29 @@
 			getApp().globalData.conn.onMessage = null;
 		},
 		methods: {
+			openEmoji() {
+			  this.setData({
+			    show: EMOJI_STATUS.OPENED
+			  });
+			},
+			
+			cancelEmoji() {
+			  this.setData({
+			    show: EMOJI_STATUS.CLOSED
+			  });
+			},
+			
+			// 输出 emoji
+			sendEmoji(event) {
+			  var emoji = event.target.dataset.emoji;
+			  this.$emit("newEmojiStr", {
+			    msg: emoji,
+			    type: msgType.EMOJI
+			  }, {
+			    bubbles: true,
+			    composed: true
+			  });
+			},
 			onPhoto(){
 				console.log('点击照片')
 			},
@@ -109,11 +177,15 @@
 				console.log('点击相机')
 			},
 			onEmo(){
+				this.btm = 300
 				console.log('点击表情')
 				this.showCamera = false
+				this.showEmo = true
 			},
 			onImg(){
+				this.btm = 496
 				this.showCamera = true
+				this.showEmo = false
 			},
 			startRecord(){
 				console.log('开始录音')
@@ -123,40 +195,19 @@
 				console.log('录音结束')
 			},
 			onSwitch(){
+				this.btm = 0
 				this.showText = false
 				this.showCamera = false
-			},
-			onSwitch1(){
-				this.showText = true
-				this.showCamera = false
+				this.showEmo = false
 				
 			},
-			// uploadRecord(tempFilePath) {
-			// 	// tempFilePath为RecorderManager对象返回的录音文件临时地址
-			// 	console.log(tempFilePath,'11')
-			// 	const uploadTask = uni.uploadFile({
-			// 	url: 'http://10.0.2.51.:8199/v2/im/send_msg',
-			// 	filePath: tempFilePath, //录音结束后返回的临时路径
-			// 	name: 'send_file', // 文件对应的 key值对象名称
-			// 	header: {
-			// 		'Authorization': getApp().globalData.Authorization,
-			// 		'content-type': 'multipart/form-data',
-			// 		// 'token': uni.getStorageSync('token')
-			// 	},
-			// 	success: (res) => {
-			// 	console.log('-----上传成功-----'+JSON.stringify(res.data))
-			// 	this.sound = JSON.stringify(res.data.data.msg)
-			// 	console.log(this.sound,'this.sound')
-			// 	// json字符串转对象，JSON.parse( res.data )
-			// 	console.log('文件ID:'+ JSON.parse(res.data).data.id)
-			// 	// 添加、更新字词录音文件方法
-			// 	this.updateWordVoice(JSON.parse(res.data).data.id)
-			// 	},
-			// 	fail: (res) => {
-			// 	console.log('-----上传失败-----'+JSON.stringify(res))
-			// 	}
-			// 	})
-			// },
+			onSwitch1(){
+				this.btm = 0
+				this.showText = true
+				this.showCamera = false
+				this.showEmo = false
+				
+			},
 			postconsulting(){
 				this.HTTP.request({
 					url: '/bulter/consulting',
@@ -165,15 +216,12 @@
 					},
 					success: res => {
 						this.consulting = res.data.data
-						// this.contentList = res.data.data.list
-						console.log(this.consulting,'管家详情')
 						this.history = res.data.data.history
 						this.title = '管家' + res.data.data.name + '在线中'
 						this.username = {
 							your:res.data.data.name,
 							myName:res.data.data.account_username
 						}
-						console.log(this.title,'title')
 						getApp().globalData.conn.open({
 						  apiUrl: WebIM.config.apiURL,
 						  user: this.consulting.account_username,
@@ -280,7 +328,7 @@
 		width: 100%;
 		height: 98rpx;
 		position: fixed;
-		bottom: 0;
+		// bottom: 0;
 		display: flex;
 		align-items: center;
 		background: #F1F2F3;
@@ -324,56 +372,7 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-		}
-	}
-	.btm1{
-		width: 100%;
-		height: 98rpx;
-		position: fixed;
-		bottom: 496rpx;
-		display: flex;
-		align-items: center;
-		background: #F1F2F3;
-		.voice{
-			width: 48rpx;
-			height: 48rpx;
-			margin-left: 28rpx;
-			image{
-				width: 100%;
-				height: 100%;
-			}
-		}
-		.voice1{
-			width: 48rpx;
-			height: 48rpx;
-			margin-left: 24rpx;
-			image{
-				width: 100%;
-				height: 100%;
-			}
-		}
-		.text{
-			width: 474rpx;
-			height: 72rpx;
-			background: #FFFFFF;
-			border-radius: 8rpx;
-			// margin: 0 24rpx;
-			margin-left: 24rpx;
-		}
-		.btn{
-			margin-left: 24rpx;
 			
-			width: 474rpx;
-			height: 72rpx;
-			background: #FFFFFF;
-			border-radius: 8rpx;
-			font-size: 30rpx;
-			font-family: PingFangSC-Medium, PingFang SC;
-			font-weight: 500;
-			color: #303133;
-			display: flex;
-			justify-content: center;
-			align-items: center;
 		}
 	}
 	.imgBox{
@@ -400,6 +399,35 @@
 			}
 		}
 	}
+	.btmImg{
+		width: 100%;
+		height: 300rpx;
+		position: fixed;
+		bottom: 0;
+		.emoji_list image,
+		.showEmoji image {
+			width: 26px;
+			height: 26px;
+			margin: 5px 2%;
+		}
+		
+		.emoji {
+			width: 26px;
+			height: 26px;
+			margin: 0 0;
+		}
+		
+		.emoji_item {
+			display: flex;
+			justify-content: space-around;
+			margin-right: 20px;
+		}
+		.last_item{
+			justify-content:flex-end !important
+		}
+		
+	}
+	
 }
 
 </style>
