@@ -262,13 +262,25 @@
 			// 输出 emoji
 			sendEmoji(event) {
 			  var emoji = event.target.dataset.emoji;
-			  this.$emit("newEmojiStr", {
-			    msg: emoji,
-			    type: msgType.EMOJI
-			  }, {
-			    bubbles: true,
-			    composed: true
-			  });
+			  
+			  var str;
+			  var msglen = this.text.length - 1;
+			  
+			  if (emoji && emoji != "[del]") {
+			    str = this.text + emoji;
+			  } else if (emoji == "[del]") {
+			    let start = this.text.lastIndexOf("[");
+			    let end = this.text.lastIndexOf("]");
+			    let len = end - start;
+			  
+			    if (end != -1 && end == msglen && len >= 3 && len <= 4) {
+			      str = this.text.slice(0, start);
+			    } else {
+			      str = this.text.slice(0, msglen);
+			    }
+			  }
+			  this.text = str;
+			  this.inputMessage = str;
 			},
 			// 发送图片
 			onPhoto(){
