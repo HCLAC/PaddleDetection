@@ -30,13 +30,15 @@
 					</view>
 				</view>
 			</view>
-			<view class="tc">
-				<chatSuitAudio
-				  ref="chatSuitAudio"
-				  :username="username"
-				  chatType="singleChat"
-				  @newAudioMsg="saveSendMsg"
-				></chatSuitAudio>
+			<view class="audio-box" v-if="showAudioWave">
+				<view class="sound-waves">
+				  <view
+				    v-for="(item, index) in radomheight"
+				    :key="index"
+				    :style="'height:' + item + 'rpx;margin-top:-' + item / 2 + 'rpx'"
+				  ></view>
+				  <view style="clear: both; width: 0; height: 0"></view>
+				</view>
 			</view>
 			<!-- :class="showCamera == false ? 'btm' : 'btm1' " -->
 			<view class="btm" :style="{bottom:btm + 'rpx'}">
@@ -51,6 +53,7 @@
 				v-else
 				class="btn"  
 				@touchstart="startRecord"
+				@touchmove="moveRecord"
 				@touchend="endRecord">
 					按住说话
 				</view>
@@ -70,7 +73,7 @@
 				</view>
 			</view>
 			<view class="btmImg" v-if="showEmo">
-				<swiper :class="show" id="btmImg" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
+				<swiper class="emoji_list" id="btmImg" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
 					<block>
 						<swiper-item>
 							<view class="emoji_item">
@@ -104,38 +107,40 @@
 </template>
 .
 <script>
-	import chatSuitAudio from './audio/audio.vue';
+	import globalUrl from '@/global.js';
 	let WebIM = require("../../imSDK/utils/WebIM")["default"];
 	let msgType = require("../../imSDK/utils/msgtype");
-	let EMOJI_STATUS = {
-	  OPENED: "showEmoji",
-	  CLOSED: "emoji_list"
-	};
 	export default {
 		data() {
 			return {
+				consulting:{},
+				fromUser: '',
+				toUser: '',
 				showText:true,
 				showCamera:false,
 				showEmo:false,
+				showAudioWave: false,
 				history:[],
 				arr:[],
 				text:'',
 				title:'',
-				consulting:{},
 				username:{},
 				btm:0,
 				
-				show: EMOJI_STATUS.CLOSED,
 				emoji: WebIM.Emoji,
 				emojiObj: WebIM.EmojiObj,
 				interval: 5000,
 				duration: 1000,
 				autoplay: false,
-				indicatorDots: true // 显示面板指示点
+				indicatorDots: true, // 显示面板指示点
+				// 音频
+				radomheight: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
+				recorderManager: uni.getRecorderManager(),
+				RunAnimation: false,
+				recordTime: 0,
 			}
 		},
 		components:{
-			chatSuitAudio
 		},
 		onLoad() {
 			this.postconsulting()
@@ -147,34 +152,51 @@
 			getApp().globalData.conn.onMessage = null;
 		},
 		methods: {
-			openEmoji() {
-			  this.setData({
-			    show: EMOJI_STATUS.OPENED
-			  });
+			// 获取聊天室消息
+			postconsulting(){
+				this.HTTP.request({
+					url: '/bulter/consulting',
+					method:'POST',
+					data: {
+					},
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						this.consulting = res.data.data
+						this.fromUser = 'test3'//this.consulting.account_username
+						this.toUser = 'wuwuwuuw'//this.consulting.username
+						this.history = this.consulting.history
+						this.title = '管家' + this.consulting.name + '在线中'
+						this.username = {
+							your: this.consulting.username,
+							myName: this.consulting.account_username
+						}
+						getApp().globalData.conn.open({
+						  apiUrl: WebIM.config.apiURL,
+						  user: this.fromUser,
+						  pwd: '123456',
+						  grant_type: 'password',
+						  appKey: WebIM.config.appkey
+						});
+					}
+				});
 			},
-			
-			cancelEmoji() {
-			  this.setData({
-			    show: EMOJI_STATUS.CLOSED
-			  });
-			},
-			
-			// 输出 emoji
-			sendEmoji(event) {
-			  var emoji = event.target.dataset.emoji;
-			  this.$emit("newEmojiStr", {
-			    msg: emoji,
-			    type: msgType.EMOJI
-			  }, {
-			    bubbles: true,
-			    composed: true
-			  });
-			},
-			onPhoto(){
-				console.log('点击照片')
-			},
-			onCamera(){
-				console.log('点击相机')
+			// 消息回调
+			onMessage(type, message){
+				console.log(type, 'type')
+				console.log(message, 'message')
+				switch(type){
+					case 'text':
+					this.arr.push(message)
+					break
+				}
+				
+				// this.$forceUpdate()
 			},
 			onEmo(){
 				this.btm = 300
@@ -186,13 +208,6 @@
 				this.btm = 496
 				this.showCamera = true
 				this.showEmo = false
-			},
-			startRecord(){
-				console.log('开始录音')
-				this.$refs.chatSuitAudio.toggleRecordModal();
-			},
-			endRecord(){
-				console.log('录音结束')
 			},
 			onSwitch(){
 				this.btm = 0
@@ -208,43 +223,7 @@
 				this.showEmo = false
 				
 			},
-			postconsulting(){
-				this.HTTP.request({
-					url: '/bulter/consulting',
-					method:'POST',
-					data: {
-					},
-					success: res => {
-						this.consulting = res.data.data
-						this.history = res.data.data.history
-						this.title = '管家' + res.data.data.name + '在线中'
-						this.username = {
-							your:res.data.data.name,
-							myName:res.data.data.account_username
-						}
-						getApp().globalData.conn.open({
-						  apiUrl: WebIM.config.apiURL,
-						  user: this.consulting.account_username,
-						  pwd: '123456',
-						  grant_type: 'password',
-						  appKey: WebIM.config.appkey
-						});
-					}
-				});
-			},
-			onMessage(type, message){
-				console.log(type, 'type')
-				console.log(message, 'message')
-				switch(type){
-					case 'text':
-					this.arr.push(message)
-					break
-				}
-				
-				// this.$forceUpdate()
-			},
-			
-			//发送文本信息
+			// 发送文本信息
 			sendPrivateText() {
 			    let id = WebIM.conn.getUniqueId();                 // 生成本地消息id
 			    let msg = new WebIM.message('txt', id);      // 创建文本消息
@@ -271,6 +250,204 @@
 			        }
 			    });
 			    WebIM.conn.send(msg.body);
+			},
+			// 输出 emoji
+			sendEmoji(event) {
+			  var emoji = event.target.dataset.emoji;
+			  this.$emit("newEmojiStr", {
+			    msg: emoji,
+			    type: msgType.EMOJI
+			  }, {
+			    bubbles: true,
+			    composed: true
+			  });
+			},
+			// 发送图片
+			onPhoto(){
+				var me = this;
+				uni.chooseImage({
+					count: 1,
+					sizeType: ["original", "compressed"],
+					sourceType: ["album"],
+				
+					success(res) {
+						me.upLoadImage(res);
+					}
+				});
+				
+			},
+			onCamera(){
+				var me = this;
+				uni.chooseImage({
+					count: 1,
+					sizeType: ["original", "compressed"],
+					sourceType: ["camera"],
+				
+					success(res) {
+						me.upLoadImage(res);
+					}
+				});
+			},
+			upLoadImage(res) {
+				var me = this;
+				var tempFilePaths = res.tempFilePaths;
+				var token = WebIM.conn.context.accessToken;
+				uni.getImageInfo({
+					src: res.tempFilePaths[0],
+					success(res) {
+						var allowType = {
+							jpg: true,
+							jpeg: true,
+							gif: true,
+							png: true,
+							bmp: true
+						};
+						var str = WebIM.config.appkey.split("#");
+						var width = res.width;
+						var height = res.height;
+						var index = res.path.lastIndexOf(".");
+						var filetype = ~index && res.path.slice(index + 1) || "";
+						if (!res.type) {
+							uni.showToast({
+								title: "H5端，uni-app暂未支持",
+			          			icon: "none"
+							})
+						}
+						if (filetype.toLowerCase() in allowType || res.type in allowType) {
+							uni.uploadFile({
+								url: globalUrl+'/im/upload_file',
+								filePath: tempFilePaths[0],
+								name: "send_file",
+								header: {
+									'Authorization': getApp().globalData.Authorization,
+									'content-type': 'multipart/form-data'
+								},
+								success: (res)=>{
+									if (res.statusCode != 200 || res.data.code != 0){
+										uni.showToast({
+											title: res.data.msg,
+											icon: 'none'
+										});
+										return
+									}
+									var dataObj = res.data.data;
+									var id = WebIM.conn.getUniqueId(); // 生成本地消息 id
+									var msg = new WebIM.message(msgType.IMAGE, id);
+									var file = {
+										url: dataObj.msg
+									};
+									msg.set({
+										apiUrl: WebIM.config.apiURL,
+										body: file,
+										from: me.fromUser,
+										to: me.toUser,
+										roomType: false,
+										chatType: 'singleChat',
+										success: function(argument) {
+											disp.fire('em.chat.sendSuccess', id);
+										}
+									});
+			
+									WebIM.conn.send(msg.body);
+								},
+								fail: (err) => {
+									console.log('上传失败', err)
+								},
+								complete: (err) => {
+									console.log('上传完成', err)
+								}
+							});
+						}
+					}
+				});
+			},
+			// 发送音频
+			startRecord(){
+				this.showAudioWave = true
+				console.log('开始录音')
+				this.myradom();
+			},
+			moveRecord(){
+			},
+			endRecord(){
+				this.showAudioWave = false
+				console.log('录音结束')
+			},
+			executeRecord() {
+			  if (uni.getSetting) {
+				  return 
+			  }
+			  var me = this;
+			  uni.getSetting({
+			    success: res => {
+			      clearInterval(recordTimeInterval);
+			      me.recordTime = 0
+			      let recordAuth = res.authSetting['scope.record'];
+			
+			      if (recordAuth == false) {
+			        //已申请过授权，但是用户拒绝
+			        uni.openSetting({
+			          success: function (res) {
+			            let recordAuth = res.authSetting['scope.record'];
+			
+			            if (recordAuth == true) {
+			              uni.showToast({
+			                title: "授权成功",
+			                icon: "success"
+			              });
+			            } else {
+			              uni.showToast({
+			                title: "请授权录音",
+			                icon: "none"
+			              });
+			            }
+			
+			            me.isLongPress = false
+			          }
+			        });
+			      } else if (recordAuth == true) {
+			        // 用户已经同意授权
+			        startRecord();
+			      } else {
+			        // 第一次进来，未发起授权
+			        uni.authorize({
+			          scope: 'scope.record',
+			          success: () => {
+			            //授权成功
+			            uni.showToast({
+			              title: "授权成功",
+			              icon: "success"
+			            });
+			          }
+			        });
+			      }
+			    },
+			    fail: function () {
+			      uni.showToast({
+			        title: "鉴权失败，请重试",
+			        icon: "none"
+			      });
+			    }
+			  })
+			},
+			myradom() {
+			  const that = this;
+			  var _radomheight = that.radomheight;
+			
+			  for (var i = 0; i < that.radomheight.length; i++) {
+			    //+1是为了避免为0
+			    _radomheight[i] = 100 * Math.random().toFixed(2) + 10;
+			  }
+			
+			  that.radomheight = _radomheight
+			
+			  if (RunAnimation) {
+			    setTimeout(function () {
+			      that.myradom();
+			    }, 500);
+			  } else {
+			    return;
+			  }
 			}
 		}
 	}
@@ -323,6 +500,41 @@
 				align-items: center;
 			}
 		}
+	}
+	.audio-box{
+		width: 480rpx;
+		height: 440rpx;
+		background-color: #fff;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		border-radius: 3px;
+		box-shadow: 0 0 32rpx rgba(0, 0, 0, 0.15);
+		position: fixed;
+		bottom: 480rpx;
+		left: 50%;
+		margin-left: -240rpx;
+		
+		.sound-waves {
+		  width: 100%;
+		  box-sizing: border-box;
+		  padding-left:10%;
+		  margin-top: 80rpx;
+		  height: 80rpx;
+		  text-align: center;
+		}
+		 
+		.sound-waves view {
+		  transition: all 0.5s;
+		  width: 1%;
+		  margin-left: 1.5%;
+		  margin-right: 1.5%;
+		  height: 160rpx;
+		  background-color: #aaa;
+		  float: left;
+		}
+
 	}
 	.btm{
 		width: 100%;
