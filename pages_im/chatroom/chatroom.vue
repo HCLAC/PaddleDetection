@@ -30,13 +30,15 @@
 					</view>
 				</view>
 			</view>
-			<view class="tc">
-				<chatSuitAudio
-				  ref="chatSuitAudio"
-				  :username="username"
-				  chatType="singleChat"
-				  @newAudioMsg="saveSendMsg"
-				></chatSuitAudio>
+			<view class="audio-box" v-if="showAudioWave">
+				<view class="sound-waves">
+				  <view
+				    v-for="(item, index) in radomheight"
+				    :key="index"
+				    :style="'height:' + item + 'rpx;margin-top:-' + item / 2 + 'rpx'"
+				  ></view>
+				  <view style="clear: both; width: 0; height: 0"></view>
+				</view>
 			</view>
 			<view :class="showCamera == false ? 'btm' : 'btm1' ">
 				<view class="voice" v-if="showText" @click="onSwitch">
@@ -50,6 +52,7 @@
 				v-else
 				class="btn"  
 				@touchstart="startRecord"
+				@touchmove="moveRecord"
 				@touchend="endRecord">
 					按住说话
 				</view>
@@ -73,10 +76,10 @@
 </template>
 .
 <script>
-	import chatSuitAudio from './audio/audio.vue';
 	import globalUrl from '@/global.js';
 	let WebIM = require("../../imSDK/utils/WebIM")["default"];
 	let msgType = require("../../imSDK/utils/msgtype");
+	
 	export default {
 		data() {
 			return {
@@ -85,16 +88,20 @@
 				toUser: '',
 				showText:true,
 				showCamera:false,
+				showAudioWave: false,
 				history:[],
 				arr:[],
 				text:'',
 				title:'',
 				username:{},
+				// 音频
+				radomheight: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
 				recorderManager: uni.getRecorderManager(),
+				RunAnimation: false,
+				recordTime: 0,
 			}
 		},
 		components:{
-			chatSuitAudio
 		},
 		onLoad() {
 			this.postconsulting()
@@ -106,54 +113,6 @@
 			getApp().globalData.conn.onMessage = null;
 		},
 		methods: {
-			onPhoto(){
-				var me = this;
-				uni.chooseImage({
-					count: 1,
-					sizeType: ["original", "compressed"],
-					sourceType: ["album"],
-				
-					success(res) {
-						me.upLoadImage(res);
-					}
-				});
-				
-			},
-			onCamera(){
-				var me = this;
-				uni.chooseImage({
-					count: 1,
-					sizeType: ["original", "compressed"],
-					sourceType: ["camera"],
-				
-					success(res) {
-						me.upLoadImage(res);
-					}
-				});
-			},
-			onEmo(){
-				console.log('点击表情')
-				this.showCamera = false
-			},
-			onImg(){
-				this.showCamera = true
-			},
-			startRecord(){
-				console.log('开始录音')
-				this.$refs.chatSuitAudio.toggleRecordModal();
-			},
-			endRecord(){
-				console.log('录音结束')
-			},
-			onSwitch(){
-				this.showText = false
-				this.showCamera = false
-			},
-			onSwitch1(){
-				this.showText = true
-				this.showCamera = false
-				
-			},
 			postconsulting(){
 				this.HTTP.request({
 					url: '/bulter/consulting',
@@ -198,8 +157,48 @@
 				
 				// this.$forceUpdate()
 			},
+			onPhoto(){
+				var me = this;
+				uni.chooseImage({
+					count: 1,
+					sizeType: ["original", "compressed"],
+					sourceType: ["album"],
+				
+					success(res) {
+						me.upLoadImage(res);
+					}
+				});
+				
+			},
+			onCamera(){
+				var me = this;
+				uni.chooseImage({
+					count: 1,
+					sizeType: ["original", "compressed"],
+					sourceType: ["camera"],
+				
+					success(res) {
+						me.upLoadImage(res);
+					}
+				});
+			},
+			onEmo(){
+				console.log('点击表情')
+				this.showCamera = false
+			},
+			onImg(){
+				this.showCamera = true
+			},
+			onSwitch(){
+				this.showText = false
+				this.showCamera = false
+			},
+			onSwitch1(){
+				this.showText = true
+				this.showCamera = false
+			},
 			
-			//发送文本信息
+			// 发送文本信息
 			sendPrivateText() {
 			    let id = WebIM.conn.getUniqueId();                 // 生成本地消息id
 			    let msg = new WebIM.message('txt', id);      // 创建文本消息
@@ -299,6 +298,94 @@
 						}
 					}
 				});
+			},
+			// 发送音频
+			startRecord(){
+				this.showAudioWave = true
+				console.log('开始录音')
+				this.myradom();
+			},
+			moveRecord(){
+			},
+			endRecord(){
+				this.showAudioWave = false
+				console.log('录音结束')
+			},
+			executeRecord() {
+			  if (uni.getSetting) {
+				  return 
+			  }
+			  var me = this;
+			  uni.getSetting({
+			    success: res => {
+			      clearInterval(recordTimeInterval);
+			      me.recordTime = 0
+			      let recordAuth = res.authSetting['scope.record'];
+			
+			      if (recordAuth == false) {
+			        //已申请过授权，但是用户拒绝
+			        uni.openSetting({
+			          success: function (res) {
+			            let recordAuth = res.authSetting['scope.record'];
+			
+			            if (recordAuth == true) {
+			              uni.showToast({
+			                title: "授权成功",
+			                icon: "success"
+			              });
+			            } else {
+			              uni.showToast({
+			                title: "请授权录音",
+			                icon: "none"
+			              });
+			            }
+			
+			            me.isLongPress = false
+			          }
+			        });
+			      } else if (recordAuth == true) {
+			        // 用户已经同意授权
+			        startRecord();
+			      } else {
+			        // 第一次进来，未发起授权
+			        uni.authorize({
+			          scope: 'scope.record',
+			          success: () => {
+			            //授权成功
+			            uni.showToast({
+			              title: "授权成功",
+			              icon: "success"
+			            });
+			          }
+			        });
+			      }
+			    },
+			    fail: function () {
+			      uni.showToast({
+			        title: "鉴权失败，请重试",
+			        icon: "none"
+			      });
+			    }
+			  })
+			},
+			myradom() {
+			  const that = this;
+			  var _radomheight = that.radomheight;
+			
+			  for (var i = 0; i < that.radomheight.length; i++) {
+			    //+1是为了避免为0
+			    _radomheight[i] = 100 * Math.random().toFixed(2) + 10;
+			  }
+			
+			  that.radomheight = _radomheight
+			
+			  if (RunAnimation) {
+			    setTimeout(function () {
+			      that.myradom();
+			    }, 500);
+			  } else {
+			    return;
+			  }
 			}
 		}
 	}
@@ -351,6 +438,41 @@
 				align-items: center;
 			}
 		}
+	}
+	.audio-box{
+		width: 480rpx;
+		height: 440rpx;
+		background-color: #fff;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		border-radius: 3px;
+		box-shadow: 0 0 32rpx rgba(0, 0, 0, 0.15);
+		position: fixed;
+		bottom: 480rpx;
+		left: 50%;
+		margin-left: -240rpx;
+		
+		.sound-waves {
+		  width: 100%;
+		  box-sizing: border-box;
+		  padding-left:10%;
+		  margin-top: 80rpx;
+		  height: 80rpx;
+		  text-align: center;
+		}
+		 
+		.sound-waves view {
+		  transition: all 0.5s;
+		  width: 1%;
+		  margin-left: 1.5%;
+		  margin-right: 1.5%;
+		  height: 160rpx;
+		  background-color: #aaa;
+		  float: left;
+		}
+
 	}
 	.btm{
 		width: 100%;
