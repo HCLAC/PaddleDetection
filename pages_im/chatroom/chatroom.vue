@@ -74,19 +74,23 @@
 .
 <script>
 	import chatSuitAudio from './audio/audio.vue';
+	import globalUrl from '@/global.js';
 	let WebIM = require("../../imSDK/utils/WebIM")["default"];
 	let msgType = require("../../imSDK/utils/msgtype");
 	export default {
 		data() {
 			return {
+				consulting:{},
+				fromUser: '',
+				toUser: '',
 				showText:true,
 				showCamera:false,
 				history:[],
 				arr:[],
 				text:'',
 				title:'',
-				consulting:{},
 				username:{},
+				recorderManager: uni.getRecorderManager(),
 			}
 		},
 		components:{
@@ -103,10 +107,29 @@
 		},
 		methods: {
 			onPhoto(){
-				console.log('点击照片')
+				var me = this;
+				uni.chooseImage({
+					count: 1,
+					sizeType: ["original", "compressed"],
+					sourceType: ["album"],
+				
+					success(res) {
+						me.upLoadImage(res);
+					}
+				});
+				
 			},
 			onCamera(){
-				console.log('点击相机')
+				var me = this;
+				uni.chooseImage({
+					count: 1,
+					sizeType: ["original", "compressed"],
+					sourceType: ["camera"],
+				
+					success(res) {
+						me.upLoadImage(res);
+					}
+				});
 			},
 			onEmo(){
 				console.log('点击表情')
@@ -131,32 +154,6 @@
 				this.showCamera = false
 				
 			},
-			// uploadRecord(tempFilePath) {
-			// 	// tempFilePath为RecorderManager对象返回的录音文件临时地址
-			// 	console.log(tempFilePath,'11')
-			// 	const uploadTask = uni.uploadFile({
-			// 	url: 'http://10.0.2.51.:8199/v2/im/send_msg',
-			// 	filePath: tempFilePath, //录音结束后返回的临时路径
-			// 	name: 'send_file', // 文件对应的 key值对象名称
-			// 	header: {
-			// 		'Authorization': getApp().globalData.Authorization,
-			// 		'content-type': 'multipart/form-data',
-			// 		// 'token': uni.getStorageSync('token')
-			// 	},
-			// 	success: (res) => {
-			// 	console.log('-----上传成功-----'+JSON.stringify(res.data))
-			// 	this.sound = JSON.stringify(res.data.data.msg)
-			// 	console.log(this.sound,'this.sound')
-			// 	// json字符串转对象，JSON.parse( res.data )
-			// 	console.log('文件ID:'+ JSON.parse(res.data).data.id)
-			// 	// 添加、更新字词录音文件方法
-			// 	this.updateWordVoice(JSON.parse(res.data).data.id)
-			// 	},
-			// 	fail: (res) => {
-			// 	console.log('-----上传失败-----'+JSON.stringify(res))
-			// 	}
-			// 	})
-			// },
 			postconsulting(){
 				this.HTTP.request({
 					url: '/bulter/consulting',
@@ -164,19 +161,25 @@
 					data: {
 					},
 					success: res => {
-						this.consulting = res.data.data
-						// this.contentList = res.data.data.list
-						console.log(this.consulting,'管家详情')
-						this.history = res.data.data.history
-						this.title = '管家' + res.data.data.name + '在线中'
-						this.username = {
-							your:res.data.data.name,
-							myName:res.data.data.account_username
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
 						}
-						console.log(this.title,'title')
+						this.consulting = res.data.data
+						this.fromUser = 'test3'//this.consulting.account_username
+						this.toUser = 'wuwuwuuw'//this.consulting.username
+						this.history = this.consulting.history
+						this.title = '管家' + this.consulting.name + '在线中'
+						this.username = {
+							your: this.consulting.username,
+							myName: this.consulting.account_username
+						}
 						getApp().globalData.conn.open({
 						  apiUrl: WebIM.config.apiURL,
-						  user: this.consulting.account_username,
+						  user: this.fromUser,
 						  pwd: '123456',
 						  grant_type: 'password',
 						  appKey: WebIM.config.appkey
@@ -223,6 +226,79 @@
 			        }
 			    });
 			    WebIM.conn.send(msg.body);
+			},
+			upLoadImage(res) {
+				var me = this;
+				var tempFilePaths = res.tempFilePaths;
+				var token = WebIM.conn.context.accessToken;
+				uni.getImageInfo({
+					src: res.tempFilePaths[0],
+					success(res) {
+						var allowType = {
+							jpg: true,
+							jpeg: true,
+							gif: true,
+							png: true,
+							bmp: true
+						};
+						var str = WebIM.config.appkey.split("#");
+						var width = res.width;
+						var height = res.height;
+						var index = res.path.lastIndexOf(".");
+						var filetype = ~index && res.path.slice(index + 1) || "";
+						if (!res.type) {
+							uni.showToast({
+								title: "H5端，uni-app暂未支持",
+			          			icon: "none"
+							})
+						}
+						if (filetype.toLowerCase() in allowType || res.type in allowType) {
+							uni.uploadFile({
+								url: globalUrl+'/im/upload_file',
+								filePath: tempFilePaths[0],
+								name: "send_file",
+								header: {
+									'Authorization': getApp().globalData.Authorization,
+									'content-type': 'multipart/form-data'
+								},
+								success: (res)=>{
+									if (res.statusCode != 200 || res.data.code != 0){
+										uni.showToast({
+											title: res.data.msg,
+											icon: 'none'
+										});
+										return
+									}
+									var dataObj = res.data.data;
+									var id = WebIM.conn.getUniqueId(); // 生成本地消息 id
+									var msg = new WebIM.message(msgType.IMAGE, id);
+									var file = {
+										url: dataObj.msg
+									};
+									msg.set({
+										apiUrl: WebIM.config.apiURL,
+										body: file,
+										from: me.fromUser,
+										to: me.toUser,
+										roomType: false,
+										chatType: 'singleChat',
+										success: function(argument) {
+											disp.fire('em.chat.sendSuccess', id);
+										}
+									});
+			
+									WebIM.conn.send(msg.body);
+								},
+								fail: (err) => {
+									console.log('上传失败', err)
+								},
+								complete: (err) => {
+									console.log('上传完成', err)
+								}
+							});
+						}
+					}
+				});
 			}
 		}
 	}

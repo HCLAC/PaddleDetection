@@ -220,7 +220,8 @@ WebIM.conn = new WebIM.connection({
   autoReconnectNumMax: WebIM.config.autoReconnectNumMax,
   autoReconnectInterval: WebIM.config.autoReconnectInterval,
   isDebug: true,
-  isHttpDNS:false
+  isHttpDNS:false,
+  useOwnUploadFun: true,
 });
 
 module.exports = {
