@@ -9,14 +9,6 @@
 					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
-			<!-- <view class="listbox">
-				<view class="left" v-for="(item,index) in leftList" :key="index">
-					{{item.data}}
-				</view>
-				<view class="right" v-for="(item,index) in rightList" :key="index">
-					{{item.value}}
-				</view>
-			</view> -->
 			<view class="chatbox">
 				<!-- 历史记录 -->
 				<view class="boxMax" v-for="(item,index) in history" :key="index">
@@ -51,30 +43,59 @@
 					</view>
 				</view> -->
 			</view>
-			<view class="btm">
-				<button @tap="startRecord">开始录音</button>
-				<button @tap="endRecord">停止录音</button>
-				<button @tap="playVoice">播放录音</button>
-				<u-input class="text" v-model="text" type="text" :border="true" />
-				<button type="default" @click="sendPrivateText">111</button>
+			<view class="tc">
+				<chatSuitAudio
+				  ref="chatSuitAudio"
+				  :username="username"
+				  chatType="singleChat"
+				  @newAudioMsg="saveSendMsg"
+				></chatSuitAudio>
 			</view>
-			
+			<view :class="boxShow == false ? 'btm' : 'btm1' ">
+				<!-- <button @tap="startRecord">开始录音</button>
+				<button @tap="endRecord">停止录音</button>
+				<button @tap="playVoice">播放录音</button> -->
+				<view class="voice" v-if="show" @click="onSwitch">
+					<image  src="@/static/images/voice.png" mode=""></image>
+				</view>
+				<view class="voice" v-if="!show" @click="onSwitch1">
+					<image  src="@/static/images/text.png" mode=""></image>
+				</view>
+				<u-input v-if="show" class="text" @confirm="sendPrivateText" v-model="text" type="text" :border="true" />
+				<view 
+				v-if="!show"
+				class="btn"  
+				@touchstart="startRecord"
+				@touchend="endRecord">
+					按住说话
+				</view>
+				<view class="voice1" @click.stop="onEmo">
+					<image src="@/static/images/Emoji.png" mode=""></image>
+				</view>
+				<view class="voice" @click.stop="onImg">
+					<image src="@/static/images/ad.png" mode=""></image>
+				</view>
+			</view>
+			<view  class="imgBox"  v-if="boxShow">
+				<view class="minBox" @click="onPhoto">
+					<image src="@/static/images/im_tp.png" mode=""></image>
+				</view>
+				<view class="minBox" @click="onCamera">
+					<image src="@/static/images/im_zp.png" mode=""></image>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
-
+.
 <script>
-	const recorderManager = uni.getRecorderManager();
-	const innerAudioContext = uni.createInnerAudioContext();
-	
-	innerAudioContext.autoplay = true;
-	
-	
+	import chatSuitAudio from './audio/audio.vue';
 	let WebIM = require("../../imSDK/utils/WebIM")["default"];
 	let msgType = require("../../imSDK/utils/msgtype");
 	export default {
 		data() {
 			return {
+				show:true,
 				history:[],
 				arr:[],
 				text:'',
@@ -86,7 +107,13 @@
 				
 				voicePath: '',
 				sound:'',
+				// radomheight: InitHeight,
+				username:{},
+				boxShow:false,
 			}
+		},
+		components:{
+			chatSuitAudio
 		},
 		onLoad() {
 			this.postconsulting()
@@ -106,22 +133,37 @@
 			getApp().globalData.conn.onMessage = null;
 		},
 		methods: {
-			startRecord() {
-				console.log('开始录音');
-	
-				recorderManager.start();
+			// qqq(){
+			// 	boxShow = true
+			// },
+			onPhoto(){
+				console.log('点击照片')
 			},
-			endRecord() {
-				console.log('录音结束');
-				recorderManager.stop();
+			onCamera(){
+				console.log('点击相机')
 			},
-			playVoice() {
-				console.log('播放录音');
-	
-				if (this.sound) {
-					innerAudioContext.src = this.sound;
-					innerAudioContext.play();
-				}
+			onEmo(){
+				console.log('点击表情')
+				this.boxShow = false
+			},
+			onImg(){
+				this.boxShow = true
+			},
+			startRecord(){
+				console.log('开始录音')
+				this.$refs.chatSuitAudio.toggleRecordModal();
+			},
+			endRecord(){
+				console.log('录音结束')
+			},
+			onSwitch(){
+				this.show = false
+				this.boxShow = false
+			},
+			onSwitch1(){
+				this.show = true
+				this.boxShow = false
+				
 			},
 			// uploadRecord(tempFilePath) {
 			// 	// tempFilePath为RecorderManager对象返回的录音文件临时地址
@@ -149,45 +191,6 @@
 			// 	}
 			// 	})
 			// },
-			audio(tempFilePath){
-				console.log(tempFilePath,'tempFilePath')
-				    var id = WebIM.conn.getUniqueId();                   // 生成本地消息id
-				    var msg = new WebIM.message('audio', id);      // 创建音频消息
-				    var file = WebIM.utils.getFileUrl(tempFilePath);      // 将音频转化为二进制文件
-				    var allowType = {
-				        'mp3': true,
-				        'amr': true,
-				        'wmv': true
-				    };
-					console.log(file,'+++')
-				    if (file.filetype.toLowerCase() in allowType) {
-				        var option = {
-				            file: file,
-				            length: '3',                          // 音频文件时长，单位(s)
-				            to: 'test2',                       // 接收消息对象
-				            chatType: 'singleChat',               // 设置单聊
-				            onFileUploadError: function () {      // 消息上传失败
-				                console.log('onFileUploadError');
-				            },
-				            onFileUploadProgress: function (e) { // 上传进度的回调
-				                console.log(e)
-				            },
-				            onFileUploadComplete: function () {   // 消息上传成功
-				                console.log('onFileUploadComplete');
-				            },
-				            success: function () {                // 消息发送成功
-				                console.log('Success');
-				            },
-				            fail: function(e){
-				                console.log("Fail");              //如禁言、拉黑后发送消息会失败
-				            },
-				            flashUpload: WebIM.flashUpload,
-				            ext: {file_length: file.data.size}
-				        };
-				        msg.set(option);
-				        conn.send(msg.body);
-				    }
-			},
 			postconsulting(){
 				this.HTTP.request({
 					url: '/bulter/consulting',
@@ -200,6 +203,10 @@
 						console.log(this.consulting,'管家详情')
 						this.history = res.data.data.history
 						this.title = '管家' + res.data.data.name + '在线中'
+						this.username = {
+							your:res.data.data.name,
+							myName:'test1'
+						}
 						console.log(this.title,'title')
 						getApp().globalData.conn.open({
 						  apiUrl: WebIM.config.apiURL,
@@ -211,7 +218,7 @@
 					}
 				});
 			},
-			onMessage(type, message){				
+			onMessage(type, message){
 				console.log(type, 'type')
 				console.log(message, 'message')
 				// this.arr.push(message)
@@ -229,18 +236,6 @@
 			        success:  (id, serverMsgId)=> {
 			            console.log('send private text Success', msg);  
 						this.arr.push(msg.body)
-						// this.HTTP.request({
-						// 	url: '/im/save_msg',
-						// 	method:'POST',
-						// 	data: {
-						// 		type:msg.type,
-						// 		msg:msg.value,
-						// 		bulter_id:this.consulting.bulter_id
-						// 	},
-						// 	success: res => {
-						// 		console.log('成功')
-						// 	}
-						// });
 			        }, 
 			        fail: function(e){
 			            // 失败原因:
@@ -309,40 +304,6 @@
 				align-items: center;
 			}
 		}
-		// .content {
-		// 	width: 100%;
-		// 	height: 100%;
-		// 	background: #F1F2F3;
-		// 	display: flex;
-		// 	flex-direction: column;
-		// 	.item{
-		// 		.box {
-		// 			display: flex;
-		// 			align-items: center;
-		// 			margin: 10rpx 0;
-		// 			.avatar{
-		// 				width: 100rpx;
-		// 				height: 100rpx;
-		// 				border-radius: 50%;
-		// 				margin: 0 20rpx;
-		// 			}
-		// 			.chatmsg {
-		// 				// max-width: 50%;
-		// 				.chat {
-		// 					padding: 10rpx;
-		// 					background: #fff;
-		// 					white-space: pre-wrap;
-		// 					word-wrap: break-word;
-		// 					word-break: break-all;
-		// 				}
-		// 			}
-		// 		}
-		// 	} 
-		// 	.me {
-		// 		margin-left: auto;
-		// 		flex: 1;
-		// 	}
-		// }
 	}
 	.btm{
 		width: 100%;
@@ -350,15 +311,122 @@
 		position: fixed;
 		bottom: 0;
 		display: flex;
-		button{
-			width: 200rpx;
-			height: 100rpx;
+		align-items: center;
+		background: #F1F2F3;
+		.voice{
+			width: 48rpx;
+			height: 48rpx;
+			margin-left: 28rpx;
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.voice1{
+			width: 48rpx;
+			height: 48rpx;
+			margin-left: 24rpx;
+			image{
+				width: 100%;
+				height: 100%;
+			}
 		}
 		.text{
 			width: 474rpx;
 			height: 72rpx;
 			background: #FFFFFF;
 			border-radius: 8rpx;
+			// margin: 0 24rpx;
+			margin-left: 24rpx;
+		}
+		.btn{
+			margin-left: 24rpx;
+			
+			width: 474rpx;
+			height: 72rpx;
+			background: #FFFFFF;
+			border-radius: 8rpx;
+			font-size: 30rpx;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 500;
+			color: #303133;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+	.btm1{
+		width: 100%;
+		height: 98rpx;
+		position: fixed;
+		bottom: 496rpx;
+		display: flex;
+		align-items: center;
+		background: #F1F2F3;
+		.voice{
+			width: 48rpx;
+			height: 48rpx;
+			margin-left: 28rpx;
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.voice1{
+			width: 48rpx;
+			height: 48rpx;
+			margin-left: 24rpx;
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.text{
+			width: 474rpx;
+			height: 72rpx;
+			background: #FFFFFF;
+			border-radius: 8rpx;
+			// margin: 0 24rpx;
+			margin-left: 24rpx;
+		}
+		.btn{
+			margin-left: 24rpx;
+			
+			width: 474rpx;
+			height: 72rpx;
+			background: #FFFFFF;
+			border-radius: 8rpx;
+			font-size: 30rpx;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 500;
+			color: #303133;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+	.imgBox{
+		width: 750rpx;
+		height: 496rpx;
+		background: #F6F6F6;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 160rpx;
+		position: fixed;
+		bottom: 0;
+		.minBox{
+			width: 116rpx;
+			height: 116rpx;
+			background: #FFFFFF;
+			border-radius: 24rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			image{
+				width: 60rpx;
+				height: 60rpx;
+			}
 		}
 	}
 }
