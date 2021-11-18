@@ -52,9 +52,9 @@
 				</view> -->
 			</view>
 			<view class="btm">
-				<!-- <button @tap="startRecord">开始录音</button>
+				<button @tap="startRecord">开始录音</button>
 				<button @tap="endRecord">停止录音</button>
-				<button @tap="playVoice">播放录音</button> -->
+				<button @tap="playVoice">播放录音</button>
 				<u-input class="text" v-model="text" type="text" :border="true" />
 				<button type="default" @click="sendPrivateText">111</button>
 			</view>
@@ -94,7 +94,8 @@
 			recorderManager.onStop( (res)=> {
 				console.log('recorder stop' + JSON.stringify(res));
 				self.voicePath = res.tempFilePath;
-				this.uploadRecord(self.voicePath)
+				// this.uploadRecord(self.voicePath)
+				this.audio(self.voicePath)
 				
 			});
 		},
@@ -122,31 +123,70 @@
 					innerAudioContext.play();
 				}
 			},
-			uploadRecord(tempFilePath) {
-				// tempFilePath为RecorderManager对象返回的录音文件临时地址
-				console.log(tempFilePath,'11')
-				const uploadTask = uni.uploadFile({
-				url: 'http://10.0.2.51.:8199/v2/im/send_msg',
-				filePath: tempFilePath, //录音结束后返回的临时路径
-				name: 'send_file', // 文件对应的 key值对象名称
-				header: {
-					'Authorization': getApp().globalData.Authorization,
-					'content-type': 'multipart/form-data',
-					// 'token': uni.getStorageSync('token')
-				},
-				success: (res) => {
-				console.log('-----上传成功-----'+JSON.stringify(res.data))
-				this.sound = JSON.stringify(res.data.data.msg)
-				console.log(this.sound,'this.sound')
-				// json字符串转对象，JSON.parse( res.data )
-				console.log('文件ID:'+ JSON.parse(res.data).data.id)
-				// 添加、更新字词录音文件方法
-				this.updateWordVoice(JSON.parse(res.data).data.id)
-				},
-				fail: (res) => {
-				console.log('-----上传失败-----'+JSON.stringify(res))
-				}
-				})
+			// uploadRecord(tempFilePath) {
+			// 	// tempFilePath为RecorderManager对象返回的录音文件临时地址
+			// 	console.log(tempFilePath,'11')
+			// 	const uploadTask = uni.uploadFile({
+			// 	url: 'http://10.0.2.51.:8199/v2/im/send_msg',
+			// 	filePath: tempFilePath, //录音结束后返回的临时路径
+			// 	name: 'send_file', // 文件对应的 key值对象名称
+			// 	header: {
+			// 		'Authorization': getApp().globalData.Authorization,
+			// 		'content-type': 'multipart/form-data',
+			// 		// 'token': uni.getStorageSync('token')
+			// 	},
+			// 	success: (res) => {
+			// 	console.log('-----上传成功-----'+JSON.stringify(res.data))
+			// 	this.sound = JSON.stringify(res.data.data.msg)
+			// 	console.log(this.sound,'this.sound')
+			// 	// json字符串转对象，JSON.parse( res.data )
+			// 	console.log('文件ID:'+ JSON.parse(res.data).data.id)
+			// 	// 添加、更新字词录音文件方法
+			// 	this.updateWordVoice(JSON.parse(res.data).data.id)
+			// 	},
+			// 	fail: (res) => {
+			// 	console.log('-----上传失败-----'+JSON.stringify(res))
+			// 	}
+			// 	})
+			// },
+			audio(tempFilePath){
+				console.log(tempFilePath,'tempFilePath')
+				    var id = WebIM.conn.getUniqueId();                   // 生成本地消息id
+				    var msg = new WebIM.message('audio', id);      // 创建音频消息
+				    var file = WebIM.utils.getFileUrl(tempFilePath);      // 将音频转化为二进制文件
+				    var allowType = {
+				        'mp3': true,
+				        'amr': true,
+				        'wmv': true
+				    };
+					console.log(file,'+++')
+				    if (file.filetype.toLowerCase() in allowType) {
+				        var option = {
+				            file: file,
+				            length: '3',                          // 音频文件时长，单位(s)
+				            to: 'test2',                       // 接收消息对象
+				            chatType: 'singleChat',               // 设置单聊
+				            onFileUploadError: function () {      // 消息上传失败
+				                console.log('onFileUploadError');
+				            },
+				            onFileUploadProgress: function (e) { // 上传进度的回调
+				                console.log(e)
+				            },
+				            onFileUploadComplete: function () {   // 消息上传成功
+				                console.log('onFileUploadComplete');
+				            },
+				            success: function () {                // 消息发送成功
+				                console.log('Success');
+				            },
+				            fail: function(e){
+				                console.log("Fail");              //如禁言、拉黑后发送消息会失败
+				            },
+				            flashUpload: WebIM.flashUpload,
+				            ext: {file_length: file.data.size}
+				        };
+				        msg.set(option);
+				        conn.send(msg.body);
+				    }
 			},
 			postconsulting(){
 				this.HTTP.request({
@@ -172,8 +212,8 @@
 				});
 			},
 			onMessage(type, message){				
-				console.log(type, message)
-
+				console.log(type, 'type')
+				console.log(message, 'message')
 				// this.arr.push(message)
 				// this.$forceUpdate()
 			},
