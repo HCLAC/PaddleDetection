@@ -52,6 +52,7 @@
 				<view 
 				v-else
 				class="btn"  
+				@tap.stop="toggleWithoutAction"
 				@touchstart="startRecord"
 				@touchmove="moveRecord"
 				@touchend="endRecord">
@@ -110,6 +111,7 @@
 	import globalUrl from '@/global.js';
 	let WebIM = require("../../imSDK/utils/WebIM")["default"];
 	let msgType = require("../../imSDK/utils/msgtype");
+	let recordTimeInterval = null;
 	export default {
 		data() {
 			return {
@@ -136,7 +138,6 @@
 				// 音频
 				radomheight: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
 				recorderManager: uni.getRecorderManager(),
-				RunAnimation: false,
 				recordTime: 0,
 			}
 		},
@@ -151,7 +152,13 @@
 		onUnload() {
 			getApp().globalData.conn.onMessage = null;
 		},
+		destroyed() {
+			clearInterval(recordTimeInterval)
+			this.recordTime = 0
+	    },
 		methods: {
+			toggleWithoutAction(e) {// 阻止 tap 冒泡
+			},
 			// 获取聊天室消息
 			postconsulting(){
 				this.HTTP.request({
@@ -212,6 +219,7 @@
 			onSwitch(){
 				this.btm = 0
 				this.showText = false
+				this.executeRecord()
 				this.showCamera = false
 				this.showEmo = false
 				
@@ -229,7 +237,7 @@
 			    let msg = new WebIM.message('txt', id);      // 创建文本消息
 			    msg.set({
 			        msg: this.text,                  // 消息内容
-			        to:  this.consulting.username,                          // 接收消息对象（用户id）
+			        to:  this.toUser,                          // 接收消息对象（用户id）
 			        chatType: 'singleChat',                  // 设置为单聊
 			        success:  (id, serverMsgId)=> {
 			            console.log('send private text Success', msg);  
@@ -271,7 +279,7 @@
 					sourceType: ["album"],
 				
 					success(res) {
-						me.upLoadImage(res);
+						me.sendImage(res);
 					}
 				});
 				
@@ -284,11 +292,11 @@
 					sourceType: ["camera"],
 				
 					success(res) {
-						me.upLoadImage(res);
+						me.sendImage(res);
 					}
 				});
 			},
-			upLoadImage(res) {
+			sendImage(res) {
 				var me = this;
 				var tempFilePaths = res.tempFilePaths;
 				var token = WebIM.conn.context.accessToken;
@@ -334,7 +342,11 @@
 									var id = WebIM.conn.getUniqueId(); // 生成本地消息 id
 									var msg = new WebIM.message(msgType.IMAGE, id);
 									var file = {
-										url: dataObj.msg
+										url: dataObj.msg,
+										size: {
+											width: width,
+											height: height
+										},
 									};
 									msg.set({
 										apiUrl: WebIM.config.apiURL,
@@ -363,16 +375,109 @@
 			},
 			// 发送音频
 			startRecord(){
-				this.showAudioWave = true
+				var me = this;
 				console.log('开始录音')
-				this.myradom();
+				clearInterval(recordTimeInterval);
+				
+				me.recordTime = 0
+				me.showAudioWave = true
+				me.myradom();
+				let recorderManager = me.recorderManager || uni.getRecorderManager();
+				recorderManager.onStart(() => {
+				  recordTimeInterval = setInterval(()=>{
+					// console.log("开始录音...");
+				    me.recordTime++
+				  },1000)
+				  
+				});
+				recorderManager.start({
+				  format: "mp3"
+				}); // 超时
+				
+				setTimeout(function () {
+				  me.endRecord();
+				}, 100000);
 			},
 			moveRecord(){
 			},
 			endRecord(){
+				console.log('录音结束')      
+				let recorderManager = this.recorderManager; // 向上滑动状态停止：取消录音发放
 				this.showAudioWave = false
-				console.log('录音结束')
+				recorderManager.onStop(res => {
+				// console.log("结束录音...", res, this.recordTime);
+				clearInterval(recordTimeInterval);
+				let duration = this.recordTime * 1000;
+				if (duration <= 1000) {
+					uni.showToast({
+					  title: "录音时间太短",
+					  icon: "none"
+					});
+				} else {
+					// 上传
+					this.sendAudio(res.tempFilePath, duration);
+				}
+				this.recordTime = 0;
+				}); // 停止录音
+				
+				recorderManager.stop();
 			},
+			sendAudio(tempFilePath, dur) {
+				var me = this;
+				var token = WebIM.conn.context.accessToken;
+				uni.uploadFile({
+					url: globalUrl+'/im/upload_file',
+					filePath: tempFilePath,
+					name: "send_file",
+					header: {
+						'Authorization': getApp().globalData.Authorization,
+						'content-type': 'multipart/form-data'
+					},
+					success: (res)=>{
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						var id = WebIM.conn.getUniqueId();
+						var msg = new WebIM.message(msgType.AUDIO, id);
+						var dataObj = res.data.data; // 接收消息对象
+
+						msg.set({
+							apiUrl: WebIM.config.apiURL,
+							accessToken: token,
+							body: {
+							  type: msgType.AUDIO,
+							  url: dataObj.msg,
+							  filetype: "",
+							  filename: tempFilePath,
+							  accessToken: token,
+							  length: Math.ceil(dur / 1000)
+							},
+							from: this.fromUser,
+							to: this.toUser,
+							roomType: false,
+							chatType: 'singleChat',
+							success: function (argument) {
+							  disp.fire('em.chat.sendSuccess', id);
+							}
+						});
+
+						msg.body.length = Math.ceil(dur / 1000); //console.log('发送的语音消息', msg.body)
+						WebIM.conn.send(msg.body);
+						
+					},
+					fail: (err) => {
+						console.log('上传失败', err)
+					},
+					complete: (err) => {
+						console.log('上传完成', err)
+					}
+				});
+			},
+			// 授权录音
 			executeRecord() {
 			  if (uni.getSetting) {
 				  return 
@@ -380,47 +485,43 @@
 			  var me = this;
 			  uni.getSetting({
 			    success: res => {
-			      clearInterval(recordTimeInterval);
-			      me.recordTime = 0
-			      let recordAuth = res.authSetting['scope.record'];
-			
-			      if (recordAuth == false) {
-			        //已申请过授权，但是用户拒绝
-			        uni.openSetting({
-			          success: function (res) {
-			            let recordAuth = res.authSetting['scope.record'];
-			
-			            if (recordAuth == true) {
-			              uni.showToast({
-			                title: "授权成功",
-			                icon: "success"
-			              });
-			            } else {
-			              uni.showToast({
-			                title: "请授权录音",
-			                icon: "none"
-			              });
-			            }
-			
-			            me.isLongPress = false
-			          }
-			        });
-			      } else if (recordAuth == true) {
-			        // 用户已经同意授权
-			        startRecord();
-			      } else {
-			        // 第一次进来，未发起授权
-			        uni.authorize({
-			          scope: 'scope.record',
-			          success: () => {
-			            //授权成功
-			            uni.showToast({
-			              title: "授权成功",
-			              icon: "success"
-			            });
-			          }
-			        });
-			      }
+					let recordAuth = res.authSetting['scope.record'];
+					if (recordAuth == true) {
+						return
+					} else if (recordAuth == false){
+						//已申请过授权，但是用户拒绝
+						uni.openSetting({
+						  success: function (res) {
+							let recordAuth = res.authSetting['scope.record'];
+						
+							if (recordAuth == true) {
+							  uni.showToast({
+								title: "授权成功",
+								icon: "success"
+							  });
+							} else {
+							  uni.showToast({
+								title: "请授权录音",
+								icon: "none"
+							  });
+							}
+						
+							me.isLongPress = false
+						  }
+						});
+					} else {
+						// 第一次进来，未发起授权
+						uni.authorize({
+						  scope: 'scope.record',
+						  success: () => {
+							//授权成功
+							uni.showToast({
+							  title: "授权成功",
+							  icon: "success"
+							});
+						  }
+						});
+					}
 			    },
 			    fail: function () {
 			      uni.showToast({
@@ -431,23 +532,20 @@
 			  })
 			},
 			myradom() {
-			  const that = this;
-			  var _radomheight = that.radomheight;
-			
-			  for (var i = 0; i < that.radomheight.length; i++) {
-			    //+1是为了避免为0
-			    _radomheight[i] = 100 * Math.random().toFixed(2) + 10;
-			  }
-			
-			  that.radomheight = _radomheight
-			
-			  if (RunAnimation) {
-			    setTimeout(function () {
-			      that.myradom();
-			    }, 500);
-			  } else {
-			    return;
-			  }
+				const that = this;
+				var _radomheight = that.radomheight;
+				for (var i = 0; i < that.radomheight.length; i++) {
+					//+1是为了避免为0
+					_radomheight[i] = 100 * Math.random().toFixed(2) + 10;
+				}
+				this.radomheight = _radomheight
+				this.$forceUpdate()
+				
+				if (that.showAudioWave) {
+					setTimeout(function () {
+						that.myradom();
+					}, 500);
+				}
 			}
 		}
 	}
