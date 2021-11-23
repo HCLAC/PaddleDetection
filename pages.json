@@ -220,6 +220,15 @@
 		        		"enablePullDownRefresh": false
 		        	}
 		        }
+                ,{
+                    "path" : "agreement/agreement",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 		},
 		{

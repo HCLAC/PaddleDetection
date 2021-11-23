@@ -9,24 +9,68 @@
 					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
+			<view class="title">
+				<view class="left">
+					咨询中…
+				</view>
+				<view class="right">
+					详细描述问题，方便管家更好答复
+				</view>
+			</view>
+			
 			<view class="chatbox">
+				<view class="boxTop">
+					欢迎使用领途羊旅游管家，继续咨询即表示您已同意
+					<text @click="agreement">《用户协议及隐私政策》</text>
+				</view>
 				<!-- 历史记录 -->
 				<view class="boxMax" v-for="(item,index) in history" :key="index">
 					<view :class="item.from != consulting.account_username ?'ls-box':'ls-box1'">
 						<image v-if="item.from != consulting.account_username" class="avatar" src="@/static/images/logo.png" mode="aspectFill"></image>
-						<view class="chatmsg">
+						<view class="chatmsg" v-if="item.type == 'txt'">
 							{{item.msg}}
+						</view>
+						<view class="chatImg" v-if="item.type == 'img'">
+							<image :src="item.msg" mode=""></image>
+						</view>
+						<view class="chatAudio" v-if="item.type == 'audio'">
+							<audio-msg :msg="item"></audio-msg>
 						</view>
 						<image v-if="item.from == consulting.account_username" class="avatar" src="@/static/images/logo.png" mode="aspectFill"></image>
 					</view>
 				</view>
+				<!-- 信息记录 -->
 				<view class="" v-for="(item,index) in arr" :key="index">
-					<view :class="item.from != consulting.account_username?'ls-box':'ls-box1'">
-						<image v-if="item.from != consulting.account_username" class="avatar" src="@/static/images/logo.png" mode="aspectFill"></image>
-						<view class="chatmsg">
+					<view class="card" v-if="index == 0" @click="details">
+						<view class="left">
+							<image :src="card.avatar" mode=""></image>
+						</view>
+						<view class="right">
+							<view class="r-top">
+								{{card.name}}
+							</view>
+							<view class="r-center">
+								执业{{card.working_years}}年/{{card.company}}
+							</view>
+							<view class="r-btm">
+								{{ professionObj[card.profession] }}
+							</view>
+						</view>
+					</view>
+					<!-- item.from != '' -->
+					<view :class="item.from == '' || item.from == consulting.account_username || item.type == 'audio'?'ls-box1':'ls-box'">
+						<image v-if="item.contentsType == 'TEXT' || item.contentsType == 'IMAGE'|| item.contentsType == 'VOICE'" class="avatar" src="@/static/images/logo.png" mode="aspectFill"></image>
+						<view class="chatmsg" v-if="item.contentsType == 'TEXT' || item.type == 'txt'">
 							{{item.data ? item.data : item.msg}}
 						</view>
-						<image v-if="item.from == consulting.account_username" class="avatar" src="@/static/images/logo.png" mode="aspectFill"></image>
+						<!-- v-if="item.contentsType == 'IMAGE'" -->
+						<view class="chatImg" v-if="item.contentsType == 'IMAGE' || item.type == 'img'">
+							<image :src="item.body.url? item.body.url : item.url" mode=""></image>
+						</view>
+						<view class="chatAudio" v-if="item.contentsType == 'VOICE' || item.type == 'audio'">
+							<audio-msg :msg="item"></audio-msg>
+						</view>
+						<image v-if="item.type == 'txt' || item.type == 'img'|| item.type == 'audio'" class="avatar" src="@/static/images/logo.png" mode="aspectFill"></image>
 					</view>
 				</view>
 			</view>
@@ -108,6 +152,7 @@
 </template>
 .
 <script>
+	import audioMsg from './audio/audio'
 	import globalUrl from '@/global.js';
 	let WebIM = require("../../imSDK/utils/WebIM")["default"];
 	let msgType = require("../../imSDK/utils/msgtype");
@@ -115,6 +160,12 @@
 	export default {
 		data() {
 			return {
+				professionObj:{
+					'0':'导游',
+					'1':'旅游达人',
+					'2':'旅游定制师'
+				},
+				inputMessage:'',
 				consulting:{},
 				fromUser: '',
 				toUser: '',
@@ -139,9 +190,11 @@
 				radomheight: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
 				recorderManager: uni.getRecorderManager(),
 				recordTime: 0,
+				card:{},
 			}
 		},
 		components:{
+			audioMsg
 		},
 		onLoad() {
 			this.postconsulting()
@@ -157,6 +210,28 @@
 			this.recordTime = 0
 	    },
 		methods: {
+			details(){
+				// console.log(item,'e')
+				uni.navigateTo({
+					url:'/pages_im/housekeeperDetails/housekeeperDetails?bulter_id=' + this.card.bulter_id
+				})
+			},
+			getCard(){
+				this.HTTP.request({
+					url: '/bulter/info',
+					data: {
+						bulter_id:this.consulting.bulter_id
+					},
+					success: res => {
+						this.card = res.data.data
+					},
+				})
+			},
+			agreement(){
+				uni.navigateTo({
+					url:'/pages_im/agreement/agreement'
+				})
+			},
 			toggleWithoutAction(e) {// 阻止 tap 冒泡
 			},
 			// 获取聊天室消息
@@ -175,8 +250,10 @@
 							return
 						}
 						this.consulting = res.data.data
-						this.fromUser = 'test3'//this.consulting.account_username
-						this.toUser = 'wuwuwuuw'//this.consulting.username
+						console.log(this.consulting,'管家列表')
+						this.getCard()
+						this.fromUser = this.consulting.account_username//'test2'
+						this.toUser = this.consulting.username//'wuwuwuuw'
 						this.history = this.consulting.history
 						this.title = '管家' + this.consulting.name + '在线中'
 						this.username = {
@@ -199,6 +276,12 @@
 				console.log(message, 'message')
 				switch(type){
 					case 'text':
+					this.arr.push(message)
+					break
+					case 'picture':
+					this.arr.push(message)
+					break
+					case 'audio':
 					this.arr.push(message)
 					break
 				}
@@ -242,6 +325,19 @@
 			        success:  (id, serverMsgId)=> {
 			            console.log('send private text Success', msg);  
 						this.arr.push(msg.body)
+						this.HTTP.request({
+							url: '/im/save_msg',
+							method:'POST',
+							data: {
+								bulter_id:this.consulting.bulter_id,
+								msg:msg.body.msg,
+								type:msg.body.type,
+								id:msg.body.id,
+							},
+							success: res => {
+								console.log(res,'历史记录')
+							},
+						})
 			        }, 
 			        fail: function(e){
 			            // 失败原因:
@@ -279,6 +375,7 @@
 			      str = this.text.slice(0, msglen);
 			    }
 			  }
+			  console.log( event,'str')
 			  this.text = str;
 			  this.inputMessage = str;
 			},
@@ -291,6 +388,7 @@
 					sourceType: ["album"],
 				
 					success(res) {
+						console.log(res,'res')
 						me.sendImage(res);
 					}
 				});
@@ -371,8 +469,22 @@
 											disp.fire('em.chat.sendSuccess', id);
 										}
 									});
-			
+									console.log(msg.body,'msg.body')
+									me.arr.push(msg.body)
 									WebIM.conn.send(msg.body);
+									me.HTTP.request({
+										url: '/im/save_msg',
+										method:'POST',
+										data: {
+											bulter_id:me.consulting.bulter_id,
+											msg:msg.body.body.url,
+											type:msg.body.type,
+											id:msg.body.id,
+										},
+										success: res => {
+											console.log(res,'历史记录')
+										},
+									})
 								},
 								fail: (err) => {
 									console.log('上传失败', err)
@@ -441,6 +553,9 @@
 					url: globalUrl+'/im/upload_file',
 					filePath: tempFilePath,
 					name: "send_file",
+					formData:{
+						length: Math.ceil(dur / 1000)
+					},
 					header: {
 						'Authorization': getApp().globalData.Authorization,
 						'content-type': 'multipart/form-data'
@@ -479,6 +594,22 @@
 
 						msg.body.length = Math.ceil(dur / 1000); //console.log('发送的语音消息', msg.body)
 						WebIM.conn.send(msg.body);
+						this.arr.push(msg.body.body)
+						console.log('发送的语音消息', msg.body)
+						console.log(msg.body.body,'+++')
+						me.HTTP.request({
+							url: '/im/save_msg',
+							method:'POST',
+							data: {
+								bulter_id:me.consulting.bulter_id,
+								msg:msg.body.body.url,
+								type:msg.body.type,
+								id:msg.body.id,
+							},
+							success: res => {
+								console.log(res,'历史记录')
+							},
+						})
 						
 					},
 					fail: (err) => {
@@ -566,10 +697,103 @@
 <style lang="scss">
 .box{
 	position: relative;
+	.title{
+		width: 750rpx;
+		height: 72rpx;
+		background: rgba(183, 235, 143, 0.3);
+		display: flex;
+		justify-content: space-between;
+		padding: 0 28rpx;
+		align-items: center;
+		position: fixed;
+		.left{
+			font-size: 24rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #7CB305;
+		}
+		.right{
+			font-size: 24rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #606266;
+		}
+	}
 	.chatbox {
 		// display: flex;
-		// min-height: 800rpx;
+		min-height: 1490rpx;
+		// background: pink;
 		background: #F1F2F3;
+		padding-top: 100rpx;
+		.boxTop{
+			width: 568rpx;
+			height: 100rpx;
+			background: rgba(0, 0, 0, 0.04);
+			border-radius: 12rpx;
+			margin: 0 auto;
+			text-align: center;
+			font-size: 24rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #606266;
+			padding:16rpx 20rpx;
+			text{
+				color: #0091FF;
+			}
+			// padding: 16rpx 20rpx;
+			// display: flex;
+			// justify-content: center;
+			// align-items: center;
+			// margin-top: 108rpx;
+		}
+		.card{
+			width: 694rpx;
+			height: 214rpx;
+			background: #FFFFFF;
+			border-radius: 20rpx;
+			margin: 0 auto;
+			display: flex;
+			.left{
+				width: 100rpx;
+				height: 100rpx;
+				border-radius: 50%;
+				overflow: hidden;
+				margin-top: 30rpx;
+				margin-left: 30rpx;
+				image{
+					width: 100%;
+					height: 100%;
+				}
+			}
+			.right{
+				margin-left: 20rpx;
+				.r-top{
+					font-size: 34rpx;
+					font-family: PingFangSC-Medium, PingFang SC;
+					font-weight: 500;
+					color: #303133;
+					margin-top: 30rpx;
+				}
+				.r-center{
+					font-size: 28rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #606266;
+					margin-top: 8rpx;
+				}
+				.r-btm{
+					height: 38rpx;
+					background: #FFF1B8;
+					border-radius: 21rpx;
+					opacity: 0.7;
+					border: 2rpx solid #FFE512;
+					margin-top: 16rpx;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+			}
+		}
 		.ls-box1{
 			display: flex;
 			align-items: center;
@@ -588,6 +812,16 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
+			}
+			.chatImg{
+				width: 460rpx;
+				height: 280rpx;
+				border-radius: 24rpx;
+				overflow: hidden;
+				image{
+					width: 100%;
+					height: 100%;
+				}
 			}
 		}
 		.ls-box{
@@ -608,6 +842,16 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
+			}
+			.chatImg{
+				width: 460rpx;
+				height: 280rpx;
+				border-radius: 24rpx;
+				overflow: hidden;
+				image{
+					width: 100%;
+					height: 100%;
+				}
 			}
 		}
 	}
@@ -726,6 +970,7 @@
 		height: 300rpx;
 		position: fixed;
 		bottom: 0;
+		background: #FFFFFF;
 		.emoji_list image,
 		.showEmoji image {
 			width: 26px;
