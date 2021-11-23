@@ -2,7 +2,33 @@
 	<view v-show="i === index" >
 		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="questionList">
+				<view class="jxbox" v-if="type == 'selected'" @click="toDetail">
+					<view class="one">
+						{{chiose.title}}
+					</view>
+					<view class="two">
+						<image class="tx" :src="chiose.avatar" mode=""></image>
+						<view class="xqbox">
+							<view class="name">
+								{{chiose.account_name}}
+							</view>
+							<view class="zsbox">
+								<image class="zs" src="@/static/images/zs.png" mode=""></image>
+								<view class="zstext">精选</view>
+							</view>
+						</view>
+					</view>
+					<view class="three">
+						{{chiose.answer}} 
+					</view>
+				</view>
 				<view class="card" v-for="(item,index) in list" :key="index" @click="toQuestionsDetail(item)">
+					<view class="btn" v-if="index == 2 && type == 'selected'" @click.stop="toConsultation">
+						<image src="@/static/images/gg1.png" mode=""></image>
+					</view>
+					<view class="btn" v-if="index == 2 && type == 'newest'" @click.stop="toConsultation">
+						<image src="@/static/images/gg2.png" mode=""></image>
+					</view>
 					<view class="title">
 						{{item.title}}
 					</view>
@@ -56,6 +82,7 @@
 		},
 		data() {
 			return {
+				type:'',
 				list: [],
 				style: {
 					img: 'border-radius: 16rpx'
@@ -63,6 +90,7 @@
 				downOption:{
 					auto:false // 不自动加载 (mixin已处理第一个tab触发downCallback)
 				},
+				chiose:{},
 				upOption:{
 					auto:false, // 不自动加载
 					noMoreSize: 10, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
@@ -85,6 +113,16 @@
 			}
 		},
 		methods: {
+			toConsultation(){
+				console.log('在线咨询')
+			},
+			//跳转精选问答详情页
+			toDetail(){
+				var question_id = this.chiose.question_id
+				uni.navigateTo({
+					url: '/pages_questions/questionsDetail/questionsDetail?question_id=' + question_id
+				});
+			},
 			// 跳转问题详情
 			toQuestionsDetail(item){
 				var question_id = item.question_id
@@ -118,6 +156,7 @@
 				if(this.i == 0){
 					t ='selected'
 				}
+				this.type = t
 				this.HTTP.request({
 					url: '/questions/seemore?page=' + pageNum + '&count=' + pageSize,
 					data: {
@@ -139,6 +178,8 @@
 							that.mescroll.endBySize(0, 0);
 							return
 						}
+						this.chiose = res.data.data.chiose
+						console.log(this.chiose,'问答详情')
 						// 接口返回的当前页数据列表 (数组)
 						let curPageData = res.data.data.list;
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
@@ -188,7 +229,76 @@
 </script>
 
 <style lang="scss" scoped>
-
+.jxbox{
+	width: 750rpx;
+	background-image: url(@/static/images/wdbj.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	height: 404rpx;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	.one{
+		width: 480rpx;
+		min-height: 88rpx;
+		margin-top: 30rpx;
+		font-size: 32rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #303133;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+	}
+	.two{
+		margin-top: 30rpx;
+		height: 68rpx;
+		display: flex;
+		align-items: center;
+		.tx{
+			width: 68rpx;
+			height: 68rpx;
+			border-radius: 50%;
+			overflow: hidden;
+		}
+		.xqbox{
+			margin-left: 8rpx;			
+			.name{
+				font-size: 24rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
+				color: #303133;
+			}
+			.zsbox{
+				display: flex;
+				align-items: center;
+				.zs{
+					width: 32rpx;
+					height: 32rpx;
+				}
+				.zstext{
+					font-size: 22rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #606266;
+				}
+			}
+		}
+	}
+	.three{
+		width: 646rpx;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		-webkit-line-clamp: 3;
+		text-align:justify;
+		text-justify:inter-ideograph;
+		display: flex;
+		align-items: center;
+		margin-top: 30rpx;
+	}
+}
 // 问答列表
 
 // 问答列表
@@ -196,8 +306,18 @@
 	.card{
 		margin: 28rpx 28rpx;
 		margin-bottom: 0rpx;
-		padding-bottom: 40rpx;
+		padding-bottom: 20rpx;
 		border-bottom: 2rpx solid #edeff2;
+		.btn{
+			width: 694rpx;
+			height: 240rpx;
+			border-radius: 12rpx;
+			margin-bottom: 28rpx;
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
 		.title{
 			font-size: 34rpx;
 			font-family: PingFangSC-Medium, PingFang SC;
@@ -254,6 +374,7 @@
 				}
 			}
 		}
+
 	}
 }
 

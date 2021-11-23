@@ -17,6 +17,25 @@
 			<view class="banner-box">
 				<u-image :src="bannerList[0].image" width="750rpx" height="440rpx"></u-image>
 			</view>
+			<!-- 功能区 -->
+			<view class="function-box">
+				<view class="f-box" @click="toChatroom">
+					<image class="f-img" src="/static/images/zxzx.png" />
+					<view class="f-text">在线咨询</view>
+				</view>
+				<view class="f-box" @click="toquestion">
+					<image class="f-img" src="/static/images/jxwd.png" />
+					<view class="f-text">精选问答</view>
+				</view>
+				<view class="f-box" @click="Housekeeper">
+					<image class="f-img" src="/static/images/lygj.png" />
+					<view class="f-text">旅游管家</view>
+				</view>
+				<view class="f-box" @click="heat">
+					<image class="f-img" src="/static/images/rsbd.png" />
+					<view class="f-text">热度榜单</view>
+				</view>
+			</view>
 			<!-- 热门目的地 -->
 			<view class="hot">
 				<view class="hot-top">
@@ -179,6 +198,28 @@
 			}
 		}, 100),
 		methods: {
+			toChatroom(){
+				uni.navigateTo({
+					url:'/pages_im/chatroom/chatroom',
+				})
+			},
+			Housekeeper(){
+				uni.navigateTo({
+					url:'/pages_im/housekeeperList/housekeeperList',
+				})
+			},
+			//跳转精选问答
+			toquestion(){
+				uni.navigateTo({
+					url:'/pages_questions/moreQuestions/moreQuestions'
+				})
+			},
+			//跳转热搜榜单
+			heat(){
+				uni.navigateTo({
+					url:'/pages_search/hotSearchRank/hotSearchRank'
+				})
+			},
 			notLocation(){
 				if(this.dqdwText == '未定位'){
 					uni.getSetting({
@@ -489,7 +530,32 @@
 			font-size: 28rpx;
 		}
 	}
-	
+	// 功能区
+	.function-box{
+		width: 100%;
+		height: 188rpx;
+		background: #F9FAFA;
+		display: flex;
+		.f-box{
+			width: 25%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			.f-img{
+				width: 88rpx;
+				height: 88rpx;
+			}
+			.f-text{
+				font-size: 22rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #606266;
+				margin-top: 8rpx;
+			}
+		}
+	}
 	/* 热门景点 */
 	.hot {
 		display: flex;

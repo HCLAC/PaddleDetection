@@ -15,7 +15,26 @@
 		<view class="searchBox">
 			<u-search v-model="keyword" @search="search" @custom="custom" :show-action="true" search-icon-color="#c9cad1" placeholder="输入搜索内容" placeholder-color="#c9cad1" action-text="取消" :animation="true"></u-search>
 		</view>
-		<meTabs class="mineQuestionTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :tab-width="120"></meTabs>
+		<!-- <u-tabs :list="list" :is-scroll="false" :current="current" @change="change"></u-tabs> -->
+		<view class="tabBox">
+			<view :class="tabIndex == 0?'select':'selectNone'"  @click="tabChange">
+				<view class="">
+					精选问答
+				</view>
+				<view class="kong" v-if="tabIndex == 0">
+					
+				</view>
+			</view>
+			<view :class="tabIndex == 1?'select':'selectNone'"  @click="tabChange1">
+				<view class="">
+					最新问答
+				</view>
+				<view class="kong" v-if="tabIndex == 1">
+					
+				</view>
+			</view>
+		</view>
+		<!-- <meTabs class="mineQuestionTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :tab-width="120"></meTabs> -->
 		<questionList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :keyword="keyword"></questionList>
 		<!-- 提问按钮 -->
 		<view class="questionsBtn" @click="toQuestions">
@@ -26,12 +45,12 @@
 
 <script>
 import MescrollMoreMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-more.js';
-import meTabs from '@/common/me-tabs/me-tabs.vue';
-import questionList from '@/common/article-mescroll-item/question-list.vue';
+// import meTabs from '@/common/me-tabs/me-tabs.vue';
+import questionList from './question-list.vue';
 	export default {
 		mixins: [MescrollMoreMixin],
 		components: {
-			meTabs,
+			// meTabs,
 			questionList
 		},
 		data() {
@@ -42,7 +61,7 @@ import questionList from '@/common/article-mescroll-item/question-list.vue';
 				state_id:'',
 				city_id:'',
 				isFixed:false,
-				cardheight: 0
+				cardheight: 0,
 			};
 		},
 		// #ifdef MP-BAIDU
@@ -54,31 +73,42 @@ import questionList from '@/common/article-mescroll-item/question-list.vue';
 			this.state_id = query.state_id
 			this.city_id = query.city_id
 		}, 
-		mounted() {
-			this.calcCardHeight()
-		},
-		onPageScroll(e) {
-			if (e.scrollTop >  this.cardheight) {
-				this.isFixed = true;
-			} else {
-				this.isFixed = false;
-			}
-		},
+		// mounted() {
+		// 	this.calcCardHeight()
+		// },
+		// onPageScroll(e) {
+		// 	if (e.scrollTop >  this.cardheight) {
+		// 		this.isFixed = true;
+		// 	} else {
+		// 		this.isFixed = false;
+		// 	}
+		// },
 		methods:{
-			calcCardHeight(){
-				if (this.isFixed){
-					return
-				}
-				const query = uni.createSelectorQuery().in(this);
-				setTimeout(() => {
-					query.select('.mineQuestionTabs').boundingClientRect(data => {
-						this.cardheight = data.top-data.height
-					}).exec();
-				}, 500);
+			// calcCardHeight(){
+			// 	if (this.isFixed){
+			// 		return
+			// 	}
+			// 	const query = uni.createSelectorQuery().in(this);
+			// 	setTimeout(() => {
+			// 		query.select('.mineQuestionTabs').boundingClientRect(data => {
+			// 			this.cardheight = data.top-data.height
+			// 		}).exec();
+			// 	}, 500);
+			// },
+			change(index) {
+				this.current = index;
 			},
 			// 切换
 			tabChange(index){
-				this.tabIndex = index
+				// console.log(1111)
+				// console.log(index,'index')
+				this.tabIndex = 0
+				this.keyword = ''
+			},
+			tabChange1(index){
+				// console.log(1111)
+				// console.log(index,'index')
+				this.tabIndex = 1
 				this.keyword = ''
 			},
 			// 搜索问题
@@ -107,9 +137,58 @@ import questionList from '@/common/article-mescroll-item/question-list.vue';
 .searchBox{
 	padding: 8rpx 28rpx;
 }
+
 // 问答列表
 .answersList{
 	
+}
+.tabBox{
+	width: 100%;
+	height: 88rpx;
+	display: flex;
+	justify-content: space-between;
+	padding: 0 156rpx;
+	border-bottom: 1rpx solid #EDEFF2;
+	view{
+		// width: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		// z-index: 1000;
+	}
+	.select{
+		font-size: 26rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #303133;
+		display: flex;
+		// margin-left: 156rpx;
+		flex-direction: column;
+		position: relative;
+		.kong{
+			width: 112rpx;
+			height: 8rpx;
+			background: #0091FF;
+			border-radius: 4rpx;
+			position: absolute;
+			bottom:26rpx;
+			z-index: -1;
+			// left: 152rpx;
+			// bottom: 26rpx;
+		}
+	}
+	.selectNone{
+		font-size: 26rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #909399;
+		.kong{
+			width: 112rpx;
+			height: 8rpx;
+			background: #0091FF;
+			border-radius: 4rpx;
+		}
+	}
 }
 .myCollection {
 	border-radius: 12px 12px 0rpx 0rpx;

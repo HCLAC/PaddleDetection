@@ -127,7 +127,16 @@
 					"style" :                                                                                    
 					{
 					}
-				}
+				},
+				{
+		            "path" : "consultingService/consultingService",
+		            "style" :                                                                                    
+		        {
+		            "navigationBarTitleText": "",
+		            "enablePullDownRefresh": false
+		        }
+		        
+		        }
 			]
 		},
 		{
@@ -182,6 +191,44 @@
 				// 		"navigationStyle": "custom"
 				// 	}
 				// }
+            ]
+		},
+		{
+			"root":"pages_im",
+			"pages":[
+				{
+				    "path" : "housekeeperDetails/housekeeperDetails",
+				    "style" :                                                                                    
+					{
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false
+					}
+				}
+		        ,{
+		            "path" : "housekeeperList/housekeeperList",
+		            "style" :                                                                                    
+					{
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false
+					}
+		        }
+		        ,{
+		            "path" : "chatroom/chatroom",
+		            "style" :                                                                                    
+		        	{
+		        		"navigationBarTitleText": "",
+		        		"enablePullDownRefresh": false
+		        	}
+		        }
+                ,{
+                    "path" : "agreement/agreement",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 		},
 		{
@@ -282,13 +329,13 @@
 				// 		"navigationStyle": "custom"
 				// 	}
 				// },
-				// {
-				// 	"path" : "moreQuestions/moreQuestions",
-				// 	"style" :                                                                                    
-				// 	{
-				// 		"navigationStyle": "custom"
-				// 	}
-				// },
+				{
+					"path" : "moreQuestions/moreQuestions",
+					"style" :                                                                                    
+					{
+						"navigationStyle": "custom"
+					}
+				},
 				// {
 				// 	"path" : "questionsComplete/questionsComplete",
 				// 	"style" :                                                                                    
@@ -316,7 +363,7 @@
 	"preloadRule":{
 		"pages/index/index": {
 		    "network": "all",
-		    "packages": ["pages_content","pages_search","pages_mine"]
+		    "packages": ["pages_content","pages_search","pages_mine","pages_im"]
 		},
         "pages/mine/mine": {
             "network": "all",

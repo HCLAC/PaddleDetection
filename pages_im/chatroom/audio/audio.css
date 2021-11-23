@@ -1,0 +1,28 @@
+.audio-player {
+	position: relative;
+	overflow: hidden;
+	display: flex;
+	transition: opacity .5s;
+	background: #0091FF;
+	border-radius: 24rpx 0rpx 24rpx 24rpx;
+	padding: 24rpx 16rpx  18rpx 44rpx;
+}
+
+.audio-player .controls {
+	height:40rpx;
+	align-items:center;
+	display:flex;
+}
+
+.audio-player .controls image {
+	height: 48rpx;
+	width: 30rpx;
+	/* margin: 0 8rpx 0 100rpx; */
+}
+
+.audio-player .time {
+	font-size: 34rpx;
+	line-height: 40rpx;
+	flex: 1;
+	text-align: left;
+}
