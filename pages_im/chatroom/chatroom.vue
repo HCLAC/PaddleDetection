@@ -191,12 +191,14 @@
 				recorderManager: uni.getRecorderManager(),
 				recordTime: 0,
 				card:{},
+				bulter_id:'',
 			}
 		},
 		components:{
 			audioMsg
 		},
-		onLoad() {
+		onLoad(query) {
+			this.bulter_id = query.bulter_id
 			this.postconsulting()
 		},
 		onShow(){
@@ -240,6 +242,7 @@
 					url: '/bulter/consulting',
 					method:'POST',
 					data: {
+						bulter_id:this.bulter_id
 					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0){
@@ -697,6 +700,9 @@
 <style lang="scss">
 .box{
 	position: relative;
+	padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
+	padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
+	
 	.title{
 		width: 750rpx;
 		height: 72rpx;
@@ -898,6 +904,9 @@
 		display: flex;
 		align-items: center;
 		background: #F1F2F3;
+		// padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
+		// padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
+		
 		.voice{
 			width: 48rpx;
 			height: 48rpx;

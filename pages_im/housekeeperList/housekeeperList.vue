@@ -48,9 +48,11 @@
 					</view>
 					
 				</view>
-				<view class="right">
+				<!-- <view class="right">
 					在线咨询
-				</view>
+				</view> -->
+				<button type="default" class="right" @click="toChatroom(item)" v-if="auth != ''">在线咨询</button>
+				<button v-else type="default" class="right" open-type="getPhoneNumber" @getphonenumber="getPhone">在线咨询</button>
 			</view>
 		</view>
 	</view>
@@ -139,6 +141,8 @@
 					'1':'旅游达人',
 					'2':'旅游定制师'
 				},
+				serviceSource: 2,
+				auth:'',
 			};
 		},
 		onLoad() {
@@ -148,8 +152,145 @@
 		onShow() {
 			// 获取管家列表
 			this.getComments()
+			this.auth = getApp().globalData.Authorization
 		},
 		methods:{
+			//一键登录
+			getPhone(res) {
+				if (res.detail.errMsg != 'getPhoneNumber:ok') {
+					uni.showToast({
+						title: '用户拒绝授权',
+						icon: 'none'
+					});
+					return;
+				}
+			
+				// 百度小程序直接调用swan.getLoginCode，其他平台调用uni.login
+				if (this.serviceProvider == 'baidu'){
+					//#ifdef MP-BAIDU
+					swan.getLoginCode({
+						success: result => {
+							if (!result || !result.code || result.code.length == 0) {
+								uni.showToast({
+									title: '一键登录失败',
+									icon: 'none'
+								});
+								return
+							}
+							this.baiduLogin({
+								code: result.code,
+								source: this.serviceSource,
+								data: res.detail.encryptedData,
+								iv: res.detail.iv
+							});
+						},
+						fail: err => {
+							console.error('getLoginCode', err)
+						}
+					});
+					//#endif
+					return 
+				}
+				uni.login({
+					provider: this.serviceProvider,
+					success: result => {
+						if (!result || !result.code || result.code.length == 0) {
+							uni.showToast({
+								title: '一键登录失败',
+								icon: 'none'
+							});
+							return;
+						}
+						this.baiduLogin({
+							code: result.code,
+							source: this.serviceSource,
+							data: res.detail.encryptedData,
+							iv: res.detail.iv
+						});
+					},
+					fail: err => {
+						console.error('login', err)
+					}
+				});
+			},
+			baiduLogin(obj) {
+				this.HTTP.request({
+					url: '/user/oauth/code2session',
+					data: {
+						code: obj.code,
+						source: 2
+					},
+					method: 'POST',
+					success: res => {
+						if (res.data.code == 0) {
+							this.getSessionKey({
+								uuid: res.data.data,
+								data: obj.data,
+								iv: obj.iv
+							});
+						} else {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+						}
+					}
+				});
+			},
+			getSessionKey(obj) {
+				this.HTTP.request({
+					url: '/user/oauth/login',
+					data: {
+						data: obj.data,
+						iv: obj.iv,
+						uuid: obj.uuid,
+						source: this.serviceSource
+					},
+					method: 'POST',
+					success: res => {
+						if (res.data.code == 0) {
+							var auth = res.header.authorization ? res.header.authorization : res.header.Authorization
+							this.loginSuccess(res.data.data, auth) 
+						} else {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+						}
+					}
+				});
+			},
+			loginSuccess(userinfo, auth){
+				
+				uni.showToast({
+					title: '登录成功',
+					icon: 'none'
+				}),
+				getApp().globalData.Authorization = auth
+				
+				uni.setStorage({
+					key: 'userinfo',
+					data: userinfo,
+					success: function () {
+					}
+				});
+				uni.setStorage({
+					key: 'Authorization',
+					data: auth,
+					success: function () {
+					}
+				});
+				uni.$emit('onLoginSuccess', userinfo.first_login);
+				// this.Utils.back()
+				this.toChatroom()
+				
+			},
+			toChatroom(item){
+				uni.navigateTo({
+					url:'/pages_im/chatroom/chatroom?bulter_id=' + item.bulter_id,
+				})
+			},
+			
 			back(){
 				this.Utils.back()
 				
@@ -326,6 +467,9 @@
 				justify-content: center;
 				align-items: center;
 				margin: auto 0;
+			}
+			.right::after{
+				border: none;
 			}
 		}
 	}

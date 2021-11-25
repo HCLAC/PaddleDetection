@@ -37,7 +37,8 @@ let config = {
   /*
    * Application AppKey
    */
-  appkey: "1164211103091042#demo",
+  // appkey: "1164211103091042#demo",
+  appkey: "1121211118107996#fengyankeji",
 
   /*
    * Whether to use HTTPS      '1177161227178308#xcx'
