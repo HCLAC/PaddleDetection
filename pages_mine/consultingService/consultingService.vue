@@ -14,7 +14,7 @@
 				@click="click" @open="open"
 				:options="options"
 			>
-				<view class="item u-border-bottom" @click="toConsultation">
+				<view class="item u-border-bottom" @click="toConsultation(item)">
 					<!-- 此层wrap在此为必写的，否则可能会出现标题定位错误 -->
 					<view class="title-wrap">
 						在线咨询服务
@@ -66,8 +66,10 @@
 			this.getlist()
 		},
 		methods:{
-			toConsultation(){
-				console.log('在线咨询')
+			toConsultation(item){
+				uni.navigateTo({
+					url:'/pages_im/chatroom/chatroom?bulter_id=' + item.bulter_id,
+				})
 			},
 			toHousekeeper(item){
 				var bulter_id = item.bulter_id

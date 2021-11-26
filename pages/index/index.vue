@@ -19,27 +19,27 @@
 			</view>
 			<!-- 功能区 -->
 			<view class="function-box">
-				<view class="f-box" @click="toChatroom" v-if="auth != ''">
+				<button class="f-box" @click="toChatroom" v-if="auth != ''">
 					<image class="f-img" src="/static/images/zxzx.png" />
 					<view class="f-text">在线咨询</view>
 					 <!-- @click="toChatroom" -->
-				</view>
+				</button>
 				<button v-else type="default" class="btn f-box" style="border: none;" open-type="getPhoneNumber" @getphonenumber="getPhone">
 					<image class="f-img" src="/static/images/zxzx.png" />
 					<view class="f-text">在线咨询</view>
 				</button>
-				<view class="f-box" @click="toquestion">
+				<button class="f-box" @click="toquestion">
 					<image class="f-img" src="/static/images/jxwd.png" />
 					<view class="f-text">精选问答</view>
-				</view>
-				<view class="f-box" @click="Housekeeper">
+				</button>
+				<button class="f-box" @click="Housekeeper">
 					<image class="f-img" src="/static/images/lygj.png" />
 					<view class="f-text">旅游管家</view>
-				</view>
-				<view class="f-box" @click="heat">
+				</button>
+				<button class="f-box" @click="heat">
 					<image class="f-img" src="/static/images/rsbd.png" />
 					<view class="f-text">热度榜单</view>
-				</view>
+				</button>
 			</view>
 			<!-- 热门目的地 -->
 			<view class="hot">
@@ -695,13 +695,14 @@
 				color: #606266;
 				margin-top: 8rpx;
 			}
-			.btn{
-				background: rgba(0,0,0,0);
-				border: none;
-			}
-			.btn::after{
-				border: none;
-			}
+			
+		}
+		.btn{
+			background: rgba(0,0,0,0);
+			border: none;
+		}
+		.btn::after{
+			border: none;
 		}
 		.f-box::after{
 			border: none;

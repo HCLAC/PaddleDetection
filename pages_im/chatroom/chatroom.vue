@@ -26,7 +26,7 @@
 				<!-- 历史记录 -->
 				<view class="boxMax" v-for="(item,index) in history" :key="index">
 					<view :class="item.from != consulting.account_username ?'ls-box':'ls-box1'">
-						<image v-if="item.from != consulting.account_username" class="avatar" src="@/static/images/logo.png" mode="aspectFill"></image>
+						<image v-if="item.from != consulting.account_username" class="avatar" :src="item.avatar?item.avatar: '@/static/images/logo.png'" mode="aspectFill"></image>
 						<view class="chatmsg" v-if="item.type == 'txt'">
 							{{item.msg}}
 						</view>
@@ -36,7 +36,7 @@
 						<view class="chatAudio" v-if="item.type == 'audio'">
 							<audio-msg :msg="item"></audio-msg>
 						</view>
-						<image v-if="item.from == consulting.account_username" class="avatar" src="@/static/images/logo.png" mode="aspectFill"></image>
+						<image v-if="item.from == consulting.account_username" class="avatar" :src="item.avatar?item.avatar: '@/static/images/logo.png'" mode="aspectFill"></image>
 					</view>
 				</view>
 				<!-- 信息记录 -->
@@ -700,8 +700,8 @@
 <style lang="scss">
 .box{
 	position: relative;
-	padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
-	padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
+	// padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
+	// padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
 	
 	.title{
 		width: 750rpx;
@@ -833,6 +833,7 @@
 		.ls-box{
 			display: flex;
 			align-items: center;
+			
 			margin: 30rpx 0;
 			.avatar{
 				width: 72rpx;
