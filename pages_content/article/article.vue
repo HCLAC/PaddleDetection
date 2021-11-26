@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="nav-bar">
-			<uni-nav-bar :fixed="true" :status-bar="true" :title="title" :shadow="true">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="领途羊旅游管家" :shadow="true">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />

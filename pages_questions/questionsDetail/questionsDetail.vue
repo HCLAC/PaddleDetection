@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="nav-bar">
-			<uni-nav-bar :fixed="true" :status-bar="true" :title="detail?detail.title:'领途羊'">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="领途羊旅游管家">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
