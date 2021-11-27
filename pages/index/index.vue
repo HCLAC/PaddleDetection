@@ -133,6 +133,15 @@
 				Shadow:false,
 				serviceSource: 2,
 				auth:'',
+				// 首页显示问答
+				answersList:[],
+				randomPage: 0,
+				randomNum: 0,
+				backgroundQuestion: [
+					{background: 'linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);'},
+					{background: 'linear-gradient(270deg, #FFE512 0%, #FFB64D 100%);'},
+					{background: 'linear-gradient(270deg, #FFD5A2 0%, #F98480 100%);'}
+				]
 			};
 		},
 		created() {
@@ -385,6 +394,7 @@
 						this.hideLoad();
 					},
 					complete: () => {
+						this.getQuestionList();
 						this.getBanner();
 						this.getAdress();
 					}
@@ -417,6 +427,39 @@
 							item1.image = this.Utils.addImageProcess(item1.image, false, 40)
 						})
 						this.bannerList = bannerList;
+					}
+				});
+			},
+			// 获取问答列表
+			getQuestionList() {
+				this.randomPage += 1 
+				this.randomNum = 0
+				this.HTTP.request({
+					url: '/questions/random',
+					retry: 3,
+					data: {
+						page: this.randomPage,
+						count: 6
+					},
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						
+						if (res.data.data.total <= this.randomPage*6){
+							this.randomPage = 0
+						}
+						var answersList = res.data.data.list
+						for (let i = 1; i < answersList.length; i++) {
+						    const random = Math.floor(Math.random() * (i + 1));
+						    [answersList[i], answersList[random]] = [answersList[random], answersList[i]];
+						}
+						
+						this.answersList = answersList
 					}
 				});
 			},
@@ -600,6 +643,20 @@
 							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
 							item1.image = this.Utils.addImageProcess(item1.image, false, 40)
 						})
+						
+						if(this.answersList.length > 0 && curPageLen == pageSize){
+							let qobj = this.answersList[this.randomNum]
+							qobj.style = this.backgroundQuestion[this.randomNum%3]
+							curPageData.splice(2, 0, qobj)
+							this.randomNum++
+							if (this.randomNum == this.answersList.length){
+								this.getQuestionList()
+							}
+						} else {
+							console.log('no answer')
+							this.getQuestionList()
+						}
+						
 						that.list = that.list.concat(curPageData); //追加新数据
 						that.mescroll.endByPage(curPageLen, totalPage);
 					},
