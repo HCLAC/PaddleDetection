@@ -14,7 +14,8 @@
 				@click="click" @open="open"
 				:options="options"
 			>
-				<view class="item u-border-bottom" @click="toConsultation(item)">
+			<!-- u-border-bottom -->
+				<view class="item" @click="toConsultation(item)">
 					<!-- 此层wrap在此为必写的，否则可能会出现标题定位错误 -->
 					<view class="title-wrap">
 						在线咨询服务
@@ -40,8 +41,11 @@
 						</view>
 					</view>
 				</view>
-				<u-gap height="19" bg-color="#F6F6F8"></u-gap>
+				<u-gap height="19" v-if="index != list.length - 1" bg-color="#F6F6F8"></u-gap>
 			</u-swipe-action>
+		</view>
+		<view class="">
+			<image src="../../images/jp.png" mode=""></image>
 		</view>
 	</view>
 </template>

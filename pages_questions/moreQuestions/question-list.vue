@@ -114,7 +114,9 @@
 		},
 		methods: {
 			toConsultation(){
-				console.log('在线咨询')
+				uni.navigateTo({
+					url:'/pages_im/chatroom/chatroom',
+				})
 			},
 			//跳转精选问答详情页
 			toDetail(){

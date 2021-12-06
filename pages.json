@@ -198,8 +198,15 @@
 			"pages":[
 				{
 				    "path" : "housekeeperDetails/housekeeperDetails",
+					// "style": {
+					// 	// "backgroundColorBottom": "#F8F8F8",
+					// 	"backgroundColorTop": "#FFFFFF",
+					// 	// "backgroundColor":"#F8F8F8",
+					// 	"navigationBarTextStyle":"white"
+					// }
 				    "style" :                                                                                    
 					{
+						"navigationStyle": "custom",
 						"navigationBarTitleText": "",
 						"enablePullDownRefresh": false
 					}

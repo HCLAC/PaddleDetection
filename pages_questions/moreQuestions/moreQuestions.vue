@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="nav-bar">
-			<uni-nav-bar :fixed="true" :status-bar="true" title="问答列表">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="精选问答">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
@@ -37,9 +37,9 @@
 		<!-- <meTabs class="mineQuestionTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :tab-width="120"></meTabs> -->
 		<questionList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :keyword="keyword"></questionList>
 		<!-- 提问按钮 -->
-		<view class="questionsBtn" @click="toQuestions">
+		<!-- <view class="questionsBtn" @click="toQuestions">
 			<image src="/static/images/twIcon.svg"></image>
-		</view>
+		</view> -->
 	</view>
 </template>
 

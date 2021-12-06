@@ -1,5 +1,11 @@
 <template>
 	<view class="box">
+		<!-- 自定义导航栏 -->
+		<view class="nav-bar">
+			<uni-nav-bar :title="false" :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor" :shadow='Shadow'>
+				
+			</uni-nav-bar>
+		</view>
 		<view class="top">
 			<view class="t-box">
 				<view class="left">
@@ -132,9 +138,14 @@
 </template>
 
 <script>
+	import UTILS from '@/common/utils/utils.js';
+	
 	export default {
 		data() {
 			return {
+				backgroundColor: 'transparent',
+				Shadow:false,
+				bannerPostion: 220,
 				bulter_id:'',
 				info:{},
 				professionObj:{
@@ -161,6 +172,33 @@
 		onShow(){
 			this.auth = getApp().globalData.Authorization
 		},
+		// 滚动
+		onPageScroll: UTILS.throttle( function(res){
+			var scrollTop = res[0].scrollTop
+			if (scrollTop >= this.bannerPostion){
+				if (this.backgroundColor != '#FFFFFF'){
+					this.backgroundColor = '#FFFFFF';
+					this.Shadow = true
+					uni.setNavigationBarColor({
+					    frontColor: '#000000',
+						backgroundColor: '#FFFFFF',
+						fail: err => {
+							console.log('setNavigationBarColor fail', err);
+						}
+					})
+				}
+			} else {
+				this.backgroundColor = 'transparent';
+				this.Shadow = false
+				uni.setNavigationBarColor({
+				    frontColor: '#ffffff',
+					backgroundColor: '#000000',
+					fail: err => {
+						console.log('setNavigationBarColor fail', err);
+					}
+				})
+			}
+		}, 100),
 		methods:{
 			//一键登录
 			getPhone(res) {
@@ -327,6 +365,17 @@
 	 // padding-bottom env(safe-area-inset-bottom)
 	 padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
 	 padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
+	 .nav-bar {
+	 	z-index: 999;
+	 	position: fixed;
+	 	top:0px;
+	 	flex-wrap: wrap;
+	 	justify-content: center;
+	 	font-size: 14px;
+	 	display: flex;
+	 	flex-direction: column;
+	 	background: rgba(255, 255, 255, 0);
+	 }
 	.top{
 		width: 750rpx;
 		height: 440rpx;
@@ -634,6 +683,7 @@
 		padding: 30rpx;
 		text-align: justify;
 		margin: 20rpx auto;
+		margin-bottom: 120rpx;
 	}
 	.ljzx{
 		width: 694rpx;

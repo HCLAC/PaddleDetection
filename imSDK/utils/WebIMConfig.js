@@ -89,6 +89,7 @@ let config = {
    */
   isWebRTC: false,
 
+	delivery:true,
   /*
    * Set to auto sign-in
    */

@@ -1,7 +1,7 @@
 <template>
 	<view class="box">
 		<view class="nav-bar">
-			<uni-nav-bar :fixed="true" :status-bar="true" :title="title">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="旅游管家">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
@@ -435,9 +435,10 @@
 						font-weight: 400;
 						color: #909399;
 						margin-top: 10rpx;
+						margin-bottom: 12rpx;
 					}
 					.professionObj{
-						width: 158rpx;
+						// width: 158rpx;
 						height: 38rpx;
 						background: #FFF1B8;
 						border-radius: 21rpx;
@@ -447,15 +448,17 @@
 						font-family: PingFangSC-Regular, PingFang SC;
 						font-weight: 400;
 						color: #303133;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						margin-top: 12rpx;
+						padding: 0 14rpx;
+						// display: flex;
+						// justify-content: center;
+						// align-items: center;
+						// margin-top: 12rpx;
+						// margin-top: 100rpx;
 					}
 				}
 			}
 			.right{
-				width: 168rpx;
+				width: 198rpx;
 				height: 60rpx;
 				background: #FFE512;
 				border-radius: 40rpx;

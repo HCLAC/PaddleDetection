@@ -60,7 +60,7 @@
 					<!-- item.from != '' -->
 					<view :class="item.from == '' || item.from == consulting.account_username || item.type == 'audio'?'ls-box1':'ls-box'">
 						<image v-if="item.contentsType == 'TEXT' || item.contentsType == 'IMAGE'|| item.contentsType == 'VOICE'" class="avatar" src="@/static/images/logo.png" mode="aspectFill"></image>
-						<view class="chatmsg" v-if="item.contentsType == 'TEXT' || item.type == 'txt'">
+						<view class="chatmsg" v-if="item.contentsType == 'TEXT' || item.type == 'txt'" @longtap="longtap">
 							{{item.data ? item.data : item.msg}}
 						</view>
 						<!-- v-if="item.contentsType == 'IMAGE'" -->
@@ -198,6 +198,8 @@
 			audioMsg
 		},
 		onLoad(query) {
+			// var num = EMClient.getInstance().chatManager().getUnreadMessageCount();
+			// console.log(num,'++++')
 			this.bulter_id = query.bulter_id
 			this.postconsulting()
 		},
@@ -326,6 +328,8 @@
 			        to:  this.toUser,                          // 接收消息对象（用户id）
 			        chatType: 'singleChat',                  // 设置为单聊
 			        success:  (id, serverMsgId)=> {
+						this.text = '',
+						
 			            console.log('send private text Success', msg);  
 						this.arr.push(msg.body)
 						this.HTTP.request({
@@ -702,7 +706,6 @@
 	position: relative;
 	// padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
 	// padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
-	
 	.title{
 		width: 750rpx;
 		height: 72rpx;
@@ -727,8 +730,7 @@
 	}
 	.chatbox {
 		// display: flex;
-		min-height: 1490rpx;
-		// background: pink;
+		min-height: 1282rpx;
 		background: #F1F2F3;
 		padding-top: 100rpx;
 		.boxTop{
@@ -901,12 +903,12 @@
 		width: 100%;
 		height: 98rpx;
 		position: fixed;
-		// bottom: 0;
+		bottom: 0;
 		display: flex;
 		align-items: center;
 		background: #F1F2F3;
-		// padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
-		// padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
+		// margin-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
+		// margin-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
 		
 		.voice{
 			width: 48rpx;

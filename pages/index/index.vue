@@ -172,7 +172,6 @@
 		},
 		onShow() {
 			this.auth = getApp().globalData.Authorization
-			
 			// 间隔300s，重新加载首页
 			// var cur = Number((new Date().getTime())/1000).toFixed(0)
 			// var firstT = Number((this.leaveTime)/1000).toFixed(0)
