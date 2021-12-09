@@ -41,7 +41,7 @@
 						</view>
 					</view>
 				</view>
-				<u-gap height="19" v-if="index != list.length - 1" bg-color="#F6F6F8"></u-gap>
+				<u-gap height="19" margin-top="20" v-if="index != list.length - 1" bg-color="#F6F6F8"></u-gap>
 			</u-swipe-action>
 		</view>
 		<view class="">
@@ -72,7 +72,7 @@
 		methods:{
 			toConsultation(item){
 				uni.navigateTo({
-					url:'/pages_im/chatroom/chatroom?bulter_id=' + item.bulter_id,
+					url:'/pages_im/chatroom/chatroom?search_id=' + item.search_id,
 				})
 			},
 			toHousekeeper(item){

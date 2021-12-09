@@ -30,8 +30,8 @@
 						<view class="chatmsg" v-if="item.type == 'txt'">
 							{{item.msg}}
 						</view>
-						<view class="chatImg" v-if="item.type == 'img'">
-							<image :src="item.msg" mode=""></image>
+						<view class="chatImg" v-if="item.type == 'img'" @click="previewImg(item)">
+							<image :src="item.msg" mode="aspectFill"></image>
 						</view>
 						<view class="chatAudio" v-if="item.type == 'audio'">
 							<audio-msg :msg="item"></audio-msg>
@@ -65,7 +65,7 @@
 						</view>
 						<!-- v-if="item.contentsType == 'IMAGE'" -->
 						<view class="chatImg" v-if="item.contentsType == 'IMAGE' || item.type == 'img'">
-							<image :src="item.body.url? item.body.url : item.url" mode=""></image>
+							<image :src="item.body.url? item.body.url : item.url" mode="aspectFill" @click="previewImg1(item)"></image>
 						</view>
 						<view class="chatAudio" v-if="item.contentsType == 'VOICE' || item.type == 'audio'">
 							<audio-msg :msg="item"></audio-msg>
@@ -85,7 +85,7 @@
 				</view>
 			</view>
 			<!-- :class="showCamera == false ? 'btm' : 'btm1' " -->
-			<view class="btm" :style="{bottom:btm + 'rpx'}">
+			<view class="btm" :style="{bottom:btm + 'rpx'}" v-if="consulting.status != 1">
 				<view class="voice" v-if="showText" @click="onSwitch">
 					<image  src="@/static/images/voice.png" mode=""></image>
 				</view>
@@ -97,9 +97,9 @@
 				v-else
 				class="btn"  
 				@tap.stop="toggleWithoutAction"
-				@touchstart="startRecord"
-				@touchmove="moveRecord"
-				@touchend="endRecord">
+				@touchstart.stop="startRecord"
+				@touchmove.stop="moveRecord"
+				@touchend.stop="endRecord">
 					按住说话
 				</view>
 				<view class="voice1" @click.stop="onEmo">
@@ -178,7 +178,7 @@
 				text:'',
 				title:'',
 				username:{},
-				btm:0,
+				btm:30,
 				
 				emoji: WebIM.Emoji,
 				emojiObj: WebIM.EmojiObj,
@@ -191,6 +191,7 @@
 				recorderManager: uni.getRecorderManager(),
 				recordTime: 0,
 				card:{},
+				search_id:'',
 				bulter_id:'',
 			}
 		},
@@ -201,7 +202,13 @@
 			// var num = EMClient.getInstance().chatManager().getUnreadMessageCount();
 			// console.log(num,'++++')
 			this.bulter_id = query.bulter_id
-			this.postconsulting()
+			this.search_id = query.search_id
+			if(this.search_id){
+				this.getconsulting()
+			}else{
+				this.postconsulting()
+			}
+			// this.postconsulting()
 		},
 		onShow(){
 			getApp().globalData.conn.onMessage = this.onMessage;
@@ -214,6 +221,24 @@
 			this.recordTime = 0
 	    },
 		methods: {
+			previewImg(item){
+				let _this = this;
+				let imgsArray = [];
+				imgsArray[0] = item.msg
+				uni.previewImage({
+					current: 0,
+					urls: imgsArray
+				});
+			},
+			previewImg1(item){
+				let _this = this;
+				let imgsArray = [];
+				imgsArray[0] = item.body.url? item.body.url : item.url
+				uni.previewImage({
+					current: 0,
+					urls: imgsArray
+				});
+			},
 			details(){
 				// console.log(item,'e')
 				uni.navigateTo({
@@ -237,6 +262,42 @@
 				})
 			},
 			toggleWithoutAction(e) {// 阻止 tap 冒泡
+			},
+			getconsulting(){
+				this.HTTP.request({
+					url: '/user/search_record/info',
+					// method:'POST',
+					data: {
+						search_id:this.search_id
+					},
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						this.consulting = res.data.data
+						console.log(this.consulting,'管家列表')
+						this.getCard()
+						this.fromUser = this.consulting.account_username//'test2'
+						this.toUser = this.consulting.username//'wuwuwuuw'
+						this.history = this.consulting.history
+						this.title = '管家' + this.consulting.name + '在线中'
+						this.username = {
+							your: this.consulting.username,
+							myName: this.consulting.account_username
+						}
+						getApp().globalData.conn.open({
+						  apiUrl: WebIM.config.apiURL,
+						  user: this.fromUser,
+						  pwd: '123456',
+						  grant_type: 'password',
+						  appKey: WebIM.config.appkey
+						});
+					}
+				});
 			},
 			// 获取聊天室消息
 			postconsulting(){
@@ -305,7 +366,7 @@
 				this.showEmo = false
 			},
 			onSwitch(){
-				this.btm = 0
+				this.btm = 30
 				this.showText = false
 				this.executeRecord()
 				this.showCamera = false
@@ -313,7 +374,7 @@
 				
 			},
 			onSwitch1(){
-				this.btm = 0
+				this.btm = 30
 				this.showText = true
 				this.showCamera = false
 				this.showEmo = false
@@ -509,7 +570,6 @@
 				var me = this;
 				console.log('开始录音')
 				clearInterval(recordTimeInterval);
-				
 				me.recordTime = 0
 				me.showAudioWave = true
 				me.myradom();
@@ -730,7 +790,7 @@
 	}
 	.chatbox {
 		// display: flex;
-		min-height: 1282rpx;
+		min-height: 1400rpx;
 		background: #F1F2F3;
 		padding-top: 100rpx;
 		.boxTop{
@@ -903,7 +963,7 @@
 		width: 100%;
 		height: 98rpx;
 		position: fixed;
-		bottom: 0;
+		bottom: 30rpx;
 		display: flex;
 		align-items: center;
 		background: #F1F2F3;
