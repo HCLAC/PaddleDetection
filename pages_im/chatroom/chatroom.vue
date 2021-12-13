@@ -1,6 +1,6 @@
 <template>
 	<view class="box">
-		<view class="nav-bar">
+		<view class="nav-bar" style="background: pink;height: 100%;">
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="title">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
@@ -18,7 +18,7 @@
 				</view>
 			</view>
 			
-			<view class="chatbox">
+			<view @click="onDow" class="chatbox">
 				<view class="boxTop">
 					欢迎使用领途羊旅游管家，继续咨询即表示您已同意
 					<text @click="agreement">《用户协议及隐私政策》</text>
@@ -41,7 +41,39 @@
 				</view>
 				<!-- 信息记录 -->
 				<view class="" v-for="(item,index) in arr" :key="index">
-					<view class="card" v-if="index == 0" @click="details">
+					
+					<!-- item.from != '' -->
+					<view :class="item.from == '' || item.from == consulting.account_username || item.type == 'audio'?'ls-box1':'ls-box'">
+						<image v-if="item.contentsType == 'TEXT' || item.contentsType == 'IMAGE'|| item.contentsType == 'VOICE' || item.contentsType == 'CUSTOM'" class="avatar" src="@/static/images/logo.png" mode="aspectFill"></image>
+						<view class="chatmsg" v-if="item.contentsType == 'TEXT' || item.type == 'txt'" @longtap="longtap">
+							{{item.data ? item.data : item.msg}}
+						</view>
+						<view class="card" v-if="item.contentsType == 'CUSTOM'" @click="details">
+							<view class="left">
+								<image :src="card.avatar" mode=""></image>
+							</view>
+							<view class="right">
+								<view class="r-top">
+									{{card.name}}
+								</view>
+								<view class="r-center">
+									执业{{card.working_years}}年/{{card.company}}
+								</view>
+								<view class="r-btm">
+									{{ professionObj[card.profession] }}
+								</view>
+							</view>
+						</view>
+						<!-- v-if="item.contentsType == 'IMAGE'" -->
+						<view class="chatImg" v-if="item.contentsType == 'IMAGE' || item.type == 'img'">
+							<image :src="item.body.url? item.body.url : item.url" mode="aspectFill" @click="previewImg1(item)"></image>
+						</view>
+						<view class="chatAudio" v-if="item.contentsType == 'VOICE' || item.type == 'audio'">
+							<audio-msg :msg="item"></audio-msg>
+						</view>
+						<image v-if="item.type == 'txt' || item.type == 'img'|| item.type == 'audio'" class="avatar" src="@/static/images/logo.png" mode="aspectFill"></image>
+					</view>
+					<!-- <view class="card" v-if="customEvent == 'send_card' && index == 0" @click="details">
 						<view class="left">
 							<image :src="card.avatar" mode=""></image>
 						</view>
@@ -56,22 +88,7 @@
 								{{ professionObj[card.profession] }}
 							</view>
 						</view>
-					</view>
-					<!-- item.from != '' -->
-					<view :class="item.from == '' || item.from == consulting.account_username || item.type == 'audio'?'ls-box1':'ls-box'">
-						<image v-if="item.contentsType == 'TEXT' || item.contentsType == 'IMAGE'|| item.contentsType == 'VOICE'" class="avatar" src="@/static/images/logo.png" mode="aspectFill"></image>
-						<view class="chatmsg" v-if="item.contentsType == 'TEXT' || item.type == 'txt'" @longtap="longtap">
-							{{item.data ? item.data : item.msg}}
-						</view>
-						<!-- v-if="item.contentsType == 'IMAGE'" -->
-						<view class="chatImg" v-if="item.contentsType == 'IMAGE' || item.type == 'img'">
-							<image :src="item.body.url? item.body.url : item.url" mode="aspectFill" @click="previewImg1(item)"></image>
-						</view>
-						<view class="chatAudio" v-if="item.contentsType == 'VOICE' || item.type == 'audio'">
-							<audio-msg :msg="item"></audio-msg>
-						</view>
-						<image v-if="item.type == 'txt' || item.type == 'img'|| item.type == 'audio'" class="avatar" src="@/static/images/logo.png" mode="aspectFill"></image>
-					</view>
+					</view> -->
 				</view>
 			</view>
 			<view class="audio-box" v-if="showAudioWave">
@@ -93,6 +110,8 @@
 					<image  src="@/static/images/text.png" mode=""></image>
 				</view>
 				<u-input v-if="showText" confirm-type="send" class="text" @confirm="sendPrivateText" v-model="text" type="text" :border="true" />
+				<!-- <u-input v-if="showText" confirm-type="send" class="text" @confirm="sendPrivateText" v-model="text" height="50" auto-height="true" type="textarea" :border="true" /> -->
+				
 				<view 
 				v-else
 				class="btn"  
@@ -193,6 +212,7 @@
 				card:{},
 				search_id:'',
 				bulter_id:'',
+				customEvent:''
 			}
 		},
 		components:{
@@ -221,6 +241,13 @@
 			this.recordTime = 0
 	    },
 		methods: {
+			onDow(){
+				this.btm = 30
+				this.showText = false
+				// this.executeRecord()
+				this.showCamera = false
+				this.showEmo = false
+			},
 			previewImg(item){
 				let _this = this;
 				let imgsArray = [];
@@ -349,6 +376,14 @@
 					break
 					case 'audio':
 					this.arr.push(message)
+					break
+					case 'custom':
+					console.log(1231321)
+					
+					this.arr.push(message)
+					if(message.customEvent == 'send_card'){
+						this.customEvent = message.customEvent
+					}
 					break
 				}
 				
@@ -764,6 +799,9 @@
 <style lang="scss">
 .box{
 	position: relative;
+	background: #F1F2F3;
+	// background: red;
+	// height: 1282rpx;
 	// padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
 	// padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
 	.title{
@@ -815,11 +853,11 @@
 			// margin-top: 108rpx;
 		}
 		.card{
-			width: 694rpx;
+			width: 598rpx;
 			height: 214rpx;
 			background: #FFFFFF;
 			border-radius: 20rpx;
-			margin: 0 auto;
+			// margin: 0 auto;
 			display: flex;
 			.left{
 				width: 100rpx;

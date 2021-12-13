@@ -109,8 +109,11 @@
 				</view>
 				<text>领途羊旅游管家</text>
 			</view>
-			<view class="right">
-				<button class="right-btn" type="primary" open-type="contact" bindcontact="contactCB">立即咨询</button>
+			<view class="right"  @click="toChatroom">
+				<view class="right-btn">
+					立即咨询
+				</view>
+				<!-- <button class="right-btn" type="primary" open-type="contact" bindcontact="contactCB">立即咨询</button> -->
 			</view>
 		</view>
 		<!-- 相关问题 -->
@@ -250,6 +253,11 @@
 		 	//#endif
 		},
 		methods:{
+			toChatroom(){
+				uni.navigateTo({
+					url:'/pages_im/chatroom/chatroom',
+				})
+			},
 			share() {
 				uni.showShareMenu({
 					title: this.detail.title,

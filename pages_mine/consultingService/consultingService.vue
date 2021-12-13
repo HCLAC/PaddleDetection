@@ -8,6 +8,14 @@
 				<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 			</view>
 		</uni-nav-bar>
+		<view class="kong" v-if="list.length == 0">
+			<view class="kong_img">
+				<image src="@/static/images/index-kong.png" mode=""></image>
+			</view>
+			<view class="kong_text">
+				咨询列表空空的
+			</view>
+		</view>
 		<view class="">
 			<u-swipe-action :show="item.show" :index="index" 
 				v-for="(item, index) in list" :key="item.search_id" 
@@ -133,6 +141,26 @@
 
 <style lang="scss">
 .box{
+	.kong{
+		margin-left: 274rpx;
+		margin-top: 478rpx;
+		// margin: 0 auto;
+		.kong_img{
+			width: 202rpx;
+			height: 206rpx;
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.kong_text{
+			font-size: 26rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #909399;
+			margin-top: 40rpx;
+		}
+	}
 	.item {
 		display: flex;
 		height: 320rpx;
