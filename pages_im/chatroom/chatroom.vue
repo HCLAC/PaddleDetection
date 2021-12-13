@@ -423,6 +423,12 @@
 			        msg: this.text,                  // 消息内容
 			        to:  this.toUser,                          // 接收消息对象（用户id）
 			        chatType: 'singleChat',                  // 设置为单聊
+					ext: {
+						bulter_avatar: this.consulting.bulter_avatar,
+						bulter_name: this.consulting.name,
+						account_avatar: this.consulting.user_avatar,
+						account_name: this.consulting.account_name
+					},
 			        success:  (id, serverMsgId)=> {
 						this.text = '',
 						
@@ -568,6 +574,12 @@
 										to: me.toUser,
 										roomType: false,
 										chatType: 'singleChat',
+										ext: {
+											bulter_avatar: me.consulting.bulter_avatar,
+											bulter_name: me.consulting.name,
+											account_avatar: me.consulting.user_avatar,
+											account_name: me.consulting.account_name
+										},
 										success: function(argument) {
 											disp.fire('em.chat.sendSuccess', id);
 										}
@@ -689,6 +701,12 @@
 							to: this.toUser,
 							roomType: false,
 							chatType: 'singleChat',
+							ext: {
+								bulter_avatar: me.consulting.bulter_avatar,
+								bulter_name: me.consulting.name,
+								account_avatar: me.consulting.user_avatar,
+								account_name: me.consulting.account_name
+							},
 							success: function (argument) {
 							  disp.fire('em.chat.sendSuccess', id);
 							}
