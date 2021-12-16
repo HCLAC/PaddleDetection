@@ -171,7 +171,7 @@ export default {
       audioCtx.onStop(this.onDone);
       audioCtx.onEnded(this.onDone);
       audioCtx.onError(this.onDone);
-      audioCtx.onWaiting(this.onWait); //audioCtx.onTimeUpdate(this.onTimeUpdate);
+      // audioCtx.onWaiting(this.onWait); //audioCtx.onTimeUpdate(this.onTimeUpdate);
     },
 
     delEvent() {
@@ -182,7 +182,7 @@ export default {
       audioCtx.offStop(this.onDone);
       audioCtx.offEnded(this.onDone);
       audioCtx.offError(this.onDone);
-      audioCtx.offWaiting(this.onWait); // 多次播放会丢失这个回调，所以不用卸载
+      // audioCtx.offWaiting(this.onWait); // 多次播放会丢失这个回调，所以不用卸载
       // audioCtx.offTimeUpdate(this.onTimeUpdate);
     }
 

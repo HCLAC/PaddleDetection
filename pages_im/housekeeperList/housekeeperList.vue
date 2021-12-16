@@ -164,42 +164,14 @@
 					});
 					return;
 				}
-			
-				// 百度小程序直接调用swan.getLoginCode，其他平台调用uni.login
-				if (this.serviceProvider == 'baidu'){
-					//#ifdef MP-BAIDU
-					swan.getLoginCode({
-						success: result => {
-							if (!result || !result.code || result.code.length == 0) {
-								uni.showToast({
-									title: '一键登录失败',
-									icon: 'none'
-								});
-								return
-							}
-							this.baiduLogin({
-								code: result.code,
-								source: this.serviceSource,
-								data: res.detail.encryptedData,
-								iv: res.detail.iv
-							});
-						},
-						fail: err => {
-							console.error('getLoginCode', err)
-						}
-					});
-					//#endif
-					return 
-				}
-				uni.login({
-					provider: this.serviceProvider,
+				swan.getLoginCode({
 					success: result => {
 						if (!result || !result.code || result.code.length == 0) {
 							uni.showToast({
 								title: '一键登录失败',
 								icon: 'none'
 							});
-							return;
+							return
 						}
 						this.baiduLogin({
 							code: result.code,
@@ -207,11 +179,60 @@
 							data: res.detail.encryptedData,
 							iv: res.detail.iv
 						});
+						console.log(123)
 					},
 					fail: err => {
-						console.error('login', err)
+						console.error('getLoginCode', err)
 					}
 				});
+				// 百度小程序直接调用swan.getLoginCode，其他平台调用uni.login
+				// if (this.serviceProvider == 'baidu'){
+				// 	//#ifdef MP-BAIDU
+				// 	swan.getLoginCode({
+				// 		success: result => {
+				// 			if (!result || !result.code || result.code.length == 0) {
+				// 				uni.showToast({
+				// 					title: '一键登录失败',
+				// 					icon: 'none'
+				// 				});
+				// 				return
+				// 			}
+				// 			this.baiduLogin({
+				// 				code: result.code,
+				// 				source: this.serviceSource,
+				// 				data: res.detail.encryptedData,
+				// 				iv: res.detail.iv
+				// 			});
+				// 			// console.log(123)
+				// 		},
+				// 		fail: err => {
+				// 			console.error('getLoginCode', err)
+				// 		}
+				// 	});
+				// 	//#endif
+				// 	return 
+				// }
+				// uni.login({
+				// 	provider: this.serviceProvider,
+				// 	success: result => {
+				// 		if (!result || !result.code || result.code.length == 0) {
+				// 			uni.showToast({
+				// 				title: '一键登录失败',
+				// 				icon: 'none'
+				// 			});
+				// 			return;
+				// 		}
+				// 		this.baiduLogin({
+				// 			code: result.code,
+				// 			source: this.serviceSource,
+				// 			data: res.detail.encryptedData,
+				// 			iv: res.detail.iv
+				// 		});
+				// 	},
+				// 	fail: err => {
+				// 		console.error('login', err)
+				// 	}
+				// });
 			},
 			baiduLogin(obj) {
 				this.HTTP.request({
@@ -260,8 +281,8 @@
 					}
 				});
 			},
-			loginSuccess(userinfo, auth){
-				
+			loginSuccess(userinfo, auth,item){
+				console.log(item,'item')
 				uni.showToast({
 					title: '登录成功',
 					icon: 'none'
@@ -283,7 +304,6 @@
 				uni.$emit('onLoginSuccess', userinfo.first_login);
 				// this.Utils.back()
 				this.toChatroom()
-				
 			},
 			toChatroom(item){
 				uni.navigateTo({
