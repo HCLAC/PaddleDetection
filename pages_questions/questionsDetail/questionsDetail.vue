@@ -299,8 +299,8 @@
 						//#ifdef MP-BAIDU
 						swan.setPageInfo({
 							title: this.detail.title,
-							keywords: this.detail.labels.join(','),
-							description: this.detail.title,
+							keywords: this.detail.keywords,
+							description: this.detail.description,
 						})
 						// #endif
 					}
