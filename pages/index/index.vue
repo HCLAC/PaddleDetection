@@ -173,7 +173,6 @@
 		},
 		onShow() {
 			this.auth = getApp().globalData.Authorization
-			this.gen()
 			// 间隔300s，重新加载首页
 			// var cur = Number((new Date().getTime())/1000).toFixed(0)
 			// var firstT = Number((this.leaveTime)/1000).toFixed(0)
@@ -218,16 +217,7 @@
 			}
 		}, 100),
 		methods: {
-			gen(){
-				this.HTTP.request({
-					url: '/pay/gen',
-					method: 'POST',
-					success: res => {
-						this.genObj = res.data.data
-						console.log(res,'res')
-					}
-				})
-			},
+
 			//一键登录
 			getPhone(res) {
 				if (res.detail.errMsg != 'getPhoneNumber:ok') {
