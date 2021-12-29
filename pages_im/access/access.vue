@@ -213,7 +213,7 @@
 							    success:  (res) => {
 							        console.log('success:' + JSON.stringify(res));
 									uni.navigateTo({
-										url:'/pages_im/chatroom/chatroom',
+										url:'/pages_im/chatroom/chatroom?search_id=' + res.data.data.search_id,
 									})
 							    },
 							    fail:  (err) => {
