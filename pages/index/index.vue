@@ -383,7 +383,7 @@
 						console.log(info, '管家列表')
 						if(info.history.length > 0){
 							uni.navigateTo({
-								url:'/pages_im/chatroom/chatroom',
+								url:'/pages_im/chatroom/chatroom?search_id=' + info.search_id,
 							})
 						}else{
 							uni.navigateTo({
