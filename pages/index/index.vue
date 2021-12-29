@@ -137,6 +137,7 @@
 				answersList:[],
 				randomPage: 0,
 				randomNum: 0,
+				genObj:{},
 				backgroundQuestion: [
 					{background: 'linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);'},
 					{background: 'linear-gradient(270deg, #FFE512 0%, #FFB64D 100%);'},
@@ -172,6 +173,7 @@
 		},
 		onShow() {
 			this.auth = getApp().globalData.Authorization
+			this.gen()
 			// 间隔300s，重新加载首页
 			// var cur = Number((new Date().getTime())/1000).toFixed(0)
 			// var firstT = Number((this.leaveTime)/1000).toFixed(0)
@@ -216,6 +218,16 @@
 			}
 		}, 100),
 		methods: {
+			gen(){
+				this.HTTP.request({
+					url: '/pay/gen',
+					method: 'POST',
+					success: res => {
+						this.genObj = res.data.data
+						console.log(res,'res')
+					}
+				})
+			},
 			//一键登录
 			getPhone(res) {
 				if (res.detail.errMsg != 'getPhoneNumber:ok') {
@@ -366,9 +378,30 @@
 				
 			},
 			toChatroom(){
-				uni.navigateTo({
-					url:'/pages_im/chatroom/chatroom',
-				})
+				this.HTTP.request({
+					url: '/bulter/consulting',
+					method: 'POST',
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0) {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						var info = res.data.data
+						console.log(info, '管家列表')
+						if(info.history.length > 0){
+							uni.navigateTo({
+								url:'/pages_im/chatroom/chatroom',
+							})
+						}else{
+							uni.navigateTo({
+								url:'/pages_im/problem/problem',
+							})
+						}
+					}
+				});
 			},
 			Housekeeper(){
 				uni.navigateTo({
@@ -380,6 +413,26 @@
 				uni.navigateTo({
 					url:'/pages_questions/moreQuestions/moreQuestions'
 				})
+				//支付
+				// uni.requestPayment({
+				//     provider: 'baidu',
+				// 	orderInfo: {
+				// 		dealId:this.genObj.dealId,
+				// 		appKey:this.genObj.appKey,
+				// 		totalAmount:this.genObj.totalAmount,
+				// 		tpOrderId:this.genObj.tpOrderId,
+				// 		dealTitle:this.genObj.dealTitle,
+				// 		signFieldsRange:this.genObj.signFieldsRange,
+				// 		rsaSign:this.genObj.rsaSign,
+				// 	},
+				//      //微信、支付宝订单数据 【注意微信的订单信息，键值应该全部是小写，不能采用驼峰命名】
+				//     success: function (res) {
+				//         console.log('success:' + JSON.stringify(res));
+				//     },
+				//     fail: function (err) {
+				//         console.log('fail:' + JSON.stringify(err));
+				//     }
+				// });
 			},
 			//跳转热搜榜单
 			heat(){

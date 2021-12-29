@@ -2,26 +2,85 @@
 	<view class="box">
 		<view class="nav-bar">
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="title">
-				<view slot="left" class="slotleft">
-					<!-- #ifndef  MP-BAIDU -->
-					<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
-					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
-				</view>
+				
 			</uni-nav-bar>
-			<view class="title">
+			<view class="top">
+				<text>说明问题</text>
+				<u-icon class="con" name="arrow-right" color="#303133" size="28"></u-icon>
+				<text >接入管家</text>
+				<u-icon class="con" name="arrow-right" color="#303133" size="28"></u-icon>
+				<text style="color:#A86B13;">获取解答</text>
+			</view>
+			<!-- <view class="title">
 				<view class="left">
 					咨询中…
 				</view>
 				<view class="right">
 					详细描述问题，方便管家更好答复
 				</view>
-			</view>
+			</view> -->
 
 			<view @click="onDow" class="chatbox">
-				<view class="boxTop">
+				<!-- <view class="boxTop">
 					欢迎使用领途羊旅游管家，继续咨询即表示您已同意
 					<text @click="agreement">《用户协议及隐私政策》</text>
+				</view> -->
+				<view class="c_card">
+					<view class="c_card_top">
+						<view class="c_card_top_text">
+							{{professionObj[consulting.level]}}
+						</view>
+					</view>
+					<view class="c_card_center">
+						<view class="c_card_center_left">
+							<view class="left_img">
+								<image :src="consulting.bulter_avatar" mode=""></image>
+							</view>
+							<view class="left_btm">
+								<view class="btm_dian"></view>
+								<view class="btm_text">咨询中</view>
+							</view>
+						</view>
+						<view class="c_card_center_right">
+							<view class="right_one">
+								<view class="one_1">
+									{{consulting.name}}
+								</view>
+								<view class="one_2">
+									{{professionObj1[consulting.profession]}}
+								</view>
+							</view>
+							<view class="right_two">
+								{{consulting.company}}
+							</view>
+							<view class="right_three">
+								<view class="three_1">
+									<text>已服务：</text>
+									<text style="color: #A86B13;">{{consulting.number_of_people}}</text>
+								</view>
+								<view class="three_2">
+									<text>评分：</text>
+									<text style="color: #A86B13;">5分</text>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="c_card_btm">
+						<view class="btm_left">
+							<view class="left_img">
+								<image src="@/static/images/yx.png" mode=""></image>
+							</view>
+							<view class="left_txt">
+								严选保障 · 隐私保护 · 专业旅游管家
+							</view>
+						</view>
+						<view class="btm_right" @click="details">
+							<view class="right_txt">
+								查看更多
+							</view>
+							<u-icon class="con" name="arrow-right" color="#303133" size="28"></u-icon>
+						</view>
+					</view>
 				</view>
 				<!-- 历史记录 -->
 				<view class="boxMax" v-for="(item,index) in history" :key="index">
@@ -55,7 +114,7 @@
 							@longtap="longtap">
 							{{item.data ? item.data : item.msg}}
 						</view>
-						<view class="card" v-if="item.contentsType == 'CUSTOM'" @click="details">
+						<!-- <view class="card" v-if="item.contentsType == 'CUSTOM'" @click="details">
 							<view class="left">
 								<image :src="card.avatar" mode=""></image>
 							</view>
@@ -70,8 +129,7 @@
 									{{ professionObj[card.profession] }}
 								</view>
 							</view>
-						</view>
-						<!-- v-if="item.contentsType == 'IMAGE'" -->
+						</view> -->
 						<view class="chatImg" v-if="item.contentsType == 'IMAGE' || item.type == 'img'">
 							<image :src="item.body.url? item.body.url : item.url" mode="aspectFill"
 								@click="previewImg1(item)"></image>
@@ -83,24 +141,13 @@
 							:src="ext.account_avatar ? ext.account_avatar : '@/static/images/logo.png'"
 							mode="aspectFill"></image>
 					</view>
-					<!-- <view class="card" v-if="customEvent == 'send_card' && index == 0" @click="details">
-						<view class="left">
-							<image :src="card.avatar" mode=""></image>
-						</view>
-						<view class="right">
-							<view class="r-top">
-								{{card.name}}
-							</view>
-							<view class="r-center">
-								执业{{card.working_years}}年/{{card.company}}
-							</view>
-							<view class="r-btm">
-								{{ professionObj[card.profession] }}
-							</view>
-						</view>
-					</view> -->
 				</view>
 			</view>
+			
+			<view class="end" v-if="showEnd">
+				咨询已结束！
+			</view>
+			
 			<view class="audio-box" v-if="showAudioWave">
 				<view class="sound-waves">
 					<view v-for="(item, index) in radomheight" :key="index"
@@ -108,27 +155,33 @@
 					<view style="clear: both; width: 0; height: 0"></view>
 				</view>
 			</view>
-			<view class="btm" :style="{bottom:btm + 'rpx'}" v-if="consulting.status != 1">
+			
+			<view class="btm" :style="{bottom:btm + 'rpx'}" v-if="consulting.status != 2">
 				<!-- <view class="voice" v-if="showText" @click="onSwitch">
 					<image src="@/static/images/voice.png" mode=""></image>
 				</view>
 				<view class="voice" v-else @click="onSwitch1">
 					<image src="@/static/images/text.png" mode=""></image>
 				</view> -->
-				<u-input v-if="showText" confirm-type="send" class="text" @confirm="sendPrivateText" v-model="text"
-					type="text" :border="true" />
+				<!-- <u-input v-if="showText" confirm-type="send" class="text" @confirm="sendPrivateText" v-model="text"
+					type="text" :border="true" /> -->
+				<input :disabled="show_input" v-model="text" class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='简单描述你的问题' />
+				<view class="btm_btn" @click="sendPrivateText" :style="{'color':color,'background':bgcolor}">
+					发送
+				</view>
+				<!-- <u-button style="width: 200rpx;" class="btm_btn" :plain="true" @click="sendPrivateText" >发送</u-button> -->
 				<!-- <u-input v-if="showText" confirm-type="send" class="text" @confirm="sendPrivateText" v-model="text" height="50" auto-height="true" type="textarea" :border="true" /> -->
 
-				<view v-else class="btn" @tap.stop="toggleWithoutAction" @touchstart.stop="startRecord"
+				<!-- <view v-else class="btn" @tap.stop="toggleWithoutAction" @touchstart.stop="startRecord"
 					@touchmove.stop="moveRecord" @touchend.stop="endRecord">
 					按住说话
-				</view>
+				</view> -->
 				<!-- <view class="voice1" @click.stop="onEmo">
 					<image src="@/static/images/Emoji.png" mode=""></image>
 				</view> -->
-				<view class="voice" @click.stop="onImg">
+				<!-- <view class="voice" @click.stop="onImg">
 					<image src="@/static/images/ad.png" mode=""></image>
-				</view>
+				</view> -->
 			</view>
 			<view class="imgBox" v-if="showCamera">
 				<view class="minBox" @click="onPhoto">
@@ -188,7 +241,16 @@
 	export default {
 		data() {
 			return {
+				color:'',
+				bgcolor:'',
+				showEnd:false,
+				show_input:false,
 				professionObj: {
+					'0': '金牌管家',
+					'1': '银牌管家',
+					'2': '铜牌管家'
+				},
+				professionObj1: {
 					'0': '导游',
 					'1': '旅游达人',
 					'2': '旅游定制师'
@@ -438,6 +500,17 @@
 			},
 			// 发送文本信息
 			sendPrivateText() {
+				//校验时间
+				let timestamp = parseInt(new Date().getTime()/1000);
+				if(timestamp > this.consulting.end_time){
+					this.showEnd = true
+					this.show_input = true
+					this.color = '#FFFFFF'
+					this.bgcolor = '#C9CAD1'
+					return
+				}
+				// timestamp(new Date() / 1000)
+				console.log(timestamp,'timestamp')
 				let id = WebIM.conn.getUniqueId(); // 生成本地消息id
 				let msg = new WebIM.message('txt', id); // 创建文本消息
 				msg.set({
@@ -463,6 +536,7 @@
 								msg: msg.body.msg,
 								type: msg.body.type,
 								id: msg.body.id,
+								search_id:this.consulting.search_id,
 							},
 							success: res => {
 								console.log(res, '历史记录')
@@ -846,14 +920,52 @@
 </script>
 
 <style lang="scss">
+	page{
+		background: #F8F8F8;
+	}
 	.box {
 		position: relative;
-		background: #F1F2F3;
-
+		// background: #F1F2F3;
+		
 		// background: red;
 		// height: 1282rpx;
 		// padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
 		// padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
+		.nav-bar{
+			background: #F8F8F8;
+		}
+		.end{
+			width: 192rpx;
+			height: 44rpx;
+			background: #EDEFF2;
+			border-radius: 22rpx;
+			margin: 40rpx auto;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 24rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #606266;
+		}
+		.top{
+			background: #FFFFFF;
+			width: 100%;
+			height: 80rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-top: 1rpx solid #E5E5E5;
+			text{
+				font-size: 28rpx;
+				// font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #303133;
+			}
+			.con{
+				margin: 0 12rpx;
+			}
+		}
 		.title {
 			width: 750rpx;
 			height: 72rpx;
@@ -882,11 +994,172 @@
 
 		.chatbox {
 			// display: flex;
-			min-height: 1400rpx;
-			background: #F1F2F3;
-			padding-top: 100rpx;
+			// min-height: 1400rpx;
+			background: #F8F8F8;
+			padding-top: 30rpx;
 			padding-bottom: 150rpx;
-
+			.c_card{
+				width: 694rpx;
+				height: 342rpx;
+				background: #FFFFFF;
+				box-shadow: 0rpx 4rpx 20rpx 0rpx rgba(0, 0, 0, 0.05);
+				border-radius: 12rpx;
+				margin-top: 30rpx;
+				margin: 0 auto;
+				.c_card_top{
+					display: flex;
+					justify-content: flex-end;
+					.c_card_top_text{
+						width: 128rpx;
+						height: 40rpx;
+						background: #FFE512;
+						border-radius: 0rpx 12rpx 0rpx 12rpx;
+						font-size: 24rpx;
+						font-family: PingFangSC-Regular, PingFang SC;
+						font-weight: 400;
+						color: #303133;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+					}
+				}
+				.c_card_center{
+					width: 100%;
+					height: 196rpx;
+					display: flex;
+					.c_card_center_left{
+						.left_img{
+							width: 112rpx;
+							height: 112rpx;
+							border-radius: 50%;
+							overflow: hidden;
+							margin-left: 28rpx;
+							image{
+								width: 100%;
+								height: 100%;
+							}
+						}
+						.left_btm{
+							margin-top: 18rpx;
+							margin-left: 43rpx;
+							display: flex;
+							align-content: center;
+							.btm_dian{
+								width: 6rpx;
+								height: 6rpx;
+								background: #A86B13;
+								margin: auto 0;
+							}
+							.btm_text{
+								font-size: 20rpx;
+								font-family: PingFangSC-Regular, PingFang SC;
+								font-weight: 400;
+								color: #A86B13;
+								margin-left: 6rpx;
+							}
+						}
+					}
+					.c_card_center_right{
+						margin-left: 30rpx;
+						.right_one{
+							display: flex;
+							margin-top: 14rpx;
+							align-items: center;
+							.one_1{
+								font-size: 36rpx;
+								font-family: PingFangSC-Medium, PingFang SC;
+								font-weight: 500;
+								color: #303133;
+							}
+							.one_2{
+								margin-left: 12rpx;
+								font-size: 28rpx;
+								font-family: PingFangSC-Regular, PingFang SC;
+								font-weight: 400;
+								color: #606266;
+							}
+						}
+						.right_two{
+							margin-top: 14rpx;
+							font-size: 28rpx;
+							font-family: PingFangSC-Regular, PingFang SC;
+							font-weight: 400;
+							color: #606266;
+						}
+						.right_three{
+							display: flex;
+							margin-top: 12rpx;
+							.three_1{
+								display: flex;
+								align-items: center;
+								width: 170rpx;
+								height: 26rpx;
+								border-right: 1rpx solid #E5E5E5;
+								text{
+									font-size: 26rpx;
+									font-family: PingFangSC-Regular, PingFang SC;
+									font-weight: 400;
+									color: #909399;
+								}
+							}
+							.three_2{
+								height: 26rpx;
+								display: flex;
+								align-items: center;
+								font-size: 26rpx;
+								font-family: PingFangSC-Regular, PingFang SC;
+								font-weight: 400;
+								color: #909399;
+								margin-left: 16rpx;
+							}
+						}
+					}
+				}
+				.c_card_btm{
+					width: 630rpx;
+					height: 104rpx;
+					margin: 0 auto;
+					border-top: 1rpx solid #E5E5E5;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					padding: 0 ;
+					.btm_left{
+						display: flex;
+						align-items: center;
+						width: 462rpx;
+						height: 64rpx;
+						background: linear-gradient(270deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 0%, #FFF8BB 100%);
+						border-radius: 20rpx;
+						padding-left: 16rpx;
+						.left_img{
+							width: 30rpx;
+							height: 30rpx;
+							image{
+								width: 100%;
+								height: 100%;
+							}
+						}
+						.left_txt{
+							font-size: 24rpx;
+							font-family: PingFangSC-Medium, PingFang SC;
+							font-weight: 500;
+							color: #A86B13;
+							margin-left: 8rpx;
+						}
+					}
+					.btm_right{
+						display: flex;
+						align-items: center;
+						.right_txt{
+							font-size: 24rpx;
+							font-family: PingFangSC-Regular, PingFang SC;
+							font-weight: 400;
+							color: #303133;
+						}
+					}
+				}
+			}
 			.boxTop {
 				width: 568rpx;
 				height: 100rpx;
@@ -980,11 +1253,11 @@
 				}
 
 				.chatmsg {
-					background: #0091FF;
+					background: #D1E2FF;
 					border-radius: 24rpx 0rpx 24rpx 24rpx;
 					padding: 20rpx;
 					display: flex;
-					color: #FFFFFF;
+					color: #303133;
 					justify-content: center;
 					align-items: center;
 				}
@@ -1076,7 +1349,7 @@
 		}
 
 		.btm {
-			width: 100%;
+			width: 750rpx;
 			height: 98rpx;
 			position: fixed;
 			bottom: 0;
@@ -1084,11 +1357,33 @@
 			align-items: center;
 			padding-bottom: 100rpx;
 			padding-top: 60rpx;
+			padding: 0 28rpx;
 			// background: #F1F2F3;
-			background: #F6F6F8;
+			background: #FFFFFF;
 			// margin-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
 			// margin-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
-
+			.btm_input{
+				width: 522rpx;
+				height: 72rpx;
+				background: #F8F8F8;
+				border-radius: 36rpx;
+				padding-left: 32rpx;
+				color: #303133;
+			}
+			.btm_btn{
+				width: 144rpx;
+				height: 72rpx;
+				background: #FFE512;
+				border-radius: 36rpx;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 32rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
+				color: #303133;
+				margin-left: 28rpx;
+			}
 			.voice {
 				width: 48rpx;
 				height: 48rpx;
