@@ -134,9 +134,11 @@
 					'1': '旅游达人',
 					'2': '旅游定制师'
 				},
+				bulter_id: '',
 			};
 		},
-		onLoad() {
+		onLoad(query) {
+			this.bulter_id = query.bulter_id
 			this.getInfo()
 		},
 		onShow(){

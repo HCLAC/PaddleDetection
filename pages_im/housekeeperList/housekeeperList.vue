@@ -303,12 +303,18 @@
 				});
 				uni.$emit('onLoginSuccess', userinfo.first_login);
 				// this.Utils.back()
-				this.toChatroom()
+				this.toChatroom(item)
 			},
 			toChatroom(item){
-				uni.navigateTo({
-					url:'/pages_im/chatroom/chatroom?bulter_id=' + item.bulter_id,
-				})
+				if (item.search_id > 0) {
+					uni.navigateTo({
+						url:'/pages_im/chatroom/chatroom?search_id=' + item.search_id,
+					})
+				} else {
+					uni.navigateTo({
+						url:'/pages_im/problem/problem?bulter_id=' + item.bulter_id,
+					})
+				}
 			},
 			
 			back(){

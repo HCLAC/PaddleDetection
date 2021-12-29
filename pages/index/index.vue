@@ -387,7 +387,7 @@
 							})
 						}else{
 							uni.navigateTo({
-								url:'/pages_im/problem/problem',
+								url:'/pages_im/problem/problem?bulter_id=' + info.bulter_id,
 							})
 						}
 					}
