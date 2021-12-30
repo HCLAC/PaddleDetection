@@ -206,6 +206,7 @@
 					success: res => {
 						console.log(res,'res')
 						if(res.data.code == 0){
+							var search_id = res.data.data.search_id
 							uni.requestPayment({
 							    provider: 'baidu',
 								orderInfo: res.data.data,
@@ -213,7 +214,7 @@
 							    success:  (res) => {
 							        console.log('success:' + JSON.stringify(res));
 									uni.navigateTo({
-										url:'/pages_im/chatroom/chatroom?search_id=' + res.data.data.search_id,
+										url:'/pages_im/chatroom/chatroom?search_id=' + search_id,
 									})
 							    },
 							    fail:  (err) => {
