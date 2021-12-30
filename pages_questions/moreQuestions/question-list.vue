@@ -114,9 +114,30 @@
 		},
 		methods: {
 			toConsultation(){
-				uni.navigateTo({
-					url:'/pages_im/chatroom/chatroom',
-				})
+				this.HTTP.request({
+					url: '/bulter/consulting',
+					method: 'POST',
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0) {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						var info = res.data.data
+						console.log(info, '管家列表')
+						if(info.history.length > 0){
+							uni.navigateTo({
+								url:'/pages_im/chatroom/chatroom?search_id=' + info.search_id,
+							})
+						}else{
+							uni.navigateTo({
+								url:'/pages_im/problem/problem?bulter_id=' + info.bulter_id,
+							})
+						}
+					}
+				});
 			},
 			//跳转精选问答详情页
 			toDetail(){

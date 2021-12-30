@@ -13,7 +13,7 @@
 		</view>
 		<!-- 搜索框 -->
 		<view class="searchBox">
-			<u-search v-model="keyword" @search="search" @custom="custom" :show-action="true" search-icon-color="#c9cad1" placeholder="输入搜索内容" placeholder-color="#c9cad1" action-text="取消" :animation="true"></u-search>
+			<u-search v-model="keyword" @search="search" @change="changeText" @custom="custom" :show-action="true" search-icon-color="#c9cad1" placeholder="输入搜索内容" placeholder-color="#c9cad1" action-text="取消" :animation="true"></u-search>
 		</view>
 		<!-- <u-tabs :list="list" :is-scroll="false" :current="current" @change="change"></u-tabs> -->
 		<view class="tabBox">
@@ -62,6 +62,7 @@ import questionList from './question-list.vue';
 				city_id:'',
 				isFixed:false,
 				cardheight: 0,
+				text:'',
 			};
 		},
 		// #ifdef MP-BAIDU
@@ -84,6 +85,11 @@ import questionList from './question-list.vue';
 		// 	}
 		// },
 		methods:{
+			changeText(value){
+				this.text = value
+				console.log(this.text.length,'++++++')
+				console.log(value,'value')
+			},
 			// calcCardHeight(){
 			// 	if (this.isFixed){
 			// 		return

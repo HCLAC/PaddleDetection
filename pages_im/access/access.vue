@@ -125,7 +125,7 @@
 							<image src="@/static/images/pay_one.png" mode=""></image>
 						</view>
 						<view class="content_txt">
-							极速响应，平均5分钟回复
+							极速响应，平均1分钟回复
 						</view>
 					</view>
 					<view class="content_box">

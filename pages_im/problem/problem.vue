@@ -193,6 +193,7 @@
 					url: '/pages_im/access/access?txt=' + this.txt +'&bulter_id=' + this.consulting.bulter_id
 				})
 				this.show = !this.show
+				this.txt = ''
 			}
 		},
 	}

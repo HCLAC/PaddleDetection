@@ -19,7 +19,7 @@
 					详细描述问题，方便管家更好答复
 				</view>
 			</view> -->
-
+			
 			<view @click="onDow" class="chatbox">
 				<!-- <view class="boxTop">
 					欢迎使用领途羊旅游管家，继续咨询即表示您已同意
@@ -81,6 +81,9 @@
 							<u-icon class="con" name="arrow-right" color="#303133" size="28"></u-icon>
 						</view>
 					</view>
+				</view>
+				<view class="time">
+					{{history[0].create_at}}
 				</view>
 				<!-- 历史记录 -->
 				<view class="boxMax" v-for="(item,index) in history" :key="index">
@@ -1001,6 +1004,15 @@
 			background: #F8F8F8;
 			padding-top: 30rpx;
 			padding-bottom: 150rpx;
+			.time{
+				font-size: 26rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #909399;
+				margin: 20rpx 0;
+				display: flex;
+				justify-content: center;
+			}
 			.c_card{
 				width: 694rpx;
 				height: 342rpx;
