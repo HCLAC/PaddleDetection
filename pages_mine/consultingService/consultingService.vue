@@ -52,7 +52,7 @@
 						金 &nbsp;&nbsp;&nbsp;&nbsp; 额:0.01元
 					</view>
 					<view class="mp" @click.stop="toHousekeeper(item)">
-						<image src="/static/images/logo.png" mode=""></image>
+						<image :src=" item.avatar ? item.avatar : '/static/images/logo.png' " mode=""></image>
 						<view class="m-box">
 							<view class="name">
 								{{item.name}}
@@ -277,7 +277,7 @@
 	.content{
 		.c_box{
 			width: 710rpx;
-			height: 448rpx;
+			height: 468rpx;
 			background: #FFFFFF;
 			border-radius: 20rpx;
 			margin: 0 auto;
@@ -373,7 +373,7 @@
 		.btn{
 			display: flex;
 			justify-content: flex-end;
-			margin-top: 10rpx;
+			margin-top: 20rpx;
 			.btn_box{
 				padding: 14rpx 28rpx;
 				border-radius: 34rpx;

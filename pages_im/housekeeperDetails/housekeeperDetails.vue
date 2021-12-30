@@ -9,7 +9,7 @@
 		<view class="top">
 			<view class="t-box">
 				<view class="left">
-					<image src="@/static/images/logo.png" mode=""></image>
+					<image :src="info.avatar ? info.avatar : '@/static/images/logo.png' " mode=""></image>
 				</view>
 				<view class="right">
 					<view class="name">
@@ -331,9 +331,15 @@
 				
 			},
 			toChatroom(){
-				uni.navigateTo({
-					url:'/pages_im/chatroom/chatroom?bulter_id=' + this.bulter_id,
-				})
+				if (this.info.search_id > 0) {
+					uni.navigateTo({
+						url:'/pages_im/chatroom/chatroom?search_id=' + this.info.search_id,
+					})
+				} else {
+					uni.navigateTo({
+						url:'/pages_im/problem/problem?bulter_id=' + this.info.bulter_id,
+					})
+				}
 			},
 			
 			//切换简介展开
@@ -442,7 +448,7 @@
 		}
 	}
 	.content{
-		height: 250rpx;
+		// height: 250rpx;
 		padding: 0 28rpx;
 		.titlebox{
 			width: 100%;

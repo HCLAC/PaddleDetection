@@ -2,7 +2,7 @@
 	<view class="box">
 		<view class="nav-bar">
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="consulting.name">
-				
+
 			</uni-nav-bar>
 		</view>
 		<view class="top">

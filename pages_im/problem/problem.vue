@@ -87,8 +87,8 @@
 			</view>
 		</view>
 		<view class="btm">
-			<input v-model="txt" class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='简单描述你的问题' />
-			<view class="btm_btn" @click="send">
+			<input v-model="txt" @input="input" class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='简单描述你的问题(至少十个字)' />
+			<view class="btm_btn" @click="send" :style="{'color':color,'background':bgcolor}">
 				发送
 			</view>
 		</view>
@@ -121,6 +121,8 @@
 	export default {
 		data() {
 			return {
+				color:'',
+				bgcolor:'',
 				show:false,
 				txt:'',
 				consulting:{},
@@ -135,6 +137,7 @@
 					'2': '旅游定制师'
 				},
 				bulter_id: '',
+				cursor:'',
 			};
 		},
 		onLoad(query) {
@@ -145,8 +148,16 @@
 			// this.getInfo()
 		},
 		methods: {
+			input(value){
+				this.cursor = value.detail.cursor
+				
+				if(value.detail.cursor >= 10){
+					this.color = '#303133'
+					this.bgcolor = '#FFE512'
+				}
+			},
 			send(){
-				if(this.txt == ''){
+				if(this.txt == '' || this.cursor < 10){
 					return
 				}
 				this.show = !this.show
@@ -181,6 +192,7 @@
 				uni.navigateTo({
 					url: '/pages_im/access/access?txt=' + this.txt
 				})
+				this.show = !this.show
 			}
 		},
 	}
@@ -435,7 +447,8 @@ page{
 		.btm_btn{
 			width: 144rpx;
 			height: 72rpx;
-			background: #FFE512;
+			background: #C9CAD1;
+			color: #FFFFFF;
 			border-radius: 36rpx;
 			display: flex;
 			justify-content: center;
@@ -443,7 +456,6 @@ page{
 			font-size: 32rpx;
 			font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 500;
-			color: #303133;
 			margin-left: 28rpx;
 		}
 	}

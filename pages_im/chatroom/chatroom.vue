@@ -1349,17 +1349,15 @@
 		}
 
 		.btm {
-			width: 750rpx;
-			height: 98rpx;
 			position: fixed;
 			bottom: 0;
 			display: flex;
 			align-items: center;
-			padding-bottom: 100rpx;
-			padding-top: 60rpx;
-			padding: 0 28rpx;
-			// background: #F1F2F3;
+			width: 750rpx;
+			height: 168rpx;
 			background: #FFFFFF;
+			padding: 0 28rpx;
+			padding-bottom: 68rpx;
 			// margin-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
 			// margin-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
 			.btm_input{

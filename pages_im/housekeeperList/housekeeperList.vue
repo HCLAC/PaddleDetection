@@ -30,7 +30,7 @@
 				</view>
 				<view class="left-box" @click="details(item)">
 					<view class="left">
-						<image src="/static/images/logo.png" mode=""></image>
+						<image :src="item.avatar ? item.avatar : '/static/images/logo.png' " mode=""></image>
 					</view>
 					<view class="center">
 						<view class="title">
