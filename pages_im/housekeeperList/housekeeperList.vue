@@ -335,7 +335,6 @@
 				this.level = ''
 				this.working_years = ''
 				this.getComments()
-				console.log(111)
 			},
 			change2(value){
 				this.profession = ''
@@ -356,11 +355,9 @@
 					data: {
 						count:20,
 						page:1,
-						filter:{
-							level:this.level,
-							profession:this.profession,
-							working_years:this.working_years
-						}
+						level:this.level,
+						profession:this.profession,
+						working_years:this.working_years
 					},
 					success: res => {
 						this.contentList = res.data.data.list
