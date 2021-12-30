@@ -75,7 +75,7 @@
 					{{txt}}
 				</view>
 				<view class="img">
-					<image :src="consulting.user_avatar" mode=""></image>
+					<image :src="consulting.user_avatar? consulting.user_avatar : '/static/images/logo.png'" mode=""></image>
 				</view>
 			</view>
 			<view class="im_txt_one">
@@ -99,7 +99,7 @@
 							<image :src="consulting.bulter_avatar" mode=""></image>
 						</view>
 						<view class="txt_2_txt">
-							金洋洋管家已通过领途羊认证！
+							{{consulting.name}}管家已通过领途羊认证！
 						</view>
 					</view>
 				</view>
@@ -166,6 +166,7 @@
 		data() {
 			return {
 				txt:'',
+				bulter_id:'',
 				show_txt:false,
 				show_pay:false,
 				consulting:{},
@@ -183,6 +184,7 @@
 			};
 		},
 		onLoad(query) {
+			this.bulter_id = query.bulter_id
 			this.txt = query.txt
 			this.getInfo()
 		},
@@ -220,6 +222,11 @@
 							    fail:  (err) => {
 							        console.log('fail:' + JSON.stringify(err));
 							    }
+							});
+						}else{
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
 							});
 						}
 					}

@@ -86,7 +86,7 @@
 				<view class="boxMax" v-for="(item,index) in history" :key="index">
 					<view :class="item.from != consulting.account_username ?'ls-box':'ls-box1'">
 						<image v-if="item.from != consulting.account_username" class="avatar"
-							:src="item.avatar?item.avatar: '@/static/images/logo.png'" mode="aspectFill"></image>
+							:src="item.avatar?item.avatar: '/static/images/logo.png'" mode="aspectFill"></image>
 						<view class="chatmsg" v-if="item.type == 'txt'">
 							{{item.msg}}
 						</view>
@@ -97,7 +97,7 @@
 							<audio-msg :msg="item"></audio-msg>
 						</view>
 						<image v-if="item.from == consulting.account_username" class="avatar"
-							:src="item.avatar?item.avatar: '@/static/images/logo.png'" mode="aspectFill"></image>
+							:src="item.avatar?item.avatar: '/static/images/logo.png'" mode="aspectFill"></image>
 					</view>
 				</view>
 				<!-- 信息记录 -->
@@ -108,7 +108,7 @@
 						:class="item.from == '' || item.from == consulting.account_username || item.type == 'audio'?'ls-box1':'ls-box'">
 						<image
 							v-if="item.contentsType == 'TEXT' || item.contentsType == 'IMAGE'|| item.contentsType == 'VOICE' || item.contentsType == 'CUSTOM'"
-							class="avatar" :src="ext.bulter_avatar ? ext.bulter_avatar : '@/static/images/logo.png'"
+							class="avatar" :src="ext.bulter_avatar ? ext.bulter_avatar : '/static/images/logo.png'"
 							mode="aspectFill"></image>
 						<view class="chatmsg" v-if="item.contentsType == 'TEXT' || item.type == 'txt'"
 							@longtap="longtap">
@@ -138,7 +138,7 @@
 							<audio-msg :msg="item"></audio-msg>
 						</view>
 						<image v-if="item.type == 'txt' || item.type == 'img'|| item.type == 'audio'" class="avatar"
-							:src="ext.account_avatar ? ext.account_avatar : '@/static/images/logo.png'"
+							:src="ext.account_avatar ? ext.account_avatar : '/static/images/logo.png'"
 							mode="aspectFill"></image>
 					</view>
 				</view>
@@ -165,7 +165,7 @@
 				</view> -->
 				<!-- <u-input v-if="showText" confirm-type="send" class="text" @confirm="sendPrivateText" v-model="text"
 					type="text" :border="true" /> -->
-				<input :disabled="show_input" v-model="text" class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='简单描述你的问题' />
+				<input :disabled="show_input" v-model="text" class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='请输入......' />
 				<view class="btm_btn" @click="sendPrivateText" :style="{'color':color,'background':bgcolor}">
 					发送
 				</view>
@@ -507,6 +507,9 @@
 					this.show_input = true
 					this.color = '#FFFFFF'
 					this.bgcolor = '#C9CAD1'
+					return
+				}
+				if(this.text == ''){
 					return
 				}
 				// timestamp(new Date() / 1000)

@@ -87,7 +87,7 @@
 			</view>
 		</view>
 		<view class="btm">
-			<input v-model="txt" @input="input" class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='简单描述你的问题(至少十个字)' />
+			<input v-model.trim="txt" @input="input"  class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='简单描述你的问题(至少十个字)' />
 			<view class="btm_btn" @click="send" :style="{'color':color,'background':bgcolor}">
 				发送
 			</view>
@@ -190,7 +190,7 @@
 			},
 			goNext(){
 				uni.navigateTo({
-					url: '/pages_im/access/access?txt=' + this.txt
+					url: '/pages_im/access/access?txt=' + this.txt +'&bulter_id=' + this.consulting.bulter_id
 				})
 				this.show = !this.show
 			}
@@ -201,6 +201,9 @@
 <style lang="scss">
 page{
 	background: #F8F8F8;
+	height: 100%;
+	overflow: hidden;
+	
 }
 .box{
 	.top{
