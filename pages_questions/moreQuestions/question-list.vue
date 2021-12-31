@@ -73,6 +73,12 @@
 					return 0
 				}
 			},
+			text: { // 当前tab的下标 (除了支付宝小程序必须在这里定义, 其他平台都可不用写, 因为已在MescrollMoreItemMixin定义)
+				type: Number,
+				default(){
+					return 0
+				}
+			},
 			keyword:{ 
 				type: String,
 				default(){

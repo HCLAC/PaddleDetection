@@ -2,13 +2,19 @@
 	<view class="box">
 		<view class="nav-bar">
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="title">
-				
+				<view slot="left" class="slotleft">
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+				</view>
 			</uni-nav-bar>
 			<view class="top">
 				<text>说明问题</text>
-				<u-icon class="con" name="arrow-right" color="#303133" size="28"></u-icon>
+				<view class="con">
+					<image src="@/static/images/smwt.png" mode=""></image>
+				</view>
 				<text >接入管家</text>
-				<u-icon class="con" name="arrow-right" color="#303133" size="28"></u-icon>
+				<view  class="con">
+					<image src="@/static/images/smwt.png" mode=""></image>
+				</view>
 				<text style="color:#A86B13;">获取解答</text>
 			</view>
 			<!-- <view class="title">
@@ -56,11 +62,11 @@
 							<view class="right_three">
 								<view class="three_1">
 									<text>已服务：</text>
-									<text style="color: #A86B13;">{{consulting.number_of_people}}</text>
+									<text style="color: #A86B13;font-weight: 500;">{{consulting.number_of_people}}</text>
 								</view>
 								<view class="three_2">
 									<text>评分：</text>
-									<text style="color: #A86B13;">5分</text>
+									<text style="color: #A86B13;font-weight: 500;">5分</text>
 								</view>
 							</view>
 						</view>
@@ -78,7 +84,9 @@
 							<view class="right_txt">
 								查看更多
 							</view>
-							<u-icon class="con" name="arrow-right" color="#303133" size="28"></u-icon>
+							<view class="con">
+								<image src="@/static/images/smwt.png" mode=""></image>
+							</view>
 						</view>
 					</view>
 				</view>
@@ -145,11 +153,12 @@
 							mode="aspectFill"></image>
 					</view>
 				</view>
+				<view class="end" v-if="showEnd">
+					咨询已结束！
+				</view>
 			</view>
 			
-			<view class="end" v-if="showEnd">
-				咨询已结束！
-			</view>
+			
 			
 			<view class="audio-box" v-if="showAudioWave">
 				<view class="sound-waves">
@@ -158,8 +167,8 @@
 					<view style="clear: both; width: 0; height: 0"></view>
 				</view>
 			</view>
-			
-			<view class="btm" :style="{bottom:btm + 'rpx'}" v-if="consulting.status != 2">
+			<!-- v-if="consulting.status != 2" -->
+			<view class="btm" :style="{bottom:btm + 'rpx'}">
 				<!-- <view class="voice" v-if="showText" @click="onSwitch">
 					<image src="@/static/images/voice.png" mode=""></image>
 				</view>
@@ -168,7 +177,7 @@
 				</view> -->
 				<!-- <u-input v-if="showText" confirm-type="send" class="text" @confirm="sendPrivateText" v-model="text"
 					type="text" :border="true" /> -->
-				<input :disabled="show_input" v-model="text" class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='请输入......' />
+				<input :disabled="show_input"  v-model="text" class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='请输入......' />
 				<view class="btm_btn" @click="sendPrivateText" :style="{'color':color,'background':bgcolor}">
 					发送
 				</view>
@@ -306,6 +315,7 @@
 				this.postconsulting()
 			}
 			// this.postconsulting()
+			
 		},
 		onShow() {
 			getApp().globalData.conn.onMessage = this.onMessage;
@@ -313,6 +323,7 @@
 			    scrollTop: 5000,
 			    duration: 300
 			});
+			
 		},
 		onUnload() {
 			getApp().globalData.conn.onMessage = null;
@@ -322,6 +333,10 @@
 			this.recordTime = 0
 		},
 		methods: {
+			home(){
+				// this.recordStayAndRead()
+				this.Utils.home()
+			},
 			onDow() {
 				this.btm = 0
 				// this.showText = false
@@ -394,6 +409,12 @@
 						this.toUser = this.consulting.username //'wuwuwuuw'
 						this.history = this.consulting.history
 						this.title = this.consulting.name
+						if(this.consulting.status == 2){
+							this.show_input = true
+							this.color = '#FFFFFF'
+							this.bgcolor = '#C9CAD1'
+							this.showEnd = true
+						}
 						this.username = {
 							your: this.consulting.username,
 							myName: this.consulting.account_username
@@ -432,6 +453,12 @@
 						this.toUser = this.consulting.username //'wuwuwuuw'
 						this.history = this.consulting.history
 						this.title = this.consulting.name 
+						if(this.consulting.status == 2){
+							this.show_input = true
+							this.color = '#FFFFFF'
+							this.bgcolor = '#C9CAD1'
+							this.showEnd = true
+						}
 						this.username = {
 							your: this.consulting.username,
 							myName: this.consulting.account_username
@@ -512,8 +539,12 @@
 					this.bgcolor = '#C9CAD1'
 					return
 				}
-				if(this.text == ''){
-					return
+				// if(this.text == ''){
+				// 	return
+				// }
+				var input  = /^[\s]*$/;
+				 if (input.test(this.text)){
+				   return false;
 				}
 				// timestamp(new Date() / 1000)
 				console.log(timestamp,'timestamp')
@@ -969,7 +1000,13 @@
 				color: #303133;
 			}
 			.con{
+				width: 16rpx;
+				height: 28rpx;
 				margin: 0 12rpx;
+				image{
+					width: 100%;
+					height: 100%;
+				}
 			}
 		}
 		.title {
@@ -1064,6 +1101,8 @@
 								height: 6rpx;
 								background: #A86B13;
 								margin: auto 0;
+								border-radius: 50%;
+								overflow: hidden;
 							}
 							.btm_text{
 								font-size: 20rpx;
@@ -1171,6 +1210,15 @@
 							font-family: PingFangSC-Regular, PingFang SC;
 							font-weight: 400;
 							color: #303133;
+						}
+						.con{
+							width: 16rpx;
+							height: 28rpx;
+							margin-left: 4rpx;
+							image{
+								width: 100%;
+								height: 100%;
+							}
 						}
 					}
 				}

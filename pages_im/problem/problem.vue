@@ -7,9 +7,13 @@
 		</view>
 		<view class="top">
 			<text style="color:#A86B13;">说明问题</text>
-			<u-icon class="con" name="arrow-right" color="#303133" size="28"></u-icon>
+			<view class="con">
+				<image src="@/static/images/smwt.png" mode=""></image>
+			</view>
 			<text>接入管家</text>
-			<u-icon class="con" name="arrow-right" color="#303133" size="28"></u-icon>
+			<view class="con">
+				<image src="@/static/images/smwt.png" mode=""></image>
+			</view>
 			<text>获取解答</text>
 		</view>
 		<view class="content">
@@ -18,6 +22,7 @@
 				<text>《用户服务协议》</text>
 				与
 				<text>《个人信息保护协议》《咨询产品服务协议》</text>
+				。
 			</view>
 			<view class="c_card">
 				<view class="c_card_top">
@@ -72,7 +77,9 @@
 						<view class="right_txt">
 							查看更多
 						</view>
-						<u-icon class="con" name="arrow-right" color="#303133" size="28"></u-icon>
+						<view class="con">
+							<image src="@/static/images/smwt.png" mode=""></image>
+						</view>
 						
 					</view>
 				</view>
@@ -87,8 +94,8 @@
 			</view>
 		</view>
 		<view class="btm">
-			<input v-model.trim="txt" @input="input"  class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='简单描述你的问题(至少十个字)' />
-			<view class="btm_btn" @click="send" :style="{'color':color,'background':bgcolor}">
+			<input v-model.trim="txt"  class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='简单描述你的问题' />
+			<view class="btm_btn" @click="send">
 				发送
 			</view>
 		</view>
@@ -148,16 +155,16 @@
 			// this.getInfo()
 		},
 		methods: {
-			input(value){
-				this.cursor = value.detail.cursor
+			// input(value){
+			// 	this.cursor = value.detail.cursor
 				
-				if(value.detail.cursor >= 10){
-					this.color = '#303133'
-					this.bgcolor = '#FFE512'
-				}
-			},
+			// 	if(value.detail.cursor >= 10){
+			// 		this.color = '#303133'
+			// 		this.bgcolor = '#FFE512'
+			// 	}
+			// },
 			send(){
-				if(this.txt == '' || this.cursor < 10){
+				if(this.txt == ''){
 					return
 				}
 				this.show = !this.show
@@ -222,7 +229,13 @@ page{
 			color: #303133;
 		}
 		.con{
+			width: 16rpx;
+			height: 28rpx;
 			margin: 0 12rpx;
+			image{
+				width: 100%;
+				height: 100%;
+			}
 		}
 	}
 	.content{
@@ -400,6 +413,15 @@ page{
 						font-weight: 400;
 						color: #303133;
 					}
+					.con{
+						width: 16rpx;
+						height: 28rpx;
+						margin-left: 4rpx;
+						image{
+							width: 100%;
+							height: 100%;
+						}
+					}
 				}
 			}
 		}
@@ -451,8 +473,8 @@ page{
 		.btm_btn{
 			width: 144rpx;
 			height: 72rpx;
-			background: #C9CAD1;
-			color: #FFFFFF;
+			background: #FFE512;
+			color: #303133;
 			border-radius: 36rpx;
 			display: flex;
 			justify-content: center;

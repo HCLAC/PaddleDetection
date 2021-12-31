@@ -2,14 +2,20 @@
 	<view class="box">
 		<view class="nav-bar">
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="consulting.name">
-
+				<view slot="left" class="slotleft">
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+				</view>
 			</uni-nav-bar>
 		</view>
 		<view class="top">
 			<text>说明问题</text>
-			<u-icon class="con" name="arrow-right" color="#303133" size="28"></u-icon>
+			<view class="con">
+				<image src="@/static/images/smwt.png" mode=""></image>
+			</view>
 			<text style="color:#A86B13;">接入管家</text>
-			<u-icon class="con" name="arrow-right" color="#303133" size="28"></u-icon>
+			<view class="con">
+				<image src="@/static/images/smwt.png" mode=""></image>
+			</view>
 			<text>获取解答</text>
 		</view>
 		<view class="content">
@@ -66,7 +72,9 @@
 						<view class="right_txt">
 							查看更多
 						</view>
-						<u-icon class="con" name="arrow-right" color="#303133" size="28"></u-icon>
+						<view class="con">
+							<image src="@/static/images/smwt.png" mode=""></image>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -197,6 +205,10 @@
 			}, 6000);
 		},
 		methods: {
+			home(){
+				// this.recordStayAndRead()
+				this.Utils.home()
+			},
 			gen(){
 				this.HTTP.request({
 					url: '/pay/gen',
@@ -281,7 +293,13 @@ page{
 			color: #303133;
 		}
 		.con{
+			width: 16rpx;
+			height: 28rpx;
 			margin: 0 12rpx;
+			image{
+				width: 100%;
+				height: 100%;
+			}
 		}
 	}
 	.content{
@@ -444,6 +462,15 @@ page{
 						font-family: PingFangSC-Regular, PingFang SC;
 						font-weight: 400;
 						color: #303133;
+					}
+					.con{
+						width: 16rpx;
+						height: 28rpx;
+						margin-left: 4rpx;
+						image{
+							width: 100%;
+							height: 100%;
+						}
 					}
 				}
 			}
