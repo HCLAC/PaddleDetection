@@ -451,6 +451,10 @@ page{
 						margin-top: 34rpx;
 					}
 					.company{
+						width: 280rpx;
+						// width: 100%;
+						text-overflow:ellipsis; white-space: nowrap;
+						overflow: hidden;
 						font-size: 28rpx;
 						font-family: PingFangSC-Regular, PingFang SC;
 						font-weight: 400;
