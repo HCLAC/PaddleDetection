@@ -19,9 +19,10 @@
 		<view class="content">
 			<view class="c_top">
 				欢迎使用领途羊旅游管家，已累计为10000+人提供旅游出行相关咨询服务。继续咨询即表示您已经同意
-				<text>《用户服务协议》</text>
+				<text @click="goYonghu">《用户服务协议》</text>
 				与
-				<text>《个人信息保护协议》《咨询产品服务协议》</text>
+				<text @click="goXinxi">《个人信息保护协议》</text>
+				<text @click="goChanpin">《咨询产品服务协议》</text>
 				。
 			</view>
 			<view class="c_card">
@@ -163,6 +164,21 @@
 			// 		this.bgcolor = '#FFE512'
 			// 	}
 			// },
+			goChanpin(){
+				uni.navigateTo({
+					url: '/pages_im/product/product'
+				})
+			},
+			goXinxi(){
+				uni.navigateTo({
+					url: '/pages_im/information/information'
+				})
+			},
+			goYonghu(){
+				uni.navigateTo({
+					url: '/pages_im/agreement/agreement'
+				})
+			},
 			send(){
 				if(this.txt == ''){
 					return

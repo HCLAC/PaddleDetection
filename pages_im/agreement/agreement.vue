@@ -1,6 +1,6 @@
 <template>
 	<view class="box">
-		<uni-nav-bar :fixed="true" :status-bar="true" title="领途羊-用户协议">
+		<uni-nav-bar :fixed="true" :status-bar="true" title="《用户服务协议》">
 			<view slot="left" class="slotleft">
 				<!-- #ifndef  MP-BAIDU -->
 					<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
@@ -44,7 +44,7 @@
 			<view class="" style="text-align: justify;margin-top: 24rpx;color: #606266;">
 				再次感谢您对领途羊旅游管家的信任和使用！<br/>
 				青岛纯品科技有限公司<br/>
-				2021年11月27日生效
+				2021年12月31日生效
 			</view>
 		</view>
 	</view>
