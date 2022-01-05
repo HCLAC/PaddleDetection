@@ -178,6 +178,12 @@ export default {
 					that.globalData.conn.onMessage('audio', message)
 				}
 			},   //收到音频消息
+			onCustomMessage: function ( message ) {
+				console.log(message, 'onCustomMessage')
+				if (message && onMessageError(message) && that.globalData.conn.onMessage){
+					that.globalData.conn.onMessage('custom', message)
+				}
+			},  //收到自定义消息
 			onLocationMessage: function ( message ) {},//收到位置消息
 			onFileMessage: function ( message ) {},    //收到文件消息
 			onVideoMessage: function (message) {

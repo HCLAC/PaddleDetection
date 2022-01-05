@@ -45,7 +45,8 @@
             "sdkConfigs" : {
                 "ad" : {},
                 "maps" : {},
-                "oauth" : {}
+                "oauth" : {},
+                "payment" : {}
             }
         },
         "uniStatistics" : {

@@ -1,9 +1,15 @@
 <template>
 	<view class="box">
+		<!-- 自定义导航栏 -->
+		<view class="nav-bar">
+			<uni-nav-bar :title="false" :fixed="true" :status-bar="true" color="#333333" :backgroundColor="backgroundColor" :shadow='Shadow'>
+				
+			</uni-nav-bar>
+		</view>
 		<view class="top">
 			<view class="t-box">
 				<view class="left">
-					<image src="@/static/images/logo.png" mode=""></image>
+					<image :src="info.avatar ? info.avatar : '@/static/images/logo.png' " mode=""></image>
 				</view>
 				<view class="right">
 					<view class="name">
@@ -102,7 +108,7 @@
 				</view>
 			</view>
 			<view class="imgbox">
-				<image v-if="info.nvq_url" :src="info.nvq_url" mode=""></image>
+				<image v-if="info.nvq_url" :src="info.nvq_url" mode="center"></image>
 				<text v-else>暂无认证资料</text>
 			</view>
 		</view>
@@ -116,23 +122,30 @@
 				</view>
 			</view>
 			<view class="imgbox">
-				<image v-if="info.vocation_url" :src="info.vocation_url" mode=""></image>
+				<image v-if="info.vocation_url" :src="info.vocation_url" mode="center"></image>
 				<text v-else>暂无认证资料</text>
 			</view>
 		</view>
 		<view class="cn">
 			导游本人承诺以上资料全部属实，接受公众监督，并为此承担相应法律责任。如发现虚假信息，请联系领途羊平台客服进行反馈，谢谢。
 		</view>
-		<view class="ljzx">
+		<!-- <view class="ljzx">
 			立即咨询
-		</view>
+		</view> -->
+		<button type="default" class="ljzx" @click="toChatroom" v-if="auth != ''">在线咨询</button>
+		<button v-else type="default" class="ljzx" open-type="getPhoneNumber" @getphonenumber="getPhone">在线咨询</button>
 	</view>
 </template>
 
 <script>
+	import UTILS from '@/common/utils/utils.js';
+	
 	export default {
 		data() {
 			return {
+				backgroundColor: 'transparent',
+				Shadow:false,
+				bannerPostion: 220,
 				bulter_id:'',
 				info:{},
 				professionObj:{
@@ -147,6 +160,8 @@
 				},
 				isShow: true,
 				more:true,
+				serviceSource: 2,
+				auth:'',
 			};
 		},
 		onLoad(query) {
@@ -154,7 +169,179 @@
 			//获取个人详情
 			this.Getinfo()
 		},
+		onShow(){
+			this.auth = getApp().globalData.Authorization
+		},
+		// 滚动
+		onPageScroll: UTILS.throttle( function(res){
+			var scrollTop = res[0].scrollTop
+			if (scrollTop >= this.bannerPostion){
+				if (this.backgroundColor != '#FFFFFF'){
+					this.backgroundColor = '#FFFFFF';
+					this.Shadow = true
+					uni.setNavigationBarColor({
+					    frontColor: '#000000',
+						backgroundColor: '#FFFFFF',
+						fail: err => {
+							console.log('setNavigationBarColor fail', err);
+						}
+					})
+				}
+			} else {
+				this.backgroundColor = 'transparent';
+				this.Shadow = false
+				uni.setNavigationBarColor({
+				    frontColor: '#ffffff',
+					backgroundColor: '#000000',
+					fail: err => {
+						console.log('setNavigationBarColor fail', err);
+					}
+				})
+			}
+		}, 100),
 		methods:{
+			//一键登录
+			getPhone(res) {
+				if (res.detail.errMsg != 'getPhoneNumber:ok') {
+					uni.showToast({
+						title: '用户拒绝授权',
+						icon: 'none'
+					});
+					return;
+				}
+			
+				// 百度小程序直接调用swan.getLoginCode，其他平台调用uni.login
+				if (this.serviceProvider == 'baidu'){
+					//#ifdef MP-BAIDU
+					swan.getLoginCode({
+						success: result => {
+							if (!result || !result.code || result.code.length == 0) {
+								uni.showToast({
+									title: '一键登录失败',
+									icon: 'none'
+								});
+								return
+							}
+							this.baiduLogin({
+								code: result.code,
+								source: this.serviceSource,
+								data: res.detail.encryptedData,
+								iv: res.detail.iv
+							});
+						},
+						fail: err => {
+							console.error('getLoginCode', err)
+						}
+					});
+					//#endif
+					return 
+				}
+				uni.login({
+					provider: this.serviceProvider,
+					success: result => {
+						if (!result || !result.code || result.code.length == 0) {
+							uni.showToast({
+								title: '一键登录失败',
+								icon: 'none'
+							});
+							return;
+						}
+						this.baiduLogin({
+							code: result.code,
+							source: this.serviceSource,
+							data: res.detail.encryptedData,
+							iv: res.detail.iv
+						});
+					},
+					fail: err => {
+						console.error('login', err)
+					}
+				});
+			},
+			baiduLogin(obj) {
+				this.HTTP.request({
+					url: '/user/oauth/code2session',
+					data: {
+						code: obj.code,
+						source: 2
+					},
+					method: 'POST',
+					success: res => {
+						if (res.data.code == 0) {
+							this.getSessionKey({
+								uuid: res.data.data,
+								data: obj.data,
+								iv: obj.iv
+							});
+						} else {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+						}
+					}
+				});
+			},
+			getSessionKey(obj) {
+				this.HTTP.request({
+					url: '/user/oauth/login',
+					data: {
+						data: obj.data,
+						iv: obj.iv,
+						uuid: obj.uuid,
+						source: this.serviceSource
+					},
+					method: 'POST',
+					success: res => {
+						if (res.data.code == 0) {
+							var auth = res.header.authorization ? res.header.authorization : res.header.Authorization
+							this.loginSuccess(res.data.data, auth) 
+						} else {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+						}
+					}
+				});
+			},
+			loginSuccess(userinfo, auth){
+				
+				uni.showToast({
+					title: '登录成功',
+					icon: 'none'
+				}),
+				getApp().globalData.Authorization = auth
+				
+				uni.setStorage({
+					key: 'userinfo',
+					data: userinfo,
+					success: function () {
+					}
+				});
+				uni.setStorage({
+					key: 'Authorization',
+					data: auth,
+					success: function () {
+					}
+				});
+				uni.$emit('onLoginSuccess', userinfo.first_login);
+				// this.Utils.back()
+				this.toChatroom()
+				
+			},
+			toChatroom(){
+				if (this.info.search_id > 0) {
+					uni.navigateTo({
+						url:'/pages_im/chatroom/chatroom?search_id=' + this.info.search_id,
+					})
+				} else {
+					uni.navigateTo({
+						url:'/pages_im/problem/problem?bulter_id=' + this.info.bulter_id,
+					})
+				}
+			},
+			
 			//切换简介展开
 			showMore() {
 				this.isShow = !this.isShow;
@@ -184,6 +371,17 @@
 	 // padding-bottom env(safe-area-inset-bottom)
 	 padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
 	 padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
+	 .nav-bar {
+	 	z-index: 999;
+	 	position: fixed;
+	 	top:0px;
+	 	flex-wrap: wrap;
+	 	justify-content: center;
+	 	font-size: 14px;
+	 	display: flex;
+	 	flex-direction: column;
+	 	background: rgba(255, 255, 255, 0);
+	 }
 	.top{
 		width: 750rpx;
 		height: 440rpx;
@@ -250,7 +448,7 @@
 		}
 	}
 	.content{
-		height: 250rpx;
+		// height: 250rpx;
 		padding: 0 28rpx;
 		.titlebox{
 			width: 100%;
@@ -491,6 +689,7 @@
 		padding: 30rpx;
 		text-align: justify;
 		margin: 20rpx auto;
+		margin-bottom: 120rpx;
 	}
 	.ljzx{
 		width: 694rpx;
@@ -510,6 +709,9 @@
 		left: 28rpx;
 		margin-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
 		margin-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
+	}
+	.ljzx::after{
+		border: none;
 	}
 }
 </style>

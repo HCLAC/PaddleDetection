@@ -2,7 +2,7 @@
 	<view>
 		<!-- 自定义导航栏 -->
 		<view class="nav-bar">
-			<uni-nav-bar :fixed="true" :status-bar="true" title="问答列表">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="精选问答">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
@@ -13,7 +13,7 @@
 		</view>
 		<!-- 搜索框 -->
 		<view class="searchBox">
-			<u-search v-model="keyword" @search="search" @custom="custom" :show-action="true" search-icon-color="#c9cad1" placeholder="输入搜索内容" placeholder-color="#c9cad1" action-text="取消" :animation="true"></u-search>
+			<u-search v-model="keyword" @search="search" @change="changeText" @custom="custom" :show-action="true" search-icon-color="#c9cad1" placeholder="输入搜索内容" placeholder-color="#c9cad1" action-text="取消" :animation="true"></u-search>
 		</view>
 		<!-- <u-tabs :list="list" :is-scroll="false" :current="current" @change="change"></u-tabs> -->
 		<view class="tabBox">
@@ -35,11 +35,11 @@
 			</view>
 		</view>
 		<!-- <meTabs class="mineQuestionTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :tab-width="120"></meTabs> -->
-		<questionList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :keyword="keyword"></questionList>
+		<questionList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :text="text" :keyword="keyword"></questionList>
 		<!-- 提问按钮 -->
-		<view class="questionsBtn" @click="toQuestions">
+		<!-- <view class="questionsBtn" @click="toQuestions">
 			<image src="/static/images/twIcon.svg"></image>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -62,6 +62,7 @@ import questionList from './question-list.vue';
 				city_id:'',
 				isFixed:false,
 				cardheight: 0,
+				text:'',
 			};
 		},
 		// #ifdef MP-BAIDU
@@ -84,6 +85,11 @@ import questionList from './question-list.vue';
 		// 	}
 		// },
 		methods:{
+			changeText(value){
+				this.text = value
+				console.log(this.text.length,'++++++')
+				console.log(value,'value')
+			},
 			// calcCardHeight(){
 			// 	if (this.isFixed){
 			// 		return

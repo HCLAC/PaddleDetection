@@ -1,7 +1,7 @@
 <template>
 	<view class="box">
 		<view class="nav-bar">
-			<uni-nav-bar :fixed="true" :status-bar="true" :title="title">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="旅游管家">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="back" />
@@ -9,14 +9,15 @@
 					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
+			<view class="top" style="position: relative;">
+				<u-dropdown  :border-bottom="false" border-color="#FFE512" active-color="rgb(96, 98, 102)">
+					<u-dropdown-item v-model="profession" title="职业" :options="options1"  @change="change1"></u-dropdown-item>
+					<u-dropdown-item v-model="level" title="级别" :options="options2" @change="change2"></u-dropdown-item>
+					<u-dropdown-item v-model="working_years" title="经验" :options="options3" @change="change3"></u-dropdown-item>
+				</u-dropdown>
+			</view>
 		</view>
-		<view class="top">
-			<u-dropdown height="88" :border-bottom="false" border-color="#FFE512" active-color="rgb(96, 98, 102)">
-				<u-dropdown-item v-model="profession" title="职业" :options="options1"  @change="change1"></u-dropdown-item>
-				<u-dropdown-item v-model="level" title="级别" :options="options2" @change="change2"></u-dropdown-item>
-				<u-dropdown-item v-model="working_years" title="经验" :options="options3" @change="change3"></u-dropdown-item>
-			</u-dropdown>
-		</view>
+		
 		<view class="content">
 			<view class="c-box" v-for="(item,index) in contentList" :key = 'index'>
 				<view class="pm" v-if="item.level == 0">
@@ -30,7 +31,7 @@
 				</view>
 				<view class="left-box" @click="details(item)">
 					<view class="left">
-						<image src="/static/images/logo.png" mode=""></image>
+						<image :src="item.avatar ? item.avatar : '/static/images/logo.png' " mode=""></image>
 					</view>
 					<view class="center">
 						<view class="title">
@@ -48,9 +49,11 @@
 					</view>
 					
 				</view>
-				<view class="right">
+				<!-- <view class="right">
 					在线咨询
-				</view>
+				</view> -->
+				<button type="default" class="right" @click="toChatroom(item)" v-if="auth != ''">在线咨询</button>
+				<button v-else type="default" class="right" open-type="getPhoneNumber" @getphonenumber="getPhone">在线咨询</button>
 			</view>
 		</view>
 	</view>
@@ -139,6 +142,8 @@
 					'1':'旅游达人',
 					'2':'旅游定制师'
 				},
+				serviceSource: 2,
+				auth:'',
 			};
 		},
 		onLoad() {
@@ -148,8 +153,171 @@
 		onShow() {
 			// 获取管家列表
 			this.getComments()
+			this.auth = getApp().globalData.Authorization
 		},
 		methods:{
+			//一键登录
+			getPhone(res) {
+				if (res.detail.errMsg != 'getPhoneNumber:ok') {
+					uni.showToast({
+						title: '用户拒绝授权',
+						icon: 'none'
+					});
+					return;
+				}
+				swan.getLoginCode({
+					success: result => {
+						if (!result || !result.code || result.code.length == 0) {
+							uni.showToast({
+								title: '一键登录失败',
+								icon: 'none'
+							});
+							return
+						}
+						this.baiduLogin({
+							code: result.code,
+							source: this.serviceSource,
+							data: res.detail.encryptedData,
+							iv: res.detail.iv
+						});
+						console.log(123)
+					},
+					fail: err => {
+						console.error('getLoginCode', err)
+					}
+				});
+				// 百度小程序直接调用swan.getLoginCode，其他平台调用uni.login
+				// if (this.serviceProvider == 'baidu'){
+				// 	//#ifdef MP-BAIDU
+				// 	swan.getLoginCode({
+				// 		success: result => {
+				// 			if (!result || !result.code || result.code.length == 0) {
+				// 				uni.showToast({
+				// 					title: '一键登录失败',
+				// 					icon: 'none'
+				// 				});
+				// 				return
+				// 			}
+				// 			this.baiduLogin({
+				// 				code: result.code,
+				// 				source: this.serviceSource,
+				// 				data: res.detail.encryptedData,
+				// 				iv: res.detail.iv
+				// 			});
+				// 			// console.log(123)
+				// 		},
+				// 		fail: err => {
+				// 			console.error('getLoginCode', err)
+				// 		}
+				// 	});
+				// 	//#endif
+				// 	return 
+				// }
+				// uni.login({
+				// 	provider: this.serviceProvider,
+				// 	success: result => {
+				// 		if (!result || !result.code || result.code.length == 0) {
+				// 			uni.showToast({
+				// 				title: '一键登录失败',
+				// 				icon: 'none'
+				// 			});
+				// 			return;
+				// 		}
+				// 		this.baiduLogin({
+				// 			code: result.code,
+				// 			source: this.serviceSource,
+				// 			data: res.detail.encryptedData,
+				// 			iv: res.detail.iv
+				// 		});
+				// 	},
+				// 	fail: err => {
+				// 		console.error('login', err)
+				// 	}
+				// });
+			},
+			baiduLogin(obj) {
+				this.HTTP.request({
+					url: '/user/oauth/code2session',
+					data: {
+						code: obj.code,
+						source: 2
+					},
+					method: 'POST',
+					success: res => {
+						if (res.data.code == 0) {
+							this.getSessionKey({
+								uuid: res.data.data,
+								data: obj.data,
+								iv: obj.iv
+							});
+						} else {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+						}
+					}
+				});
+			},
+			getSessionKey(obj) {
+				this.HTTP.request({
+					url: '/user/oauth/login',
+					data: {
+						data: obj.data,
+						iv: obj.iv,
+						uuid: obj.uuid,
+						source: this.serviceSource
+					},
+					method: 'POST',
+					success: res => {
+						if (res.data.code == 0) {
+							var auth = res.header.authorization ? res.header.authorization : res.header.Authorization
+							this.loginSuccess(res.data.data, auth) 
+						} else {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+						}
+					}
+				});
+			},
+			loginSuccess(userinfo, auth,item){
+				console.log(item,'item')
+				uni.showToast({
+					title: '登录成功',
+					icon: 'none'
+				}),
+				getApp().globalData.Authorization = auth
+				
+				uni.setStorage({
+					key: 'userinfo',
+					data: userinfo,
+					success: function () {
+					}
+				});
+				uni.setStorage({
+					key: 'Authorization',
+					data: auth,
+					success: function () {
+					}
+				});
+				uni.$emit('onLoginSuccess', userinfo.first_login);
+				// this.Utils.back()
+				this.toChatroom(item)
+			},
+			toChatroom(item){
+				if (item.search_id > 0) {
+					uni.navigateTo({
+						url:'/pages_im/chatroom/chatroom?search_id=' + item.search_id,
+					})
+				} else {
+					uni.navigateTo({
+						url:'/pages_im/problem/problem?bulter_id=' + item.bulter_id,
+					})
+				}
+			},
+			
 			back(){
 				this.Utils.back()
 				
@@ -168,7 +336,6 @@
 				this.level = ''
 				this.working_years = ''
 				this.getComments()
-				console.log(111)
 			},
 			change2(value){
 				this.profession = ''
@@ -189,11 +356,9 @@
 					data: {
 						count:20,
 						page:1,
-						filter:{
-							level:this.level,
-							profession:this.profession,
-							working_years:this.working_years
-						}
+						level:this.level,
+						profession:this.profession,
+						working_years:this.working_years
 					},
 					success: res => {
 						this.contentList = res.data.data.list
@@ -206,6 +371,10 @@
 </script>
 
 <style lang="scss">
+page{
+	background: #F6F6F8;
+	
+}
 .box{
 	.sw-6__u-cell-item-box{
 		display: flex;
@@ -228,13 +397,13 @@
 	}
 	.top{
 		width: 100%;
-		// height: 88rpx;
+		height: 88rpx;
 	}
 	.content{
-		background: #F6F6F8;
+		// background: #F6F6F8;
 		width: 100%;
-		min-height: 100%;
-		position:fixed;
+		// min-height: 100%;
+		// position:fixed;
 		padding-top: 20rpx;
 		.c-box{
 			width: 694rpx;
@@ -282,6 +451,10 @@
 						margin-top: 34rpx;
 					}
 					.company{
+						width: 280rpx;
+						// width: 100%;
+						text-overflow:ellipsis; white-space: nowrap;
+						overflow: hidden;
 						font-size: 28rpx;
 						font-family: PingFangSC-Regular, PingFang SC;
 						font-weight: 400;
@@ -294,9 +467,10 @@
 						font-weight: 400;
 						color: #909399;
 						margin-top: 10rpx;
+						margin-bottom: 12rpx;
 					}
 					.professionObj{
-						width: 158rpx;
+						// width: 158rpx;
 						height: 38rpx;
 						background: #FFF1B8;
 						border-radius: 21rpx;
@@ -306,15 +480,17 @@
 						font-family: PingFangSC-Regular, PingFang SC;
 						font-weight: 400;
 						color: #303133;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						margin-top: 12rpx;
+						padding: 0 14rpx;
+						// display: flex;
+						// justify-content: center;
+						// align-items: center;
+						// margin-top: 12rpx;
+						// margin-top: 100rpx;
 					}
 				}
 			}
 			.right{
-				width: 168rpx;
+				width: 198rpx;
 				height: 60rpx;
 				background: #FFE512;
 				border-radius: 40rpx;
@@ -326,6 +502,9 @@
 				justify-content: center;
 				align-items: center;
 				margin: auto 0;
+			}
+			.right::after{
+				border: none;
 			}
 		}
 	}

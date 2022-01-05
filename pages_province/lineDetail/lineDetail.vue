@@ -188,7 +188,16 @@
 					</view>
 				</view>
 			</view>
-			<view class="phone" @click="tell" ><image src="/static/images/serverCall.svg"></image></view>
+			<!-- <view class="phone" @click="tell" >
+				<image src="/static/images/serverCall.svg"></image>
+			</view> -->
+			<button type="default" class="phone" @click="toChatroom(item)" v-if="auth != ''">
+				<image src="/static/images/serverCall.svg"></image>
+			</button>
+			<button v-else type="default" class="phone" open-type="getPhoneNumber" @getphonenumber="getPhone">
+				<image src="/static/images/serverCall.svg"></image>
+			</button>
+			
 		</view>
 		
 	</view>
@@ -202,6 +211,7 @@ export default {
 	},
 	data() {
 		return {
+			auth:'',
 			id: 0,
 			lineContent:null,
 			lineContent: null,
@@ -223,6 +233,7 @@ export default {
 			// 动效
 			isAnimate: false,
 			inTabChange:false,
+			serviceSource: 2,
 		};
 	},
 	mounted(){
@@ -240,6 +251,8 @@ export default {
 	},
 	onShow() {
 		this.hasLogin = getApp().globalData.Authorization ? true : false;
+		this.auth = getApp().globalData.Authorization
+		
 	},
 	onPageScroll(e) {
 		if (e.scrollTop > this.headerHeight) {
@@ -261,6 +274,182 @@ export default {
 		}
 	},
 	methods: {
+		//一键登录
+		getPhone(res) {
+			if (res.detail.errMsg != 'getPhoneNumber:ok') {
+				uni.showToast({
+					title: '用户拒绝授权',
+					icon: 'none'
+				});
+				return;
+			}
+			swan.getLoginCode({
+				success: result => {
+					if (!result || !result.code || result.code.length == 0) {
+						uni.showToast({
+							title: '一键登录失败',
+							icon: 'none'
+						});
+						return
+					}
+					this.baiduLogin({
+						code: result.code,
+						source: this.serviceSource,
+						data: res.detail.encryptedData,
+						iv: res.detail.iv
+					});
+				},
+				fail: err => {
+					console.error('getLoginCode', err)
+				}
+			});
+			// 百度小程序直接调用swan.getLoginCode，其他平台调用uni.login
+			// if (this.serviceProvider == 'baidu'){
+			// 	//#ifdef MP-BAIDU
+			// 	swan.getLoginCode({
+			// 		success: result => {
+			// 			if (!result || !result.code || result.code.length == 0) {
+			// 				uni.showToast({
+			// 					title: '一键登录失败',
+			// 					icon: 'none'
+			// 				});
+			// 				return
+			// 			}
+			// 			this.baiduLogin({
+			// 				code: result.code,
+			// 				source: this.serviceSource,
+			// 				data: res.detail.encryptedData,
+			// 				iv: res.detail.iv
+			// 			});
+			// 		},
+			// 		fail: err => {
+			// 			console.error('getLoginCode', err)
+			// 		}
+			// 	});
+			// 	//#endif
+			// 	return 
+			// }
+			// uni.login({
+			// 	provider: this.serviceProvider,
+			// 	success: result => {
+			// 		if (!result || !result.code || result.code.length == 0) {
+			// 			uni.showToast({
+			// 				title: '一键登录失败',
+			// 				icon: 'none'
+			// 			});
+			// 			return;
+			// 		}
+			// 		this.baiduLogin({
+			// 			code: result.code,
+			// 			source: this.serviceSource,
+			// 			data: res.detail.encryptedData,
+			// 			iv: res.detail.iv
+			// 		});
+			// 	},
+			// 	fail: err => {
+			// 		console.error('login', err)
+			// 	}
+			// });
+		},
+		baiduLogin(obj) {
+			this.HTTP.request({
+				url: '/user/oauth/code2session',
+				data: {
+					code: obj.code,
+					source: 2
+				},
+				method: 'POST',
+				success: res => {
+					if (res.data.code == 0) {
+						this.getSessionKey({
+							uuid: res.data.data,
+							data: obj.data,
+							iv: obj.iv
+						});
+					} else {
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+					}
+				}
+			});
+		},
+		getSessionKey(obj) {
+			console.log(obj,'obj')
+			this.HTTP.request({
+				url: '/user/oauth/login',
+				data: {
+					data: obj.data,
+					iv: obj.iv,
+					uuid: obj.uuid,
+					source: this.serviceSource
+				},
+				method: 'POST',
+				success: res => {
+					if (res.data.code == 0) {
+						var auth = res.header.authorization ? res.header.authorization : res.header.Authorization
+						this.loginSuccess(res.data.data, auth) 
+					} else {
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+					}
+				}
+			});
+		},
+		loginSuccess(userinfo, auth){
+			
+			uni.showToast({
+				title: '登录成功',
+				icon: 'none'
+			}),
+			getApp().globalData.Authorization = auth
+			
+			uni.setStorage({
+				key: 'userinfo',
+				data: userinfo,
+				success: function () {
+				}
+			});
+			uni.setStorage({
+				key: 'Authorization',
+				data: auth,
+				success: function () {
+				}
+			});
+			uni.$emit('onLoginSuccess', userinfo.first_login);
+			// this.Utils.back()
+			this.toChatroom()
+			
+		},
+		toChatroom(){
+			this.HTTP.request({
+				url: '/bulter/consulting',
+				method: 'POST',
+				success: res => {
+					if (res.statusCode != 200 || res.data.code != 0) {
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return
+					}
+					var info = res.data.data
+					console.log(info, '管家列表')
+					if(info.history.length > 0){
+						uni.navigateTo({
+							url:'/pages_im/chatroom/chatroom?search_id=' + info.search_id,
+						})
+					}else{
+						uni.navigateTo({
+							url:'/pages_im/problem/problem?bulter_id=' + info.bulter_id,
+						})
+					}
+				}
+			});
+		},
 		loadData(){
 			uni.showLoading({
 				title: '加载中',
@@ -1067,5 +1256,8 @@ export default {
 		width: 46rpx;
 		height: 46rpx;
 	}
+}
+.phone::after{
+	border: none;
 }
 </style>

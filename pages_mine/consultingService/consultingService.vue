@@ -8,18 +8,38 @@
 				<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 			</view>
 		</uni-nav-bar>
-		<view class="">
-			<u-swipe-action :show="item.show" :index="index" 
-				v-for="(item, index) in list" :key="item.search_id" 
-				@click="click" @open="open"
-				:options="options"
-			>
-				<view class="item u-border-bottom" @click="toConsultation">
-					<!-- 此层wrap在此为必写的，否则可能会出现标题定位错误 -->
+		<u-modal v-model="show" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="delefe"></u-modal>
+		<u-modal v-model="show1" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="onCancel"></u-modal>
+		
+		<view class="kong" v-if="list.length == 0">
+			<view class="kong_img">
+				<image src="@/static/images/index-kong.png" mode=""></image>
+			</view>
+			<view class="kong_text">
+				咨询列表空空的
+			</view>
+		</view>
+		<view class="content" :show="item.show" :index="index" 
+		v-for="(item, index) in list" :key="item.search_id" 
+		@click="click">
+			<view class="c_box">
+				<view class="item" @click.stop="toConsultation(item)">
 					<view class="title-wrap">
 						在线咨询服务
-						<view :class="item.status == 0?'jxz':'ywc'">
+						<!-- <view :class="item.status == 0?'jxz':'ywc'">
 							{{item.status == 0?'进行中':'已完成'}}
+						</view> -->
+						<view class="jxz" v-if="item.status == 0" style="background: #FFF1F0;color: #F5222D;">
+							待支付
+						</view>
+						<view class="jxz" v-if="item.status == 2" style="background: #F2FFEC;color: #89B324;">
+							已结束
+						</view>
+						<view class="jxz" v-if="item.status == 3" style="background: #EDEFF2;color: #606266;">
+							已取消
+						</view>
+						<view class="jxz" v-if="item.status == 1">
+							进行中
 						</view>
 					</view>
 					<view class="item-text">
@@ -28,8 +48,11 @@
 					<view class="item-text">
 						问题描述:{{item.question}}
 					</view>
+					<view class="item-num">
+						金 &nbsp;&nbsp;&nbsp;&nbsp; 额:0.01元
+					</view>
 					<view class="mp" @click.stop="toHousekeeper(item)">
-						<image src="/static/images/logo.png" mode=""></image>
+						<image :src=" item.avatar ? item.avatar : '/static/images/logo.png' " mode=""></image>
 						<view class="m-box">
 							<view class="name">
 								{{item.name}}
@@ -39,10 +62,24 @@
 							</view>
 						</view>
 					</view>
+					<view class="btn">
+						<view class="btn_box" v-if="item.status == 0" style="margin-right: 20rpx;" @click.stop="cancel(item)">
+							取消订单
+						</view>
+						<view class="btn_box" style="background: #FFE512;border: none;" v-if="item.status == 0" @click.stop="onPay(item)">
+							去支付
+						</view>
+						<view class="btn_box" v-if="item.status == 2 || item.status == 3" @click.stop="onMoadel(item,index)">
+							删除订单
+						</view>
+						<view class="btn_box" style="background: #FFE512;border: none" v-if="item.status == 1" @click.stop="onIm(item)">
+							去咨询
+						</view>
+					</view>
 				</view>
-				<u-gap height="19" bg-color="#F6F6F8"></u-gap>
-			</u-swipe-action>
+			</view>
 		</view>
+		
 	</view>
 </template>
 
@@ -56,9 +93,14 @@
 						text: '删除',
 						style: {
 							backgroundColor: '#F95051'
-						}
+						},
 					}
-				]
+				],
+				content:'',
+				show:false,
+				show1:false,
+				item:{},
+				index:'',
 			};
 		},
 		onShow() {
@@ -66,8 +108,90 @@
 			this.getlist()
 		},
 		methods:{
-			toConsultation(){
-				console.log('在线咨询')
+			onIm(item){
+				uni.navigateTo({
+					url:'/pages_im/chatroom/chatroom?search_id=' + item.search_id
+				})
+			},
+			onCancel(){
+				this.HTTP.request({
+					method:'POST',
+					url: '/user/search_record/close',
+					data: {
+						search_id:this.item.search_id
+					},
+					success: res => {
+						this.getlist()
+						// this.list.splice(this.index, 1);
+						// this.$u.toast(`删除了第${index}个cell`);
+						// console.log(res,'咨询详情')
+					}
+				});
+			},
+			cancel(item){
+				this.show1 = true;
+				this.content = '确认取消订单?';
+				this.item = item
+				// this.index = index
+			},
+			onPay(item){
+				this.HTTP.request({
+					url: '/pay/get_order',
+					method: 'POST',
+					data: {
+						search_id: item.search_id,
+					},
+					success: res => {
+						console.log(res,'res')
+						if(res.data.code == 0){
+							uni.requestPayment({
+							    provider: 'baidu',
+								orderInfo: res.data.data,
+							     //微信、支付宝订单数据 【注意微信的订单信息，键值应该全部是小写，不能采用驼峰命名】
+							    success:  (res) => {
+							        console.log('success:' + JSON.stringify(res));
+									uni.navigateTo({
+										url:'/pages_im/chatroom/chatroom?search_id=' + item.search_id,
+									})
+							    },
+							    fail:  (err) => {
+							        console.log('fail:' + JSON.stringify(err));
+							    }
+							});
+						}
+					}
+				})
+			},
+			onMoadel(item,index){
+				this.show = true;
+				this.content = '确认删除订单?';
+				this.item = item
+				this.index = index
+			},
+			delefe(){
+				this.HTTP.request({
+					method:'DELETE',
+					url: '/user/search_record/del',
+					data: {
+						search_id:this.item.search_id
+					},
+					success: res => {
+						this.list.splice(this.index, 1);
+						// this.$u.toast(`删除了第${index}个cell`);
+						// console.log(res,'咨询详情')
+					}
+				});
+			},
+			toConsultation(item){
+				if(item.status == 2 || item.status == 1){
+					uni.navigateTo({
+						url:'/pages_im/chatroom/chatroom?search_id=' + item.search_id,
+					})
+				}else if(item.status == 0){
+					this.onPay(item)
+				}else{
+					console.log('订单取消')
+				}
 			},
 			toHousekeeper(item){
 				var bulter_id = item.bulter_id
@@ -96,22 +220,22 @@
 					}
 				});
 			},
-			click(index, index1) {
-				console.log(index,'index')
-				console.log(index1,'index1')
-				this.HTTP.request({
-					method:'DELETE',
-					url: '/user/search_record/del',
-					data: {
-						search_id:this.list[index].search_id
-					},
-					success: res => {
-						this.list.splice(index, 1);
-						// this.$u.toast(`删除了第${index}个cell`);
-						// console.log(res,'咨询详情')
-					}
-				});
-			},
+			// click(index,index1) {
+			// 	console.log(index,'index')
+			// 	console.log(item,'index1')
+			// 	this.HTTP.request({
+			// 		method:'DELETE',
+			// 		url: '/user/search_record/del',
+			// 		data: {
+			// 			search_id:this.list[index].search_id
+			// 		},
+			// 		success: res => {
+			// 			this.list.splice(index, 1);
+			// 			// this.$u.toast(`删除了第${index}个cell`);
+			// 			// console.log(res,'咨询详情')
+			// 		}
+			// 	});
+			// },
 			open(index) {
 				// console.log(index,'index')
 				// 先将正在被操作的swipeAction标记为打开状态，否则由于props的特性限制，
@@ -126,10 +250,43 @@
 </script>
 
 <style lang="scss">
+	page{
+	background: #F6F6F8;
+	}
 .box{
+	.kong{
+		margin-left: 274rpx;
+		margin-top: 478rpx;
+		// margin: 0 auto;
+		.kong_img{
+			width: 202rpx;
+			height: 206rpx;
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.kong_text{
+			font-size: 26rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #909399;
+			margin-top: 40rpx;
+		}
+	}
+	.content{
+		.c_box{
+			width: 710rpx;
+			height: 468rpx;
+			background: #FFFFFF;
+			border-radius: 20rpx;
+			margin: 0 auto;
+			margin-top: 20rpx;
+		}
+	}
 	.item {
 		display: flex;
-		height: 320rpx;
+		// height: 320rpx;
 		flex-direction: column;
 		padding: 0 28rpx;
 		.title-wrap{
@@ -175,8 +332,15 @@
 			color: #606266;
 			margin-top: 10rpx;
 		}
+		.item-num{
+			font-size: 28rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #606266;
+			margin-top: 11rpx;
+		}
 		.mp{
-			width: 694rpx;
+			width: 650rpx;
 			height: 112rpx;
 			background: #F6F6F8;
 			border-radius: 16rpx;
@@ -204,6 +368,16 @@
 					font-weight: 400;
 					color: #606266;
 				}
+			}
+		}
+		.btn{
+			display: flex;
+			justify-content: flex-end;
+			margin-top: 20rpx;
+			.btn_box{
+				padding: 14rpx 28rpx;
+				border-radius: 34rpx;
+				border: 1rpx solid #E5E5E5;
 			}
 		}
 	}

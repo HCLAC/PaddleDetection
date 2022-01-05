@@ -19,22 +19,27 @@
 			</view>
 			<!-- 功能区 -->
 			<view class="function-box">
-				<view class="f-box" @click="toChatroom">
+				<button class="f-box" @click="toChatroom" v-if="auth != ''">
 					<image class="f-img" src="/static/images/zxzx.png" />
 					<view class="f-text">在线咨询</view>
-				</view>
-				<view class="f-box" @click="toquestion">
+					 <!-- @click="toChatroom" -->
+				</button>
+				<button v-else type="default" class="btn f-box" style="border: none;" open-type="getPhoneNumber" @getphonenumber="getPhone">
+					<image class="f-img" src="/static/images/zxzx.png" />
+					<view class="f-text">在线咨询</view>
+				</button>
+				<button class="f-box" @click="toquestion">
 					<image class="f-img" src="/static/images/jxwd.png" />
 					<view class="f-text">精选问答</view>
-				</view>
-				<view class="f-box" @click="Housekeeper">
+				</button>
+				<button class="f-box" @click="Housekeeper">
 					<image class="f-img" src="/static/images/lygj.png" />
 					<view class="f-text">旅游管家</view>
-				</view>
-				<view class="f-box" @click="heat">
+				</button>
+				<button class="f-box" @click="heat">
 					<image class="f-img" src="/static/images/rsbd.png" />
 					<view class="f-text">热度榜单</view>
-				</view>
+				</button>
 			</view>
 			<!-- 热门目的地 -->
 			<view class="hot">
@@ -126,10 +131,13 @@
 				serviceProvider: '',
 				popularCities:false,
 				Shadow:false,
+				serviceSource: 2,
+				auth:'',
 				// 首页显示问答
 				answersList:[],
 				randomPage: 0,
 				randomNum: 0,
+				genObj:{},
 				backgroundQuestion: [
 					{background: 'linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);'},
 					{background: 'linear-gradient(270deg, #FFE512 0%, #FFB64D 100%);'},
@@ -153,6 +161,7 @@
 		onLoad(query) {
 		// #endif
 			this.serviceProvider = getApp().globalData.serviceProvider
+			
 			this.loadData()
 		},
 		onReady() {
@@ -163,6 +172,7 @@
 			// #endif
 		},
 		onShow() {
+			this.auth = getApp().globalData.Authorization
 			// 间隔300s，重新加载首页
 			// var cur = Number((new Date().getTime())/1000).toFixed(0)
 			// var firstT = Number((this.leaveTime)/1000).toFixed(0)
@@ -207,10 +217,181 @@
 			}
 		}, 100),
 		methods: {
+
+			//一键登录
+			getPhone(res) {
+				if (res.detail.errMsg != 'getPhoneNumber:ok') {
+					uni.showToast({
+						title: '用户拒绝授权',
+						icon: 'none'
+					});
+					return;
+				}
+				swan.getLoginCode({
+					success: result => {
+						if (!result || !result.code || result.code.length == 0) {
+							uni.showToast({
+								title: '一键登录失败',
+								icon: 'none'
+							});
+							return
+						}
+						this.baiduLogin({
+							code: result.code,
+							source: this.serviceSource,
+							data: res.detail.encryptedData,
+							iv: res.detail.iv
+						});
+					},
+					fail: err => {
+						console.error('getLoginCode', err)
+					}
+				});
+				// 百度小程序直接调用swan.getLoginCode，其他平台调用uni.login
+				// if (this.serviceProvider == 'baidu'){
+				// 	//#ifdef MP-BAIDU
+				// 	swan.getLoginCode({
+				// 		success: result => {
+				// 			if (!result || !result.code || result.code.length == 0) {
+				// 				uni.showToast({
+				// 					title: '一键登录失败',
+				// 					icon: 'none'
+				// 				});
+				// 				return
+				// 			}
+				// 			this.baiduLogin({
+				// 				code: result.code,
+				// 				source: this.serviceSource,
+				// 				data: res.detail.encryptedData,
+				// 				iv: res.detail.iv
+				// 			});
+				// 		},
+				// 		fail: err => {
+				// 			console.error('getLoginCode', err)
+				// 		}
+				// 	});
+				// 	//#endif
+				// 	return 
+				// }
+				// uni.login({
+				// 	provider: this.serviceProvider,
+				// 	success: result => {
+				// 		if (!result || !result.code || result.code.length == 0) {
+				// 			uni.showToast({
+				// 				title: '一键登录失败',
+				// 				icon: 'none'
+				// 			});
+				// 			return;
+				// 		}
+				// 		this.baiduLogin({
+				// 			code: result.code,
+				// 			source: this.serviceSource,
+				// 			data: res.detail.encryptedData,
+				// 			iv: res.detail.iv
+				// 		});
+				// 	},
+				// 	fail: err => {
+				// 		console.error('login', err)
+				// 	}
+				// });
+			},
+			baiduLogin(obj) {
+				this.HTTP.request({
+					url: '/user/oauth/code2session',
+					data: {
+						code: obj.code,
+						source: 2
+					},
+					method: 'POST',
+					success: res => {
+						if (res.data.code == 0) {
+							this.getSessionKey({
+								uuid: res.data.data,
+								data: obj.data,
+								iv: obj.iv
+							});
+						} else {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+						}
+					}
+				});
+			},
+			getSessionKey(obj) {
+				this.HTTP.request({
+					url: '/user/oauth/login',
+					data: {
+						data: obj.data,
+						iv: obj.iv,
+						uuid: obj.uuid,
+						source: this.serviceSource
+					},
+					method: 'POST',
+					success: res => {
+						if (res.data.code == 0) {
+							var auth = res.header.authorization ? res.header.authorization : res.header.Authorization
+							this.loginSuccess(res.data.data, auth) 
+						} else {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+						}
+					}
+				});
+			},
+			loginSuccess(userinfo, auth){
+				
+				uni.showToast({
+					title: '登录成功',
+					icon: 'none'
+				}),
+				getApp().globalData.Authorization = auth
+				
+				uni.setStorage({
+					key: 'userinfo',
+					data: userinfo,
+					success: function () {
+					}
+				});
+				uni.setStorage({
+					key: 'Authorization',
+					data: auth,
+					success: function () {
+					}
+				});
+				uni.$emit('onLoginSuccess', userinfo.first_login);
+				// this.Utils.back()
+				this.toChatroom()
+				
+			},
 			toChatroom(){
-				uni.navigateTo({
-					url:'/pages_im/chatroom/chatroom',
-				})
+				this.HTTP.request({
+					url: '/bulter/consulting',
+					method: 'POST',
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0) {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						var info = res.data.data
+						console.log(info, '管家列表')
+						if(info.history.length > 0){
+							uni.navigateTo({
+								url:'/pages_im/chatroom/chatroom?search_id=' + info.search_id,
+							})
+						}else{
+							uni.navigateTo({
+								url:'/pages_im/problem/problem?bulter_id=' + info.bulter_id,
+							})
+						}
+					}
+				});
 			},
 			Housekeeper(){
 				uni.navigateTo({
@@ -222,6 +403,26 @@
 				uni.navigateTo({
 					url:'/pages_questions/moreQuestions/moreQuestions'
 				})
+				//支付
+				// uni.requestPayment({
+				//     provider: 'baidu',
+				// 	orderInfo: {
+				// 		dealId:this.genObj.dealId,
+				// 		appKey:this.genObj.appKey,
+				// 		totalAmount:this.genObj.totalAmount,
+				// 		tpOrderId:this.genObj.tpOrderId,
+				// 		dealTitle:this.genObj.dealTitle,
+				// 		signFieldsRange:this.genObj.signFieldsRange,
+				// 		rsaSign:this.genObj.rsaSign,
+				// 	},
+				//      //微信、支付宝订单数据 【注意微信的订单信息，键值应该全部是小写，不能采用驼峰命名】
+				//     success: function (res) {
+				//         console.log('success:' + JSON.stringify(res));
+				//     },
+				//     fail: function (err) {
+				//         console.log('fail:' + JSON.stringify(err));
+				//     }
+				// });
 			},
 			//跳转热搜榜单
 			heat(){
@@ -597,6 +798,7 @@
 			width: 25%;
 			height: 100%;
 			display: flex;
+			background: rgba(0,0,0,0);
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
@@ -611,6 +813,17 @@
 				color: #606266;
 				margin-top: 8rpx;
 			}
+			
+		}
+		.btn{
+			background: rgba(0,0,0,0);
+			border: none;
+		}
+		.btn::after{
+			border: none;
+		}
+		.f-box::after{
+			border: none;
 		}
 	}
 	/* 热门景点 */
