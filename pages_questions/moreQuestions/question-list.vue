@@ -317,14 +317,18 @@
 	}
 	.three{
 		width: 646rpx;
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
 		overflow: hidden;
-		-webkit-line-clamp: 3;
-		text-align:justify;
-		text-justify:inter-ideograph;
-		display: flex;
-		align-items: center;
+		display: -webkit-box;//将元素设为盒子伸缩模型显示
+		-webkit-box-orient: vertical;//伸缩方向设为垂直方向
+		-webkit-line-clamp: 3;//超出3行隐藏，并显示省略号
+		// display: -webkit-box;
+		// -webkit-box-orient: vertical;
+		// overflow: hidden;
+		// -webkit-line-clamp: 3;
+		// text-align:justify;
+		// text-justify:inter-ideograph;
+		// display: flex;
+		// align-items: center;
 		margin-top: 30rpx;
 	}
 }

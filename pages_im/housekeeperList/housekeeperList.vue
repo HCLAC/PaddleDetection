@@ -144,6 +144,8 @@
 				},
 				serviceSource: 2,
 				auth:'',
+				pageSize:1,
+				countSize:10,
 			};
 		},
 		onLoad() {
@@ -154,6 +156,10 @@
 			// 获取管家列表
 			this.getComments()
 			this.auth = getApp().globalData.Authorization
+		},
+		onReachBottom(){
+			this.pageSize += 1
+			this.getComments()
 		},
 		methods:{
 			//一键登录
@@ -186,54 +192,6 @@
 						console.error('getLoginCode', err)
 					}
 				});
-				// 百度小程序直接调用swan.getLoginCode，其他平台调用uni.login
-				// if (this.serviceProvider == 'baidu'){
-				// 	//#ifdef MP-BAIDU
-				// 	swan.getLoginCode({
-				// 		success: result => {
-				// 			if (!result || !result.code || result.code.length == 0) {
-				// 				uni.showToast({
-				// 					title: '一键登录失败',
-				// 					icon: 'none'
-				// 				});
-				// 				return
-				// 			}
-				// 			this.baiduLogin({
-				// 				code: result.code,
-				// 				source: this.serviceSource,
-				// 				data: res.detail.encryptedData,
-				// 				iv: res.detail.iv
-				// 			});
-				// 			// console.log(123)
-				// 		},
-				// 		fail: err => {
-				// 			console.error('getLoginCode', err)
-				// 		}
-				// 	});
-				// 	//#endif
-				// 	return 
-				// }
-				// uni.login({
-				// 	provider: this.serviceProvider,
-				// 	success: result => {
-				// 		if (!result || !result.code || result.code.length == 0) {
-				// 			uni.showToast({
-				// 				title: '一键登录失败',
-				// 				icon: 'none'
-				// 			});
-				// 			return;
-				// 		}
-				// 		this.baiduLogin({
-				// 			code: result.code,
-				// 			source: this.serviceSource,
-				// 			data: res.detail.encryptedData,
-				// 			iv: res.detail.iv
-				// 		});
-				// 	},
-				// 	fail: err => {
-				// 		console.error('login', err)
-				// 	}
-				// });
 			},
 			baiduLogin(obj) {
 				this.HTTP.request({
@@ -335,18 +293,21 @@
 				this.profession = value
 				this.level = ''
 				this.working_years = ''
+				this.pageSize = 1
 				this.getComments()
 			},
 			change2(value){
 				this.profession = ''
 				this.working_years = ''
 				this.level = value
+				this.pageSize = 1
 				this.getComments()
 			},
 			change3(value){
 				this.profession = ''
 				this.level = ''
 				this.working_years = value
+				this.pageSize = 1
 				this.getComments()
 			},
 			// 获取管家列表
@@ -354,15 +315,18 @@
 				this.HTTP.request({
 					url: '/bulter/list',
 					data: {
-						count:20,
-						page:1,
+						count:this.countSize,
+						page:this.pageSize,
 						level:this.level,
 						profession:this.profession,
 						working_years:this.working_years
 					},
 					success: res => {
-						this.contentList = res.data.data.list
+						// this.contentList = res.data.data.list
 						console.log(this.contentList,'管家详情')
+						
+						if(this.pageSize === 1)this.contentList = res.data.data.list
+						else this.contentList = this.contentList.concat(res.data.data.list)
 					}
 				});
 			},
@@ -376,6 +340,9 @@ page{
 	
 }
 .box{
+	.sw-3__u-dropdown__content{
+		height: 2000rpx !important;
+	}
 	.sw-6__u-cell-item-box{
 		display: flex;
 		flex-wrap: wrap;
