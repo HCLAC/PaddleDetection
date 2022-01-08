@@ -28,7 +28,7 @@
 				<view class="c_card_center">
 					<view class="c_card_center_left">
 						<view class="left_img">
-							<image :src="consulting.bulter_avatar" mode=""></image>
+							<image :src="consulting.bulter_avatar ? consulting.bulter_avatar : '/static/images/logo.png'" mode=""></image>
 						</view>
 						<view class="left_btm">
 							<view class="btm_dian"></view>
@@ -88,7 +88,7 @@
 			</view>
 			<view class="im_txt_one">
 				<view class="img">
-					<image :src="consulting.bulter_avatar" mode=""></image>
+					<image :src="consulting.bulter_avatar ? consulting.bulter_avatar : '/static/images/logo.png'" mode=""></image>
 				</view>
 				<view class="txt">
 					手机号{{consulting.account_mobile}}的咨询正在通知管家接入，请稍等...
@@ -96,7 +96,7 @@
 			</view>
 			<view class="im_txt_two" v-if="show_txt">
 				<view class="img">
-					<image :src="consulting.bulter_avatar" mode=""></image>
+					<image :src="consulting.bulter_avatar ? consulting.bulter_avatar : '/static/images/logo.png'" mode=""></image>
 				</view>
 				<view class="txt">
 					<view class="txt_1">
@@ -121,7 +121,7 @@
 						<image src="@/static/images/qian.png" mode=""></image>
 					</view>
 					<view class="pay_num">
-						0.01
+						{{consulting.money}}
 					</view>
 					<view class="pay_num_1">
 						/1小时
@@ -199,10 +199,10 @@
 		onShow(){
 			setTimeout(() => {
 			    this.show_txt = true
-			}, 3000);
+			}, 1000);
 			setTimeout(() => {
 			    this.show_pay = true
-			}, 6000);
+			}, 2000);
 		},
 		methods: {
 			home(){

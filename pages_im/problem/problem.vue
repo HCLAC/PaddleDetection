@@ -34,7 +34,7 @@
 				<view class="c_card_center">
 					<view class="c_card_center_left">
 						<view class="left_img">
-							<image :src="consulting.bulter_avatar" mode=""></image>
+							<image :src="consulting.bulter_avatar ? consulting.bulter_avatar : '/static/images/logo.png'" mode=""></image>
 						</view>
 						<view class="left_btm">
 							<view class="btm_dian"></view>
@@ -87,7 +87,7 @@
 			</view>
 			<view class="im">
 				<view class="im_img">
-					<image :src="consulting.bulter_avatar" mode=""></image>
+					<image :src="consulting.bulter_avatar ? consulting.bulter_avatar : '/static/images/logo.png'" mode=""></image>
 				</view>
 				<view class="im_txt">
 					hi，我是旅游管家{{consulting.name}}，请问您最近有出游的打算么？

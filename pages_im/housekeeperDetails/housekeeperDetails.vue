@@ -9,7 +9,7 @@
 		<view class="top">
 			<view class="t-box">
 				<view class="left">
-					<image :src="info.avatar ? info.avatar : '@/static/images/logo.png' " mode=""></image>
+					<image :src="info.avatar ? info.avatar : '/static/images/logo.png' " mode=""></image>
 				</view>
 				<view class="right">
 					<view class="name">

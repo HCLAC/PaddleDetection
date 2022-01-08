@@ -49,7 +49,7 @@
 						问题描述:{{item.question}}
 					</view>
 					<view class="item-num">
-						金 &nbsp;&nbsp;&nbsp;&nbsp; 额:0.01元
+						金 &nbsp;&nbsp;&nbsp;&nbsp; 额:{{item.money}}元
 					</view>
 					<view class="mp" @click.stop="toHousekeeper(item)">
 						<image :src=" item.avatar ? item.avatar : '/static/images/logo.png' " mode=""></image>

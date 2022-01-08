@@ -40,7 +40,7 @@
 					<view class="c_card_center">
 						<view class="c_card_center_left">
 							<view class="left_img">
-								<image :src="consulting.bulter_avatar" mode=""></image>
+								<image :src="consulting.bulter_avatar  ? consulting.bulter_avatar : '/static/images/logo.png'" mode=""></image>
 							</view>
 							<view class="left_btm">
 								<view class="btm_dian"></view>
