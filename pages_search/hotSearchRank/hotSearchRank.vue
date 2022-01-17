@@ -15,7 +15,7 @@
 			<!-- 头部背景 -->
 			<view class="bgBox">
 				<image src="/static/images/rankBanner.png" class="bannerImg"></image>
-				<image src="/static/images/hotRank.png" class="bannerText"></image>
+				<image src="/static/images/rdbd.png" class="bannerText"></image>
 			</view>
 			<view class="content">
 				<view class="hotList" v-for="(keyword,index) in hotKeywordList" :key="index" @tap="doSearch(keyword)">
@@ -23,7 +23,13 @@
 						<image class=" " :src="`/static/images/icon-${index + 1>4?4:index + 1}.svg`"  mode="aspectFit"></image>
 						<text class="rankNum">{{ index + 1 }}</text>
 					</view>
-					<view class="hotContent">{{ keyword }}</view>
+					<view class="hotBox">
+						<view class="hotContent">{{ keyword.name }}</view>
+						<view class="hotRight">
+							<image v-if="index <= 2" src="/static/images/hot.png" mode=""></image>
+							<view :class=" index <= 2 ? 'hotNumTop' : 'hotNum' ">热度{{ keyword.volume }}</view>
+						</view>
+					</view>
 				</view>
 			</view>
 		</mescroll-body>
@@ -63,7 +69,7 @@
 						console.log('setNavigationBarColor fail', err);
 					}
 					})
-				this.title = "热搜排行榜"
+				this.title = "热度排行榜"
 				this.Icon = true
 			} else {
 				this.background = 'transparent'
@@ -93,7 +99,7 @@
 			doSearch(keyword) {
 				if (!keyword) return false;
 				uni.navigateTo({
-					url: '/pages_search/search/search?focus=0&keyword='+keyword
+					url: '/pages_search/search/search?focus=0&keyword='+keyword.name
 				});
 				
 			},
@@ -129,9 +135,15 @@
 							that.mescroll.endBySize(0, 0);
 							return
 						}
+						
 						// 接口返回的当前页数据列表 (数组)
 						let curPageData = res.data.data.list;
-		
+						curPageData.map(item => {
+							if(item.volume > 9999){
+								var num = (item.volume / 10000).toFixed(1) + 'w'
+								item.volume = num
+							}
+						})
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
 						let curPageLen = curPageData.length;
 						// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
@@ -140,7 +152,6 @@
 						let totalSize = res.data.data.total;
 						// 接口返回的是否有下一页 (true/false)
 						// let hasNext = res.data.data.list;
-		
 						//设置列表数据
 						if (page.num == 1) this.hotKeywordList = []; //如果是第一页需手动置空列表
 						this.hotKeywordList = this.hotKeywordList.concat(curPageData); //追加新数据
@@ -239,15 +250,46 @@
 					line-height: 20rpx;
 				}
 			}
-			
-			.hotContent {
-				margin-left: 16rpx;
-				height: 32rpx;
-				font-size: 32rpx;
-				font-family: PingFangSC-Regular, PingFang SC;
-				font-weight: 400;
-				color: #303133;
-				line-height: 32rpx;
+			.hotBox{
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding-right: 24rpx;
+				.hotContent {
+					margin-left: 16rpx;
+					height: 32rpx;
+					font-size: 32rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #303133;
+					line-height: 32rpx;
+				}
+				.hotRight{
+					display: flex;
+					align-items: center;
+					image{
+						width: 28rpx;
+						height: 30rpx;
+						margin-right: 8rpx;
+					}
+					.hotNumTop{
+						font-size: 20rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #303133;
+						line-height: 20rpx;
+						background: linear-gradient(180deg, #FF962B 0%, #FF5C13 100%);
+						-webkit-background-clip: text;
+						-webkit-text-fill-color: transparent;
+					}
+					.hotNum{
+						font-size: 20rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #909399;
+					}
+				}
 			}
 		}
 	}

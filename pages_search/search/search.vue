@@ -63,12 +63,12 @@
 						<view>热门搜索</view>
 					</view>
 					<view class="hotList" >
-						<view class="hotItem" v-for="(keyword, index) in hotKeywordList" @tap="doSearch(keyword)" :key="index" v-if="index < 10" >
+						<view class="hotItem" v-for="(keyword, index) in hotKeywordList" @tap="doSearch(keyword.name)" :key="index" v-if="index < 10" >
 							<view class="hotImg" >
 								<image class=" " :src="`/static/images/icon-${index + 1>4?4:index + 1}.svg`"  mode="aspectFit"></image>
 								<text class="rankNum" >{{ index + 1 }}</text>
 							</view>
-							<view class="hotContent" >{{ keyword}}</view>
+							<view class="hotContent" >{{ keyword.name }}</view>
 						</view>
 					</view>
 					<view class="hide-hot-tis" v-if="hotKeywordList.length >= 10" @click="toHotRank">
@@ -152,7 +152,7 @@
 			</view>
 			<view v-if="showType == 3">
 				<view class="noResult">
-					没找到“{{ keyword }}”相关结果
+					没找到“{{ keyword.name }}”相关结果
 				</view>
 				<view class="wrap">
 					<articleWaterfall :list="noResultList"></articleWaterfall>
@@ -400,6 +400,7 @@
 			},
 			//执行搜索
 			doSearch(keyword) {
+				console.log(keyword,'keyword')
 				if (!keyword) return false;
 				this.keyword = keyword
 				this.getSearchResults()
