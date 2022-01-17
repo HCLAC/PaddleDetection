@@ -108,7 +108,7 @@
 				</view>
 			</view>
 			<view class="imgbox">
-				<image v-if="info.nvq_url" :src="info.nvq_url" mode="center"></image>
+				<image v-if="info.nvq_url" :src="info.nvq_url" mode="aspectFit"></image>
 				<text v-else>暂无认证资料</text>
 			</view>
 		</view>
@@ -122,7 +122,7 @@
 				</view>
 			</view>
 			<view class="imgbox">
-				<image v-if="info.vocation_url" :src="info.vocation_url" mode="center"></image>
+				<image v-if="info.vocation_url" :src="info.vocation_url" mode="aspectFit"></image>
 				<text v-else>暂无认证资料</text>
 			</view>
 		</view>
