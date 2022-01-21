@@ -41,7 +41,26 @@
 			<text>全部回答·{{detail?detail.reply_count:0}}</text>
 			<view class="answersLine"></view>
 		</view>
-		<view class="answersOfficial" v-if="answersOfficial">
+		<view class="page-section-spacing" width="100%" v-if="detail.video[1]">
+			<video class="videobox" :style="{ height: swiperHeight }" :src="detail.video[1]" object-fit="contain"
+			 :poster="detail.video[0]" controls></video>
+			 <!-- <text>{{detail.video_desc}}</text> -->
+			 <view class="contentText">
+			 	<view :class="isShow ? 'loseText' : 'moreText'" id="moreText">
+			 		{{detail.video_desc}}
+			 	</view>
+			 	<view class="btnBox" @click="showMore" v-if="!isShow && more">
+			 		<text>收起</text>
+			 		<image class="iconImg" src="@/static/images/zhankaiIcon.png"></image>
+			 	</view>
+			 	<view class="btnBox" @click="showMore" v-if="isShow && more">
+			 		<view class="mask"></view>
+			 		<text>展开</text>
+			 		<image class="iconImg" src="@/static/images/shouqiIcon.png"></image>
+			 	</view>
+			 </view>
+		</view>
+		<view class="answersOfficial" v-if="!detail.video[1] && answersOfficial.content">
 			<view class="answersCardBox" >
 				<view class="answersCardTop">
 					<view class="answersAuthor">
@@ -81,7 +100,10 @@
 				查看全部{{detail.reply_count}}条回答
 			</view>
 		</view>
-		<view class="answersNull" v-else>
+		<view class="moreAnswers" @click="moreAnswers()" v-if="detail.video[1]&&detail.reply_count > 1">
+			查看全部{{detail.reply_count}}条回答
+		</view>
+		<view class="answersNull" v-if="!detail.video[1] && !answersOfficial.content">
 			<view class="answersNull-img">
 				<image src="/static/images/wd-kong.png" mode=""></image>
 			</view>
@@ -207,6 +229,8 @@
 	export default {
 		data() {
 			return {
+				more:false,
+				isShow: true,
 				keywordHeight: '0px',
 				backgroundColor: 'linear-gradient(270deg, #6BBEFF 0%, #0091FF 100%);',
 				question_id:'',
@@ -253,6 +277,10 @@
 		 	//#endif
 		},
 		methods:{
+			//切换简介展开
+			showMore() {
+				this.isShow = !this.isShow;
+			},
 			toChatroom(){
 				this.HTTP.request({
 					url: '/bulter/consulting',
@@ -325,6 +353,11 @@
 							return
 						}
 						this.detail = res.data.data
+						if(this.detail.video_desc.length <= 48){
+							this.more = false
+						}else{
+							this.more = true
+						}
 						//#ifdef MP-BAIDU
 						swan.setPageInfo({
 							title: this.detail.title,
@@ -647,6 +680,70 @@
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 	}
+	.videobox {
+		width: 694rpx;
+		min-height: 390rpx;
+		max-height: 1000rpx;
+	}
+	.contentText {
+		margin-top: 20rpx;
+		margin-bottom: 20rpx;
+		position: relative;
+		padding: 0 28rpx;
+		.moreText {
+			font-size: 28rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: rgba(144, 147, 153, 1);
+			line-height: 42rpx;
+			text-align:justify;
+			text-justify:inter-ideograph;
+		}
+		.loseText {
+			font-size: 28rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: rgba(144, 147, 153, 1);
+			line-height: 42rpx;
+			
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			-webkit-line-clamp: 2;
+			text-align:justify;
+			text-justify:inter-ideograph;
+		}
+		.btnBox {
+			height: 42rpx;
+			position: absolute;
+			right: 5rpx;
+			bottom: 0;
+			display: flex;
+			justify-content: flex-end;
+			z-index: 111;
+			.mask{
+				width: 64rpx;
+				background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+			}
+			text {
+				height: 100%;
+				padding-top: 8rpx;
+				font-size: 24rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
+				line-height: 24rpx;
+				color: rgba(48, 49, 51, 1);
+				background-color: #FFFFFF;
+			}
+			.iconImg {
+				margin-right: 28rpx;
+				margin-top: 10rpx;
+				height: 24rpx;
+				width: 24rpx;
+				background-color: #FFFFFF;
+			}
+		}
+	}
 	.detailCard{
 		margin-top: 20rpx;
 		margin-left: 32rpx;
@@ -885,6 +982,18 @@
 			align-items: center;
 			border-top: 2rpx solid #EDEFF2;
 		}
+	}
+	.moreAnswers{
+		text-align: center;
+		height: 92rpx;
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #0091FF;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-top: 2rpx solid #EDEFF2;
 	}
 	.answersNull{
 		display: flex;
