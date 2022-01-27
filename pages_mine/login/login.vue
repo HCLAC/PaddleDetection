@@ -502,9 +502,9 @@ export default {
 .loginButton .badiduBtn {
 	width: 692rpx;
 	height: 100rpx;
-	background-color: #fff !important;
+	background-color: #FFE512 !important;
 	border-radius: 58rpx;
-	border: 2rpx solid #edeff2;
+	// border: 2rpx solid #edeff2;
 	margin-top: 30rpx;
 	font-size: 36rpx;
 	color: #303133;

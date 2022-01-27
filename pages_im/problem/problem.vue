@@ -153,7 +153,7 @@
 			this.getInfo()
 		},
 		onShow(){
-			// this.getInfo()
+			this.getInfo()
 		},
 		methods: {
 			// input(value){
