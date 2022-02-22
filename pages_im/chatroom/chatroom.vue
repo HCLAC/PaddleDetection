@@ -1316,6 +1316,8 @@
 				}
 
 				.chatmsg {
+					max-width: 400rpx;
+					
 					background: #D1E2FF;
 					border-radius: 24rpx 0rpx 24rpx 24rpx;
 					padding: 20rpx;
@@ -1352,6 +1354,7 @@
 				}
 
 				.chatmsg {
+					max-width: 400rpx;
 					height: 72rpx;
 					background: #FFFFFF;
 					border-radius: 0rpx 24rpx 24rpx 24rpx;
@@ -1417,10 +1420,10 @@
 			display: flex;
 			align-items: center;
 			width: 750rpx;
-			height: 168rpx;
+			height: 148rpx;
 			background: #FFFFFF;
 			padding: 0 28rpx;
-			padding-bottom: 68rpx;
+			padding-bottom: 48rpx;
 			// margin-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
 			// margin-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
 			.btm_input{
