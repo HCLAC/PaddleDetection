@@ -56,11 +56,11 @@
 						<view class="right_three">
 							<view class="three_1">
 								<text>已服务：</text>
-								<text style="color: #A86B13;">{{consulting.number_of_people}}</text>
+								<text style="color: #A86B13;font-weight: 500;">{{consulting.number_of_people}}</text>
 							</view>
 							<view class="three_2">
 								<text>评分：</text>
-								<text style="color: #A86B13;">5分</text>
+								<text style="color: #A86B13;font-weight: 500;">5分</text>
 							</view>
 						</view>
 					</view>

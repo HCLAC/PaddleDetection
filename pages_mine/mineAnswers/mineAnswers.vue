@@ -48,6 +48,14 @@ import answerList from './mine-answer-list.vue';
 </script>
 
 <style lang="scss">
+.empty-icon{
+	width: 202rpx;
+	height: 206rpx;
+	width: 202rpx !important;
+	height: 206rpx !important;
+	margin-top: 200rpx;
+}
+
 .tabs-fixed{
 	// height: 75rpx !important;
 	border-bottom: 20rpx solid #F8F8F8 !important;

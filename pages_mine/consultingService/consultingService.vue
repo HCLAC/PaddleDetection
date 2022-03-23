@@ -250,9 +250,9 @@
 </script>
 
 <style lang="scss">
-	page{
-	background: #F6F6F8;
-	}
+	// page{
+	// background: #F6F6F8;
+	// }
 .box{
 	.kong{
 		margin-left: 274rpx;

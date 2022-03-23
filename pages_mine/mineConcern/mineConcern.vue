@@ -238,8 +238,8 @@
 
 <style lang="scss">
 	.empty-icon{
-		width: 202rpx;
-		height: 206rpx;
+		width: 202rpx !important;
+		height: 206rpx !important;
 		margin-top: 200rpx;
 	}
 	//关注列表

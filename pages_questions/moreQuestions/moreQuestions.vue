@@ -62,7 +62,7 @@ import questionList from './question-list.vue';
 				city_id:'',
 				isFixed:false,
 				cardheight: 0,
-				text:'',
+				text:0,
 			};
 		},
 		// #ifdef MP-BAIDU
