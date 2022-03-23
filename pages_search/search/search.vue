@@ -979,6 +979,10 @@
 	}
 
 	.hotContent {
+		width: 200rpx;
+		text-overflow:ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
 		margin-left: 8rpx;
 		color: rgba(48, 49, 51, 1);
 		font-size: 28rpx;
