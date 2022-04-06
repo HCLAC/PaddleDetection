@@ -33,9 +33,9 @@
 		</view>
 		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="questionList">
-				<view class="jxbox" v-if="type == 'selected'" @click="toDetail">
+				<view class="jxbox" v-if="type == 'selected' && banner" @click="toDetail">
 					<view class="one">
-						{{chiose.title}}
+						{{chiose.title}}111
 					</view>
 					<view class="two">
 						<image class="tx" :src="chiose.avatar" mode=""></image>
@@ -147,6 +147,7 @@
 				// 骨架屏
 				loadEmpty:[1,2,3],
 				loading: true,
+				banner:true,
 			}
 		},
 		watch: {
@@ -251,6 +252,11 @@
 						title: this.keyword
 					},
 					success: res => {
+						this.hideLoad()
+						console.log(res,'res')
+						if(res.data.data.list){
+							this.banner = false
+						}
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
 								title: res.data.msg,
@@ -265,7 +271,7 @@
 						}
 						this.chiose = res.data.data.chiose
 						console.log(this.chiose,'问答详情')
-						this.hideLoad()
+						console.log(res,'res')
 						// 接口返回的当前页数据列表 (数组)
 						let curPageData = res.data.data.list;
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
