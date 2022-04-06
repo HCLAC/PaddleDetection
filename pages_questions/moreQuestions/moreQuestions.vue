@@ -63,6 +63,7 @@ import questionList from './question-list.vue';
 				isFixed:false,
 				cardheight: 0,
 				text:0,
+				
 			};
 		},
 		// #ifdef MP-BAIDU
@@ -85,6 +86,24 @@ import questionList from './question-list.vue';
 		// 	}
 		// },
 		methods:{
+			// loadData(){
+			// 	uni.showLoading({
+			// 		title: '加载中',
+			// 		mask: true,
+			// 		success: () => {
+			// 		},
+			// 		complete: () => {
+			// 			this.loading = true
+			// 			this.getDetail();
+			// 		}
+			// 	});
+			// },
+			// hideLoad(){
+			// 	setTimeout(() => {
+			// 		this.loading = false
+			// 		uni.hideLoading();
+			// 	}, 300);
+			// },
 			changeText(value){
 				this.text = value
 				console.log(this.text.length,'++++++')
@@ -148,6 +167,7 @@ import questionList from './question-list.vue';
 .answersList{
 	
 }
+
 .tabBox{
 	width: 100%;
 	height: 88rpx;
