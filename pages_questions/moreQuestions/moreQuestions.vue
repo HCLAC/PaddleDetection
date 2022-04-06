@@ -86,24 +86,6 @@ import questionList from './question-list.vue';
 		// 	}
 		// },
 		methods:{
-			// loadData(){
-			// 	uni.showLoading({
-			// 		title: '加载中',
-			// 		mask: true,
-			// 		success: () => {
-			// 		},
-			// 		complete: () => {
-			// 			this.loading = true
-			// 			this.getDetail();
-			// 		}
-			// 	});
-			// },
-			// hideLoad(){
-			// 	setTimeout(() => {
-			// 		this.loading = false
-			// 		uni.hideLoading();
-			// 	}, 300);
-			// },
 			changeText(value){
 				this.text = value
 				console.log(this.text.length,'++++++')
