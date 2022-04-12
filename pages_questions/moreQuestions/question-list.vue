@@ -35,7 +35,7 @@
 			<view class="questionList">
 				<view class="jxbox" v-if="type == 'selected' && banner" @click="toDetail">
 					<view class="one">
-						{{chiose.title}}111
+						{{chiose.title}}
 					</view>
 					<view class="two">
 						<image class="tx" :src="chiose.avatar" mode=""></image>
@@ -144,15 +144,20 @@
 					  zIndex: 99
 					}
 				},
+				banner:true,
 				// 骨架屏
 				loadEmpty:[1,2,3],
 				loading: true,
-				banner:true,
 			}
 		},
 		watch: {
 			keyword(newVal, old) {
 				this.keyword = newVal;
+				if(this.keyword){
+					this.banner = false
+				}else{
+					this.banner = true
+				}
 				this.mescroll.resetUpScroll();
 			}
 		},
@@ -254,9 +259,9 @@
 					success: res => {
 						this.hideLoad()
 						console.log(res,'res')
-						if(res.data.data.list){
-							this.banner = false
-						}
+						// if(res.data.data.list){
+						// 	this.banner = false
+						// }
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
 								title: res.data.msg,
