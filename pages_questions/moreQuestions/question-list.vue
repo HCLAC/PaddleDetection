@@ -1,8 +1,39 @@
 <template>
 	<view v-show="i === index" >
+		<view v-if="loading" class="loadBox">
+			<view class="container u-skeleton">
+				<view class="loadBlock">
+					<!-- <view class="skeleton-long u-skeleton-rect"></view> -->
+					<view class="top u-skeleton-circle"></view>
+					<view class="status">
+						<view class="content u-skeleton-rect"></view>
+						<view class="content u-skeleton-rect"></view>
+					</view>
+					<view class="card u-skeleton-rect"></view>
+					<view class="title-box" v-for="(item, index) in loadEmpty">
+						<view class="title u-skeleton-rect"></view>
+						<view class="title u-skeleton-rect"></view>
+						<view class="title u-skeleton-rect"></view>
+						<view class="btm">
+							<view class="left">
+								<view class="img u-skeleton-circle"></view>
+								<view class="txt u-skeleton-rect"></view>
+							</view>
+							<view class="right">
+								<view class="txt u-skeleton-rect" style="margin-right: 20rpx;"></view>
+								<view class="txt u-skeleton-rect"></view>
+							</view>
+						</view>
+					</view>
+					<view class="banner u-skeleton-rect"></view>
+				</view>
+			</view>
+			<!--引用组件-->
+			<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
+		</view>
 		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="questionList">
-				<view class="jxbox" v-if="type == 'selected'" @click="toDetail">
+				<view class="jxbox" v-if="type == 'selected' && banner" @click="toDetail">
 					<view class="one">
 						{{chiose.title}}
 					</view>
@@ -31,6 +62,9 @@
 					</view>
 					<view class="title">
 						{{item.title}}
+					</view>
+					<view class="answer">
+						{{item.answer}}
 					</view>
 					<view class="content">
 						<mp-html ref="parse" container-style="contentText" lazy-load :tag-style="style"
@@ -109,16 +143,44 @@
 					  top: "100rpx",
 					  zIndex: 99
 					}
-				}
+				},
+				banner:true,
+				// 骨架屏
+				loadEmpty:[1,2,3],
+				loading: true,
 			}
 		},
 		watch: {
 			keyword(newVal, old) {
 				this.keyword = newVal;
+				if(this.keyword){
+					this.banner = false
+				}else{
+					this.banner = true
+				}
 				this.mescroll.resetUpScroll();
 			}
 		},
+	
 		methods: {
+			// loadData(){
+			// 	uni.showLoading({
+			// 		title: '加载中',
+			// 		mask: true,
+			// 		success: () => {
+			// 		},
+			// 		complete: () => {
+			// 			this.loading = true
+			// 			this.getDetail();
+			// 		}
+			// 	});
+			// },
+			hideLoad(){
+				setTimeout(() => {
+					this.loading = false
+					uni.hideLoading();
+				}, 300);
+			},
 			toConsultation(){
 				this.HTTP.request({
 					url: '/bulter/consulting',
@@ -172,10 +234,10 @@
 			
 			/*上拉加载的回调*/
 			upCallback(page) {
-				if (this.i != this.index){
-					this.mescroll.endBySize(0,0)
-					return
-				}
+				// if (this.i != this.index){
+				// 	this.mescroll.endBySize(0,0)
+				// 	return
+				// }
 				var that = this
 				// mescroll.setPageSize(6)
 				let pageNum = page.num; // 页码, 默认从1开始
@@ -195,6 +257,11 @@
 						title: this.keyword
 					},
 					success: res => {
+						this.hideLoad()
+						console.log(res,'res')
+						// if(res.data.data.list){
+						// 	this.banner = false
+						// }
 						if (res.statusCode != 200 || res.data.code != 0){
 							uni.showToast({
 								title: res.data.msg,
@@ -209,6 +276,7 @@
 						}
 						this.chiose = res.data.data.chiose
 						console.log(this.chiose,'问答详情')
+						console.log(res,'res')
 						// 接口返回的当前页数据列表 (数组)
 						let curPageData = res.data.data.list;
 						// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
@@ -258,6 +326,76 @@
 </script>
 
 <style lang="scss" scoped>
+//骨架屏
+.loadBox{
+	width: 100%;
+	height: auto;
+	position: relative;
+	top:-230rpx;
+	// margin:0 28rpx;
+	.loadBlock{
+		.top{
+			width: 694rpx;
+			height: 72rpx;
+			background: #EEEEEE;
+			margin-left: 28rpx;
+		}
+		.status{
+			height: 108rpx;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0 128rpx;
+			.content{
+				width: 174rpx;
+				height: 28rpx;
+			}
+		}
+		.card{
+			width: 750rpx;
+			height: 410rpx;
+		}
+		.title-box{
+			margin-top: 40rpx;
+			.title{
+				margin-left: 28rpx;
+				width: 694rpx;
+				height: 28rpx;
+				margin-bottom: 20rpx;
+			}
+			.btm{
+				display: flex;
+				justify-content: space-between;
+				padding: 0 28rpx;
+				.left{
+					display: flex;
+					align-items: center;
+					.img{
+						width: 40rpx;
+						height: 40rpx;
+						margin-right: 20rpx;
+					}
+					.txt{
+						width: 40rpx;
+						height: 20rpx;
+					}
+				}
+				.right{
+					display: flex;
+					.txt{
+						width: 100rpx;
+						height: 20rpx;
+					}
+				}
+			}
+		}
+		.banner{
+			width: 694rpx;
+			height: 240rpx;
+			margin: 50rpx 28rpx;
+		}
+	}
+}
 .jxbox{
 	width: 750rpx;
 	background-image: url(@/static/images/wdbj.png);
@@ -358,6 +496,18 @@
 			color: #303133;
 			line-height: 48rpx;
 	
+		}
+		.answer{
+			font-size: 30rpx;
+			font-family: PingFangSC-Light, PingFang SC;
+			font-weight: 300;
+			color: #606266;
+			margin-top: 12rpx;
+			overflow : hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
 		}
 		.content{
 			font-size: 30rpx;

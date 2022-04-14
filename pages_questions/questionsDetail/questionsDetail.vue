@@ -11,6 +11,43 @@
 				</view>
 			</uni-nav-bar>
 		</view>
+		<!-- 骨架屏 -->
+		<view v-if="loading" class="loadBox">
+			<view class="container u-skeleton">
+				<view class="top u-skeleton-rect"></view>
+				<view class="top-2 u-skeleton-rect"></view>
+				<view class="conter">
+					<view class="left">
+						<view class="img u-skeleton-circle"></view>
+						<view class="txt u-skeleton-rect"></view>
+					</view>
+					<view class="right">
+						<view class="txt u-skeleton-rect"></view>
+					</view>
+				</view>
+				<view class="skeleton-long u-skeleton-rect"></view>
+				<view class="skeleton-long u-skeleton-rect"></view>
+				<view class="skeleton-long u-skeleton-rect"></view>
+				<view class="skeleton-ling u-skeleton-rect"></view>
+				<view class="kong u-skeleton-rect"></view>
+				<view class="zan">
+					<view class="img-1 u-skeleton-circle"></view>
+					<view class="img-2 u-skeleton-circle"></view>
+				</view>
+				<view class="banner u-skeleton-rect"></view>
+				<view class="conter">
+					<view class="left">
+						<view class="img u-skeleton-circle"></view>
+						<view class="txt u-skeleton-rect"></view>
+					</view>
+					<view class="right">
+						<view class="txt u-skeleton-rect"></view>
+					</view>
+				</view>
+			</view>
+			<!--引用组件-->
+			<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
+		</view>
 		<!-- 问题详情卡片 -->
 		<view class="detailCard" v-if="detail">
 			<view class="cardTopBox" :style="{background:backgroundColor}">
@@ -152,6 +189,9 @@
 						<view class="tQCTitle">
 							{{item.title}}
 						</view>
+						<view class="answer">
+							{{item.answer}}
+						</view>
 						<view class="authorBox">
 							<view class="author">
 								<view class="authorImg">
@@ -254,6 +294,9 @@
 					height: '20px'
 				},
 				marketingData: null,
+				// 骨架屏
+				loadEmpty:[1,2,3],
+				loading: true,
 			};
 		},
 		// #ifdef MP-BAIDU
@@ -268,6 +311,9 @@
 			this.getAnswersOfficial()
 			this.getQuestionsRelated()
 		},
+		mounted(){
+			this.loadData();
+		},
 		onReady() {
 			
 		 	//#ifdef MP-BAIDU
@@ -277,6 +323,24 @@
 		 	//#endif
 		},
 		methods:{
+			loadData(){
+				uni.showLoading({
+					title: '加载中',
+					mask: true,
+					success: () => {
+					},
+					complete: () => {
+						this.loading = true
+						this.getArticleDetail();
+					}
+				});
+			},
+			hideLoad(){
+				setTimeout(() => {
+					this.loading = false
+					uni.hideLoading();
+				}, 300);
+			},
 			//切换简介展开
 			showMore() {
 				this.isShow = !this.isShow;
@@ -353,6 +417,8 @@
 							return
 						}
 						this.detail = res.data.data
+						this.hideLoad()
+						
 						if(this.detail.video_desc.length <= 48){
 							this.more = false
 						}else{
@@ -393,6 +459,7 @@
 							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
 						})
 						this.questionsRelated = res.data.data
+						console.log(this.questionsRelated,'this.questionsRelated')
 					}
 				});
 			},
@@ -680,6 +747,17 @@
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 	}
+	.answer{
+		 overflow: hidden;
+		  text-overflow: ellipsis;
+		  /* 将对象作为弹性伸缩盒子模型显示 */
+		  display: -webkit-box;
+		  /* 限制在一个块元素显示的文本的行数 */
+		  /* -webkit-line-clamp 其实是一个不规范属性，使用了WebKit的CSS扩展属性，该方法适用于WebKit浏览器及移动端；*/
+		  -webkit-line-clamp: 3;
+		  /* 设置或检索伸缩盒对象的子元素的排列方式 */
+		  -webkit-box-orient: vertical;
+	}
 	.videobox {
 		width: 694rpx;
 		min-height: 390rpx;
@@ -741,6 +819,83 @@
 				height: 24rpx;
 				width: 24rpx;
 				background-color: #FFFFFF;
+			}
+		}
+	}
+	//骨架屏
+	.loadBox{
+		width: 100%;
+		height: auto;
+		margin: 0 28rpx;
+		.container{
+			.top{
+				width: 694rpx;
+				height: 296rpx;
+			}
+			.top-2{
+				width: 204rpx;
+				height: 40rpx;
+				margin-top: 40rpx;
+			}
+			.conter{
+				display: flex;
+				margin-top: 40rpx;
+				margin-bottom: 20rpx;
+				.left{
+					display: flex;
+					align-items: center;
+					.img{
+						width: 68rpx;
+						height: 68rpx;
+						margin-right: 20rpx;
+					}
+					.txt{
+						width: 116rpx;
+						height: 20rpx;
+					}
+				}
+				.right{
+					display: flex;
+					align-items: center;
+					margin-left: 332rpx;
+					.txt{
+						width: 158rpx;
+						height: 20rpx;
+					}
+				}
+			}
+			.skeleton-long{
+				width: 694rpx;
+				height: 20rpx;
+				margin-bottom: 20rpx;
+			}
+			.skeleton-ling{
+				width: 348rpx;
+				height: 20rpx;
+			}
+			.kong{
+				margin-top: 20rpx;
+				width: 694rpx;
+				height: 390rpx;
+			}
+			.zan{
+				display: flex;
+				margin-top: 20rpx;
+				.img-1{
+					width: 40rpx;
+					height: 40rpx;
+					margin-left: 574rpx;
+				}
+				.img-2{
+					width: 40rpx;
+					height: 40rpx;
+					margin-left: 40rpx;
+				}
+			}
+			.banner{
+				width: 694rpx;
+				height: 204rpx;
+				margin-top: 40rpx;
 			}
 		}
 	}

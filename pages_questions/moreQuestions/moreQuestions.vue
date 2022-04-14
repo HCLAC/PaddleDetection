@@ -63,6 +63,7 @@ import questionList from './question-list.vue';
 				isFixed:false,
 				cardheight: 0,
 				text:0,
+				
 			};
 		},
 		// #ifdef MP-BAIDU
@@ -106,14 +107,11 @@ import questionList from './question-list.vue';
 			},
 			// 切换
 			tabChange(index){
-				// console.log(1111)
-				// console.log(index,'index')
+				console.log(index,'index')
 				this.tabIndex = 0
 				this.keyword = ''
 			},
 			tabChange1(index){
-				// console.log(1111)
-				// console.log(index,'index')
 				this.tabIndex = 1
 				this.keyword = ''
 			},
@@ -148,6 +146,7 @@ import questionList from './question-list.vue';
 .answersList{
 	
 }
+
 .tabBox{
 	width: 100%;
 	height: 88rpx;
