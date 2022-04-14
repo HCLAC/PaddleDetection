@@ -107,14 +107,11 @@ import questionList from './question-list.vue';
 			},
 			// 切换
 			tabChange(index){
-				// console.log(1111)
-				// console.log(index,'index')
+				console.log(index,'index')
 				this.tabIndex = 0
 				this.keyword = ''
 			},
 			tabChange1(index){
-				// console.log(1111)
-				// console.log(index,'index')
 				this.tabIndex = 1
 				this.keyword = ''
 			},

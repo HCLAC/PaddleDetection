@@ -747,6 +747,17 @@
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 	}
+	.answer{
+		 overflow: hidden;
+		  text-overflow: ellipsis;
+		  /* 将对象作为弹性伸缩盒子模型显示 */
+		  display: -webkit-box;
+		  /* 限制在一个块元素显示的文本的行数 */
+		  /* -webkit-line-clamp 其实是一个不规范属性，使用了WebKit的CSS扩展属性，该方法适用于WebKit浏览器及移动端；*/
+		  -webkit-line-clamp: 3;
+		  /* 设置或检索伸缩盒对象的子元素的排列方式 */
+		  -webkit-box-orient: vertical;
+	}
 	.videobox {
 		width: 694rpx;
 		min-height: 390rpx;

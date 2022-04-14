@@ -234,10 +234,10 @@
 			
 			/*上拉加载的回调*/
 			upCallback(page) {
-				if (this.i != this.index){
-					this.mescroll.endBySize(0,0)
-					return
-				}
+				// if (this.i != this.index){
+				// 	this.mescroll.endBySize(0,0)
+				// 	return
+				// }
 				var that = this
 				// mescroll.setPageSize(6)
 				let pageNum = page.num; // 页码, 默认从1开始
