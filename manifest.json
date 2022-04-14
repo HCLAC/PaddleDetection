@@ -94,7 +94,8 @@
         },
         "cookie" : {
             "enableStore" : false // 开启小程序cookie存储设置
-        }
+        },
+		"useSwanNews":true
     },
     "mp-toutiao" : {
         "setting" : {
