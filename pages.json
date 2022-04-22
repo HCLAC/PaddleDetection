@@ -6,15 +6,14 @@
 			"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 		}
 	},
-	"pages": [
-		{
+	"pages": [{
 			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom",
 				// "backgroundColorBottom": "#F8F8F8",
 				"backgroundColorTop": "#FFFFFF",
 				// "backgroundColor":"#F8F8F8",
-				"navigationBarTextStyle":"white"
+				"navigationBarTextStyle": "white"
 			}
 		},
 		{
@@ -22,147 +21,129 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
-		}
-        ,{
-            "path" : "swan-sitemap/index",
-            "style" :                                                                                    
-            {
+		}, {
+			"path": "swan-sitemap/index",
+			"style": {
 				"mp-baidu": {
 					"usingComponents": {
 						"swan-sitemap-list": "dynamicLib://swan-sitemap-lib/swan-sitemap-list"
 					}
 				},
 				"navigationStyle": "default",
-                "navigationBarTitleText": "文章索引页"
-            }
-        }
-        ,{
-            "path" : "swan-sitemap/province",
-            "style" :                                                                                    
-            {
+				"navigationBarTitleText": "文章索引页"
+			}
+		}, {
+			"path": "swan-sitemap/province",
+			"style": {
 				"mp-baidu": {
 					"usingComponents": {
 						"swan-sitemap-list": "dynamicLib://swan-sitemap-lib/swan-sitemap-list"
 					}
 				},
 				"navigationStyle": "default",
-                "navigationBarTitleText": "省市索引页"
-            }
-        }
-        ,{
-            "path" : "swan-sitemap/site",
-            "style" :                                                                                    
-            {
+				"navigationBarTitleText": "省市索引页"
+			}
+		}, {
+			"path": "swan-sitemap/site",
+			"style": {
 				"mp-baidu": {
 					"usingComponents": {
 						"swan-sitemap-list": "dynamicLib://swan-sitemap-lib/swan-sitemap-list"
 					}
 				},
 				"navigationStyle": "default",
-                "navigationBarTitleText": "景点索引页"
-            }
-        }
-        ,{
-            "path" : "swan-sitemap/route",
-            "style" :                                                                                    
-            {
+				"navigationBarTitleText": "景点索引页"
+			}
+		}, {
+			"path": "swan-sitemap/route",
+			"style": {
 				"mp-baidu": {
 					"usingComponents": {
 						"swan-sitemap-list": "dynamicLib://swan-sitemap-lib/swan-sitemap-list"
 					}
 				},
 				"navigationStyle": "default",
-                "navigationBarTitleText": "路线索引页"
-            }
-        },
+				"navigationBarTitleText": "路线索引页"
+			}
+		},
 		{
-		    "path" : "swan-sitemap/question",
-		    "style" :                                                                                    
-		    {
+			"path": "swan-sitemap/question",
+			"style": {
 				"mp-baidu": {
 					"usingComponents": {
 						"swan-sitemap-list": "dynamicLib://swan-sitemap-lib/swan-sitemap-list"
 					}
 				},
 				"navigationStyle": "default",
-		        "navigationBarTitleText": "问答索引页"
-		    }
+				"navigationBarTitleText": "问答索引页"
+			}
 		}
-    ],
-	"subPackages": [
-		{
-			"root":"pages_mine",
-			"pages":[
-				{
-				    "path" : "login/login",
-				    "style" : {
-						"navigationBarBackgroundColor":"#FFFFFF",
-						"backgroundColor":"#fff",
+	],
+	"subPackages": [{
+			"root": "pages_mine",
+			"pages": [{
+					"path": "login/login",
+				 "style": {
+						"navigationBarBackgroundColor": "#FFFFFF",
+						"backgroundColor": "#fff",
 						"navigationStyle": "custom",
-						"disableScroll":true
+						"disableScroll": true
 					}
 				},
 				{
-				    "path" : "mineConcern/mineConcern",
-				    "style" : {
+					"path": "mineConcern/mineConcern",
+					"style": {
 						"navigationStyle": "custom",
 						"backgroundColor": "#fff"
 					}
 				},
 				{
-				    "path" : "mineInfo/mineInfo",
-				    "style" : {
+					"path": "mineInfo/mineInfo",
+					"style": {
 						"navigationStyle": "custom"
 					}
 				},
 				{
-				    "path" : "mineAnswers/mineAnswers",
-				    "style" :                                                                                    
-				    {
-				        "navigationStyle": "custom"
-				    }
-				},
-				{
-					"path" : "cropper-default/cropper-default",
-					"style" :                                                                                    
-					{
+					"path": "mineAnswers/mineAnswers",
+					"style": {
+						"navigationStyle": "custom"
 					}
 				},
 				{
-		            "path" : "consultingService/consultingService",
-		            "style" :                                                                                    
-		        {
-		            "navigationBarTitleText": "",
-		            "enablePullDownRefresh": false
-		        }
-		        
-		        }
+					"path": "cropper-default/cropper-default",
+					"style": {}
+				},
+				{
+					"path": "consultingService/consultingService",
+					"style": {
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false
+					}
+
+				}
 			]
 		},
 		{
-			"root":"pages_search",
-			"pages":[
-				{
+			"root": "pages_search",
+			"pages": [{
 					"path": "search/search",
 					"style": {
 						"navigationStyle": "custom"
 					}
 				},
 				{
-					"path" : "hotSearchRank/hotSearchRank",
-					"style" :                                                                                    
-					{
+					"path": "hotSearchRank/hotSearchRank",
+					"style": {
 						"navigationStyle": "custom",
 						"disableScroll": false,
-						"navigationBarTextStyle":"white"
+						"navigationBarTextStyle": "white"
 					}
 				}
 			]
 		},
 		{
-			"root":"pages_content",
-			"pages":[
-				{
+			"root": "pages_content",
+			"pages": [{
 					"path": "provinces/provinces",
 					"style": {
 						"navigationStyle": "custom",
@@ -177,13 +158,12 @@
 					}
 				},
 				{
-				    "path" : "city-hot/city-hot",
-				    "style" :                                                                                    
-					{
+					"path": "city-hot/city-hot",
+					"style": {
 						"navigationBarTitleText": "",
 						"enablePullDownRefresh": false
 					}
-				
+
 				}
 				// {
 				// 	"path": "city/city",
@@ -191,98 +171,76 @@
 				// 		"navigationStyle": "custom"
 				// 	}
 				// }
-            ]
+			]
 		},
 		{
-			"root":"pages_im",
-			"pages":[
-				{
-				    "path" : "housekeeperDetails/housekeeperDetails",
-					// "style": {
-					// 	// "backgroundColorBottom": "#F8F8F8",
-					// 	"backgroundColorTop": "#FFFFFF",
+			"root": "pages_im",
+			"pages": [{
+				"path": "housekeeperDetails/housekeeperDetails",
+					// "style": {					// 	// "backgroundColorBottom": "#F8F8F8",					// 	"backgroundColorTop": "#FFFFFF",
 					// 	// "backgroundColor":"#F8F8F8",
-					// 	"navigationBarTextStyle":"white"
-					// }
-				    "style" :                                                                                    
-					{
-						"navigationStyle": "custom",
-						"navigationBarTitleText": "",
-						"enablePullDownRefresh": false
-					}
+				// 	"navigationBarTextStyle":"white"					// }
+				"style": {
+					"navigationStyle": "custom",
+					"navigationBarTitleText": "",						"enablePullDownRefresh": false
 				}
-		        ,{
-		            "path" : "housekeeperList/housekeeperList",
-		            "style" :                                                                                    
-					{
-						"navigationBarTitleText": "",
-						"enablePullDownRefresh": false
-					}
-		        }
-		        ,{
-		            "path" : "chatroom/chatroom",
-		            "style" :                                                                                    
-		        	{
-		        		"navigationBarTitleText": "",
-		        		"enablePullDownRefresh": false
-		        	}
-		        }
-                ,{
-                    "path" : "agreement/agreement",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "problem/problem",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "access/access",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "information/information",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "product/product",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-            ]
+			}, {
+				"path": "housekeeperList/housekeeperList",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+			}, {
+				"path": "chatroom/chatroom",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+			}, {
+				"path": "agreement/agreement",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+
+			}, {
+				"path": "problem/problem",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+
+			}, {
+				"path": "access/access",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+
+			}, {
+				"path": "information/information",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+
+			}, {
+				"path": "product/product",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+
+			}]
 		},
 		{
-			"root":"pages_province",
-			"pages":[
-				{
+			"root": "pages_province",
+			"pages": [{
 					"path": "attractionsRank/attractionsRank",
 					"style": {
 						"navigationStyle": "custom",
 						"backgroundColor": "#ffffff",
-						"navigationBarTextStyle":"white"
+						"navigationBarTextStyle": "white"
 					}
 				},
 				{
@@ -290,14 +248,14 @@
 					"style": {
 						"navigationStyle": "custom"
 					}
-				}, 
+				},
 				{
 					"path": "lineList/lineList",
 					"style": {
 						"navigationStyle": "custom",
 						"backgroundColor": "#fff"
 					}
-				}, 
+				},
 				{
 					"path": "lineDetail/lineDetail",
 					"style": {
@@ -314,40 +272,35 @@
 			]
 		},
 		{
-			"root":"pages_article",
-			"pages":[
-				{
-					"path" : "bloggers/bloggers",
-					"style" : {
+			"root": "pages_article",
+			"pages": [{
+					"path": "bloggers/bloggers",
+					"style": {
 						"navigationStyle": "custom",
-						"navigationBarTextStyle":"black"
+						"navigationBarTextStyle": "black"
 					}
 				},
 				{
-					"path" : "topic/topic",
-					"style" : {
+					"path": "topic/topic",
+					"style": {
 						"navigationStyle": "custom"
-						
+
 					}
 				},
 				{
-					"path" : "topicList/topicList",
-					"style" : {
+					"path": "topicList/topicList",
+					"style": {
 						"navigationStyle": "custom",
-						"backgroundColor":"#FFFFFF"
+						"backgroundColor": "#FFFFFF"
 					}
-				}
-				,{
-					"path" : "comments/comments",
-					"style" :                                                                                    
-					{
+				}, {
+					"path": "comments/comments",
+					"style": {
 						"navigationStyle": "custom"
 					}
-				}
-				,{
-					"path" : "report/report",
-					"style" :                                                                                    
-					{
+				}, {
+					"path": "report/report",
+					"style": {
 						"navigationStyle": "custom"
 					}
 				},
@@ -355,10 +308,9 @@
 					"path": "webview/webview"
 				}
 			]
-		}
-		,{
-			"root":"pages_questions",
-			"pages":[
+		}, {
+			"root": "pages_questions",
+			"pages": [
 				// {
 				// 	"path" : "questions/questions",
 				// 	"style" : {
@@ -373,9 +325,8 @@
 				// 	}
 				// },
 				{
-					"path" : "moreQuestions/moreQuestions",
-					"style" :                                                                                    
-					{
+					"path": "moreQuestions/moreQuestions",
+					"style": {
 						"navigationStyle": "custom"
 					}
 				},
@@ -387,52 +338,50 @@
 				// 	}
 				// },
 				{
-					"path" : "questionsDetail/questionsDetail",
-					"style" :                                                                                    
-					{
+					"path": "questionsDetail/questionsDetail",
+					"style": {
 						"navigationStyle": "custom"
 					}
 				},
 				{
-					"path" : "answersList/answersList",
-					"style" :                                                                                    
-					{
+					"path": "answersList/answersList",
+					"style": {
 						"navigationStyle": "custom"
 					}
 				}
 			]
 		}
 	],
-	"preloadRule":{
+	"preloadRule": {
 		"pages/index/index": {
-		    "network": "all",
-		    "packages": ["pages_content","pages_search","pages_mine","pages_im"]
+			"network": "all",
+			"packages": ["pages_content", "pages_search", "pages_mine", "pages_im"]
 		},
-        "pages/mine/mine": {
-            "network": "all",
-            "packages": ["pages_mine"]
-        },
-        "pages_content/article/article": {
-            "network": "all",
-            "packages": ["pages_article"]
-        },
-        "pages_content/provinces/provinces": {
-            "network": "all",
-            "packages": ["pages_province", "pages_questions"]
-        },
+		"pages/mine/mine": {
+			"network": "all",
+			"packages": ["pages_mine"]
+		},
+		"pages_content/article/article": {
+			"network": "all",
+			"packages": ["pages_article"]
+		},
+		"pages_content/provinces/provinces": {
+			"network": "all",
+			"packages": ["pages_province", "pages_questions"]
+		},
 		"pages_mine/mineAnswers/mineAnswers": {
-            "network": "all",
-            "packages": ["pages_questions"]
-        }
-    },
+			"network": "all",
+			"packages": ["pages_questions"]
+		}
+	},
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F7F7F7",
 		"navigationBarTextStyle": "black",
 		"backgroundColorTop": "#FFFFFF",
-		"navigationStyle":"custom",
+		"navigationStyle": "custom",
 		"onReachBottomDistance": 70
-	}
-	,"tabBar": {
+	},
+	"tabBar": {
 		"list": [{
 				"pagePath": "pages/index/index",
 				"text": "首页",
