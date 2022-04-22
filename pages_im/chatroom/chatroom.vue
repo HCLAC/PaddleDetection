@@ -168,7 +168,7 @@
 				</view>
 			</view>
 			<!-- v-if="consulting.status != 2" -->
-			<view class="btm" :style="{bottom:btm + 'rpx'}">
+			<view class="btm" :style="{bottom:btm + 'rpx','padding-bottom': keywordHeight}">
 				<!-- <view class="voice" v-if="showText" @click="onSwitch">
 					<image src="@/static/images/voice.png" mode=""></image>
 				</view>
@@ -177,7 +177,7 @@
 				</view> -->
 				<!-- <u-input v-if="showText" confirm-type="send" class="text" @confirm="sendPrivateText" v-model="text"
 					type="text" :border="true" /> -->
-				<input :disabled="show_input"  v-model="text" class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='请输入......' />
+				<input :focus="inputFocus" :adjust-position="false"  :disabled="show_input"  v-model="text" class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='请输入......' />
 				<view class="btm_btn" @click="sendPrivateText" :style="{'color':color,'background':bgcolor}">
 					发送
 				</view>
@@ -253,6 +253,7 @@
 	export default {
 		data() {
 			return {
+				keywordHeight: '0px',
 				color:'',
 				bgcolor:'',
 				showEnd:false,
@@ -332,7 +333,23 @@
 			clearInterval(recordTimeInterval)
 			this.recordTime = 0
 		},
+		onReady() {
+			//#ifdef MP-BAIDU
+			swan.showFavoriteGuide({
+			    type: 'tip'
+			})
+			swan.onKeyboardHeightChange(res => {
+				if (res.height === 0){
+					this.showText = false 
+				}
+				this.keywordHeight = (res.height+60)+'px'
+			});
+			//#endif
+		},
 		methods: {
+			inputFocus(){
+				this.keywordHeight = '0px'
+			},
 			home(){
 				// this.recordStayAndRead()
 				this.Utils.home()
@@ -1418,12 +1435,11 @@
 			position: fixed;
 			bottom: 0;
 			display: flex;
-			align-items: center;
+			// align-items: center;
 			width: 750rpx;
-			height: 148rpx;
+			height: 132rpx;
 			background: #FFFFFF;
-			padding: 0 28rpx;
-			padding-bottom: 48rpx;
+			padding: 30rpx 28rpx 0;
 			// margin-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
 			// margin-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
 			.btm_input{
