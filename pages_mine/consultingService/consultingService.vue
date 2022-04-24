@@ -10,6 +10,7 @@
 		</uni-nav-bar>
 		<u-modal v-model="show" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="delefe"></u-modal>
 		<u-modal v-model="show1" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="onCancel"></u-modal>
+		<u-tabs :list="tabList" :is-scroll="false" :current="current" @change="change"></u-tabs>
 		
 		<view class="kong" v-if="list.length == 0">
 			<view class="kong_img">
@@ -19,6 +20,7 @@
 				咨询列表空空的
 			</view>
 		</view>
+
 		<view class="content" :show="item.show" :index="index" 
 		v-for="(item, index) in list" :key="item.search_id" 
 		@click="click">
@@ -101,6 +103,17 @@
 				show1:false,
 				item:{},
 				index:'',
+				tabList: [{
+					name: '全部'
+				}, {
+					name: '待支付'
+				}, {
+					name: '进行中',
+				}, {
+					name: '已结束',
+				},
+				],
+				current: 0
 			};
 		},
 		onShow() {
@@ -108,6 +121,11 @@
 			this.getlist()
 		},
 		methods:{
+			change(index) {
+				console.log(index,'index')
+				this.current = index;
+				this.getlist(index)
+			},
 			onIm(item){
 				uni.navigateTo({
 					url:'/pages_im/chatroom/chatroom?search_id=' + item.search_id
@@ -207,12 +225,14 @@
 				this.Utils.home()
 			},
 			//获取咨询列表
-			getlist(){
+			getlist(data){
+				console.log(data,'data')
 				this.HTTP.request({
 					url: '/user/search_record/list',
 					data: {
 						count:20,
 						page:1,
+						status:data,
 					},
 					success: res => {
 						this.list = res.data.data.list
@@ -250,9 +270,9 @@
 </script>
 
 <style lang="scss">
-	// page{
-	// background: #F6F6F8;
-	// }
+	page{
+	background: #F6F6F8;
+	}
 .box{
 	.kong{
 		margin-left: 274rpx;

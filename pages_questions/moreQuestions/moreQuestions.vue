@@ -139,15 +139,26 @@ import questionList from './question-list.vue';
 <style lang="scss" scoped>
 // 搜索框
 .searchBox{
+	width: 100%;
 	padding: 8rpx 28rpx;
+	position: fixed;
+	z-index: 10;
+	
+	background: #FFFFFF;
 }
-
+.u-content{
+	width: 600rpx !important;
+}
 // 问答列表
 .answersList{
 	
 }
 
 .tabBox{
+	position: fixed;
+	top: 200rpx;
+	z-index: 10;
+	background: #FFFFFF;
 	width: 100%;
 	height: 88rpx;
 	display: flex;

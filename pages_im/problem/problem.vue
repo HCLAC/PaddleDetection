@@ -16,86 +16,8 @@
 			</view>
 			<text>获取解答</text>
 		</view>
-		<view class="content">
-			<view class="c_top">
-				欢迎使用领途羊旅游管家，已累计为10000+人提供旅游出行相关咨询服务。继续咨询即表示您已经同意
-				<text @click="goYonghu">《用户服务协议》</text>
-				与
-				<text @click="goXinxi">《个人信息保护协议》</text>
-				<text @click="goChanpin">《咨询产品服务协议》</text>
-				。
-			</view>
-			<view class="c_card">
-				<view class="c_card_top">
-					<view class="c_card_top_text">
-						{{professionObj[consulting.level]}}
-					</view>
-				</view>
-				<view class="c_card_center">
-					<view class="c_card_center_left">
-						<view class="left_img">
-							<image :src="consulting.bulter_avatar ? consulting.bulter_avatar : '/static/images/logo.png'" mode=""></image>
-						</view>
-						<view class="left_btm">
-							<view class="btm_dian"></view>
-							<view class="btm_text">咨询中</view>
-						</view>
-					</view>
-					<view class="c_card_center_right">
-						<view class="right_one">
-							<view class="one_1">
-								{{consulting.name}}
-							</view>
-							<view class="one_2">
-								{{professionObj1[consulting.profession]}}
-							</view>
-						</view>
-						<view class="right_two">
-							{{consulting.company}}
-						</view>
-						<view class="right_three">
-							<view class="three_1">
-								<text>已服务：</text>
-								<text style="color: #A86B13;font-weight: 500;">{{consulting.number_of_people}}</text>
-							</view>
-							<view class="three_2">
-								<text>评分：</text>
-								<text style="color: #A86B13;font-weight: 500;">5分</text>
-							</view>
-						</view>
-					</view>
-				</view>
-				<view class="c_card_btm">
-					<view class="btm_left">
-						<view class="left_img">
-							<image src="@/static/images/yx.png" mode=""></image>
-						</view>
-						<view class="left_txt">
-							严选保障 · 隐私保护 · 专业旅游管家
-						</view>
-					</view>
-					<view class="btm_right" @click="details">
-						<view class="right_txt">
-							查看更多
-						</view>
-						<view class="con">
-							<image src="@/static/images/smwt.png" mode=""></image>
-						</view>
-						
-					</view>
-				</view>
-			</view>
-			<view class="im">
-				<view class="im_img">
-					<image :src="consulting.bulter_avatar ? consulting.bulter_avatar : '/static/images/logo.png'" mode=""></image>
-				</view>
-				<view class="im_txt">
-					hi，我是旅游管家{{consulting.name}}，请问您最近有出游的打算么？
-				</view>
-			</view>
-		</view>
-		<view class="btm">
-			<input v-model.trim="txt"  class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='简单描述你的问题' />
+		<view class="btm"  :style="{'padding-bottom': keywordHeight}">
+			<input :focus="inputFocus" :adjust-position="false" v-model.trim="txt"  class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='简单描述你的问题' />
 			<view class="btm_btn" @click="send">
 				发送
 			</view>
@@ -129,6 +51,7 @@
 	export default {
 		data() {
 			return {
+				keywordHeight: '0px',
 				color:'',
 				bgcolor:'',
 				show:false,
@@ -148,6 +71,19 @@
 				cursor:'',
 			};
 		},
+		onReady() {
+			//#ifdef MP-BAIDU
+			swan.showFavoriteGuide({
+			    type: 'tip'
+			})
+			swan.onKeyboardHeightChange(res => {
+				if (res.height === 0){
+					this.showText = false 
+				}
+				this.keywordHeight = (res.height+60)+'px'
+			});
+			//#endif
+		},
 		onLoad(query) {
 			this.bulter_id = query.bulter_id
 			this.getInfo()
@@ -164,6 +100,9 @@
 			// 		this.bgcolor = '#FFE512'
 			// 	}
 			// },
+			inputFocus(){
+				this.keywordHeight = '0px'
+			},
 			goChanpin(){
 				uni.navigateTo({
 					url: '/pages_im/product/product'
@@ -472,12 +411,12 @@ page{
 		position: fixed;
 		bottom: 0;
 		display: flex;
-		align-items: center;
+		// align-items: center;
 		width: 750rpx;
-		height: 168rpx;
+		height: 132rpx;
 		background: #FFFFFF;
-		padding: 0 28rpx;
-		padding-bottom: 68rpx;
+		padding: 30rpx 28rpx 0;
+		
 		.btm_input{
 			width: 522rpx;
 			height: 72rpx;

@@ -332,6 +332,7 @@
 	height: auto;
 	position: relative;
 	top:-230rpx;
+	// padding-top: 400rpx;
 	// margin:0 28rpx;
 	.loadBlock{
 		.top{
@@ -474,6 +475,7 @@
 
 // 问答列表
 .questionList{
+	padding-top: 160rpx;
 	.card{
 		margin: 28rpx 28rpx;
 		margin-bottom: 0rpx;

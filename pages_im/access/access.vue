@@ -677,12 +677,10 @@ page{
 		position: fixed;
 		bottom: 0;
 		display: flex;
-		align-items: center;
 		width: 750rpx;
-		height: 168rpx;
+		height: 132rpx;
 		background: #FFFFFF;
-		padding: 0 28rpx;
-		padding-bottom: 68rpx;
+		padding: 30rpx 28rpx 0;
 		.btm_txt{
 			width: 522rpx;
 			height: 72rpx;
