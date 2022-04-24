@@ -42,6 +42,14 @@
 				<view v-for="(item, index) in searchDatas" :key="index" class="citys-row-serach">
 					<view class="citys-item" :key="inx" @click="cityTrigger(item)">{{ item.name }}</view>
 				</view>
+				<view class="kong" v-if="!searchDatas[0].name">
+					<view class="kong_img">
+						<image src="@/static/images/index-kong.png" mode=""></image>
+					</view>
+					<view class="kong_txt">
+						暂无城市数据～
+					</view>
+				</view>
 			</view>
 		</scroll-view>
 		<!-- 城市选择索引-->
@@ -102,7 +110,7 @@ export default {
 			handleCity: [], // 处理后的城市数据
 			searchCity: '', // 搜索的城市
 			cityData: [],
-			bgColor:'#f6f5fa'
+			bgColor:'#f6f5fa',
 		};
 	},
 	computed: {
@@ -408,6 +416,29 @@ view {
 	}
 
 	.citys {
+		.kong{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			margin: 0 auto;
+			margin-top: 274rpx;
+			.kong_img{
+				width: 202rpx;
+				height: 206rpx;
+				image{
+					width: 100%;
+					height: 100%;
+				}
+			}
+			.kong_txt{
+				font-size: 26rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #909399;
+				margin-top: 40rpx;
+			}
+		}
 		.citys-row { 
 			// padding-left: vww(18); 
 			// width: 100%; 

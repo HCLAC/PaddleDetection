@@ -9,15 +9,21 @@
 					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
-			<view class="top" style="position: relative;">
+			<!-- <view class="top" style="position: fixed;z-index: 10;">
 				<u-dropdown  :border-bottom="false" border-color="#FFE512" active-color="rgb(96, 98, 102)">
 					<u-dropdown-item v-model="profession" title="职业" :options="options1"  @change="change1"></u-dropdown-item>
 					<u-dropdown-item v-model="level" title="级别" :options="options2" @change="change2"></u-dropdown-item>
 					<u-dropdown-item v-model="working_years" title="经验" :options="options3" @change="change3"></u-dropdown-item>
 				</u-dropdown>
-			</view>
+			</view> -->
 		</view>
-		
+		<view class="top" style="position: fixed;z-index: 10;">
+			<u-dropdown  :border-bottom="false" border-color="#FFE512" active-color="rgb(96, 98, 102)">
+				<u-dropdown-item v-model="profession" title="职业" :options="options1"  @change="change1"></u-dropdown-item>
+				<u-dropdown-item v-model="level" title="级别" :options="options2" @change="change2"></u-dropdown-item>
+				<u-dropdown-item v-model="working_years" title="经验" :options="options3" @change="change3"></u-dropdown-item>
+			</u-dropdown>
+		</view>
 		<view class="content">
 			<view class="c-box" v-for="(item,index) in contentList" :key = 'index'>
 				<view class="pm" v-if="item.level == 0">
@@ -341,37 +347,38 @@ page{
 }
 .box{
 	.sw-3__u-dropdown__content{
-		height: 2000rpx !important;
+		height: 500rpx !important;
 	}
 	.sw-6__u-cell-item-box{
 		display: flex;
 		flex-wrap: wrap;
-		padding-bottom:240px;
-		padding-top: 10px;
+		// padding-bottom:240px;
+		// padding-top: 10px;
 		border-top: none;
 		border-radius:  0 0 24rpx 24rpx;
 		overflow: hidden;
 	}
-	.u-cell-box{
-		border: none;
-	}
+	// .u-cell-box{
+	// 	border: none;
+	// }
 	.sw-7__u-cell{
 		padding: 20rpx 18rpx !important;
 	}
-	.slot-content{
-		height: 400px;
-		background: pink;
-	}
+	// .slot-content{
+	// 	height: 400px;
+	// 	background: pink;
+	// }
 	.top{
 		width: 100%;
 		height: 88rpx;
+		background: #FFFFFF;
 	}
 	.content{
 		// background: #F6F6F8;
 		width: 100%;
 		// min-height: 100%;
 		// position:fixed;
-		padding-top: 20rpx;
+		padding-top: 120rpx;
 		.c-box{
 			width: 694rpx;
 			height: 250rpx;
