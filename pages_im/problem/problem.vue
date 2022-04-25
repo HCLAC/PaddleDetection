@@ -16,6 +16,65 @@
 			</view>
 			<text>获取解答</text>
 		</view>
+		<view class="c_card">
+			<view class="c_card_top">
+				<view class="c_card_top_text">
+					{{professionObj[consulting.level]}}
+				</view>
+			</view>
+			<view class="c_card_center">
+				<view class="c_card_center_left">
+					<view class="left_img">
+						<image :src="consulting.bulter_avatar ? consulting.bulter_avatar : '/static/images/logo.png'" mode=""></image>
+					</view>
+					<view class="left_btm">
+						<view class="btm_dian"></view>
+						<view class="btm_text">咨询中</view>
+					</view>
+				</view>
+				<view class="c_card_center_right">
+					<view class="right_one">
+						<view class="one_1">
+							{{consulting.name}}
+						</view>
+						<view class="one_2">
+							{{professionObj1[consulting.profession]}}
+						</view>
+					</view>
+					<view class="right_two">
+						{{consulting.company}}
+					</view>
+					<view class="right_three">
+						<view class="three_1">
+							<text>已服务：</text>
+							<text style="color: #A86B13;">{{consulting.number_of_people}}</text>
+						</view>
+						<view class="three_2">
+							<text>评分：</text>
+							<text style="color: #A86B13;">5分</text>
+						</view>
+					</view>
+				</view>
+			</view>
+			<view class="c_card_btm">
+				<view class="btm_left">
+					<view class="left_img">
+						<image src="@/static/images/yx.png" mode=""></image>
+					</view>
+					<view class="left_txt">
+						严选保障 · 隐私保护 · 专业旅游管家
+					</view>
+				</view>
+				<view class="btm_right" @click="details">
+					<view class="right_txt">
+						查看更多
+					</view>
+					<view class="con">
+						<image src="@/static/images/smwt.png" mode=""></image>
+					</view>
+				</view>
+			</view>
+		</view>
 		<view class="btm"  :style="{'padding-bottom': keywordHeight}">
 			<input :focus="inputFocus" :adjust-position="false" v-model.trim="txt"  class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='简单描述你的问题' />
 			<view class="btm_btn" @click="send">
@@ -193,6 +252,177 @@ page{
 			}
 		}
 	}
+	.c_card{
+		margin:  0 auto;
+		margin-top: 30rpx;
+		width: 694rpx;
+		height: 342rpx;
+		background: #FFFFFF;
+		box-shadow: 0rpx 4rpx 20rpx 0rpx rgba(0, 0, 0, 0.05);
+		border-radius: 12rpx;
+		.c_card_top{
+			display: flex;
+			justify-content: flex-end;
+			.c_card_top_text{
+				width: 128rpx;
+				height: 40rpx;
+				background: #FFE512;
+				border-radius: 0rpx 12rpx 0rpx 12rpx;
+				font-size: 24rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #303133;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+		}
+		.c_card_center{
+			width: 100%;
+			height: 196rpx;
+			display: flex;
+			.c_card_center_left{
+				.left_img{
+					width: 112rpx;
+					height: 112rpx;
+					border-radius: 50%;
+					overflow: hidden;
+					margin-left: 28rpx;
+					image{
+						width: 100%;
+						height: 100%;
+					}
+				}
+				.left_btm{
+					margin-top: 18rpx;
+					margin-left: 43rpx;
+					display: flex;
+					align-content: center;
+					.btm_dian{
+						width: 6rpx;
+						height: 6rpx;
+						background: #A86B13;
+						margin: auto 0;
+					}
+					.btm_text{
+						font-size: 20rpx;
+						font-family: PingFangSC-Regular, PingFang SC;
+						font-weight: 400;
+						color: #A86B13;
+						margin-left: 6rpx;
+					}
+				}
+			}
+			.c_card_center_right{
+				margin-left: 30rpx;
+				.right_one{
+					display: flex;
+					margin-top: 14rpx;
+					align-items: center;
+					.one_1{
+						font-size: 36rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #303133;
+					}
+					.one_2{
+						margin-left: 12rpx;
+						font-size: 28rpx;
+						font-family: PingFangSC-Regular, PingFang SC;
+						font-weight: 400;
+						color: #606266;
+					}
+				}
+				.right_two{
+					margin-top: 14rpx;
+					font-size: 28rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #606266;
+				}
+				.right_three{
+					display: flex;
+					margin-top: 12rpx;
+					.three_1{
+						display: flex;
+						align-items: center;
+						width: 170rpx;
+						height: 26rpx;
+						border-right: 1rpx solid #E5E5E5;
+						text{
+							font-size: 26rpx;
+							font-family: PingFangSC-Regular, PingFang SC;
+							font-weight: 400;
+							color: #909399;
+						}
+					}
+					.three_2{
+						height: 26rpx;
+						display: flex;
+						align-items: center;
+						font-size: 26rpx;
+						font-family: PingFangSC-Regular, PingFang SC;
+						font-weight: 400;
+						color: #909399;
+						margin-left: 16rpx;
+					}
+				}
+			}
+		}
+		.c_card_btm{
+			width: 630rpx;
+			height: 104rpx;
+			margin: 0 auto;
+			border-top: 1rpx solid #E5E5E5;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0 ;
+			.btm_left{
+				display: flex;
+				align-items: center;
+				width: 462rpx;
+				height: 64rpx;
+				background: linear-gradient(270deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 0%, #FFF8BB 100%);
+				border-radius: 20rpx;
+				padding-left: 16rpx;
+				.left_img{
+					width: 30rpx;
+					height: 30rpx;
+					image{
+						width: 100%;
+						height: 100%;
+					}
+				}
+				.left_txt{
+					font-size: 24rpx;
+					font-family: PingFangSC-Medium, PingFang SC;
+					font-weight: 500;
+					color: #A86B13;
+					margin-left: 8rpx;
+				}
+			}
+			.btm_right{
+				display: flex;
+				align-items: center;
+				.right_txt{
+					font-size: 24rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #303133;
+				}
+				.con{
+					width: 16rpx;
+					height: 28rpx;
+					margin-left: 4rpx;
+					image{
+						width: 100%;
+						height: 100%;
+					}
+				}
+			}
+		}
+	}
 	.content{
 		padding: 0 28rpx;
 		.c_top{
@@ -211,175 +441,7 @@ page{
 				color: #A86B13;
 			}
 		}
-		.c_card{
-			width: 694rpx;
-			height: 342rpx;
-			background: #FFFFFF;
-			box-shadow: 0rpx 4rpx 20rpx 0rpx rgba(0, 0, 0, 0.05);
-			border-radius: 12rpx;
-			.c_card_top{
-				display: flex;
-				justify-content: flex-end;
-				.c_card_top_text{
-					width: 128rpx;
-					height: 40rpx;
-					background: #FFE512;
-					border-radius: 0rpx 12rpx 0rpx 12rpx;
-					font-size: 24rpx;
-					font-family: PingFangSC-Regular, PingFang SC;
-					font-weight: 400;
-					color: #303133;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-				}
-			}
-			.c_card_center{
-				width: 100%;
-				height: 196rpx;
-				display: flex;
-				.c_card_center_left{
-					.left_img{
-						width: 112rpx;
-						height: 112rpx;
-						border-radius: 50%;
-						overflow: hidden;
-						margin-left: 28rpx;
-						image{
-							width: 100%;
-							height: 100%;
-						}
-					}
-					.left_btm{
-						margin-top: 18rpx;
-						margin-left: 43rpx;
-						display: flex;
-						align-content: center;
-						.btm_dian{
-							width: 6rpx;
-							height: 6rpx;
-							background: #A86B13;
-							margin: auto 0;
-						}
-						.btm_text{
-							font-size: 20rpx;
-							font-family: PingFangSC-Regular, PingFang SC;
-							font-weight: 400;
-							color: #A86B13;
-							margin-left: 6rpx;
-						}
-					}
-				}
-				.c_card_center_right{
-					margin-left: 30rpx;
-					.right_one{
-						display: flex;
-						margin-top: 14rpx;
-						align-items: center;
-						.one_1{
-							font-size: 36rpx;
-							font-family: PingFangSC-Medium, PingFang SC;
-							font-weight: 500;
-							color: #303133;
-						}
-						.one_2{
-							margin-left: 12rpx;
-							font-size: 28rpx;
-							font-family: PingFangSC-Regular, PingFang SC;
-							font-weight: 400;
-							color: #606266;
-						}
-					}
-					.right_two{
-						margin-top: 14rpx;
-						font-size: 28rpx;
-						font-family: PingFangSC-Regular, PingFang SC;
-						font-weight: 400;
-						color: #606266;
-					}
-					.right_three{
-						display: flex;
-						margin-top: 12rpx;
-						.three_1{
-							display: flex;
-							align-items: center;
-							width: 170rpx;
-							height: 26rpx;
-							border-right: 1rpx solid #E5E5E5;
-							text{
-								font-size: 26rpx;
-								font-family: PingFangSC-Regular, PingFang SC;
-								font-weight: 400;
-								color: #909399;
-							}
-						}
-						.three_2{
-							height: 26rpx;
-							display: flex;
-							align-items: center;
-							font-size: 26rpx;
-							font-family: PingFangSC-Regular, PingFang SC;
-							font-weight: 400;
-							color: #909399;
-							margin-left: 16rpx;
-						}
-					}
-				}
-			}
-			.c_card_btm{
-				width: 630rpx;
-				height: 104rpx;
-				margin: 0 auto;
-				border-top: 1rpx solid #E5E5E5;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: 0 ;
-				.btm_left{
-					display: flex;
-					align-items: center;
-					width: 462rpx;
-					height: 64rpx;
-					background: linear-gradient(270deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 0%, #FFF8BB 100%);
-					border-radius: 20rpx;
-					padding-left: 16rpx;
-					.left_img{
-						width: 30rpx;
-						height: 30rpx;
-						image{
-							width: 100%;
-							height: 100%;
-						}
-					}
-					.left_txt{
-						font-size: 24rpx;
-						font-family: PingFangSC-Medium, PingFang SC;
-						font-weight: 500;
-						color: #A86B13;
-						margin-left: 8rpx;
-					}
-				}
-				.btm_right{
-					display: flex;
-					align-items: center;
-					.right_txt{
-						font-size: 24rpx;
-						font-family: PingFangSC-Regular, PingFang SC;
-						font-weight: 400;
-						color: #303133;
-					}
-					.con{
-						width: 16rpx;
-						height: 28rpx;
-						margin-left: 4rpx;
-						image{
-							width: 100%;
-							height: 100%;
-						}
-					}
-				}
-			}
-		}
+		
 		.im{
 			display: flex;
 			margin-top: 40rpx;
