@@ -12,28 +12,31 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 搜索框 -->
-		<view class="searchBox">
-			<u-search v-model="keyword" @search="search" @change="changeText" @custom="custom" :show-action="true" search-icon-color="#c9cad1" placeholder="输入搜索内容" placeholder-color="#c9cad1" action-text="取消" :animation="true"></u-search>
-		</view>
-		<!-- <u-tabs :list="list" :is-scroll="false" :current="current" @change="change"></u-tabs> -->
-		<view class="tabBox">
-			<view :class="tabIndex == 0?'select':'selectNone'"  @click="tabChange">
-				<view class="">
-					精选问答
+		<view class="top_box">
+			<view class="searchBox">
+				<u-search v-model="keyword" @search="search" @change="changeText" @custom="custom" :show-action="true" search-icon-color="#c9cad1" placeholder="输入搜索内容" placeholder-color="#c9cad1" action-text="取消" :animation="true"></u-search>
+			</view>
+			
+			<view class="tabBox">
+				<view :class="tabIndex == 0?'select':'selectNone'"  @click="tabChange">
+					<view class="">
+						精选问答
+					</view>
+					<view class="kong" v-if="tabIndex == 0">
+						
+					</view>
 				</view>
-				<view class="kong" v-if="tabIndex == 0">
-					
+				<view :class="tabIndex == 1?'select':'selectNone'"  @click="tabChange1">
+					<view class="">
+						最新问答
+					</view>
+					<view class="kong" v-if="tabIndex == 1">
+						
+					</view>
 				</view>
 			</view>
-			<view :class="tabIndex == 1?'select':'selectNone'"  @click="tabChange1">
-				<view class="">
-					最新问答
-				</view>
-				<view class="kong" v-if="tabIndex == 1">
-					
-				</view>
-			</view>
 		</view>
+		
 		<!-- <meTabs class="mineQuestionTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :tab-width="120"></meTabs> -->
 		<questionList ref="mescrollItem" v-for="(tab,i) in tabList" :key="i" :i="i" :index="tabIndex" :text="text" :keyword="keyword"></questionList>
 		<!-- 提问按钮 -->
@@ -137,15 +140,7 @@ import questionList from './question-list.vue';
 </script>
 
 <style lang="scss" scoped>
-// 搜索框
-.searchBox{
-	width: 100%;
-	padding: 8rpx 28rpx;
-	position: fixed;
-	z-index: 10;
-	
-	background: #FFFFFF;
-}
+
 .u-content{
 	width: 600rpx !important;
 }
@@ -153,59 +148,68 @@ import questionList from './question-list.vue';
 .answersList{
 	
 }
-
-.tabBox{
+.top_box{
 	position: fixed;
-	top: 200rpx;
+	top: 180;
 	z-index: 10;
-	background: #FFFFFF;
 	width: 100%;
-	height: 88rpx;
-	display: flex;
-	justify-content: space-between;
-	padding: 0 156rpx;
-	border-bottom: 1rpx solid #EDEFF2;
-	view{
-		// width: 50%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		// z-index: 1000;
+	// 搜索框
+	.searchBox{
+		width: 100%;
+		padding: 8rpx 28rpx;
+		background: #FFFFFF;
 	}
-	.select{
-		font-size: 26rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
+	.tabBox{
+		background: #FFFFFF;
+		width: 100%;
+		height: 88rpx;
 		display: flex;
-		// margin-left: 156rpx;
-		flex-direction: column;
-		position: relative;
-		.kong{
-			width: 112rpx;
-			height: 8rpx;
-			background: #0091FF;
-			border-radius: 4rpx;
-			position: absolute;
-			bottom:26rpx;
-			z-index: -1;
-			// left: 152rpx;
-			// bottom: 26rpx;
+		justify-content: space-between;
+		padding: 0 156rpx;
+		border-bottom: 1rpx solid #EDEFF2;
+		view{
+			// width: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			// z-index: 1000;
 		}
-	}
-	.selectNone{
-		font-size: 26rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: #909399;
-		.kong{
-			width: 112rpx;
-			height: 8rpx;
-			background: #0091FF;
-			border-radius: 4rpx;
+		.select{
+			font-size: 26rpx;
+			font-family: PingFangSC-Medium, PingFang SC;
+			font-weight: 500;
+			color: #303133;
+			display: flex;
+			// margin-left: 156rpx;
+			flex-direction: column;
+			position: relative;
+			.kong{
+				width: 112rpx;
+				height: 8rpx;
+				background: #0091FF;
+				border-radius: 4rpx;
+				position: absolute;
+				bottom:26rpx;
+				z-index: -1;
+				// left: 152rpx;
+				// bottom: 26rpx;
+			}
+		}
+		.selectNone{
+			font-size: 26rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #909399;
+			.kong{
+				width: 112rpx;
+				height: 8rpx;
+				background: #0091FF;
+				border-radius: 4rpx;
+			}
 		}
 	}
 }
+
 .myCollection {
 	border-radius: 12px 12px 0rpx 0rpx;
 	background-color: #fff;

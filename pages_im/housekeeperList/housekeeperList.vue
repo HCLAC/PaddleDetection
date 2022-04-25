@@ -9,13 +9,6 @@
 					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
 				</view>
 			</uni-nav-bar>
-			<!-- <view class="top" style="position: fixed;z-index: 10;">
-				<u-dropdown  :border-bottom="false" border-color="#FFE512" active-color="rgb(96, 98, 102)">
-					<u-dropdown-item v-model="profession" title="职业" :options="options1"  @change="change1"></u-dropdown-item>
-					<u-dropdown-item v-model="level" title="级别" :options="options2" @change="change2"></u-dropdown-item>
-					<u-dropdown-item v-model="working_years" title="经验" :options="options3" @change="change3"></u-dropdown-item>
-				</u-dropdown>
-			</view> -->
 		</view>
 		<view class="top" style="position: fixed;z-index: 10;">
 			<u-dropdown  :border-bottom="false" border-color="#FFE512" active-color="rgb(96, 98, 102)">
@@ -25,6 +18,14 @@
 			</u-dropdown>
 		</view>
 		<view class="content">
+			<view class="kong_box" v-if="contentList.length == 0">
+				<view class="kong_img">
+					<image src="@/static/images/index-kong.png" mode=""></image>
+				</view>
+				<view class="kong_txt">
+					<text>暂无旅游管家</text>
+				</view>
+			</view>
 			<view class="c-box" v-for="(item,index) in contentList" :key = 'index'>
 				<view class="pm" v-if="item.level == 0">
 					<image src="/static/images/jp.png" mode=""></image>
@@ -55,9 +56,6 @@
 					</view>
 					
 				</view>
-				<!-- <view class="right">
-					在线咨询
-				</view> -->
 				<button type="default" class="right" @click="toChatroom(item)" v-if="auth != ''">在线咨询</button>
 				<button v-else type="default" class="right" open-type="getPhoneNumber" @getphonenumber="getPhone">在线咨询</button>
 			</view>
@@ -343,7 +341,6 @@
 <style lang="scss">
 page{
 	background: #F6F6F8;
-	
 }
 .box{
 	.sw-3__u-dropdown__content{
@@ -374,11 +371,32 @@ page{
 		background: #FFFFFF;
 	}
 	.content{
-		// background: #F6F6F8;
 		width: 100%;
-		// min-height: 100%;
-		// position:fixed;
 		padding-top: 120rpx;
+		.kong_box{
+			width: 100%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			margin-top: 300rpx;
+			.kong_img{
+				width: 202rpx;
+				height: 206rpx;
+				image{
+					width: 100%;
+					height: 100%;
+				}
+			}
+			.kong_txt{
+				margin-top: 40rpx;
+				font-size: 26rpx;
+				font-family: PingFangSC-Regular, PingFang SC;
+				font-weight: 400;
+				color: #909399;
+			}
+		}
 		.c-box{
 			width: 694rpx;
 			height: 250rpx;
