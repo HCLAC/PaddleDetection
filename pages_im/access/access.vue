@@ -124,7 +124,7 @@
 						{{consulting.money}}
 					</view>
 					<view class="pay_num_1">
-						/1小时
+						/24小时
 					</view>
 				</view>
 				<view class="pay_content">
@@ -149,7 +149,7 @@
 							<image src="@/static/images/pay_three.png" mode=""></image>
 						</view>
 						<view class="content_txt">
-							1小时深度服务，问题解决率99%
+							24小时深度服务，问题解决率99%
 						</view>
 					</view>
 				</view>
