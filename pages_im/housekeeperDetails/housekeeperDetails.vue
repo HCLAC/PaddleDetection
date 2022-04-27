@@ -39,17 +39,16 @@
 				</view>
 			</view>
 			<view class="contentText">
-				<view :class="isShow ? 'loseText' : 'moreText'" id="moreText">
-					{{info.description}}
+				<view class="detail-intorduce-wrap" :style="{height:textHeight>=60?'120rpx':'auto'}">
+					<view class="detail-intorduce-txt">
+						{{info.description}}
+					</view>
 				</view>
-				<view class="btnBox" @click="showMore" v-if="!isShow && more">
-					<text>收起</text>
-					<image class="iconImg" src="@/static/images/zhankaiIcon.png"></image>
-				</view>
-				<view class="btnBox" @click="showMore" v-else-if="isShow && more">
-					<view class="mask"></view>
-					<text>展开</text>
-					<image class="iconImg" src="@/static/images/shouqiIcon.png"></image>
+				
+				<view class="detail-unfold-btn" >
+					<text v-if="textHeight >= 60" @click="textHeight=0">展开</text>
+					<text v-if="textHeight == 0" @click="textHeight=60">收起</text>
+					<!-- <image class="iconImg" src="@/static/images/zhankaiIcon.png"></image> -->
 				</view>
 			</view>
 		</view>
@@ -143,6 +142,7 @@
 	export default {
 		data() {
 			return {
+				textHeight:0,
 				backgroundColor: 'transparent',
 				Shadow:false,
 				bannerPostion: 220,
@@ -162,6 +162,7 @@
 				more:true,
 				serviceSource: 2,
 				auth:'',
+				TxtHeight:120
 			};
 		},
 		onLoad(query) {
@@ -345,6 +346,11 @@
 			//切换简介展开
 			showMore() {
 				this.isShow = !this.isShow;
+				if(!this.isShow){
+					this.TxtHeight = 'auto'
+				}else{
+					this.TxtHeight = 120
+				}
 			},
 			//获取个人详情
 			Getinfo(){
@@ -356,9 +362,14 @@
 					success: res => {
 						this.info = res.data.data
 						console.log(this.info,'个人详情')
-						if(this.info.description.length < 72){
-							this.more = false
-						}
+						this.$nextTick(() => {
+							// 获取demo
+							let introduce = uni.createSelectorQuery().in(this).select('.detail-intorduce-txt')
+							introduce.boundingClientRect(res=>{
+								console.log('开展收起----',res)
+								this.textHeight = res.height
+							}).exec()
+						})
 					}
 				});
 			}
@@ -367,6 +378,27 @@
 </script>
 
 <style lang="scss">
+	.detail-intorduce{
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+	}
+	.detail-intorduce-wrap{
+		overflow: hidden;
+	}
+	.detail-intorduce-txt{
+		font-size: 28rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #606266;
+	}
+	.detail-unfold-btn{
+		font-size: 24rpx;
+		font-family: PingFangSC-Medium, PingFang SC;
+		font-weight: 500;
+		color: #303133;
+	}
 .box{
 	 // padding-bottom env(safe-area-inset-bottom)
 	 padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/

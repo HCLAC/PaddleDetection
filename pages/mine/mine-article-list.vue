@@ -309,7 +309,7 @@
 		}
 		.richText {
 			width: 482rpx;
-			height: 84rpx;
+			height: 80rpx;
 			font-size: 28rpx;
 			font-weight: 400;
 			color: #909399;

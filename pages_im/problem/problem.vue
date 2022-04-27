@@ -75,13 +75,21 @@
 				</view>
 			</view>
 		</view>
+		<view class="one-txt">
+			<view class="txt-img">
+				<image :src="consulting.bulter_avatar ? consulting.bulter_avatar : '/static/images/logo.png'" mode=""></image>
+			</view>
+			<view class="txt">
+				hi，我是旅游管家{{consulting.name}}，请问您最近有出游的打算么？
+			</view>
+		</view>
 		<view class="btm"  :style="{'padding-bottom': keywordHeight}">
 			<input :focus="inputFocus" :adjust-position="false" v-model.trim="txt"  class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='简单描述你的问题' />
-			<view class="btm_btn" @click="send">
+			<view class="btm_btn" @click="goNext">
 				发送
 			</view>
 		</view>
-		<u-popup v-model="show" mode="bottom" border-radius="20" :closeable='true'>
+		<!-- <u-popup v-model="show" mode="bottom" border-radius="20" :closeable='true'>
 			<view class="box_min">
 				<view class="" style="font-size: 36rpx;color: #303133;margin-top: 70rpx;">
 					手机号授权申请
@@ -102,7 +110,7 @@
 					说明：授权后，旅游管家会主动联系你，请保持电话通畅
 				</view>
 			</view>
-		</u-popup>
+		</u-popup> -->
 	</view>
 </template>
 
@@ -252,6 +260,34 @@ page{
 			}
 		}
 	}
+	.one-txt{
+		display: flex;
+		margin: 40rpx 0 0 28rpx;
+		.txt-img{
+			width: 72rpx;
+			height: 72rpx;
+			border-radius: 50%;
+			overflow: hidden;
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.txt{
+			margin-left: 20rpx;
+			width: 570rpx;
+			padding: 20rpx;
+			background: #FFFFFF;
+			border-radius: 0px 24rpx 24rpx 24rpx;
+			font-size: 32rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #303133;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
 	.c_card{
 		margin:  0 auto;
 		margin-top: 30rpx;
@@ -369,6 +405,7 @@ page{
 				}
 			}
 		}
+	
 		.c_card_btm{
 			width: 630rpx;
 			height: 104rpx;

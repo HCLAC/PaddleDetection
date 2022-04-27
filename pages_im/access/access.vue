@@ -100,7 +100,7 @@
 				</view>
 				<view class="txt">
 					<view class="txt_1">
-						已收到问题，请点击下方服务接入，为您提供1小时在线沟通和问题解决方案。
+						已收到问题，请点击下方服务接入，为您提供24小时在线沟通和问题解决方案。
 					</view>
 					<view class="txt_2">
 						<view class="txt_2_img">
@@ -124,7 +124,7 @@
 						{{consulting.money}}
 					</view>
 					<view class="pay_num_1">
-						/1小时
+						/24小时
 					</view>
 				</view>
 				<view class="pay_content">
@@ -149,7 +149,7 @@
 							<image src="@/static/images/pay_three.png" mode=""></image>
 						</view>
 						<view class="content_txt">
-							1小时深度服务，问题解决率99%
+							24小时深度服务，问题解决率99%
 						</view>
 					</view>
 				</view>

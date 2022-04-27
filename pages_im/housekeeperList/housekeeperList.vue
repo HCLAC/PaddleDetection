@@ -234,7 +234,7 @@
 					success: res => {
 						if (res.data.code == 0) {
 							var auth = res.header.authorization ? res.header.authorization : res.header.Authorization
-							this.loginSuccess(res.data.data, auth) 
+							this.loginSuccess(res.data.data,auth) 
 						} else {
 							uni.showToast({
 								title: res.data.msg,
@@ -245,7 +245,6 @@
 				});
 			},
 			loginSuccess(userinfo, auth,item){
-				console.log(item,'item')
 				uni.showToast({
 					title: '登录成功',
 					icon: 'none'
@@ -266,9 +265,13 @@
 				});
 				uni.$emit('onLoginSuccess', userinfo.first_login);
 				// this.Utils.back()
-				this.toChatroom(item)
+				uni.navigateTo({
+					url:'/pages_im/housekeeperList/housekeeperList',
+				})
+				// this.toChatroom(item)
 			},
 			toChatroom(item){
+				console.log(item,'item')
 				if (item.search_id > 0) {
 					uni.navigateTo({
 						url:'/pages_im/chatroom/chatroom?search_id=' + item.search_id,
@@ -344,7 +347,7 @@ page{
 }
 .box{
 	.sw-3__u-dropdown__content{
-		height: 500rpx !important;
+		height: 100rpx !important;
 	}
 	.sw-6__u-cell-item-box{
 		display: flex;
