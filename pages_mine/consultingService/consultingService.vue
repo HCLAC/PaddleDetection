@@ -10,8 +10,7 @@
 		</uni-nav-bar>
 		<u-modal v-model="show" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="delefe"></u-modal>
 		<u-modal v-model="show1" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="onCancel"></u-modal>
-		<u-tabs :list="tabList" :is-scroll="false" :current="current" @change="change"></u-tabs>
-		
+		<u-tabs :list="tabList" :show-bar="false" :is-scroll="false" :current="current" @change="change"></u-tabs>
 		<view class="kong" v-if="list.length == 0">
 			<view class="kong_img">
 				<image src="@/static/images/index-kong.png" mode=""></image>
@@ -106,9 +105,11 @@
 				tabList: [{
 					name: '全部'
 				}, {
-					name: '待支付'
+					name: '待支付',
+					
 				}, {
 					name: '进行中',
+					
 				}, {
 					name: '已结束',
 				},

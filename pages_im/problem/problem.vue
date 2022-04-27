@@ -77,11 +77,11 @@
 		</view>
 		<view class="btm"  :style="{'padding-bottom': keywordHeight}">
 			<input :focus="inputFocus" :adjust-position="false" v-model.trim="txt"  class="btm_input" placeholder-style='color:#C9CAD1;' type="text" placeholder='简单描述你的问题' />
-			<view class="btm_btn" @click="send">
+			<view class="btm_btn" @click="goNext">
 				发送
 			</view>
 		</view>
-		<u-popup v-model="show" mode="bottom" border-radius="20" :closeable='true'>
+		<!-- <u-popup v-model="show" mode="bottom" border-radius="20" :closeable='true'>
 			<view class="box_min">
 				<view class="" style="font-size: 36rpx;color: #303133;margin-top: 70rpx;">
 					手机号授权申请
@@ -102,7 +102,7 @@
 					说明：授权后，旅游管家会主动联系你，请保持电话通畅
 				</view>
 			</view>
-		</u-popup>
+		</u-popup> -->
 	</view>
 </template>
 

@@ -100,7 +100,7 @@
 				</view>
 				<view class="txt">
 					<view class="txt_1">
-						已收到问题，请点击下方服务接入，为您提供1小时在线沟通和问题解决方案。
+						已收到问题，请点击下方服务接入，为您提供24小时在线沟通和问题解决方案。
 					</view>
 					<view class="txt_2">
 						<view class="txt_2_img">

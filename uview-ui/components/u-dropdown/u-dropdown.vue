@@ -283,7 +283,7 @@
 			width: 100%;
 			left: 0px;
 			bottom: 0;
-			overflow: hidden;
+			// overflow: hidden;
 			&__mask {
 				position: absolute;
 				z-index: 9;
