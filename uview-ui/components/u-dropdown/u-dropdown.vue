@@ -21,7 +21,6 @@
 			</view>
 		</view>
 		<view class="u-dropdown__content" :style="[contentStyle, {
-			transition: `opacity ${duration / 1000}s linear`,
 			top: $u.addUnit(height),
 			height: contentHeight + 'px'
 		}]"
@@ -29,7 +28,7 @@
 			<view @tap.stop.prevent class="u-dropdown__content__popup" :style="[popupStyle]">
 				<slot></slot>
 			</view>
-			<view class="u-dropdown__content__mask"></view>
+			<!-- <view class="u-dropdown__content__mask"></view> -->
 		</view>
 	</view>
 </template>
@@ -188,6 +187,7 @@
 				// 展开时，设置下拉内容的样式
 				this.contentStyle = {
 					zIndex: 11,
+					transition: `opacity ${this.duration / 1000}s linear`,
 				}
 				// 标记展开状态以及当前展开项的索引
 				this.active = true;
@@ -208,7 +208,8 @@
 				// 下拉内容的样式进行调整，不透明度设置为0
 				this.contentStyle = {
 					zIndex: -1,
-					opacity: 0
+					opacity: 0,
+					transition: `opacity ${this.duration / 1000}s linear`,
 				}
 			},
 			// 点击遮罩
@@ -241,7 +242,9 @@
 
 <style scoped lang="scss">
 	@import "../../libs/css/style.components.scss";
-
+	.u-dropdown__content{
+		
+	}
 	.u-dropdown {
 		flex: 1;
 		width: 100%;

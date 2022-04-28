@@ -3,7 +3,6 @@
 		<view v-if="loading" class="loadBox">
 			<view class="container u-skeleton">
 				<view class="loadBlock">
-					<!-- <view class="skeleton-long u-skeleton-rect"></view> -->
 					<view class="top u-skeleton-circle"></view>
 					<view class="status">
 						<view class="content u-skeleton-rect"></view>
@@ -163,18 +162,6 @@
 		},
 	
 		methods: {
-			// loadData(){
-			// 	uni.showLoading({
-			// 		title: '加载中',
-			// 		mask: true,
-			// 		success: () => {
-			// 		},
-			// 		complete: () => {
-			// 			this.loading = true
-			// 			this.getDetail();
-			// 		}
-			// 	});
-			// },
 			hideLoad(){
 				setTimeout(() => {
 					this.loading = false
@@ -331,16 +318,18 @@
 	width: 100%;
 	height: auto;
 	position: relative;
-	top:-230rpx;
+	top:-90rpx;
 	// padding-top: 400rpx;
 	// margin:0 28rpx;
 	.loadBlock{
+		padding-top: 40rpx;
 		.top{
 			width: 694rpx;
 			height: 72rpx;
 			background: #EEEEEE;
 			margin-left: 28rpx;
 		}
+		
 		.status{
 			height: 108rpx;
 			display: flex;

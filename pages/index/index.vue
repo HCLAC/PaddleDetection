@@ -162,7 +162,7 @@
 		// #endif
 			this.serviceProvider = getApp().globalData.serviceProvider
 			
-			// this.loadData()
+			this.loadData()
 		},
 		onReady() {
 			// #ifdef MP-BAIDU
@@ -188,8 +188,6 @@
 				this.mescroll.scrollTo(0,0)
 				this.firstLogin = true
 			}
-			this.loadData()
-			this.mescroll.resetUpScroll()
 		},
 		// 滚动
 		onPageScroll: UTILS.throttle( function(res){
