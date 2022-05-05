@@ -236,7 +236,7 @@
 					<image src="@/static/images/border-jian.png" mode=""></image>
 				</view>
 				<view class="left_img">
-					<image :src="consulting.bulter_avatar ? consulting.bulter_avatar : '/static/images/logo.png'" mode=""></image>
+					<image :src="consulting.avatar ? consulting.avatar : '/static/images/logo.png'" mode=""></image>
 				</view>
 				<view class="left_txt">
 					在线中
@@ -354,10 +354,10 @@
 			//管家信息
 			getInfo() {
 				this.HTTP.request({
-					url: '/bulter/consulting',
-					method: 'POST',
+					url: '/bulter/market',
 					data: {
-						bulter_id: this.bulter_id
+						type:1,
+						question_id:this.question_id,
 					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0) {
@@ -409,6 +409,9 @@
 				this.HTTP.request({
 					url: '/bulter/consulting',
 					method: 'POST',
+					data:{
+						bulter_id: this.consulting.bulter_id
+					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0) {
 							uni.showToast({
