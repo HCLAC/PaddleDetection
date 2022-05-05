@@ -55,6 +55,11 @@
 					<view class="cardTopText">
 						领途羊·旅行问答
 					</view>
+					<view :class="detail&&detail.is_follow == 0? 'followBox' : 'followBox1'"  @click="Fllow()">
+						<view class="midBox">
+							<text >{{detail&&detail.is_follow == 0?'关注问题':'已关注'}}</text>
+						</view>
+					</view>
 				</view>
 				<view class="cradTitle">
 					{{detail.title}}
@@ -73,10 +78,20 @@
 				<image class="answersIcon" src="/static/images/answersIcon.png"></image>
 			</view>
 		</view>
+		<!-- 悬浮窗口 -->
+		<view class="share-box" @click="share">
+				<image src="/static/images/xq.png"></image>
+		</view>
 		<!-- 问题回答 -->
 		<view class="answersTip">
 			<text>全部回答·{{detail?detail.reply_count:0}}</text>
 			<view class="answersLine"></view>
+		</view>
+		<view class="myReply">
+			<image class="userImg" lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'"></image>
+			<view class="replyInput" @click="sendAsk">
+				写个回复走个心
+			</view>
 		</view>
 		<view class="page-section-spacing" width="100%" v-if="detail.video[1]">
 			<video class="videobox" :style="{ height: swiperHeight }" :src="detail.video[1]" object-fit="contain"
@@ -161,7 +176,7 @@
 			</view>
 			<view class="wechatBtn ldx infinite ldx-blur-in" @click="templateAdd">复制导游微信</view>
 		</view> -->
-		<view class="btn">
+		<!-- <view class="btn">
 			<view class="left">
 				<view class="left-img">
 					<image src="/static/images/tx.png" mode=""></image>
@@ -172,9 +187,8 @@
 				<view class="right-btn">
 					立即咨询
 				</view>
-				<!-- <button class="right-btn" type="primary" open-type="contact" bindcontact="contactCB">立即咨询</button> -->
 			</view>
-		</view>
+		</view> -->
 		<!-- 相关问题 -->
 		<view class="travelQuestionsBox">
 			<view class="tQTop">
@@ -217,30 +231,35 @@
 		</view>
 		<!-- 我要提问按钮 -->
 		<view class="answersFollow" >
-			<view class="addBox" @click="sendAsk">
-				<view class="midBox">
-					<view class="img">
-						<image src="/static/images/wdadd.svg"></image>
-					</view>
-					<text>添加回答</text>
+			<view class="answersLeft">
+				<view class="border-img">
+					<image src="@/static/images/border-jian.png" mode=""></image>
+				</view>
+				<view class="left_img">
+					<image :src="consulting.bulter_avatar ? consulting.bulter_avatar : '/static/images/logo.png'" mode=""></image>
+				</view>
+				<view class="left_txt">
+					在线中
 				</view>
 			</view>
-			<!-- <view class="aFLine"></view> -->
-			<view class="followBox"  @click="Fllow()">
-				<view class="midBox">
-					<view class="img">
-						<image src="/static/images/wdtj.svg"></image>
+			<view class="answersCenter">
+				<view class="center-top">
+					<view class="top-left">
+						{{consulting.name}}
 					</view>
-					<text >{{detail&&detail.is_follow == 0?'关注问题':'已关注'}}</text>
+					<view class="top-right">
+						{{professionObj1[consulting.profession]}}
+					</view>
+				</view>
+				<view class="center-btm">
+					{{consulting.company}}
 				</view>
 			</view>
-			<view class="shareBox"  @click="share">
-				<view class="midBox">
-					<view class="img">
-						<image src="/static/images/wdfx.svg"></image>
-					</view>
-					<text>分享问答</text>
+			<view class="answersRight" @click="toChatroom">
+				<view class="right-img">
+					<image src="@/static/images/wz.png" mode=""></image>
 				</view>
+				<text>咨询Ta</text>
 			</view>
 		</view>
 		<!-- 输入框 -->
@@ -297,6 +316,13 @@
 				// 骨架屏
 				loadEmpty:[1,2,3],
 				loading: true,
+				consulting:{},
+				userInfo:{},
+				professionObj1: {
+					'0': '导游',
+					'1': '旅游达人',
+					'2': '旅游定制师'
+				},
 			};
 		},
 		// #ifdef MP-BAIDU
@@ -313,6 +339,8 @@
 		},
 		mounted(){
 			this.loadData();
+			this.getUserInfo()
+			this.getInfo()
 		},
 		onReady() {
 			
@@ -323,6 +351,38 @@
 		 	//#endif
 		},
 		methods:{
+			//管家信息
+			getInfo() {
+				this.HTTP.request({
+					url: '/bulter/consulting',
+					method: 'POST',
+					data: {
+						bulter_id: this.bulter_id
+					},
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0) {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						this.consulting = res.data.data
+						console.log(this.consulting, '管家列表')
+					}
+				});
+			},
+			// 用户信息
+			getUserInfo() {
+				uni.getStorage({
+					key: 'userinfo',
+					success: res => {
+						var userInfo = res.data 
+						userInfo && (userInfo.avatar = this.Utils.addImageProcess(userInfo.avatar, false, 60)) 
+						this.userInfo = userInfo
+					}
+				}); 
+			}, 
 			loadData(){
 				uni.showLoading({
 					title: '加载中',
@@ -915,6 +975,32 @@
 				justify-content: space-between;
 				align-items: center;
 				padding: 30rpx 28rpx 20rpx;
+				.followBox{
+					width: 128rpx;
+					height: 48rpx;
+					background: #FFFFFF;
+					border-radius: 8rpx;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					font-size: 24rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #303133;
+				}
+				.followBox1{
+					width: 128rpx;
+					height: 48rpx;
+					background: rgba(255, 255, 255, 0.3);
+					border-radius: 8rpx;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					font-size: 24rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #FFFFFF;
+				}
 				.cardTopText{
 					width: 220rpx;
 					height: 40rpx;
@@ -980,6 +1066,25 @@
 			}
 		}
 	}
+	// 悬浮窗口
+	.share-box{
+		width: 88rpx;
+		height: 88rpx;
+		background: #FFE512;
+		box-shadow: 0px 0px 56rpx 0px rgba(255, 229, 18, 0.4);
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: fixed;
+		bottom: 310rpx;
+		right: 40rpx;
+		z-index: 10;
+		image{
+			width: 52rpx;
+			height: 52rpx;
+		}
+	}
 	// 回复列表
 	.answersTip{
 		margin: 40rpx 32rpx;
@@ -988,11 +1093,37 @@
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
 		color: #303133;
-		.answersLine{
-			width: 100%;
-			height: 2rpx;
-			background: #EDEFF2;
-			margin-top: 20rpx;
+		// .answersLine{
+		// 	width: 100%;
+		// 	height: 2rpx;
+		// 	background: #EDEFF2;
+		// 	margin-top: 20rpx;
+		// }
+	}
+	.myReply {
+		display: flex;
+		padding-left: 34rpx;
+		align-items: center;
+		margin-top: 40rpx;
+		margin-bottom: 40rpx;
+		.userImg {
+			width: 68rpx;
+			height: 68rpx;
+			border-radius: 50%;
+			margin-right: 16rpx;
+		}
+		.replyInput {
+			width: 598rpx;
+			height: 68rpx;
+			background: #F8F8F8;
+			border-radius: 17px;
+			padding-left: 32rpx;
+			display: flex;
+			align-items: center;
+			font-size: 28rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #909399;
 		}
 	}
 	.answersOfficial{
@@ -1469,117 +1600,115 @@
 		right:0;
 		bottom:0;
 		width: 100%;
-		height: 98rpx;
+		height: 150rpx;
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 		box-sizing: content-box;
 		background: #FFFFFF;
 		box-shadow: 0px -16rpx 56rpx 0px rgba(0, 0, 0, 0.05);
 		display: flex;
-		align-items: center;
-		justify-content: space-between;
+		// align-items: center;
+		// justify-content: space-between;
 		z-index: 10;
-		.addBox{
-			padding: 0 40rpx;
-			height: 40rpx;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			border-right: 2rpx solid #EDEFF2;
-			.midBox{
-				display: flex;
-				align-items: center;
-				.img{
-					width: 48rpx;
-					height: 48rpx;
-					background: #FFE512;
-					box-shadow: 0px 0px 26rpx 0px rgba(255, 229, 0, 0.3);
-					border-radius: 50%;
-					overflow: hidden;
-					margin-right: 8rpx;
-					image{
-						width: 48rpx;
-						height: 48rpx;
-					}
-				}
-				text{
-					height: 40rpx;
-					font-size: 28rpx;
-					font-family: PingFangSC-Regular, PingFang SC;
-					font-weight: 400;
-					color: #303133;
-					line-height: 40rpx;
-				
+		.answersLeft{
+			position: relative;
+			// margin-left: 26rpx;
+			left: 26rpx;
+			margin-top: 18rpx;
+			.border-img{
+				width: 108rpx;
+				height: 108rpx;
+				position: absolute;
+				image{
+					width: 100%;
+					height: 100%;
 				}
 			}
-			
-		}
-		.followBox{
-			height: 40rpx;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			
-			.midBox{
-				display: flex;
-				align-items: center;
-				.img{
-					width: 48rpx;
-					height: 48rpx;
-					background: #FFE512;
-					box-shadow: 0px 0px 26rpx 0px rgba(255, 229, 0, 0.3);
-					border-radius: 50%;
-					overflow: hidden;
-					margin-right: 8rpx;
-					image{
-						width: 48rpx;
-						height: 48rpx;
-					}
-				}
-				text{
-					height: 40rpx;
-					font-size: 28rpx;
-					font-family: PingFangSC-Regular, PingFang SC;
-					font-weight: 400;
-					color: #303133;
-					line-height: 40rpx;
-				
+			.left_img{
+				width: 88rpx;
+				height: 88rpx;
+				border-radius: 50%;
+				overflow: hidden;
+				position: absolute;
+				left: 10rpx;
+				top: 10rpx;
+				image{
+					width: 100%;
+					height: 100%;
 				}
 			}
-			
+			.left_txt{
+				width: 70rpx;
+				height: 34rpx;
+				background: #FFE512;
+				border-radius: 8rpx;
+				font-size: 18rpx;
+				font-family: PingFangSC-Semibold, PingFang SC;
+				font-weight: 600;
+				color: #303133;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				position: absolute;
+				top: 88rpx;
+				left: 20rpx;
+			}
 		}
-		.shareBox{
-			border-left: 2rpx solid #EDEFF2;
-			padding: 0 40rpx;
-			height: 40rpx;
+		.answersCenter{
+			margin-left: 152rpx;
 			display: flex;
-			align-items: center;
+			flex-direction: column;
 			justify-content: center;
-			.midBox{
+			.center-top{
 				display: flex;
 				align-items: center;
-				.img{
-					width: 48rpx;
-					height: 48rpx;
-					background: #9F95FF;
-					box-shadow: 0px 0px 26rpx 0px rgba(159, 149, 255, 0.25);
-					border-radius: 50%;
-					overflow: hidden;
-					margin-right: 8rpx;
-					image{
-						width: 48rpx;
-						height: 48rpx;
-					}
-				}
-				text{
-					height: 40rpx;
-					font-size: 28rpx;
-					font-family: PingFangSC-Regular, PingFang SC;
-					font-weight: 400;
+				.top-left{
+					font-size: 32rpx;
+					font-family: PingFangSC-Semibold, PingFang SC;
+					font-weight: 600;
 					color: #303133;
-					line-height: 40rpx;
-				
 				}
+				.top-right{
+					margin-left: 20rpx;
+					width: 106rpx;
+					height: 34rpx;
+					background: #EDEFF2;
+					border-radius: 8rpx;
+					font-size: 18rpx;
+					font-family: PingFangSC-Medium, PingFang SC;
+					font-weight: 500;
+					color: #303133;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+			}
+		}
+		.answersRight{
+			position: absolute;
+			right: 28rpx;
+			top: 34rpx;
+			width: 196rpx;
+			height: 76rpx;
+			background: #FFFFFF;
+			border-radius: 16rpx;
+			border: 2rpx solid #303133;
+			display: flex;
+			align-items: center;
+			.right-img{
+				width: 56rpx;
+				height: 56rpx;
+				margin-left: 20rpx;
+				image{
+					width: 100%;
+					height: 100%;
+				}
+			}
+			text{
+				font-size: 28rpx;
+				font-family: PingFangSC-Semibold, PingFang SC;
+				font-weight: 600;
+				color: #303133;
 			}
 		}
 	}

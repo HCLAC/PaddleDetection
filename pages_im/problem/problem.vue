@@ -16,7 +16,7 @@
 			</view>
 			<text>获取解答</text>
 		</view>
-		<view class="c_card">
+		<view class="c_card" v-if="consulting">
 			<view class="c_card_top">
 				<view class="c_card_top_text">
 					{{professionObj[consulting.level]}}
@@ -75,7 +75,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="one-txt">
+		<view class="one-txt" v-if="consulting">
 			<view class="txt-img">
 				<image :src="consulting.bulter_avatar ? consulting.bulter_avatar : '/static/images/logo.png'" mode=""></image>
 			</view>
@@ -123,7 +123,7 @@
 				bgcolor:'',
 				show:false,
 				txt:'',
-				consulting:{},
+				consulting:null,
 				professionObj: {
 					'0': '金牌管家',
 					'1': '银牌管家',
