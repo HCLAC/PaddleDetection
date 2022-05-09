@@ -106,7 +106,7 @@
 									<view class="author_tag">作者</view>
 								</view>
 								
-								<view class="releaseTime-strategy"> 领途羊签约作者 </view>
+								<view class="releaseTime-strategy" style="background-color: #fff;"> 领途羊签约作者 </view>
 							</view>
 						</view>
 						<view class="right">
