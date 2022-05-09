@@ -138,10 +138,58 @@
 				</view>
 			</view>
 			<!-- 评论区 -->
-			<view v-if="articleInfo">
+			<view v-if="articleInfo && articleInfo.type != 2">
 				<view class="replyLine"></view>
+				<view class="replyBox">
+					<view class="replyText" v-if="comment_count == 0">
+						暂无评论
+					</view>
+					<view class="replyText" v-if="comment_count > 0">
+						共{{comment_count}}条评论
+					</view>
+					<view class="replyContent">
+						<view class="myReply">
+							<image class="userImg" lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'"></image>
+							<view class="replyInput" @click="sendReply">
+								写个回复走个心
+							</view>
+						</view>
+						<view class="reply" v-for="(item,index) in commentsList" :key="index">
+							<view class="replyTop">
+								<image class="userImg" lazy-load :src="item.avatar?item.avatar:'/static/images/userImg.svg'"></image>
+								<view class="topBox">
+									<view class="boxOne">
+										<view class="userName">{{item.account_name}}</view>
+										<view class="replyTime">
+											{{item.create_at.slice(0,10)}}
+										</view>
+									</view>
+									<view class="boxTwo">
+										<view class="min-box" @click="replyLike(item, index)">
+											<image class="replyLike" :src="item.like == 1?'/static/images/attLikeA.svg':'/static/images/attLike.svg'" ></image>
+										</view>
+										<view class="min-box" @click="toReport(item.id)">
+											<image class="report" src="/static/images/report.svg" ></image>
+										</view>
+									</view>
+								</view>
+							</view>
+							<view class="replyBottom">
+								{{item.content}}
+							</view>
+						</view>
+					</view>
+					<view class="moreReply" v-if="comment_count > 3" @click="toMoreReply">
+						查看全部{{comment_count}}条评论
+					</view>
+				</view>
+				<view class="safeBox"></view>
+			</view>
+			<!-- 评论区 攻略文章 -->
+			<view v-if="articleInfo && articleInfo.type == 2">
+				<view style="width: 750rpx;height: 20rpx;background: #F6F6F8;margin-top: 28rpx;"></view>
 				<!-- 分享点赞收藏 -->
-				<view class="bottom">
+				<view class="bottom-gl">
 					<view class="like" @click="clickLike">
 						<!-- <image class="likeBtn" :src="articleInfo.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image> -->
 						<view v-if="isAnimate" class="icon-animate"></view>
@@ -201,7 +249,29 @@
 						查看全部{{comment_count}}条评论
 					</view>
 				</view>
-				<view class="safeBox"></view>
+				<view class="safeBox" style="height: 180rpx;"></view>
+			</view>
+		</view>
+		
+		<!-- 登录 -->
+		<view class="bottom" v-if="articleInfo && articleInfo.type != 2">
+			<view class="bottom-text" @click="sendReply">
+				撩点什么…
+			</view>
+			<view class="like" @click="clickLike">
+				<!-- <image class="likeBtn" :src="articleInfo.liked?'/static/images/attHeartActive.svg':'/static/images/attheart.svg'"></image> -->
+				<view v-if="isAnimate" class="icon-animate"></view>
+				<view v-else :class="articleInfo.liked?'has-like':'icon-like'"></view>
+			</view>
+			<view class="likeNum">{{ articleInfo.like_count }}</view>
+			
+			<view class="fav" @click="clickFav">
+				<image class="favBtn" :src="articleInfo.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
+			</view>
+			<view class="favNum">{{ articleInfo.fav_count }}</view>
+			
+			<view class="share"  @click="share">
+				<image src="/static/images/shareIcon.svg"></image>
 			</view>
 		</view>
 		<!-- 评论输入框 -->
@@ -216,7 +286,7 @@
 		<!-- 弹窗 -->
 		<u-modal v-model="show" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 		<!-- 我要提问按钮 -->
-		<view class="answersFollow" v-if="consulting">
+		<view class="answersFollow" v-if="consulting && articleInfo && articleInfo.type == 2">
 			<view class="answersLeft">
 				<view class="border-img">
 					<image src="@/static/images/border-jian.png" mode=""></image>
@@ -248,7 +318,6 @@
 				<text>咨询Ta</text>
 			</view>
 		</view>
-		
 	</view>
 </template>
 
@@ -263,7 +332,7 @@
 					'1': '旅游达人',
 					'2': '旅游定制师'
 				},
-				consulting:null,
+				consulting: null,
 				// isShow: true,
 				keywordHeight: '0px',
 				showText:false,
@@ -303,8 +372,7 @@
 				// 数据采集
 				trace_info: null,
 				rn: null,
-				joinTime: 0,
-				bulter_id: null 
+				joinTime: 0
 			};
 		},
 		//#ifdef H5
@@ -376,11 +444,11 @@
 			// this.isShow = false
 		},
 		methods: {
-			toChatroom(){
-				console.log('管家列表',this.bulter_id)
-				if(this.bulter_id){
+			toChatroom() {
+				console.log('管家列表', this.bulter_id)
+				if (this.bulter_id) {
 					uni.navigateTo({
-						url:'/pages_im/problem/problem?bulter_id=' + this.bulter_id
+						url: '/pages_im/problem/problem?bulter_id=' + this.bulter_id
 					})
 				}
 			},
@@ -401,7 +469,7 @@
 							});
 							return
 						}
-						
+			
 						this.consulting = res.data.data
 						this.bulter_id = res.data.data.bulter_id
 						console.log(this.consulting, '管家列表')
@@ -1225,12 +1293,12 @@
 </script>
 
 <style lang="scss" scoped>
-.answersFollow{
-		position:fixed;
-		margin:auto;
-		left:0;
-		right:0;
-		bottom:0;
+.answersFollow {
+		position: fixed;
+		margin: auto;
+		left: 0;
+		right: 0;
+		bottom: 0;
 		width: 100%;
 		height: 150rpx;
 		padding-bottom: constant(safe-area-inset-bottom);
@@ -1242,21 +1310,25 @@
 		// align-items: center;
 		// justify-content: space-between;
 		z-index: 10;
-		.answersLeft{
+
+		.answersLeft {
 			position: relative;
 			// margin-left: 26rpx;
 			left: 26rpx;
 			margin-top: 18rpx;
-			.border-img{
+
+			.border-img {
 				width: 108rpx;
 				height: 108rpx;
 				position: absolute;
-				image{
+
+				image {
 					width: 100%;
 					height: 100%;
 				}
 			}
-			.left_img{
+
+			.left_img {
 				width: 88rpx;
 				height: 88rpx;
 				border-radius: 50%;
@@ -1264,12 +1336,14 @@
 				position: absolute;
 				left: 10rpx;
 				top: 10rpx;
-				image{
+
+				image {
 					width: 100%;
 					height: 100%;
 				}
 			}
-			.left_txt{
+
+			.left_txt {
 				width: 70rpx;
 				height: 34rpx;
 				background: #FFE512;
@@ -1286,21 +1360,25 @@
 				left: 20rpx;
 			}
 		}
-		.answersCenter{
+
+		.answersCenter {
 			margin-left: 152rpx;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
-			.center-top{
+
+			.center-top {
 				display: flex;
 				align-items: center;
-				.top-left{
+
+				.top-left {
 					font-size: 32rpx;
 					font-family: PingFangSC-Semibold, PingFang SC;
 					font-weight: 600;
 					color: #303133;
 				}
-				.top-right{
+
+				.top-right {
 					margin-left: 20rpx;
 					width: 106rpx;
 					height: 34rpx;
@@ -1315,11 +1393,13 @@
 					align-items: center;
 				}
 			}
-			.center-btm{
+
+			.center-btm {
 				margin-top: 16rpx;
 			}
 		}
-		.answersRight{
+
+		.answersRight {
 			position: absolute;
 			right: 28rpx;
 			top: 34rpx;
@@ -1330,16 +1410,19 @@
 			border: 2rpx solid #303133;
 			display: flex;
 			align-items: center;
-			.right-img{
+
+			.right-img {
 				width: 56rpx;
 				height: 56rpx;
 				margin-left: 20rpx;
-				image{
+
+				image {
 					width: 100%;
 					height: 100%;
 				}
 			}
-			text{
+
+			text {
 				font-size: 28rpx;
 				font-family: PingFangSC-Semibold, PingFang SC;
 				font-weight: 600;
@@ -1347,7 +1430,7 @@
 			}
 		}
 	}
-	
+
 	page {
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
@@ -1525,37 +1608,47 @@
 					}
 				}
 			}
+			.userMse-r {
+				margin-left: 20rpx;
+				.userNikename {
+					font-size: 28rpx;
+					font-family: PingFangSC-Medium, PingFang SC;
+					font-weight: 500;
+					color: rgba(48, 49, 51, 1);
+					line-height: 28rpx;
+				}
+			}
 		}
 		.right{
 			.isfollowBox {
-				width: 146rpx;
-				height: 68rpx;
-				background: #EDEFF2;
-				border-radius: 16rpx;
+				width: 124rpx;
+				height: 48rpx;
+				background: #f8f8f8;
+				border-radius: 24rpx;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				font-size: 24rpx;
 				font-family: PingFangSC-Medium, PingFang SC;
 				font-weight: 400;
-				color: #606266;
+				color: #c9cad1;
 			}
 			.followBox {
-				width: 146rpx;
-				height: 68rpx; 
-				background: #FFE512;
-				border-radius: 16rpx;
+				width: 124rpx;
+				height: 48rpx;
+				background: #ffe512;
+				border-radius: 24rpx;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				font-size: 28rpx;
+				font-size: 24rpx;
 				font-family: PingFangSC-Medium, PingFang SC;
-				font-weight: bold;
+				font-weight: 500;
 				color: #303133;
 				.followImg {
-					width: 20rpx;
-					height: 20rpx;
-					margin-right: 10rpx;
+					width: 16rpx;
+					height: 16rpx;
+					margin-right: 4rpx;
 				}
 			}
 		}
@@ -1595,7 +1688,7 @@
 		margin: 40rpx 28rpx 0rpx;
 		font-size: 38rpx;
 		font-family: PingFangSC-Semibold, PingFang SC;
-		font-weight: bold;
+		font-weight: 600;
 		color: #303133;
 		line-height: 52rpx;
 		display: inline-block;
@@ -1621,9 +1714,8 @@
 	}
 
 	.tips {
-		margin-top: 10rpx;
+		margin-top: 28rpx;
 		margin-left: 28rpx;
-		padding-bottom: 10rpx;
 		display: flex;
 		flex-wrap: wrap;
 		
@@ -1675,26 +1767,29 @@
 		height: 22rpx;
 		font-size: 22rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
 		color: #909399;
 		line-height: 22rpx;
 		margin-top: 12rpx;
+		background: #EDEFF2;
 	}
+
 	.replyLine {
-		width: 750rpx;
-		height: 20rpx;
-		background: #F6F6F8;
+		width: 694rpx;
+		height: 0.5px;
+		background: #edeff2;
+		margin: 28rpx 28rpx 40rpx;
 	}
 
 	// 评论
 	.replyBox {
 		margin:0 28rpx;
 		.replyText {
-			margin-top: 30rpx;
 			height: 32rpx;
 			font-size: 32rpx;
 			font-family: PingFangSC-Medium, PingFang SC;
-			color: #606266;
-			font-weight: 400;
+			font-weight: 500;
+			color: #303133;
 			line-height: 32rpx;
 		}
 
@@ -1714,8 +1809,8 @@
 				.replyInput {
 					width: 598rpx;
 					height: 68rpx;
-					background: #F6F6F8;
-					border-radius: 34rpx;
+					background: #F8F8F8;
+					border-radius: 17px;
 					padding-left: 32rpx;
 					display: flex;
 					align-items: center;
@@ -1843,14 +1938,48 @@
 		padding-bottom: env(safe-area-inset-bottom);
 		box-sizing: content-box;
 	}
-	/* 分享收藏点赞 */
+	/* 底部 */
 	.bottom {
+		width: 100%;
+		height: 98rpx;
+		position: fixed;
+		left: 0;
+		bottom: var( --window-bottom);
+		z-index: 111;
+		padding-bottom: constant(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom);
+		box-sizing: content-box;
+		display: flex;
+		align-items: center;
+		border-top: 2rpx solid #EDEFF2;
+		background-color: hsla(0,0%,89.8%,.8);
+		background: hsla(0,0%,100%,.9);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+	}
+	.bottom-text{
+		width: 372rpx;
+		height: 68rpx;
+		background: #F8F8F8;
+		border-radius: 34rpx;
+		display: flex;
+		align-items: center;
+		font-size: 24rpx;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		color: #909399;
+		padding-left: 28rpx;
+		margin-left: 28rpx;
+		margin-right: 32rpx;
+	}
+	.bottom-gl{
 		padding: 30rpx;
 		box-sizing: content-box;
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;
-		border-bottom: 2rpx solid #EDEFF2;;
+		border-bottom: 2rpx solid #EDEFF2;
+		margin-bottom: 30rpx;
 	}
 	.share{
 		margin-left: 32rpx;
