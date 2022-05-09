@@ -504,11 +504,12 @@ export default {
 	height: 100rpx;
 	background-color: #FFE512 !important;
 	border-radius: 58rpx;
-	// border: 2rpx solid #edeff2;
 	margin-top: 30rpx;
 	font-size: 36rpx;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	color: #303133;
-	line-height: 100rpx;
 }
 button::after {
 	border: none;

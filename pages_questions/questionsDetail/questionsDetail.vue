@@ -80,7 +80,7 @@
 		</view>
 		<!-- 悬浮窗口 -->
 		<view class="share-box" @click="share">
-				<image src="/static/images/xq.png"></image>
+			<image src="/static/images/xq.png"></image>
 		</view>
 		<!-- 问题回答 -->
 		<view class="answersTip">
@@ -626,9 +626,9 @@
                         if (res.status === 'reply' || res.status === 'replay') {
 							this.contentText = res.content
 							this.pubComment()
+							// 主动关闭评论发布器
+							swan.closeReplyEditor();
 						}
-						// 主动关闭评论发布器
-						swan.closeReplyEditor();
 				    },
 				    fail: err => {
 				        console.log('fail', err)
@@ -1082,7 +1082,7 @@
 		position: fixed;
 		bottom: 310rpx;
 		right: 40rpx;
-		z-index: 10;
+		z-index: 9999;
 		image{
 			width: 52rpx;
 			height: 52rpx;
@@ -1673,7 +1673,7 @@
 				}
 				.top-right{
 					margin-left: 20rpx;
-					width: 106rpx;
+					padding: 4rpx 8rpx;
 					height: 34rpx;
 					background: #EDEFF2;
 					border-radius: 8rpx;

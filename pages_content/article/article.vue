@@ -292,7 +292,7 @@
 					<image src="@/static/images/border-jian.png" mode=""></image>
 				</view>
 				<view class="left_img">
-					<image :src="consulting.bulter_avatar ? consulting.bulter_avatar : '/static/images/logo.png'" mode=""></image>
+					<image :src="consulting.avatar ? consulting.avatar : '/static/images/logo.png'" mode=""></image>
 				</view>
 				<view class="left_txt">
 					在线中
@@ -445,12 +445,39 @@
 		},
 		methods: {
 			toChatroom() {
-				console.log('管家列表', this.bulter_id)
-				if (this.bulter_id) {
-					uni.navigateTo({
-						url: '/pages_im/problem/problem?bulter_id=' + this.bulter_id
-					})
-				}
+				this.HTTP.request({
+					url: '/bulter/consulting',
+					method: 'POST',
+					data:{
+						bulter_id: this.consulting.bulter_id
+					},
+					success: res => {
+						if (res.statusCode != 200 || res.data.code != 0) {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							return
+						}
+						var info = res.data.data
+						console.log(info, '管家列表')
+						if(info.history.length > 0){
+							uni.navigateTo({
+								url:'/pages_im/chatroom/chatroom?search_id=' + info.search_id,
+							})
+						}else{
+							uni.navigateTo({
+								url:'/pages_im/problem/problem?bulter_id=' + info.bulter_id,
+							})
+						}
+					}
+				});
+				// console.log('管家列表', this.bulter_id)
+				// if (this.bulter_id) {
+				// 	uni.navigateTo({
+				// 		url: '/pages_im/problem/problem?bulter_id=' + this.bulter_id
+				// 	})
+				// }
 			},
 			//管家信息
 			getInfo() {
@@ -980,6 +1007,7 @@
 				})
 			},
 			sendReply() {
+				console.log(123123)
 				if (!this.hasLogin) {
 					uni.navigateTo({
 						url: '/pages_mine/login/login'
@@ -994,9 +1022,9 @@
                         if (res.status === 'reply' || res.status === 'replay') {
 							this.contentText = res.content
 							this.pubComment()
+							// 主动关闭评论发布器
+							swan.closeReplyEditor();
 						}
-						// 主动关闭评论发布器
-						swan.closeReplyEditor();
 					},
 					fail: err => {
 						console.log('fail', err)
@@ -1380,7 +1408,7 @@
 
 				.top-right {
 					margin-left: 20rpx;
-					width: 106rpx;
+					padding: 4rpx 8rpx;
 					height: 34rpx;
 					background: #EDEFF2;
 					border-radius: 8rpx;
