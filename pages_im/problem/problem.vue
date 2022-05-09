@@ -153,7 +153,7 @@
 		},
 		onLoad(query) {
 			this.bulter_id = query.bulter_id
-			this.getInfo()
+			// this.getInfo()
 		},
 		onShow(){
 			this.getInfo()
