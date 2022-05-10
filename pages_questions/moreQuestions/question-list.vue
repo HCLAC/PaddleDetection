@@ -76,10 +76,12 @@
 						</view>
 						<view class="lookAnswers">
 							<view class="look">
-								{{item.read}}人看过
+								{{item.read}}
+								<text>人看过</text>
 							</view>
 							<view class="answers">
-								{{item.reply_count}}回答
+								{{item.reply_count}}
+								<text>回答</text>
 							</view>
 						</view>
 					</view>
@@ -481,7 +483,7 @@
 			}
 		}
 		.title{
-			font-size: 34rpx;
+			font-size: 32rpx;
 			font-family: PingFangSC-Medium, PingFang SC;
 			font-weight: 500;
 			color: #303133;
@@ -539,12 +541,22 @@
 				display: flex;
 				align-items: center;
 				font-size: 24rpx;
-				font-family: PingFangSC-Regular, PingFang SC;
-				font-weight: 400;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
 				color: #606266;
 				line-height: 34rpx;
 				.look{
 					margin-right: 16rpx;
+					text{
+						font-family: PingFangSC-Regular, PingFang SC;
+						font-weight: 400;
+					}
+				}
+				.answers{
+					text{
+						font-family: PingFangSC-Regular, PingFang SC;
+						font-weight: 400;
+					}
 				}
 			}
 		}

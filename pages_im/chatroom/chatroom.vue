@@ -1372,7 +1372,7 @@
 
 				.chatmsg {
 					max-width: 400rpx;
-					height: 72rpx;
+					// height: 72rpx;
 					background: #FFFFFF;
 					border-radius: 0rpx 24rpx 24rpx 24rpx;
 					padding: 20rpx;
