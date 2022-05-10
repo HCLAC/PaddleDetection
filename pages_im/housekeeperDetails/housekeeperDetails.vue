@@ -374,14 +374,31 @@
 					success: res => {
 						this.info = res.data.data
 						console.log(this.info,'个人详情')
+						
+
 						this.$nextTick(() => {
-							// console.log(this.info.description.length,'个人详情')
-							// this.info.description+='测试数据'
-							if(this.info.description.length <= 78){
-								this.isShow = false
-							}else{
-								this.isShow = true
+							switch(uni.getSystemInfoSync().platform){
+							 case 'android':    
+							console.log('运行Android上')    
+							  if(this.info.description.length <= 72){
+							  	this.isShow = false
+							  }else{
+							  	this.isShow = true
+							  }
+							 break;    
+							 case 'ios':      
+							 console.log('运行iOS上')      
+							 if(this.info.description.length <= 78){
+							 	this.isShow = false
+							 }else{
+							 	this.isShow = true
+							 }
+							  break;    
+							  default:      
+							 console.log('运行在开发者工具上')   
+							 break;
 							}
+							
 							
 						})
 					}
