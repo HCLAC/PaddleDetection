@@ -1431,6 +1431,12 @@
 						-webkit-line-clamp: 2;
 						-webkit-box-orient: vertical;
 					}
+					.answer{
+						font-size: 30rpx;
+						font-family: PingFangSC-Light, PingFang SC;
+						font-weight: 300;
+						color: #606266;
+					}
 					.authorBox{
 						margin-top: 20rpx;
 						display: flex;
@@ -1685,6 +1691,9 @@
 					justify-content: center;
 					align-items: center;
 				}
+			}
+			.center-btm{
+				margin-top: 16rpx;
 			}
 		}
 		.answersRight{
