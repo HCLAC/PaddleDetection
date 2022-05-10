@@ -702,7 +702,6 @@
 		}
 		.areacontent {
 			width: 412rpx;
-			height: 84rpx;
 			margin-top: 12rpx;
 			margin-bottom: 14rpx;
 			font-size: 28rpx;
