@@ -1691,7 +1691,7 @@
 		background: rgba(0, 145, 255, 0.1);
 		border-radius: 20rpx;
 		display: inline-block;
-		line-height: 40rpx;
+		// line-height: 40rpx;
 		padding: 0 14rpx;
 		.adreessIcon {
 			width: 24rpx;
@@ -1701,11 +1701,14 @@
 		}
 		.adressText {
 			max-width: 400rpx;
+			height: 100%;
+			display: flex;
+			align-items: center;
 			font-size: 22rpx;
 			font-family: PingFangSC-Regular, PingFang SC;
 			font-weight: 400;
 			color: rgba(0, 145, 255, 1);
-			float: right;
+			// float: right;
 			overflow: hidden;
 			white-space: nowrap; 
 			text-overflow: ellipsis; 
