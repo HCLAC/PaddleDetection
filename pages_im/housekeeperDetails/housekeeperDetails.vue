@@ -38,7 +38,7 @@
 					个人简介
 				</view>
 			</view>
-			<view class="contentText">
+			<!-- <view class="contentText">
 				<view class="detail-intorduce-wrap" :style="{height:textHeight>=60?'120rpx':'auto'}">
 					<view class="detail-intorduce-txt">
 						{{info.description}}
@@ -48,7 +48,22 @@
 				<view class="detail-unfold-btn" >
 					<text v-if="textHeight >= 60" @click="textHeight=0">展开</text>
 					<text v-if="textHeight == 0" @click="textHeight=60">收起</text>
-					<!-- <image class="iconImg" src="@/static/images/zhankaiIcon.png"></image> -->
+				</view>
+			</view> -->
+			
+			<view class="contentText">
+				<view class="info-wrap" :class="hMore ? 'loseText' : 'moreText'">
+					{{info.description}}
+				</view>
+				<view class="btnBox" @click="showMore" v-if="!hMore && isShow">
+					<view class="mask"></view>
+					<text>收起</text>
+					<image class="iconImg" src="@/static/images/zhankaiIcon.png"></image>
+				</view>
+				<view class="btnBox" @click="showMore" v-if="hMore && isShow">
+					<view class="mask"></view>
+					<text>展开</text>
+					<image class="iconImg" src="@/static/images/shouqiIcon.png"></image>
 				</view>
 			</view>
 		</view>
@@ -142,6 +157,7 @@
 	export default {
 		data() {
 			return {
+				hMore: true,
 				textHeight:0,
 				backgroundColor: 'transparent',
 				Shadow:false,
@@ -345,12 +361,8 @@
 			
 			//切换简介展开
 			showMore() {
-				this.isShow = !this.isShow;
-				if(!this.isShow){
-					this.TxtHeight = 'auto'
-				}else{
-					this.TxtHeight = 120
-				}
+				this.hMore = !this.hMore;
+				
 			},
 			//获取个人详情
 			Getinfo(){
@@ -363,12 +375,14 @@
 						this.info = res.data.data
 						console.log(this.info,'个人详情')
 						this.$nextTick(() => {
-							// 获取demo
-							let introduce = uni.createSelectorQuery().in(this).select('.detail-intorduce-txt')
-							introduce.boundingClientRect(res=>{
-								console.log('开展收起----',res)
-								this.textHeight = res.height
-							}).exec()
+							// console.log(this.info.description.length,'个人详情')
+							this.info.description+='测试数据'
+							if(this.info.description.length <= 78){
+								this.isShow = false
+							}else{
+								this.isShow = true
+							}
+							
 						})
 					}
 				});
@@ -378,6 +392,13 @@
 </script>
 
 <style lang="scss">
+	.line-clamp{
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		-webkit-line-clamp: 3;
+	}
+	
 	.detail-intorduce{
 		overflow: hidden;
 		display: -webkit-box;
@@ -385,8 +406,9 @@
 		-webkit-line-clamp: 3;
 	}
 	.detail-intorduce-wrap{
-		overflow: hidden;
+		 overflow:hidden; 
 	}
+	
 	.detail-intorduce-txt{
 		font-size: 28rpx;
 		font-family: PingFangSC-Regular, PingFang SC;
@@ -559,6 +581,7 @@
 					background-color: #FFFFFF;
 				}
 			}
+			
 		}
 	}
 	.kong{
