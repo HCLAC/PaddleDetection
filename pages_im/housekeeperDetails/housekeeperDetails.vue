@@ -376,7 +376,7 @@
 						console.log(this.info,'个人详情')
 						this.$nextTick(() => {
 							// console.log(this.info.description.length,'个人详情')
-							this.info.description+='测试数据'
+							// this.info.description+='测试数据'
 							if(this.info.description.length <= 78){
 								this.isShow = false
 							}else{
