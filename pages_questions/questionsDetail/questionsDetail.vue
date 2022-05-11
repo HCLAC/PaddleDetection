@@ -1692,9 +1692,6 @@
 					align-items: center;
 				}
 			}
-			.center-btm{
-				margin-top: 16rpx;
-			}
 		}
 		.answersRight{
 			position: absolute;
