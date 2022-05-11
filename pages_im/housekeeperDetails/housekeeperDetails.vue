@@ -38,32 +38,9 @@
 					个人简介
 				</view>
 			</view>
-			<!-- <view class="contentText">
-				<view class="detail-intorduce-wrap" :style="{height:textHeight>=60?'120rpx':'auto'}">
-					<view class="detail-intorduce-txt">
-						{{info.description}}
-					</view>
-				</view>
-				
-				<view class="detail-unfold-btn" >
-					<text v-if="textHeight >= 60" @click="textHeight=0">展开</text>
-					<text v-if="textHeight == 0" @click="textHeight=60">收起</text>
-				</view>
-			</view> -->
-			
 			<view class="contentText">
-				<view class="info-wrap" :class="hMore ? 'loseText' : 'moreText'">
+				<view class="info-wrap">
 					{{info.description}}
-				</view>
-				<view class="btnBox" @click="showMore" v-if="!hMore && isShow">
-					<view class="mask"></view>
-					<text>收起</text>
-					<image class="iconImg" src="@/static/images/zhankaiIcon.png"></image>
-				</view>
-				<view class="btnBox" @click="showMore" v-if="hMore && isShow">
-					<view class="mask"></view>
-					<text>展开</text>
-					<image class="iconImg" src="@/static/images/shouqiIcon.png"></image>
 				</view>
 			</view>
 		</view>
@@ -546,28 +523,11 @@
 			margin-top: 10rpx;
 			margin-bottom: 40rpx;
 			position: relative;
-			.moreText {
+			.info-wrap{
 				font-size: 28rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
 				font-weight: 400;
-				color: rgba(144, 147, 153, 1);
-				line-height: 42rpx;
-				text-align:justify;
-				text-justify:inter-ideograph;
-			}
-			.loseText {
-				font-size: 28rpx;
-				font-family: PingFangSC-Regular, PingFang SC;
-				font-weight: 400;
-				color: rgba(144, 147, 153, 1);
-				line-height: 42rpx;
-				
-				display: -webkit-box;
-				-webkit-box-orient: vertical;
-				overflow: hidden;
-				-webkit-line-clamp: 3;
-				text-align:justify;
-				text-justify:inter-ideograph;
+				color: #606266;
 			}
 			.btnBox {
 				height: 42rpx;
