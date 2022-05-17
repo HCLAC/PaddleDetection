@@ -280,8 +280,8 @@ export default {
 					//#ifdef MP-BAIDU
 					swan.setPageInfo({
 						title: that.siteInfo.name+"景点介绍-领途羊",
-						keywords: that.siteInfo.name+","+that.siteInfo.city+"旅游攻略,"+that.siteInfo.pos+",领途羊",
-						description: that.siteInfo.description,
+						keywords: that.siteInfo.keywords,
+						description: that.siteInfo.web_doc,
 						image: that.siteInfo.images.length<=3?that.siteInfo.images:that.siteInfo.images.slice(0,3),
 					})
 					// #endif
