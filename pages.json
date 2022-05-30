@@ -190,7 +190,14 @@
 					"navigationBarTitleText": "",
 					"enablePullDownRefresh": false
 				}
-			}, {
+			},
+			{
+				"path": "customization/customization",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+			},{
 				"path": "chatroom/chatroom",
 				"style": {
 					"navigationBarTitleText": "",
@@ -231,7 +238,16 @@
 					"enablePullDownRefresh": false
 				}
 
-			}]
+			}    ,{
+                    "path" : "tripForm/tripForm",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
 		},
 		{
 			"root": "pages_province",

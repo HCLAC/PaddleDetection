@@ -40,6 +40,10 @@
 					<image class="f-img" src="/static/images/rsbd.png" />
 					<view class="f-text">热度榜单</view>
 				</button>
+				<button class="f-box" @click="stroke">
+					<image class="f-img" src="https://cache.lingtuyang.cn/web_static/index-xcdz.png" />
+					<view class="f-text">行程定制</view>
+				</button>
 			</view>
 			<!-- 热门目的地 -->
 			<view class="hot">
@@ -430,6 +434,12 @@
 					url:'/pages_search/hotSearchRank/hotSearchRank'
 				})
 			},
+			//跳转行程定制
+			stroke(){
+				uni.navigateTo({
+					url:'/pages_im/customization/customization'
+				})
+			},
 			notLocation(){
 				if(this.dqdwText == '未定位'){
 					uni.getSetting({
@@ -795,7 +805,7 @@
 		background: #F9FAFA;
 		display: flex;
 		.f-box{
-			width: 25%;
+			width: 20%;
 			height: 100%;
 			display: flex;
 			background: rgba(0,0,0,0);
