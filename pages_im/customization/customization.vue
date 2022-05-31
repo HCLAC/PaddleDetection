@@ -23,7 +23,7 @@
 				<view class="time-txt">
 					游玩天数
 				</view>
-				<u-number-box :size="28" :input-width="76" :input-height="60" v-model="value" @change="valChange"></u-number-box>
+				<u-number-box :disabledInput='true' :size="28" :input-width="76" :input-height="60" v-model="value" @change="valChange"></u-number-box>
 			</view>
 			<view class="title-mode">
 				推荐方式
@@ -66,6 +66,9 @@
 				value:0,//步进器
 				mode:true,
 			};
+		},
+		onLoad(e){
+			console.log(e,'eee')
 		},
 		methods:{
 			//步进器函数

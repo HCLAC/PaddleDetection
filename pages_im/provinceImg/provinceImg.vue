@@ -35,6 +35,13 @@
 				</view>
 			</view>
 		</view>
+		<view class="kong-index" v-if="!emptyShow">
+			<image src="@/static/images/index-kong.png" mode=""></image>
+			<view class="txt">暂无搜索结果</view>
+		</view>
+		<view class="btn" @click="goBack">
+			我选好了
+		</view>
 	</view>
 </template>
 
@@ -45,7 +52,8 @@
 				keyword:'',
 				form:[],
 				stateS:[],
-				imgShow:true
+				imgShow:true,
+				emptyShow:true
 			};
 		},
 		onShow(){
@@ -79,37 +87,53 @@
 			//搜索触发
 			search(value){
 				console.log(this.keyword,'---')
+				this.getStates()
 			},
 			//清除搜索
 			clear(){
 				this.keyword = ''
+				this.getStates()
 			},
 			//获取省份信息
 			getStates(){
 				this.HTTP.request({
 					url: '/area/states',
+					data:{
+						name:this.keyword
+					},
 					method: 'GET',
 					success: res => {
 						this.form = res.data.data.map(item=>{
 							item.imgShow=false
 							return item
 						})
-			
+						if(this.form.length == 0){
+							this.emptyShow = false
+						}else{
+							this.emptyShow = true
+						}
 						console.log(this.form,'res')
 					}
 				});
 			},
+			goBack(){
+				uni.navigateTo({
+					url:'/pages_im/customization/customization?stateS=' + this.stateS
+				})
+			}
 		}
 	}
 </script>
 
 <style lang="scss">
 .box{
-	padding: 0 28rpx;
+	// padding: 0 28rpx;
 	.searchBox{
+		padding: 0 28rpx;
 		margin-top: 30rpx;
 	}
 	.content{
+		padding: 0 28rpx;
 		.title{
 			font-size: 32rpx;
 			font-family: PingFangSC-Medium, PingFang SC;
@@ -158,6 +182,38 @@
 				}
 			}
 		}
+	}
+	.kong-index{
+		margin-top: 200rpx;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		image{
+			width: 202rpx;
+			height: 206rpx;
+		}
+		.txt{
+			font-size: 26rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #909399;
+			margin-top: 40rpx;
+		}
+	}
+	.btn{
+		position: fixed;
+		bottom: 0;
+		width: 750rpx;
+		height: 166rpx;
+		background: #FFFFFF;
+		box-shadow: 0px -16rpx 56rpx 0px rgba(0, 0, 0, 0.15);
+		font-size: 32rpx;
+		font-family: PingFangSC-Semibold, PingFang SC;
+		font-weight: 600;
+		color: #303133;
+		display: flex;
+		justify-content: center;
+		padding-top: 34rpx;
 	}
 }
 </style>
