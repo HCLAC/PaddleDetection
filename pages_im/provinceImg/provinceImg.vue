@@ -64,21 +64,20 @@
 				if(item.imgShow){
 					item.imgShow = false
 					this.stateS.map((val, i) => {
-					        if (val === item.state_id) {
+					        if (val.state_id === item.state_id) {
 					          this.stateS.splice(i, 1)
 					        }
 					      })
 				}else{
 					if(this.stateS.length < 2){
-						if(this.stateS.indexOf(item.state_id)===-1){
-							this.stateS.push(item.state_id)
-						}
+						this.stateS.push(item)
 						item.imgShow = true
 					}else{
 						item.imgShow = false
 						console.log('最多选择2个')
 					}
 				}
+				console.log('选择===', this.stateS)
 			},
 			//返回首页
 			home(){
@@ -103,10 +102,23 @@
 					},
 					method: 'GET',
 					success: res => {
+						// var a = [{name:1111,id:1,show:false},{name:222,id:2,show:false},{name:333,id:3,show:false}]
+						// var b = [{name:1111,id:1,show:true}]
+						console.log('this.stateS===',this.stateS)
 						this.form = res.data.data.map(item=>{
 							item.imgShow=false
+							this.stateS.map(item2=>{
+								if(item.state_id===item2.state_id) {
+									item.imgShow = true
+								}
+							})
 							return item
 						})
+						// console.log('c====',c)
+						// this.form = res.data.data.map(item=>{
+						// 	item.imgShow=false
+						// 	return item
+						// })
 						if(this.form.length == 0){
 							this.emptyShow = false
 						}else{
@@ -117,8 +129,9 @@
 				});
 			},
 			goBack(){
+				console.log(JSON.stringify(this.stateS))
 				uni.navigateTo({
-					url:'/pages_im/customization/customization?stateS=' + this.stateS
+					url:'/pages_im/customization/customization?stateS=' + JSON.stringify(this.stateS)
 				})
 			}
 		}

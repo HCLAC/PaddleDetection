@@ -68,7 +68,7 @@
 			};
 		},
 		onLoad(e){
-			console.log(e,'eee')
+			console.log(JSON.parse(e.stateS),'eee')
 		},
 		methods:{
 			//步进器函数
