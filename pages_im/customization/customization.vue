@@ -44,7 +44,7 @@
 			<view class="want-province" @click="provinceImg">
 				<u-icon color="#909399" size="44" name="plus"></u-icon>
 			</view>
-			<!-- 省份图片选择 -->
+			<!-- 城市图片选择 -->
 			<view class="title-want" v-if="!mode">
 				我想去的城市
 			</view>
@@ -82,7 +82,9 @@
 			},
 			//选择省份的图片
 			provinceImg(){
-				console.log('省份图')
+				uni.navigateTo({
+					url:'/pages_im/provinceImg/provinceImg'
+				})
 			},
 			//提交按钮
 			submit(){
