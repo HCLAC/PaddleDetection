@@ -53,25 +53,24 @@
 		},
 		methods:{
 			imgChange(item,index){
-				// console.log(item,'++++')
-				// console.log(index,'++++')
-				this.$nextTick(function(){
-					const arr = this.form
-					if(this.stateS.length < 2 && arr[index].imgShow == false){
-						arr[index].imgShow = !arr[index].imgShow
-					}
-					this.form = []
-					this.form = arr
-					// console.log(this.form[index],'---')      
-					// console.log(arr,'===')
-					
-					if(arr[index].imgShow){
-						this.stateS.push(this.form[index])
+				if(item.imgShow){
+					item.imgShow = false
+					this.stateS.map((val, i) => {
+					        if (val === item.state_id) {
+					          this.stateS.splice(i, 1)
+					        }
+					      })
+				}else{
+					if(this.stateS.length < 2){
+						if(this.stateS.indexOf(item.state_id)===-1){
+							this.stateS.push(item.state_id)
+						}
+						item.imgShow = true
 					}else{
-						this.stateS.splice(this.form[index],1)
+						item.imgShow = false
+						console.log('最多选择2个')
 					}
-					console.log(this.stateS,'this.stateS')
-				})
+				}
 			},
 			//返回首页
 			home(){
@@ -91,7 +90,11 @@
 					url: '/area/states',
 					method: 'GET',
 					success: res => {
-						this.form = res.data.data
+						this.form = res.data.data.map(item=>{
+							item.imgShow=false
+							return item
+						})
+			
 						console.log(this.form,'res')
 					}
 				});
