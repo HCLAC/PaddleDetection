@@ -256,6 +256,15 @@
                 }
                 
                 }
+                ,{
+                    "path" : "cityImg/cityImg",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 		},
 		{

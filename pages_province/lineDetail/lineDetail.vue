@@ -77,7 +77,7 @@
 							<view class="price-img">
 								<image src="../../static/images/money.svg"></image>
 							</view>
-							<text class="price">{{ lineContent?lineContent.money:0 }}</text>
+							<text class="price">{{lineContent.min_money}} ~ {{lineContent.max_money}}</text>
 							<text>起</text>
 						</view>
 						<view class="linePrice-text">

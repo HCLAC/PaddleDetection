@@ -2,7 +2,7 @@
 	<view class="box">
 		<!-- 顶部栏 -->
 		<view class="nav-bar">
-			<uni-nav-bar :fixed="true" :status-bar="true" title="选择省份">
+			<uni-nav-bar :fixed="true" :status-bar="true" title="选择城市">
 				<view slot="left" class="slotleft">
 					<!-- #ifndef  MP-BAIDU -->
 						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="home" />
@@ -24,12 +24,12 @@
 		<!-- 城市选择 -->
 		<view class="content">
 			<view class="title">
-				热门省份
+				热门城市
 			</view>
 			<view class="list-box">
 				<view class="box-img" v-for="(item,index) in form" :key="index" @click="imgChange(item,index)">
 					<image :src="item.image" mode=""></image>
-					<text>{{item.state_name}}</text>
+					<text>{{item.city_name}}</text>
 					<view class="kong" v-if="item.imgShow"></view>
 					<image v-if="item.imgShow" class="kong-img" src="https://cache.lingtuyang.cn/web_static/xz-yes.png" mode=""></image>
 				</view>
@@ -49,13 +49,16 @@
 	export default {
 		data() {
 			return {
+				state_id:'',
 				keyword:'',
 				form:[],
 				stateS:[],
 				imgShow:true,
 				emptyShow:true,
-				max_num:uni.getStorageSync('mode')=='2'? 1 : 2
 			};
+		},
+		onLoad(e){
+			this.state_id = e.state_id
 		},
 		onShow(){
 			this.getStates()
@@ -70,12 +73,12 @@
 						}
 					  })
 				}else{
-					if(this.stateS.length < this.max_num){
+					if(this.stateS.length < 5){
 						this.stateS.push(item)
 						item.imgShow = true
 					}else{
 						item.imgShow = false
-						console.log('最多选择2个')
+						console.log('最多选择5个')
 					}
 				}
 				console.log('选择===', this.stateS)
@@ -97,9 +100,10 @@
 			//获取省份信息
 			getStates(){
 				this.HTTP.request({
-					url: '/area/states',
+					url: '/area/cities',
 					data:{
-						name:this.keyword
+						name:this.keyword,
+						state_id:this.state_id
 					},
 					method: 'GET',
 					success: res => {
@@ -130,9 +134,8 @@
 				});
 			},
 			goBack(){
-				console.log(JSON.stringify(this.stateS))
 				uni.setStorage({
-					key: 'stateS',
+					key: 'citys',
 					data: JSON.stringify(this.stateS),
 					success:  (e)=> {
 						console.log(e,'success');

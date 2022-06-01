@@ -23,37 +23,63 @@
 				<view class="time-txt">
 					游玩天数
 				</view>
-				<u-number-box :disabledInput='true' :size="28" :input-width="76" :input-height="60" v-model="value" @change="valChange"></u-number-box>
+				<u-number-box :min='1' :disabledInput='true' :size="28" :input-width="76" :input-height="60" v-model="value" @change="valChange"></u-number-box>
 			</view>
 			<view class="title-mode">
 				推荐方式
 			</view>
 			<!-- 省份城市选择 -->
 			<view class="mode">
-				<view :class="mode ? 'mode-state' : 'mode-city'" @click="stateChange">
+				<view :class="mode != '2' ? 'mode-state' : 'mode-city'" @click="stateChange">
 					按省份
 				</view>
-				<view :class="mode ? 'mode-city' : 'mode-state'" style="margin-left: 20rpx;" @click="cityChange">
+				<view :class="mode == '2' ? 'mode-state' : 'mode-city'" style="margin-left: 20rpx;" @click="cityChange">
 					按城市
 				</view>
 			</view>
 			<!-- 省份图片选择 -->
 			<view class="title-want">
-				我想去的省份
+				我想去的省份{{imgForm.length}}
 			</view>
-			<view class="want-province" @click="provinceImg">
-				<u-icon color="#909399" size="44" name="plus"></u-icon>
+			<view class="want-box">
+				<view class="want-img" v-for="(item,index) in imgForm" :key='index'>
+					<image class="state-img" :src="item.image" mode=""></image>
+					<view class="state-txt">
+						{{item.state_name}}
+					</view>
+					<view class="" @click="close(item,index)">
+						<image class="gb" src="https://cache.lingtuyang.cn/web_static/dz-gb.png" mode=""></image>
+					</view>
+				</view>
+				<view class="want-province" @click="provinceImg" v-if="stateShow">
+					<u-icon color="#909399" size="44" name="plus"></u-icon>
+				</view>
 			</view>
 			<!-- 城市图片选择 -->
-			<view class="title-want" v-if="!mode">
+			<view class="title-want" v-if="mode == '2'">
 				我想去的城市
 			</view>
-			<view class="want-province" @click="provinceImg" v-if="!mode">
-				<u-icon color="#909399" size="44" name="plus"></u-icon>
+			<view class="want-box-two" v-if="mode == '2'">
+				<scroll-view  class="two-box" scroll-x="true">
+					<view class="two-img" v-for="(item,index) in imgForm2" :key='index'>
+						<image class="city-img" :src="item.image" mode=""></image>
+						<view class="city-txt">
+							{{item.city_name}}
+						</view>
+						<view class="" @click="close2(item,index)">
+							<image class="gb" src="https://cache.lingtuyang.cn/web_static/dz-gb.png" mode=""></image>
+						</view>
+					</view>
+					<view class="want-province-two" @click="cityImg" >
+						<view class="two-icon">
+							<u-icon color="#909399" size="44" name="plus"></u-icon>
+						</view>
+					</view> 
+				</scroll-view>
 			</view>
 			<!-- button -->
 			<view class="btn" @click="submit">
-				开始制定行程
+				{{txt}}
 			</view>
 		</view>
 	</view>
@@ -63,25 +89,113 @@
 	export default {
 		data() {
 			return {
-				value:0,//步进器
-				mode:true,
+				value:1,//步进器
+				mode:'1',//1省份/2城市
+				imgForm:[],
+				imgForm2:[],
+				stateShow:true,
+				cityShow:true,
+				txt:"开始制定行程"
 			};
 		},
 		onLoad(e){
-			console.log(JSON.parse(e.stateS),'eee')
+			uni.getStorage({
+				key: 'stateS',
+				success:  (res)=> {
+					console.log(res,'res')
+					let data = res.data
+					if(data){
+						this.imgForm = JSON.parse(data)
+						conso
+						if(this.imgForm.length == 2){
+							this.stateShow = false
+						}else{
+							this.stateShow = true
+						}
+					}
+				}
+			});
+			uni.getStorage({
+				key: 'citys',
+				success:  (res)=> {
+					let data = res.data
+					if(data){
+						this.imgForm2 = JSON.parse(data)
+						if(this.imgForm.length == 5){
+							this.cityShow = false
+						}else{
+							this.cityShow = true
+						}
+					}
+				}
+			});
+			
+		},
+		onShow(){
+			this.$nextTick(function(){
+				this.mode = uni.getStorageSync('mode');
+				console.log(this.mode,'+++++')
+			})
+			console.log(this.mode,'this.mode1111')
+			
 		},
 		methods:{
+			close(item,index){
+				this.imgForm.map((val, i) => {
+					if (val.state_id === item.state_id) {
+						this.imgForm.splice(i, 1)
+					}
+				})
+				if(this.imgForm.length == 2){
+					this.stateShow = false
+				}else{
+					this.stateShow = true
+				}
+			},
+			close2(item,index){
+				this.imgForm2.map((val, i) => {
+					if (val.city_id === item.city_id) {
+						this.imgForm2.splice(i, 1)
+					}
+				})
+				if(this.imgForm.length == 5){
+					this.cityShow = false
+				}else{
+					this.cityShow = true
+				}
+			},
 			//步进器函数
 			valChange(e) {
 				console.log('当前值为: ' + e.value)
 			},
 			//选择省份
 			stateChange(){
-				this.mode = true
+				this.mode = '1'
+				this.imgForm = []
+				this.imgForm2 = []
+				uni.clearStorage();
+				uni.setStorage({
+					key: 'mode',
+					data: this.mode,
+					success:  (e)=> {
+						console.log(this.mode,'success11');
+					}
+				});
 			},
 			//选择城市
 			cityChange(){
-				this.mode = false
+				this.mode = '2'
+				this.imgForm = []
+				this.imgForm2 = []
+				console.log(this.imgForm,'this.imgForm')
+				uni.clearStorage();
+				uni.setStorage({
+					key: 'mode',
+					data: this.mode,
+					success:  (e)=> {
+						console.log(this.mode,'success22');
+					}
+				});
 			},
 			//选择省份的图片
 			provinceImg(){
@@ -89,11 +203,32 @@
 					url:'/pages_im/provinceImg/provinceImg'
 				})
 			},
+			//选择城市图片
+			cityImg(){
+				var state_id = this.imgForm[0].state_id
+				// uni.setStorage({
+				// 	key: 'mode',
+				// 	data: this.mode,
+				// 	success:  (e)=> {
+				// 		console.log(e,'success');
+				// 	}
+				// });
+				uni.navigateTo({
+					url:'/pages_im/cityImg/cityImg?state_id=' + state_id
+				})
+			},
 			//提交按钮
 			submit(){
-				uni.navigateTo({
-					url:'/pages_im/tripForm/tripForm'
-				})
+				this.txt = '正在定制行程'
+				var state_id = JSON.stringify(this.imgForm)
+				var city_id = JSON.stringify(this.imgForm2)
+				setTimeout(() => {
+					uni.navigateTo({
+						url: '/pages_im/tripForm/tripForm?state_id=' + state_id +'&city_id=' + city_id + '&value=' + this.value
+					});
+					this.txt = '开始制定行程'
+					uni.clearStorage();
+				}, 300);
 			},
 		}
 	}
@@ -216,16 +351,104 @@
 			margin-top: 40rpx;
 			padding-top: 40rpx;
 		}
-		.want-province{
-			width: 176rpx;
-			height: 176rpx;
+		.want-box-two{
 			display: flex;
-			justify-content: center;
-			align-items: center;
-			margin-top: 30rpx;
-			background-image: url(https://cache.lingtuyang.cn/web_static/dz-border.png);
-			background-size: 100%;
-			background-origin: center center;
+			.two-box{
+				display: flex;
+				white-space: nowrap;
+				width: 100%;
+				.two-img{
+					position: relative;
+					margin-top: 30rpx;
+					margin-right: 30rpx;
+					display: inline-block;
+					.city-img{
+						width: 176rpx;
+						height: 176rpx;
+						border-radius: 16rpx;
+					}
+					.city-txt{
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50%,-50%);
+						font-size: 28rpx;
+						font-family: PingFangSC-Medium, PingFang SC;
+						font-weight: 500;
+						color: #FFFFFF;
+					}
+					.gb{
+						right: -18rpx;
+						top: -14rpx;
+						z-index: 100;
+						position: absolute;
+						width: 44rpx;
+						height: 44rpx;
+					}
+				}
+				.want-province-two{
+					width: 176rpx;
+					height: 176rpx;
+					position: relative;
+					display: inline-block;
+					// display: flex;
+					// justify-content: center;
+					// align-items: center;
+					margin-top: 30rpx;
+					background-image: url(https://cache.lingtuyang.cn/web_static/dz-border.png);
+					background-size: 100%;
+					background-origin: center center;
+					.two-icon{
+						position: absolute;
+						top:50%;
+						left: 50%;
+						transform: translate(-50%,-50%);
+					}
+				}
+			}
+			
+		}
+		.want-box{
+			display: flex;
+			.want-img{
+				position: relative;
+				margin-top: 30rpx;
+				margin-right: 30rpx;
+				.state-img{
+					width: 176rpx;
+					height: 176rpx;
+					border-radius: 16rpx;
+				}
+				.state-txt{
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%,-50%);
+					font-size: 28rpx;
+					font-family: PingFangSC-Medium, PingFang SC;
+					font-weight: 500;
+					color: #FFFFFF;
+				}
+				.gb{
+					right: -18rpx;
+					top: -14rpx;
+					z-index: 100;
+					position: absolute;
+					width: 44rpx;
+					height: 44rpx;
+				}
+			}
+			.want-province{
+				width: 176rpx;
+				height: 176rpx;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin-top: 30rpx;
+				background-image: url(https://cache.lingtuyang.cn/web_static/dz-border.png);
+				background-size: 100%;
+				background-origin: center center;
+			}
 		}
 		.btn {
 			width: 100%;

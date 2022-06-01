@@ -23,7 +23,7 @@
 				<image src="https://cache.lingtuyang.cn/web_static/xc-prompt.png" mode=""></image>
 			</view>
 			<view class="prompt-txt">
-				共18条线路，持续更新中…
+				共{{total}}条线路，持续更新中…
 			</view>
 		</view>
 		<!-- 行程为空 -->
@@ -36,34 +36,37 @@
 			</view>
 		</view>
 		<!-- 有数据时列表 -->
-		<view class="List" v-for="(item,index) in form" v-if="promptShow">
+		<view class="List" v-for="(item,index) in form" :key="index" v-if="promptShow" @click="goLine(item)">
 			<view class="left">
 				<view class="title">
-					成都出发，自驾西藏，川进青出-5日川藏环线
+					{{item.title}}
 				</view>
 				<view class="money">
-					参考价格：1280～2650
+					参考价格：{{item.min_money}}～{{item.max_money}}
 				</view>
 				<view class="day-box">
 					<view class="day">
-						5日行程
+						{{item.day}}日行程
 					</view>
 					<view class="label">
-						人文
+						{{labelArr[item.theme]}}
 					</view>
 				</view>
 			</view>
 			<view class="right">
 				<view class="img">
-					
+					<image :src="item.image" mode=""></image>
 				</view>
-				<view class="txt">
+				<view class="txt" v-if="item.tag == 1">
 					定制师推荐路线
+				</view>
+				<view class="txt" v-if="item.tag == 2">
+					超时长
 				</view>
 			</view>
 		</view>
 		<!-- 无数据时列表 -->
-		<view class="List-box" v-else>
+		<view class="List-box" v-if="!promptShow">
 			<view class="list-top">
 				<view class="left">
 					<view class="left-txt">
@@ -73,7 +76,7 @@
 						<image src="https://cache.lingtuyang.cn/web_static/xc-border.png" mode=""></image>
 					</view>
 				</view>
-				<view class="right">
+				<view class="right" @click="replace" v-if="replaceShow">
 					<view class="right-img">
 						<image src="https://cache.lingtuyang.cn/web_static/xc-hyp.png" mode=""></image>
 					</view>
@@ -82,29 +85,32 @@
 					</view>
 				</view>
 			</view>
-			<view class="List" v-for="(item,index) in recommendation">
+			<view class="List" v-for="(item,index) in recommendation" :key="index" @click="goLine(item)">
 				<view class="left">
 					<view class="title">
-						成都出发，自驾西藏，川进青出-5日川藏环线
+						{{item.title}}
 					</view>
 					<view class="money">
-						参考价格：1280～2650
+						参考价格：{{item.min_money}}～{{item.max_money}}
 					</view>
 					<view class="day-box">
 						<view class="day">
-							5日行程
+							{{item.day}}日行程
 						</view>
 						<view class="label">
-							人文
+							{{labelArr[item.theme]}}
 						</view>
 					</view>
 				</view>
 				<view class="right">
 					<view class="img">
-						
+						<image :src="item.image" mode=""></image>
 					</view>
-					<view class="txt">
+					<view class="txt" v-if="item.tag == 1">
 						定制师推荐路线
+					</view>
+					<view class="txt" v-if="item.tag == 2">
+						超时长
 					</view>
 				</view>
 			</view>
@@ -117,26 +123,101 @@
 	export default {
 		data() {
 			return {
+				replaceShow:true,
 				promptShow:true,//有无线路
-				form:[
-					{
-						id:1
-					},
-					{
-						id:2
-					}
-				],
-				recommendation:[
-					{
-						id:1
-					},
-					{
-						id:2
-					}
-				]
+				total:0,
+				form:[],
+				labelArr:{
+					1:'亲子',
+					2:'自驾',
+					3:'海景',
+					4:'美食',
+					5:'山林',
+					6:'草原',
+					7:'古境'
+				},
+				pageSize:1,
+				recommendation:[],
+				totalPage:0,
+				state_id:[],
+				city_id:[],
+				days:0,
+				qqq:'',
 			};
 		},
+		onLoad(e){
+			var state = JSON.parse(e.state_id)
+			var city = JSON.parse(e.city_id)
+			this.days = e.value
+			state.map((e)=>{
+				this.state_id.push(e.state_id)
+			})
+			city.map((e)=>{
+				this.city_id.push(e.city_id)
+			})
+		},
+		onShow(){
+			this.getCustomized()
+			
+		},
 		methods:{
+			goLine(item){
+				uni.navigateTo({
+					url: '/pages_province/lineDetail/lineDetail?id=' + item.uuid
+				});
+			},
+			//有数据列表
+			getCustomized(){
+				this.HTTP.request({
+					url: '/route/customized',
+					data: {
+						days:this.days,
+						state_ids:this.state_id,
+						city_ids:this.city_id
+					},
+					method: 'POST',
+					success: res => {
+						this.total = res.data.data.total
+						this.form = res.data.data.list
+						if(this.total == 0){
+							this.promptShow = false
+							this.getRecommend()
+						}else{
+							this.promptShow = true
+						}
+					}
+				});
+			},
+			//无数据列表
+			getRecommend(){
+				this.HTTP.request({
+					url: '/route/recommend',
+					data: {
+						page:this.pageSize,
+						count:6,
+						days:this.days,
+						state_ids:this.state_id,
+						city_ids:this.city_id
+					},
+					method: 'POST',
+					success: res => {
+						var total = res.data.data.total
+						this.recommendation = res.data.data.list
+						this.totalPage = Math.ceil(total / 6)
+						if(total <= 6){
+							this.replaceShow = false
+						}
+					}
+				});
+			},
+			//换一批
+			replace(){
+				var page = this.pageSize += 1
+				if(page > this.totalPage){
+					this.pageSize = 1
+				}
+				this.getRecommend()
+			},
 			//返回首页
 			home(){
 				this.Utils.home()
@@ -152,9 +233,11 @@
 		width: 694rpx;
 		height: 320rpx;
 		border-radius: 16rpx;
-		background: pink;
 		display: flex;
 		align-items: flex-end;
+		background-image: url(https://cache.lingtuyang.cn/web_static/xc-banner.jpeg);
+		background-size: 100%;
+		background-origin: center center;
 		.banner-txt{
 			width: 694rpx;
 			height: 98rpx;
@@ -232,6 +315,13 @@
 				font-family: PingFangSC-Semibold, PingFang SC;
 				font-weight: 600;
 				color: #303133;
+				text-overflow: -o-ellipsis-lastline;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				line-clamp: 2;
+				-webkit-box-orient: vertical;
 			}
 			.money{
 				font-size: 28rpx;
@@ -276,8 +366,12 @@
 				width: 346rpx;
 				height: 194rpx;
 				border-radius: 16rpx;
-				background: yellow;
 				margin-left: 20rpx;
+				overflow: hidden;
+				image{
+					width: 100%;
+					height: 100%;
+				}
 			}
 			.txt{
 				position: absolute;
