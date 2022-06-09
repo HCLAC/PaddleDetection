@@ -39,7 +39,7 @@
 			</view>
 			<!-- 省份图片选择 -->
 			<view class="title-want">
-				我想去的省份{{imgForm.length}}
+				我想去的省份
 			</view>
 			<view class="want-box">
 				<view class="want-img" v-for="(item,index) in imgForm" :key='index'>
@@ -102,11 +102,10 @@
 			uni.getStorage({
 				key: 'stateS',
 				success:  (res)=> {
-					console.log(res,'res')
 					let data = res.data
 					if(data){
 						this.imgForm = JSON.parse(data)
-						conso
+						console.log(this.imgForm,'this.imgForm')
 						if(this.imgForm.length == 2){
 							this.stateShow = false
 						}else{
@@ -134,10 +133,7 @@
 		onShow(){
 			this.$nextTick(function(){
 				this.mode = uni.getStorageSync('mode');
-				console.log(this.mode,'+++++')
 			})
-			console.log(this.mode,'this.mode1111')
-			
 		},
 		methods:{
 			close(item,index){
@@ -173,6 +169,11 @@
 				this.mode = '1'
 				this.imgForm = []
 				this.imgForm2 = []
+				if(this.imgForm.length == 2){
+					this.stateShow = false
+				}else{
+					this.stateShow = true
+				}
 				uni.clearStorage();
 				uni.setStorage({
 					key: 'mode',
@@ -187,7 +188,11 @@
 				this.mode = '2'
 				this.imgForm = []
 				this.imgForm2 = []
-				console.log(this.imgForm,'this.imgForm')
+				if(this.imgForm.length == 2){
+					this.stateShow = false
+				}else{
+					this.stateShow = true
+				}
 				uni.clearStorage();
 				uni.setStorage({
 					key: 'mode',
@@ -228,7 +233,7 @@
 					});
 					this.txt = '开始制定行程'
 					uni.clearStorage();
-				}, 300);
+				}, 3000);
 			},
 		}
 	}
