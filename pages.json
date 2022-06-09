@@ -190,7 +190,14 @@
 					"navigationBarTitleText": "",
 					"enablePullDownRefresh": false
 				}
-			}, {
+			},
+			{
+				"path": "customization/customization",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+			},{
 				"path": "chatroom/chatroom",
 				"style": {
 					"navigationBarTitleText": "",
@@ -231,7 +238,34 @@
 					"enablePullDownRefresh": false
 				}
 
-			}]
+			}    ,{
+                    "path" : "tripForm/tripForm",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "provinceImg/provinceImg",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "cityImg/cityImg",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
 		},
 		{
 			"root": "pages_province",
