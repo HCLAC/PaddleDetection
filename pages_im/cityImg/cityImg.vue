@@ -12,7 +12,7 @@
 			</uni-nav-bar>
 		</view>
 		<!-- 搜索栏 -->
-		<view class="searchBox">
+		<!-- <view class="searchBox">
 			<u-search 
 				placeholder="请输入城市名称" 
 				v-model="keyword"
@@ -20,16 +20,38 @@
 				@change="search"
 				@clear="clear"
 			></u-search>
-		</view>
+		</view> -->
 		<!-- 城市选择 -->
 		<view class="content">
 			<view class="title">
-				热门城市
+				{{txt}}热门城市
+			</view>
+			<view class="u-demo-block__content">
+			    <u-row
+			            justify="space-between"
+			            gutter="10"
+			    >
+			        <u-col span="3" v-for="(item,index) in form">
+			            <view class="demo-layout bg-purple"></view>
+			        </u-col>
+			        <u-col span="3">
+			            <view class="demo-layout bg-purple-light"></view>
+			        </u-col>
+			        <u-col span="3">
+			            <view class="demo-layout bg-purple"></view>
+			        </u-col>
+			        <u-col span="3">
+			            <view class="demo-layout bg-purple-light"></view>
+			        </u-col>
+			    </u-row>
 			</view>
 			<view class="list-box">
 				<view class="box-img" v-for="(item,index) in form" :key="index" @click="imgChange(item,index)">
 					<image :src="item.image" mode=""></image>
 					<text>{{item.city_name}}</text>
+					<view class="kong-1">
+						
+					</view>
 					<view class="kong" v-if="item.imgShow"></view>
 					<image v-if="item.imgShow" class="kong-img" src="https://cache.lingtuyang.cn/web_static/xz-yes.png" mode=""></image>
 				</view>
@@ -55,10 +77,19 @@
 				stateS:[],
 				imgShow:true,
 				emptyShow:true,
+				txt:''
 			};
 		},
 		onLoad(e){
 			this.state_id = e.state_id
+			this.txt = e.state_name
+
+			const value = uni.getStorageSync('citys');
+			if (value) {
+				console.log(value);
+				this.stateS = JSON.parse(value)
+					console.log(this.stateS,'this.stateS')
+			}
 		},
 		onShow(){
 			this.getStates()
@@ -68,7 +99,7 @@
 				if(item.imgShow){
 					item.imgShow = false
 					this.stateS.map((val, i) => {
-						if (val.state_id === item.state_id) {
+						if (val.city_id === item.city_id) {
 						  this.stateS.splice(i, 1)
 						}
 					  })
@@ -78,6 +109,10 @@
 						item.imgShow = true
 					}else{
 						item.imgShow = false
+						uni.showToast({
+						   title: '为了更好的旅游体验，所选城市不能超过5个',
+						   icon: 'none'
+						  });
 						console.log('最多选择5个')
 					}
 				}
@@ -113,7 +148,7 @@
 						this.form = res.data.data.map(item=>{
 							item.imgShow=false
 							this.stateS.map(item2=>{
-								if(item.state_id===item2.state_id) {
+								if(item.city_id===item2.city_id) {
 									item.imgShow = true
 								}
 							})
@@ -134,6 +169,13 @@
 				});
 			},
 			goBack(){
+				if(this.stateS.length == 0){
+					uni.showToast({
+					   title: '请选择城市！',
+					   icon: 'none'
+					  });
+					return
+				}
 				uni.setStorage({
 					key: 'citys',
 					data: JSON.stringify(this.stateS),
@@ -141,7 +183,7 @@
 						console.log(e,'success');
 					}
 				});
-				uni.navigateTo({
+				uni.redirectTo({
 					url:'/pages_im/customization/customization'
 				})
 			}
@@ -158,6 +200,7 @@
 	}
 	.content{
 		padding: 0 28rpx;
+		margin-left: 15rpx;
 		.title{
 			font-size: 32rpx;
 			font-family: PingFangSC-Medium, PingFang SC;
@@ -165,35 +208,56 @@
 			color: #303133;
 			margin-top: 30rpx;
 		}
+		.list-box:after{
+		  content: "";
+		  width: 30%;
+		  height: 0;
+		  visibility: hidden;
+		}
 		.list-box{
 			display: flex;
-			flex-wrap: wrap;
 			justify-content: space-between;
+			flex-wrap: wrap;
+			 // box-sizing: border-box;
+			// margin: 0 auto;
 			.box-img{
 				width: 212rpx;
 				height: 212rpx;
 				background: rgba(0, 0, 0, 0.15);
 				margin-top: 30rpx;
 				position: relative;
+				margin-right:auto;
+				// margin-right: 19rpx;
+				// margin: 0 10rpx;
 				image{
 					width: 100%;
 					height: 100%;
 				}
 				text{
 					position: absolute;
-					top: 50%;
-					left: 50%;
-					transform: translate(-50%,-50%);
+					width: 132rpx;
+					height: 44rpx;
 					font-size: 32rpx;
 					font-family: PingFangSC-Medium, PingFang SC;
 					font-weight: 500;
 					color: #FFFFFF;
 					z-index: 100;
+					left: 0; top: 0; right: 0; bottom: 0;
+					margin: auto; /* 有了这个就自动居中了 */
+					display: flex;
+					justify-content: center;
 				}
 				.kong{
 					width: 212rpx;
 					height: 212rpx;
 					background: rgba(0, 0, 0, 0.75);
+					position: absolute;
+					top: 0;
+				}
+				.kong-1{
+					width: 212rpx;
+					height: 212rpx;
+					background: rgba(0, 0, 0, 0.15);
 					position: absolute;
 					top: 0;
 				}

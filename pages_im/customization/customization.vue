@@ -1,5 +1,16 @@
 <template>
 	<view class="box">
+		<!-- 自定义导航栏 -->
+		<view class="nav-bar">
+			<uni-nav-bar :title="title" :fixed="true" :status-bar="true" :backgroundColor="background">
+				<view slot="left" class="slotleft">
+					<!-- #ifndef  MP-BAIDU -->
+						<image class="fanhui" :src="Icon?'/static/images/icon-fanhui.svg':'/static/images/icon-fanhui-white.svg'" @click="Utils.back" />
+					<!-- #endif -->
+					<image class="fhsy" :src="Icon?'/static/images/icon-fhsy.svg':'/static/images/icon-fhsy-white.svg'" @click="Utils.home"></image>
+				</view>
+			</uni-nav-bar>
+		</view>
 		<!-- 顶部banner图 -->
 		<view class="banner-box">
 			<image src="https://cache.lingtuyang.cn/web_static/dz-banner.png" mode=""></image>
@@ -23,7 +34,7 @@
 				<view class="time-txt">
 					游玩天数
 				</view>
-				<u-number-box :min='1' :disabledInput='true' :size="28" :input-width="76" :input-height="60" v-model="value" @change="valChange"></u-number-box>
+				<u-number-box :min='1' :max='12' :disabledInput='true' :size="28" :input-width="76" :input-height="60" v-model="value" @change="valChange"></u-number-box>
 			</view>
 			<view class="title-mode">
 				推荐方式
@@ -70,7 +81,7 @@
 							<image class="gb" src="https://cache.lingtuyang.cn/web_static/dz-gb.png" mode=""></image>
 						</view>
 					</view>
-					<view class="want-province-two" @click="cityImg" >
+					<view class="want-province-two" @click="cityImg" v-if="cityShow">
 						<view class="two-icon">
 							<u-icon color="#909399" size="44" name="plus"></u-icon>
 						</view>
@@ -95,36 +106,54 @@
 				imgForm2:[],
 				stateShow:true,
 				cityShow:true,
-				txt:"开始制定行程"
+				txt:"开始制定行程",
+				requestStatus : false,
+				cardheight: 0,
+				title: '',
+				background: 'transparent',
+				Icon:false,
 			};
 		},
 		onLoad(e){
-			uni.getStorage({
-				key: 'stateS',
-				success:  (res)=> {
-					let data = res.data
-					if(data){
-						this.imgForm = JSON.parse(data)
-						console.log(this.imgForm,'this.imgForm')
-						if(this.imgForm.length == 2){
-							this.stateShow = false
-						}else{
-							this.stateShow = true
-						}
+			const value = uni.getStorageSync('stateS');
+			const value1 = uni.getStorageSync('mode');
+			if (value) {
+				this.imgForm = JSON.parse(value)				
+				if(value1 == 1){
+					if(this.imgForm.length == 2){
+						this.stateShow = false
+					}else{
+						this.stateShow = true
 					}
 				}
-			});
+				if(value1 == 2){
+					if(this.imgForm){
+						this.stateShow = false
+					}
+				}
+			}
 			uni.getStorage({
 				key: 'citys',
 				success:  (res)=> {
 					let data = res.data
 					if(data){
 						this.imgForm2 = JSON.parse(data)
-						if(this.imgForm.length == 5){
+						if(this.imgForm2.length == 5){
 							this.cityShow = false
 						}else{
 							this.cityShow = true
+							
 						}
+					}
+				}
+			});
+			uni.getStorage({
+				key: 'value',
+				success:  (res)=> {
+					if(res.data){
+						this.value = res.data
+					}else{
+						this.value = 1
 					}
 				}
 			});
@@ -134,12 +163,21 @@
 			this.$nextTick(function(){
 				this.mode = uni.getStorageSync('mode');
 			})
+			
 		},
 		methods:{
 			close(item,index){
 				this.imgForm.map((val, i) => {
 					if (val.state_id === item.state_id) {
 						this.imgForm.splice(i, 1)
+						console.log(this.imgForm,'this.imgForm')
+						uni.setStorage({
+							key: 'stateS',
+							data: JSON.stringify(this.imgForm),
+							success:  (e)=> {
+								console.log(e,'success');
+							}
+						});
 					}
 				})
 				if(this.imgForm.length == 2){
@@ -152,6 +190,13 @@
 				this.imgForm2.map((val, i) => {
 					if (val.city_id === item.city_id) {
 						this.imgForm2.splice(i, 1)
+						uni.setStorage({
+							key: 'citys',
+							data: JSON.stringify(this.imgForm2),
+							success:  (e)=> {
+								console.log(e,'success');
+							}
+						});
 					}
 				})
 				if(this.imgForm.length == 5){
@@ -163,6 +208,13 @@
 			//步进器函数
 			valChange(e) {
 				console.log('当前值为: ' + e.value)
+				uni.setStorage({
+					key: 'value',
+					data: this.value,
+					success:  (e)=> {
+						console.log(e,'success');
+					}
+				});
 			},
 			//选择省份
 			stateChange(){
@@ -174,7 +226,9 @@
 				}else{
 					this.stateShow = true
 				}
-				uni.clearStorage();
+				uni.removeStorageSync('stateS');
+				uni.removeStorageSync('citys');
+				
 				uni.setStorage({
 					key: 'mode',
 					data: this.mode,
@@ -193,7 +247,9 @@
 				}else{
 					this.stateShow = true
 				}
-				uni.clearStorage();
+				uni.removeStorageSync('stateS');
+				uni.removeStorageSync('citys');
+				
 				uni.setStorage({
 					key: 'mode',
 					data: this.mode,
@@ -204,35 +260,59 @@
 			},
 			//选择省份的图片
 			provinceImg(){
-				uni.navigateTo({
+				uni.redirectTo({
 					url:'/pages_im/provinceImg/provinceImg'
 				})
 			},
 			//选择城市图片
 			cityImg(){
 				var state_id = this.imgForm[0].state_id
-				// uni.setStorage({
-				// 	key: 'mode',
-				// 	data: this.mode,
-				// 	success:  (e)=> {
-				// 		console.log(e,'success');
-				// 	}
-				// });
-				uni.navigateTo({
-					url:'/pages_im/cityImg/cityImg?state_id=' + state_id
+				var state_name = this.imgForm[0].state_name
+				uni.redirectTo({
+					url:'/pages_im/cityImg/cityImg?state_id=' + state_id + '&state_name=' + state_name
 				})
 			},
 			//提交按钮
 			submit(){
-				this.txt = '正在定制行程'
+				if(this.requestStatus){
+							// 利用 return 终止函数继续运行
+					return false;
+				}
+				console.log('按钮点击函数执行');
+				// 执行函数
+				this.requestStatus = true;
+
 				var state_id = JSON.stringify(this.imgForm)
 				var city_id = JSON.stringify(this.imgForm2)
+				console.log(this.imgForm,'state_id')
+				if(this.imgForm.length == 0){
+					uni.showToast({
+					   title: '请选择省份！',
+					   icon: 'none'
+					  });
+					  return
+					  
+				}
+				if(this.imgForm2.length == 0 && this.mode == 2){
+					uni.showToast({
+					   title: '请选择城市！',
+					   icon: 'none'
+					  });
+					  return
+					  
+				}
+				this.txt = '正在定制行程...'
+				
 				setTimeout(() => {
-					uni.navigateTo({
+					uni.redirectTo({
 						url: '/pages_im/tripForm/tripForm?state_id=' + state_id +'&city_id=' + city_id + '&value=' + this.value
 					});
 					this.txt = '开始制定行程'
-					uni.clearStorage();
+					this.requestStatus = false;
+					
+					uni.removeStorageSync('stateS');
+					uni.removeStorageSync('citys');
+					uni.removeStorageSync('value');
 				}, 3000);
 			},
 		}
@@ -242,6 +322,9 @@
 <style lang="scss">
 .box{
 	position: relative;
+	.qqq{
+		background-color: transparent !important;
+	}
 	.banner-box{
 		width: 100%;
 		height: 524rpx;

@@ -436,6 +436,19 @@
 			},
 			//跳转行程定制
 			stroke(){
+				if (!this.Utils.isLogin()) {
+					return
+				}
+				uni.removeStorageSync('stateS');
+				uni.removeStorageSync('citys');
+				uni.removeStorageSync('value');
+				uni.setStorage({
+					key: 'mode',
+					data: 1,
+					success:  (e)=> {
+						console.log(e,'success');
+					}
+				});
 				uni.navigateTo({
 					url:'/pages_im/customization/customization'
 				})
@@ -801,7 +814,7 @@
 	// 功能区
 	.function-box{
 		width: 100%;
-		height: 188rpx;
+		height: 168rpx;
 		background: #F9FAFA;
 		display: flex;
 		.f-box{
@@ -813,15 +826,15 @@
 			justify-content: center;
 			align-items: center;
 			.f-img{
-				width: 88rpx;
-				height: 88rpx;
+				width: 68rpx;
+				height: 68rpx;
 			}
 			.f-text{
 				font-size: 22rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
 				font-weight: 400;
 				color: #606266;
-				margin-top: 8rpx;
+				// margin-top: 8rpx;
 			}
 			
 		}
@@ -852,7 +865,7 @@
 				font-weight: 500;
 				color: rgba(48, 49, 51, 1);
 				/* line-height: 40rpx; */
-				margin-top: 48rpx;
+				margin-top: 30rpx;
 				margin-left: 32rpx;
 			}
 			.ht-r {
@@ -865,7 +878,7 @@
 				font-weight: 500;
 				color: #606266;
 				// line-height: 42rpx;
-				margin: 54rpx 32rpx 0 0;
+				margin: 28rpx 32rpx 0 0;
 				display: flex;
 				align-items: center;
 				justify-content: center;
