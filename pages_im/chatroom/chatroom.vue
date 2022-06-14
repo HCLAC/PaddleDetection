@@ -94,68 +94,73 @@
 					{{history[0].create_at}}
 				</view>
 				<!-- 历史记录 -->
-				<view class="boxMax" v-for="(item,index) in history" :key="index">
-					<view :class="item.from != consulting.account_username ?'ls-box':'ls-box1'">
-						<image v-if="item.from != consulting.account_username" class="avatar"
-							:src="item.avatar?item.avatar: '/static/images/logo.png'" mode="aspectFill"></image>
-						<view class="chatmsg" v-if="item.type == 'txt'">
-							{{item.msg}}
+				<scroll-view :scroll-top="commentScrollTop" :scroll-y="true" id="commentContainer" class="scroll-Y" @scrolltoupper="upper"
+				@scrolltolower="lower" @scroll="scroll">
+					<view class="" id="commentContent">
+						<view class="boxMax" v-for="(item,index) in history" :key="index">
+							<view :class="item.from != consulting.account_username ?'ls-box':'ls-box1'">
+								<image v-if="item.from != consulting.account_username" class="avatar"
+									:src="item.avatar?item.avatar: '/static/images/logo.png'" mode="aspectFill"></image>
+								<view class="chatmsg" v-if="item.type == 'txt'">
+									{{item.msg}}
+								</view>
+								<view class="chatImg" v-if="item.type == 'img'" @click="previewImg(item)">
+									<image :src="item.msg" mode="aspectFill"></image>
+								</view>
+								<view class="chatAudio" v-if="item.type == 'audio'">
+									<audio-msg :msg="item"></audio-msg>
+								</view>
+								<image v-if="item.from == consulting.account_username" class="avatar"
+									:src="item.avatar?item.avatar: '/static/images/logo.png'" mode="aspectFill"></image>
+							</view>
 						</view>
-						<view class="chatImg" v-if="item.type == 'img'" @click="previewImg(item)">
-							<image :src="item.msg" mode="aspectFill"></image>
-						</view>
-						<view class="chatAudio" v-if="item.type == 'audio'">
-							<audio-msg :msg="item"></audio-msg>
-						</view>
-						<image v-if="item.from == consulting.account_username" class="avatar"
-							:src="item.avatar?item.avatar: '/static/images/logo.png'" mode="aspectFill"></image>
-					</view>
-				</view>
-				<!-- 信息记录 -->
-				<view class="" v-for="(item,index) in arr" :key="index">
+						<!-- 信息记录 -->
+						<view class="" v-for="(item,index) in arr" :key="index">
 
-					<!-- item.from != '' -->
-					<view
-						:class="item.from == '' || item.from == consulting.account_username || item.type == 'audio'?'ls-box1':'ls-box'">
-						<image
-							v-if="item.contentsType == 'TEXT' || item.contentsType == 'IMAGE'|| item.contentsType == 'VOICE' || item.contentsType == 'CUSTOM'"
-							class="avatar" :src="ext.bulter_avatar ? ext.bulter_avatar : '/static/images/logo.png'"
-							mode="aspectFill"></image>
-						<view class="chatmsg" v-if="item.contentsType == 'TEXT' || item.type == 'txt'"
-							@longtap="longtap">
-							{{item.data ? item.data : item.msg}}
-						</view>
-						<!-- <view class="card" v-if="item.contentsType == 'CUSTOM'" @click="details">
-							<view class="left">
-								<image :src="card.avatar" mode=""></image>
+							<!-- item.from != '' -->
+							<view
+								:class="item.from == '' || item.from == consulting.account_username || item.type == 'audio'?'ls-box1':'ls-box'">
+								<image
+									v-if="item.contentsType == 'TEXT' || item.contentsType == 'IMAGE'|| item.contentsType == 'VOICE' || item.contentsType == 'CUSTOM'"
+									class="avatar" :src="ext.bulter_avatar ? ext.bulter_avatar : '/static/images/logo.png'"
+									mode="aspectFill"></image>
+								<view class="chatmsg" v-if="item.contentsType == 'TEXT' || item.type == 'txt'"
+									@longtap="longtap">
+									{{item.data ? item.data : item.msg}}
+								</view>
+								<!-- <view class="card" v-if="item.contentsType == 'CUSTOM'" @click="details">
+									<view class="left">
+										<image :src="card.avatar" mode=""></image>
+									</view>
+									<view class="right">
+										<view class="r-top">
+											{{card.name}}
+										</view>
+										<view class="r-center">
+											执业{{card.working_years}}年/{{card.company}}
+										</view>
+										<view class="r-btm">
+											{{ professionObj[card.profession] }}
+										</view>
+									</view>
+								</view> -->
+								<view class="chatImg" v-if="item.contentsType == 'IMAGE' || item.type == 'img'">
+									<image :src="item.body.url? item.body.url : item.url" mode="aspectFill"
+										@click="previewImg1(item)"></image>
+								</view>
+								<view class="chatAudio" v-if="item.contentsType == 'VOICE' || item.type == 'audio'">
+									<audio-msg :msg="item"></audio-msg>
+								</view>
+								<image v-if="item.type == 'txt' || item.type == 'img'|| item.type == 'audio'" class="avatar"
+									:src="ext.account_avatar ? ext.account_avatar : '/static/images/logo.png'"
+									mode="aspectFill"></image>
 							</view>
-							<view class="right">
-								<view class="r-top">
-									{{card.name}}
-								</view>
-								<view class="r-center">
-									执业{{card.working_years}}年/{{card.company}}
-								</view>
-								<view class="r-btm">
-									{{ professionObj[card.profession] }}
-								</view>
-							</view>
-						</view> -->
-						<view class="chatImg" v-if="item.contentsType == 'IMAGE' || item.type == 'img'">
-							<image :src="item.body.url? item.body.url : item.url" mode="aspectFill"
-								@click="previewImg1(item)"></image>
 						</view>
-						<view class="chatAudio" v-if="item.contentsType == 'VOICE' || item.type == 'audio'">
-							<audio-msg :msg="item"></audio-msg>
+						<view class="end" v-if="showEnd">
+							咨询已结束！
 						</view>
-						<image v-if="item.type == 'txt' || item.type == 'img'|| item.type == 'audio'" class="avatar"
-							:src="ext.account_avatar ? ext.account_avatar : '/static/images/logo.png'"
-							mode="aspectFill"></image>
 					</view>
-				</view>
-				<view class="end" v-if="showEnd">
-					咨询已结束！
-				</view>
+				</scroll-view>
 			</view>
 			
 			
@@ -300,6 +305,11 @@
 				ext: {
 					account_avatar: ''
 				},
+				commentScrollTop: 0,
+				old: {
+					scrollTop: 0
+				},
+				page:0,
 			}
 		},
 		components: {
@@ -320,11 +330,11 @@
 		},
 		onShow() {
 			getApp().globalData.conn.onMessage = this.onMessage;
-			uni.pageScrollTo({
-			    scrollTop: 5000,
-			    duration: 300
-			});
-			
+			// uni.pageScrollTo({
+			//     scrollTop: 5000,
+			//     duration: 300
+			// });
+			this.scrollToBottom()
 		},
 		onUnload() {
 			getApp().globalData.conn.onMessage = null;
@@ -347,6 +357,52 @@
 			//#endif
 		},
 		methods: {
+			//滚动到底部
+			scrollToBottom() {
+			    let query = uni.createSelectorQuery().in(this)
+			    query.select('#commentContainer').boundingClientRect()
+			    query.select('#commentContent').boundingClientRect()
+			    query.exec((res) => {
+					console.log(res,'++++')
+			    //如果子元素高度大于父元素高度(显示高度)
+			    if (res[1].height > res[0].height) {
+			      //计算出二者差值就是需要滚动的距离
+			       this.commentScrollTop = res[1].height - res[0].height
+			    }
+			  })
+			},
+			upper: function(e) {
+				this.HTTP.request({
+					url: '/user/search_record/info',
+					// method:'POST',
+					data: {
+						search_id: this.search_id,
+						page: this.page == 0 ? 0 : this.page - 1,
+					},
+				success: res => {
+					if (res.statusCode != 200 || res.data.code != 0) {
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+							return
+					}
+					console.log(res,'res')
+
+					let data = res.data.data
+					let arr = data.history.concat(this.history)
+					this.history = arr
+					this.page = data.history_page
+					}
+				});
+			},
+			lower: function(e) {
+				console.log(e)
+			},
+			scroll: function(e) {
+				console.log(e)
+				this.old.scrollTop = e.detail.scrollTop
+			},
 			inputFocus(){
 				this.keywordHeight = '0px'
 			},
@@ -426,6 +482,7 @@
 						this.toUser = this.consulting.username //'wuwuwuuw'
 						this.history = this.consulting.history
 						this.title = this.consulting.name
+						this.page = this.consulting.history_page
 						if(this.consulting.status == 2){
 							this.show_input = true
 							this.color = '#FFFFFF'
@@ -985,6 +1042,9 @@
 		// height: 1282rpx;
 		// padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
 		// padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
+		.scroll-Y{
+			height: 600rpx;
+		}
 		.nav-bar{
 			background: #F8F8F8;
 		}

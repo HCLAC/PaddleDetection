@@ -159,6 +159,16 @@
 			});
 			
 		},
+		onReady(){
+			uni.setNavigationBarColor({
+			    frontColor: '#ffffff',
+			    backgroundColor: '#ff0000',
+			    animation: {
+			        duration: 400,
+			        timingFunc: 'easeIn'
+			    }
+			})
+		},
 		onShow(){
 			this.$nextTick(function(){
 				this.mode = uni.getStorageSync('mode');
@@ -322,12 +332,11 @@
 <style lang="scss">
 .box{
 	position: relative;
-	.qqq{
-		background-color: transparent !important;
-	}
 	.banner-box{
 		width: 100%;
 		height: 524rpx;
+		position: absolute;
+		top: 0;
 		image{
 			width: 100%;
 			height: 100%;
