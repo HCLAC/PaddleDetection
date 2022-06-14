@@ -94,10 +94,10 @@
 					{{history[0].create_at}}
 				</view>
 				<!-- 历史记录 -->
-				<scroll-view :scroll-top="commentScrollTop" :scroll-y="true" id="commentContainer" class="scroll-Y" @scrolltoupper="upper"
-				@scrolltolower="lower" @scroll="scroll">
+				<scroll-view  :scroll-y="true" id="commentContainer" class="scroll-Y" @scrolltoupper="upper"
+				@scrolltolower="lower" @scroll="scroll" :scroll-into-view="scroll_id">
 					<view class="" id="commentContent">
-						<view class="boxMax" v-for="(item,index) in history" :key="index">
+						<view  :id='"history_"+item.id' class="boxMax" v-for="(item,index) in history" :key="index">
 							<view :class="item.from != consulting.account_username ?'ls-box':'ls-box1'">
 								<image v-if="item.from != consulting.account_username" class="avatar"
 									:src="item.avatar?item.avatar: '/static/images/logo.png'" mode="aspectFill"></image>
@@ -115,9 +115,7 @@
 							</view>
 						</view>
 						<!-- 信息记录 -->
-						<view class="" v-for="(item,index) in arr" :key="index">
-
-							<!-- item.from != '' -->
+						<view :id='"arr_"+index' v-for="(item,index) in arr" :key="index">
 							<view
 								:class="item.from == '' || item.from == consulting.account_username || item.type == 'audio'?'ls-box1':'ls-box'">
 								<image
@@ -128,22 +126,6 @@
 									@longtap="longtap">
 									{{item.data ? item.data : item.msg}}
 								</view>
-								<!-- <view class="card" v-if="item.contentsType == 'CUSTOM'" @click="details">
-									<view class="left">
-										<image :src="card.avatar" mode=""></image>
-									</view>
-									<view class="right">
-										<view class="r-top">
-											{{card.name}}
-										</view>
-										<view class="r-center">
-											执业{{card.working_years}}年/{{card.company}}
-										</view>
-										<view class="r-btm">
-											{{ professionObj[card.profession] }}
-										</view>
-									</view>
-								</view> -->
 								<view class="chatImg" v-if="item.contentsType == 'IMAGE' || item.type == 'img'">
 									<image :src="item.body.url? item.body.url : item.url" mode="aspectFill"
 										@click="previewImg1(item)"></image>
@@ -160,6 +142,7 @@
 							咨询已结束！
 						</view>
 					</view>
+					
 				</scroll-view>
 			</view>
 			
@@ -258,6 +241,7 @@
 	export default {
 		data() {
 			return {
+				scroll_id:'',
 				keywordHeight: '0px',
 				color:'',
 				bgcolor:'',
@@ -305,7 +289,6 @@
 				ext: {
 					account_avatar: ''
 				},
-				commentScrollTop: 0,
 				old: {
 					scrollTop: 0
 				},
@@ -334,7 +317,7 @@
 			//     scrollTop: 5000,
 			//     duration: 300
 			// });
-			this.scrollToBottom()
+			console.log('history====',this.history)
 		},
 		onUnload() {
 			getApp().globalData.conn.onMessage = null;
@@ -357,20 +340,6 @@
 			//#endif
 		},
 		methods: {
-			//滚动到底部
-			scrollToBottom() {
-			    let query = uni.createSelectorQuery().in(this)
-			    query.select('#commentContainer').boundingClientRect()
-			    query.select('#commentContent').boundingClientRect()
-			    query.exec((res) => {
-					console.log(res,'++++')
-			    //如果子元素高度大于父元素高度(显示高度)
-			    if (res[1].height > res[0].height) {
-			      //计算出二者差值就是需要滚动的距离
-			       this.commentScrollTop = res[1].height - res[0].height
-			    }
-			  })
-			},
 			upper: function(e) {
 				this.HTTP.request({
 					url: '/user/search_record/info',
@@ -393,14 +362,17 @@
 					let arr = data.history.concat(this.history)
 					this.history = arr
 					this.page = data.history_page
+						this.$nextTick(() => { 
+							this.scroll_id = 'history_' +  data.history[data.history.length-1].id
+						})
 					}
 				});
 			},
 			lower: function(e) {
-				console.log(e)
+				// console.log(e)
 			},
 			scroll: function(e) {
-				console.log(e)
+				// console.log(e)
 				this.old.scrollTop = e.detail.scrollTop
 			},
 			inputFocus(){
@@ -500,6 +472,12 @@
 							grant_type: 'password',
 							appKey: WebIM.config.appkey
 						});
+						
+						console.log('history2====',this.history)
+						
+						this.$nextTick(() => {
+							this.scroll_id = 'history_' +  this.history[this.history.length-1].id
+						})
 					}
 				});
 			},
