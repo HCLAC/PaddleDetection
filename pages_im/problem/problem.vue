@@ -2,7 +2,12 @@
 	<view class="box">
 		<view class="nav-bar">
 			<uni-nav-bar :fixed="true" :status-bar="true" :title="consulting.name">
-				
+				<view slot="left" class="slotleft">
+					<!-- #ifndef  MP-BAIDU -->
+						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="home" />
+					<!-- #endif -->
+					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="home" />
+				</view>
 			</uni-nav-bar>
 		</view>
 		<view class="top">
@@ -159,6 +164,10 @@
 			this.getInfo()
 		},
 		methods: {
+			//返回首页
+			home(){
+				this.Utils.home()
+			},
 			// input(value){
 			// 	this.cursor = value.detail.cursor
 				

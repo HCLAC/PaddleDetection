@@ -194,8 +194,9 @@
 			{
 				"path": "customization/customization",
 				"style": {
-					"navigationBarTitleText": "",
-					"enablePullDownRefresh": false
+					 "navigationStyle": "custom",
+					  "disableScroll": false,
+					  "navigationBarTextStyle": "white"
 				}
 			},{
 				"path": "chatroom/chatroom",

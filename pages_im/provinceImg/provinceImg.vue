@@ -14,7 +14,7 @@
 		<!-- 搜索栏 -->
 		<view class="searchBox">
 			<u-search 
-				placeholder="请输入城市名称" 
+				placeholder="请输入省份名称" 
 				v-model="keyword"
 				:show-action="false"
 				@change="search"
@@ -23,13 +23,16 @@
 		</view>
 		<!-- 城市选择 -->
 		<view class="content">
-			<view class="title">
+			<view class="title" v-if="emptyShow">
 				热门省份
 			</view>
 			<view class="list-box">
 				<view class="box-img" v-for="(item,index) in form" :key="index" @click="imgChange(item,index)">
 					<image :src="item.image" mode=""></image>
 					<text>{{item.state_name}}</text>
+					<view class="kong-1">
+						
+					</view>
 					<view class="kong" v-if="item.imgShow"></view>
 					<image v-if="item.imgShow" class="kong-img" src="https://cache.lingtuyang.cn/web_static/xz-yes.png" mode=""></image>
 				</view>
@@ -39,7 +42,7 @@
 			<image src="@/static/images/index-kong.png" mode=""></image>
 			<view class="txt">暂无搜索结果</view>
 		</view>
-		<view class="btn" @click="goBack">
+		<view class="btn" @click="goBack" v-if="emptyShow">
 			我选好了
 		</view>
 	</view>
@@ -54,11 +57,21 @@
 				stateS:[],
 				imgShow:true,
 				emptyShow:true,
-				max_num:uni.getStorageSync('mode')=='2'? 1 : 2
+				max_num:uni.getStorageSync('mode')=='2'? 1 : 2,
+				num:uni.getStorageSync('mode')=='2'? 1 : 2
 			};
 		},
 		onShow(){
 			this.getStates()
+			uni.getStorage({
+				key: 'stateS',
+				success:  (res)=> {
+					let data = res.data
+					if(data){
+						this.stateS = JSON.parse(data)
+					}
+				}
+			});
 		},
 		methods:{
 			imgChange(item,index){
@@ -75,6 +88,17 @@
 						item.imgShow = true
 					}else{
 						item.imgShow = false
+						if(this.num == 1){
+							uni.showToast({
+							   title: '为了更好的旅游体验，所选省份不能超过1个',
+							   icon: 'none'
+							  });
+							  return
+						}
+						uni.showToast({
+						   title: '为了更好的旅游体验，所选省份不能超过2个',
+						   icon: 'none'
+						  });
 						console.log('最多选择2个')
 					}
 				}
@@ -130,7 +154,14 @@
 				});
 			},
 			goBack(){
-				console.log(JSON.stringify(this.stateS))
+				console.log(this.stateS,'stateS')
+				if(this.stateS.length == 0){
+					uni.showToast({
+					   title: '请选择省份！',
+					   icon: 'none'
+					  });
+					return
+				}
 				uni.setStorage({
 					key: 'stateS',
 					data: JSON.stringify(this.stateS),
@@ -138,7 +169,9 @@
 						console.log(e,'success');
 					}
 				});
-				uni.navigateTo({
+				uni.removeStorageSync('citys');
+				
+				uni.redirectTo({
 					url:'/pages_im/customization/customization'
 				})
 			}
@@ -191,6 +224,13 @@
 					width: 212rpx;
 					height: 212rpx;
 					background: rgba(0, 0, 0, 0.75);
+					position: absolute;
+					top: 0;
+				}
+				.kong-1{
+					width: 212rpx;
+					height: 212rpx;
+					background: rgba(0, 0, 0, 0.15);
 					position: absolute;
 					top: 0;
 				}
