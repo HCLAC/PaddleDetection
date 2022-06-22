@@ -115,7 +115,7 @@
 							</view>
 						</view>
 						<!-- 信息记录 -->
-						<view :id='"arr_"+index' v-for="(item,index) in arr" :key="index">
+						<view :id='"arr_"+item.id' v-for="(item,index) in arr" :key="index">
 							<view
 								:class="item.from == '' || item.from == consulting.account_username || item.type == 'audio'?'ls-box1':'ls-box'">
 								<image
@@ -292,7 +292,8 @@
 				old: {
 					scrollTop: 0
 				},
-				page:0,
+				page:1,
+				total:0
 			}
 		},
 		components: {
@@ -341,12 +342,13 @@
 		},
 		methods: {
 			upper: function(e) {
+				var num = this.page == this.total ? this.total : this.page += 1
 				this.HTTP.request({
 					url: '/user/search_record/info',
 					// method:'POST',
 					data: {
 						search_id: this.search_id,
-						page: this.page == 0 ? 0 : this.page - 1,
+						page: num,
 					},
 				success: res => {
 					if (res.statusCode != 200 || res.data.code != 0) {
@@ -356,12 +358,16 @@
 						});
 							return
 					}
+					if(this.page == this.total){
+						return
+					}
 					console.log(res,'res')
 
 					let data = res.data.data
-					let arr = data.history.concat(this.history)
+					// let arr = data.history.concat(this.history)
+					let arr = [...data.history,...this.history]
 					this.history = arr
-					this.page = data.history_page
+					// this.page = data.history_page
 						this.$nextTick(() => { 
 							this.scroll_id = 'history_' +  data.history[data.history.length-1].id
 						})
@@ -436,7 +442,8 @@
 					url: '/user/search_record/info',
 					// method:'POST',
 					data: {
-						search_id: this.search_id
+						search_id: this.search_id,
+						page:1,
 					},
 					success: res => {
 						if (res.statusCode != 200 || res.data.code != 0) {
@@ -454,7 +461,7 @@
 						this.toUser = this.consulting.username //'wuwuwuuw'
 						this.history = this.consulting.history
 						this.title = this.consulting.name
-						this.page = this.consulting.history_page
+						this.total = this.consulting.history_page
 						if(this.consulting.status == 2){
 							this.show_input = true
 							this.color = '#FFFFFF'
@@ -616,7 +623,10 @@
 						this.text = '',
 
 							console.log('send private text Success', msg);
-						this.arr.push(msg.body)
+						this.$nextTick(() => {
+							this.arr.push(msg.body)
+							this.scroll_id = 'arr_' +  this.arr[this.arr.length-1].id
+						})
 						this.HTTP.request({
 							url: '/im/save_msg',
 							method: 'POST',
@@ -1015,13 +1025,12 @@
 	.box {
 		position: relative;
 		// background: #F1F2F3;
-		
 		// background: red;
 		// height: 1282rpx;
 		// padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
 		// padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
 		.scroll-Y{
-			height: 600rpx;
+			height: calc(100vh - 800rpx);
 		}
 		.nav-bar{
 			background: #F8F8F8;
