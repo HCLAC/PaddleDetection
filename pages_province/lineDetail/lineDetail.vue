@@ -1,49 +1,53 @@
 <template>
 	<view>
-		<view class="nav-bar" >
-			<uni-nav-bar :fixed="true" title="领途羊旅游管家" :status-bar="true" style="z-index: 99999 !important;">
-				<view slot="left" class="slotleft">
-					<!-- #ifndef  MP-BAIDU -->
-						<image class="fanhui" src="/static/images/icon-fanhui.svg" @click="Utils.back" />
-					<!-- #endif -->
-					<image class="fhsy" src="/static/images/icon-fhsy.svg" @click="Utils.home" />
-				</view>
-			</uni-nav-bar>
-		</view>
 		<!-- 骨架屏 -->
 		<view v-if="loading" class="loadBox">
 			<view class="content u-skeleton">
 				<view class="loadBlock">
 					<view class="banner u-skeleton-rect"></view>
-					<view class="kong u-skeleton-circle"></view>
-					<view class="box-btm">
-						<view class="kong-big u-skeleton-rect"></view>
-						<view class="title u-skeleton-rect"></view>
-						<view class="title u-skeleton-rect"></view>
-						<view class="title u-skeleton-rect"></view>
-						<view class="title-min u-skeleton-rect"></view>
-						<view class="xxk-box">
-							<view class="xxk u-skeleton-rect"></view>
-							<view class="xxk u-skeleton-rect"></view>
+					<view class="info-wrap">
+						<view class="title mt20 u-skeleton-rect"></view>
+						<view class="title mt20 u-skeleton-rect"></view>
+						<view class="title-wrap mt20">
+							<view class="title-sm  u-skeleton-rect"></view>
+							<view class="title-sm  u-skeleton-rect"></view>
 						</view>
-						<view class="day-box">
-							<view class="day-min u-skeleton-circle"></view>
-							<view class="day u-skeleton-rect"></view>
+						<view class="title-big mt20 u-skeleton-rect"></view>
+						<view class="title-wrap title-wrap-sm  mt20">
+							<view class="title-sm  u-skeleton-rect"></view>
+							<view class="title-sm-big  u-skeleton-rect"></view>
 						</view>
-						<view class="title u-skeleton-rect"></view>
-						<view class="title-min u-skeleton-rect"></view>
-						<view class="lx-box" v-for="(item, index) in loadEmpty">
-							<view class="lx-top">
-								<view class="lx-min u-skeleton-circle"></view>
-								<view class="lx u-skeleton-rect"></view>
-							</view>
-							<view class="lx-center">
-								<view class="lx-min u-skeleton-rect"></view>
-								<view class="lx u-skeleton-rect"></view>
-								<view class="lx u-skeleton-rect"></view>
-								<view class="lx-min u-skeleton-rect"></view>
-							</view>
-							<view class="lx-btm u-skeleton-rect"></view>
+						<view class="title-wrap title-wrap-sm mt20">
+							<view class="title-sm  u-skeleton-rect"></view>
+							<view class="title-sm-big  u-skeleton-rect"></view>
+						</view>
+						<view class="row3 mt40">
+							<view class="title u-skeleton-rect"></view>
+							<view class="title u-skeleton-rect"></view>
+							<view class="title u-skeleton-rect"></view>
+						</view>
+						<view class="banner mt30 u-skeleton-rect"></view>
+						<view class="flex">
+							<view class="title-1 mt30 u-skeleton-rect"></view>
+						</view>
+						<view class="title-wrap title-wrap-big mt30">
+							<view class="title-sm  u-skeleton-rect"></view>
+							<view class="title-sm-big  u-skeleton-rect"></view>
+						</view>
+						<view class="title-wrap title-wrap-big mt20">
+							<view class="title-sm  u-skeleton-rect"></view>
+							<view class="title-sm-big  u-skeleton-rect"></view>
+						</view>
+						<view class="title-wrap title-wrap-big mt20">
+							<view class="title-sm  u-skeleton-rect"></view>
+							<view class="title-sm-big  u-skeleton-rect"></view>
+						</view>
+						<view class="title-wrap title-wrap-big mt20">
+							<view class="title-sm  u-skeleton-rect"></view>
+							<view class="title-sm-big  u-skeleton-rect"></view>
+						</view>
+						<view class="flex">
+							<view class="title-1-1 mt20 u-skeleton-rect"></view>
 						</view>
 					</view>
 				</view>
@@ -51,1213 +55,1128 @@
 			<!--引用组件-->
 			<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
 		</view>
-		<view>
-			<view class="lineHeader">
-				<view class="lineImageWrap" v-if="lineContent" v-show="lineContent">
-					<!-- 内容详情轮播图 -->
-					<view class="uni-padding-wrap">
-						<view class="page-section" >
-							<view class="page-section-spacing" >
-								<swiper @change="change" class="swiper" :autoplay="true" :indicator-dots="false" circular='true'>
-									<swiper-item v-for="(item, index) in lineContent.images" :key="index">
-										<u-image width="100%" height="440rpx" mode="scaleToFill" :src="item"></u-image>
-									</swiper-item>
-								</swiper>
-								<view class="imageCount">{{ current + 1 }}/{{ lineContent.images.length }}</view>
-								<view class="dots">
-									<block v-for="(item, index) in lineContent.images" :key="index"><view :class="[index == current ? 'activieDot' : 'dot']"></view></block>
+		<!-- 内容 -->
+		<view class="page-content" v-else>
+			<view class="banner">
+				<swiper class="swiper" circular :indicator-dots="true" :autoplay="true" indicator-color="#303133" indicator-active-color="#fff">
+					<swiper-item v-for="item in swiperImgs">
+						<image class="swiper-item" :src="item" mode=""></image>
+					</swiper-item>
+				</swiper>
+				<view class="title-wrap">
+					<view class="title">{{InfoObj.title}}</view>
+					<view class="tags">
+						<view class="tag-item" v-if="InfoObj.selected">定制师推荐路线 </view>
+						<view class="tag-item">{{InfoObj.route_type==0?'省心跟团游':'快乐自助游'}}</view>
+						<view class="tag-item-green">{{themes[InfoObj.theme]}}</view>
+					</view>
+				</view>
+				<view class="price-wrap">
+					<text class="price"> <text>￥</text> {{InfoObj.min_money}}～{{InfoObj.max_money}} </text>
+					<text class="text">参考价格</text>
+				</view>
+				<view class="info-wrap">
+					<view class="info-item">
+						<text class="title">目的地：</text>
+						<template v-for="item in InfoObj.area">
+							<navigator open-type="redirect" class="text underline" :url="`/pages_content/provinces/provinces?state_id=${item.state_id}&city_id=${item.city_id}&name=${item.city_name}&image=${item.image}`">{{item.city_name}}</navigator>
+							<text class="dian">、</text>
+						</template>
+						
+						
+					</view>
+					<view class="info-item mt30">
+						<text class="title">行程日：</text>
+						<text class="text">{{InfoObj.days}}日行程</text>
+					</view>
+				</view>
+			</view>
+			<luBarTabNav :tabList="tabList" :barFixed="barFixed" :iconShow="iconShow" :barHeight="barHeight"
+				:barTop="barTop" :barId="barId" :dayList="dayList" ref="barTabNav">
+				<!-- 内嵌咨询 -->
+				<view class="answersFollow-inner-wrap">
+					<view class="answersFollow-inner">
+						<view class="answersLeft">
+							<view class="border-img">
+								<image src="@/static/images/border-jian.png" mode=""></image>
+							</view>
+							<view class="left_img">
+								<image :src="consulting.avatar ? consulting.avatar : '/static/images/logo.png'" mode="">
+								</image>
+							</view>
+							<view class="left_txt">
+								在线中
+							</view>
+						</view>
+						<view class="answersCenter">
+							<view class="center-top">
+								<view class="top-left">
+									{{consulting.name}}
+								</view>
+								<view class="top-right">
+									{{professionObj1[consulting.profession]}}
+								</view>
+							</view>
+							<view class="center-btm">
+								{{consulting.company}}
+							</view>
+							<view class="center-btm">
+								<view>
+									已服务:<text class="item">{{consulting.number_of_people}}</text>
+								</view>
+								<view>
+									评分:<text class="item">5.0</text>
+								</view>
+							</view>
+						</view>
+						<view class="answersRight" @click="toChatroom">
+							<view class="right-img">
+								<image src="@/static/images/wz.png" mode=""></image>
+							</view>
+							<text>咨询Ta</text>
+						</view>
+					</view>
+				</view>
+				<view id="item1" class="tabbody">
+					<view class="h-title-wrap">
+						<view class="h-title">路线概览</view>
+					</view>
+					<template v-for="(item,index) in InfoObj.gv">
+						<view v-if="index<3" :key="index" class="day-wrap">
+							<view class="day-title"> {{item.date}} </view>
+							<view class="day-text">{{item.line}}</view>
+							<!-- showAll -->
+						</view>
+						<view v-if="index>=3 && !showAll" :key="index" class="day-wrap">
+							<view class="day-title"> {{item.date}} </view>
+							<view class="day-text">{{item.line}}</view>
+							<!-- showAll -->
+						</view>
+					</template>
+					<view class="look-all-wrap" v-if="InfoObj.gv.length>3">
+						<view @click="lookAll">{{showAll?'查看全部':'收起'}}</view>
+					</view>
+					
+				</view>
+				<view id="item2" class="tabbody">
+					<view class="h-title-wrap">
+						<view class="h-title">开始{{InfoObj.days}}天定制旅行</view>
+						<view class="h-title-sm">个性定制，自由出行</view>
+					</view>
+					<view class="item2-wrap" v-for="item in InfoObj.trip" :id="'day'+item.day">
+						<view class="day-title">
+							<view class="dian-wrap">
+								<view class="dian"> </view>
+							</view>
+							<view class="day-title-day">Day{{item.day}}</view>
+							<view class="day-title-text">{{item.subheading}}</view>
+						</view>
+						<view class="title-wrap">
+							<image class="icon" src="../../static/images/line/traffic.svg" mode=""></image>
+							<view class="title">交通：</view>
+							<view>{{item.traffic}}</view>
+						</view>
+						<view class="title-wrap">
+							<image class="icon" src="../../static/images/line/repast.svg" mode=""></image>
+							<view class="flex mr10">
+								<view class="title">早餐：</view>
+								<view>{{item.breakfast}}</view>
+							</view>
+							<view class="flex mr10">
+								<view class="title">午餐：</view>
+								<view>{{item.lunch}}</view>
+							</view>
+							<view class="flex">
+								<view class="title">晚餐：</view>
+								<view>{{item.dinner}}</view>
+							</view>
+						</view>
+						<view class="title-wrap">
+							<image class="icon" src="../../static/images/line/home.svg" mode=""></image>
+							<view class="title">住宿：</view>
+							<view>{{item.hotel_intr}}</view>
+						</view>
+						<view class="title-wrap">
+							<image class="icon" src="../../static/images/line/journey.svg" mode=""></image>
+							<view class="title">行程：</view>
+						</view>
+						<view class="content" v-html="item.content"></view>
+						<!-- 景点 -->
+						<view class="scenic-wrap">
+							<view class="scenic-item" v-for="sitesItem in item.sites" @click="goSites(sitesItem)">
+								<view class="scenic-item-left">
+									<u-image width="216rpx" height="164rpx" border-radius="16rpx" :src="sitesItem.cover_url" :iconSize="66"></u-image>
+									<view class="imgTag">景点</view>
+								</view>
+								<view class="scenic-item-right">
+									<view class="scenic-item-right-title">{{sitesItem.Name}}</view>
+									<view class="rateBox">
+										<uni-rate :readonly="true" :value="sitesItem.rate" :size='14' margin="4" :allowHalf="true"/>
+										<view class="rate" >{{sitesItem.rate}} 星</view>
+									</view>
+									<view class="scenic-item-right-text">{{sitesItem.description}}</view>
 								</view>
 							</view>
 						</view>
 					</view>
 				</view>
-				<view class="container">
-					<view class="linePrice">
-						<view class="linePrice-number">
-							<view class="price-img">
-								<image src="../../static/images/money.svg"></image>
-							</view>
-							<text class="price">{{lineContent.min_money}} ~ {{lineContent.max_money}}</text>
-							<text>起</text>
-						</view>
-						<view class="linePrice-text">
-							参考价格
-						</view>
-					</view>
-					<view class="lineTitle">{{ lineContent?lineContent.title:'' }}</view>
-				</view>
-				<view class="lineDriver"></view>
-			</view>
-			<view class="lineTabs">
-				<meTabs class="lineDetailTabs" v-model="tabIndex" :tabs="tabList" @change="tabChange" :fixed="isFixed" :top="navbarHeight"  :line-width="130" :tab-width="105"></meTabs>
-			</view>
-			<view class="linePlan">
-				<view class="planContent" v-if='lineContent'>
-					<u-time-line >
-						<view v-for="(item, index) in lineContent.content" :key="index">
-							<u-time-line-item nodeTop="2">
-								<!-- 此处自定义了左边内容，用一个图标替代 -->
-								<template v-slot:node>
-									<view class="u-node" style="background: #BFC2CC ; border-radius: 50%;">
-										<!-- 此处为uView的icon组件 -->
-										<view style="width: 10rpx; height: 10rpx;"></view>
-									</view>
-								</template>
-								<template v-slot:content>
-									<view>
-										<view class="u-order-title">
-											<text class="tui-chat-right">
-												<text class="tui-chatbox tui-chatbox-right">第{{ item.day }}天</text>
-											</text>
-											<text class="planTitle">{{ item.title }}</text>
-										</view>
-										<view class="u-order-desc1">{{ item.description }}</view>
-										<!-- <view class="u-order-time"></view> -->
-									</view>
-								</template>
-							</u-time-line-item>
-							<view v-for="(eve, eveIndex) in item.event" :key="eveIndex">
-								<u-time-line-item>
-									<template v-slot:node>
-										<view class="uTime">
-											<image class="timeIcon" src="/static/images/timeClock.svg"></image>
-											<text>{{ eve.time == '上午' ? '上午' : '下午' }}</text>
-										</view>
-									</template>
-									<template v-slot:content>
-										<view style="height: 40rpx;"></view>
-									</template>
-								</u-time-line-item>
-								<u-time-line-item nodeTop="2">
-									<!-- 此处自定义了左边内容，用一个图标替代 -->
-									<template v-slot:node>
-										<view class="u-node" style="background: #B7EB8F; border-radius: 50%;">
-											<!-- 此处为uView的icon组件 -->
-											<view style="width: 10rpx; height: 10rpx;"></view>
-										</view>
-									</template>
-									<template v-slot:content>
-										<view>
-											<view class="u-order-title">
-												<text class="stitle">{{ eve.title }}</text>
-											</view>
-											<view class="u-order-desc">{{ eve.description }}</view>
-											<view class="position" v-for="(pos, posIndex) in eve.position" :key="posIndex" @click="toPosition(pos)">
-												<view class="left">
-													<u-image width="216rpx" height="164rpx" border-radius="12rpx" :src="pos.cover_url" :iconSize="66"></u-image>
-													<view class="imgTag">景点</view>
-												</view>
-												<view class="right">
-													<view class="title">{{ pos.name }}</view>
-													<view class="rateBox">
-														<uni-rate :readonly="true" :value="pos.rate" :size='14' margin="4" :allowHalf="true"/>
-														<view class="rate" >{{ pos.rate }} 星</view>
-													</view>
-													<text class="content">{{ pos.description }}</text>
-												</view>
-											</view>
-										</view>
-									</template>
-								</u-time-line-item>
-							</view>
-						</view>
-					</u-time-line>
-					<view class="serverInfo" v-if="lineContent.content">
-						<view class="title">服务说明</view>
-						<view class="content">{{ lineContent.description }}</view>
-					</view>
-					
-				</view>
-				<view class="bottom">
-					<view class="bottom-text">
-						
-					</view>
-					<view class="like"  @click="clickLike">
-						<view v-if="isAnimate" class="icon-animate"></view>
-						<view v-else :class="lineContent.liked?'has-like':'icon-like'"></view>
-					</view>
-					<view class="likeNum">{{ lineContent.like_count }}</view>
-					
-					<view class="fav" @click="clickFav">
-						<image class="favBtn" :src="lineContent.fav == 1?'/static/images/attFavA.svg':'/static/images/attFav.svg'"></image>
-					</view>
-					<view class="favNum">{{ lineContent.fav_count }}</view>
-					
-					<view class="share" v-if="serviceProvider =='baidu'"  @click="share">
-						<image src="/static/images/shareIcon.svg"></image>
+				<view id="item3" class="tabbody">
+					<view class="item3-wrap">
+						<view class="item3-title">服务说明</view>
+						<view>{{InfoObj.service_note}}</view>
 					</view>
 				</view>
-			</view>
-			<!-- <view class="phone" @click="tell" >
-				<image src="/static/images/serverCall.svg"></image>
-			</view> -->
-			<button type="default" class="phone" @click="toChatroom(item)" v-if="auth != ''">
-				<image src="/static/images/serverCall.svg"></image>
-			</button>
-			<button v-else type="default" class="phone" open-type="getPhoneNumber" @getphonenumber="getPhone">
-				<image src="/static/images/serverCall.svg"></image>
-			</button>
-			
+			</luBarTabNav>
 		</view>
-		
+		<!-- 咨询卡 -->
+		<view class="zhanwei"></view>
+		<view v-if="showOutZX" class="answersFollow">
+			<view class="answersLeft">
+				<view class="border-img">
+					<image src="@/static/images/border-jian.png" mode=""></image>
+				</view>
+				<view class="left_img">
+					<image :src="consulting.avatar ? consulting.avatar : '/static/images/logo.png'" mode=""></image>
+				</view>
+				<view class="left_txt">
+					在线中
+				</view>
+			</view>
+			<view class="answersCenter">
+				<view class="center-top">
+					<view class="top-left">
+						{{consulting.name}}
+					</view>
+					<view class="top-right">
+						{{professionObj1[consulting.profession]}}
+					</view>
+				</view>
+				<view class="center-btm">
+					{{consulting.company}}
+				</view>
+			</view>
+			<view class="answersRight" @click="toChatroom">
+				<view class="right-img">
+					<image src="@/static/images/wz.png" mode=""></image>
+				</view>
+				<text>咨询Ta</text>
+			</view>
+		</view>
+		<!-- 输入框 -->
 	</view>
 </template>
 
 <script>
-import meTabs from '@/common/me-tabs/me-tabs.vue';
-export default {
-	components: {
-		meTabs
-	},
-	data() {
-		return {
-			auth:'',
-			id: 0,
-			lineContent:null,
-			lineContent: null,
-			current: 0,
-			hasLogin: false,
-			isFixed: false,
-			serviceProvider: '',
-			headerHeight:200,
-			navbarHeight: 64,
-			planHeight: 2000,
-			serverInfoHeight: 2000,
-			tabList: ['参考行程', '服务说明'],
-			tabIndex: 0 ,// 当前tab下标,必须与mescroll-more.js对应,所以tabIndex是固定变量,不可以改为其他的名字
-			Show:false,
-			hasLikeClick:false,
-			// 骨架屏
-			loadEmpty:[1,2],
-			loading: true,
-			// 动效
-			isAnimate: false,
-			inTabChange:false,
-			serviceSource: 2,
-		};
-	},
-	mounted(){
-		this.navbarHeight = getApp().globalData.navbarHeight
-	},
-	// #ifdef MP-BAIDU
-	onInit(query) {
-	// #endif
-	// #ifndef MP-BAIDU
-	onLoad(query) {
-	// #endif
-		this.id = query.id
-		this.serviceProvider = getApp().globalData.serviceProvider
-		this.loadData();
-	},
-	onShow() {
-		this.hasLogin = getApp().globalData.Authorization ? true : false;
-		this.auth = getApp().globalData.Authorization
-		
-	},
-	onPageScroll(e) {
-		if (e.scrollTop > this.headerHeight) {
-			if (e.scrollTop > this.headerHeight+20 && this.isFixed){
-			} else {
-				this.isFixed = true;
-			}
-		} else {
-			this.isFixed = false;
-		}
-		if(this.inTabChange){
-			return
-		}
-		if(e.scrollTop >= this.planHeight+20){
-			this.tabIndex = 1
-		} else {
-			this.tabIndex = 0
-			this.Show = false
-		}
-	},
-	methods: {
-		//一键登录
-		getPhone(res) {
-			if (res.detail.errMsg != 'getPhoneNumber:ok') {
-				uni.showToast({
-					title: '用户拒绝授权',
-					icon: 'none'
-				});
-				return;
-			}
-			swan.getLoginCode({
-				success: result => {
-					if (!result || !result.code || result.code.length == 0) {
-						uni.showToast({
-							title: '一键登录失败',
-							icon: 'none'
-						});
-						return
-					}
-					this.baiduLogin({
-						code: result.code,
-						source: this.serviceSource,
-						data: res.detail.encryptedData,
-						iv: res.detail.iv
-					});
+	import meTabs from '@/common/me-tabs/me-tabs.vue';
+	import luBarTabNav from "@/components/lu-bar-tab-nav/lu-bar-tab-nav.vue";
+	export default {
+		components: {
+			meTabs,
+			luBarTabNav
+		},
+		data() {
+			return {
+				// 骨架屏
+				loading: true,
+				// 外层锚点开始
+				barFixed: false,
+				barTop: 0,
+				iconShow: false,
+				tabList: [{
+					text: "路线概览",
+					navTarget: "#item1"
+				}, {
+					text: "参考行程",
+					navTarget: "#item2"
+				}, {
+					text: "服务说明",
+					navTarget: "#item3"
+				}],
+				// 外层锚点结束
+				swiperImgs:[], // banner
+				InfoObj:{}, // 详情
+				showAll: true, // 
+				showOutZX: false,
+				dayList:[],
+				consulting: {},
+				professionObj1: {
+					'0': '导游',
+					'1': '旅游达人',
+					'2': '旅游定制师'
 				},
-				fail: err => {
-					console.error('getLoginCode', err)
+				themes:{
+					'1': '亲子',
+					'2': '自驾',
+					'3': '海景',
+					'4': '美食',
+					'5': '山林',
+					'6': '草原',
+					'7': '古境',
 				}
-			});
-			// 百度小程序直接调用swan.getLoginCode，其他平台调用uni.login
-			// if (this.serviceProvider == 'baidu'){
-			// 	//#ifdef MP-BAIDU
-			// 	swan.getLoginCode({
-			// 		success: result => {
-			// 			if (!result || !result.code || result.code.length == 0) {
-			// 				uni.showToast({
-			// 					title: '一键登录失败',
-			// 					icon: 'none'
-			// 				});
-			// 				return
-			// 			}
-			// 			this.baiduLogin({
-			// 				code: result.code,
-			// 				source: this.serviceSource,
-			// 				data: res.detail.encryptedData,
-			// 				iv: res.detail.iv
-			// 			});
-			// 		},
-			// 		fail: err => {
-			// 			console.error('getLoginCode', err)
-			// 		}
-			// 	});
-			// 	//#endif
-			// 	return 
-			// }
-			// uni.login({
-			// 	provider: this.serviceProvider,
-			// 	success: result => {
-			// 		if (!result || !result.code || result.code.length == 0) {
-			// 			uni.showToast({
-			// 				title: '一键登录失败',
-			// 				icon: 'none'
-			// 			});
-			// 			return;
-			// 		}
-			// 		this.baiduLogin({
-			// 			code: result.code,
-			// 			source: this.serviceSource,
-			// 			data: res.detail.encryptedData,
-			// 			iv: res.detail.iv
-			// 		});
-			// 	},
-			// 	fail: err => {
-			// 		console.error('login', err)
-			// 	}
-			// });
+			};
 		},
-		baiduLogin(obj) {
-			this.HTTP.request({
-				url: '/user/oauth/code2session',
-				data: {
-					code: obj.code,
-					source: 2
+		// #ifdef MP-BAIDU
+		onInit(query) {
+			// #endif
+			// #ifndef MP-BAIDU
+			onLoad(query) {
+					// #endif
+					console.log(query, '=====query')
+					this.backgroundColor = query.background
+					this.line_id = query.id
+					
 				},
-				method: 'POST',
-				success: res => {
-					if (res.data.code == 0) {
-						this.getSessionKey({
-							uuid: res.data.data,
-							data: obj.data,
-							iv: obj.iv
-						});
-					} else {
-						uni.showToast({
-							title: res.data.msg,
-							icon: 'none'
-						});
-					}
-				}
-			});
-		},
-		getSessionKey(obj) {
-			console.log(obj,'obj')
-			this.HTTP.request({
-				url: '/user/oauth/login',
-				data: {
-					data: obj.data,
-					iv: obj.iv,
-					uuid: obj.uuid,
-					source: this.serviceSource
+				mounted() {
+					this.getInfo()
+					this.getDetail()
 				},
-				method: 'POST',
-				success: res => {
-					if (res.data.code == 0) {
-						var auth = res.header.authorization ? res.header.authorization : res.header.Authorization
-						this.loginSuccess(res.data.data, auth) 
-					} else {
-						uni.showToast({
-							title: res.data.msg,
-							icon: 'none'
-						});
-					}
-				}
-			});
-		},
-		loginSuccess(userinfo, auth){
-			
-			uni.showToast({
-				title: '登录成功',
-				icon: 'none'
-			}),
-			getApp().globalData.Authorization = auth
-			
-			uni.setStorage({
-				key: 'userinfo',
-				data: userinfo,
-				success: function () {
-				}
-			});
-			uni.setStorage({
-				key: 'Authorization',
-				data: auth,
-				success: function () {
-				}
-			});
-			uni.$emit('onLoginSuccess', userinfo.first_login);
-			// this.Utils.back()
-			this.toChatroom()
-			
-		},
-		toChatroom(){
-			this.HTTP.request({
-				url: '/bulter/consulting',
-				method: 'POST',
-				success: res => {
-					if (res.statusCode != 200 || res.data.code != 0) {
-						uni.showToast({
-							title: res.data.msg,
-							icon: 'none'
-						});
-						return
-					}
-					var info = res.data.data
-					console.log(info, '管家列表')
-					if(info.history.length > 0){
-						uni.navigateTo({
-							url:'/pages_im/chatroom/chatroom?search_id=' + info.search_id,
-						})
+				onShow() {},
+				onPageScroll(e) {
+					console.log(e.scrollTop)
+					if(e.scrollTop > 700){
+						this.showOutZX = true
 					}else{
-						uni.navigateTo({
-							url:'/pages_im/problem/problem?bulter_id=' + info.bulter_id,
-						})
+						this.showOutZX = false
 					}
-				}
-			});
-		},
-		loadData(){
-			uni.showLoading({
-				title: '加载中',
-				mask: true,
-				success: () => {
+					this.$refs.barTabNav._selectedTab(e.scrollTop);
 				},
-				complete: () => {
-					this.loading = true
-					this.getDetail();
-				}
-			});
-		},
-		hideLoad(){
-			setTimeout(() => {
-				this.loading = false
-				uni.hideLoading();
-			}, 300);
-		},
-		//获取行程信息
-		getDetail() {
-			var that = this
-			this.HTTP.request({
-				url: '/route',
-				method: 'GET',
-				data: {
-					uuid: this.id
-				},
-				success: res => {
-					if (res.statusCode != 200 || res.data.code != 0){
-						uni.showToast({
-							title: res.data.msg,
-							icon: 'none'
+				methods: {
+					// 查看全部
+					lookAll(){
+						this.showAll = !this.showAll
+					},
+					// 咨询
+					//管家信息
+					getInfo() {
+						this.HTTP.request({
+							url: '/bulter/market',
+							data: {
+								type: 2,
+								uuid: this.line_id,
+							},
+							success: res => {
+								if (res.statusCode != 200 || res.data.code != 0) {
+									uni.showToast({
+										title: res.data.msg,
+										icon: 'none'
+									});
+									return
+								}
+								this.consulting = res.data.data
+								console.log(this.consulting, '管家列表')
+							}
 						});
-						return
-					}
-					var lineContent = res.data.data
-					lineContent.content = lineContent.content && lineContent.content.length ? JSON.parse(lineContent.content) : [];
-					lineContent.content && lineContent.content.forEach((itemDay, index1) => {
-						itemDay.event && itemDay.event.forEach((itemEvent, index2) => {
-							itemEvent.position && itemEvent.position.forEach((itempPosition, index3) => {
-								itempPosition.cover_url = that.Utils.addImageProcess(itempPosition.cover_url, false, 40)
-							})
-						})
-					})
-					
-					that.butler_mobile = lineContent.butler_mobile;
-					
-					lineContent.images.forEach((item1, index1) => {
-						lineContent.images[index1] = that.Utils.addImageProcess(item1, true, 70)
-					})
-					that.lineContent = lineContent;
-					
-					that.hideLoad()
-					setTimeout(() => {
-						this.calcHeight()
-					}, 300);
-					//#ifdef MP-BAIDU
-					swan.setPageInfo({
-						title: that.lineContent.title+"-领途羊",
-						keywords: that.lineContent.title+",行程路线,领途羊",
-						description: that.lineContent.description,
-						image: that.lineContent.images.length <=3 ? that.lineContent.images : that.lineContent.images.slice(0,3),
-					})
-					//#endif
-				}
-			});
-		},
-		// 点赞
-		clickLike() {
-			var that = this;
-			if (!this.hasLogin) {
-				uni.navigateTo({
-					url: '/pages_mine/login/login'
-				});
-				return
-			}
-			if (this.hasLikeClick) {
-				return;
-			}
-			if (this.lineContent.liked == 0){
-				this.isAnimate = true
-				setTimeout(() => {
-				    this.isAnimate = false;
-				}, 800);
-			}
-			this.hasLikeClick = true;
-			this.HTTP.request({
-				url: '/user/liked',
-				data: {
-					article_id: that.lineContent.uuid,
-					liked: that.lineContent.liked == 0 ? 1 : 0,
-					type: that.lineContent.type
-				},
-				method: 'POST',
-				success: res => {
-					if (res.statusCode != 200 || res.data.code != 0){
-						uni.showToast({
-							title: res.data.msg,
-							icon: 'none'
+					},
+					toChatroom() {
+						if (!this.Utils.isLogin()) {
+								return
+							}
+						this.HTTP.request({
+							url: '/bulter/consulting',
+							method: 'POST',
+							data: {
+								bulter_id: this.consulting.bulter_id
+							},
+							success: res => {
+								if (res.statusCode != 200 || res.data.code != 0) {
+									uni.showToast({
+										title: res.data.msg,
+										icon: 'none'
+									});
+									return
+								}
+								var info = res.data.data
+								if (info.history.length > 0) {
+									uni.navigateTo({
+										url: '/pages_im/chatroom/chatroom?search_id=' + info.search_id,
+									})
+								} else {
+									uni.navigateTo({
+										url: '/pages_im/problem/problem?bulter_id=' + info.bulter_id,
+									})
+								}
+							}
 						});
-						return
-					}
-					that.lineContent.liked = res.data.data.liked
-					that.lineContent.like_count = res.data.data.like_count
-					
-					// if (that.trace_info && that.rn) {
-					// 	that.Opensearch.uploadData({
-					// 		trace_info: that.trace_info,
-					// 		rn: that.rn,
-					// 		item_id: that.article_id,
-					// 		bhv_type: 'like'
-					// 	})
-					// }
-				},
-				complete: () => {
-					that.hasLikeClick = false;
-				}
-			});
-		},
-		// 收藏
-		clickFav() {
-			var that = this;
-			if (!this.hasLogin) {
-				uni.navigateTo({
-					url: '/pages_mine/login/login'
-				});
-				return
-			}
-			
-			if (this.hasFavClick) {
-				return;
-			}
-			this.hasFavClick = true;
-			this.HTTP.request({
-				url: '/user/favorite',
-				data: {
-					article_id: that.lineContent.uuid,
-					favorite: that.lineContent.fav == 0 ? 1 : 0,
-					type: that.lineContent.type
-				},
-				method: 'POST',
-				success: res => {
-					if (res.statusCode != 200 || res.data.code != 0){
-						uni.showToast({
-							title: res.data.msg,
-							icon: 'none'
+					},
+					//获取行程信息
+					getDetail() {
+						const _this = this
+						this.HTTP.request({
+							url: '/route',
+							method: 'GET',
+							data: {
+								uuid: this.line_id
+							},
+							success: res => {
+								if (res.statusCode != 200 || res.data.code != 0){
+									uni.showToast({
+										title: res.data.msg,
+										icon: 'none'
+									});
+									return
+								}
+								console.log('res====',res.data.data)
+								const resData = res.data.data
+								for (var i = 0 ; i < resData.days; i ++) {
+									this.dayList.push('day'+(i+1))
+								}
+								console.log('dayList====',this.dayList)
+								this.loading = false
+								setTimeout(()=>{
+									_this.barFixed = true
+								},1000)
+								this.swiperImgs = resData.images
+								this.InfoObj = resData
+								//#ifdef MP-BAIDU
+								swan.setPageInfo({
+									title: this.InfoObj.title+"-领途羊",
+									keywords: this.InfoObj.keywords,
+									description: this.InfoObj.description,
+									image: this.InfoObj.images.length <=3 ? this.InfoObj.images : this.InfoObj.images.slice(0,3),
+								})
+								//#endif
+							}
 						});
-						return
-					}
-					that.lineContent.fav = res.data.data.fav
-					that.lineContent.fav_count = res.data.data.fav_count
-					// if (that.trace_info && that.rn) {
-					// 	that.Opensearch.uploadData({
-					// 		trace_info: that.trace_info,
-					// 		rn: that.rn,
-					// 		item_id: that.article_id,
-					// 		bhv_type: 'collect'
-					// 	})
-					// }
-				},
-				complete: () => {
-					that.hasFavClick = false;
-				}
-			});
-		},
-		calcHeight(){
-			if (this.isFixed || this.loading){
-				return
-			}
-			const query = uni.createSelectorQuery().in(this);
-			setTimeout(() => {
-				query.select('.lineHeader').boundingClientRect(data => {
-					console.log('lineHeader', data)
-					this.headerHeight = data.height
-				})
-				query.select('.linePlan').boundingClientRect(data => {
-					console.log('linePlan', data)
-					this.planHeight = data.height-data.top
-				}).exec();
-			}, 500);
-		},
-		// 切换
-		tabChange(index){
-			
-			this.tabIndex = index
-			let scrollTop = this.planHeight * 2
-			// console.log(scrollTop,'scrollTop')
-			if (index == 0){
-				scrollTop = this.headerHeight + 3
-			}else{
-				this.inTabChange = true
-			}
-			uni.pageScrollTo({
-				scrollTop: scrollTop,
-				duration: 50,
-			})
-			setTimeout(() => {
-				this.inTabChange = false
-			}, 300);
-		},
-		change(e) {
-			this.current = e.detail.current;
-		},
-		lineFav(id) {
-			if (!this.hasLogin) {
-				this.login()
-				return
-			}
-			this.HTTP.request({
-				url: '/user/favorite',
-				method: 'POST',
-				header: {},
-				data: {
-					uuid: id
-				},
-				success: res => {
-					if (res.statusCode != 200 || res.data.code != 0){
-						uni.showToast({
-							title: res.data.msg,
-							icon: 'none'
-						});
-						return
+					},
+					// 去景点详情
+					goSites(sitesItem){
+						console.log('sitesItem====',sitesItem)
+						if (sitesItem.id) {
+							uni.navigateTo({
+								url: '/pages_province/positionContent/positionContent?id=' + sitesItem.id
+							});
+						}
 					}
 				}
-			});
-		},
-		toPosition(pos) {
-			if (pos.id) {
-				uni.navigateTo({
-					url: '/pages_province/positionContent/positionContent?id=' + pos.id
-				});
-			}
-		},
-		// login() {
-		// 	uni.navigateTo({
-		// 		url: '/pages_mine/login/login'
-		// 	});
-		// },
-		tell(){
-			uni.makePhoneCall({
-				phoneNumber:this.butler_mobile
-			})
-		},
-		share() {
-			uni.showShareMenu({
-			});
-		}
-	}
-};
+		};
 </script>
 
 <style lang="scss">
-// 骨架屏样式
-.loadBox{
-	width: 100%;
-	height: auto;
-	.loadBlock{
-		.banner{
-			width: 100%;
+	.mr10{
+		margin-right: 10rpx;
+	}
+	.flex{
+		display: flex;
+	}
+	// 骨架屏样式
+	.loadBox {
+		width: 100%;
+		height: auto;
+
+		.loadBlock {
+			.banner {
+				width: 100%;
+				height: 440rpx;
+			}
+
+			.info-wrap {
+				padding: 20rpx 28rpx;
+
+				.flex {
+					
+					justify-content: center;
+				}
+
+				.mt20 {
+					margin-top: 20rpx;
+				}
+
+				.mt30 {
+					margin-top: 30rpx;
+				}
+
+				.mt40 {
+					margin-top: 40rpx;
+				}
+
+				.title {
+					width: 694rpx;
+					height: 28rpx;
+				}
+
+				.title-wrap {
+					display: flex;
+
+					.title-sm {
+						width: 100rpx;
+						height: 28rpx;
+						margin-right: 20rpx;
+					}
+
+					&.title-wrap-sm {
+						.title-sm {
+							width: 100rpx;
+							height: 20rpx;
+							margin-right: 20rpx;
+						}
+
+						.title-sm-big {
+							width: 188rpx;
+							height: 20rpx;
+						}
+					}
+
+					&.title-wrap-big {
+						.title-sm {
+							width: 100rpx;
+							height: 20rpx;
+							margin-right: 20rpx;
+						}
+
+						.title-sm-big {
+							width: 574rpx;
+							height: 20rpx;
+						}
+					}
+				}
+
+				.title-big {
+					width: 348rpx;
+					height: 28rpx;
+				}
+
+				.row3 {
+					display: flex;
+					justify-content: space-between;
+
+					.title {
+						width: 128rpx;
+						height: 20rpx;
+					}
+				}
+
+				.banner {
+					height: 250rpx;
+				}
+
+				.title-1 {
+					width: 200rpx;
+					height: 28rpx;
+				}
+
+				.title-1-1 {
+					width: 160rpx;
+					height: 20rpx;
+				}
+			}
+		}
+	}
+
+	// 内容
+	.page-content {
+		position: relative;
+		width: 100%;
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: center;
+		align-items: center;
+		background-color: #F8F8F8;
+		font-size: 14px;
+	}
+
+	.banner {
+		position: relative;
+		width: 100%;
+		margin-bottom: 20rpx;
+
+		.swiper {
 			height: 440rpx;
-		}
-		.kong{
-			width: 104rpx;
-			height: 20rpx;
-			margin: 20rpx auto;
-		}
-		.box-btm{
-			padding: 0 28rpx;
-			margin-top: 20rpx;
-			.kong-big{
-				width: 204rpx;
-				height: 40rpx;
-				margin-bottom:20rpx;
-			}
-			.title{
-				width: 694rpx;
-				height: 20rpx;
-				margin-bottom: 20rpx;
-			}
-			.title-min{
-				width: 348rpx;
-				height: 20rpx;
+			.swiper-item{
+				width: 100%;
 			}
 		}
-		.xxk-box{
-			display: flex;
-			margin-top: 80rpx;
-			.xxk{
-				width: 120rpx;
-				height: 40rpx;
-				margin-right: 40rpx;
+
+		.title-wrap {
+			padding: 20rpx 28rpx 30rpx;
+			background: rgba(255, 229, 18, 0.5);
+
+			.title {
+				font-size: 36rpx;
+				font-weight: 600;
+				color: #303133;
+				line-height: 50rpx;
+			}
+
+			.tags {
+				margin-top: 14rpx;
+				display: flex;
+
+				.tag-item {
+					padding: 8rpx 10rpx;
+					background: #FFFFFF;
+					border-radius: 4rpx;
+					font-size: 20rpx;
+					font-weight: 400;
+					color: #303133;
+					margin-right: 10rpx;
+				}
+
+				.tag-item-green {
+					padding: 8rpx 10rpx;
+					background: #71C817;
+					border-radius: 4rpx;
+					font-size: 20rpx;
+					font-weight: 400;
+					color: #FFFFFF;
+				}
 			}
 		}
-		.day-box{
+
+		.price-wrap {
+			padding: 30rpx;
 			display: flex;
 			align-items: center;
-			margin-top: 40rpx;
-			margin-bottom: 20rpx;
-			.day-min{
-				width: 120rpx;
-				height: 40rpx;
-				margin-right: 20rpx;
+			border-bottom: 4rpx solid #EDEFF2;
+			background-color: #fff;
+
+			.price {
+				font-size: 40rpx;
+				font-weight: bold;
+				color: #E41D54;
+
+				text {
+					font-size: 30rpx;
+				}
 			}
-			.day{
-				width: 554rpx;
-				height: 20rpx;
+
+			.text {
+				font-size: 28rpx;
+				font-weight: 400;
+				color: #606266;
+				margin-left: 10rpx;
 			}
 		}
-		.lx-box{
-			.lx-top{
+
+		.info-wrap {
+			padding: 28rpx;
+			background-color: #fff;
+
+			.info-item {
 				display: flex;
 				align-items: center;
-				margin-top: 20rpx;
-				.lx-min{
-					width: 40rpx;
-					height: 40rpx;
-					margin-right: 20rpx;
+				font-size: 32rpx;
+				font-weight: 400;
+
+				&.mt30 {
+					margin-top: 30rpx;
 				}
-				.lx{
-					width: 40rpx;
-					height: 20rpx;
+
+				.title {
+					color: #606266;
 				}
-			}
-			.lx-center{
-				.lx-min{
-					width: 348rpx;
-					height: 20rpx;
-					margin-top: 20rpx;
+
+				.dian {
+					color: #303133;
+
+					&:last-child {
+						display: none;
+					}
 				}
-				.lx{
-					width: 694rpx;
-					height: 20rpx;
-					margin-top: 20rpx;
+
+				.text {
+					color: #303133;
+
+					&.underline {
+						text-decoration: underline;
+					}
 				}
-			}
-			.lx-btm{
-				width: 694rpx;
-				height: 200rpx;
-				margin-top: 20rpx;
 			}
 		}
 	}
-}
-.u-node{
-	border: 8rpx solid #FFFFFF;
-}
-.active{
-	font-size: 32rpx !important;
-}
-.tabs-line{
-	border-radius: 12px !important;
-	height: 12rpx !important;
-	margin-bottom: 2rpx !important;
-}
-.page-section-spacing {
-	position: relative;
-	width: 100%;
-	height: 440rpx;
-}
-.swiper {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: relative;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%,-50%);
-}
 
-
-.imageCount {
-	height: 40rpx;
-	background-color: rgba(0, 0, 0, 0.6);
-	border-radius: 20rpx;
-	text-align: center;
-	line-height: 40rpx;
-	font-size: 22rpx;
-	font-family: PingFangSC-Regular, PingFang SC;
-	font-weight: 400;
-	color: rgba(255, 255, 255, 1);
-	position: absolute;
-	right: 28rpx;
-	bottom: 28rpx;
-	padding: 0 12rpx;
-}
-
-//标记点样式
-.dots {
-	width: 100%;
-	height: 10rpx;
-	display: flex;
-	justify-content: center;
-	position: absolute;
-	background: #ffff;
-	bottom: -30rpx;
-	.dot {
-		width: 10rpx;
-		height: 10rpx;
-		border-radius: 50%;
-		background: rgba(221, 221, 221, 1);
-		margin-right: 8rpx;
-	}
-
-	.activieDot {
-		width: 20rpx;
-		height: 10rpx;
-		background: rgba(48, 49, 51, 1);
-		border-radius: 3px;
-		margin-right: 8rpx;
-	}
-}
-// swipper样式 end
-.container {
-	padding: 40rpx 30rpx 20rpx;
-
-	.linePrice {
-		font-size: 24rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 400;
-		color: #909399;
-		display: flex;
-		align-items: flex-end;
-		.linePrice-number{
+	.tabbody {
+		position: relative;
+		width: 100%;
+		background-color: #fff;
+		padding: 0 28rpx;
+		&#item1{
+			padding-bottom: 40rpx;
+			border-bottom: 2rpx solid #EDEFF2 ;
+		}
+		&#item2{
+			.h-title-wrap{
+				padding-top: 40rpx;
+				padding-bottom: 0rpx;
+			}
+			.item2-wrap{
+				padding-left: 15rpx;
+				margin-top: 40rpx;
+				border-left: 2rpx solid #EDEFF2;
+				.day-title{
+					position: relative;
+					display: flex;
+					.dian-wrap{
+						padding: 14rpx 8rpx;
+						background-color: #fff;
+						position: absolute;
+						left: -30rpx;
+						.dian{
+							width: 10rpx;
+							height: 10rpx;
+							background: #BFC2CC;
+							border-radius: 50%;
+						}
+					}
+					.day-title-day{
+						width: 96rpx;
+						height: 40rpx;
+						background: #FFE512;
+						font-size: 24rpx;
+						font-weight: 600;
+						color: #303133;
+						text-align: center;
+						line-height: 40rpx;
+					}
+					.day-title-text{
+						margin-left: 20rpx;
+						font-size: 30rpx;
+						font-weight: bold;
+						color: #303133;
+					}
+				}
+				.title-wrap{
+					padding-left: 15rpx;
+					margin-top: 30rpx;
+					display: flex;
+					flex-wrap: wrap;
+					font-size: 30rpx;
+					font-weight: 300;
+					color: #606266;
+					position: relative;
+					.icon{
+						width: 48rpx;
+						height: 48rpx;
+						position: absolute;
+						left: -40rpx;
+					}
+					.title{
+						font-weight: bold;
+						color: #303133;
+					}
+				}
+				.content{
+					padding-left: 15rpx;
+					margin-top: 20rpx;
+				}
+				// 景点列表
+				.scenic-wrap{
+					padding-left: 15rpx;
+					.scenic-item{
+						margin-top: 30rpx;
+						padding: 20rpx;
+						width: 642rpx;
+						height: 204rpx;
+						box-sizing: border-box;
+						background: #FFFFFF;
+						box-shadow: 0px 0px 36rpx 0px rgba(0, 0, 0, 0.1);
+						border-radius: 8rpx;
+						display: flex;
+						.scenic-item-left{
+							width: 216rpx;
+							height: 164rpx;
+							border-radius: 16rpx;
+							position: relative;
+							.imgTag {
+								width: 88rpx;
+								height: 44rpx;
+								background: #9fd873;
+								border-radius: 16rpx 0px 16rpx 0px;
+								position: absolute;
+								left: 0;
+								top: 0;
+								color: #ffffff;
+								font-size: 24rpx;
+								text-align: center;
+								line-height: 44rpx;
+								font-weight: bold;
+							}
+						}
+						.scenic-item-right{
+							flex: 1;
+							margin-left: 20rpx;
+							.scenic-item-right-title{
+								font-size: 30rpx;
+								font-weight: bold;
+								color: #303133;
+							}
+							.rateBox{
+								display: flex;
+								align-items: center;
+								margin: 12rpx 0;
+								.rate {
+									margin-left: 2rpx;
+									font-size: 24rpx;
+									font-family: PingFangSC-Medium, PingFang SC;
+									font-weight: 500;
+									color: #606266;
+								}
+								.rateStart {
+									image {
+										width: 22.4rpx;
+										height: 22.4rpx;
+										margin-right: 6rpx;
+									}
+								}
+							}
+							.scenic-item-right-text{
+								font-size: 26rpx;
+								font-weight: 400;
+								color: #909399;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								display: -webkit-box;
+								-webkit-line-clamp: 2;
+								-webkit-box-orient: vertical;
+							}
+						}
+					}
+				}
+			}
+		}
+		&#item3{
+			padding: 40rpx 28rpx 20rpx;
+			.item3-wrap{
+				width: 100%;
+				background: #F8F8F8;
+				border-radius: 8rpx;
+				padding: 28rpx;
+				box-sizing: border-box;
+				font-size: 28rpx;
+				font-weight: 300;
+				color: #606266;
+				.item3-title{
+					font-size: 30rpx;
+					font-weight: 400;
+					color: #303133;
+					text-align: center;
+					margin-bottom: 20rpx;
+				}
+			}
+		}
+		.h-title-wrap{
 			display: flex;
-			align-items: flex-end;
-			.price-img{
-				width: 14rpx;
-				height: 18rpx;
-				margin-bottom: 10rpx;
-				image{
+			justify-content: center;
+			flex-direction: column;
+			align-items: center;
+			padding-bottom: 40rpx;
+			.h-title{
+				font-size: 32rpx;
+				font-weight: bold;
+				color: #303133;
+				position: relative;
+				z-index: 1;
+				&::after{
+					content: "";
+					width: 100%;
+					height: 20rpx;
+					background: rgba(255, 229, 18, 0.5);
+					position: absolute;
+					left: 0;
+					bottom: 0;
+					z-index: -1;
+				}
+			}
+			.h-title-sm{
+				font-size: 24rpx;
+				font-weight: 300;
+				color: #606266;
+				margin-top: 16rpx;
+			}
+		}
+		.day-wrap{
+			margin-top: 30rpx;
+			display: flex;
+			align-items: center;
+			.day-title{
+				width: 70rpx;
+				height: 36rpx;
+				background: #FFE512;
+				border-radius: 4rpx;
+				font-size: 22rpx;
+				font-weight: bold;
+				color: #303133;
+				text-align: center;
+				line-height: 36rpx;
+			}
+			.day-text{
+				font-size: 30rpx;
+				font-weight: 400;
+				color: #303133;
+				margin-left: 20rpx;
+			}
+		}
+		.look-all-wrap{
+			display: flex;
+			justify-content: center;
+			font-size: 22rpx;
+			font-weight: bold;
+			color: #0091FF;
+			margin-top: 30rpx;
+		}
+	}
+
+	// 内置咨询卡
+	.answersFollow-inner-wrap{
+		padding: 40rpx 28rpx;
+		background: #FFFFFF; 
+		.answersFollow-inner {
+			box-sizing: border-box;
+			width: 694rpx;
+			height: 164rpx;
+			background: #FFFFFF; 
+			box-shadow: 0px 0px 24rpx 0px rgba(0, 0, 0, 0.1);
+			border-radius: 16rpx;
+			display: flex;
+			.answersLeft {
+				position: relative;
+				left: 28rpx;
+				margin-top: 18rpx;
+				.border-img {
+					width: 108rpx;
+					height: 108rpx;
+					position: absolute;
+		
+					image {
+						width: 100%;
+						height: 100%;
+					}
+				}
+				.left_img {
+					width: 88rpx;
+					height: 88rpx;
+					border-radius: 50%;
+					overflow: hidden;
+					position: absolute;
+					left: 10rpx;
+					top: 10rpx;
+		
+					image {
+						width: 100%;
+						height: 100%;
+					}
+				}
+		
+				.left_txt {
+					width: 70rpx;
+					height: 34rpx;
+					background: #FFE512;
+					border-radius: 8rpx;
+					font-size: 18rpx;
+					font-family: PingFangSC-Semibold, PingFang SC;
+					font-weight: 600;
+					color: #303133;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					position: absolute;
+					top: 88rpx;
+					left: 20rpx;
+				}
+			}
+		
+			.answersCenter {
+				flex: 1;
+				margin-left: 152rpx;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+		
+				.center-top {
+					display: flex;
+					align-items: flex-end;
+					
+					.top-left {
+						font-size: 32rpx;
+						font-weight: 600;
+						color: #303133;
+					}
+		
+					.top-right {
+						margin-left: 20rpx;
+						font-size: 24rpx;
+						font-weight: 400;
+						color: #606266;
+						display: flex;
+					}
+				}
+				.center-btm{
+					display: flex;
+					font-size: 24rpx;
+					font-weight: 400;
+					color: #606266;
+					margin-top: 10rpx;
+					.item{
+						color: #A86B13;
+						margin-right: 20rpx;
+					}
+				}
+			}
+			
+				.answersRight {
+					width: 164rpx;
+					height: 164rpx;
+					background: #F8F8F8;
+					border-radius: 0px 16rpx 16rpx 0px;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+						justify-content: center;
+					.right-img {
+						width: 56rpx;
+						height: 56rpx;
+						
+						image {
+							width: 100%;
+							height: 100%;
+						}
+					}
+						
+					text {
+						font-size: 28rpx;
+						font-weight: 600;
+						color: #303133;
+					}
+				}
+			
+			
+		}
+		
+	}
+	.zhanwei{
+		height: 150rpx;
+	}
+	// 咨询卡
+	.answersFollow {
+		position: fixed;
+		margin: auto;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		width: 100%;
+		height: 150rpx;
+		padding-bottom: constant(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom);
+		box-sizing: content-box;
+		background: #FFFFFF;
+		box-shadow: 0px -16rpx 56rpx 0px rgba(0, 0, 0, 0.05);
+		display: flex;
+		// align-items: center;
+		// justify-content: space-between;
+		z-index: 10;
+
+		.answersLeft {
+			position: relative;
+			// margin-left: 26rpx;
+			left: 26rpx;
+			margin-top: 18rpx;
+
+			.border-img {
+				width: 108rpx;
+				height: 108rpx;
+				position: absolute;
+
+				image {
 					width: 100%;
 					height: 100%;
 				}
 			}
-			.price {
-				font-size: 64rpx;
-				font-family: STSongti-SC-Black, STSongti-SC;
-				font-weight: 900;
-				color: #FA541C;
-				line-height: 50rpx;
-			}
-			text{
-				margin-left: 8rpx;
-				font-family: PingFangSC-Medium, PingFang SC;
-				color: #FA541C;
-			}
-		}
-		.linePrice-text{
-			width: 112rpx;
-			height: 36rpx;
-			background: rgba(0, 145, 255, 0.1);
-			border-radius: 18rpx;
-			color: #0091FF;
-			display: flex;
-			font-size: 22rpx;
-			justify-content: center;
-			align-items: center;
-			margin-left: 16rpx;
-		}
-	}
-	.lineTitle {
-		padding-top: 20rpx;
-		font-size: 36rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		line-height: 48rpx;
-	}
-}
-.lineDriver {
-	height: 20rpx;
-	width: 100%;
-	background: #f8f8f8;
-}
 
-.lineTabs{
-	height: 128rpx;
-}
-
-.linePlan {
-	margin-top: 20rpx;
-	margin-left: 20rpx;
-	position: absolute; 
-	padding: 10rpx 10rpx;
-	padding-bottom: 175rpx;
-	.planContent {
-		padding-right: 10rpx;
-		padding-left: 5rpx;
-	}
-}
-.tui-chatbox::before {
-	content: '';
-	position: absolute;
-	width: 0;
-	height: 0;
-	top: 20rpx;
-	border: 16rpx solid;
-}
-.tui-chatbox {
-	width: 64rpx;
-	padding: 0 10rpx;
-	height: 40rpx;
-	background: #ffe512;
-	position: relative;
-	border-radius: 6rpx;
-	font-size: 24rpx;
-	font-weight: bold;
-	color: #000;
-	word-break: break-all;
-	word-wrap: break-word;
-}
-.tui-chatbox-right {
-	background: #ffe512;
-	border: 1rpx solid #ffe512;
-}
-
-.tui-chatbox-right::before {
-	top: 3%;
-	right: 88%;
-	border-color: transparent #ffe512 transparent transparent;
-}
-.planContent {
-	font-family: PingFangSC-Medium, PingFang SC;
-	.position {
-		position: relative;
-		left: -14rpx;
-		width: 642rpx;
-		margin: 32rpx 0;
-		height: 204rpx;
-		background: #FFFFFF;
-		box-shadow: 0 0 36rpx 0 rgba(0, 0, 0, 0.1);
-		border-radius: 8rpx;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 0 20rpx;
-		.right {
-			margin-left: 20rpx;
-			height: 164rpx;
-			.title {
-				font-size: 30rpx;
-				font-family: PingFangSC-Medium, PingFang SC;
-				font-weight: 500;
-				color: #303133;
-			}
-			.content {
-				margin-top: 6rpx;
-				font-size: 26rpx;
-				font-family: PingFangSC-Regular, PingFang SC;
-				font-weight: 400;
-				color: #909399;
-				line-height: 36rpx;
+			.left_img {
+				width: 88rpx;
+				height: 88rpx;
+				border-radius: 50%;
 				overflow: hidden;
-				text-overflow: ellipsis;
-				display: -webkit-box;
-				-webkit-line-clamp: 2;
-				line-clamp: 2;
-				-webkit-box-orient: vertical;
+				position: absolute;
+				left: 10rpx;
+				top: 10rpx;
+
+				image {
+					width: 100%;
+					height: 100%;
+				}
 			}
-			.rateBox {
+
+			.left_txt {
+				width: 70rpx;
+				height: 34rpx;
+				background: #FFE512;
+				border-radius: 8rpx;
+				font-size: 18rpx;
+				font-family: PingFangSC-Semibold, PingFang SC;
+				font-weight: 600;
+				color: #303133;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				position: absolute;
+				top: 88rpx;
+				left: 20rpx;
+			}
+		}
+
+		.answersCenter {
+			margin-left: 152rpx;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+
+			.center-top {
 				display: flex;
 				align-items: center;
-				margin-top: 6rpx;
-				.rate {
-					margin-left: 2rpx;
-					font-size: 24rpx;
+
+				.top-left {
+					font-size: 32rpx;
+					font-family: PingFangSC-Semibold, PingFang SC;
+					font-weight: 600;
+					color: #303133;
+				}
+
+				.top-right {
+					margin-left: 20rpx;
+					padding: 4rpx 8rpx;
+					height: 34rpx;
+					background: #EDEFF2;
+					border-radius: 8rpx;
+					font-size: 18rpx;
 					font-family: PingFangSC-Medium, PingFang SC;
 					font-weight: 500;
-					color: #606266;
-				}
-				.rateStart {
-					image {
-						width: 22.4rpx;
-						height: 22.4rpx;
-						margin-right: 6rpx;
-					}
+					color: #303133;
+					display: flex;
+					justify-content: center;
+					align-items: center;
 				}
 			}
 		}
-		.left {
-			position: relative;
 
-			.imgTag {
-				width: 88rpx;
-				height: 44rpx;
-				background: #9fd873;
-				border-radius: 12rpx 0px 12rpx 0px;
-				position: absolute;
-				left: 0;
-				top: 0rpx;
-				color: #ffffff;
-				font-size: 24rpx;
-				text-align: center;
-				line-height: 44rpx;
+		.answersRight {
+			position: absolute;
+			right: 28rpx;
+			top: 34rpx;
+			width: 196rpx;
+			height: 76rpx;
+			background: #FFFFFF;
+			border-radius: 16rpx;
+			border: 2rpx solid #303133;
+			display: flex;
+			align-items: center;
+
+			.right-img {
+				width: 56rpx;
+				height: 56rpx;
+				margin-left: 20rpx;
+
+				image {
+					width: 100%;
+					height: 100%;
+				}
+			}
+
+			text {
+				font-size: 28rpx;
+				font-family: PingFangSC-Semibold, PingFang SC;
+				font-weight: 600;
+				color: #303133;
 			}
 		}
 	}
-
-	.u-order-title {
-		position: relative;
-		top: -20rpx;
-		left: -18rpx;
-		display: flex;
-		align-items: center;
-	}
-	
-	.planTitle {
-		font-size: 30rpx;
-		font-weight: 500;
-		color: #303133;
-		margin-left: 20rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-	}
-	.stitle{
-		margin-left: 4rpx;
-		font-family: PingFangSC-Medium, PingFang SC;
-		font-size: 30rpx;
-		font-weight: 500;
-		color: #303133;
-	}
-	.u-order-desc {
-		font-size: 30rpx;
-		text-align: justify;
-		color: #606266;
-		font-family: PingFangSC-Light, PingFang SC;
-		font-weight: 300;
-		position: relative;
-		left: -14rpx;
-		line-height: 42rpx;
-		text-align: justify;
-	}
-	.u-order-desc1 {
-		font-size: 30rpx;
-		text-align: justify;
-		color: #303133;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 300;
-		position: relative;
-		left: -14rpx;
-		line-height: 42rpx;
-	}
-
-	.uTime {
-		display: flex;
-		align-items: center;
-		margin-left: 60rpx;
-		.timeIcon {
-			width: 34rpx;
-			height: 34rpx;
-			margin-left: 14rpx;
-		}
-		text {
-			font-size: 30rpx;
-			font-family: PingFangSC-Regular, PingFang SC;
-			font-weight: 400;
-			line-height: 42rpx;
-			color: #606266;
-			margin-left: 10rpx;
-		}
-	}
-}
-.u-time-axis-node {
-	top: -1.5vw !important;
-}
-.bottom {
-	width: 100%;
-	height: 98rpx;
-	position: fixed;
-	left: 0;
-	bottom: var( --window-bottom);
-	z-index: 111;
-	padding-bottom: constant(safe-area-inset-bottom);
-	padding-bottom: env(safe-area-inset-bottom);
-	box-sizing: content-box;
-	display: flex;
-	align-items: center;
-	border-top: 2rpx solid #EDEFF2;
-	background-color: hsla(0,0%,89.8%,.8);
-	background: hsla(0,0%,100%,.9);
-	backdrop-filter: blur(10px);
-	-webkit-backdrop-filter: blur(10px);
-}
-.bottom-text{
-	width: 372rpx;
-	height: 68rpx;
-	padding-left: 28rpx;
-	margin-left: 28rpx;
-	margin-right: 32rpx;
-}
-.share{
-	margin-left: 32rpx;
-	width: 52rpx;
-	height: 52rpx;
-	image{
-		width: 100%;
-		height: 100%;
-	}
-}
-.like {
-	display: flex;
-	align-items: center;
-	width: 52rpx;
-	height: 52rpx;
-	margin-right: 4rpx;
-	.has-like {
-		width: 100%;
-		height: 100%;
-		display: inline-block;
-		background-size: 100%;
-		background-origin: center center;
-		background-image: url(../../static/images/attHeartActive.svg);
-	}
-	.icon-like {
-		width: 100%;
-		height: 100%;
-		display: inline-block;
-		background-image: url(../../static/images/attheart.svg);
-		background-size: 100%;
-		background-origin: center center;
-	}
-	
-	.icon-animate {
-		width: 100%;
-		height: 100%;
-		display: block;
-		background-image: url(../../static/icon-heart.gif);
-		background-size: 100%;
-		background-origin: center center;
-	}
-}
-.likeNum {
-	width: 30rpx;
-	height: 24rpx;
-	font-size: 24rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 500;
-	color: #303133;
-	line-height: 24rpx;
-	margin-right: 32rpx;
-}
-.fav {
-	display: flex;
-	align-items: center;
-	margin-right: 4rpx;
-	position: relative;
-	width: 52rpx;
-	height: 52rpx;
-	.favBtn {
-		width: 100%;
-		height: 100%;
-	}
-}
-.favNum {
-	width: 30rpx;
-	height: 24rpx;
-	font-size: 24rpx;
-	font-family: PingFangSC-Medium, PingFang SC;
-	font-weight: 500;
-	color: #303133;
-	line-height: 24rpx;
-}
-.serverInfo {
-	width: 694rpx;
-	min-height: 416rpx;
-	background: #f8f8f8;
-	border-radius: 8rpx;
-	position: relative;
-	padding: 28rpx;
-	margin: 0 auto;
-	margin-left: -4rpx;
-	text-align: justify;
-	.title {
-		font-size: 30rpx;
-		font-family: PingFangSC-Regular, PingFang SC;
-		font-weight: 500;
-		color: #303133;
-		line-height: 50rpx;
-		text-align: center;
-	}
-	.content {
-		margin-top: 20rpx;
-		font-size: 28rpx;
-		font-family: PingFangSC-Light, PingFang SC;
-		font-weight: 400;
-		color: #606266;
-		line-height: 36rpx;
-	}
-}
-.phone {
-	width: 92rpx;
-	height: 92rpx;
-	background: #ffe512;
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	position: fixed;
-	bottom: 246rpx;
-	right: 34rpx;
-	justify-content: center;
-	box-shadow: 0px 0px 12rpx 4rpx rgba(255, 229, 18, 0.35);
-	image {
-		width: 46rpx;
-		height: 46rpx;
-	}
-}
-.phone::after{
-	border: none;
-}
 </style>

@@ -293,8 +293,8 @@
 				{
 					"path": "lineDetail/lineDetail",
 					"style": {
-						"navigationStyle": "custom",
-						"backgroundColor": "#fff"
+						"navigationStyle": "default",
+						"navigationBarTitleText": "路线详情"
 					}
 				}
 				// {
