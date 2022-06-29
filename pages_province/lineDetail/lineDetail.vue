@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="wrap-box">
 		<!-- 骨架屏 -->
 		<view v-if="loading" class="loadBox">
 			<view class="content u-skeleton">
@@ -452,6 +452,10 @@
 </script>
 
 <style lang="scss">
+	.wrap-box{
+		padding-bottom: constant(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom);
+	}
 	.mr10{
 		margin-right: 10rpx;
 	}
@@ -583,6 +587,7 @@
 			height: 440rpx;
 			.swiper-item{
 				width: 100%;
+				height: 100%;
 			}
 		}
 
@@ -1044,6 +1049,7 @@
 	}
 	.zhanwei{
 		height: 150rpx;
+		width: 100%;
 	}
 	// 咨询卡
 	.answersFollow {
