@@ -134,6 +134,10 @@
 					</view>
 				</view>
 				<view class="contentText">
+					<view class="moreText" id="moreText">
+						简介：{{siteInfo.description}}
+					</view>
+					<!-- 
 					<view :class="isShow ? 'loseText' : 'moreText'" id="moreText">
 						简介：{{siteInfo.description}}
 					</view>
@@ -145,7 +149,7 @@
 						<view class="mask"></view>
 						<text>展开</text>
 						<image class="iconImg" src="/static/images/shouqiIcon.png"></image>
-					</view>
+					</view> -->
 				</view>
 			</view>
 			<view class="magrinBck"></view>
