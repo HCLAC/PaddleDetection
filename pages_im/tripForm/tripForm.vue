@@ -11,6 +11,31 @@
 				</view>
 			</uni-nav-bar>
 		</view>
+		<!-- 骨架屏 -->
+		<view v-if="loading" class="loadBox">
+			<view class="container u-skeleton">
+				<view class="banner-box u-skeleton-fillet"></view>
+				<view class="title-box u-skeleton-rect"></view>
+				<view class="loadBlock" v-for="(item, index) in loadEmpty">
+					<view class="left">
+						<view class="left-top">
+							<view class="txt-box u-skeleton-rect"></view>
+							<view class="txt-box u-skeleton-rect"></view>
+							<view class="txt-box u-skeleton-rect"></view>
+						</view>
+						<view class="left-btm">
+							<view class="txt-box-min u-skeleton-rect"></view>
+							<view class="txt-box-min u-skeleton-rect"></view>
+						</view>
+					</view>
+					<view class="right">
+						<view class="img-box u-skeleton-fillet"></view>
+					</view>
+				</view>
+			</view>
+			<!--引用组件-->
+			<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
+		</view>
 		<!-- banner图 -->
 		<view class="banner">
 			<view class="banner-txt">
@@ -119,43 +144,17 @@
 				</view>
 			</view>
 		</view>
-		<view class="answersFollow" >
-			<view class="answersLeft">
-				<view class="border-img">
-					<image src="@/static/images/border-jian.png" mode=""></image>
-				</view>
-				<view class="left_img">
-					<image :src="consulting.avatar ? consulting.avatar : '/static/images/logo.png'" mode=""></image>
-				</view>
-				<view class="left_txt">
-					在线中
-				</view>
-			</view>
-			<view class="answersCenter">
-				<view class="center-top">
-					<view class="top-left">
-						{{consulting.name}}
-					</view>
-					<view class="top-right">
-						{{professionObj1[consulting.profession]}}
-					</view>
-				</view>
-				<view class="center-btm">
-					{{consulting.company}}
-				</view>
-			</view>
-			<view class="answersRight" @click="toChatroom">
-				<view class="right-img">
-					<image src="@/static/images/wz.png" mode=""></image>
-				</view>
-				<text>咨询Ta</text>
-			</view>
-		</view>
+		<consultingBtm :consulting="consulting"></consultingBtm>
 	</view>
 </template>
 
 <script>
+	import consultingBtm from '@/common/consulting-btm/consulting-btm.vue';
+
 	export default {
+		components: {
+			consultingBtm
+		},
 		data() {
 			return {
 				replaceShow:true,
@@ -178,11 +177,9 @@
 				state_id:[],
 				city_id:[],
 				days:0,
-				professionObj1: {
-					'0': '导游',
-					'1': '旅游达人',
-					'2': '旅游定制师'
-				},
+				// 骨架屏
+				loadEmpty:[1,2,3,4],
+				loading: true,
 			};
 		},
 		onLoad(e){
@@ -201,34 +198,11 @@
 			this.getInfo()
 		},
 		methods:{
-			toChatroom(){
-				this.HTTP.request({
-					url: '/bulter/consulting',
-					method: 'POST',
-					data:{
-						bulter_id: this.consulting.bulter_id
-					},
-					success: res => {
-						if (res.statusCode != 200 || res.data.code != 0) {
-							uni.showToast({
-								title: res.data.msg,
-								icon: 'none'
-							});
-							return
-						}
-						var info = res.data.data
-						console.log(info, '管家列表')
-						if(info.history.length > 0){
-							uni.navigateTo({
-								url:'/pages_im/chatroom/chatroom?search_id=' + info.search_id,
-							})
-						}else{
-							uni.navigateTo({
-								url:'/pages_im/problem/problem?bulter_id=' + info.bulter_id,
-							})
-						}
-					}
-				});
+			hideLoad(){
+				setTimeout(() => {
+					this.loading = false
+					uni.hideLoading();
+				}, 300);
 			},
 			//管家信息
 			getInfo() {
@@ -269,6 +243,7 @@
 					success: res => {
 						this.total = res.data.data.total
 						this.form = res.data.data.list
+						this.hideLoad()
 						if(this.total == 0){
 							this.promptShow = false
 							this.getRecommend()
@@ -293,6 +268,8 @@
 					success: res => {
 						var total = res.data.data.total
 						this.recommendation = res.data.data.list
+						this.hideLoad()
+						
 						this.totalPage = Math.ceil(total / 6)
 						if(total <= 6){
 							this.replaceShow = false
@@ -324,6 +301,50 @@
 	// padding:  0 28rpx;
 	padding-bottom: 200rpx;
 	overflow-x:scroll;
+	.loadBox{
+		width: 100%;
+		height: auto;
+		.container{
+			padding: 0 28rpx;
+			.banner-box{
+				width: 694rpx;
+				height: 320rpx;
+			}
+			.title-box{
+				width: 694rpx;
+				height: 40rpx;
+				margin-top: 30rpx;
+			}
+			.loadBlock{
+				margin-top: 40rpx;
+				display: flex;
+				.left{
+					.left-top{
+						.txt-box{
+							width: 320rpx;
+							height: 28rpx;
+							margin-bottom: 20rpx;
+						}
+					}
+					.left-btm{
+						display: flex;
+						.txt-box-min{
+							width: 80rpx;
+							height: 28rpx;
+							margin-right: 20rpx;
+						}
+					}
+				}
+				.right{
+					margin-left: 28rpx;
+					.img-box{
+						width: 346rpx;
+						height: 194rpx;
+					}
+				}
+			}
+		}
+	}
 	.banner{
 		margin-left: 28rpx;
 		width: 694rpx;
@@ -552,125 +573,6 @@
 					font-weight: 400;
 					color: #303133;
 				}
-			}
-		}
-	}
-	.answersFollow{
-		position:fixed;
-		margin:auto;
-		left:0;
-		right:0;
-		bottom:0;
-		width: 100%;
-		height: 150rpx;
-		padding-bottom: constant(safe-area-inset-bottom);
-		padding-bottom: env(safe-area-inset-bottom);
-		box-sizing: content-box;
-		background: #FFFFFF;
-		box-shadow: 0px -16rpx 56rpx 0px rgba(0, 0, 0, 0.05);
-		display: flex;
-		// align-items: center;
-		// justify-content: space-between;
-		z-index: 10;
-		.answersLeft{
-			position: relative;
-			// margin-left: 26rpx;
-			left: 26rpx;
-			margin-top: 18rpx;
-			.border-img{
-				width: 108rpx;
-				height: 108rpx;
-				position: absolute;
-				image{
-					width: 100%;
-					height: 100%;
-				}
-			}
-			.left_img{
-				width: 88rpx;
-				height: 88rpx;
-				border-radius: 50%;
-				overflow: hidden;
-				position: absolute;
-				left: 10rpx;
-				top: 10rpx;
-				image{
-					width: 100%;
-					height: 100%;
-				}
-			}
-			.left_txt{
-				width: 70rpx;
-				height: 34rpx;
-				background: #FFE512;
-				border-radius: 8rpx;
-				font-size: 18rpx;
-				font-family: PingFangSC-Semibold, PingFang SC;
-				font-weight: 600;
-				color: #303133;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				position: absolute;
-				top: 88rpx;
-				left: 20rpx;
-			}
-		}
-		.answersCenter{
-			margin-left: 152rpx;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			.center-top{
-				display: flex;
-				align-items: center;
-				.top-left{
-					font-size: 32rpx;
-					font-family: PingFangSC-Semibold, PingFang SC;
-					font-weight: 600;
-					color: #303133;
-				}
-				.top-right{
-					margin-left: 20rpx;
-					padding: 4rpx 8rpx;
-					height: 34rpx;
-					background: #EDEFF2;
-					border-radius: 8rpx;
-					font-size: 18rpx;
-					font-family: PingFangSC-Medium, PingFang SC;
-					font-weight: 500;
-					color: #303133;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-				}
-			}
-		}
-		.answersRight{
-			position: absolute;
-			right: 28rpx;
-			top: 34rpx;
-			width: 196rpx;
-			height: 76rpx;
-			background: #FFFFFF;
-			border-radius: 16rpx;
-			border: 2rpx solid #303133;
-			display: flex;
-			align-items: center;
-			.right-img{
-				width: 56rpx;
-				height: 56rpx;
-				margin-left: 20rpx;
-				image{
-					width: 100%;
-					height: 100%;
-				}
-			}
-			text{
-				font-size: 28rpx;
-				font-family: PingFangSC-Semibold, PingFang SC;
-				font-weight: 600;
-				color: #303133;
 			}
 		}
 	}
