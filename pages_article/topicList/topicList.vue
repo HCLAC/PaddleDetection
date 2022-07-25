@@ -11,6 +11,20 @@
 				</view>
 			</uni-nav-bar>
 		</view>
+		<!-- 骨架屏 -->
+		<view v-if="loading" class="loadBox">
+			<view class="container u-skeleton">
+				<view class="title-box u-skeleton-rect"></view>
+				<view class="bq">
+					<view class="title-box u-skeleton-rect"></view>
+					<view class="title-box u-skeleton-rect"></view>
+				</view>
+				<view class="box-max u-skeleton-rect" >
+				</view>
+			</view>
+			<!--引用组件-->
+			<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
+		</view>
 		<!-- 头图 -->
 		<view class="headImgBox"  :style="{'position': headerFixed?'absolute':'fixed'}">
 			<image class="headImg" lazy-load :src="info.image" mode="scaleToFill"></image>
@@ -59,7 +73,10 @@ export default {
 				navbarHeight: 64,
 				headerHeight: 0,
 				topic_id: 0,
-				info:''
+				info:'',
+				// 骨架屏
+				loadEmpty:[1,2,3,4],
+				loading: true,
 			};
 		},
 		// #ifdef MP-BAIDU
@@ -89,8 +106,15 @@ export default {
 		mounted(){
 			this.navbarHeight = getApp().globalData.navbarHeight
 			this.calcHeight()
+			this.hideLoad()
 		},
 		methods: {	
+			hideLoad(){
+				setTimeout(() => {
+					this.loading = false
+					uni.hideLoading();
+				}, 300);
+			},
 			loadData(){
 				this.getTopic()
 			},
@@ -152,6 +176,33 @@ export default {
 .tabs-item{
 	padding-left: 20rpx !important;
 }
+	.loadBox{
+		width: 100%;
+		height: auto;
+		.container{
+			// padding: 0 28rpx;
+			.title-box{
+				width: 100%;
+				height: 428rpx;
+			}
+			.bq{
+				display: flex;
+				margin-top: 30rpx;
+				margin-left: 28rpx;
+				.title-box{
+					width: 160rpx;
+					height: 40rpx;
+					margin-right: 30rpx;
+				}
+			}
+			.box-max{
+				width: 694rpx;
+				height: 1300rpx;
+				margin-top: 40rpx;
+				margin-left: 28rpx;
+			}
+		}
+	}
 // 头图
 .headImgBox {
 	width: 750rpx;

@@ -17,23 +17,29 @@
 				<view class="usermes">
 					<image lazy-load :src="userInfo.avatar?userInfo.avatar:'/static/images/userImg.svg'" class="userAva"></image>
 					<view class="userR">
-						<view v-if="hasLogin">
-							<view class="userName" @click="toMineInfo">{{ userInfo.nickName }}
-								<image src="/static/images/iconExit.svg"></image>
+						<view v-if="hasLogin" class="contentBox">
+							<view class="">
+								<view class="userName" @click="toMineInfo">{{ userInfo.nickName }}
+									<image src="/static/images/iconExit.svg"></image>
+								</view>
+								<view class="fa">
+									<view class="fllow" @click="toConcern">
+										<text>关注</text>
+										<view class="fllowNum">{{ userInfo.fllowNum }}</view>
+									</view>
+									<view class="answers" @click="toAnswers" >
+										<text>问答</text>
+										<view class="answersNum">{{ userInfo.answersNum }}</view>
+									</view>
+									<view class="answers" @click="toCount" >
+										<text>咨询</text>
+										<view class="answersNum">{{ userInfo.search_count }}</view>
+									</view>
+								</view>
 							</view>
-							<view class="fa">
-								<view class="fllow" @click="toConcern">
-									<text>关注</text>
-									<view class="fllowNum">{{ userInfo.fllowNum }}</view>
-								</view>
-								<view class="answers" @click="toAnswers" >
-									<text>问答</text>
-									<view class="answersNum">{{ userInfo.answersNum }}</view>
-								</view>
-								<view class="answers" @click="toCount" >
-									<text>咨询</text>
-									<view class="answersNum">{{ userInfo.search_count }}</view>
-								</view>
+							
+							<view class="outBtn" @click="outChange">
+								<image src="@/static/images/tcdl.png" mode=""></image>
 							</view>
 						</view>
 						<view v-else>
@@ -141,6 +147,12 @@ export default {
 		}
 	},
 	methods: {
+		outChange(){
+			uni.clearStorage();
+			uni.navigateTo({
+				url: '/pages_mine/login/login'
+			});
+		},
 		signIn() {
 			this.isInit = false
 			uni.navigateTo({
@@ -310,62 +322,75 @@ page {
 	}
 	.userR {
 		margin-left: 32rpx;
-		.userName {
-			font-size: 36rpx;
-			font-weight: 500;
-			color: #303133;
+		.contentBox{
 			display: flex;
-			align-items: center;
-			image{
-				width: 32rpx;
-				height: 32rpx;
-				margin-left: 16rpx;
+			.outBtn{
+				display: flex;
+				align-items: center;
+				margin-left: 170rpx;
+				image{
+					width: 48rpx;
+					height: 48rpx;
+				}
 			}
-		}
-		.userSignin{
-			font-size: 40rpx;
-			font-family: PingFangSC-Medium, PingFang SC;
-			font-weight: 500;
-			color: #303133;
-		}
-		.userMsg{
-			font-size: 24rpx;
-			font-family: PingFangSC-Regular, PingFang SC;
-			font-weight: 400;
-			color: #606266;
-		}
-		.fa{
-			// margin-top: 20rpx;
-			display: flex;
-			align-items: center;
-			.fllow{
-				height: 60rpx;
-				font-size: 28rpx;
+			.userName {
+				font-size: 36rpx;
+				font-weight: 500;
+				color: #303133;
+				display: flex;
+				align-items: center;
+				image{
+					width: 32rpx;
+					height: 32rpx;
+					margin-left: 16rpx;
+				}
+			}
+			.userSignin{
+				font-size: 40rpx;
+				font-family: PingFangSC-Medium, PingFang SC;
+				font-weight: 500;
+				color: #303133;
+			}
+			.userMsg{
+				font-size: 24rpx;
 				font-family: PingFangSC-Regular, PingFang SC;
 				font-weight: 400;
 				color: #606266;
-				line-height: 24rpx;
-				display: flex;
-				align-items: center;
-				.fllowNum{
-					margin-left: 8rpx;
-				}
 			}
-			.answers{
-				height: 60rpx;
-				font-size: 28rpx;
-				font-family: PingFangSC-Regular, PingFang SC;
-				font-weight: 400;
-				color: #606266;
-				line-height: 24rpx;
+			.fa{
+				// margin-top: 20rpx;
 				display: flex;
 				align-items: center;
-				margin-left: 20rpx;
-				.answersNum{
-					margin-left: 8rpx;
+				.fllow{
+					height: 60rpx;
+					font-size: 28rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #606266;
+					line-height: 24rpx;
+					display: flex;
+					align-items: center;
+					.fllowNum{
+						margin-left: 8rpx;
+					}
+				}
+				.answers{
+					height: 60rpx;
+					font-size: 28rpx;
+					font-family: PingFangSC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #606266;
+					line-height: 24rpx;
+					display: flex;
+					align-items: center;
+					margin-left: 20rpx;
+					.answersNum{
+						margin-left: 8rpx;
+					}
 				}
 			}
 		}
+		
 		.logout {
 			margin-top: 4px;
 			width: 80px;
