@@ -230,27 +230,30 @@
 					//#endif
 					return 
 				}
-				uni.login({
-					provider: this.serviceProvider,
-					success: result => {
-						if (!result || !result.code || result.code.length == 0) {
-							uni.showToast({
-								title: '一键登录失败',
-								icon: 'none'
+					//#ifndef MP-BAIDU
+					uni.login({
+						provider: this.serviceProvider,
+						success: result => {
+							if (!result || !result.code || result.code.length == 0) {
+								uni.showToast({
+									title: '一键登录失败',
+									icon: 'none'
+								});
+								return;
+							}
+							this.baiduLogin({
+								code: result.code,
+								source: this.serviceSource,
+								data: res.detail.encryptedData,
+								iv: res.detail.iv
 							});
-							return;
+						},
+						fail: err => {
+							console.error('login', err)
 						}
-						this.baiduLogin({
-							code: result.code,
-							source: this.serviceSource,
-							data: res.detail.encryptedData,
-							iv: res.detail.iv
-						});
-					},
-					fail: err => {
-						console.error('login', err)
-					}
-				});
+					});
+					//#endif
+				
 			},
 			baiduLogin(obj) {
 				this.HTTP.request({
