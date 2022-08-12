@@ -230,7 +230,7 @@
 			</view>
 		</view>
 		<!-- 我要提问按钮 -->
-		<consultingBtm :consulting="consulting"></consultingBtm>
+		<consultingBtm :consulting="consulting" :type="type" :question_id="question_id"></consultingBtm>
 		<!-- 输入框 -->
 		<u-popup v-model="textareafocus" mode="bottom" :mask-custom-style="{background: 'rgba(0, 0, 0, 0)'}">
 			<view :style="{'padding-bottom': keywordHeight}" class="commentInput" v-if="textareafocus">
@@ -261,6 +261,7 @@
 		},
 		data() {
 			return {
+				type:1,
 				more:false,
 				isShow: true,
 				keywordHeight: '0px',

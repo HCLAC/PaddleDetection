@@ -230,7 +230,7 @@
 		</view>
 		<!-- 咨询卡 -->
 		<view class="zhanwei"></view>
-		<consultingBtm :consulting="consulting" v-if="showOutZX"></consultingBtm>
+		<consultingBtm :consulting="consulting" :type="type" :uuid="line_id" v-if="showOutZX"></consultingBtm>
 		<!-- 输入框 -->
 	</view>
 </template>
@@ -248,6 +248,7 @@
 		},
 		data() {
 			return {
+				type:2,
 				// 骨架屏
 				loading: true,
 				// 外层锚点开始
@@ -279,7 +280,12 @@
 					'5': '山林',
 					'6': '草原',
 					'7': '古境',
-				}
+				},
+				professionObj1: {
+					'0': '导游',
+					'1': '旅游达人',
+					'2': '旅游定制师'
+				},
 			};
 		},
 		// #ifdef MP-BAIDU
@@ -308,6 +314,50 @@
 					this.$refs.barTabNav._selectedTab(e.scrollTop);
 				},
 				methods: {
+					toChatroom(){
+						this.HTTP.request({
+							url: '/bulter/consulting',
+							method: 'POST',
+							data:{
+								bulter_id: this.consulting.bulter_id
+							},
+							success: res => {
+								if (res.statusCode != 200 || res.data.code != 0) {
+									uni.showToast({
+										title: res.data.msg,
+										icon: 'none'
+									});
+									return
+								}
+								var info = res.data.data
+								console.log(info, '管家列表')
+								this.toTransform()
+								if(info.history.length > 0){
+									uni.navigateTo({
+										url:'/pages_im/chatroom/chatroom?search_id=' + info.search_id,
+									})
+								}else{
+									uni.navigateTo({
+										url:'/pages_im/problem/problem?bulter_id=' + info.bulter_id,
+									})
+								}
+							}
+						});
+					},
+					toTransform(){
+						this.HTTP.request({
+							url: '/bulter/transform',
+							method: 'POST',
+							data:{
+								type: 2,
+								uuid:this.line_id,
+								bulter_id:this.consulting.bulter_id,
+							},
+							success: res => {
+								console.log(res,'res')
+							}
+						})
+					},
 					// 查看全部
 					lookAll(){
 						this.showAll = !this.showAll
