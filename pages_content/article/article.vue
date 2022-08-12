@@ -286,7 +286,11 @@
 		<!-- 弹窗 -->
 		<u-modal v-model="show" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
 		<!-- 我要提问按钮 -->
-		<consultingBtm :consulting="consulting" v-if="consulting && articleInfo && articleInfo.type == 2"></consultingBtm>
+		<consultingBtm :consulting="consulting" :article_id="article_id" :type='type' v-if="consulting && articleInfo && articleInfo.type == 2"></consultingBtm>
+		 <!-- 返回顶部按钮 -->
+		<view class="back-btn" @click="toTop" :style="{'display':(flag===false? 'none':'block')}">
+			<image src="https://www.mescroll.com/img/mescroll-totop.png" class="back-btn_img"></image>
+		</view>
 	</view>
 </template>
 
@@ -299,7 +303,8 @@
 		},
 		data() {
 			return {
-
+				flag:false,
+				type:0,
 				consulting: null,
 				// isShow: true,
 				keywordHeight: '0px',
@@ -412,6 +417,20 @@
 			// this.isShow = false
 		},
 		methods: {
+			// 返回顶部
+			toTop() {
+				uni.pageScrollTo({
+					scrollTop: 0,
+					duration: 100,
+				});
+			},
+			onPageScroll(e) { //根据距离顶部距离是否显示回到顶部按钮
+				if (e.scrollTop > 1000) { //当距离顶部大于1000时显示回到顶部按钮
+					this.flag = true
+				} else {
+					this.flag = false
+				}
+			},
 			//管家信息
 			getInfo() {
 				this.HTTP.request({
@@ -1886,5 +1905,18 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%,-50%);
+	}
+	 /* 返回顶部 */
+	.back-btn {
+		position: fixed;
+		right: 40rpx;
+		z-index: 9999;
+		bottom: 200rpx;
+		color: #353535;
+		.back-btn_img {
+			width: 70rpx;
+			height: 70rpx;
+			border-radius: 50%;
+		}
 	}
 </style>

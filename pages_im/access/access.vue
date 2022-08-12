@@ -112,49 +112,94 @@
 					</view>
 				</view>
 			</view>
-			<view class="pay" v-if="show_pay">
-				<view class="pay_top">
-					<view class="pay_txt">
-						旅游定制咨询服务
+			<view class="pay-free" v-if="show_pay && consulting.is_first == true">
+				<view class="free-top">
+					<view class="top-1">
+						领途羊旅游管家
 					</view>
-					<view class="pay_img">
-						<image src="@/static/images/qian.png" mode=""></image>
-					</view>
-					<view class="pay_num">
-						{{consulting.money}}
-					</view>
-					<view class="pay_num_1">
-						/24小时
-					</view>
-				</view>
-				<view class="pay_content">
-					<view class="content_box" style="margin-top: 44rpx;">
-						<view class="content_img">
-							<image src="@/static/images/pay_one.png" mode=""></image>
+					<view class="top-2">
+						<view class="top-2-box">
+							<image src="@/static/images/jsxy.png" mode=""></image>
+							<text>极速响应</text>
 						</view>
-						<view class="content_txt">
-							极速响应，平均1分钟回复
+						<view class="top-2-box">
+							<image src="@/static/images/jd.png" mode=""></image>
+							<text>一对一解答</text>
 						</view>
-					</view>
-					<view class="content_box">
-						<view class="content_img">
-							<image src="@/static/images/pay_two.png" mode=""></image>
-						</view>
-						<view class="content_txt">
-							一对一解答，专业指导
-						</view>
-					</view>
-					<view class="content_box">
-						<view class="content_img">
-							<image src="@/static/images/pay_three.png" mode=""></image>
-						</view>
-						<view class="content_txt">
-							24小时深度服务，问题解决率99%
+						<view class="top-2-box">
+							<image src="@/static/images/sdfw.png" mode=""></image>
+							<text>问题解决率99%</text>
 						</view>
 					</view>
 				</view>
-				<view class="pay_btm" @click="gen">
-					确认咨询
+				<view class="free-btm">
+					<view class="btm-top">
+						<view class="btm-top-1">
+							新客首单免费！
+						</view>
+						<view class="btm-top-2">
+							旅游定制咨询服务
+						</view>
+					</view>
+					<view class="btm-center">
+						<view class="center-1">
+							¥
+						</view>
+						<view class="center-2">
+							0.0
+						</view>
+						<view class="center-3">
+							¥9.9
+						</view>
+						<view class="center-4">
+							/24小时
+						</view>
+					</view>
+					<view class="btm-btm" @click="toFree">
+						免费咨询
+					</view>
+				</view>
+			</view>
+			<view class="pay-free" v-if="show_pay  && consulting.is_first == false">
+				<view class="free-top">
+					<view class="top-1">
+						领途羊旅游管家
+					</view>
+					<view class="top-2">
+						<view class="top-2-box">
+							<image src="@/static/images/jsxy.png" mode=""></image>
+							<text>极速响应</text>
+						</view>
+						<view class="top-2-box">
+							<image src="@/static/images/jd.png" mode=""></image>
+							<text>一对一解答</text>
+						</view>
+						<view class="top-2-box">
+							<image src="@/static/images/sdfw.png" mode=""></image>
+							<text>问题解决率99%</text>
+						</view>
+					</view>
+				</view>
+				<view class="free-btm">
+					<view class="btm-top">
+						<view class="btm-top-1">
+							旅游定制咨询服务
+						</view>
+					</view>
+					<view class="btm-center">
+						<view class="center-1">
+							¥
+						</view>
+						<view class="center-2">
+							9.9
+						</view>
+						<view class="center-4">
+							/24小时
+						</view>
+					</view>
+					<view class="btm-btm" @click="gen">
+						确认咨询
+					</view>
 				</view>
 			</view>
 		</view>
@@ -205,6 +250,23 @@
 			}, 2000);
 		},
 		methods: {
+			toFree(){
+				console.log(122)
+				this.HTTP.request({
+					url:'/pay/free',
+					method: 'POST',
+					data: {
+						bulter_id: this.consulting.bulter_id,
+						first_word:this.txt,
+					},
+					success: res => {
+						console.log(res,'+++++')
+						uni.navigateTo({
+							url:'/pages_im/chatroom/chatroom?bulter_id=' + this.consulting.bulter_id
+						})
+					}
+				})
+			},
 			home(){
 				// this.recordStayAndRead()
 				this.Utils.home()
@@ -591,85 +653,121 @@ page{
 				}
 			}
 		}
-		.pay{
-			width: 630rpx;
-			height: 470rpx;
-			background: #FFFFFF;
-			box-shadow: 0px 4rpx 20rpx 0px rgba(0, 0, 0, 0.05);
-			border-radius: 20rpx;
+		.pay-free{
 			margin: 40rpx auto;
-			padding: 50rpx 40rpx 0;
-			.pay_top{
-				display: flex;
-				.pay_txt{
+			width: 694rpx;
+			height: 464rpx;
+			position: relative;
+			.free-top{
+				width: 694rpx;
+				height: 293rpx;
+				background-image: url(@/static/images/hqkp.png);
+				background-size: 100%;
+				background-origin: center center;
+				padding: 30rpx 30rpx;
+				.top-1{
 					font-size: 36rpx;
-					font-family: PingFangSC-Medium, PingFang SC;
-					font-weight: 500;
+					font-family: AlibabaPuHuiTi-Heavy, AlibabaPuHuiTi;
+					font-weight: 800;
 					color: #303133;
+				}
+				.top-2{
 					display: flex;
-					align-items: flex-end;
-				}
-				.pay_img{
-					width: 18rpx;
-					height: 24rpx;
-					margin-left: 20rpx;
-					line-height: 60rpx;
-					image{
-						width: 100%;
-						height: 100%;
-					}
-				}
-				.pay_num{
-					font-size: 48rpx;
-					font-family: PingFangSC-Semibold, PingFang SC;
-					font-weight: 600;
-					color: #D84035;
-					line-height: 48rpx;
-				}
-				.pay_num_1{
-					font-size: 24rpx;
-					font-family: PingFangSC-Regular, PingFang SC;
-					font-weight: 400;
-					color: #909399;
-					line-height: 50rpx;
-					margin-left: 8rpx;
-				}
-			}
-			.pay_content{
-				.content_box{
-					display: flex;
-					align-items: center;
-					margin-top: 18rpx;
-					.content_img{
-						width: 32rpx;
-						height: 32rpx;
+					margin-top: 6rpx;
+					.top-2-box{
+						display: flex;
+						align-items: center;
 						image{
-							width: 100%;
-							height: 100%;
+							width: 24rpx;
+							height: 24rpx;
+							margin-right: 4rpx;
+						}
+						text{
+							font-size: 20rpx;
+							font-family: PingFangSC-Regular, PingFang SC;
+							font-weight: 400;
+							color: #303133;
+							margin-right: 20rpx;
 						}
 					}
-					.content_txt{
-						font-size: 28rpx;
+				}
+			}
+			.free-btm{
+				width: 694rpx;
+				height: 320rpx;
+				background: #FFFFFF;
+				box-shadow: 0px 0px 16rpx 4rpx rgba(0,0,0,0.0500);
+				border-radius: 24rpx;
+				position: absolute;
+				top: 144rpx;
+				padding: 40rpx 30rpx;
+				.btm-top{
+					display: flex;
+					.btm-top-1{
+						font-size: 34rpx;
+						font-family: PingFangSC-Semibold, PingFang SC;
+						font-weight: 600;
+						color: #303133;
+					}
+					.btm-top-2{
+						font-size: 24rpx;
 						font-family: PingFangSC-Regular, PingFang SC;
 						font-weight: 400;
 						color: #303133;
-						margin-left: 12rpx;
+						display: flex;
+						align-items:center;
 					}
 				}
-			}
-			.pay_btm{
-				width: 550rpx;
-				height: 90rpx;
-				background: #D84035;
-				border-radius: 20rpx;
-				font-size: 32rpx;
-				font-family: PingFangSC-Regular, PingFang SC;
-				font-weight: 400;
-				color: #FFFFFF;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				margin-top: 42rpx;
+				.btm-center{
+					display: flex;
+					.center-1{
+						font-size: 32rpx;
+						font-family: AlibabaPuHuiTi-Medium, AlibabaPuHuiTi;
+						font-weight: 500;
+						color: #D84035;
+						display: flex;
+						align-items: center;
+						margin-right: 6rpx;
+					}
+					.center-2{
+						font-size: 48rpx;
+						font-family: AlibabaPuHuiTi-Medium, AlibabaPuHuiTi;
+						font-weight: 500;
+						color: #D84035;
+						margin-right: 6rpx;
+					}
+					.center-3{
+						font-size: 32rpx;
+						font-family: AlibabaPuHuiTi-Medium, AlibabaPuHuiTi;
+						font-weight: 500;
+						color: #606266;
+						text-decoration: line-through;
+						display: flex;
+						align-items: center;
+					}
+					.center-4{
+						font-size: 32rpx;
+						font-family: AlibabaPuHuiTi-Medium, AlibabaPuHuiTi;
+						font-weight: 500;
+						color: #606266;
+						display: flex;
+						align-items: center;
+					}
+				}
+				.btm-btm{
+					width: 634rpx;
+					height: 90rpx;
+					background: #D84035;
+					border-radius: 20rpx;
+					font-size: 32rpx;
+					font-family: PingFangSC-Medium, PingFang SC;
+					font-weight: 500;
+					color: #FFFFFF;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					margin-top: 20rpx;
+				}
 			}
 		}
 	}

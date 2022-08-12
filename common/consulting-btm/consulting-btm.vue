@@ -42,7 +42,23 @@
 				default(){
 					return {}
 				}
-			}
+			},
+			type: {
+				type: Number,
+				default: 0
+			},
+			article_id: {
+				type: String,
+				default: '0'
+			},
+			question_id: {
+				type: String,
+				default: '0'
+			},
+			uuid: {
+				type: String,
+				default: '0'
+			},
 		},
 		data() {
 			return {
@@ -71,6 +87,7 @@
 						}
 						var info = res.data.data
 						console.log(info, '管家列表')
+						this.toTransform()
 						if(info.history.length > 0){
 							uni.navigateTo({
 								url:'/pages_im/chatroom/chatroom?search_id=' + info.search_id,
@@ -82,6 +99,23 @@
 						}
 					}
 				});
+			},
+			toTransform(){
+				console.log(this.article_id,'+++')
+				this.HTTP.request({
+					url: '/bulter/transform',
+					method: 'POST',
+					data:{
+						type: this.type,
+						article_id:this.article_id,
+						question_id:this.question_id,
+						uuid:this.uuid,
+						bulter_id:this.consulting.bulter_id,
+					},
+					success: res => {
+						console.log(res,'res')
+					}
+				})
 			},
 		}
 	}
