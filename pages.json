@@ -74,11 +74,18 @@
 						"swan-sitemap-list": "dynamicLib://swan-sitemap-lib/swan-sitemap-list"
 					}
 				},
-				"navigationStyle": "default",
-				"navigationBarTitleText": "问答索引页"
+				"navigationStyle": "default"
+				
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/mine/onlineService",
+			"style": {
+				"navigationStyle": "default"
+			}
+            
+        }
+    ],
 	"subPackages": [{
 			"root": "pages_mine",
 			"pages": [{

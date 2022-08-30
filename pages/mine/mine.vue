@@ -1,5 +1,7 @@
 <template>
 	<view >
+		<!-- 在线客服官方  -->
+		<img src="/static/images/icon-online.png" alt="" class="onlineService" @click="goOnline">
 		<!-- 自定义导航栏 -->
 		<view class="nav-bar" v-if="isFixed">
 			<uni-nav-bar :fixed="true" :status-bar="true" title="个人主页">
@@ -147,6 +149,11 @@ export default {
 		}
 	},
 	methods: {
+		goOnline(){
+			uni.navigateTo({
+				url: '/pages/mine/onlineService' 
+			})
+		},
 		outChange(){
 			uni.clearStorage();
 			uni.navigateTo({
@@ -259,6 +266,7 @@ export default {
 			})
 			
 		},
+		 
 	}
 };
 </script>
@@ -268,6 +276,15 @@ export default {
 /deep/.mescroll-empty .empty-icon { width: 154rpx !important }
 // /deep/.mescroll-empty .empty-icon { height: 148rpx !important }
 // /deep/.mescroll-empty  .empty-fixed{top: 120rpx !important;}
+.onlineService{
+	width: 124rpx;
+	height: 124rpx;
+	position: fixed;
+	right: 10rpx;
+	bottom: 100rpx;
+	border-radius: 50%;
+	z-index: 9999;
+}
 page {
 	padding-bottom: constant(safe-area-inset-bottom);
 	padding-bottom: env(safe-area-inset-bottom);
