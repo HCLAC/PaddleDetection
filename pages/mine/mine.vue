@@ -64,6 +64,7 @@
 		<view class="kong">
 			
 		</view>
+		<u-modal v-model="show" :show-cancel-button='true' @confirm="confirm" :content="content"></u-modal>
 	</view>
 </template>
 
@@ -115,6 +116,8 @@ export default {
 			headerFixed: false,
 			hasLogin: false,
 			isInit: true,
+			show: false,
+			content: '确定是否要退出登录？'
 		};
 	},
 	// #ifdef MP-BAIDU
@@ -155,11 +158,13 @@ export default {
 			})
 		},
 		outChange(){
+			this.show = true;
+		},
+		confirm(){
 			uni.clearStorage();
 			uni.navigateTo({
 				url: '/pages_mine/login/login'
 			});
-			
 			getApp().globalData.Authorization = ''
 			this.userInfo.avatar = ''
 			this.tabList[0].count = ''
