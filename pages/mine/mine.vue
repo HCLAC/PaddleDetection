@@ -159,6 +159,12 @@ export default {
 			uni.navigateTo({
 				url: '/pages_mine/login/login'
 			});
+			
+			getApp().globalData.Authorization = ''
+			this.userInfo.avatar = ''
+			this.tabList[0].count = ''
+			this.tabList[1].count = ''
+			this.getUserMsg()
 		},
 		signIn() {
 			this.isInit = false
