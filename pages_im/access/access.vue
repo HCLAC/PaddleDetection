@@ -149,7 +149,7 @@
 							0.0
 						</view>
 						<view class="center-3">
-							¥9.9
+							{{consulting.money}}
 						</view>
 						<view class="center-4">
 							/24小时
@@ -191,7 +191,7 @@
 							¥
 						</view>
 						<view class="center-2">
-							9.9
+							{{consulting.money}}
 						</view>
 						<view class="center-4">
 							/24小时
