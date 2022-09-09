@@ -199,6 +199,7 @@
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: space-between;
+			padding-bottom: 180rpx;
 			.box-img{
 				width: 212rpx;
 				height: 212rpx;
