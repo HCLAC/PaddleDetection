@@ -303,11 +303,11 @@
 
 		.richText {
 			width: 480rpx;
-			height: 84rpx;
+			height: 80rpx;
 			font-size: 28rpx;
 			font-weight: 400;
 			color: #909399;
-			line-height: 42rpx;
+			// line-height: 42rpx;
 			margin-top: 12rpx;
 			display: -webkit-box;
 			overflow: hidden;
