@@ -207,6 +207,7 @@ export default {
 .headImgBox {
 	width: 750rpx;
 	height: 440rpx;
+	top: 100rpx;
 	
 	.topicTabs{
 		width: 100%;
@@ -256,6 +257,8 @@ export default {
 		.topicSquare{
 			width: 138rpx;
 			height: 36rpx;
+			// display: inline-block;
+			// padding: 5rpx 6rpx;
 			background: rgba(0, 0, 0, 0.3);
 			border-radius: 9px;
 			border: none;
@@ -266,7 +269,7 @@ export default {
 			padding-right: 12rpx;
 			
 			.squareText{
-				width: 88rpx;
+				// width: 88rpx;
 				font-size: 22rpx;
 				font-family: PingFangSC-Medium, PingFang SC;
 				font-weight: 500;

@@ -44,7 +44,13 @@
 						</view>
 					</view>
 				</view>
+				<!-- #ifndef H5 -->
 				<view class="answersBox" :style="item.style" v-else-if="item.type == 6" @click="toQuestionsDetail(item,index) in leftList"> 
+				<!-- #endif -->	
+				<!-- #ifdef H5 -->
+				<view class="answersBox" style="color: #000;" v-else-if="item.type == 6" @click="toQuestionsDetail(item,index) in leftList"> 
+				<!-- #endif -->	
+					
 					<image src="/static/images/yh.svg"></image> 
 					<view class="answersTitle">
 						{{item.title}} 
@@ -99,7 +105,12 @@
 						</view>
 					</view>
 				</view>
+				<!-- #ifndef H5 -->
 				<view class="answersBoxR" :style="item.style" v-else-if="item.type == 6" @click="toQuestionsDetail(item,index) in rightList"> 
+				<!-- #endif -->
+				<!-- #ifdef H5 -->
+				<view class="answersBoxR" style="color: #000;" v-else-if="item.type == 6" @click="toQuestionsDetail(item,index) in rightList">
+				<!-- #endif -->
 					<image src="/static/images/yh.svg"></image> 
 					<view class="answersTitle"> 
 						{{item.title}} 
@@ -379,7 +390,8 @@
 
 	.demo-tag-owner {
 		width: 54rpx;
-		height: 28rpx;
+		// height: 28rpx;
+		padding: 3rpx 0;
 		text-align: center;
 		align-items: center;
 		color: #0091ff;
@@ -486,6 +498,7 @@
 		border-radius: 16rpx;
 		padding: 80rpx 32rpx 40rpx;
 		position: relative;
+		color: #FFFFFF;
 		image{
 			width: 76rpx;
 			height: 54rpx;
@@ -498,7 +511,7 @@
 			letter-spacing: 2rpx;
 			font-family: PingFangSC-Semibold, PingFang SC;
 			font-weight: 600;
-			color: #FFFFFF;
+			
 			line-height: 50rpx;
 			margin-top: -8rpx;
 			line-height: 50rpx;
@@ -508,7 +521,6 @@
 			font-size: 24rpx;
 			font-family: PingFangSC-Light, PingFang SC;
 			font-weight: 300;
-			color: #FFFFFF;
 			line-height: 34rpx;
 			margin-top: 40rpx;
 	
@@ -520,6 +532,7 @@
 		border-radius: 16rpx;
 		padding: 80rpx 32rpx 40rpx;
 		position: relative;
+		color: #FFFFFF;
 		image{
 			position: absolute;
 			top: 48rpx;
@@ -533,7 +546,7 @@
 			letter-spacing: 2rpx;
 			font-family: PingFangSC-Semibold, PingFang SC;
 			font-weight: 600;
-			color: #FFFFFF;
+			
 			line-height: 50rpx;
 			text-align: justify;
 		}
@@ -541,7 +554,6 @@
 			font-size: 24rpx;
 			font-family: PingFangSC-Light, PingFang SC;
 			font-weight: 300;
-			color: #FFFFFF;
 			line-height: 34rpx;
 			margin-top: 40rpx;
 	

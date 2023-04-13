@@ -1,7 +1,9 @@
 <template>
 	<view >
+		<!-- #ifndef H5 -->
 		<!-- 在线客服官方  -->
 		<img src="/static/images/icon-online.png" alt="" class="onlineService" @click="goOnline">
+		<!-- #endif -->
 		<!-- 自定义导航栏 -->
 		<view class="nav-bar" v-if="isFixed">
 			<uni-nav-bar :fixed="true" :status-bar="true" title="个人主页">

@@ -19,6 +19,7 @@
 			</view>
 			<!-- 功能区 -->
 			<view class="function-box">
+				 <!-- #ifndef H5 -->
 				<button class="f-box" @click="toChatroom" v-if="auth != ''">
 					<image class="f-img" src="/static/images/zxzx.png" />
 					<view class="f-text">在线咨询</view>
@@ -28,6 +29,7 @@
 					<image class="f-img" src="/static/images/zxzx.png" />
 					<view class="f-text">在线咨询</view>
 				</button>
+				 <!-- #endif -->
 				<button class="f-box" @click="toquestion">
 					<image class="f-img" src="/static/images/jxwd.png" />
 					<view class="f-text">精选问答</view>
@@ -40,10 +42,12 @@
 					<image class="f-img" src="/static/images/rsbd.png" />
 					<view class="f-text">热度榜单</view>
 				</button>
+				 <!-- #ifndef H5 -->
 				<button class="f-box" @click="stroke">
 					<image class="f-img" src="https://cache.lingtuyang.cn/web_static/index-xcdz.png" />
 					<view class="f-text">行程定制</view>
 				</button>
+				 <!-- #endif -->
 			</view>
 			<!-- 热门目的地 -->
 			<view class="hot">
@@ -54,6 +58,7 @@
 						<image src="../../static/images/more-right.svg" class="moreIcon" mode=""></image>
 					</view>
 				</view>
+				<!-- 热门目的地 -->
 				<view class="hot-bot">
 					<view class="hotAdress">
 						<!-- 当前位置 -->
@@ -61,10 +66,12 @@
 							<view class="mask"></view>
 							<image class="hotCityImg" :src="item.image" mode="scaleToFill"></image>
 							<text class="hotCityText1">{{ item.name }}</text>
+							<!-- #ifndef H5 -->
 							<view class="adressBox" v-if="index == 0 && popularCities" @tap.stop="notLocation">
 								<image class="zhishi" src="../../static/images/iconMapt.svg" mode=""></image>
 								<text class="dqwzText1">{{ dqdwText }}</text>
 							</view>
+							<!-- #endif -->
 							<view class="pinyinBox">
 								<text class="pinyinText">{{ item.pinyin }}</text>
 							</view>
@@ -86,6 +93,7 @@
 					</view>
 				</view>
 			</view>
+	
 			<!-- 正在旅行 -->
 			<view class="touring">
 				<text class="tourtext">正在旅行</text>
@@ -165,7 +173,6 @@
 		onLoad(query) {
 		// #endif
 			this.serviceProvider = getApp().globalData.serviceProvider
-			
 			this.loadData()
 		},
 		onReady() {
@@ -407,26 +414,6 @@
 				uni.navigateTo({
 					url:'/pages_questions/moreQuestions/moreQuestions'
 				})
-				//支付
-				// uni.requestPayment({
-				//     provider: 'baidu',
-				// 	orderInfo: {
-				// 		dealId:this.genObj.dealId,
-				// 		appKey:this.genObj.appKey,
-				// 		totalAmount:this.genObj.totalAmount,
-				// 		tpOrderId:this.genObj.tpOrderId,
-				// 		dealTitle:this.genObj.dealTitle,
-				// 		signFieldsRange:this.genObj.signFieldsRange,
-				// 		rsaSign:this.genObj.rsaSign,
-				// 	},
-				//      //微信、支付宝订单数据 【注意微信的订单信息，键值应该全部是小写，不能采用驼峰命名】
-				//     success: function (res) {
-				//         console.log('success:' + JSON.stringify(res));
-				//     },
-				//     fail: function (err) {
-				//         console.log('fail:' + JSON.stringify(err));
-				//     }
-				// });
 			},
 			//跳转热搜榜单
 			heat(){
@@ -455,6 +442,7 @@
 			},
 			notLocation(){
 				if(this.dqdwText == '未定位'){
+					/*#ifndef H5*/
 					uni.getSetting({
 					   success: res =>{
 						  if(res.authSetting['scope.userLocation'] == false){
@@ -468,6 +456,10 @@
 						  }
 					   }
 					})
+					/*#endif*/
+					/*#ifdef H5*/
+					 this.getLocation()
+					 /*#endif*/
 				}
 			},
 			loadData(){
@@ -548,6 +540,7 @@
 				});
 			},
 			getAdress(){
+				 /*#ifndef H5*/
 				uni.getSetting({
 				   success: res =>{
 					  if(res.authSetting['scope.userLocation'] == false){
@@ -561,6 +554,14 @@
 					  }
 				   }
 				})
+				/*#endif*/
+				/*#ifdef H5*/
+				this.getAreaHot()
+				this.dqdwText = '未定位';
+				this.popularCities = true
+				this.locationCity.city_id = '0'
+				this.locationCity.name = '暂无定位'
+				/*#endif*/
 			},
 			// 获取当前地理位置
 			getLocation() {
@@ -570,6 +571,10 @@
 					key: '3L3BZ-V5OCV-GXHPP-ULIVW-DYQRT-HRFBL',
 				},5000)
 				.then(res => {
+					console.log(res.result)
+					this.popularCities = false
+					this.locationCity.name = '暂无定位'
+					this.locationCity.city_id = '0'
 				})
 				.catch(error => {
 					console.error('get address failed, ',error);
@@ -579,6 +584,7 @@
 				uni.getLocation({
 					type: 'wgs84',
 					success: res => {
+						console.log(res, '小程序定位')
 						this.HTTP.request({
 							url: '/area/hot',
 							retry: 3,
@@ -727,7 +733,7 @@
 							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
 							item1.image = this.Utils.addImageProcess(item1.image, false, 40)
 						})
-						
+						console.log(this.answersList.length,curPageLen,pageSize)
 						if(this.answersList.length > 0 && curPageLen == pageSize){
 							let qobj = this.answersList[this.randomNum]
 							qobj.style = this.backgroundQuestion[this.randomNum%3]
@@ -742,6 +748,7 @@
 						}
 						
 						that.list = that.list.concat(curPageData); //追加新数据
+						
 						that.mescroll.endByPage(curPageLen, totalPage);
 					},
 					fail: () => {
@@ -788,7 +795,12 @@
 	}
 	.input-view {
 		display: flex;
+		/*#ifndef H5*/
 		width: 486rpx;
+		/*#endif*/
+		/*#ifdef H5*/
+		width: 600rpx;
+		/*#endif*/
 		height: 64rpx;
 		align-items: center;
 		background: rgba(248, 248, 248, 1);
@@ -818,7 +830,6 @@
 		background: #F9FAFA;
 		display: flex;
 		.f-box{
-			width: 20%;
 			height: 100%;
 			display: flex;
 			background: rgba(0,0,0,0);

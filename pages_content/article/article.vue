@@ -249,7 +249,12 @@
 						查看全部{{comment_count}}条评论
 					</view>
 				</view>
+				<!-- #ifndef H5 -->
 				<view class="safeBox" style="height: 180rpx;"></view>
+				  <!-- #endif -->
+				  <!-- #ifdef H5 -->
+				  <view class="safeBox"></view>
+				   <!-- #endif -->
 			</view>
 		</view>
 		
@@ -285,8 +290,10 @@
 		</u-popup>
 		<!-- 弹窗 -->
 		<u-modal v-model="show" :content="content" :border-radius="40" :z-index="9999" :show-title="false" :show-cancel-button="true" @confirm="confirm"></u-modal>
-		<!-- 我要提问按钮 -->
+		 <!-- #ifndef H5 -->
+		<!-- 咨询 -->
 		<consultingBtm :consulting="consulting" :article_id="article_id" :type='type' v-if="consulting && articleInfo && articleInfo.type == 2"></consultingBtm>
+		  <!-- #endif -->
 		 <!-- 返回顶部按钮 -->
 		<view class="back-btn" @click="toTop" :style="{'display':(flag===false? 'none':'block')}">
 			<image src="https://www.mescroll.com/img/mescroll-totop.png" class="back-btn_img"></image>
@@ -1779,11 +1786,16 @@
 
 	.safeBox {
 		height: 140rpx;
+		/*#ifdef H5*/
+		height: 30rpx;
+		 /*#endif*/
 		width: 100%;
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
 		box-sizing: content-box;
 	}
+	
+	
 	/* 底部 */
 	.bottom {
 		width: 100%;
