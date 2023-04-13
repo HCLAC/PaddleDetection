@@ -11,6 +11,7 @@
 				</view>
 			</view>
 			<view v-if="!searchCity">
+				<!-- #ifndef H5 -->
 				<!-- 当前定位城市 -->
 				<view class="hot-box" v-if="activeCity">
 					<view class="box-city" v-if="activeCity">
@@ -19,6 +20,7 @@
 					</view>
 					<view class="box-title" v-if="activeCity">当前定位</view>
 				</view>
+				<!-- #endif -->
 				<!-- 热门城市 -->
 				<view class="hot-title" v-if="hotCity.length > 0">热门城市</view>
 				<view class="hot-city" v-if="hotCity.length > 0">

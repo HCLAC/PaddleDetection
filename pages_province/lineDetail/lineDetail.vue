@@ -93,6 +93,7 @@
 			</view>
 			<luBarTabNav :tabList="tabList" :barFixed="barFixed" :iconShow="iconShow" :barHeight="barHeight"
 				:barTop="barTop" :barId="barId" :dayList="dayList" ref="barTabNav">
+				<!-- #ifndef H5 -->
 				<!-- 内嵌咨询 -->
 				<view class="answersFollow-inner-wrap">
 					<view class="answersFollow-inner">
@@ -137,6 +138,7 @@
 						</view>
 					</view>
 				</view>
+				<!-- #endif -->
 				<view id="item1" class="tabbody">
 					<view class="h-title-wrap">
 						<view class="h-title">路线概览</view>
@@ -228,10 +230,12 @@
 				</view>
 			</luBarTabNav>
 		</view>
+		<!-- #ifndef H5 -->
 		<!-- 咨询卡 -->
 		<view class="zhanwei"></view>
 		<consultingBtm :consulting="consulting" :type="type" :uuid="line_id" v-if="showOutZX"></consultingBtm>
 		<!-- 输入框 -->
+		<!-- #endif -->
 	</view>
 </template>
 

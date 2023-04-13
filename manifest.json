@@ -1,6 +1,6 @@
 {
     "name" : "领途羊",
-    "appid" : "__UNI__71D005B",
+    "appid" : "__UNI__B83C5D4",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -95,7 +95,7 @@
         "cookie" : {
             "enableStore" : false // 开启小程序cookie存储设置
         },
-		"useSwanNews":true
+        "useSwanNews" : true
     },
     "mp-toutiao" : {
         "setting" : {

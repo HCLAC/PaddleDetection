@@ -53,7 +53,7 @@ export default {
     },
     methods: {
 		back(){
-			this.recordStayAndRead()
+			// this.recordStayAndRead()
 			this.Utils.back()
 			
 		},
