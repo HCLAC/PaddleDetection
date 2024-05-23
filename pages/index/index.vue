@@ -470,7 +470,7 @@
 						this.hideLoad();
 					},
 					complete: () => {
-						this.getQuestionList();
+						//this.getQuestionList();
 						this.getBanner();
 						this.getAdress();
 					}
@@ -732,20 +732,23 @@
 							item1.isAnimate = false
 							item1.avatar = this.Utils.addImageProcess(item1.avatar, false, 60)
 							item1.image = this.Utils.addImageProcess(item1.image, false, 40)
-						})
-						console.log(this.answersList.length,curPageLen,pageSize)
-						if(this.answersList.length > 0 && curPageLen == pageSize){
-							let qobj = this.answersList[this.randomNum]
-							qobj.style = this.backgroundQuestion[this.randomNum%3]
-							curPageData.splice(2, 0, qobj)
-							this.randomNum++
-							if (this.randomNum == this.answersList.length){
-								this.getQuestionList()
+							if (index1+1 == curPageLen){
+								item1.style = this.backgroundQuestion[index1%3]
 							}
-						} else {
-							console.log('no answer')
-							this.getQuestionList()
-						}
+						})
+						// console.log(this.answersList.length,curPageLen,pageSize)
+						// if(this.answersList.length > 0 && curPageLen == pageSize){
+						// 	let qobj = this.answersList[this.randomNum]
+						// 	qobj.style = this.backgroundQuestion[this.randomNum%3]
+						// 	curPageData.splice(2, 0, qobj)
+						// 	this.randomNum++
+						// 	if (this.randomNum == this.answersList.length){
+						// 		this.getQuestionList()
+						// 	}
+						// } else {
+						// 	console.log('no answer')
+						// 	this.getQuestionList()
+						// }
 						
 						that.list = that.list.concat(curPageData); //追加新数据
 						
